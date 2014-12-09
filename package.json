@@ -2,7 +2,7 @@
     "name": "exceljs",
     "version": "0.0.1",
     "description": "Excel Workbook Manager",
-    "private": true,
+    "private": false,
     "license": "MIT",
     "author": {
         "name": "Guyon Roche",
