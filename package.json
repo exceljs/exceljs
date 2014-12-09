@@ -1,0 +1,34 @@
+{
+    "name": "exceljs",
+    "version": "0.0.0",
+    "description": "Excel Workbook Manager",
+    "private": true,
+    "license": "MIT",
+    "author": {
+        "name": "Guyon Roche",
+        "email": "cyber.sapiens@hotmail.com",
+        "url": "https://github.com/guyonroche/exceljs"
+    },
+    "dependencies": {
+        "archiver": "0.5.1",
+        "bluebird": "*",
+        "sax": "^0.6.0",
+        "underscore": "1.4.4",
+        "unzip": ">= 0.1.9"
+    },
+    "devDependencies": {
+        "jasmine-node": "~1.14",
+        "memorystream": "*"
+    },
+    "scripts": {
+        "test": "jasmine-node spec"
+    },
+    "main": "./excel.js",
+    "files": [
+        "excel.js",
+        "lib",
+        "LICENSE",
+        "README.md",
+        "MODEL.md"
+    ]
+}
