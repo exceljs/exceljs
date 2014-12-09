@@ -10,10 +10,13 @@ npm install exceljs
 
 # Interface
 
-var Excel = require("????");
+```javascript
+var Excel = require("exceljs");
+```
 
 ## Construction
 
+```javascript
 // create a workbook
 var workbook = new Excel.Workbook();
 
@@ -61,6 +64,7 @@ sheet.mergeCells("A4:B5");
 // ... merged cells are linked
 sheet.getCell("B5").value = "Hello, World!";
 assert(sheet.getCell("A4").value === sheet.getCell("B5"));
+```
 
 ## Value Types
 
@@ -78,6 +82,7 @@ assert(sheet.getCell("A4").value === sheet.getCell("B5"));
 
 ## Reading XLSX
 
+```javascript
 // read from a file
 var workbook = new Excel.Workbook();
 workbook.xlsx.readFile(filename)
@@ -88,9 +93,11 @@ workbook.xlsx.readFile(filename)
 // pipe from stream
 var workbook = new Excel.Workbook();
 stream.pipe(workbook.xlsx.createInputStream());
+```
 
 ## Writing XLSX
 
+```javascript
 // write to a file
 var workbook = createAndFillWorkbook();
 workbook.xlsx.writeFile(filename)
@@ -103,3 +110,4 @@ workbook.xlsx.write(stream)
     .then(function() {
         // done
     });
+```
