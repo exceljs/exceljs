@@ -1,4 +1,4 @@
-# Excel - Something
+# ExcelJS
 
 Read, manipulate and write spreadsheet data to XLSX and JSON.
 
@@ -6,7 +6,7 @@ Reverse engineered from Excel spreadsheet files as a project.
 
 # Installation
 
-npm install ????
+npm install exceljs
 
 # Interface
 
