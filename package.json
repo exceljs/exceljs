@@ -1,6 +1,6 @@
 {
     "name": "exceljs",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Excel Workbook Manager",
     "private": false,
     "license": "MIT",
@@ -12,7 +12,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/guyonroche/exceljs.git"
-    }
+    },
     "dependencies": {
         "archiver": "0.5.1",
         "bluebird": "*",

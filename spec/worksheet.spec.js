@@ -1,3 +1,4 @@
+var _ = require("underscore");
 var Excel = require("../excel");
 
 describe("Worksheet", function() {
@@ -137,32 +138,85 @@ describe("Worksheet", function() {
                 { header: "D.O.B.", key: "dob", width: 10 }
             ];
             
-            ws.addRow({id:1, name: "John Doe", dob: new Date(1970,1,1)});
-            ws.addRow({id:2, name: "Jane Doe", dob: new Date(1965,1,7)});
+            var dateValue1 = new Date(1970,1,1);
+            var dateValue2 = new Date(1965,1,7);
+            
+            ws.addRow({id:1, name: "John Doe", dob: dateValue1});
+            ws.addRow({id:2, name: "Jane Doe", dob: dateValue2});
             
             expect(ws.getCell("A2").value).toEqual(1);
             expect(ws.getCell("B2").value).toEqual("John Doe");
-            expect(ws.getCell("C2").value).toEqual(new Date(1970,1,1));
+            expect(ws.getCell("C2").value).toEqual(dateValue1);
 
             expect(ws.getCell("A3").value).toEqual(2);
             expect(ws.getCell("B3").value).toEqual("Jane Doe");
-            expect(ws.getCell("C3").value).toEqual(new Date(1965,1,7));
+            expect(ws.getCell("C3").value).toEqual(dateValue2);
+            
+            expect(ws.getRow(2)).toEqual([,1,"John Doe", dateValue1]);
+            expect(ws.getRow(3)).toEqual([,2,"Jane Doe", dateValue2]);
         });
         
-        it("adds rows by array", function() {
+        it("adds rows by contiguous array", function() {
             var wb = new Excel.Workbook()
             var ws = wb.addWorksheet("blort");
             
-            ws.addRow([1, "John Doe", new Date(1970,1,1)]);
-            ws.addRow([2, "Jane Doe", new Date(1965,1,7)]);
+            var dateValue1 = new Date(1970,1,1);
+            var dateValue2 = new Date(1965,1,7);
+            
+            ws.addRow([1, "John Doe", dateValue1]);
+            ws.addRow([2, "Jane Doe", dateValue2]);
             
             expect(ws.getCell("A1").value).toEqual(1);
             expect(ws.getCell("B1").value).toEqual("John Doe");
-            expect(ws.getCell("C1").value).toEqual(new Date(1970,1,1));
-
+            expect(ws.getCell("C1").value).toEqual(dateValue1);
+            
             expect(ws.getCell("A2").value).toEqual(2);
             expect(ws.getCell("B2").value).toEqual("Jane Doe");
-            expect(ws.getCell("C2").value).toEqual(new Date(1965,1,7));
+            expect(ws.getCell("C2").value).toEqual(dateValue2);
+            
+            expect(ws.getRow(1)).toEqual([,1,"John Doe", dateValue1]);
+            expect(ws.getRow(2)).toEqual([,2,"Jane Doe", dateValue2]);
+        });
+        it("adds rows by sparse array", function() {
+            var wb = new Excel.Workbook()
+            var ws = wb.addWorksheet("blort");
+            
+            var dateValue1 = new Date(1970,1,1);
+            var dateValue2 = new Date(1965,1,7);
+            var rows = [
+                ,[,1, "John Doe", ,dateValue1]
+                ,[,2, "Jane Doe", ,dateValue2]
+            ];
+            var row3 = [];
+            row3[1] = 3;
+            row3[3] = "Sam";
+            row3[5] = dateValue1;
+            rows.push(row3);
+            _.each(rows, function(row, index) {
+                if (row) {
+                    ws.addRow(row);
+                }
+            });
+            
+            expect(ws.getCell("A1").value).toEqual(1);
+            expect(ws.getCell("B1").value).toEqual("John Doe");
+            expect(ws.getCell("D1").value).toEqual(dateValue1);
+            
+            expect(ws.getCell("A2").value).toEqual(2);
+            expect(ws.getCell("B2").value).toEqual("Jane Doe");
+            expect(ws.getCell("D2").value).toEqual(dateValue2);
+            
+            expect(ws.getCell("A3").value).toEqual(3);
+            expect(ws.getCell("C3").value).toEqual("Sam");
+            expect(ws.getCell("E3").value).toEqual(dateValue1);
+            
+            expect(ws.getRow(1)).toEqual(rows[1]);
+            expect(ws.getRow(2)).toEqual(rows[2]);
+            expect(ws.getRow(3)).toEqual(rows[3]);
+            
+            ws.eachRow(function(number, row) {
+                expect(row).toEqual(rows[number]);
+            });
         });
     });
     
