@@ -19,9 +19,14 @@ ws.columns = [
 
 ws.getCell("A2").value = 7;
 ws.getCell("B2").value = "Hello, World!";
-ws.getCell("C2").value = 5;
+
+ws.getCell("C2").value = -5.55;
+ws.getCell("C2").numFmt = "&quot;£&quot;#,##0.00;[Red]\-&quot;£&quot;#,##0.00";
+
 ws.getCell("D2").value = 3.14;
 ws.getCell("D2").value = new Date();
+ws.getCell("D2").numFmt = "d-mmm-yyyy"
+
 ws.getCell("E2").value = ["Hello", "World"].join(", ") + "!";
 
 ws.getCell("A3").value = {text: "www.google.com", hyperlink:"http://www.google.com"};
@@ -46,6 +51,18 @@ ws.getCell("A8").value = now;
 ws.getCell("B8").value = 0;
 ws.getCell("C8").value = {formula:"A8+B8", result: now};
 
+ws.getCell("A9").value = 1.6;
+ws.getCell("A9").numFmt = "# ?/?";
+ws.getCell("B9").value = 1.6;
+ws.getCell("B9").numFmt = "h:mm:ss";
+ws.getCell("C9").value = 0.016;
+ws.getCell("C9").numFmt = "0.00%";
+ws.getCell("D9").value = 1.6;
+ws.getCell("D9").numFmt = "[Green]#,##0 ;[Red](#,##0)";
+ws.getCell("E9").value = 1.6;
+ws.getCell("E9").numFmt = "#0.000";
+ws.getCell("F9").value = 0.016;
+ws.getCell("F9").numFmt = "# ?/?%";
 
 wb.xlsx.writeFile(filename)
     .then(function(){

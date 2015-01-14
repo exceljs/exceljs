@@ -4,6 +4,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="x14ac"
         xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
+    <% if (numFmts.length) { %><numFmts count="<%=numFmts.length%>">
+        <%_.each(numFmts, function(nf) {%><numFmt numFmtId="<%=nf.numFmtId%>" formatCode="<%=nf.formatCode%>"/>
+        <%});%>
+    </numFmts>
+    <% } %>
     <fonts count="1" x14ac:knownFonts="1">
         <font><sz val="11"/><color theme="1"/><name val="Calibri"/><family val="2"/><scheme val="minor"/></font>
     </fonts>
@@ -17,9 +22,9 @@
     <cellStyleXfs count="1">
         <xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>
     </cellStyleXfs>
-    <cellXfs count="1">
-        <xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>
-        <xf numFmtId="14" fontId="0" fillId="0" borderId="0" xfId="0"/>
+    <cellXfs count="<%=cellXfs.length%>">
+        <%_.each(cellXfs, function(xf) {%><xf numFmtId="<%=xf.numFmtId%>" fontId="<%=xf.fontId%>" fillId="<%=xf.fillId%>" borderId="<%=xf.borderId%>" xfId="<%=xf.xfId%>"/>
+        <%});%>
     </cellXfs>
     <cellStyles count="1">
         <cellStyle name="Normal" xfId="0" builtinId="0"/>
