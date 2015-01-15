@@ -11,7 +11,9 @@ describe("Workbook", function() {
             {formula: "A1", result: 7},
             {formula: "A2"}
         ],
-        hyperlink: {hyperlink: "http://www.link.com", text: "www.link.com"}
+        hyperlink: {hyperlink: "http://www.link.com", text: "www.link.com"},
+        numFmt1: "# ?/?",
+        numFmt2: "[Green]#,##0 ;[Red](#,##0)"
     };
     var createTestBook = function() {
         var wb = new Excel.Workbook()
@@ -23,13 +25,18 @@ describe("Workbook", function() {
         ws.getCell("D1").value = testValues.formulas[0];
         ws.getCell("E1").value = testValues.formulas[1];
         ws.getCell("F1").value = testValues.hyperlink;
-        
+
         // merge cell square with numerical value
         ws.getCell("A2").value = 5;
         ws.mergeCells("A2:B3");
         
         // merge cell squalre with null value
         ws.mergeCells("C2:D3");
+        
+        ws.getCell("A4").value = 1.5;
+        ws.getCell("A4").numFmt = testValues.numFmt1;
+        ws.getCell("B4").value = 1.5;
+        ws.getCell("B4").numFmt = testValues.numFmt2;
         
         return wb;
     }
@@ -85,6 +92,9 @@ describe("Workbook", function() {
         expect(ws.getCell("D3").value).toBeNull();
         expect(ws.getCell("D3").type).toEqual(Excel.ValueType.Merge);
         expect(ws.getCell("D3").master).toBe(ws.getCell("C2"));
+        
+        expect(ws.getCell("A4").numFmt).toEqual(testValues.numFmt1);
+        expect(ws.getCell("B4").numFmt).toEqual(testValues.numFmt2);
     }
     
     it("creates sheets with correct names", function() {

@@ -10,23 +10,24 @@ npm install exceljs
 
 # New Features!
 
-* [Number Formats](#number-formats)
-
+* [Number Formats](https://www.npmjs.com/package/exceljs#number-formats)
+    * Now including read()
+    
 # Contents
 
-* [Interface](#interface)
-    * [Create a Workbook](#create-a-workbook)
-    * [Add a Worksheet](#add-a-worksheet)
-    * [Access Worksheets](#access-worksheets)
-    * [Fetching Sheets](#fetching-sheets)
-    * [Column Headers](#column-headers)
-    * [Adding and Handling Rows](#adding-and-handling-rows)
-    * [Handling Individual Cells](#handling-individual-cells)
-    * [Merged Cells](#merged-cells)
-    * [Number Formats](#number-formats)
-    * [Reading XLSX](#reading-xlsx)
-    * [Writing XLSX](#writing-xlsx)
-* [Value Types](#value-types)
+* [Interface](https://www.npmjs.com/package/exceljs#interface)
+    * [Create a Workbook](https://www.npmjs.com/package/exceljs#create-a-workbook)
+    * [Add a Worksheet](https://www.npmjs.com/package/exceljs#add-a-worksheet)
+    * [Access Worksheets](https://www.npmjs.com/package/exceljs#access-worksheets)
+    * [Fetching Sheets](https://www.npmjs.com/package/exceljs#fetching-sheets)
+    * [Column Headers](https://www.npmjs.com/package/exceljs#column-headers)
+    * [Adding and Handling Rows](https://www.npmjs.com/package/exceljs#adding-and-handling-rows)
+    * [Handling Individual Cells](https://www.npmjs.com/package/exceljs#handling-individual-cells)
+    * [Merged Cells](https://www.npmjs.com/package/exceljs#merged-cells)
+    * [Number Formats](https://www.npmjs.com/package/exceljs#number-formats)
+    * [Reading XLSX](https://www.npmjs.com/package/exceljs#reading-xlsx)
+    * [Writing XLSX](https://www.npmjs.com/package/exceljs#writing-xlsx)
+* [Value Types](https://www.npmjs.com/package/exceljs#value-types)
 
 # Interface
 
@@ -123,8 +124,6 @@ assert(sheet.getCell("A4") === sheet.getCell("B5").master);
 ```
 
 ## Number Formats
-
-* Note: This feature currently only implemented for write(). Coming soon - read().
 
 ```javascript
 // display value as "1 3/5"

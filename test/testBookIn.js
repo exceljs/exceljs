@@ -34,6 +34,13 @@ wb.xlsx.readFile(filename)
         
         assert(ws.getCell("C5").value.formula, "Expected C5 to be a formula, was " + JSON.stringify(ws.getCell("C5").value));
         
+        assert(ws.getCell("A9").numFmt == "# ?/?", 'Expected A9 numFmt to be "# ?/?", was ' + ws.getCell("A9").numFmt);
+        assert(ws.getCell("B9").numFmt == "h:mm:ss", 'Expected A9 numFmt to be "h:mm:ss", was ' + ws.getCell("A9").numFmt);
+        assert(ws.getCell("C9").numFmt == "0.00%", 'Expected A9 numFmt to be "0.00%", was ' + ws.getCell("A9").numFmt);
+        assert(ws.getCell("D9").numFmt == "[Green]#,##0 ;[Red](#,##0)", 'Expected A9 numFmt to be "[Green]#,##0 ;[Red](#,##0)", was ' + ws.getCell("A9").numFmt);
+        assert(ws.getCell("E9").numFmt == "#0.000", 'Expected A9 numFmt to be "#0.000", was ' + ws.getCell("A9").numFmt);
+        assert(ws.getCell("F9").numFmt == "# ?/?%", 'Expected A9 numFmt to be "# ?/?%", was ' + ws.getCell("A9").numFmt);
+        
         assert(passed, "Something went wrong", "All tests passed!");
     });
 
