@@ -1,5 +1,6 @@
 var _ = require("underscore");
 var Excel = require("../excel");
+var Dimensions = require("../lib/dimensions");
 
 describe("Worksheet", function() {
     describe("Values", function() {
@@ -113,6 +114,32 @@ describe("Worksheet", function() {
             expect(ws.getCell("C2").type).toEqual(Excel.ValueType.Formula);
         });
         
+        it("adds columns", function() {
+            var wb = new Excel.Workbook()
+            var ws = wb.addWorksheet("blort");
+            
+            ws.columns = [
+                { key: "id", width: 10 },
+                { key: "name", width: 32 },
+                { key: "dob", width: 10 }
+            ];
+            
+            expect(ws.getColumn("id").number).toEqual(1);
+            expect(ws.getColumn("id").width).toEqual(10);
+            expect(ws.getColumn("A")).toBe(ws.getColumn("id"));
+            expect(ws.getColumn(1)).toBe(ws.getColumn("id"));
+            
+            expect(ws.getColumn("name").number).toEqual(2);
+            expect(ws.getColumn("name").width).toEqual(32);
+            expect(ws.getColumn("B")).toBe(ws.getColumn("name"));
+            expect(ws.getColumn(2)).toBe(ws.getColumn("name"));
+            
+            expect(ws.getColumn("dob").number).toEqual(3);
+            expect(ws.getColumn("dob").width).toEqual(10);
+            expect(ws.getColumn("C")).toBe(ws.getColumn("dob"));
+            expect(ws.getColumn(3)).toBe(ws.getColumn("dob"));
+        });
+        
         it("adds column headers", function() {
             var wb = new Excel.Workbook()
             var ws = wb.addWorksheet("blort");
@@ -127,6 +154,61 @@ describe("Worksheet", function() {
             expect(ws.getCell("B1").value).toEqual("Name");
             expect(ws.getCell("C1").value).toEqual("D.O.B.");
         });
+        
+        it("adds column headers by number", function() {
+            var wb = new Excel.Workbook()
+            var ws = wb.addWorksheet("blort");
+            
+            // by defn
+            ws.getColumn(1).defn = { key: "id", header: "Id", width: 10 };
+            
+            // by property
+            ws.getColumn(2).key = "name";
+            ws.getColumn(2).header = "Name";
+            ws.getColumn(2).width = 32;
+            
+            expect(ws.getCell("A1").value).toEqual("Id");
+            expect(ws.getCell("B1").value).toEqual("Name");
+            
+            expect(ws.getColumn("A").key).toEqual("id");
+            expect(ws.getColumn(1).key).toEqual("id");
+            expect(ws.getColumn(1).header).toEqual("Id");
+            expect(ws.getColumn(1).headers).toEqual(["Id"]);
+            expect(ws.getColumn(1).width).toEqual(10);
+            
+            expect(ws.getColumn(2).key).toEqual("name");
+            expect(ws.getColumn(2).header).toEqual("Name");
+            expect(ws.getColumn(2).headers).toEqual(["Name"]);
+            expect(ws.getColumn(2).width).toEqual(32);
+        });
+        
+        it("adds column headers by letter", function() {
+            var wb = new Excel.Workbook()
+            var ws = wb.addWorksheet("blort");
+            
+            // by defn
+            ws.getColumn("A").defn = { key: "id", header: "Id", width: 10 };
+            
+            // by property
+            ws.getColumn("B").key = "name";
+            ws.getColumn("B").header = "Name";
+            ws.getColumn("B").width = 32;
+            
+            expect(ws.getCell("A1").value).toEqual("Id");
+            expect(ws.getCell("B1").value).toEqual("Name");
+            
+            expect(ws.getColumn("A").key).toEqual("id");
+            expect(ws.getColumn(1).key).toEqual("id");
+            expect(ws.getColumn("A").header).toEqual("Id");
+            expect(ws.getColumn("A").headers).toEqual(["Id"]);
+            expect(ws.getColumn("A").width).toEqual(10);
+            
+            expect(ws.getColumn("B").key).toEqual("name");
+            expect(ws.getColumn("B").header).toEqual("Name");
+            expect(ws.getColumn("B").headers).toEqual(["Name"]);
+            expect(ws.getColumn("B").width).toEqual(32);
+        });
+        
         it("adds rows by object", function() {
             var wb = new Excel.Workbook()
             var ws = wb.addWorksheet("blort");
@@ -152,8 +234,21 @@ describe("Worksheet", function() {
             expect(ws.getCell("B3").value).toEqual("Jane Doe");
             expect(ws.getCell("C3").value).toEqual(dateValue2);
             
-            expect(ws.getRow(2)).toEqual([,1,"John Doe", dateValue1]);
-            expect(ws.getRow(3)).toEqual([,2,"Jane Doe", dateValue2]);
+            expect(ws.getRow(2).values).toEqual([,1,"John Doe", dateValue1]);
+            expect(ws.getRow(3).values).toEqual([,2,"Jane Doe", dateValue2]);
+            
+            var values = [
+                undefined,
+                [undefined, "Id", "Name", "D.O.B."],
+                [undefined, 1, "John Doe", dateValue1],
+                [undefined, 2, "Jane Doe", dateValue2]
+            ];
+            ws.eachRow(function(row, rowNumber) {
+                expect(row.values).toEqual(values[rowNumber]);
+                row.eachCell(function(cell, colNumber) {
+                    expect(cell.value).toEqual(values[rowNumber][colNumber]);
+                });
+            });
         });
         
         it("adds rows by contiguous array", function() {
@@ -174,9 +269,10 @@ describe("Worksheet", function() {
             expect(ws.getCell("B2").value).toEqual("Jane Doe");
             expect(ws.getCell("C2").value).toEqual(dateValue2);
             
-            expect(ws.getRow(1)).toEqual([,1,"John Doe", dateValue1]);
-            expect(ws.getRow(2)).toEqual([,2,"Jane Doe", dateValue2]);
+            expect(ws.getRow(1).values).toEqual([,1,"John Doe", dateValue1]);
+            expect(ws.getRow(2).values).toEqual([,2,"Jane Doe", dateValue2]);
         });
+        
         it("adds rows by sparse array", function() {
             var wb = new Excel.Workbook()
             var ws = wb.addWorksheet("blort");
@@ -210,12 +306,15 @@ describe("Worksheet", function() {
             expect(ws.getCell("C3").value).toEqual("Sam");
             expect(ws.getCell("E3").value).toEqual(dateValue1);
             
-            expect(ws.getRow(1)).toEqual(rows[1]);
-            expect(ws.getRow(2)).toEqual(rows[2]);
-            expect(ws.getRow(3)).toEqual(rows[3]);
+            expect(ws.getRow(1).values).toEqual(rows[1]);
+            expect(ws.getRow(2).values).toEqual(rows[2]);
+            expect(ws.getRow(3).values).toEqual(rows[3]);
             
-            ws.eachRow(function(number, row) {
-                expect(row).toEqual(rows[number]);
+            ws.eachRow(function(row, rowNumber) {
+                expect(row.values).toEqual(rows[rowNumber]);
+                row.eachCell(function(cell, colNumber) {
+                    expect(cell.value).toEqual(rows[rowNumber][colNumber]);
+                });
             });
         });
     });
@@ -242,6 +341,58 @@ describe("Worksheet", function() {
             expect(ws.getCell("B1").type).toEqual(Excel.ValueType.Merge);
             expect(ws.getCell("A2").type).toEqual(Excel.ValueType.Merge);
             expect(ws.getCell("B2").type).toEqual(Excel.ValueType.Merge);
+        });
+
+        it("merges and unmerges", function() {
+            var wb = new Excel.Workbook()
+            var ws = wb.addWorksheet("blort");
+            
+            var expectMaster = function(range, master) {
+                var d = new Dimensions(range);
+                for (var i = d.top; i <= d.bottom; i++) {
+                    for (var j = d.left; j <= d.right; j++) {
+                        var cell = ws.getCell(i,j);
+                        var masterCell = master ? ws.getCell(master) : cell;
+                        expect(cell.master.address).toEqual(masterCell.address);
+                    }
+                }
+            };
+            
+            // merge some cells, then unmerge them
+            ws.mergeCells("A1:B2");
+            expectMaster("A1:B2", "A1");
+            ws.unMergeCells("A1:B2");
+            expectMaster("A1:B2", null);
+            
+            // unmerge just one cell
+            ws.mergeCells("A1:B2");
+            expectMaster("A1:B2", "A1");
+            ws.unMergeCells("A1");
+            expectMaster("A1:B2", null);
+            
+            ws.mergeCells("A1:B2");
+            expectMaster("A1:B2", "A1");
+            ws.unMergeCells("B2");
+            expectMaster("A1:B2", null);
+            
+            // build 4 merge-squares
+            ws.mergeCells("A1:B2");
+            ws.mergeCells("D1:E2");
+            ws.mergeCells("A4:B5");
+            ws.mergeCells("D4:E5");
+            
+            expectMaster("A1:B2", "A1");
+            expectMaster("D1:E2", "D1");
+            expectMaster("A4:B5", "A4");
+            expectMaster("D4:E5", "D4");
+            
+            // unmerge the middle
+            ws.unMergeCells("B2:D4");
+            
+            expectMaster("A1:B2", null);
+            expectMaster("D1:E2", null);
+            expectMaster("A4:B5", null);
+            expectMaster("D4:E5", null);
         });
         
         it("does not allow overlapping merges", function() {

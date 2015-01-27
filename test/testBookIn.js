@@ -35,11 +35,16 @@ wb.xlsx.readFile(filename)
         assert(ws.getCell("C5").value.formula, "Expected C5 to be a formula, was " + JSON.stringify(ws.getCell("C5").value));
         
         assert(ws.getCell("A9").numFmt == "# ?/?", 'Expected A9 numFmt to be "# ?/?", was ' + ws.getCell("A9").numFmt);
-        assert(ws.getCell("B9").numFmt == "h:mm:ss", 'Expected A9 numFmt to be "h:mm:ss", was ' + ws.getCell("A9").numFmt);
-        assert(ws.getCell("C9").numFmt == "0.00%", 'Expected A9 numFmt to be "0.00%", was ' + ws.getCell("A9").numFmt);
-        assert(ws.getCell("D9").numFmt == "[Green]#,##0 ;[Red](#,##0)", 'Expected A9 numFmt to be "[Green]#,##0 ;[Red](#,##0)", was ' + ws.getCell("A9").numFmt);
-        assert(ws.getCell("E9").numFmt == "#0.000", 'Expected A9 numFmt to be "#0.000", was ' + ws.getCell("A9").numFmt);
-        assert(ws.getCell("F9").numFmt == "# ?/?%", 'Expected A9 numFmt to be "# ?/?%", was ' + ws.getCell("A9").numFmt);
+        assert(ws.getCell("B9").numFmt == "h:mm:ss", 'Expected B9 numFmt to be "h:mm:ss", was ' + ws.getCell("B9").numFmt);
+        assert(ws.getCell("C9").numFmt == "0.00%", 'Expected C9 numFmt to be "0.00%", was ' + ws.getCell("C9").numFmt);
+        assert(ws.getCell("D9").numFmt == "[Green]#,##0 ;[Red](#,##0)", 'Expected D9 numFmt to be "[Green]#,##0 ;[Red](#,##0)", was ' + ws.getCell("D9").numFmt);
+        assert(ws.getCell("E9").numFmt == "#0.000", 'Expected E9 numFmt to be "#0.000", was ' + ws.getCell("E9").numFmt);
+        assert(ws.getCell("F9").numFmt == "# ?/?%", 'Expected F9 numFmt to be "# ?/?%", was ' + ws.getCell("F9").numFmt);
+        
+        assert(ws.getCell("A10").value == "<", 'Expected A10 to be "<", was "' + ws.getCell("A10").value + '"');
+        assert(ws.getCell("B10").value == ">", 'Expected A10 to be ">", was "' + ws.getCell("B10").value + '"');
+        assert(ws.getCell("C10").value == "<a>", 'Expected A10 to be "<a>", was "' + ws.getCell("C10").value + '"');
+        assert(ws.getCell("D10").value == "><", 'Expected A10 to be "><", was "' + ws.getCell("D10").value + '"');
         
         assert(passed, "Something went wrong", "All tests passed!");
     });

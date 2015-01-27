@@ -64,6 +64,12 @@ ws.getCell("E9").numFmt = "#0.000";
 ws.getCell("F9").value = 0.016;
 ws.getCell("F9").numFmt = "# ?/?%";
 
+ws.getCell("A10").value = "<";
+ws.getCell("B10").value = ">";
+ws.getCell("C10").value = "<a>";
+ws.getCell("D10").value = "><";
+
+
 wb.xlsx.writeFile(filename)
     .then(function(){
         console.log("Done.");
