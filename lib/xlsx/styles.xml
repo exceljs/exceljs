@@ -9,8 +9,9 @@
         <%});%>
     </numFmts>
     <% } %>
-    <fonts count="1" x14ac:knownFonts="1">
-        <font><sz val="11"/><color theme="1"/><name val="Calibri"/><family val="2"/><scheme val="minor"/></font>
+    <fonts count="<%=fonts.length%>" x14ac:knownFonts="1">
+        <%_.each(fonts, function(font) {%><%=font.xml%>
+        <%})%>
     </fonts>
     <fills count="2">
         <fill><patternFill patternType="none"/></fill>

@@ -9,6 +9,9 @@ var filename = process.argv[2];
 var wb = new Workbook()
 var ws = wb.addWorksheet("blort");
 
+var arialBlackUI14 = { name: "Arial Black", family: 2, size: 14, underline: true, italic: true };
+var comicSansUdB16 = { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true };
+
 ws.columns = [
     { header: "Col 1", key:"key", width: 25 },
     { header: "Col 2", key:"name", width: 25 },
@@ -19,13 +22,16 @@ ws.columns = [
 
 ws.getCell("A2").value = 7;
 ws.getCell("B2").value = "Hello, World!";
+ws.getCell("B2").font = comicSansUdB16;
 
 ws.getCell("C2").value = -5.55;
 ws.getCell("C2").numFmt = "&quot;£&quot;#,##0.00;[Red]\-&quot;£&quot;#,##0.00";
+ws.getCell("C2").font = arialBlackUI14;
 
 ws.getCell("D2").value = 3.14;
 ws.getCell("D2").value = new Date();
-ws.getCell("D2").numFmt = "d-mmm-yyyy"
+ws.getCell("D2").numFmt = "d-mmm-yyyy";
+ws.getCell("D2").font = comicSansUdB16;
 
 ws.getCell("E2").value = ["Hello", "World"].join(", ") + "!";
 

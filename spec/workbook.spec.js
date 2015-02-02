@@ -6,6 +6,7 @@ describe("Workbook", function() {
     var testValues = {
         num: 7,
         str: "Hello, World!",
+        str2: '<a href="www.whatever.com">Talk to the H&</a>',
         date: new Date(),
         formulas: [
             {formula: "A1", result: 7},
@@ -25,6 +26,7 @@ describe("Workbook", function() {
         ws.getCell("D1").value = testValues.formulas[0];
         ws.getCell("E1").value = testValues.formulas[1];
         ws.getCell("F1").value = testValues.hyperlink;
+        ws.getCell("G1").value = testValues.str2;
 
         // merge cell square with numerical value
         ws.getCell("A2").value = 5;
@@ -58,6 +60,7 @@ describe("Workbook", function() {
         expect(ws.getCell("E1").type).toEqual(Excel.ValueType.Formula);
         expect(ws.getCell("F1").value).toEqual(testValues.hyperlink);
         expect(ws.getCell("F1").type).toEqual(Excel.ValueType.Hyperlink);
+        expect(ws.getCell("G1").value).toEqual(testValues.str2);
         
         // A2:B3
         expect(ws.getCell("A2").value).toEqual(5);
