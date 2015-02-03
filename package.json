@@ -1,6 +1,6 @@
 {
     "name": "exceljs",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Excel Workbook Manager",
     "private": false,
     "license": "MIT",

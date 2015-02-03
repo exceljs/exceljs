@@ -14,7 +14,13 @@ describe("Workbook", function() {
         ],
         hyperlink: {hyperlink: "http://www.link.com", text: "www.link.com"},
         numFmt1: "# ?/?",
-        numFmt2: "[Green]#,##0 ;[Red](#,##0)"
+        numFmt2: "[Green]#,##0 ;[Red](#,##0)",
+        numFmtDate: "dd, mmm yyyy"
+    };
+    var fonts = {
+        arialBlackUI14: { name: "Arial Black", family: 2, size: 14, underline: true, italic: true },
+        comicSansUdB16: { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true },
+        broadwayRedOutline20: { name: "Broadway", family: 5, size: 20, outline: true, color: { argb:"FFFF0000"}}
     };
     var createTestBook = function() {
         var wb = new Excel.Workbook()
@@ -27,7 +33,7 @@ describe("Workbook", function() {
         ws.getCell("E1").value = testValues.formulas[1];
         ws.getCell("F1").value = testValues.hyperlink;
         ws.getCell("G1").value = testValues.str2;
-
+        
         // merge cell square with numerical value
         ws.getCell("A2").value = 5;
         ws.mergeCells("A2:B3");
@@ -40,8 +46,37 @@ describe("Workbook", function() {
         ws.getCell("B4").value = 1.5;
         ws.getCell("B4").numFmt = testValues.numFmt2;
         
+        // test fonts and formats
+        ws.getCell("A5").value = testValues.str;
+        ws.getCell("A5").font = fonts.arialBlackUI14;
+        ws.getCell("B5").value = testValues.str;
+        ws.getCell("B5").font = fonts.broadwayRedOutline20;
+        ws.getCell("C5").value = testValues.str;
+        ws.getCell("C5").font = fonts.comicSansUdB16;
+        
+        ws.getCell("D5").value = 1.6;
+        ws.getCell("D5").numFmt = testValues.numFmt1;
+        ws.getCell("D5").font = fonts.arialBlackUI14;
+        
+        ws.getCell("E5").value = 1.6;
+        ws.getCell("E5").numFmt = testValues.numFmt2;
+        ws.getCell("E5").font = fonts.broadwayRedOutline20;
+        
+        ws.getCell("F5").value = testValues.date;
+        ws.getCell("F5").numFmt = testValues.numFmtDate;
+        ws.getCell("F5").font = fonts.comicSansUdB16;
+        
         return wb;
     }
+    var checkFont = function(cell, font) {
+        expect(cell.font).toBeDefined();
+        _.each(font, function(item, name) {
+            expect(cell.font[name]).toEqual(font[name]);
+        });
+        _.each(value, function(item, name) {
+            expect(font[name]).not.toBeDefined();
+        });
+    };
     var checkTestBook = function(wb) {
         expect(wb).toBeDefined();
         
@@ -97,7 +132,36 @@ describe("Workbook", function() {
         expect(ws.getCell("D3").master).toBe(ws.getCell("C2"));
         
         expect(ws.getCell("A4").numFmt).toEqual(testValues.numFmt1);
+        expect(ws.getCell("A4").type).toEqual(Excel.ValueType.Number);
         expect(ws.getCell("B4").numFmt).toEqual(testValues.numFmt2);
+        expect(ws.getCell("B4").type).toEqual(Excel.ValueType.Number);
+        
+        // test fonts and formats
+        expect(ws.getCell("A5").value).toEqual(testValues.str);
+        expect(ws.getCell("A5").type).toEqual(Excel.ValueType.String);
+        expect(ws.getCell("A5").font).toEqual(fonts.arialBlackUI14);
+        expect(ws.getCell("B5").value).toEqual(testValues.str);
+        expect(ws.getCell("B5").type).toEqual(Excel.ValueType.String);
+        expect(ws.getCell("B5").font).toEqual(fonts.broadwayRedOutline20);
+        expect(ws.getCell("C5").value).toEqual(testValues.str);
+        expect(ws.getCell("C5").type).toEqual(Excel.ValueType.String);
+        expect(ws.getCell("C5").font).toEqual(fonts.comicSansUdB16);
+        
+        expect(Math.abs(ws.getCell("D5").value - 1.6)).toBeLessThan(0.00000001);
+        expect(ws.getCell("D5").type).toEqual(Excel.ValueType.Number);
+        expect(ws.getCell("D5").numFmt).toEqual(testValues.numFmt1);
+        expect(ws.getCell("D5").font).toEqual(fonts.arialBlackUI14);
+        
+        expect(Math.abs(ws.getCell("E5").value - 1.6)).toBeLessThan(0.00000001);
+        expect(ws.getCell("E5").type).toEqual(Excel.ValueType.Number);
+        expect(ws.getCell("E5").numFmt).toEqual(testValues.numFmt2);
+        expect(ws.getCell("E5").font).toEqual(fonts.broadwayRedOutline20);
+        
+        expect(Math.abs(ws.getCell("F5").value.getTime() - testValues.date.getTime())).toBeLessThan(3);
+        expect(ws.getCell("F5").type).toEqual(Excel.ValueType.Date);
+        expect(ws.getCell("F5").numFmt).toEqual(testValues.numFmtDate);
+        expect(ws.getCell("F5").font).toEqual(fonts.comicSansUdB16);
+        
     }
     
     it("creates sheets with correct names", function() {

@@ -9,34 +9,40 @@
                         {
                             "address": "A1",
                             "type": 2,
-                            "value": 7
+                            "value": 7,
+                            "styles": {}
                         },
                         {
                             "address": "B1",
                             "type": 3,
-                            "value": "Hello, World!"
+                            "value": "Hello, World!",
+                            "styles": {}
                         },
                         {
                             "address": "C1",
                             "type": 3,
-                            "value": "2014-12-05T22:25:12.871Z"
+                            "value": "2014-12-05T22:25:12.871Z",
+                            "styles": {}
                         },
                         {
                             "address": "D1",
                             "type": 6,
                             "formula": "A1",
-                            "result": 7
+                            "result": 7,
+                            "styles": {}
                         },
                         {
                             "address": "E1",
                             "type": 6,
-                            "formula": "A2"
+                            "formula": "A2",
+                            "styles": {}
                         },
                         {
                             "address": "F1",
                             "type": 5,
                             "text": "www.link.com",
-                            "hyperlink": "http://www.link.com"
+                            "hyperlink": "http://www.link.com",
+                            "styles": {}
                         }
                     ],
                     "number": 1,
@@ -48,21 +54,25 @@
                         {
                             "address": "A2",
                             "type": 2,
-                            "value": 5
+                            "value": 5,
+                            "styles": {}
                         },
                         {
                             "address": "B2",
                             "type": 1,
-                            "master": "A2"
+                            "master": "A2",
+                            "styles": {}
                         },
                         {
                             "address": "C2",
-                            "type": 0
+                            "type": 0,
+                            "styles": {}
                         },
                         {
                             "address": "D2",
                             "type": 1,
-                            "master": "C2"
+                            "master": "C2",
+                            "styles": {}
                         }
                     ],
                     "number": 2,
@@ -74,22 +84,26 @@
                         {
                             "address": "A3",
                             "type": 1,
-                            "master": "A2"
+                            "master": "A2",
+                            "styles": {}
                         },
                         {
                             "address": "B3",
                             "type": 1,
-                            "master": "A2"
+                            "master": "A2",
+                            "styles": {}
                         },
                         {
                             "address": "C3",
                             "type": 1,
-                            "master": "C2"
+                            "master": "C2",
+                            "styles": {}
                         },
                         {
                             "address": "D3",
                             "type": 1,
-                            "master": "C2"
+                            "master": "C2",
+                            "styles": {}
                         }
                     ],
                     "number": 3,
