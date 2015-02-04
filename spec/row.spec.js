@@ -127,9 +127,9 @@ describe("Row", function() {
         
         expect(row1.model).toEqual({
             cells:[
-                {address:"A1",type:Enums.ValueType.Number,value:5,styles:{}},
-                {address:"B1",type:Enums.ValueType.String,value:"Hello, World!",styles:{}},
-                {address:"D1",type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com",styles:{}}
+                {address:"A1",type:Enums.ValueType.Number,value:5,style:{}},
+                {address:"B1",type:Enums.ValueType.String,value:"Hello, World!",style:{}},
+                {address:"D1",type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com",style:{}}
             ],
             number: 1,
             min: 1,

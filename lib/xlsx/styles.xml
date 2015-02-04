@@ -5,7 +5,7 @@
         mc:Ignorable="x14ac"
         xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
     <% if (numFmts.length) { %><numFmts count="<%=numFmts.length%>">
-        <%_.each(numFmts, function(nf) {%><numFmt numFmtId="<%=nf.numFmtId%>" formatCode="<%=nf.formatCode%>"/>
+        <%_.each(numFmts, function(nf) {%><%=nf.xml%>
         <%});%>
     </numFmts>
     <% } %>

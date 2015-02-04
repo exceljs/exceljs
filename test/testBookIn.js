@@ -46,6 +46,7 @@ wb.xlsx.readFile(filename)
         assertFont(ws.getCell("B2").font, comicSansUdB16, "B2");
         
         assert(Math.abs(ws.getCell("C2").value + 5.55) < 0.000001, "Expected C2 == -5.55, was" + ws.getCell("C2").value);
+        assert(ws.getCell("C2").numFmt == '"£"#,##0.00;[Red]\-"£"#,##0.00', 'Expected C2 numFmt to be "£"#,##0.00;[Red]\-"£"#,##0.00, was ' + ws.getCell("C2").numFmt);
         assertFont(ws.getCell("C2").font, arialBlackUI14, "C2");
         
         assert(ws.getCell("D2").value instanceof Date, "expected D2 to be a Date, was " + ws.getCell("D2").value);

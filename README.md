@@ -12,18 +12,18 @@ npm install exceljs
 
 <ul>
     <li>Bug Fixes
-        <ul><li>"&lt;" and "&gt;" text characters properly rendered in xlsx</li></ul>
+        <ul>
+            <li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li>
+            <li>Better date format code recognition</li>
+        </ul>
     </li>
-    <li><a href="#columns">Better Column control</a></li>
-    <li><a href="#rows">Better Row control</a></li>
-    <li><a href="#interface-changes">Some breaking interface changes</a> were required in the version. Follow link to learn more.</li>
+    <li><a href="#fonts">Cell Font Style</a></li>
 </ul>
 
 # Coming Soon
 
 <ul>
     <li>Column and Row Styles</li>
-    <li>Fonts</li>
     <li>Fills</li>
     <li>Borders</li>
 </ul>
@@ -42,6 +42,7 @@ npm install exceljs
             <li><a href="#handling-individual-cells">Handling Individual Cells</a>
             <li><a href="#merged-cells">Merged Cells</a>
             <li><a href="#number-formats">Number Formats</a>
+            <li><a href="#fonts">Fonts</a>
             <li><a href="#reading-xlsx">Reading XLSX</a>
             <li><a href="#writing-xlsx">Writing XLSX</a>
         </ul>
@@ -87,6 +88,8 @@ var worksheet = workbook.getWorksheet(1);
 
 ```javascript
 // Add column headers and define column keys and widths
+// Note: these column structures are a workbook-building convenience only,
+// apart from the column width, they will not be fully persisted.
 worksheet.columns = [
     { header: "Id", key: "id", width: 10 },
     { header: "Name", key: "name", width: 32 },
@@ -97,7 +100,7 @@ worksheet.columns = [
 var idCol = worksheet.getColumn("id");
 var nameCol = worksheet.getColumn("B");
 var dobCol = worksheet.getColumn(3);
-
+    
 // set column properties
 dobCol.header = "Date of Birth"; // Note: will overwrite cell value C1
 dobCol.header = ["Date of Birth", "A.K.A. D.O.B."]; // Note: this will overwrite cell values C1:C2
@@ -205,6 +208,53 @@ ws.getCell("A1").numFmt = "# ?/?";
 ws.getCell("B1").value = 0.016;
 ws.getCell("B1").numFmt = "0.00%";
 ```
+
+## Fonts
+
+```javascript
+
+// for the wannabe graphic designers out there
+ws.getCell("A1").font = {
+    name: "Comic Sans MS",
+    family: 4,
+    size: 16,
+    underline: true,
+    bold: true
+};
+
+// for the graduate graphic designers...
+ws.getCell("A2").font = {
+    name: "Arial Black",
+    color: { argb: "FF00FF00" },
+    family: 2,
+    size: 14,
+    italic: true
+};
+
+// note: the cell will store a reference to the font object assigned.
+// If the font object is changed afterwards, the cell font will change also...
+var font = { name: "Arial", size: 12 };
+ws.getCell("A3").font = font;
+font.size = 20; // Cell A3 now has font size 20!
+
+// Cells that share similar fonts may reference the same font object after
+// the workbook is read from file or stream
+
+```
+
+| Font Property             | Description       | Example Value(s) |
+| ------------------------- | ----------------- | ---------------- |
+| name | Font name. | "Arial", "Calibri", etc. |
+| family | Font family. An integer value. | 1,2,3, etc. |
+| scheme | Font scheme. | "minor", "major", "none" |
+| charset | Font charset. An integer value. | 1, 2, etc. |
+| color | Colour description, an object containing an ARGB value. | { argb: "FFFF0000"} |
+| bold | Font **weight** | true, false |
+| italic | Font *slope* | true, false |
+| underline | Font underline style | true, false, "none", "single", "double", "singleAccounting", "doubleAccounting" |
+| strike | Font ~~strikethrough~~ | true, false |
+| outline | Font outline | true, false |
+
 
 ## Reading XLSX
 

@@ -10,39 +10,39 @@
                             "address": "A1",
                             "type": 2,
                             "value": 7,
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "B1",
                             "type": 3,
                             "value": "Hello, World!",
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "C1",
                             "type": 3,
                             "value": "2014-12-05T22:25:12.871Z",
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "D1",
                             "type": 6,
                             "formula": "A1",
                             "result": 7,
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "E1",
                             "type": 6,
                             "formula": "A2",
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "F1",
                             "type": 5,
                             "text": "www.link.com",
                             "hyperlink": "http://www.link.com",
-                            "styles": {}
+                            "style": {}
                         }
                     ],
                     "number": 1,
@@ -55,24 +55,24 @@
                             "address": "A2",
                             "type": 2,
                             "value": 5,
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "B2",
                             "type": 1,
                             "master": "A2",
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "C2",
                             "type": 0,
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "D2",
                             "type": 1,
                             "master": "C2",
-                            "styles": {}
+                            "style": {}
                         }
                     ],
                     "number": 2,
@@ -85,25 +85,25 @@
                             "address": "A3",
                             "type": 1,
                             "master": "A2",
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "B3",
                             "type": 1,
                             "master": "A2",
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "C3",
                             "type": 1,
                             "master": "C2",
-                            "styles": {}
+                            "style": {}
                         },
                         {
                             "address": "D3",
                             "type": 1,
                             "master": "C2",
-                            "styles": {}
+                            "style": {}
                         }
                     ],
                     "number": 3,

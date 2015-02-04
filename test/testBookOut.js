@@ -25,7 +25,7 @@ ws.getCell("B2").value = "Hello, World!";
 ws.getCell("B2").font = comicSansUdB16;
 
 ws.getCell("C2").value = -5.55;
-ws.getCell("C2").numFmt = "&quot;£&quot;#,##0.00;[Red]\-&quot;£&quot;#,##0.00";
+ws.getCell("C2").numFmt = '"£"#,##0.00;[Red]\-"£"#,##0.00';
 ws.getCell("C2").font = arialBlackUI14;
 
 ws.getCell("D2").value = 3.14;
