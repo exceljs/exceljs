@@ -308,7 +308,7 @@ The following value types are supported.
 | ------- | ------- |
 | 0.0.9 | <ul><li><a href="#number-formats">Number Formats</a></li></ul> |
 | 0.1.0 | <ul><li>Bug Fixes<ul><li>"&lt;" and "&gt;" text characters properly rendered in xlsx</li></ul></li><li><a href="#columns">Better Column control</a></li><li><a href="#rows">Better Row control</a></li></ul> |
-
+| 0.1.1 | <ul><li>Bug Fixes<ul><li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li><li>Better date format code recognition</li></ul></li><li><a href="#fonts">Cell Font Style</a></li></ul> |
 
 # Interface Changes
 
@@ -325,3 +325,9 @@ The arguments in the callback function to Worksheet.eachRow have been swapped an
 This function has changed from returning a sparse array of cell values to returning a Row object. This enables accessing row properties and will facilitate managing row styles and so on.
 
 The sparse array of cell values is still available via Worksheet.getRow(rowNumber).values;
+
+## Interface Breaks in 0.1.1
+
+### cell.model
+
+cell.styles renamed to cell.style
