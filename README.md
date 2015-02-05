@@ -15,6 +15,7 @@ npm install exceljs
         <ul>
             <li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li>
             <li>Better date format code recognition</li>
+            <li>Fixed potential race condition on zip write</li>
         </ul>
     </li>
     <li><a href="#fonts">Cell Font Style</a></li>
@@ -309,6 +310,7 @@ The following value types are supported.
 | 0.0.9 | <ul><li><a href="#number-formats">Number Formats</a></li></ul> |
 | 0.1.0 | <ul><li>Bug Fixes<ul><li>"&lt;" and "&gt;" text characters properly rendered in xlsx</li></ul></li><li><a href="#columns">Better Column control</a></li><li><a href="#rows">Better Row control</a></li></ul> |
 | 0.1.1 | <ul><li>Bug Fixes<ul><li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li><li>Better date format code recognition</li></ul></li><li><a href="#fonts">Cell Font Style</a></li></ul> |
+| 0.1.2 | <ul><li>Fixed potential race condition on zip write</li></ul> |
 
 # Interface Changes
 
