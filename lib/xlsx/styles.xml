@@ -23,8 +23,8 @@
     <cellStyleXfs count="1">
         <xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>
     </cellStyleXfs>
-    <cellXfs count="<%=cellXfs.length%>">
-        <%_.each(cellXfs, function(xf) {%><xf numFmtId="<%=xf.numFmtId%>" fontId="<%=xf.fontId%>" fillId="<%=xf.fillId%>" borderId="<%=xf.borderId%>" xfId="<%=xf.xfId%>"/>
+    <cellXfs count="<%=styles.length%>">
+        <%_.each(styles, function(style) {%><%=style.xml%>
         <%});%>
     </cellXfs>
     <cellStyles count="1">

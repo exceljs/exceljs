@@ -5,8 +5,10 @@ var Excel = require("../excel");
 
 var main = module.exports = {
     cloneByModel: function(thing1, type) {
+        var model = thing1.model;
+        //console.log(JSON.stringify(model, null, "    "))
         var thing2 = new type();
-        thing2.model = thing1.model;
+        thing2.model = model;
         return Promise.resolve(thing2);
     },
     cloneByStream: function(thing1, type, end) {

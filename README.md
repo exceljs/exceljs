@@ -11,14 +11,9 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li>Bug Fixes
-        <ul>
-            <li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li>
-            <li>Better date format code recognition</li>
-            <li>Fixed potential race condition on zip write</li>
-        </ul>
-    </li>
-    <li><a href="#fonts">Cell Font Style</a></li>
+    <li><a href="#alignment">Cell Alignment Style</a></li>
+    <li><a href="#rows">Row Height</a></li>
+    <li>Some Internal Restructuring</li>
 </ul>
 
 # Coming Soon
@@ -127,8 +122,10 @@ rowValues[9] = new Date();
 worksheet.addRow(rowValues);
 
 // Get a row object. If it doesn't already exist, a new empty one will be returned
-// Note: interface change - this used to return a sparse array, now returns row object
 var row = worksheet.getRow(5);
+
+// Set a specific row height
+row.height = 42.5;
 
 row.getCell(1).value = 5; // A5's value set to 5
 row.getCell("name").value = "Zeb"; // B5's value set to "Zeb" - assuming column 2 is still keyed by name
@@ -198,7 +195,9 @@ expect(worksheet.getCell("A4").value).toBe(worksheet.getCell("B5").value);
 expect(worksheet.getCell("A4")).toBe(worksheet.getCell("B5").master);
 ```
 
-## Number Formats
+## Cell Styles
+
+### Number Formats
 
 ```javascript
 // display value as "1 3/5"
@@ -210,7 +209,7 @@ ws.getCell("B1").value = 0.016;
 ws.getCell("B1").numFmt = "0.00%";
 ```
 
-## Fonts
+### Fonts
 
 ```javascript
 
@@ -256,6 +255,28 @@ font.size = 20; // Cell A3 now has font size 20!
 | strike | Font ~~strikethrough~~ | true, false |
 | outline | Font outline | true, false |
 
+### Alignment
+
+```javascript
+// set cell alignment to top-left, middle-center, bottom-right
+ws.getCell("A1").alignment = { vertical: "top", horizontal: "left" };
+ws.getCell("B1").alignment = { vertical: "middle", horizontal: "center" };
+ws.getCell("C1").alignment = { vertical: "bottom", horizontal: "right" };
+
+// set cell to wrap-text
+ws.getCell("D1").alignment = { wrapText: true };
+
+// set cell indent to 1
+ws.getCell("E1").alignment = { indent: 1 };
+
+// set cell text rotation to 30deg upwards, 45deg downwards and vertical text
+ws.getCell("F1").alignment = { textRotation: 30 };
+ws.getCell("G1").alignment = { textRotation: -45 };
+ws.getCell("H1").alignment = { textRotation: "vertical" };
+
+```
+
+Note: valid text rotation values range from -90 to +90 or "vertical". Any values outside this range will be ignored.
 
 ## Reading XLSX
 
@@ -311,6 +332,7 @@ The following value types are supported.
 | 0.1.0 | <ul><li>Bug Fixes<ul><li>"&lt;" and "&gt;" text characters properly rendered in xlsx</li></ul></li><li><a href="#columns">Better Column control</a></li><li><a href="#rows">Better Row control</a></li></ul> |
 | 0.1.1 | <ul><li>Bug Fixes<ul><li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li><li>Better date format code recognition</li></ul></li><li><a href="#fonts">Cell Font Style</a></li></ul> |
 | 0.1.2 | <ul><li>Fixed potential race condition on zip write</li></ul> |
+| 0.1.3 | <ul><li><a href="#alignment">Cell Alignment Style</a></li><li><a href="#rows">Row Height</a></li><li>Some Internal Restructuring</li></ul> |
 
 # Interface Changes
 

@@ -11,6 +11,34 @@ var wb = new Excel.Workbook();
 var arialBlackUI14 = { name: "Arial Black", family: 2, size: 14, underline: true, italic: true };
 var comicSansUdB16 = { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true };
 
+var alignments = [
+    { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
+    { text: "Middle Centre", alignment: { horizontal: "center", vertical: "middle" } },
+    { text: "Bottom Right", alignment: { horizontal: "right", vertical: "bottom" } },
+    { text: "Wrap Text", alignment: { wrapText: true } },
+    { text: "Indent 1", alignment: { indent: 1 } },
+    { text: "Indent 2", alignment: { indent: 2 } },
+    { text: "Rotate 15", alignment: { horizontal: "right", vertical: "bottom", textRotation: 15 } },
+    { text: "Rotate 30", alignment: { horizontal: "right", vertical: "bottom", textRotation: 30 } },
+    { text: "Rotate 45", alignment: { horizontal: "right", vertical: "bottom", textRotation: 45 } },
+    { text: "Rotate 60", alignment: { horizontal: "right", vertical: "bottom", textRotation: 60 } },
+    { text: "Rotate 75", alignment: { horizontal: "right", vertical: "bottom", textRotation: 75 } },
+    { text: "Rotate 90", alignment: { horizontal: "right", vertical: "bottom", textRotation: 90 } },
+    { text: "Rotate -15", alignment: { horizontal: "right", vertical: "bottom", textRotation: -55 } },
+    { text: "Rotate -30", alignment: { horizontal: "right", vertical: "bottom", textRotation: -30 } },
+    { text: "Rotate -45", alignment: { horizontal: "right", vertical: "bottom", textRotation: -45 } },
+    { text: "Rotate -60", alignment: { horizontal: "right", vertical: "bottom", textRotation: -60 } },
+    { text: "Rotate -75", alignment: { horizontal: "right", vertical: "bottom", textRotation: -75 } },
+    { text: "Rotate -90", alignment: { horizontal: "right", vertical: "bottom", textRotation: -90 } },
+    { text: "Vertical Text", alignment: { horizontal: "right", vertical: "bottom", textRotation: "vertical" } }
+];
+var badAlignments = [
+    { text: "Rotate -91", alignment: { textRotation: -91 } },
+    { text: "Rotate 91", alignment: { textRotation: 91 } },
+    { text: "Indent -1", alignment: { indent: -1 } },
+    { text: "Blank", alignment: {  } }
+];
+
 var passed = true;
 var assert = function(value, failMessage, passMessage) {
     if (!value) {
@@ -64,6 +92,16 @@ wb.xlsx.readFile(filename)
         assert(ws.getCell("B10").value == ">", 'Expected A10 to be ">", was "' + ws.getCell("B10").value + '"');
         assert(ws.getCell("C10").value == "<a>", 'Expected A10 to be "<a>", was "' + ws.getCell("C10").value + '"');
         assert(ws.getCell("D10").value == "><", 'Expected A10 to be "><", was "' + ws.getCell("D10").value + '"');
+        
+        assert(ws.getRow(11).height == 40, 'Expected Row 11 to be height 40, was ' + ws.getRow(11).height);
+        _.each(alignments, function(alignment, index) {
+            var rowNumber = 11;
+            var colNumber = index + 1;
+            var cell = ws.getCell(rowNumber, colNumber);
+            assert(cell.value == alignment.text, 'Expected Cell[' + rowNumber + ',' + colNumber + '] to be ' + alignment.text + ', was ' + cell.value);
+            assert(cell.alignment == alignment.alignment, 'Expected Cell[' + rowNumber + ',' + colNumber + '] alignment to be ' + JSON.stringify(alignment.alignment) + ', was ' + JSON.stringify(cell.alignment));
+        });
+        
         
         assert(passed, "Something went wrong", "All tests passed!");
     });

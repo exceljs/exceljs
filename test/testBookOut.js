@@ -12,6 +12,35 @@ var ws = wb.addWorksheet("blort");
 var arialBlackUI14 = { name: "Arial Black", family: 2, size: 14, underline: true, italic: true };
 var comicSansUdB16 = { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true };
 
+var alignments = [
+    { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
+    { text: "Middle Centre", alignment: { horizontal: "center", vertical: "middle" } },
+    { text: "Bottom Right", alignment: { horizontal: "right", vertical: "bottom" } },
+    { text: "Wrap Text", alignment: { wrapText: true } },
+    { text: "Indent 1", alignment: { indent: 1 } },
+    { text: "Indent 2", alignment: { indent: 2 } },
+    { text: "Rotate 15", alignment: { horizontal: "right", vertical: "bottom", textRotation: 15 } },
+    { text: "Rotate 30", alignment: { horizontal: "right", vertical: "bottom", textRotation: 30 } },
+    { text: "Rotate 45", alignment: { horizontal: "right", vertical: "bottom", textRotation: 45 } },
+    { text: "Rotate 60", alignment: { horizontal: "right", vertical: "bottom", textRotation: 60 } },
+    { text: "Rotate 75", alignment: { horizontal: "right", vertical: "bottom", textRotation: 75 } },
+    { text: "Rotate 90", alignment: { horizontal: "right", vertical: "bottom", textRotation: 90 } },
+    { text: "Rotate -15", alignment: { horizontal: "right", vertical: "bottom", textRotation: -55 } },
+    { text: "Rotate -30", alignment: { horizontal: "right", vertical: "bottom", textRotation: -30 } },
+    { text: "Rotate -45", alignment: { horizontal: "right", vertical: "bottom", textRotation: -45 } },
+    { text: "Rotate -60", alignment: { horizontal: "right", vertical: "bottom", textRotation: -60 } },
+    { text: "Rotate -75", alignment: { horizontal: "right", vertical: "bottom", textRotation: -75 } },
+    { text: "Rotate -90", alignment: { horizontal: "right", vertical: "bottom", textRotation: -90 } },
+    { text: "Vertical Text", alignment: { horizontal: "right", vertical: "bottom", textRotation: "vertical" } }
+];
+var badAlignments = [
+    { text: "Rotate -91", alignment: { textRotation: -91 } },
+    { text: "Rotate 91", alignment: { textRotation: 91 } },
+    { text: "Indent -1", alignment: { indent: -1 } },
+    { text: "Blank", alignment: {  } }
+];
+
+
 ws.columns = [
     { header: "Col 1", key:"key", width: 25 },
     { header: "Col 2", key:"name", width: 25 },
@@ -75,6 +104,15 @@ ws.getCell("B10").value = ">";
 ws.getCell("C10").value = "<a>";
 ws.getCell("D10").value = "><";
 
+ws.getRow(11).height = 40;
+_.each(alignments, function(alignment, index) {
+    var rowNumber = 11;
+    var colNumber = index + 1;
+    var cell = ws.getCell(rowNumber, colNumber);
+    cell.value = alignment.text;
+    cell.alignment = alignment.alignment;
+});
+        
 
 wb.xlsx.writeFile(filename)
     .then(function(){

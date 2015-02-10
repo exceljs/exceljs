@@ -1,4 +1,5 @@
 var fs = require("fs");
+var _ = require("underscore");
 var Excel = require("../excel");
 var utils = require("./testutils");
 
@@ -22,7 +23,34 @@ describe("Workbook", function() {
         comicSansUdB16: { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true },
         broadwayRedOutline20: { name: "Broadway", family: 5, size: 20, outline: true, color: { argb:"FFFF0000"}}
     };
-    var createTestBook = function() {
+    var alignments = [
+        { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
+        { text: "Middle Centre", alignment: { horizontal: "center", vertical: "middle" } },
+        { text: "Bottom Right", alignment: { horizontal: "right", vertical: "bottom" } },
+        { text: "Wrap Text", alignment: { wrapText: true } },
+        { text: "Indent 1", alignment: { indent: 1 } },
+        { text: "Indent 2", alignment: { indent: 2 } },
+        { text: "Rotate 15", alignment: { horizontal: "right", vertical: "bottom", textRotation: 15 } },
+        { text: "Rotate 30", alignment: { horizontal: "right", vertical: "bottom", textRotation: 30 } },
+        { text: "Rotate 45", alignment: { horizontal: "right", vertical: "bottom", textRotation: 45 } },
+        { text: "Rotate 60", alignment: { horizontal: "right", vertical: "bottom", textRotation: 60 } },
+        { text: "Rotate 75", alignment: { horizontal: "right", vertical: "bottom", textRotation: 75 } },
+        { text: "Rotate 90", alignment: { horizontal: "right", vertical: "bottom", textRotation: 90 } },
+        { text: "Rotate -15", alignment: { horizontal: "right", vertical: "bottom", textRotation: -55 } },
+        { text: "Rotate -30", alignment: { horizontal: "right", vertical: "bottom", textRotation: -30 } },
+        { text: "Rotate -45", alignment: { horizontal: "right", vertical: "bottom", textRotation: -45 } },
+        { text: "Rotate -60", alignment: { horizontal: "right", vertical: "bottom", textRotation: -60 } },
+        { text: "Rotate -75", alignment: { horizontal: "right", vertical: "bottom", textRotation: -75 } },
+        { text: "Rotate -90", alignment: { horizontal: "right", vertical: "bottom", textRotation: -90 } },
+        { text: "Vertical Text", alignment: { horizontal: "right", vertical: "bottom", textRotation: "vertical" } }
+    ];
+    var badAlignments = [
+        { text: "Rotate -91", alignment: { textRotation: -91 } },
+        { text: "Rotate 91", alignment: { textRotation: 91 } },
+        { text: "Indent -1", alignment: { indent: -1 } },
+        { text: "Blank", alignment: {  } }
+    ];
+    var createTestBook = function(checkBadAlignments) {
         var wb = new Excel.Workbook()
         var ws = wb.addWorksheet("blort");
         
@@ -66,6 +94,25 @@ describe("Workbook", function() {
         ws.getCell("F5").numFmt = testValues.numFmtDate;
         ws.getCell("F5").font = fonts.comicSansUdB16;
         
+        ws.getRow(6).height = 42;
+        _.each(alignments, function(alignment, index) {
+            var rowNumber = 6;
+            var colNumber = index + 1;
+            var cell = ws.getCell(rowNumber, colNumber);
+            cell.value = alignment.text;
+            cell.alignment = alignment.alignment;
+        });
+        
+        if (checkBadAlignments) {
+            _.each(badAlignments, function(alignment, index) {
+                var rowNumber = 7;
+                var colNumber = index + 1;
+                var cell = ws.getCell(rowNumber, colNumber);
+                cell.value = alignment.text;
+                cell.alignment = alignment.alignment;
+            });
+        }
+        
         return wb;
     }
     var checkFont = function(cell, font) {
@@ -77,7 +124,7 @@ describe("Workbook", function() {
             expect(font[name]).not.toBeDefined();
         });
     };
-    var checkTestBook = function(wb) {
+    var checkTestBook = function(wb, checkBadAlignments) {
         expect(wb).toBeDefined();
         
         var ws = wb.getWorksheet("blort");
@@ -162,6 +209,25 @@ describe("Workbook", function() {
         expect(ws.getCell("F5").numFmt).toEqual(testValues.numFmtDate);
         expect(ws.getCell("F5").font).toEqual(fonts.comicSansUdB16);
         
+        expect(ws.getRow(5).height).not.toBeDefined();
+        expect(ws.getRow(6).height).toEqual(42);
+        _.each(alignments, function(alignment, index) {
+            var rowNumber = 6
+            var colNumber = index + 1;
+            var cell = ws.getCell(rowNumber, colNumber);
+            expect(cell.value).toEqual(alignment.text);
+            expect(cell.alignment).toEqual(alignment.alignment);
+        });
+        
+        if (checkBadAlignments) {
+            _.each(badAlignments, function(alignment, index) {
+                var rowNumber = 7;
+                var colNumber = index + 1;
+                var cell = ws.getCell(rowNumber, colNumber);
+                expect(cell.value).toEqual(alignment.text);
+                expect(cell.alignment).not.toBeDefined();
+            });
+        }
     }
     
     it("creates sheets with correct names", function() {
@@ -191,7 +257,7 @@ describe("Workbook", function() {
     
     it("serializes and deserializes to file properly", function(done) {
         
-        var wb = createTestBook();
+        var wb = createTestBook(true);
         //fs.writeFileSync("./testmodel.json", JSON.stringify(wb.model, null, "    "));
         
         wb.xlsx.writeFile("./wb.test.xlsx")
@@ -200,7 +266,7 @@ describe("Workbook", function() {
                 return wb2.xlsx.readFile("./wb.test.xlsx");
             })
             .then(function(wb2) {
-                checkTestBook(wb2);
+                checkTestBook(wb2, true);
             })
             .finally(function() {
                 fs.unlink("./wb.test.xlsx", function(error) {

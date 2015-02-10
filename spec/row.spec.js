@@ -124,6 +124,7 @@ describe("Row", function() {
         row1.getCell(2).value = "Hello, World!";
         row1.getCell(4).value = { hyperlink:"http://www.hyperlink.com", text: "www.hyperlink.com" };
         row1.getCell(5).value = null;
+        row1.height = 50;
         
         expect(row1.model).toEqual({
             cells:[
@@ -133,7 +134,8 @@ describe("Row", function() {
             ],
             number: 1,
             min: 1,
-            max: 4
+            max: 4,
+            height: 50
         });
         
         var row2 = sheet.getRow(2);
@@ -151,7 +153,8 @@ describe("Row", function() {
             ],
             number: 1,
             min: 1,
-            max: 4
+            max: 4,
+            height: 32.5
         };
         
         expect(row1.dimensions).toEqual({min:1,max:4});
@@ -163,5 +166,6 @@ describe("Row", function() {
         expect(row1.getCell(4).type).toEqual(Enums.ValueType.Hyperlink);
         expect(row1.getCell(4).value).toEqual({hyperlink:"http://www.hyperlink.com", text: "www.hyperlink.com"});
         expect(row1.getCell(5).type).toEqual(Enums.ValueType.Null);
+        expect(row1.height - 32.5).toBeLessThan(0.00000001);
     });
 });
