@@ -50,6 +50,20 @@ describe("Workbook", function() {
         { text: "Indent -1", alignment: { indent: -1 } },
         { text: "Blank", alignment: {  } }
     ];
+
+    var borders = {
+        thin: { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}},
+        doubleRed: { top: {style:"double", color: {argb:"FFFF0000"}}, left: {style:"double", color: {argb:"FFFF0000"}}, bottom: {style:"double", color: {argb:"FFFF0000"}}, right: {style:"double", color: {argb:"FFFF0000"}}},
+        thickRainbow: {
+            top: {style:"double", color: {argb:"FFFF00FF"}},
+            left: {style:"double", color: {argb:"FF00FFFF"}},
+            bottom: {style:"double", color: {argb:"FF00FF00"}},
+            right: {style:"double", color: {argb:"FF00FF"}},
+            diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true},
+        }
+    };
+
+    
     var createTestBook = function(checkBadAlignments) {
         var wb = new Excel.Workbook()
         var ws = wb.addWorksheet("blort");
@@ -71,8 +85,12 @@ describe("Workbook", function() {
         
         ws.getCell("A4").value = 1.5;
         ws.getCell("A4").numFmt = testValues.numFmt1;
-        ws.getCell("B4").value = 1.5;
-        ws.getCell("B4").numFmt = testValues.numFmt2;
+        ws.getCell("A4").border = borders.thin;
+        ws.getCell("C4").value = 1.5;
+        ws.getCell("C4").numFmt = testValues.numFmt2;
+        ws.getCell("C4").border = borders.doubleRed;
+        ws.getCell("E4").value = 1.5;
+        ws.getCell("E4").border = borders.thickRainbow;
         
         // test fonts and formats
         ws.getCell("A5").value = testValues.str;
@@ -180,8 +198,11 @@ describe("Workbook", function() {
         
         expect(ws.getCell("A4").numFmt).toEqual(testValues.numFmt1);
         expect(ws.getCell("A4").type).toEqual(Excel.ValueType.Number);
-        expect(ws.getCell("B4").numFmt).toEqual(testValues.numFmt2);
-        expect(ws.getCell("B4").type).toEqual(Excel.ValueType.Number);
+        expect(ws.getCell("A4").border).toEqual(borders.thin);
+        expect(ws.getCell("C4").numFmt).toEqual(testValues.numFmt2);
+        expect(ws.getCell("C4").type).toEqual(Excel.ValueType.Number);
+        expect(ws.getCell("C4").border).toEqual(borders.doubleRed);
+        expect(ws.getCell("E4").border).toEqual(borders.thickRainbow);
         
         // test fonts and formats
         expect(ws.getCell("A5").value).toEqual(testValues.str);
@@ -267,6 +288,34 @@ describe("Workbook", function() {
             })
             .then(function(wb2) {
                 checkTestBook(wb2, true);
+            })
+            .finally(function() {
+                fs.unlink("./wb.test.xlsx", function(error) {
+                    expect(error && error.message).toBeFalsy();
+                    done();
+                });
+            });
+    });
+    
+    it("serializes and deserializes to file properly", function(done) {
+        var wb = new Excel.Workbook();
+        
+        // add 101 sheets
+        for (i = 1; i <= 101; i++) {
+            var ws = wb.addWorksheet("sheet" + i);
+            ws.getCell("A1").value = i;
+        }
+        wb.xlsx.writeFile("./wb.test.xlsx")
+            .then(function() {
+                var wb2 = new Excel.Workbook();
+                return wb2.xlsx.readFile("./wb.test.xlsx");
+            })
+            .then(function(wb2) {
+                for (i = 1; i <= 101; i++) {
+                    var ws = wb.getWorksheet("sheet" + i);
+                    expect(ws).toBeDefined();
+                    expect(ws.getCell("A1").value).toEqual(i);
+                }
             })
             .finally(function() {
                 fs.unlink("./wb.test.xlsx", function(error) {

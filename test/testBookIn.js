@@ -39,6 +39,16 @@ var badAlignments = [
     { text: "Blank", alignment: {  } }
 ];
 
+var thinBorder = { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}};
+var doubleRedBorder = { top: {style:"double", color: {argb:"FFFF0000"}}, left: {style:"double", color: {argb:"FFFF0000"}}, bottom: {style:"double", color: {argb:"FFFF0000"}}, right: {style:"double", color: {argb:"FFFF0000"}}};
+var thickRainbowBorder = {
+    top: {style:"double", color: {argb:"FFFF00FF"}},
+    left: {style:"double", color: {argb:"FF00FFFF"}},
+    bottom: {style:"double", color: {argb:"FF00FF00"}},
+    right: {style:"double", color: {argb:"FF00FF"}},
+    diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true},
+};
+
 var passed = true;
 var assert = function(value, failMessage, passMessage) {
     if (!value) {
@@ -59,6 +69,10 @@ var assertFont = function(value, expected, address) {
     });
 }
 
+var assertEqual = function(address, name, value, expected) {
+    assert(_.isEqual(value,expected), 'Expected Cell[' + address + '] ' + name + ' to be ' + JSON.stringify(expected) + ', was ' + JSON.stringify(value));
+}
+
 // assuming file created by testBookOut
 wb.xlsx.readFile(filename)
     .then(function() {
@@ -72,14 +86,17 @@ wb.xlsx.readFile(filename)
         assert(ws.getCell("A2").value == 7, "Expected A2 == 7");
         assert(ws.getCell("B2").value == "Hello, World!", 'Expected B2 == "Hello, World!", was "' + ws.getCell("B2").value + '"');
         assertFont(ws.getCell("B2").font, comicSansUdB16, "B2");
+        assertEqual('B2', 'border', ws.getCell("B2").border, thinBorder);
         
         assert(Math.abs(ws.getCell("C2").value + 5.55) < 0.000001, "Expected C2 == -5.55, was" + ws.getCell("C2").value);
         assert(ws.getCell("C2").numFmt == '"£"#,##0.00;[Red]\-"£"#,##0.00', 'Expected C2 numFmt to be "£"#,##0.00;[Red]\-"£"#,##0.00, was ' + ws.getCell("C2").numFmt);
         assertFont(ws.getCell("C2").font, arialBlackUI14, "C2");
         
         assert(ws.getCell("D2").value instanceof Date, "expected D2 to be a Date, was " + ws.getCell("D2").value);
+        assertEqual('D2', 'border', ws.getCell("D2").border, doubleRedBorder);
         
         assert(ws.getCell("C5").value.formula, "Expected C5 to be a formula, was " + JSON.stringify(ws.getCell("C5").value));
+        assertEqual('C6', 'border', ws.getCell("C6").border, thickRainbowBorder);
         
         assert(ws.getCell("A9").numFmt == "# ?/?", 'Expected A9 numFmt to be "# ?/?", was ' + ws.getCell("A9").numFmt);
         assert(ws.getCell("B9").numFmt == "h:mm:ss", 'Expected B9 numFmt to be "h:mm:ss", was ' + ws.getCell("B9").numFmt);
@@ -99,7 +116,7 @@ wb.xlsx.readFile(filename)
             var colNumber = index + 1;
             var cell = ws.getCell(rowNumber, colNumber);
             assert(cell.value == alignment.text, 'Expected Cell[' + rowNumber + ',' + colNumber + '] to be ' + alignment.text + ', was ' + cell.value);
-            assert(cell.alignment == alignment.alignment, 'Expected Cell[' + rowNumber + ',' + colNumber + '] alignment to be ' + JSON.stringify(alignment.alignment) + ', was ' + JSON.stringify(cell.alignment));
+            assert(_.isEqual(cell.alignment,alignment.alignment), 'Expected Cell[' + rowNumber + ',' + colNumber + '] alignment to be ' + JSON.stringify(alignment.alignment) + ', was ' + JSON.stringify(cell.alignment));
         });
         
         

@@ -40,6 +40,15 @@ var badAlignments = [
     { text: "Blank", alignment: {  } }
 ];
 
+var thinBorder = { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}};
+var doubleRedBorder = { color: {argb:"FFFF0000"}, top: {style:"double"}, left: {style:"double"}, bottom: {style:"double"}, right: {style:"double"}};
+var thickRainbowBorder = {
+    top: {style:"double", color: {argb:"FFFF00FF"}},
+    left: {style:"double", color: {argb:"FF00FFFF"}},
+    bottom: {style:"double", color: {argb:"FF00FF00"}},
+    right: {style:"double", color: {argb:"FF00FF"}},
+    diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true},
+};
 
 ws.columns = [
     { header: "Col 1", key:"key", width: 25 },
@@ -52,6 +61,7 @@ ws.columns = [
 ws.getCell("A2").value = 7;
 ws.getCell("B2").value = "Hello, World!";
 ws.getCell("B2").font = comicSansUdB16;
+ws.getCell("B2").border = thinBorder;
 
 ws.getCell("C2").value = -5.55;
 ws.getCell("C2").numFmt = '"£"#,##0.00;[Red]\-"£"#,##0.00';
@@ -61,6 +71,7 @@ ws.getCell("D2").value = 3.14;
 ws.getCell("D2").value = new Date();
 ws.getCell("D2").numFmt = "d-mmm-yyyy";
 ws.getCell("D2").font = comicSansUdB16;
+ws.getCell("D2").border = doubleRedBorder;
 
 ws.getCell("E2").value = ["Hello", "World"].join(", ") + "!";
 
@@ -76,6 +87,7 @@ ws.getCell("C5").value = {formula:"A5+B5", result:3};
 ws.getCell("A6").value = "Hello";
 ws.getCell("B6").value = "World";
 ws.getCell("C6").value = {formula:'CONCATENATE(A6,", ",B6,"!")', result:'Hello, World!'};
+ws.getCell("C6").border = thickRainbowBorder;
 
 ws.getCell("A7").value = 1;
 ws.getCell("B7").value = 2;

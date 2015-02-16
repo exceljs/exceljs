@@ -17,8 +17,9 @@
         <fill><patternFill patternType="none"/></fill>
         <fill><patternFill patternType="gray125"/></fill>
     </fills>
-    <borders count="1">
-        <border><left/><right/><top/><bottom/><diagonal/></border>
+    <borders count="<%=borders.length%>">
+        <%_.each(borders, function(border) {%><%=border.xml%>
+        <%});%>
     </borders>
     <cellStyleXfs count="1">
         <xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>

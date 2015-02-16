@@ -1,6 +1,6 @@
 # ExcelJS
 
-Read, manipulate and write spreadsheet data to XLSX and JSON.
+Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
 Reverse engineered from Excel spreadsheet files as a project.
 
@@ -11,9 +11,14 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li><a href="#alignment">Cell Alignment Style</a></li>
-    <li><a href="#rows">Row Height</a></li>
-    <li>Some Internal Restructuring</li>
+    <li>
+        Bug Fixes
+        <ul>
+            <li>Now handles 10 or more worksheets in one workbook</li>
+            <li>theme1.xml file properly added and referenced</li>
+        </ul>
+    </li>
+    <li><a href="#borders">Cell Borders</a></li>
 </ul>
 
 # Coming Soon
@@ -21,7 +26,6 @@ npm install exceljs
 <ul>
     <li>Column and Row Styles</li>
     <li>Fills</li>
-    <li>Borders</li>
 </ul>
 
 # Contents
@@ -30,17 +34,22 @@ npm install exceljs
     <li>
         <a href="#interface">Interface</a>
         <ul>
-            <li><a href="#create-a-workbook">Create a Workbook</a>
-            <li><a href="#add-a-worksheet">Add a Worksheet</a>
-            <li><a href="#access-worksheets">Access Worksheets</a>
-            <li><a href="#columns">Columns</a>
-            <li><a href="#rows">Rows</a>
-            <li><a href="#handling-individual-cells">Handling Individual Cells</a>
-            <li><a href="#merged-cells">Merged Cells</a>
-            <li><a href="#number-formats">Number Formats</a>
-            <li><a href="#fonts">Fonts</a>
-            <li><a href="#reading-xlsx">Reading XLSX</a>
-            <li><a href="#writing-xlsx">Writing XLSX</a>
+            <li><a href="#create-a-workbook">Create a Workbook</a></li>
+            <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
+            <li><a href="#access-worksheets">Access Worksheets</a></li>
+            <li><a href="#columns">Columns</a></li>
+            <li><a href="#rows">Rows</a></li>
+            <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
+            <li><a href="#merged-cells">Merged Cells</a></li>
+            <li><a href="#cell-styles">Cell Styles</a>
+                <ul>
+                    <li><a href="#number-formats">Number Formats</a></li>
+                    <li><a href="#fonts">Fonts</a></li>
+                    <li><a href="#alignment">Alignment</a></li>
+                </ul>
+            </li>
+            <li><a href="#reading-xlsx">Reading XLSX</a></li>
+            <li><a href="#writing-xlsx">Writing XLSX</a></li>
         </ul>
     </li>
     <li><a href="#value-types">Value Types</a></li>
@@ -251,8 +260,8 @@ font.size = 20; // Cell A3 now has font size 20!
 | color | Colour description, an object containing an ARGB value. | { argb: "FFFF0000"} |
 | bold | Font **weight** | true, false |
 | italic | Font *slope* | true, false |
-| underline | Font underline style | true, false, "none", "single", "double", "singleAccounting", "doubleAccounting" |
-| strike | Font ~~strikethrough~~ | true, false |
+| underline | Font <u>underline</u> style | true, false, "none", "single", "double", "singleAccounting", "doubleAccounting" |
+| strike | Font <strike>strikethrough</strike> | true, false |
 | outline | Font outline | true, false |
 
 ### Alignment
@@ -276,7 +285,55 @@ ws.getCell("H1").alignment = { textRotation: "vertical" };
 
 ```
 
-Note: valid text rotation values range from -90 to +90 or "vertical". Any values outside this range will be ignored.
+**Valid Alignment Property Values**
+| horizontal | vertical    | wrapText | indent  | readingOrder | textRotation |
+| ---------- | ----------- | -------- | ------- | ------------ | ------------ |
+| left       | top         | true     | integer | rtl          | 0 to 90      |
+| center     | middle      | false    |         | ltr          | -1 to -90    |
+| right      | bottom      |          |         |              | vertical     |
+| fill       | distributed |          |         |              |              |
+| justify    | justify     |          |         |              |              |
+| centerContinuous |       |          |         |              |              |
+| distributed |            |          |         |              |              |
+
+
+### Borders
+
+// set single thin border around A1
+ws.getCell("A1").border = {
+    top: {style:"thin"},
+    left: {style:"thin"},
+    bottom: {style:"thin"},
+    right: {style:"thin"}
+};
+
+// set double thin green border around A3
+ws.getCell("A3").border = {
+    top: {style:"double", color: {argb:"FF00FF00"}},
+    left: {style:"double", color: {argb:"FF00FF00"}},
+    bottom: {style:"double", color: {argb:"FF00FF00"}},
+    right: {style:"double", color: {argb:"FF00FF00"}}
+};
+
+// set thick red cross in A5
+ws.getCell("A5").border = {
+    diagonal: {up: true, down: true, style:"thick", color: {argb:"FFFF0000"}}
+};
+
+**Valid Border Styles**
+* thin
+* dotted
+* dashDot
+* hair
+* dashDotDot
+* slantDashDot
+* mediumDashed
+* mediumDashDotDot
+* mediumDashDot
+* medium
+* double
+* thick
+
 
 ## Reading XLSX
 
@@ -333,6 +390,8 @@ The following value types are supported.
 | 0.1.1 | <ul><li>Bug Fixes<ul><li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li><li>Better date format code recognition</li></ul></li><li><a href="#fonts">Cell Font Style</a></li></ul> |
 | 0.1.2 | <ul><li>Fixed potential race condition on zip write</li></ul> |
 | 0.1.3 | <ul><li><a href="#alignment">Cell Alignment Style</a></li><li><a href="#rows">Row Height</a></li><li>Some Internal Restructuring</li></ul> |
+| 0.1.4 | <ul><li>Bug Fixes<ul><li>Now handles 10 or more worksheets in one workbook</li><li>theme1.xml file properly added and referenced</li></ul></li><li><a href="#borders">Cell Borders</a></li></ul> |
+
 
 # Interface Changes
 
