@@ -14,18 +14,17 @@ npm install exceljs
     <li>
         Bug Fixes
         <ul>
-            <li>Now handles 10 or more worksheets in one workbook</li>
-            <li>theme1.xml file properly added and referenced</li>
+            <li>More compatable theme1.xml included in XLSX file</li>
         </ul>
     </li>
-    <li><a href="#borders">Cell Borders</a></li>
+    <li><a href="#fills">Cell Fills</a></li>
 </ul>
 
 # Coming Soon
 
 <ul>
     <li>Column and Row Styles</li>
-    <li>Fills</li>
+    <li>CSV</li>
 </ul>
 
 # Contents
@@ -299,6 +298,7 @@ ws.getCell("H1").alignment = { textRotation: "vertical" };
 
 ### Borders
 
+```javascript
 // set single thin border around A1
 ws.getCell("A1").border = {
     top: {style:"thin"},
@@ -319,6 +319,7 @@ ws.getCell("A3").border = {
 ws.getCell("A5").border = {
     diagonal: {up: true, down: true, style:"thick", color: {argb:"FFFF0000"}}
 };
+```
 
 **Valid Border Styles**
 * thin
@@ -334,6 +335,98 @@ ws.getCell("A5").border = {
 * double
 * thick
 
+### Fills
+
+```javascript
+// fill A1 with red darkVertical stripes
+ws.getCell("A1").fill = {
+    type: "pattern",
+    pattern:"darkVertical",
+    fgColor:{argb:"FFFF0000"}
+};
+
+// fill A2 with yellow dark trellis and blue behind
+ws.getCell("A2").fill = {
+    type: "pattern",
+    pattern:"darkTrellis",
+    fgColor:{argb:"FFFFFF00"},
+    bgColor:{argb:"FF0000FF"}
+};
+
+// fill A3 with blue-white-blue gradient from left to right
+ws.getCell("A3").fill = {
+    type: "gradient",
+    gradient: "angle",
+    degree: 0,
+    stops: [
+        {position:0, color:{argb:"FF0000FF"}},
+        {position:0.5, color:{argb:"FFFFFFFF"}},
+        {position:1, color:{argb:"FF0000FF"}}
+    ]
+};
+
+
+// fill A4 with red-green gradient from center
+ws.getCell("A2").fill = {
+    type: "gradient",
+    gradient: "path",
+    center:{left:0.5,top:0.5},
+    stops: [
+        {position:0, color:{argb:"FFFF0000"}},
+        {position:1, color:{argb:"FF00FF00"}}
+    ]
+};
+
+```
+
+#### Pattern Fills
+
+| Property | Required | Description |
+| ======== | ======== | =========== |
+| type     | Y        | Value: "pattern"<br/>Specifies this fill uses patterns |
+| pattern  | Y        | Specifies type of pattern (see <a href="#valid-pattern-types">Valid Pattern Types</a> below) |
+| fgColor  | N        | Specifies the pattern foreground color. Default is black. |
+| bgColor  | N        | Specifies the pattern background color. Default is white. |
+
+##### Valid Pattern Types
+
+* none
+* solid
+* darkVertical
+* darkGray
+* mediumGray
+* lightGray
+* gray125
+* gray0625
+* darkHorizontal
+* darkVertical
+* darkDown
+* darkUp
+* darkGrid
+* darkTrellis
+* lightHorizontal
+* lightVertical
+* lightDown
+* lightUp
+* lightGrid
+* lightTrellis
+* lightGrid
+
+#### Gradient Fills
+
+| Property | Required | Description |
+| ======== | ======== | =========== |
+| type     | Y        | Value: "gradient"<br/>Specifies this fill uses gradients |
+| gradient | Y        | Specifies gradient type. One of ["angle", "path"] |
+| degree   | angle    | For "angle" gradient, specifies the direction of the gradient. 0 is from the left to the right. Values from 1 - 359 rotates the direction clockwise |
+| center   | path     | For "path" gradient. Specifies the relative coordinates for the start of the path. "left" and "top" values range from 0 to 1 |
+| stops    | Y        | Specifies the gradient colour sequence. Is an array of objects containing position and color starting with position 0 and ending with position 1. Intermediatary positions may be used to specify other colours on the path. |
+
+**Caveats**
+Using the interface above it may be possible to create gradient fill effects not possible using the XLSX editor program.
+For example, Excel only supports angle gradients of 0, 45, 90 and 135.
+Similarly the sequence of stops may also be limited by the UI with positions [0,1] or [0,0.5,1] as the only options.
+Take care with this fill to be sure it is supported by the target XLSX viewers.
 
 ## Reading XLSX
 
@@ -385,12 +478,13 @@ The following value types are supported.
 
 | Version | Changes |
 | ------- | ------- |
-| 0.0.9 | <ul><li><a href="#number-formats">Number Formats</a></li></ul> |
-| 0.1.0 | <ul><li>Bug Fixes<ul><li>"&lt;" and "&gt;" text characters properly rendered in xlsx</li></ul></li><li><a href="#columns">Better Column control</a></li><li><a href="#rows">Better Row control</a></li></ul> |
-| 0.1.1 | <ul><li>Bug Fixes<ul><li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li><li>Better date format code recognition</li></ul></li><li><a href="#fonts">Cell Font Style</a></li></ul> |
-| 0.1.2 | <ul><li>Fixed potential race condition on zip write</li></ul> |
-| 0.1.3 | <ul><li><a href="#alignment">Cell Alignment Style</a></li><li><a href="#rows">Row Height</a></li><li>Some Internal Restructuring</li></ul> |
-| 0.1.4 | <ul><li>Bug Fixes<ul><li>Now handles 10 or more worksheets in one workbook</li><li>theme1.xml file properly added and referenced</li></ul></li><li><a href="#borders">Cell Borders</a></li></ul> |
+| 0.0.9   | <ul><li><a href="#number-formats">Number Formats</a></li></ul> |
+| 0.1.0   | <ul><li>Bug Fixes<ul><li>"&lt;" and "&gt;" text characters properly rendered in xlsx</li></ul></li><li><a href="#columns">Better Column control</a></li><li><a href="#rows">Better Row control</a></li></ul> |
+| 0.1.1   | <ul><li>Bug Fixes<ul><li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li><li>Better date format code recognition</li></ul></li><li><a href="#fonts">Cell Font Style</a></li></ul> |
+| 0.1.2   | <ul><li>Fixed potential race condition on zip write</li></ul> |
+| 0.1.3   | <ul><li><a href="#alignment">Cell Alignment Style</a></li><li><a href="#rows">Row Height</a></li><li>Some Internal Restructuring</li></ul> |
+| 0.1.5   | <ul><li>Bug Fixes<ul><li>Now handles 10 or more worksheets in one workbook</li><li>theme1.xml file properly added and referenced</li></ul></li><li><a href="#borders">Cell Borders</a></li></ul> |
+| 0.1.6   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
 
 
 # Interface Changes

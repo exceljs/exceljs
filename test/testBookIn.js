@@ -39,15 +39,32 @@ var badAlignments = [
     { text: "Blank", alignment: {  } }
 ];
 
-var thinBorder = { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}};
-var doubleRedBorder = { top: {style:"double", color: {argb:"FFFF0000"}}, left: {style:"double", color: {argb:"FFFF0000"}}, bottom: {style:"double", color: {argb:"FFFF0000"}}, right: {style:"double", color: {argb:"FFFF0000"}}};
-var thickRainbowBorder = {
-    top: {style:"double", color: {argb:"FFFF00FF"}},
-    left: {style:"double", color: {argb:"FF00FFFF"}},
-    bottom: {style:"double", color: {argb:"FF00FF00"}},
-    right: {style:"double", color: {argb:"FF00FF"}},
-    diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true},
+var borders = {
+    thin: { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}},
+    doubleRed: {
+        top: {style:"double", color: {argb:"FFFF0000"}},
+        left: {style:"double", color: {argb:"FFFF0000"}},
+        bottom: {style:"double", color: {argb:"FFFF0000"}},
+        right: {style:"double", color: {argb:"FFFF0000"}}
+    },
+    thickRainbow: {
+        top: {style:"double", color: {argb:"FFFF00FF"}},
+        left: {style:"double", color: {argb:"FF00FFFF"}},
+        bottom: {style:"double", color: {argb:"FF00FF00"}},
+        right: {style:"double", color: {argb:"FF00FF"}},
+        diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true}
+    }
 };
+
+var fills = {
+    redDarkVertical: {type: "pattern", pattern:"darkVertical", fgColor:{argb:"FFFF0000"}},
+    redGreenDarkTrellis: {type: "pattern", pattern:"darkTrellis", fgColor:{argb:"FFFF0000"}, bgColor:{argb:"FF00FF00"}},
+    blueWhiteHGrad: {type: "gradient", gradient: "angle", degree: 0,
+        stops: [{position:0, color:{argb:"FF0000FF"}},{position:1, color:{argb:"FFFFFFFF"}}]},
+    rgbPathGrad: {type: "gradient", gradient: "path", center:{left:0.5,top:0.5},
+        stops: [{position:0, color:{argb:"FFFF0000"}},{position:0.5, color:{argb:"FF00FF00"}},{position:1, color:{argb:"FF0000FF"}}]}
+};
+
 
 var passed = true;
 var assert = function(value, failMessage, passMessage) {
@@ -86,17 +103,17 @@ wb.xlsx.readFile(filename)
         assert(ws.getCell("A2").value == 7, "Expected A2 == 7");
         assert(ws.getCell("B2").value == "Hello, World!", 'Expected B2 == "Hello, World!", was "' + ws.getCell("B2").value + '"');
         assertFont(ws.getCell("B2").font, comicSansUdB16, "B2");
-        assertEqual('B2', 'border', ws.getCell("B2").border, thinBorder);
+        assertEqual('B2', 'border', ws.getCell("B2").border, borders.thin);
         
         assert(Math.abs(ws.getCell("C2").value + 5.55) < 0.000001, "Expected C2 == -5.55, was" + ws.getCell("C2").value);
         assert(ws.getCell("C2").numFmt == '"£"#,##0.00;[Red]\-"£"#,##0.00', 'Expected C2 numFmt to be "£"#,##0.00;[Red]\-"£"#,##0.00, was ' + ws.getCell("C2").numFmt);
         assertFont(ws.getCell("C2").font, arialBlackUI14, "C2");
         
         assert(ws.getCell("D2").value instanceof Date, "expected D2 to be a Date, was " + ws.getCell("D2").value);
-        assertEqual('D2', 'border', ws.getCell("D2").border, doubleRedBorder);
+        assertEqual('D2', 'border', ws.getCell("D2").border, borders.doubleRed);
         
         assert(ws.getCell("C5").value.formula, "Expected C5 to be a formula, was " + JSON.stringify(ws.getCell("C5").value));
-        assertEqual('C6', 'border', ws.getCell("C6").border, thickRainbowBorder);
+        assertEqual('C6', 'border', ws.getCell("C6").border, borders.thickRainbow);
         
         assert(ws.getCell("A9").numFmt == "# ?/?", 'Expected A9 numFmt to be "# ?/?", was ' + ws.getCell("A9").numFmt);
         assert(ws.getCell("B9").numFmt == "h:mm:ss", 'Expected B9 numFmt to be "h:mm:ss", was ' + ws.getCell("B9").numFmt);
@@ -118,6 +135,13 @@ wb.xlsx.readFile(filename)
             assert(cell.value == alignment.text, 'Expected Cell[' + rowNumber + ',' + colNumber + '] to be ' + alignment.text + ', was ' + cell.value);
             assert(_.isEqual(cell.alignment,alignment.alignment), 'Expected Cell[' + rowNumber + ',' + colNumber + '] alignment to be ' + JSON.stringify(alignment.alignment) + ', was ' + JSON.stringify(cell.alignment));
         });
+        
+        var row12 = ws.getRow(12);
+        assert(row12.height == 40, 'Expected Row 12 to be height 40, was ' + row12.height);
+        assert(_.isEqual(row12.getCell(1).fill, fills.blueWhiteHGrad), 'Expected [12,1] fill to be ' + JSON.stringify(fills.blueWhiteHGrad) + ', was ' + JSON.stringify(row12.getCell(1).fill));
+        assert(_.isEqual(row12.getCell(2).fill, fills.redDarkVertical), 'Expected [12,2] fill to be ' + JSON.stringify(fills.redDarkVertical) + ', was ' + JSON.stringify(row12.getCell(2).fill));
+        assert(_.isEqual(row12.getCell(3).fill, fills.redGreenDarkTrellis), 'Expected [12,3] fill to be ' + JSON.stringify(fills.redGreenDarkTrellis) + ', was ' + JSON.stringify(row12.getCell(3).fill));
+        assert(_.isEqual(row12.getCell(4).fill, fills.rgbPathGrad), 'Expected [12,4] fill to be ' + JSON.stringify(fills.rgbPathGrad) + ', was ' + JSON.stringify(row12.getCell(4).fill));
         
         
         assert(passed, "Something went wrong", "All tests passed!");

@@ -40,14 +40,25 @@ var badAlignments = [
     { text: "Blank", alignment: {  } }
 ];
 
-var thinBorder = { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}};
-var doubleRedBorder = { color: {argb:"FFFF0000"}, top: {style:"double"}, left: {style:"double"}, bottom: {style:"double"}, right: {style:"double"}};
-var thickRainbowBorder = {
-    top: {style:"double", color: {argb:"FFFF00FF"}},
-    left: {style:"double", color: {argb:"FF00FFFF"}},
-    bottom: {style:"double", color: {argb:"FF00FF00"}},
-    right: {style:"double", color: {argb:"FF00FF"}},
-    diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true},
+var borders = {
+    thin: { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}},
+    doubleRed: { color: {argb:"FFFF0000"}, top: {style:"double"}, left: {style:"double"}, bottom: {style:"double"}, right: {style:"double"}},
+    thickRainbow: {
+        top: {style:"double", color: {argb:"FFFF00FF"}},
+        left: {style:"double", color: {argb:"FF00FFFF"}},
+        bottom: {style:"double", color: {argb:"FF00FF00"}},
+        right: {style:"double", color: {argb:"FF00FF"}},
+        diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true}
+    }
+};
+
+var fills = {
+    redDarkVertical: {type: "pattern", pattern:"darkVertical", fgColor:{argb:"FFFF0000"}},
+    redGreenDarkTrellis: {type: "pattern", pattern:"darkTrellis", fgColor:{argb:"FFFF0000"}, bgColor:{argb:"FF00FF00"}},
+    blueWhiteHGrad: {type: "gradient", gradient: "angle", degree: 0,
+        stops: [{position:0, color:{argb:"FF0000FF"}},{position:1, color:{argb:"FFFFFFFF"}}]},
+    rgbPathGrad: {type: "gradient", gradient: "path", center:{left:0.5,top:0.5},
+        stops: [{position:0, color:{argb:"FFFF0000"}},{position:0.5, color:{argb:"FF00FF00"}},{position:1, color:{argb:"FF0000FF"}}]}
 };
 
 ws.columns = [
@@ -61,7 +72,7 @@ ws.columns = [
 ws.getCell("A2").value = 7;
 ws.getCell("B2").value = "Hello, World!";
 ws.getCell("B2").font = comicSansUdB16;
-ws.getCell("B2").border = thinBorder;
+ws.getCell("B2").border = borders.thin;
 
 ws.getCell("C2").value = -5.55;
 ws.getCell("C2").numFmt = '"£"#,##0.00;[Red]\-"£"#,##0.00';
@@ -71,7 +82,7 @@ ws.getCell("D2").value = 3.14;
 ws.getCell("D2").value = new Date();
 ws.getCell("D2").numFmt = "d-mmm-yyyy";
 ws.getCell("D2").font = comicSansUdB16;
-ws.getCell("D2").border = doubleRedBorder;
+ws.getCell("D2").border = borders.doubleRed;
 
 ws.getCell("E2").value = ["Hello", "World"].join(", ") + "!";
 
@@ -87,7 +98,7 @@ ws.getCell("C5").value = {formula:"A5+B5", result:3};
 ws.getCell("A6").value = "Hello";
 ws.getCell("B6").value = "World";
 ws.getCell("C6").value = {formula:'CONCATENATE(A6,", ",B6,"!")', result:'Hello, World!'};
-ws.getCell("C6").border = thickRainbowBorder;
+ws.getCell("C6").border = borders.thickRainbow;
 
 ws.getCell("A7").value = 1;
 ws.getCell("B7").value = 2;
@@ -116,6 +127,7 @@ ws.getCell("B10").value = ">";
 ws.getCell("C10").value = "<a>";
 ws.getCell("D10").value = "><";
 
+
 ws.getRow(11).height = 40;
 _.each(alignments, function(alignment, index) {
     var rowNumber = 11;
@@ -124,7 +136,18 @@ _.each(alignments, function(alignment, index) {
     cell.value = alignment.text;
     cell.alignment = alignment.alignment;
 });
-        
+
+var row12 = ws.getRow(12);
+row12.height = 40;
+row12.getCell(1).value = "Blue White Horizontal Gradient";
+row12.getCell(1).fill = fills.blueWhiteHGrad;
+row12.getCell(2).value = "Red Dark Vertical";
+row12.getCell(2).fill = fills.redDarkVertical;
+row12.getCell(3).value = "Red Green Dark Trellis";
+row12.getCell(3).fill = fills.redGreenDarkTrellis;
+row12.getCell(4).value = "RGB Path Gradient";
+row12.getCell(4).fill = fills.rgbPathGrad;
+
 
 wb.xlsx.writeFile(filename)
     .then(function(){

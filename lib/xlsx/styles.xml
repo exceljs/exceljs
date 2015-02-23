@@ -13,9 +13,9 @@
         <%_.each(fonts, function(font) {%><%=font.xml%>
         <%})%>
     </fonts>
-    <fills count="2">
-        <fill><patternFill patternType="none"/></fill>
-        <fill><patternFill patternType="gray125"/></fill>
+    <fills count="<%=fills.length%>">
+        <%_.each(fills, function(fill) {%><%=fill.xml%>
+        <%});%>
     </fills>
     <borders count="<%=borders.length%>">
         <%_.each(borders, function(border) {%><%=border.xml%>

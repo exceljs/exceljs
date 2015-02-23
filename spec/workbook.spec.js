@@ -63,6 +63,21 @@ describe("Workbook", function() {
         }
     };
 
+    var fills = {
+        redDarkVertical: {type: "pattern", pattern:"darkVertical", fgColor:{argb:"FFFF0000"}},
+        redGreenDarkTrellis: {type: "pattern", pattern:"darkTrellis",
+            fgColor:{argb:"FFFF0000"}, bgColor:{argb:"FF00FF00"}},
+        blueWhiteHGrad: {type: "gradient", gradient: "angle", degree: 0,
+            stops: [{position:0, color:{argb:"FF0000FF"}},{position:1, color:{argb:"FFFFFFFF"}}]},
+        rgbPathGrad: {type: "gradient", gradient: "path", center:{left:0.5,top:0.5},
+            stops: [
+                {position:0, color:{argb:"FFFF0000"}},
+                {position:0.5, color:{argb:"FF00FF00"}},
+                {position:1, color:{argb:"FF0000FF"}}
+            ]
+        }
+    };
+
     
     var createTestBook = function(checkBadAlignments) {
         var wb = new Excel.Workbook()
@@ -130,6 +145,17 @@ describe("Workbook", function() {
                 cell.alignment = alignment.alignment;
             });
         }
+        
+        var row8 = ws.getRow(8);
+        row8.height = 40;
+        row8.getCell(1).value = "Blue White Horizontal Gradient";
+        row8.getCell(1).fill = fills.blueWhiteHGrad;
+        row8.getCell(2).value = "Red Dark Vertical";
+        row8.getCell(2).fill = fills.redDarkVertical;
+        row8.getCell(3).value = "Red Green Dark Trellis";
+        row8.getCell(3).fill = fills.redGreenDarkTrellis;
+        row8.getCell(4).value = "RGB Path Gradient";
+        row8.getCell(4).fill = fills.rgbPathGrad;
         
         return wb;
     }
@@ -249,6 +275,13 @@ describe("Workbook", function() {
                 expect(cell.alignment).not.toBeDefined();
             });
         }
+        
+        var row8 = ws.getRow(8);
+        expect(row8.height).toEqual(40);
+        expect(row8.getCell(1).fill).toEqual(fills.blueWhiteHGrad);
+        expect(row8.getCell(2).fill).toEqual(fills.redDarkVertical);
+        expect(row8.getCell(3).fill).toEqual(fills.redGreenDarkTrellis);
+        expect(row8.getCell(4).fill).toEqual(fills.rgbPathGrad);
     }
     
     it("creates sheets with correct names", function() {
