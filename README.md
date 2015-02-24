@@ -45,6 +45,7 @@ npm install exceljs
                     <li><a href="#number-formats">Number Formats</a></li>
                     <li><a href="#fonts">Fonts</a></li>
                     <li><a href="#alignment">Alignment</a></li>
+                    <li><a href="#fills">Fills</a></li>
                 </ul>
             </li>
             <li><a href="#reading-xlsx">Reading XLSX</a></li>
@@ -106,9 +107,16 @@ var nameCol = worksheet.getColumn("B");
 var dobCol = worksheet.getColumn(3);
     
 // set column properties
-dobCol.header = "Date of Birth"; // Note: will overwrite cell value C1
-dobCol.header = ["Date of Birth", "A.K.A. D.O.B."]; // Note: this will overwrite cell values C1:C2
-dobCol.key = "dob"; // from this point on, this column will be indexed by "dob" and not "DOB"
+
+// Note: will overwrite cell value C1
+dobCol.header = "Date of Birth";
+
+// Note: this will overwrite cell values C1:C2
+dobCol.header = ["Date of Birth", "A.K.A. D.O.B."];
+
+// from this point on, this column will be indexed by "dob" and not "DOB"
+dobCol.key = "dob";
+
 dobCol.width = 15;
 ```
 
@@ -382,7 +390,7 @@ ws.getCell("A2").fill = {
 #### Pattern Fills
 
 | Property | Required | Description |
-| ======== | ======== | =========== |
+| -------- | -------- | ----------- |
 | type     | Y        | Value: "pattern"<br/>Specifies this fill uses patterns |
 | pattern  | Y        | Specifies type of pattern (see <a href="#valid-pattern-types">Valid Pattern Types</a> below) |
 | fgColor  | N        | Specifies the pattern foreground color. Default is black. |
@@ -415,7 +423,7 @@ ws.getCell("A2").fill = {
 #### Gradient Fills
 
 | Property | Required | Description |
-| ======== | ======== | =========== |
+| -------- | -------- | ----------- |
 | type     | Y        | Value: "gradient"<br/>Specifies this fill uses gradients |
 | gradient | Y        | Specifies gradient type. One of ["angle", "path"] |
 | degree   | angle    | For "angle" gradient, specifies the direction of the gradient. 0 is from the left to the right. Values from 1 - 359 rotates the direction clockwise |
