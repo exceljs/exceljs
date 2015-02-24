@@ -15,6 +15,7 @@ npm install exceljs
         Bug Fixes
         <ul>
             <li>More compatable theme1.xml included in XLSX file</li>
+            <li>Fixed filename case issue</li>
         </ul>
     </li>
     <li><a href="#fills">Cell Fills</a></li>
