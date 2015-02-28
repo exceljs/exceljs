@@ -14,12 +14,12 @@ npm install exceljs
     <li>
         Bug Fixes
         <ul>
-            <li>More compatable theme1.xml included in XLSX file</li>
+            <li>Added docProps files to satisfy Mac Excel users</li>
             <li>Fixed filename case issue</li>
             <li>Fixed worksheet id issue</li>
         </ul>
     </li>
-    <li><a href="#fills">Cell Fills</a></li>
+    <li><a href="#set-workbook-properties">Core Workbook Properties</a></li>
 </ul>
 
 # Coming Soon
@@ -69,6 +69,15 @@ var Excel = require("exceljs");
 
 ```javascript
 var workbook = new Excel.Workbook();
+```
+
+## Set Workbook Properties
+
+```javascript
+workbook.creator = "Me";
+workbook.lastModifiedBy = "Her";
+workbook.created = new Date(1985, 8, 30);
+workbook.modified = new Date();
 ```
 
 ## Add a Worksheet
@@ -496,6 +505,8 @@ The following value types are supported.
 | 0.1.3   | <ul><li><a href="#alignment">Cell Alignment Style</a></li><li><a href="#rows">Row Height</a></li><li>Some Internal Restructuring</li></ul> |
 | 0.1.5   | <ul><li>Bug Fixes<ul><li>Now handles 10 or more worksheets in one workbook</li><li>theme1.xml file properly added and referenced</li></ul></li><li><a href="#borders">Cell Borders</a></li></ul> |
 | 0.1.6   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
+| 0.1.8   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li><li>Fixed filename case issue</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
+| 0.1.9   | <ul><li>Bug Fixes<ul><li>Added docProps files to satisfy Mac Excel users</li><li>Fixed filename case issue</li><li>Fixed worksheet id issue</li></ul></li><li><a href="#set-workbook-properties">Core Workbook Properties</a></li></ul> |
 
 
 # Interface Changes
