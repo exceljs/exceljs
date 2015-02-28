@@ -16,6 +16,7 @@ npm install exceljs
         <ul>
             <li>More compatable theme1.xml included in XLSX file</li>
             <li>Fixed filename case issue</li>
+            <li>Fixed worksheet id issue</li>
         </ul>
     </li>
     <li><a href="#fills">Cell Fills</a></li>
@@ -55,6 +56,7 @@ npm install exceljs
     </li>
     <li><a href="#value-types">Value Types</a></li>
     <li><a href="#release-history">Release History</a></li>
+    <li><a href="#known-issues">Known Issues</a></li>
 </ul>
 
 # Interface
@@ -517,3 +519,15 @@ The sparse array of cell values is still available via Worksheet.getRow(rowNumbe
 ### cell.model
 
 cell.styles renamed to cell.style
+
+# Known Issues
+
+## Too Many Worksheets Results in Parse Error
+
+There appears to be an issue in one of the dependent libraries (unzip) where too many files causes the following error to be emitted:
+
+```javascript
+    invalid signature: 0x80014
+```
+
+In practical terms, this error only seems to arise with over 98 sheets (or 49 sheets with hyperlinks) so it shouldn't affect that many. I will keep an eye on it though.

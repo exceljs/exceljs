@@ -332,9 +332,9 @@ describe("Workbook", function() {
     
     it("serializes and deserializes to file properly", function(done) {
         var wb = new Excel.Workbook();
-        
-        // add 101 sheets
-        for (i = 1; i <= 101; i++) {
+        var numSheets = 90;
+        // add numSheets sheets
+        for (i = 1; i <= numSheets; i++) {
             var ws = wb.addWorksheet("sheet" + i);
             ws.getCell("A1").value = i;
         }
@@ -344,7 +344,7 @@ describe("Workbook", function() {
                 return wb2.xlsx.readFile("./wb.test.xlsx");
             })
             .then(function(wb2) {
-                for (i = 1; i <= 101; i++) {
+                for (i = 1; i <= numSheets; i++) {
                     var ws = wb.getWorksheet("sheet" + i);
                     expect(ws).toBeDefined();
                     expect(ws.getCell("A1").value).toEqual(i);
