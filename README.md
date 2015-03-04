@@ -196,6 +196,7 @@ worksheet.eachRow(function(row, rowNumber) {
 row.eachCell(function(cell, colNumber) {
     console.log("Cell " + colNumber + " = " + cell.value);
 });
+```
 
 ## Handling Individual Cells
 
