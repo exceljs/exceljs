@@ -500,7 +500,7 @@ workbook.xlsx.write(stream)
 
 ### CSV
 
-#### Reading CSV File
+#### Reading CSV
 
 ```javascript
 // read from a file
@@ -569,7 +569,7 @@ Dates are parsed using the npm module [moment](https://www.npmjs.com/package/mom
 * "MM-DD-YYYY"
 * "YYYY-MM-DD"
 
-#### Writing CSV File
+#### Writing CSV
 
 ```javascript
 
