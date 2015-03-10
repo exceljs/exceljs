@@ -1,6 +1,6 @@
 {
     "name": "exceljs",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "description": "Excel Workbook Manager",
     "private": false,
     "license": "MIT",
@@ -14,11 +14,13 @@
         "url": "https://github.com/guyonroche/exceljs.git"
     },
     "keywords": [
-        "xlsx", "json", "excel", "font", "border", "fill", "number", "format", "number format", "alignment", "office", "spreadsheet", "workbook"
+        "xlsx", "json", "csv", "excel", "font", "border", "fill", "number", "format", "number format", "alignment", "office", "spreadsheet", "workbook"
     ],
     "dependencies": {
         "archiver": "0.14.3",
         "bluebird": "*",
+        "fast-csv": "0.5.7",
+        "moment": "~2.9.0",
         "sax": "^0.6.0",
         "underscore": "1.4.4",
         "unzip": ">= 0.1.9"

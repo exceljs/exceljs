@@ -14,19 +14,18 @@ npm install exceljs
     <li>
         Bug Fixes
         <ul>
-            <li>Added docProps files to satisfy Mac Excel users</li>
-            <li>Fixed filename case issue</li>
-            <li>Fixed worksheet id issue</li>
+            <li>Handles File Not Found error</li>
         </ul>
     </li>
-    <li><a href="#set-workbook-properties">Core Workbook Properties</a></li>
+    <li><a href="#csv">CSV Files</a></li>
 </ul>
 
 # Coming Soon
 
 <ul>
     <li>Column and Row Styles</li>
-    <li>CSV</li>
+    <li>XLSX Streaming Writer</li>
+    <li>XLSX Streaming Parser</li>
 </ul>
 
 # Contents
@@ -50,8 +49,22 @@ npm install exceljs
                     <li><a href="#fills">Fills</a></li>
                 </ul>
             </li>
-            <li><a href="#reading-xlsx">Reading XLSX</a></li>
-            <li><a href="#writing-xlsx">Writing XLSX</a></li>
+            <li><a href="#file-i-o">File I/O</a>
+                <ul>
+                    <li><a href="#xlsx">XLSX</a>
+                        <ul>
+                            <li><a href="#reading-xlsx">Reading XLSX</a></li>
+                            <li><a href="#writing-xlsx">Writing XLSX</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#csv">CSV</a>
+                        <ul>
+                            <li><a href="#reading-csv">Reading CSV</a></li>
+                            <li><a href="#writing-csv">Writing CSV</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
     <li><a href="#value-types">Value Types</a></li>
@@ -449,7 +462,11 @@ For example, Excel only supports angle gradients of 0, 45, 90 and 135.
 Similarly the sequence of stops may also be limited by the UI with positions [0,1] or [0,0.5,1] as the only options.
 Take care with this fill to be sure it is supported by the target XLSX viewers.
 
-## Reading XLSX
+## File I/O
+
+### XLSX
+
+#### Reading XLSX
 
 ```javascript
 // read from a file
@@ -464,7 +481,7 @@ var workbook = new Excel.Workbook();
 stream.pipe(workbook.xlsx.createInputStream());
 ```
 
-## Writing XLSX
+#### Writing XLSX
 
 ```javascript
 // write to a file
@@ -481,6 +498,140 @@ workbook.xlsx.write(stream)
     });
 ```
 
+### CSV
+
+#### Reading CSV File
+
+```javascript
+// read from a file
+var workbook = new Excel.Workbook();
+workbook.csv.readFile(filename)
+    .then(function(worksheet) {
+        // use workbook or worksheet
+    });
+
+// read from a stream
+var workbook = new Excel.Workbook();
+workbook.csv.read(stream)
+    .then(function(worksheet) {
+        // use workbook or worksheet
+    });
+
+// pipe from stream
+var workbook = new Excel.Workbook();
+stream.pipe(workbook.csv.createInputStream());
+
+// read from a file with European Dates
+var workbook = new Excel.Workbook();
+var options = {
+    dateFormats: ["DD/MM/YYYY"]
+};
+workbook.csv.readFile(filename, options)
+    .then(function(worksheet) {
+        // use workbook or worksheet
+    });
+
+
+// read from a file with custom value parsing
+var workbook = new Excel.Workbook();
+var options = {
+    map: function(value, index) {
+        switch(index) {
+            case 0:
+                // column 1 is string
+                return value;
+            case 1:
+                // column 2 is a date
+                return new Date(value);
+            case 2:
+                // column 3 is JSON of a formula value
+                return JSON.parse(value);
+            default:
+                // the rest are numbers
+                return parseFloat(value);
+        }
+    }
+};
+workbook.csv.readFile(filename, options)
+    .then(function(worksheet) {
+        // use workbook or worksheet
+    });
+
+```
+
+The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
+ The options passed into the read functions above is also passed to fast-csv for parsing of the csv data.
+ Please refer to the fast-csv README.md for details.
+
+Dates are parsed using the npm module [moment](https://www.npmjs.com/package/moment).
+ If no dateFormats are supplied, the following are used:
+* moment.ISO_8601
+* "MM-DD-YYYY"
+* "YYYY-MM-DD"
+
+#### Writing CSV File
+
+```javascript
+
+// write to a file
+var workbook = createAndFillWorkbook();
+workbook.csv.writeFile(filename)
+    .then(function() {
+        // done
+    });
+
+// write to a stream
+workbook.csv.write(stream)
+    .then(function() {
+        // done
+    });
+
+
+// read from a file with European Date-Times
+var workbook = new Excel.Workbook();
+var options = {
+    dateFormat: "DD/MM/YYYY HH:mm:ss"
+};
+workbook.csv.readFile(filename, options)
+    .then(function(worksheet) {
+        // use workbook or worksheet
+    });
+
+
+// read from a file with custom value formatting
+var workbook = new Excel.Workbook();
+var options = {
+    map: function(value, index) {
+        switch(index) {
+            case 0:
+                // column 1 is string
+                return value;
+            case 1:
+                // column 2 is a date
+                return moment(value).format("YYYY-MM-DD");
+            case 2:
+                // column 3 is a formula, write just the result
+                return value.result;
+            default:
+                // the rest are numbers
+                return value;
+        }
+    }
+};
+workbook.csv.readFile(filename, options)
+    .then(function(worksheet) {
+        // use workbook or worksheet
+    });
+
+```
+
+The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write the CSV file.
+ The options passed into the write functions above is also passed to fast-csv for writing the csv data.
+ Please refer to the fast-csv README.md for details.
+
+Dates are formatted using the npm module [moment](https://www.npmjs.com/package/moment).
+ If no dateFormat is supplied, moment.ISO_8601 is used.
+
 # Value Types
 
 The following value types are supported.
@@ -494,21 +645,6 @@ The following value types are supported.
 | Excel.ValueType.Date      | 4         | A Date value      | new Date()  |
 | Excel.ValueType.Hyperlink | 5         | A hyperlink       | { text: "www.mylink.com", hyperlink: "http://www.mylink.com" } |
 | Excel.ValueType.Formula   | 6         | A formula         | { formula: "A1+A2", result: 7 } |
-
-# Release History
-
-| Version | Changes |
-| ------- | ------- |
-| 0.0.9   | <ul><li><a href="#number-formats">Number Formats</a></li></ul> |
-| 0.1.0   | <ul><li>Bug Fixes<ul><li>"&lt;" and "&gt;" text characters properly rendered in xlsx</li></ul></li><li><a href="#columns">Better Column control</a></li><li><a href="#rows">Better Row control</a></li></ul> |
-| 0.1.1   | <ul><li>Bug Fixes<ul><li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li><li>Better date format code recognition</li></ul></li><li><a href="#fonts">Cell Font Style</a></li></ul> |
-| 0.1.2   | <ul><li>Fixed potential race condition on zip write</li></ul> |
-| 0.1.3   | <ul><li><a href="#alignment">Cell Alignment Style</a></li><li><a href="#rows">Row Height</a></li><li>Some Internal Restructuring</li></ul> |
-| 0.1.5   | <ul><li>Bug Fixes<ul><li>Now handles 10 or more worksheets in one workbook</li><li>theme1.xml file properly added and referenced</li></ul></li><li><a href="#borders">Cell Borders</a></li></ul> |
-| 0.1.6   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
-| 0.1.8   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li><li>Fixed filename case issue</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
-| 0.1.9   | <ul><li>Bug Fixes<ul><li>Added docProps files to satisfy Mac Excel users</li><li>Fixed filename case issue</li><li>Fixed worksheet id issue</li></ul></li><li><a href="#set-workbook-properties">Core Workbook Properties</a></li></ul> |
-
 
 # Interface Changes
 
@@ -543,3 +679,18 @@ There appears to be an issue in one of the dependent libraries (unzip) where too
 ```
 
 In practical terms, this error only seems to arise with over 98 sheets (or 49 sheets with hyperlinks) so it shouldn't affect that many. I will keep an eye on it though.
+
+# Release History
+
+| Version | Changes |
+| ------- | ------- |
+| 0.0.9   | <ul><li><a href="#number-formats">Number Formats</a></li></ul> |
+| 0.1.0   | <ul><li>Bug Fixes<ul><li>"&lt;" and "&gt;" text characters properly rendered in xlsx</li></ul></li><li><a href="#columns">Better Column control</a></li><li><a href="#rows">Better Row control</a></li></ul> |
+| 0.1.1   | <ul><li>Bug Fixes<ul><li>More textual data written properly to xml (including text, hyperlinks, formula results and format codes)</li><li>Better date format code recognition</li></ul></li><li><a href="#fonts">Cell Font Style</a></li></ul> |
+| 0.1.2   | <ul><li>Fixed potential race condition on zip write</li></ul> |
+| 0.1.3   | <ul><li><a href="#alignment">Cell Alignment Style</a></li><li><a href="#rows">Row Height</a></li><li>Some Internal Restructuring</li></ul> |
+| 0.1.5   | <ul><li>Bug Fixes<ul><li>Now handles 10 or more worksheets in one workbook</li><li>theme1.xml file properly added and referenced</li></ul></li><li><a href="#borders">Cell Borders</a></li></ul> |
+| 0.1.6   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
+| 0.1.8   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li><li>Fixed filename case issue</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
+| 0.1.9   | <ul><li>Bug Fixes<ul><li>Added docProps files to satisfy Mac Excel users</li><li>Fixed filename case issue</li><li>Fixed worksheet id issue</li></ul></li><li><a href="#set-workbook-properties">Core Workbook Properties</a></li></ul> |
+

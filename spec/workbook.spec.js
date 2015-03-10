@@ -168,120 +168,165 @@ describe("Workbook", function() {
             expect(font[name]).not.toBeDefined();
         });
     };
-    var checkTestBook = function(wb, checkBadAlignments) {
+    var checkTestBook = function(wb, docType) {
+        var sheetName;
+        var checkFormulas, checkMerges, checkStyles, checkBadAlignments;
+        var dateAccuracy;
+        switch(docType) {
+            case "xlsx":
+                sheetName = "blort";
+                checkFormulas = true;
+                checkMerges = true;
+                checkStyles = true;
+                checkBadAlignments = true;
+                dateAccuracy = 3;
+                break;
+            case "model":
+                sheetName = "blort";
+                checkFormulas = true;
+                checkMerges = true;
+                checkStyles = true;
+                checkBadAlignments = false;
+                dateAccuracy = 3;
+                break;
+            case "csv":
+                sheetName = "sheet1";
+                checkFormulas = false;
+                checkMerges = false;
+                checkStyles = false;
+                checkBadAlignments = false;
+                dateAccuracy = 1000;
+                break;
+        }
+        
         expect(wb).toBeDefined();
         
-        var ws = wb.getWorksheet("blort");
+        var ws = wb.getWorksheet(sheetName);
         expect(ws).toBeDefined();
         
         expect(ws.getCell("A1").value).toEqual(7);
         expect(ws.getCell("A1").type).toEqual(Excel.ValueType.Number);
         expect(ws.getCell("B1").value).toEqual(testValues.str);
         expect(ws.getCell("B1").type).toEqual(Excel.ValueType.String);
-        expect(Math.abs(ws.getCell("C1").value.getTime() - testValues.date.getTime())).toBeLessThan(3);
+        expect(Math.abs(ws.getCell("C1").value.getTime() - testValues.date.getTime())).toBeLessThan(dateAccuracy);
         expect(ws.getCell("C1").type).toEqual(Excel.ValueType.Date);
-        expect(ws.getCell("D1").value).toEqual(testValues.formulas[0]);
-        expect(ws.getCell("D1").type).toEqual(Excel.ValueType.Formula);
-        expect(ws.getCell("E1").value).toEqual(testValues.formulas[1]);
-        expect(ws.getCell("E1").type).toEqual(Excel.ValueType.Formula);
-        expect(ws.getCell("F1").value).toEqual(testValues.hyperlink);
-        expect(ws.getCell("F1").type).toEqual(Excel.ValueType.Hyperlink);
-        expect(ws.getCell("G1").value).toEqual(testValues.str2);
+        
+        if (checkFormulas) {
+            expect(ws.getCell("D1").value).toEqual(testValues.formulas[0]);
+            expect(ws.getCell("D1").type).toEqual(Excel.ValueType.Formula);
+            expect(ws.getCell("E1").value).toEqual(testValues.formulas[1]);
+            expect(ws.getCell("E1").type).toEqual(Excel.ValueType.Formula);
+            expect(ws.getCell("F1").value).toEqual(testValues.hyperlink);
+            expect(ws.getCell("F1").type).toEqual(Excel.ValueType.Hyperlink);
+            expect(ws.getCell("G1").value).toEqual(testValues.str2);
+        } else {
+            expect(ws.getCell("D1").value).toEqual(testValues.formulas[0].result);
+            expect(ws.getCell("D1").type).toEqual(Excel.ValueType.Number);
+            expect(ws.getCell("E1").value).toBeNull();
+            expect(ws.getCell("E1").type).toEqual(Excel.ValueType.Null);
+            expect(ws.getCell("F1").value).toEqual(testValues.hyperlink.hyperlink);
+            expect(ws.getCell("F1").type).toEqual(Excel.ValueType.String);
+            expect(ws.getCell("G1").value).toEqual(testValues.str2);
+        }
         
         // A2:B3
         expect(ws.getCell("A2").value).toEqual(5);
         expect(ws.getCell("A2").type).toEqual(Excel.ValueType.Number);
         expect(ws.getCell("A2").master).toBe(ws.getCell("A2"));
         
-        expect(ws.getCell("A3").value).toEqual(5);
-        expect(ws.getCell("A3").type).toEqual(Excel.ValueType.Merge);
-        expect(ws.getCell("A3").master).toBe(ws.getCell("A2"));
+        if (checkMerges) {
+            expect(ws.getCell("A3").value).toEqual(5);
+            expect(ws.getCell("A3").type).toEqual(Excel.ValueType.Merge);
+            expect(ws.getCell("A3").master).toBe(ws.getCell("A2"));
+            
+            expect(ws.getCell("B2").value).toEqual(5);
+            expect(ws.getCell("B2").type).toEqual(Excel.ValueType.Merge);
+            expect(ws.getCell("B2").master).toBe(ws.getCell("A2"));
+            
+            expect(ws.getCell("B3").value).toEqual(5);
+            expect(ws.getCell("B3").type).toEqual(Excel.ValueType.Merge);
+            expect(ws.getCell("B3").master).toBe(ws.getCell("A2"));
         
-        expect(ws.getCell("B2").value).toEqual(5);
-        expect(ws.getCell("B2").type).toEqual(Excel.ValueType.Merge);
-        expect(ws.getCell("B2").master).toBe(ws.getCell("A2"));
+            // C2:D3
+            expect(ws.getCell("C2").value).toBeNull();
+            expect(ws.getCell("C2").type).toEqual(Excel.ValueType.Null);
+            expect(ws.getCell("C2").master).toBe(ws.getCell("C2"));
+            
+            expect(ws.getCell("D2").value).toBeNull();
+            expect(ws.getCell("D2").type).toEqual(Excel.ValueType.Merge);
+            expect(ws.getCell("D2").master).toBe(ws.getCell("C2"));
+            
+            expect(ws.getCell("C3").value).toBeNull();
+            expect(ws.getCell("C3").type).toEqual(Excel.ValueType.Merge);
+            expect(ws.getCell("C3").master).toBe(ws.getCell("C2"));
+            
+            expect(ws.getCell("D3").value).toBeNull();
+            expect(ws.getCell("D3").type).toEqual(Excel.ValueType.Merge);
+            expect(ws.getCell("D3").master).toBe(ws.getCell("C2"));
+        }
         
-        expect(ws.getCell("B3").value).toEqual(5);
-        expect(ws.getCell("B3").type).toEqual(Excel.ValueType.Merge);
-        expect(ws.getCell("B3").master).toBe(ws.getCell("A2"));
-        
-        // C2:D3
-        expect(ws.getCell("C2").value).toBeNull();
-        expect(ws.getCell("C2").type).toEqual(Excel.ValueType.Null);
-        expect(ws.getCell("C2").master).toBe(ws.getCell("C2"));
-        
-        expect(ws.getCell("D2").value).toBeNull();
-        expect(ws.getCell("D2").type).toEqual(Excel.ValueType.Merge);
-        expect(ws.getCell("D2").master).toBe(ws.getCell("C2"));
-        
-        expect(ws.getCell("C3").value).toBeNull();
-        expect(ws.getCell("C3").type).toEqual(Excel.ValueType.Merge);
-        expect(ws.getCell("C3").master).toBe(ws.getCell("C2"));
-        
-        expect(ws.getCell("D3").value).toBeNull();
-        expect(ws.getCell("D3").type).toEqual(Excel.ValueType.Merge);
-        expect(ws.getCell("D3").master).toBe(ws.getCell("C2"));
-        
-        expect(ws.getCell("A4").numFmt).toEqual(testValues.numFmt1);
-        expect(ws.getCell("A4").type).toEqual(Excel.ValueType.Number);
-        expect(ws.getCell("A4").border).toEqual(borders.thin);
-        expect(ws.getCell("C4").numFmt).toEqual(testValues.numFmt2);
-        expect(ws.getCell("C4").type).toEqual(Excel.ValueType.Number);
-        expect(ws.getCell("C4").border).toEqual(borders.doubleRed);
-        expect(ws.getCell("E4").border).toEqual(borders.thickRainbow);
-        
-        // test fonts and formats
-        expect(ws.getCell("A5").value).toEqual(testValues.str);
-        expect(ws.getCell("A5").type).toEqual(Excel.ValueType.String);
-        expect(ws.getCell("A5").font).toEqual(fonts.arialBlackUI14);
-        expect(ws.getCell("B5").value).toEqual(testValues.str);
-        expect(ws.getCell("B5").type).toEqual(Excel.ValueType.String);
-        expect(ws.getCell("B5").font).toEqual(fonts.broadwayRedOutline20);
-        expect(ws.getCell("C5").value).toEqual(testValues.str);
-        expect(ws.getCell("C5").type).toEqual(Excel.ValueType.String);
-        expect(ws.getCell("C5").font).toEqual(fonts.comicSansUdB16);
-        
-        expect(Math.abs(ws.getCell("D5").value - 1.6)).toBeLessThan(0.00000001);
-        expect(ws.getCell("D5").type).toEqual(Excel.ValueType.Number);
-        expect(ws.getCell("D5").numFmt).toEqual(testValues.numFmt1);
-        expect(ws.getCell("D5").font).toEqual(fonts.arialBlackUI14);
-        
-        expect(Math.abs(ws.getCell("E5").value - 1.6)).toBeLessThan(0.00000001);
-        expect(ws.getCell("E5").type).toEqual(Excel.ValueType.Number);
-        expect(ws.getCell("E5").numFmt).toEqual(testValues.numFmt2);
-        expect(ws.getCell("E5").font).toEqual(fonts.broadwayRedOutline20);
-        
-        expect(Math.abs(ws.getCell("F5").value.getTime() - testValues.date.getTime())).toBeLessThan(3);
-        expect(ws.getCell("F5").type).toEqual(Excel.ValueType.Date);
-        expect(ws.getCell("F5").numFmt).toEqual(testValues.numFmtDate);
-        expect(ws.getCell("F5").font).toEqual(fonts.comicSansUdB16);
-        
-        expect(ws.getRow(5).height).not.toBeDefined();
-        expect(ws.getRow(6).height).toEqual(42);
-        _.each(alignments, function(alignment, index) {
-            var rowNumber = 6
-            var colNumber = index + 1;
-            var cell = ws.getCell(rowNumber, colNumber);
-            expect(cell.value).toEqual(alignment.text);
-            expect(cell.alignment).toEqual(alignment.alignment);
-        });
-        
-        if (checkBadAlignments) {
-            _.each(badAlignments, function(alignment, index) {
-                var rowNumber = 7;
+        if (checkStyles) {
+            expect(ws.getCell("A4").numFmt).toEqual(testValues.numFmt1);
+            expect(ws.getCell("A4").type).toEqual(Excel.ValueType.Number);
+            expect(ws.getCell("A4").border).toEqual(borders.thin);
+            expect(ws.getCell("C4").numFmt).toEqual(testValues.numFmt2);
+            expect(ws.getCell("C4").type).toEqual(Excel.ValueType.Number);
+            expect(ws.getCell("C4").border).toEqual(borders.doubleRed);
+            expect(ws.getCell("E4").border).toEqual(borders.thickRainbow);
+            
+            // test fonts and formats
+            expect(ws.getCell("A5").value).toEqual(testValues.str);
+            expect(ws.getCell("A5").type).toEqual(Excel.ValueType.String);
+            expect(ws.getCell("A5").font).toEqual(fonts.arialBlackUI14);
+            expect(ws.getCell("B5").value).toEqual(testValues.str);
+            expect(ws.getCell("B5").type).toEqual(Excel.ValueType.String);
+            expect(ws.getCell("B5").font).toEqual(fonts.broadwayRedOutline20);
+            expect(ws.getCell("C5").value).toEqual(testValues.str);
+            expect(ws.getCell("C5").type).toEqual(Excel.ValueType.String);
+            expect(ws.getCell("C5").font).toEqual(fonts.comicSansUdB16);
+            
+            expect(Math.abs(ws.getCell("D5").value - 1.6)).toBeLessThan(0.00000001);
+            expect(ws.getCell("D5").type).toEqual(Excel.ValueType.Number);
+            expect(ws.getCell("D5").numFmt).toEqual(testValues.numFmt1);
+            expect(ws.getCell("D5").font).toEqual(fonts.arialBlackUI14);
+            
+            expect(Math.abs(ws.getCell("E5").value - 1.6)).toBeLessThan(0.00000001);
+            expect(ws.getCell("E5").type).toEqual(Excel.ValueType.Number);
+            expect(ws.getCell("E5").numFmt).toEqual(testValues.numFmt2);
+            expect(ws.getCell("E5").font).toEqual(fonts.broadwayRedOutline20);
+            
+            expect(Math.abs(ws.getCell("F5").value.getTime() - testValues.date.getTime())).toBeLessThan(dateAccuracy);
+            expect(ws.getCell("F5").type).toEqual(Excel.ValueType.Date);
+            expect(ws.getCell("F5").numFmt).toEqual(testValues.numFmtDate);
+            expect(ws.getCell("F5").font).toEqual(fonts.comicSansUdB16);
+            
+            expect(ws.getRow(5).height).not.toBeDefined();
+            expect(ws.getRow(6).height).toEqual(42);
+            _.each(alignments, function(alignment, index) {
+                var rowNumber = 6
                 var colNumber = index + 1;
                 var cell = ws.getCell(rowNumber, colNumber);
                 expect(cell.value).toEqual(alignment.text);
-                expect(cell.alignment).not.toBeDefined();
+                expect(cell.alignment).toEqual(alignment.alignment);
             });
+            
+            if (checkBadAlignments) {
+                _.each(badAlignments, function(alignment, index) {
+                    var rowNumber = 7;
+                    var colNumber = index + 1;
+                    var cell = ws.getCell(rowNumber, colNumber);
+                    expect(cell.value).toEqual(alignment.text);
+                    expect(cell.alignment).not.toBeDefined();
+                });
+            }
+            
+            var row8 = ws.getRow(8);
+            expect(row8.height).toEqual(40);
+            expect(row8.getCell(1).fill).toEqual(fills.blueWhiteHGrad);
+            expect(row8.getCell(2).fill).toEqual(fills.redDarkVertical);
+            expect(row8.getCell(3).fill).toEqual(fills.redGreenDarkTrellis);
+            expect(row8.getCell(4).fill).toEqual(fills.rgbPathGrad);
         }
-        
-        var row8 = ws.getRow(8);
-        expect(row8.height).toEqual(40);
-        expect(row8.getCell(1).fill).toEqual(fills.blueWhiteHGrad);
-        expect(row8.getCell(2).fill).toEqual(fills.redDarkVertical);
-        expect(row8.getCell(3).fill).toEqual(fills.redGreenDarkTrellis);
-        expect(row8.getCell(4).fill).toEqual(fills.rgbPathGrad);
     }
     
     it("creates sheets with correct names", function() {
@@ -298,7 +343,7 @@ describe("Workbook", function() {
         
         utils.cloneByModel(wb, Excel.Workbook)
             .then(function(wb2) {
-                checkTestBook(wb2);
+                checkTestBook(wb2, "model");
             })
             .catch(function(error) {
                 console.log(error.message);
@@ -309,7 +354,7 @@ describe("Workbook", function() {
             });
     });
     
-    it("serializes and deserializes to file properly", function(done) {
+    it("serializes and deserializes to xlsx file properly", function(done) {
         
         var wb = createTestBook(true);
         //fs.writeFileSync("./testmodel.json", JSON.stringify(wb.model, null, "    "));
@@ -320,7 +365,7 @@ describe("Workbook", function() {
                 return wb2.xlsx.readFile("./wb.test.xlsx");
             })
             .then(function(wb2) {
-                checkTestBook(wb2, true);
+                checkTestBook(wb2, "xlsx");
             })
             .finally(function() {
                 fs.unlink("./wb.test.xlsx", function(error) {
@@ -330,7 +375,7 @@ describe("Workbook", function() {
             });
     });
     
-    it("serializes and deserializes to file properly", function(done) {
+    it("serializes and deserializes a lot of sheets to xlsx file properly", function(done) {
         var wb = new Excel.Workbook();
         var numSheets = 90;
         // add numSheets sheets
@@ -357,6 +402,30 @@ describe("Workbook", function() {
                 });
             });
         
+    });
+    
+    it("serializes and deserializes to csv file properly", function(done) {
+        
+        var wb = createTestBook(true);
+        //fs.writeFileSync("./testmodel.json", JSON.stringify(wb.model, null, "    "));
+        
+        wb.csv.writeFile("./wb.test.csv")
+            .then(function() {
+                var wb2 = new Excel.Workbook();
+                return wb2.csv.readFile("./wb.test.csv")
+                    .then(function() {
+                        return wb2;
+                    });
+            })
+            .then(function(wb2) {
+                checkTestBook(wb2, "csv");
+            })
+            .finally(function() {
+                fs.unlink("./wb.test.csv", function(error) {
+                    expect(error && error.message).toBeFalsy();
+                    done();
+                });
+            });
     });
     
     it("stores shared string values properly", function() {
