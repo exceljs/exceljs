@@ -49,7 +49,7 @@ npm install exceljs
                     <li><a href="#fills">Fills</a></li>
                 </ul>
             </li>
-            <li><a href="#file-i-o">File I/O</a>
+            <li><a href="#file-io">File I/O</a>
                 <ul>
                     <li><a href="#xlsx">XLSX</a>
                         <ul>
