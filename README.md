@@ -319,6 +319,7 @@ ws.getCell("H1").alignment = { textRotation: "vertical" };
 ```
 
 **Valid Alignment Property Values**
+
 | horizontal | vertical    | wrapText | indent  | readingOrder | textRotation |
 | ---------- | ----------- | -------- | ------- | ------------ | ------------ |
 | left       | top         | true     | integer | rtl          | 0 to 90      |
