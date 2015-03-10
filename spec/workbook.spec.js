@@ -527,7 +527,7 @@ describe("Merge Cells", function() {
         expect(function() { ws.mergeCells("A1:D4"); }).toThrow();
     });
     
-    it("throws an error when file not found", function(done) {
+    it("throws an error when xlsx file not found", function(done) {
         var wb = new Excel.Workbook();
         var success = 0;
         wb.xlsx.readFile("./wb.doesnotexist.xlsx")
@@ -543,4 +543,22 @@ describe("Merge Cells", function() {
                 done();
             });
     })
+
+    it("throws an error when csv file not found", function(done) {
+        var wb = new Excel.Workbook();
+        var success = 0;
+        wb.csv.readFile("./wb.doesnotexist.csv")
+            .then(function(wb) {
+                success = 1;
+            })
+            .catch(function(error) {
+                success = 2;
+                // expect the right kind of error
+            })
+            .finally(function() {
+                expect(success).toEqual(2);
+                done();
+            });
+    })
+    
 });
