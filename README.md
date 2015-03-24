@@ -17,7 +17,7 @@ npm install exceljs
             <li>Fixed Vertical Middle Alignment Issue</li>
         </ul>
     </li>
-    <li><a href="#row-and-column-styles">Row and Column Styles</a></li>
+    <li><a href="#styles">Row and Column Styles</a></li>
     <li><a href="#rows">Worksheet.eachRow supports options</a></li>
     <li><a href="#rows">Row.eachCell supports options</a></li>
     <li><a href="#columns">New function Column.eachCell</a></li>
@@ -269,11 +269,11 @@ expect(worksheet.getCell("A4")).toBe(worksheet.getCell("B5").master);
 Cells, Rows and Columns each support a rich set of styles and formats that affect how the cells are displayed.
 
 Styles are set by assigning the following properties:
-* <a href="number-formats">numFmt</a>
-* <a href="fonts">font</a>
-* <a href="alignment">alignment</a>
-* <a href="borders">border</a>
-* <a href="fills">fill</a>
+* <a href="#number-formats">numFmt</a>
+* <a href="#fonts">font</a>
+* <a href="#alignment">alignment</a>
+* <a href="#borders">border</a>
+* <a href="#fills">fill</a>
 
 ```javascript
 // assign a style to a cell
@@ -763,4 +763,4 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.1.8   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li><li>Fixed filename case issue</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
 | 0.1.9   | <ul><li>Bug Fixes<ul><li>Added docProps files to satisfy Mac Excel users</li><li>Fixed filename case issue</li><li>Fixed worksheet id issue</li></ul></li><li><a href="#set-workbook-properties">Core Workbook Properties</a></li></ul> |
 | 0.1.10  | <ul><li>Bug Fixes<ul><li>Handles File Not Found error</li></ul></li><li><a href="#csv">CSV Files</a></li></ul> |
-
+| 0.1.11  | <ul><li>Bug Fixes<ul><li>Fixed Vertical Middle Alignment Issue</li></ul></li><li><a href="#styles">Row and Column Styles</a></li><li><a href="#rows">Worksheet.eachRow supports options</a></li><li><a href="#rows">Row.eachCell supports options</a></li><li><a href="#columns">New function Column.eachCell</a></li></ul> |
