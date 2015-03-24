@@ -9,8 +9,10 @@ var filename = process.argv[2];
 var wb = new Workbook()
 var ws = wb.addWorksheet("blort");
 
-var arialBlackUI14 = { name: "Arial Black", family: 2, size: 14, underline: true, italic: true };
-var comicSansUdB16 = { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true };
+var fonts = {
+    arialBlackUI14: { name: "Arial Black", family: 2, size: 14, underline: true, italic: true },
+    comicSansUdB16: { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true }
+};
 
 var alignments = [
     { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
@@ -63,25 +65,28 @@ var fills = {
 
 ws.columns = [
     { header: "Col 1", key:"key", width: 25 },
-    { header: "Col 2", key:"name", width: 25 },
+    { header: "Col 2", key:"name", width: 32 },
     { header: "Col 3", key:"age", width: 21 },
     { header: "Col 4", key:"addr1", width: 18 },
     { header: "Col 5", key:"addr2", width: 8 },
+    { header: "Col 6", width: 8 },
+    { header: "Col 7", width: 8 },
+    { header: "Col 8", width: 8, style: { font: fonts.comicSansUdB16, alignment: alignments[1].alignment } }
 ];
 
 ws.getCell("A2").value = 7;
 ws.getCell("B2").value = "Hello, World!";
-ws.getCell("B2").font = comicSansUdB16;
+ws.getCell("B2").font = fonts.comicSansUdB16;
 ws.getCell("B2").border = borders.thin;
 
 ws.getCell("C2").value = -5.55;
 ws.getCell("C2").numFmt = '"£"#,##0.00;[Red]\-"£"#,##0.00';
-ws.getCell("C2").font = arialBlackUI14;
+ws.getCell("C2").font = fonts.arialBlackUI14;
 
 ws.getCell("D2").value = 3.14;
 ws.getCell("D2").value = new Date();
 ws.getCell("D2").numFmt = "d-mmm-yyyy";
-ws.getCell("D2").font = comicSansUdB16;
+ws.getCell("D2").font = fonts.comicSansUdB16;
 ws.getCell("D2").border = borders.doubleRed;
 
 ws.getCell("E2").value = ["Hello", "World"].join(", ") + "!";
@@ -148,6 +153,13 @@ row12.getCell(3).fill = fills.redGreenDarkTrellis;
 row12.getCell(4).value = "RGB Path Gradient";
 row12.getCell(4).fill = fills.rgbPathGrad;
 
+// row and column styles
+ws.getRow(13).font = fonts.arialBlackUI14;
+ws.getCell("H12").value = "Foo";
+ws.getCell("G13").value = "Foo";
+ws.getCell("H13").value = "Bar";
+ws.getCell("I13").value = "Baz";
+ws.getCell("H14").value = "Baz";
 
 wb.xlsx.writeFile(filename)
     .then(function(){

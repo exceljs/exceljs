@@ -14,22 +14,15 @@
     <% if (cols) { %>
     <cols>
         <% _.each(cols, function(col) { %>
-        <col
-            min="<%=col.min%>"
-            max="<%=col.max%>"
-            width="<%=col.width%>"
-            <% if (col.style) { %> style="<%=col.style%>" <%  } %>
-            customWidth="1"/>
-        <% }); %>
+            <col min="<%=col.min%>" max="<%=col.max%>" width="<%=col.width%>"<% if (col.styleId) { %> style="<%=col.styleId%>" <%  } %> customWidth="1"/><% }); %>
     </cols>
     <% } %>
     
     <sheetData>
         <% _.each(rows, function(row) { %>
-            <row r="<%=row.number%>"<% if(row.height) {%> ht="<%=row.height%>" customHeight="1"<% } %> spans="<%=row.min%>:<%=row.max%>" x14ac:dyDescent="0.25">
+            <row r="<%=row.number%>"<% if(row.height) {%> ht="<%=row.height%>" customHeight="1"<% } %> spans="<%=row.min%>:<%=row.max%>"<% if (row.styleId) { %> s="<%=row.styleId%>" customFormat="1" <% } %> x14ac:dyDescent="0.25">
             <% _.each(row.cells, function(cell){ %>
-                <%=cell.xml%>
-            <% }); %>
+                <%=cell.xml%><% }); %>
             </row>
         <% }); %>
     </sheetData>

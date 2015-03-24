@@ -14,18 +14,21 @@ npm install exceljs
     <li>
         Bug Fixes
         <ul>
-            <li>Handles File Not Found error</li>
+            <li>Fixed Vertical Middle Alignment Issue</li>
         </ul>
     </li>
-    <li><a href="#csv">CSV Files</a></li>
+    <li><a href="#row-and-column-styles">Row and Column Styles</a></li>
+    <li><a href="#rows">Worksheet.eachRow supports options</a></li>
+    <li><a href="#rows">Row.eachCell supports options</a></li>
+    <li><a href="#columns">New function Column.eachCell</a></li>
 </ul>
 
-# Coming Soon
+# Backlog
 
 <ul>
-    <li>Column and Row Styles</li>
     <li>XLSX Streaming Writer</li>
     <li>XLSX Streaming Parser</li>
+    <li>Parsing CSV with Headers</li>
 </ul>
 
 # Contents
@@ -35,17 +38,19 @@ npm install exceljs
         <a href="#interface">Interface</a>
         <ul>
             <li><a href="#create-a-workbook">Create a Workbook</a></li>
+            <li><a href="#set-workbook-properties">Set Workbook Properties</a></li>
             <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
             <li><a href="#access-worksheets">Access Worksheets</a></li>
             <li><a href="#columns">Columns</a></li>
             <li><a href="#rows">Rows</a></li>
             <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
             <li><a href="#merged-cells">Merged Cells</a></li>
-            <li><a href="#cell-styles">Cell Styles</a>
+            <li><a href="#styles">Styles</a>
                 <ul>
                     <li><a href="#number-formats">Number Formats</a></li>
                     <li><a href="#fonts">Fonts</a></li>
                     <li><a href="#alignment">Alignment</a></li>
+                    <li><a href="#borders">Borders</a></li>
                     <li><a href="#fills">Fills</a></li>
                 </ul>
             </li>
@@ -68,8 +73,8 @@ npm install exceljs
         </ul>
     </li>
     <li><a href="#value-types">Value Types</a></li>
-    <li><a href="#release-history">Release History</a></li>
     <li><a href="#known-issues">Known Issues</a></li>
+    <li><a href="#release-history">Release History</a></li>
 </ul>
 
 # Interface
@@ -143,6 +148,19 @@ dobCol.header = ["Date of Birth", "A.K.A. D.O.B."];
 dobCol.key = "dob";
 
 dobCol.width = 15;
+
+// iterate over all current cells in this column
+dobCol.eachCell(function(cell, rowNumber) {
+    // ...
+});
+
+// iterate over all current cells in this column including empty cells
+dobCol.eachCell({ includeEmpty: true }, function(cell, rowNumber) {
+    // ...
+});
+
+
+
 ```
 
 ## Rows
@@ -200,13 +218,22 @@ row.values = {
 };
 
 // Iterate over all rows that have values in a worksheet
-// Note: interface change - argument order is now row, rowNumber
 worksheet.eachRow(function(row, rowNumber) {
+    console.log("Row " + rowNumber + " = " + JSON.stringify(row.values));
+});
+
+// Iterate over all rows (including empty rows) in a worksheet
+worksheet.eachRow({ includeEmpty: true }, function(row, rowNumber) {
     console.log("Row " + rowNumber + " = " + JSON.stringify(row.values));
 });
 
 // Iterate over all non-null cells in a row
 row.eachCell(function(cell, colNumber) {
+    console.log("Cell " + colNumber + " = " + cell.value);
+});
+
+// Iterate over all cells in a row (including empty cells)
+row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
     console.log("Cell " + colNumber + " = " + cell.value);
 });
 ```
@@ -237,7 +264,49 @@ expect(worksheet.getCell("A4").value).toBe(worksheet.getCell("B5").value);
 expect(worksheet.getCell("A4")).toBe(worksheet.getCell("B5").master);
 ```
 
-## Cell Styles
+## Styles
+
+Cells, Rows and Columns each support a rich set of styles and formats that affect how the cells are displayed.
+
+Styles are set by assigning the following properties:
+* <a href="number-formats">numFmt</a>
+* <a href="fonts">font</a>
+* <a href="alignment">alignment</a>
+* <a href="borders">border</a>
+* <a href="fills">fill</a>
+
+```javascript
+// assign a style to a cell
+ws.getCell("A1").numFmt = "0.00%";
+
+// Apply styles to worksheet columns
+ws.columnscolumns = [
+    { header: "Id", key: "id", width: 10 },
+    { header: "Name", key: "name", width: 32, style: { font: { name: "Arial Black" } } },
+    { header: "D.O.B.", key: "DOB", width: 10, style: { numFmt: "dd/mm/yyyy" } }
+];
+
+// Set Column 3 to Currency Format
+ws.getColumn(3).numFmt = "£#,##0;[Red]-£#,##0";
+
+// Set Row 2 to Comic Sans.
+ws.getRow(2).font = { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true };
+```
+
+When a style is applied to a row or column, it will be applied to all currently existing cells in that row or column.
+ Also, any new cell that is created will inherit its initial styles from the row and column it belongs to.
+
+If a cell's row and column both define a specific style (e.g. font), the cell will use the row style over the column style.
+ However if the row and column define different styles (e.g. column.numFmt and row.font), the cell will inherit the font from the row and the numFmt from the column.
+
+
+
+Caveat: All the above properties (with the exception of numFmt, which is a string), are JS object structures.
+ If the same style object is assigned to more than one spreadsheet entity, then each entity will share the same style object.
+ If the style object is later modified before the spreadsheet is serialized, then all entities referencing that style object will be modified too.
+ This behaviour is intended to prioritize performance by reducing the number of JS objects created.
+ If you want the style objects to be independent, you will need to clone them before assigning them.
+ Also, by default, when a document is read from file (or stream) if spreadsheet entities share similar styles, then they will reference the same style object too.
 
 ### Number Formats
 
@@ -423,8 +492,7 @@ ws.getCell("A2").fill = {
 | fgColor  | N        | Specifies the pattern foreground color. Default is black. |
 | bgColor  | N        | Specifies the pattern background color. Default is white. |
 
-##### Valid Pattern Types
-
+**Valid Pattern Types**
 * none
 * solid
 * darkVertical

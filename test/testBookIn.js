@@ -8,8 +8,10 @@ var filename = process.argv[2];
 
 var wb = new Excel.Workbook();
 
-var arialBlackUI14 = { name: "Arial Black", family: 2, size: 14, underline: true, italic: true };
-var comicSansUdB16 = { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true };
+var fonts = {
+    arialBlackUI14: { name: "Arial Black", family: 2, size: 14, underline: true, italic: true },
+    comicSansUdB16: { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true }
+};
 
 var alignments = [
     { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
@@ -97,17 +99,17 @@ wb.xlsx.readFile(filename)
         
         assert(ws, "Expected to find a worksheet called blort");
         
-        var cols = ws.columns;
-        assert(cols[0] && (cols[0].width == 25), "Expected column width of col 1 to be 25, was " + cols[0].width);
+        var column1 = ws.getColumn(1);
+        assert(column1 && (column1.width == 25), "Expected column width of col 1 to be 25, was " + column1.width);
         
         assert(ws.getCell("A2").value == 7, "Expected A2 == 7");
         assert(ws.getCell("B2").value == "Hello, World!", 'Expected B2 == "Hello, World!", was "' + ws.getCell("B2").value + '"');
-        assertFont(ws.getCell("B2").font, comicSansUdB16, "B2");
+        assertFont(ws.getCell("B2").font, fonts.comicSansUdB16, "B2");
         assertEqual('B2', 'border', ws.getCell("B2").border, borders.thin);
         
         assert(Math.abs(ws.getCell("C2").value + 5.55) < 0.000001, "Expected C2 == -5.55, was" + ws.getCell("C2").value);
         assert(ws.getCell("C2").numFmt == '"£"#,##0.00;[Red]\-"£"#,##0.00', 'Expected C2 numFmt to be "£"#,##0.00;[Red]\-"£"#,##0.00, was ' + ws.getCell("C2").numFmt);
-        assertFont(ws.getCell("C2").font, arialBlackUI14, "C2");
+        assertFont(ws.getCell("C2").font, fonts.arialBlackUI14, "C2");
         
         assert(ws.getCell("D2").value instanceof Date, "expected D2 to be a Date, was " + ws.getCell("D2").value);
         assertEqual('D2', 'border', ws.getCell("D2").border, borders.doubleRed);
@@ -143,6 +145,18 @@ wb.xlsx.readFile(filename)
         assert(_.isEqual(row12.getCell(3).fill, fills.redGreenDarkTrellis), 'Expected [12,3] fill to be ' + JSON.stringify(fills.redGreenDarkTrellis) + ', was ' + JSON.stringify(row12.getCell(3).fill));
         assert(_.isEqual(row12.getCell(4).fill, fills.rgbPathGrad), 'Expected [12,4] fill to be ' + JSON.stringify(fills.rgbPathGrad) + ', was ' + JSON.stringify(row12.getCell(4).fill));
         
+        assertFont(ws.getRow(13).font, fonts.arialBlackUI14, "Row 13");
+        assertFont(ws.getCell("H12").font, fonts.comicSansUdB16, "H12");
+        assertFont(ws.getCell("G13").font, fonts.arialBlackUI14, "G13");
+        assertFont(ws.getCell("H13").font, fonts.arialBlackUI14, "H13");
+        assertFont(ws.getCell("I13").font, fonts.arialBlackUI14, "I13");
+        assertFont(ws.getCell("H14").font, fonts.comicSansUdB16, "H14");
+        
+        assert(ws.getCell("H12").value == "Foo", 'Expected H12 to be "Foo", was "' + ws.getCell("H12").value + '"');
+        assert(ws.getCell("G13").value == "Foo", 'Expected G13 to be "Foo", was "' + ws.getCell("G13").value + '"');
+        assert(ws.getCell("H13").value == "Bar", 'Expected H13 to be "Bar", was "' + ws.getCell("H13").value + '"');
+        assert(ws.getCell("I13").value == "Baz", 'Expected I13 to be "Baz", was "' + ws.getCell("I13").value + '"');
+        assert(ws.getCell("H14").value == "Baz", 'Expected H14 to be "Baz", was "' + ws.getCell("H14").value + '"');
         
         assert(passed, "Something went wrong", "All tests passed!");
     });

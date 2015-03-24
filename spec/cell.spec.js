@@ -2,20 +2,31 @@ var _ = require("underscore");
 var Cell = require("../lib/cell");
 var Enums = require("../lib/enums");
 
-function createRowMock() {
-    return {
-        cells: {},
-        getCell: function(address) {
-            return this.cells[address];
-        }
-    };
+var mock = {
+    row: function() {
+        return {
+            cells: {},
+            getCell: function(address) {
+                return this.cells[address];
+            }
+        };
+    },
+    column: function() {
+        return {};
+    }
 }
+var fonts = {
+    arialBlackUI14: { name: "Arial Black", family: 2, size: 14, underline: true, italic: true },
+    comicSansUdB16: { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true },
+    broadwayRedOutline20: { name: "Broadway", family: 5, size: 20, outline: true, color: { argb:"FFFF0000"}}
+};
 
 describe("Cell", function() {
     it("stores values", function() {
-        var row = createRowMock();        
+        var row = mock.row();
+        var column = mock.column();
         
-        row.cells.A1 = new Cell(row, "A1");
+        row.cells.A1 = new Cell(row, column, "A1");
         expect(row.cells.A1.type).toEqual(Enums.ValueType.Null);
         
         expect(row.cells.A1.value = 5).toEqual(5);
@@ -52,18 +63,22 @@ describe("Cell", function() {
         expect(row.cells.A1.type).toEqual(Enums.ValueType.Null);
     });
     it("validates options on construction", function() {
-        var row = createRowMock();
+        var row = mock.row();
+        var column = mock.column();
         expect(function() { new Cell(); }).toThrow();
         expect(function() { new Cell(row); }).toThrow();
         expect(function() { new Cell(row, "A"); }).toThrow();
         expect(function() { new Cell(row, "Hello, World!"); }).toThrow();
-        expect(function() { new Cell(null, "A1"); }).toThrow();
+        expect(function() { new Cell(null, null, "A1"); }).toThrow();
+        expect(function() { new Cell(row, null, "A1"); }).toThrow();
+        expect(function() { new Cell(null, column, "A1"); }).toThrow();
     });
     it("merges", function() {
-        var row = createRowMock();        
+        var row = mock.row();
+        var column = mock.column();
         
-        row.cells.A1 = new Cell(row, "A1");
-        row.cells.A2 = new Cell(row, "A2");
+        row.cells.A1 = new Cell(row, column, "A1");
+        row.cells.A2 = new Cell(row, column, "A2");
         
         row.cells.A1.value = 5;
         row.cells.A2.value = "Hello, World!";
@@ -100,25 +115,27 @@ describe("Cell", function() {
     });
     
     it("upgrades from string to hyperlink", function() {
-        var row = createRowMock();
+        var row = mock.row();
+        var column = mock.column();
         
         var strValue = "www.link.com";
         var linkValue = "http://www.link.com";
         
-        row.cells.A1 = new Cell(row, "A1");
+        row.cells.A1 = new Cell(row, column, "A1");
         row.cells.A1.value = strValue;
         
         row.cells.A1._upgradeToHyperlink(linkValue);
         
         expect(row.cells.A1.type).toEqual(Enums.ValueType.Hyperlink);
     });
-    
+
     it("doesn't upgrade from non-string to hyperlink", function() {
-        var row = createRowMock();        
+        var row = mock.row();
+        var column = mock.column();
         
         var linkValue = "http://www.link.com";
-
-        row.cells.A1 = new Cell(row, "A1");
+        
+        row.cells.A1 = new Cell(row, column, "A1");
         
         // null
         row.cells.A1._upgradeToHyperlink(linkValue);
@@ -146,5 +163,23 @@ describe("Cell", function() {
         
         // cleanup
         row.cells.A1.value = null;
+    });
+    
+    it("inherits row and column styles", function() {
+        var row = mock.row();
+        var column = mock.column();
+        
+        column.style = {
+            font: fonts.arialBlackUI14
+        };
+        
+        row.cells.A1 = new Cell(row, column, "A1");
+        expect(row.cells.A1.font).toEqual(fonts.arialBlackUI14);
+        
+        row.style = {
+            font: fonts.broadwayRedOutline20
+        };
+        row.cells.A1 = new Cell(row, column, "A1");
+        expect(row.cells.A1.font).toEqual(fonts.broadwayRedOutline20);
     });
 });

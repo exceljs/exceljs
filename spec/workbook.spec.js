@@ -3,82 +3,88 @@ var _ = require("underscore");
 var Excel = require("../excel");
 var utils = require("./testutils");
 
+// =============================================================================
+// Test Values and Styles
+
+var testValues = {
+    num: 7,
+    str: "Hello, World!",
+    str2: '<a href="www.whatever.com">Talk to the H&</a>',
+    date: new Date(),
+    formulas: [
+        {formula: "A1", result: 7},
+        {formula: "A2"}
+    ],
+    hyperlink: {hyperlink: "http://www.link.com", text: "www.link.com"},
+    numFmt1: "# ?/?",
+    numFmt2: "[Green]#,##0 ;[Red](#,##0)",
+    numFmtDate: "dd, mmm yyyy"
+};
+var fonts = {
+    arialBlackUI14: { name: "Arial Black", family: 2, size: 14, underline: true, italic: true },
+    comicSansUdB16: { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true },
+    broadwayRedOutline20: { name: "Broadway", family: 5, size: 20, outline: true, color: { argb:"FFFF0000"}}
+};
+var alignments = [
+    { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
+    { text: "Middle Centre", alignment: { horizontal: "center", vertical: "middle" } },
+    { text: "Bottom Right", alignment: { horizontal: "right", vertical: "bottom" } },
+    { text: "Wrap Text", alignment: { wrapText: true } },
+    { text: "Indent 1", alignment: { indent: 1 } },
+    { text: "Indent 2", alignment: { indent: 2 } },
+    { text: "Rotate 15", alignment: { horizontal: "right", vertical: "bottom", textRotation: 15 } },
+    { text: "Rotate 30", alignment: { horizontal: "right", vertical: "bottom", textRotation: 30 } },
+    { text: "Rotate 45", alignment: { horizontal: "right", vertical: "bottom", textRotation: 45 } },
+    { text: "Rotate 60", alignment: { horizontal: "right", vertical: "bottom", textRotation: 60 } },
+    { text: "Rotate 75", alignment: { horizontal: "right", vertical: "bottom", textRotation: 75 } },
+    { text: "Rotate 90", alignment: { horizontal: "right", vertical: "bottom", textRotation: 90 } },
+    { text: "Rotate -15", alignment: { horizontal: "right", vertical: "bottom", textRotation: -55 } },
+    { text: "Rotate -30", alignment: { horizontal: "right", vertical: "bottom", textRotation: -30 } },
+    { text: "Rotate -45", alignment: { horizontal: "right", vertical: "bottom", textRotation: -45 } },
+    { text: "Rotate -60", alignment: { horizontal: "right", vertical: "bottom", textRotation: -60 } },
+    { text: "Rotate -75", alignment: { horizontal: "right", vertical: "bottom", textRotation: -75 } },
+    { text: "Rotate -90", alignment: { horizontal: "right", vertical: "bottom", textRotation: -90 } },
+    { text: "Vertical Text", alignment: { horizontal: "right", vertical: "bottom", textRotation: "vertical" } }
+];
+var badAlignments = [
+    { text: "Rotate -91", alignment: { textRotation: -91 } },
+    { text: "Rotate 91", alignment: { textRotation: 91 } },
+    { text: "Indent -1", alignment: { indent: -1 } },
+    { text: "Blank", alignment: {  } }
+];
+
+var borders = {
+    thin: { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}},
+    doubleRed: { top: {style:"double", color: {argb:"FFFF0000"}}, left: {style:"double", color: {argb:"FFFF0000"}}, bottom: {style:"double", color: {argb:"FFFF0000"}}, right: {style:"double", color: {argb:"FFFF0000"}}},
+    thickRainbow: {
+        top: {style:"double", color: {argb:"FFFF00FF"}},
+        left: {style:"double", color: {argb:"FF00FFFF"}},
+        bottom: {style:"double", color: {argb:"FF00FF00"}},
+        right: {style:"double", color: {argb:"FF00FF"}},
+        diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true},
+    }
+};
+
+var fills = {
+    redDarkVertical: {type: "pattern", pattern:"darkVertical", fgColor:{argb:"FFFF0000"}},
+    redGreenDarkTrellis: {type: "pattern", pattern:"darkTrellis",
+        fgColor:{argb:"FFFF0000"}, bgColor:{argb:"FF00FF00"}},
+    blueWhiteHGrad: {type: "gradient", gradient: "angle", degree: 0,
+        stops: [{position:0, color:{argb:"FF0000FF"}},{position:1, color:{argb:"FFFFFFFF"}}]},
+    rgbPathGrad: {type: "gradient", gradient: "path", center:{left:0.5,top:0.5},
+        stops: [
+            {position:0, color:{argb:"FFFF0000"}},
+            {position:0.5, color:{argb:"FF00FF00"}},
+            {position:1, color:{argb:"FF0000FF"}}
+        ]
+    }
+};
+
+// =============================================================================
+// Tests
+
 describe("Workbook", function() {
-    var testValues = {
-        num: 7,
-        str: "Hello, World!",
-        str2: '<a href="www.whatever.com">Talk to the H&</a>',
-        date: new Date(),
-        formulas: [
-            {formula: "A1", result: 7},
-            {formula: "A2"}
-        ],
-        hyperlink: {hyperlink: "http://www.link.com", text: "www.link.com"},
-        numFmt1: "# ?/?",
-        numFmt2: "[Green]#,##0 ;[Red](#,##0)",
-        numFmtDate: "dd, mmm yyyy"
-    };
-    var fonts = {
-        arialBlackUI14: { name: "Arial Black", family: 2, size: 14, underline: true, italic: true },
-        comicSansUdB16: { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true },
-        broadwayRedOutline20: { name: "Broadway", family: 5, size: 20, outline: true, color: { argb:"FFFF0000"}}
-    };
-    var alignments = [
-        { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
-        { text: "Middle Centre", alignment: { horizontal: "center", vertical: "middle" } },
-        { text: "Bottom Right", alignment: { horizontal: "right", vertical: "bottom" } },
-        { text: "Wrap Text", alignment: { wrapText: true } },
-        { text: "Indent 1", alignment: { indent: 1 } },
-        { text: "Indent 2", alignment: { indent: 2 } },
-        { text: "Rotate 15", alignment: { horizontal: "right", vertical: "bottom", textRotation: 15 } },
-        { text: "Rotate 30", alignment: { horizontal: "right", vertical: "bottom", textRotation: 30 } },
-        { text: "Rotate 45", alignment: { horizontal: "right", vertical: "bottom", textRotation: 45 } },
-        { text: "Rotate 60", alignment: { horizontal: "right", vertical: "bottom", textRotation: 60 } },
-        { text: "Rotate 75", alignment: { horizontal: "right", vertical: "bottom", textRotation: 75 } },
-        { text: "Rotate 90", alignment: { horizontal: "right", vertical: "bottom", textRotation: 90 } },
-        { text: "Rotate -15", alignment: { horizontal: "right", vertical: "bottom", textRotation: -55 } },
-        { text: "Rotate -30", alignment: { horizontal: "right", vertical: "bottom", textRotation: -30 } },
-        { text: "Rotate -45", alignment: { horizontal: "right", vertical: "bottom", textRotation: -45 } },
-        { text: "Rotate -60", alignment: { horizontal: "right", vertical: "bottom", textRotation: -60 } },
-        { text: "Rotate -75", alignment: { horizontal: "right", vertical: "bottom", textRotation: -75 } },
-        { text: "Rotate -90", alignment: { horizontal: "right", vertical: "bottom", textRotation: -90 } },
-        { text: "Vertical Text", alignment: { horizontal: "right", vertical: "bottom", textRotation: "vertical" } }
-    ];
-    var badAlignments = [
-        { text: "Rotate -91", alignment: { textRotation: -91 } },
-        { text: "Rotate 91", alignment: { textRotation: 91 } },
-        { text: "Indent -1", alignment: { indent: -1 } },
-        { text: "Blank", alignment: {  } }
-    ];
-
-    var borders = {
-        thin: { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}},
-        doubleRed: { top: {style:"double", color: {argb:"FFFF0000"}}, left: {style:"double", color: {argb:"FFFF0000"}}, bottom: {style:"double", color: {argb:"FFFF0000"}}, right: {style:"double", color: {argb:"FFFF0000"}}},
-        thickRainbow: {
-            top: {style:"double", color: {argb:"FFFF00FF"}},
-            left: {style:"double", color: {argb:"FF00FFFF"}},
-            bottom: {style:"double", color: {argb:"FF00FF00"}},
-            right: {style:"double", color: {argb:"FF00FF"}},
-            diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true},
-        }
-    };
-
-    var fills = {
-        redDarkVertical: {type: "pattern", pattern:"darkVertical", fgColor:{argb:"FFFF0000"}},
-        redGreenDarkTrellis: {type: "pattern", pattern:"darkTrellis",
-            fgColor:{argb:"FFFF0000"}, bgColor:{argb:"FF00FF00"}},
-        blueWhiteHGrad: {type: "gradient", gradient: "angle", degree: 0,
-            stops: [{position:0, color:{argb:"FF0000FF"}},{position:1, color:{argb:"FFFFFFFF"}}]},
-        rgbPathGrad: {type: "gradient", gradient: "path", center:{left:0.5,top:0.5},
-            stops: [
-                {position:0, color:{argb:"FFFF0000"}},
-                {position:0.5, color:{argb:"FF00FF00"}},
-                {position:1, color:{argb:"FF0000FF"}}
-            ]
-        }
-    };
-
-    
+   
     var createTestBook = function(checkBadAlignments) {
         var wb = new Excel.Workbook()
         var ws = wb.addWorksheet("blort");
@@ -375,6 +381,56 @@ describe("Workbook", function() {
             });
     });
     
+    it("serializes row styles and columns properly", function(done) {
+        var wb = new Excel.Workbook();
+        var ws = wb.addWorksheet("blort");
+        
+        ws.columns = [
+            { header: "A1", width: 10 },
+            { header: "B1", width: 20, style: { font: fonts.comicSansUdB16, alignment: alignments[1].alignment } },
+            { header: "C1", width: 30 },
+        ];
+        
+        ws.getRow(2).font = fonts.broadwayRedOutline20;
+        
+        ws.getCell("A2").value = "A2";
+        ws.getCell("B2").value = "B2";
+        ws.getCell("C2").value = "C2";
+        ws.getCell("A3").value = "A3";
+        ws.getCell("B3").value = "B3";
+        ws.getCell("C3").value = "C3";
+        
+        wb.xlsx.writeFile("./wb.test.xlsx")
+            .then(function() {
+                var wb2 = new Excel.Workbook();
+                return wb2.xlsx.readFile("./wb.test.xlsx");
+            })
+            .then(function(wb2) {
+                var ws2 = wb2.getWorksheet("blort");
+                _.each(["A1", "B1", "C1", "A2", "B2", "C2", "A3", "B3", "C3"], function(address) {
+                    expect(ws2.getCell(address).value).toEqual(address);
+                });
+                expect(ws2.getCell("B1").font).toEqual(fonts.comicSansUdB16);
+                expect(ws2.getCell("B1").alignment).toEqual(alignments[1].alignment);
+                expect(ws2.getCell("A2").font).toEqual(fonts.broadwayRedOutline20);
+                expect(ws2.getCell("B2").font).toEqual(fonts.broadwayRedOutline20);
+                expect(ws2.getCell("C2").font).toEqual(fonts.broadwayRedOutline20);                
+                expect(ws2.getCell("B3").font).toEqual(fonts.comicSansUdB16);
+                expect(ws2.getCell("B3").alignment).toEqual(alignments[1].alignment);
+                
+                expect(ws2.getColumn(2).font).toEqual(fonts.comicSansUdB16);
+                expect(ws2.getColumn(2).alignment).toEqual(alignments[1].alignment);
+                
+                expect(ws2.getRow(2).font).toEqual(fonts.broadwayRedOutline20);
+            })
+            .finally(function() {
+                fs.unlink("./wb.test.xlsx", function(error) {
+                    expect(error && error.message).toBeFalsy();
+                    done();
+                });
+            });
+    });
+    
     it("serializes and deserializes a lot of sheets to xlsx file properly", function(done) {
         var wb = new Excel.Workbook();
         var numSheets = 90;
@@ -401,7 +457,6 @@ describe("Workbook", function() {
                     done();
                 });
             });
-        
     });
     
     it("serializes and deserializes to csv file properly", function(done) {
@@ -542,7 +597,7 @@ describe("Merge Cells", function() {
                 expect(success).toEqual(2);
                 done();
             });
-    })
+    });
 
     it("throws an error when csv file not found", function(done) {
         var wb = new Excel.Workbook();
@@ -559,6 +614,6 @@ describe("Merge Cells", function() {
                 expect(success).toEqual(2);
                 done();
             });
-    })
+    });
     
 });

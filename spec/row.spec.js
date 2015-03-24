@@ -8,6 +8,14 @@ function createSheetMock() {
         _keys: {},
         _cells: {},
         rows: [],
+        columns: [],
+        getColumn: function(colNumber) {
+            var column = this.columns[colNumber-1];
+            if (!column) {
+                column = this.columns[colNumber-1] = new Column(this, colNumber);
+            }
+            return column;
+        },
         getRow: function(rowNumber) {
             var row = this.rows[rowNumber-1];
             if (!row) {
@@ -117,6 +125,27 @@ describe("Row", function() {
         expect(row1.values).toEqual([undefined, 9, "Dobbie", now]);
     });
     
+    it("iterates over cells", function() {
+        var sheet = createSheetMock();
+        var row1 = sheet.getRow(1);
+        
+        row1.getCell(1).value = 1;
+        row1.getCell(2).value = 2;
+        row1.getCell(4).value = 4;
+        row1.getCell(6).value = 6;
+        row1.eachCell(function(cell, colNumber) {
+            expect(colNumber).not.toEqual(3);
+            expect(colNumber).not.toEqual(5);
+            expect(cell.value).toEqual(colNumber);
+        });
+        
+        var count = 1;
+        row1.eachCell({includeEmpty: true}, function(cell, colNumber) {
+            expect(colNumber).toEqual(count++);
+        });
+        expect(count).toEqual(7);
+    });
+    
     it("builds a model", function() {
         var sheet = createSheetMock();
         var row1 = sheet.getRow(1);
@@ -135,7 +164,8 @@ describe("Row", function() {
             number: 1,
             min: 1,
             max: 4,
-            height: 50
+            height: 50,
+            style: {}
         });
         
         var row2 = sheet.getRow(2);
