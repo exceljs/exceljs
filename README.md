@@ -29,6 +29,7 @@ npm install exceljs
     <li>XLSX Streaming Writer</li>
     <li>XLSX Streaming Parser</li>
     <li>Parsing CSV with Headers</li>
+    <li>Use WeakMap if Available</li>
 </ul>
 
 # Contents
