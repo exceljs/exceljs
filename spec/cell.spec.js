@@ -182,4 +182,8 @@ describe("Cell", function() {
         row.cells.A1 = new Cell(row, column, "A1");
         expect(row.cells.A1.font).toEqual(fonts.broadwayRedOutline20);
     });
+    
+    it("has effective types", function() {
+        throw new Error("To be done...");
+    });
 });

@@ -1,5 +1,5 @@
 var _ = require("underscore");
-var utils = require("../lib/utils");
+var utils = require("../lib/utils/utils");
 
 describe("utils", function() {
     it("encodes xml text", function() {
