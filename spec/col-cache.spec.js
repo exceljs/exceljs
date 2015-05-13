@@ -1,5 +1,5 @@
 var _ = require("underscore");
-var colCache = require("../lib/colcache");
+var colCache = require("../lib/utils/col-cache");
 
 describe("colCache", function() {
 

@@ -1,5 +1,5 @@
 var _ = require("underscore");
-var Dimensions = require("../lib/dimensions");
+var Dimensions = require("../lib/utils/dimensions");
 
 describe("Dimensions", function() {
     
@@ -66,5 +66,59 @@ describe("Dimensions", function() {
         expect(d.tl).toEqual("B2");
         expect(d.br).toEqual("D4");
         expect(d.toString()).toEqual("B2:D4");
+    });
+    
+    it("detects intersections", function() {
+        var C3F6 = new Dimensions("C3:F6");
+        
+        // touching at corners
+        expect(C3F6.intersects(new Dimensions("A1:B2"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("G1:H2"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("A7:B8"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("G7:H8"))).not.toBeTruthy();
+        
+        // Adjacent to edges
+        expect(C3F6.intersects(new Dimensions("A1:H2"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("A1:B8"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("G1:H8"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("A7:H8"))).not.toBeTruthy();
+        
+        // 1 cell margin
+        expect(C3F6.intersects(new Dimensions("A1:H1"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("A1:A8"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("G1:G8"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("A8:G8"))).not.toBeTruthy();
+        
+        // Adjacent at corners
+        expect(C3F6.intersects(new Dimensions("A1:B3"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("A1:C2"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("F1:H2"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("G1:H3"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("A6:B8"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("A7:C8"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("F7:H8"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("G6:H8"))).not.toBeTruthy();
+        
+        // Adjacent at edges
+        expect(C3F6.intersects(new Dimensions("A4:B5"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("D1:E2"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("D7:E8"))).not.toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("G4:H8"))).not.toBeTruthy();
+        
+        // intersecting at corners
+        expect(C3F6.intersects(new Dimensions("A1:C3"))).toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("F1:H3"))).toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("A6:C8"))).toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("F6:H8"))).toBeTruthy();
+        
+        // slice through middle
+        expect(C3F6.intersects(new Dimensions("A4:H5"))).toBeTruthy();
+        expect(C3F6.intersects(new Dimensions("D1:E8"))).toBeTruthy();
+        
+        // inside
+        expect(C3F6.intersects(new Dimensions("D4:E5"))).toBeTruthy();
+        
+        // outside
+        expect(C3F6.intersects(new Dimensions("A1:H8"))).toBeTruthy();
     });
 });

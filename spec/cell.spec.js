@@ -184,6 +184,35 @@ describe("Cell", function() {
     });
     
     it("has effective types", function() {
-        throw new Error("To be done...");
+        var row = mock.row();
+        var column = mock.column();
+        
+        row.cells.A1 = new Cell(row, column, "A1");
+        expect(row.cells.A1.type).toEqual(Enums.ValueType.Null);
+        expect(row.cells.A1.effectiveType).toEqual(Enums.ValueType.Null);
+        
+        row.cells.A1.value = 5;
+        expect(row.cells.A1.type).toEqual(Enums.ValueType.Number);
+        expect(row.cells.A1.effectiveType).toEqual(Enums.ValueType.Number);
+        
+        row.cells.A1.value = "Hello, World!";
+        expect(row.cells.A1.type).toEqual(Enums.ValueType.String);
+        expect(row.cells.A1.effectiveType).toEqual(Enums.ValueType.String);
+        
+        row.cells.A1.value = new Date();
+        expect(row.cells.A1.type).toEqual(Enums.ValueType.Date);
+        expect(row.cells.A1.effectiveType).toEqual(Enums.ValueType.Date);
+        
+        row.cells.A1.value = {formula: "A2", result: 5};
+        expect(row.cells.A1.type).toEqual(Enums.ValueType.Formula);
+        expect(row.cells.A1.effectiveType).toEqual(Enums.ValueType.Number);
+        
+        row.cells.A1.value = {formula: "A2", result: "Hello, World!"};
+        expect(row.cells.A1.type).toEqual(Enums.ValueType.Formula);
+        expect(row.cells.A1.effectiveType).toEqual(Enums.ValueType.String);
+        
+        row.cells.A1.value = {hyperlink: "http://www.link.com", text: "www.link.com"};
+        expect(row.cells.A1.type).toEqual(Enums.ValueType.Hyperlink);
+        expect(row.cells.A1.effectiveType).toEqual(Enums.ValueType.Hyperlink);
     });
 });

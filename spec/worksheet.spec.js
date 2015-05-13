@@ -1,6 +1,6 @@
 var _ = require("underscore");
 var Excel = require("../excel");
-var Dimensions = require("../lib/dimensions");
+var Dimensions = require("../lib/utils/dimensions");
 
 var numFmts = {
     numFmt1: "# ?/?",
