@@ -10,6 +10,9 @@ npm install exceljs
 
 # New Features!
 
+Streaming Writer
+lastRow
+
 <ul>
     <li>
         Bug Fixes

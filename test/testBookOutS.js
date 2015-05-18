@@ -8,7 +8,7 @@ var WorkbookWriter = Excel.stream.xlsx.WorkbookWriter;
 
 var filename = process.argv[2];
 
-var wb = new WorkbookWriter({filename: filename, useSharedStrings: false});
+var wb = new WorkbookWriter({filename: filename, useSharedStrings: false, useStyles: false});
 var ws = wb.addWorksheet("blort");
 
 var fonts = {
