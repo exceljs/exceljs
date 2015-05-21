@@ -2,6 +2,7 @@ var fs = require('fs');
 var _ = require('underscore');
 var Promise = require('bluebird');
 
+var utils = require('./utils/utils');
 var HrStopwatch = require('./utils/hr-stopwatch');
 
 var Excel = require('../excel');
@@ -25,16 +26,19 @@ var strings = process.argv.length > 5 ? process.argv[5] : "own";
 var styles = process.argv.length > 6 ? process.argv[6] : "styled";
 
 var useStream = (writer === "stream");
-var useSharedStrings = (strings === "shared");
-var useStyles = (styles === "styled");
+
+var options = {
+    writer: (useStream ? "stream" : "document"),
+    filename: filename,
+    useSharedStrings: (strings === "shared"),
+    useStyles: (styles === "styled")
+};
+console.log(JSON.stringify(options, null, "  "));
 
 var stopwatch = new HrStopwatch();
 stopwatch.start();
 
-var wb = useStream ?
-    new WorkbookWriter({filename: filename, useSharedStrings: useSharedStrings, useStyles: useStyles}) :
-    new Workbook();
-    
+var wb = useStream ? new WorkbookWriter(options) : new Workbook();
 var ws = wb.addWorksheet("blort");
 
 var fonts = {
@@ -53,47 +57,38 @@ ws.columns = [
     { header: "Col 8", key:"num3", width: 32, style: { font: fonts.comicSansUdB16 } }
 ];
 
-function randomName(length) {
-    length = length || 5;
-    var text = [];
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for( var i=0; i < length; i++ )
-        text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
-
-    return text.join('');
-}
-function randomNum(d) {
-    return Math.round(Math.random()*d);
-}
-
 ws.getRow(1).font = fonts.arialBlackUI14;
-var i = 0;
-var deferred = Promise.defer();
-var timer = setInterval(function() {
-    if (i++ < count) {
-        ws.addRow({
-            key: i,
-            name: randomName(5),
-            age: randomNum(100),
-            addr1: randomName(16),
-            addr2: randomName(10),
-            num1: randomNum(10000),
-            num2: randomNum(100000),
-            num3: randomNum(1000000)
-        }).commit();
-    } else {
-        clearInterval(timer);
-        deferred.resolve();
-    }
-}, 2);
 
-deferred.promise.then(function() {
-        return useStream ?
-            wb.commit() :
-            wb.xlsx.writeFile(filename);    
-    })
+var t1 = 0;
+var t2 = 0;
+var t2s = [];
+var sw = new HrStopwatch();
+for (var i = 0; i < count; i++) {
+    sw.start();
+    var row = ws.addRow({
+        key: i,
+        name: utils.randomName(5),
+        age: utils.randomNum(100),
+        addr1: utils.randomName(16),
+        addr2: utils.randomName(10),
+        num1: utils.randomNum(10000),
+        num2: utils.randomNum(100000),
+        num3: utils.randomNum(1000000)
+    });
+    var lap = sw.span;
+    row.commit();
+    var end = sw.span;
+    
+    t1 += lap;
+    t2 += (end - lap);
+    t2s.push(Math.round((end - lap)*1000000));
+}
+console.log("addRow avg " + (t1 * 1000000 / count) + "\xB5s");
+console.log("commit avg " + (t2 * 1000000 / count) + "\xB5s");
+sw.start();
+(useStream ? wb.commit() : wb.xlsx.writeFile(filename, options))
     .then(function(){
+        console.log("Commit/writeFile: " + sw);
         stopwatch.stop();        
         console.log("Done.");
         console.log("Time: " + stopwatch);

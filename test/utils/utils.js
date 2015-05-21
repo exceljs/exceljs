@@ -49,5 +49,20 @@ var main = module.exports = {
         });
         
         return deferred.promise;
+    },
+    
+    randomName: function(length) {
+        length = length || 5;
+        var text = [];
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    
+        for( var i=0; i < length; i++ )
+            text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
+    
+        return text.join('');
+    },
+    randomNum: function(d) {
+        return Math.round(Math.random()*d);
     }
+
 };

@@ -34,7 +34,21 @@ HrStopwatch.prototype = {
         return finish - start;
     },
     
-    toString: function() {
-        return "" + this.span + " seconds";
+    toString: function(format) {
+        switch (format) {
+            case "ms":
+                return "" + this.ms + "ms";
+            case "microseconds":
+                return "" + this.microseconds + "\xB5s";
+            default:
+                return "" + this.span + " seconds";
+        }
+    },
+    get ms() {
+        return Math.round(this.span * 1000);
+    },
+    get microseconds() {
+        return Math.round(this.span * 1000000);
     }
+    
 };
