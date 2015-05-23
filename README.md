@@ -10,20 +10,35 @@ npm install exceljs
 
 # New Features!
 
-Streaming Writer
-lastRow
-
 <ul>
     <li>
-        Bug Fixes
+        <a href="#streaming-xlxs-writer">Streaming XLSX Writer</a>
         <ul>
-            <li>Fixed Vertical Middle Alignment Issue</li>
+            <li>
+                At long last ExcelJS can support writing massive XLSX files in a scalable
+                memory efficient manner. Performance has been optimised and even smaller spreadsheets
+                can be faster to write than the document writer. Options have been added to control
+                the use of shared strings and styles as these can both have a considerable effect on
+                performance
+            </li>
         </ul>
     </li>
-    <li><a href="#styles">Row and Column Styles</a></li>
-    <li><a href="#rows">Worksheet.eachRow supports options</a></li>
-    <li><a href="#rows">Row.eachCell supports options</a></li>
-    <li><a href="#columns">New function Column.eachCell</a></li>
+    <li>
+        <a href="#rows">Worksheet.lastRow</a>
+        <ul>
+            <li>Access the last editable row in a worksheet.</li>
+        </ul>
+    </li>
+    <li>
+        <a href="#rows">Row.commit()</a>
+        <ul>
+            <li>
+                For streaming writers, this method commits the row (and any previous rows) to the stream.
+                Committed rows will no longer be editable (and are typically deleted from the worksheet object).
+                For Document type workbooks, this method has no effect.
+            </li>
+        </ul>
+    </li>
 </ul>
 
 # Backlog
@@ -187,6 +202,9 @@ worksheet.addRow(rowValues);
 // Get a row object. If it doesn't already exist, a new empty one will be returned
 var row = worksheet.getRow(5);
 
+// Get the last editable row in a worksheet (or undefined if there are none)
+var row = worksheet.lastRow;
+
 // Set a specific row height
 row.height = 42.5;
 
@@ -240,6 +258,9 @@ row.eachCell(function(cell, colNumber) {
 row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
     console.log("Cell " + colNumber + " = " + cell.value);
 });
+
+// Commit a completed row to stream
+row.commit();
 ```
 
 ## Handling Individual Cells
@@ -718,6 +739,92 @@ The following value types are supported.
 | Excel.ValueType.Date      | 4         | A Date value      | new Date()  |
 | Excel.ValueType.Hyperlink | 5         | A hyperlink       | { text: "www.mylink.com", hyperlink: "http://www.mylink.com" } |
 | Excel.ValueType.Formula   | 6         | A formula         | { formula: "A1+A2", result: 7 } |
+
+### Streaming I/O
+
+The File I/O documented above requires that an entire workbook is built up in memory before the file can be written.
+ While convenient, it can limit the size of the document due to the amount of memory required.
+
+A streaming writer (or reader) processes the workbook or worksheet data as it is generated,
+ converting it into file form as it goes. Typically this is much more efficient on memory as the final
+ memory footprint and even intermediate memory footprints are much more compact than with the document version,
+ especially when you consider that the row and cell objects are disposed once they are committed.
+
+#### Streaming XLSX
+
+##### Streaming XLSX Writer
+
+The streaming XLSX writer is available in the ExcelJS.stream.xlsx namespace.
+
+The constructor takes an optional options object with the following fields:
+
+| Field | Description |
+| ----- | ----------- |
+| stream | Specifies a writable stream to write the XLSX workbook to. |
+| filename | If stream not specified, this field specifies the path to a file to write the XLSX workbook to. |
+| useSharedStrings | Specifies whether to use shared strings in the workbook. Default is false |
+| useStyles | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
+
+If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object
+ that will store the contents of the XLSX workbook in memory. 
+ This StreamBuf object, which can be accessed via the property workbook.stream, can be used to either
+ access the bytes directly by stream.read() or to pipe the contents to another stream.
+
+```javascript
+// construct a streaming XLSX workbook writer with styles and shared strings
+var options = {
+    filename: "./streamed-workbook.xlsx",
+    useStyles: true,
+    useSharedStrings: true
+};
+var workbook = new Excel.stream.xlsx.WorkbookWriter(options);
+```
+
+In general, the interface to the streaming XLSX writer is the same as the Document workbook (and worksheets)
+ described above, in fact the row, cell and style objects are the same.
+
+However there are some differences...
+
+**Construction**
+
+As seen above, the WorkbookWriter will typically require the output stream or file to be specified in the constructor.
+
+**Committing Data**
+
+When a worksheet row is ready, it should be committed so that the row object and contents can be freed.
+ Typically this would be done as each row is added...
+
+```javascript
+worksheet.addRow({
+   id: i,
+   name: theName,
+   etc: someOtherDetail
+}).commit();
+```
+
+The reason the WorksheetWriter does not commit rows as they are added is to allow cells to be merged across rows:
+```javascript
+worksheet.mergeCells("A1:B2");
+worksheet.getCell("A1").value = "I am merged";
+worksheet.getCell("C1").value = "I am not";
+worksheet.getCell("C2").value = "Neither am I";
+worksheet.getRow(2).commit(); // now rows 1 and two are committed.
+```
+
+As each worksheet is completed, it must also be committed:
+
+```javascript
+// Finished adding data. Commit the worksheet
+worksheet.commit();
+```
+
+To complete the XLSX document, the workbook must be committed. If any worksheet in a workbook are uncommitted,
+ they will be committed automatically as part of the workbook commit.
+
+```javascript
+// Finished the workbook.
+workbook.commit();
+```
 
 # Interface Changes
 
