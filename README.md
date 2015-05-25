@@ -726,20 +726,6 @@ The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write 
 Dates are formatted using the npm module [moment](https://www.npmjs.com/package/moment).
  If no dateFormat is supplied, moment.ISO_8601 is used.
 
-# Value Types
-
-The following value types are supported.
-
-| Enum Name                 | Enum(*)   | Description       | Example Value |
-| ------------------------- | --------- | ----------------- | ------------- |
-| Excel.ValueType.Null      | 0         | No value.         | null |
-| Excel.ValueType.Merge     | 1         | N/A               | N/A |
-| Excel.ValueType.Number    | 2         | A numerical value | 3.14 |
-| Excel.ValueType.String    | 3         | A text value      | "Hello, World!" |
-| Excel.ValueType.Date      | 4         | A Date value      | new Date()  |
-| Excel.ValueType.Hyperlink | 5         | A hyperlink       | { text: "www.mylink.com", hyperlink: "http://www.mylink.com" } |
-| Excel.ValueType.Formula   | 6         | A formula         | { formula: "A1+A2", result: 7 } |
-
 ### Streaming I/O
 
 The File I/O documented above requires that an entire workbook is built up in memory before the file can be written.
@@ -834,6 +820,20 @@ To complete the XLSX document, the workbook must be committed. If any worksheet 
 // Finished the workbook.
 workbook.commit();
 ```
+
+# Value Types
+
+The following value types are supported.
+
+| Enum Name                 | Enum(*)   | Description       | Example Value |
+| ------------------------- | --------- | ----------------- | ------------- |
+| Excel.ValueType.Null      | 0         | No value.         | null |
+| Excel.ValueType.Merge     | 1         | N/A               | N/A |
+| Excel.ValueType.Number    | 2         | A numerical value | 3.14 |
+| Excel.ValueType.String    | 3         | A text value      | "Hello, World!" |
+| Excel.ValueType.Date      | 4         | A Date value      | new Date()  |
+| Excel.ValueType.Hyperlink | 5         | A hyperlink       | { text: "www.mylink.com", hyperlink: "http://www.mylink.com" } |
+| Excel.ValueType.Formula   | 6         | A formula         | { formula: "A1+A2", result: 7 } |
 
 # Interface Changes
 
