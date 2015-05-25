@@ -119,9 +119,9 @@ describe("Workbook", function() {
             })
             .then(function(wb2) {
                 for (i = 1; i <= numSheets; i++) {
-                    var ws = wb.getWorksheet("sheet" + i);
-                    expect(ws).toBeDefined();
-                    expect(ws.getCell("A1").value).toEqual(i);
+                    var ws2 = wb2.getWorksheet("sheet" + i);
+                    expect(ws2).toBeDefined();
+                    expect(ws2.getCell("A1").value).toEqual(i);
                 }
             })
             .finally(function() {

@@ -121,7 +121,7 @@ describe("WorkbookWriter", function() {
             });
     });
     
-    xit("serializes and deserializes a lot of sheets to xlsx file properly", function(done) {
+    it("serializes and deserializes a lot of sheets to xlsx file properly", function(done) {
         var wb = new Excel.stream.xlsx.WorkbookWriter({filename: "./wbw.test.xlsx"});
         var numSheets = 90;
         // add numSheets sheets
@@ -129,16 +129,16 @@ describe("WorkbookWriter", function() {
             var ws = wb.addWorksheet("sheet" + i);
             ws.getCell("A1").value = i;
         }
-        wb.xlsx.writeFile("./wbw.test.xlsx")
+        wb.commit()
             .then(function() {
                 var wb2 = new Excel.Workbook();
                 return wb2.xlsx.readFile("./wbw.test.xlsx");
             })
             .then(function(wb2) {
                 for (i = 1; i <= numSheets; i++) {
-                    var ws = wb.getWorksheet("sheet" + i);
-                    expect(ws).toBeDefined();
-                    expect(ws.getCell("A1").value).toEqual(i);
+                    var ws2 = wb2.getWorksheet("sheet" + i);
+                    expect(ws2).toBeDefined();
+                    expect(ws2.getCell("A1").value).toEqual(i);
                 }
             })
             .finally(function() {
