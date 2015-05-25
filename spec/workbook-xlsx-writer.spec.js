@@ -6,7 +6,7 @@ var utils = require("../lib/utils/utils");
 
 describe("WorkbookWriter", function() {
        
-    xit("creates sheets with correct names", function() {
+    it("creates sheets with correct names", function() {
         var wb = new Excel.stream.xlsx.WorkbookWriter();
         var ws1 = wb.addWorksheet("Hello, World!");
         expect(ws1.name).toEqual("Hello, World!");
@@ -15,21 +15,48 @@ describe("WorkbookWriter", function() {
         expect(ws2.name).toMatch(/sheet\d+/);
     });
     
-    xit("serializes to xlsx file properly", function(done) {
-        
-        var wb = testutils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, {filename: "./wbw.test.xlsx"});
+    it("serializes to xlsx file properly", function(done) {
+        var options = {
+            filename: "./wbw.test.xlsx",
+            useStyles: true
+        };
+        var wb = testutils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
         //fs.writeFileSync("./testmodel.json", JSON.stringify(wb.model, null, "    "));
         
         wb.commit()
             .then(function() {
                 var wb2 = new Excel.Workbook();
-                return wb2.xlsx.readFile("./wb.test.xlsx");
+                return wb2.xlsx.readFile("./wbw.test.xlsx");
             })
             .then(function(wb2) {
-                checkTestBook(wb2, "xlsx");
+                testutils.checkTestBook(wb2, "xlsx", true);
             })
             .finally(function() {
-                fs.unlink("./wb.test.xlsx", function(error) {
+                fs.unlink("./wbw.test.xlsx", function(error) {
+                    expect(error && error.message).toBeFalsy();
+                    done();
+                });
+            });
+    });
+    
+    it("serializes to xlsx file without styles properly", function(done) {
+        var options = {
+            filename: "./wbw.test.xlsx",
+            useStyles: false
+        };
+        var wb = testutils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
+        //fs.writeFileSync("./testmodel.json", JSON.stringify(wb.model, null, "    "));
+        
+        wb.commit()
+            .then(function() {
+                var wb2 = new Excel.Workbook();
+                return wb2.xlsx.readFile("./wbw.test.xlsx");
+            })
+            .then(function(wb2) {
+                testutils.checkTestBook(wb2, "xlsx", false);
+            })
+            .finally(function() {
+                fs.unlink("./wbw.test.xlsx", function(error) {
                     expect(error && error.message).toBeFalsy();
                     done();
                 });

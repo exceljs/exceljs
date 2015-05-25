@@ -216,7 +216,7 @@ var utils = module.exports = {
             expect(font[name]).not.toBeDefined();
         });
     },
-    checkTestBook: function(wb, docType) {
+    checkTestBook: function(wb, docType, useStyles) {
         var sheetName;
         var checkFormulas, checkMerges, checkStyles, checkBadAlignments;
         var dateAccuracy;
@@ -225,8 +225,8 @@ var utils = module.exports = {
                 sheetName = "blort";
                 checkFormulas = true;
                 checkMerges = true;
-                checkStyles = true;
-                checkBadAlignments = true;
+                checkStyles = useStyles;
+                checkBadAlignments = useStyles;
                 dateAccuracy = 3;
                 break;
             case "model":

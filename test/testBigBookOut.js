@@ -54,7 +54,9 @@ ws.columns = [
     { header: "Col 5", key:"addr2", width: 8 },
     { header: "Col 6", key:"num1", width: 8 },
     { header: "Col 7", key:"num2", width: 8 },
-    { header: "Col 8", key:"num3", width: 32, style: { font: fonts.comicSansUdB16 } }
+    { header: "Col 8", key:"num3", width: 32, style: { font: fonts.comicSansUdB16 } },
+    { header: "Col 9", key:"date", width: 12 },
+    
 ];
 
 ws.getRow(1).font = fonts.arialBlackUI14;
@@ -63,6 +65,7 @@ var t1 = 0;
 var t2 = 0;
 var t2s = [];
 var sw = new HrStopwatch();
+var today = (new Date()).getTime();
 for (var i = 0; i < count; i++) {
     sw.start();
     var row = ws.addRow({
@@ -73,7 +76,8 @@ for (var i = 0; i < count; i++) {
         addr2: utils.randomName(10),
         num1: utils.randomNum(10000),
         num2: utils.randomNum(100000),
-        num3: utils.randomNum(1000000)
+        num3: utils.randomNum(1000000),
+        date: new Date(today + i * 86400000)
     });
     var lap = sw.span;
     row.commit();

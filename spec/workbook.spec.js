@@ -44,7 +44,7 @@ describe("Workbook", function() {
                 return wb2.xlsx.readFile("./wb.test.xlsx");
             })
             .then(function(wb2) {
-                testutils.checkTestBook(wb2, "xlsx");
+                testutils.checkTestBook(wb2, "xlsx", true);
             })
             .finally(function() {
                 fs.unlink("./wb.test.xlsx", function(error) {
