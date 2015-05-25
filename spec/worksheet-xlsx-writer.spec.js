@@ -26,7 +26,7 @@ var fills = {
         fgColor:{argb:"FFFF0000"}, bgColor:{argb:"FF00FF00"}},
 };
 
-describe("Worksheet", function() {
+xdescribe("Worksheet", function() {
     describe("Values", function() {
         it("stores values properly", function() {
             var wb = new Excel.Workbook()
