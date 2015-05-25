@@ -750,6 +750,15 @@ A streaming writer (or reader) processes the workbook or worksheet data as it is
  memory footprint and even intermediate memory footprints are much more compact than with the document version,
  especially when you consider that the row and cell objects are disposed once they are committed.
 
+The interface to the streaming workbook and worksheet is almost the same as the document versions with a few minor practical differences:
+* Once a worksheet is added to a workbook, it cannot be removed.
+* Once a row is committed, it is no longer accessible since it will have been dropped from the worksheet.
+* unMergeCells() is not supported.
+
+Note that it is possible to build the entire workbook without committing any rows.
+ When the workbook is committed, all added worksheets (including all uncommitted rows) will be automatically committed.
+ However in this case, little will have been gained over the Document version.
+
 #### Streaming XLSX
 
 ##### Streaming XLSX Writer
