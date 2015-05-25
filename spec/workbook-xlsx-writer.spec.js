@@ -1,7 +1,8 @@
 var fs = require("fs");
 var _ = require("underscore");
 var Excel = require("../excel");
-var utils = require("./testutils");
+var testutils = require("./testutils");
+var utils = require("../lib/utils/utils");
 
 describe("WorkbookWriter", function() {
        
@@ -16,7 +17,7 @@ describe("WorkbookWriter", function() {
     
     xit("serializes to xlsx file properly", function(done) {
         
-        var wb = utils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, {filename: "./wbw.test.xlsx"});
+        var wb = testutils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, {filename: "./wbw.test.xlsx"});
         //fs.writeFileSync("./testmodel.json", JSON.stringify(wb.model, null, "    "));
         
         wb.commit()
@@ -44,8 +45,8 @@ describe("WorkbookWriter", function() {
         var ws = wb.addWorksheet("blort");
         
         var colStyle = {
-            font: utils.styles.fonts.comicSansUdB16,
-            alignment: utils.styles.namedAlignments.middleCentre
+            font: testutils.styles.fonts.comicSansUdB16,
+            alignment: testutils.styles.namedAlignments.middleCentre
         };
         ws.columns = [
             { header: "A1", width: 10 },
@@ -53,7 +54,7 @@ describe("WorkbookWriter", function() {
             { header: "C1", width: 30 },
         ];
         
-        ws.getRow(2).font = utils.styles.fonts.broadwayRedOutline20;
+        ws.getRow(2).font = testutils.styles.fonts.broadwayRedOutline20;
         
         ws.getCell("A2").value = "A2";
         ws.getCell("B2").value = "B2";
@@ -62,7 +63,7 @@ describe("WorkbookWriter", function() {
         ws.getCell("B3").value = "B3";
         ws.getCell("C3").value = "C3";
         
-        wb.commit().delay(100)
+        wb.commit()
             .then(function() {
                 var wb2 = new Excel.Workbook();
                 return wb2.xlsx.readFile("./wbw.test.xlsx");
@@ -72,25 +73,24 @@ describe("WorkbookWriter", function() {
                 _.each(["A1", "B1", "C1", "A2", "B2", "C2", "A3", "B3", "C3"], function(address) {
                     expect(ws2.getCell(address).value).toEqual(address);
                 });
-                expect(ws2.getCell("B1").font).toEqual(utils.styles.fonts.comicSansUdB16);
-                expect(ws2.getCell("B1").alignment).toEqual(utils.styles.namedAlignments.middleCentre);
-                expect(ws2.getCell("A2").font).toEqual(utils.styles.fonts.broadwayRedOutline20);
-                expect(ws2.getCell("B2").font).toEqual(utils.styles.fonts.broadwayRedOutline20);
-                expect(ws2.getCell("C2").font).toEqual(utils.styles.fonts.broadwayRedOutline20);                
-                expect(ws2.getCell("B3").font).toEqual(utils.styles.fonts.comicSansUdB16);
-                expect(ws2.getCell("B3").alignment).toEqual(utils.styles.namedAlignments.middleCentre);
+                expect(ws2.getCell("B1").font).toEqual(testutils.styles.fonts.comicSansUdB16);
+                expect(ws2.getCell("B1").alignment).toEqual(testutils.styles.namedAlignments.middleCentre);
+                expect(ws2.getCell("A2").font).toEqual(testutils.styles.fonts.broadwayRedOutline20);
+                expect(ws2.getCell("B2").font).toEqual(testutils.styles.fonts.broadwayRedOutline20);
+                expect(ws2.getCell("C2").font).toEqual(testutils.styles.fonts.broadwayRedOutline20);                
+                expect(ws2.getCell("B3").font).toEqual(testutils.styles.fonts.comicSansUdB16);
+                expect(ws2.getCell("B3").alignment).toEqual(testutils.styles.namedAlignments.middleCentre);
                 
-                expect(ws2.getColumn(2).font).toEqual(utils.styles.fonts.comicSansUdB16);
-                expect(ws2.getColumn(2).alignment).toEqual(utils.styles.namedAlignments.middleCentre);
+                expect(ws2.getColumn(2).font).toEqual(testutils.styles.fonts.comicSansUdB16);
+                expect(ws2.getColumn(2).alignment).toEqual(testutils.styles.namedAlignments.middleCentre);
                 
-                expect(ws2.getRow(2).font).toEqual(utils.styles.fonts.broadwayRedOutline20);
+                expect(ws2.getRow(2).font).toEqual(testutils.styles.fonts.broadwayRedOutline20);
             })
             .finally(function() {
-                //fs.unlink("./wbw.test.xlsx", function(error) {
-                //    expect(error && error.message).toBeFalsy();
-                //    done();
-                //});
-                done();
+                fs.unlink("./wbw.test.xlsx", function(error) {
+                    expect(error && error.message).toBeFalsy();
+                    done();
+                });
             });
     });
     
