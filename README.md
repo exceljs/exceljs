@@ -11,14 +11,15 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li>
-        <a href="https://pbs.twimg.com/profile_images/2933552754/fc8c70829ee964c5542ae16453503d37.jpeg">One Billion Cells</a>
+    <li>Bug Fixes
         <ul>
             <li>
-                Achievement Unlocked: A simple test using ExcelJS has created a spreadsheet with 1,000,000,000 cells.
-                Made using random data with 100,000,000 rows of 10 cells per row. I cannot validate the file yet as
-                Excel will not open it and I have yet to implement the streaming reader but I have every confidence
-                that it is good since 1,000,000 rows loads ok.
+                <a href="https://github.com/guyonroche/exceljs/issues/18">Merge Cell Styles</a>
+                <ul>
+                    <li>
+                        Merged cells now persist (and parse) their styles.
+                    </li>
+                </ul>
             </li>
         </ul>
     </li>
@@ -290,14 +291,25 @@ expect(worksheet.getCell("C3").type).toEqual(Excel.ValueType.Date);
 // merge a range of cells
 worksheet.mergeCells("A4:B5");
 
+// ... merged cells are linked
+worksheet.getCell("B5").value = "Hello, World!";
+expect(worksheet.getCell("B5").value).toBe(worksheet.getCell("A4").value);
+expect(worksheet.getCell("B5").master).toBe(worksheet.getCell("A4"));
+
+// ... merged cells share the same style object
+expect(worksheet.getCell("B5").style).toBe(worksheet.getCell("A4").style);
+worksheet.getCell("B5").style.font = myFonts.arial;
+expect(worksheet.getCell("A4").style.font).toBe(myFonts.arial);
+
+// unmerging the cells breaks the style links
+worksheet.unMergeCells("A4");
+expect(worksheet.getCell("B5").style).not.toBe(worksheet.getCell("A4").style);
+expect(worksheet.getCell("B5").style.font).not.toBe(myFonts.arial);
+
 // merge by top-left, bottom-right
 worksheet.mergeCells("G10", "H11");
 worksheet.mergeCells(10,11,12,13); // top,left,bottom,right
 
-// ... merged cells are linked
-worksheet.getCell("B5").value = "Hello, World!";
-expect(worksheet.getCell("A4").value).toBe(worksheet.getCell("B5").value);
-expect(worksheet.getCell("A4")).toBe(worksheet.getCell("B5").master);
 ```
 
 ## Styles
