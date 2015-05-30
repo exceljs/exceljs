@@ -46,6 +46,9 @@ describe("Workbook", function() {
             .then(function(wb2) {
                 testutils.checkTestBook(wb2, "xlsx", true);
             })
+            .catch(function(error) {
+                expect(error && error.message).toBeFalsy();
+            })
             .finally(function() {
                 fs.unlink("./wb.test.xlsx", function(error) {
                     expect(error && error.message).toBeFalsy();
@@ -96,6 +99,9 @@ describe("Workbook", function() {
                 
                 expect(ws2.getRow(2).font).toEqual(testutils.styles.fonts.broadwayRedOutline20);
             })
+            .catch(function(error) {
+                expect(error && error.message).toBeFalsy();
+            })
             .finally(function() {
                 fs.unlink("./wb.test.xlsx", function(error) {
                     expect(error && error.message).toBeFalsy();
@@ -124,6 +130,9 @@ describe("Workbook", function() {
                     expect(ws2.getCell("A1").value).toEqual(i);
                 }
             })
+            .catch(function(error) {
+                expect(error && error.message).toBeFalsy();
+            })
             .finally(function() {
                 fs.unlink("./wb.test.xlsx", function(error) {
                     expect(error && error.message).toBeFalsy();
@@ -147,6 +156,9 @@ describe("Workbook", function() {
             })
             .then(function(wb2) {
                 testutils.checkTestBook(wb2, "csv");
+            })
+            .catch(function(error) {
+                expect(error && error.message).toBeFalsy();
             })
             .finally(function() {
                 fs.unlink("./wb.test.csv", function(error) {
@@ -251,27 +263,102 @@ describe("Workbook", function() {
 });
 
 describe("Merge Cells", function() {
-    it("references the same top-left value", function() {
+    it("serialises and deserialises properly", function() {
         var wb = new Excel.Workbook()
         var ws = wb.addWorksheet("blort");
         
         // initial values
-        ws.getCell("A1").value = "A1";
-        ws.getCell("B1").value = "B1";
-        ws.getCell("A2").value = "A2";
         ws.getCell("B2").value = "B2";
         
-        ws.mergeCells("A1:B2");
+        ws.mergeCells("B2:C3");
         
-        expect(ws.getCell("A1").value).toEqual("A1");
-        expect(ws.getCell("B1").value).toEqual("A1");
-        expect(ws.getCell("A2").value).toEqual("A1");
-        expect(ws.getCell("B2").value).toEqual("A1");
-        
-        expect(ws.getCell("A1").type).toEqual(Excel.ValueType.String);
-        expect(ws.getCell("B1").type).toEqual(Excel.ValueType.Merge);
-        expect(ws.getCell("A2").type).toEqual(Excel.ValueType.Merge);
-        expect(ws.getCell("B2").type).toEqual(Excel.ValueType.Merge);
+        wb.xlsx.writeFile("./wb.test.xlsx")
+            .then(function() {
+                var wb2 = new Excel.Workbook();
+                return wb2.xlsx.readFile("./wb.test.xlsx");
+            })
+            .then(function(wb2) {
+                var ws2 = wb2.getWorksheet("blort");
+                
+                expect(ws2.getCell("B2").value).toEqual("B2");
+                expect(ws2.getCell("B3").value).toEqual("B2");
+                expect(ws2.getCell("C2").value).toEqual("B2");
+                expect(ws2.getCell("C3").value).toEqual("B2");
+                
+                expect(ws2.getCell("B2").type).toEqual(Excel.ValueType.String);
+                expect(ws2.getCell("B3").type).toEqual(Excel.ValueType.Merge);
+                expect(ws2.getCell("C2").type).toEqual(Excel.ValueType.Merge);
+                expect(ws2.getCell("C3").type).toEqual(Excel.ValueType.Merge);
+            })
+            .catch(function(error) {
+                expect(error && error.message).toBeFalsy();
+            })
+            .finally(function() {
+                fs.unlink("./wb.test.xlsx", function(error) {
+                    expect(error && error.message).toBeFalsy();
+                    done();
+                });
+            });
     });
 
+    it("serialises and deserialises styles", function() {
+        var wb = new Excel.Workbook()
+        var ws = wb.addWorksheet("blort");
+        
+        // initial values
+        var B2 = ws.getCell("B2");
+        B2.value = 5;
+        B2.style.font = testutils.styles.fonts.broadwayRedOutline20;
+        B2.style.border = testutils.styles.borders.doubleRed;
+        B2.style.fill = testutils.styles.fills.blueWhiteHGrad;
+        B2.style.alignment = testutils.styles.namedAlignments.middleCentre;
+        B2.style.numFmt = testutils.styles.numFmts.numFmt1;
+        
+        // expecting styles to be copied (see worksheet spec)
+        ws.mergeCells("B2:C3");
+        
+        wb.xlsx.writeFile("./wb.test.xlsx")
+            .then(function() {
+                var wb2 = new Excel.Workbook();
+                return wb2.xlsx.readFile("./wb.test.xlsx");
+            })
+            .then(function(wb2) {
+                var ws2 = wb2.getWorksheet("blort");
+                
+                expect(ws2.getCell("B2").font).toEqual(testutils.styles.fonts.broadwayRedOutline20);
+                expect(ws2.getCell("B2").border).toEqual(testutils.styles.borders.doubleRed);
+                expect(ws2.getCell("B2").fill).toEqual(testutils.styles.fills.blueWhiteHGrad);
+                expect(ws2.getCell("B2").alignment).toEqual(testutils.styles.namedAlignments.middleCentre);
+                expect(ws2.getCell("B2").numFmt).toEqual(testutils.styles.numFmts.numFmt1);
+                
+                expect(ws2.getCell("B3").font).toEqual(testutils.styles.fonts.broadwayRedOutline20);
+                expect(ws2.getCell("B3").border).toEqual(testutils.styles.borders.doubleRed);
+                expect(ws2.getCell("B3").fill).toEqual(testutils.styles.fills.blueWhiteHGrad);
+                expect(ws2.getCell("B3").alignment).toEqual(testutils.styles.namedAlignments.middleCentre);
+                expect(ws2.getCell("B3").numFmt).toEqual(testutils.styles.numFmts.numFmt1);
+                
+                expect(ws2.getCell("C2").font).toEqual(testutils.styles.fonts.broadwayRedOutline20);
+                expect(ws2.getCell("C2").border).toEqual(testutils.styles.borders.doubleRed);
+                expect(ws2.getCell("C2").fill).toEqual(testutils.styles.fills.blueWhiteHGrad);
+                expect(ws2.getCell("C2").alignment).toEqual(testutils.styles.namedAlignments.middleCentre);
+                expect(ws2.getCell("C2").numFmt).toEqual(testutils.styles.numFmts.numFmt1);
+                
+                expect(ws2.getCell("C3").font).toEqual(testutils.styles.fonts.broadwayRedOutline20);
+                expect(ws2.getCell("C3").border).toEqual(testutils.styles.borders.doubleRed);
+                expect(ws2.getCell("C3").fill).toEqual(testutils.styles.fills.blueWhiteHGrad);
+                expect(ws2.getCell("C3").alignment).toEqual(testutils.styles.namedAlignments.middleCentre);
+                expect(ws2.getCell("C3").numFmt).toEqual(testutils.styles.numFmts.numFmt1);
+                
+            })
+            .catch(function(error) {
+                expect(error && error.message).toBeFalsy();
+            })
+            .finally(function() {
+                fs.unlink("./wb.test.xlsx", function(error) {
+                    expect(error && error.message).toBeFalsy();
+                    done();
+                });
+            });
+    });
+    
 });
