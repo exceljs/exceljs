@@ -28,7 +28,6 @@ var fills = {
 ws.getCell("B2").value = "Hello";
 ws.mergeCells("B2:C2");
 ws.getCell("B2").border = borders.thin;
-ws.getCell("C2").border = borders.thin;
 
 ws.getCell("E2").value = "World";
 ws.mergeCells("E2:F3");
@@ -36,6 +35,11 @@ ws.getCell("E2").border = borders.thin;
 ws.getCell("F2").border = borders.thin;
 ws.getCell("E3").border = borders.thin;
 ws.getCell("F3").border = borders.thin;
+
+ws.getCell("H2").value = "Broke";
+ws.getCell("H2").border = borders.thin;
+ws.mergeCells("H2:I3");
+ws.getCell("I3").style = {};
 
 wb.xlsx.writeFile(filename)
     .then(function(){

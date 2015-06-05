@@ -29,7 +29,8 @@ var main = module.exports = {
     ModelContainer: require("./lib/modelcontainer"),
     stream: {
         xlsx: {
-            WorkbookWriter: require("./lib/stream/xlsx/workbook-writer")
+            WorkbookWriter: require("./lib/stream/xlsx/workbook-writer"),
+            WorkbookReader: require("./lib/stream/xlsx/workbook-reader")
         }
     }
 };

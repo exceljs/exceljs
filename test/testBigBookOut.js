@@ -56,7 +56,7 @@ ws.columns = [
     { header: "Col 7", key:"num2", width: 8 },
     { header: "Col 8", key:"num3", width: 32, style: { font: fonts.comicSansUdB16 } },
     { header: "Col 9", key:"date", width: 12 },
-    
+    { header: "Col 10", key:"num4", width: 12 }
 ];
 
 ws.getRow(1).font = fonts.arialBlackUI14;
@@ -77,7 +77,8 @@ function addRow() {
         num1: utils.randomNum(10000),
         num2: utils.randomNum(100000),
         num3: utils.randomNum(1000000),
-        date: new Date(today + iCount * 86400000)
+        date: new Date(today + iCount * 86400000),
+        num4: utils.randomNum(1000)
     });
     var lap = sw.span;
     row.commit();
