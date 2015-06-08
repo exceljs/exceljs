@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 
 var utils = require('./utils/utils');
 var HrStopwatch = require('./utils/hr-stopwatch');
+var ColumnCount = require('./utils/column-sum');
 
 var Excel = require('../excel');
 var Workbook = Excel.Workbook;
@@ -11,51 +12,45 @@ var WorkbookReader = Excel.stream.xlsx.WorkbookReader;
 
 if (process.argv[2] == 'help') {
     console.log("Usage:");
-    console.log("    node testBigBookIn filename reader passes");
+    console.log("    node testBigBookIn filename reader plan");
     console.log("Where:");
     console.log("    reader is one of [stream, document]");
-    console.log("    passes is one of [one, two]");
+    console.log("    plan is one of [zero, one, two, hyperlinks]");
     process.exit(0);
 }
 
 var filename = process.argv[2];
 var reader = process.argv.length > 3 ? process.argv[3] : "stream";
-var passes = process.argv.length > 4 ? process.argv[4] : "one";
+var plan = process.argv.length > 4 ? process.argv[4] : "one";
 
 var useStream = (reader === "stream");
-var passCounts = {
-    zero: 0,
-    one: 1,
-    two: 2
-};
 
 var options = {
     reader: (useStream ? "stream" : "document"),
     filename: filename,
-    passCount: passCounts[passes] || 0
+    plan: plan
 };
 console.log(JSON.stringify(options, null, "  "));
 
 var stopwatch = new HrStopwatch();
 stopwatch.start();
 
-var cols = [3,6,7,8];
-var sums = [0,0,0,0,0,0,0,0,0,0,0];
-var count = 0;
+var colCount = new ColumnCount([3,6,7,8,10]);
+var hyperlinkCount = 0;
+
 function checkRow(row) {
     if (row.number > 1) {
-        _.each(cols, function(col) {
-            sums[col] += row.getCell(col).value;
-        });
-    }
-    count++;
-    if (count % 1000 === 0) {
-        process.stdout.write("Count:" + count + "\033[0G");
+        colCount.add(row);
+        
+        if (colCount.count % 1000 === 0) {
+            process.stdout.write("Count:" + colCount.count + "\033[0G");
+        }
     }
 }
 function report() {
-    console.log("Count: " + count);
-    console.log(sums.join(', '));
+    console.log("Count: " + colCount.count);
+    console.log("Sums: " + colCount);
+    console.log("Hyperlinks: " + hyperlinkCount);
     
     stopwatch.stop();
     console.log("Time: " + stopwatch);
@@ -63,26 +58,37 @@ function report() {
 
 if (useStream) {
     var wb = new WorkbookReader(options);
+    wb.on("end", function() { console.log("reached end of stream");});
+    wb.on("finished", report);
     wb.on("worksheet", function(worksheet) {
         worksheet.on("row", checkRow);
-        worksheet.on("end", report);
+    });
+    wb.on("hyperlinks", function(hyperlinks) {
+       hyperlinks.on("hyperlink", function(hyperlink) {
+            hyperlinkCount++;
+       });
     });
     wb.on("entry", function(entry) {
         console.log(JSON.stringify(entry));
     });
-    switch (options.passCount) {
-        case 0:
+    switch (options.plan) {
+        case "zero":
             wb.read(filename, {
                 entries: "emit"
             });
             break;
-        case 1:
+        case "one":
             wb.read(filename, {
                 entries: "emit",
                 worksheets: "emit"
             });
             break;
-        case 2:
+        case "two":
+            break;
+        case "hyperlinks":
+            wb.read(filename, {
+                hyperlinks: "emit"
+            });
             break;
     }
 } else {

@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 
 var utils = require('./utils/utils');
 var HrStopwatch = require('./utils/hr-stopwatch');
+var ColumnCount = require('./utils/column-sum');
 
 var Excel = require('../excel');
 var Workbook = Excel.Workbook;
@@ -59,6 +60,8 @@ ws.columns = [
     { header: "Col 10", key:"num4", width: 12 }
 ];
 
+var colCount = new ColumnCount([3,6,7,8,10]);
+
 ws.getRow(1).font = fonts.arialBlackUI14;
 
 var t1 = 0;
@@ -81,6 +84,7 @@ function addRow() {
         num4: utils.randomNum(1000)
     });
     var lap = sw.span;
+    colCount.add(row);
     row.commit();
     var end = sw.span;
     
@@ -111,6 +115,7 @@ function allDone() {
             console.log("Commit/writeFile: " + sw);
             stopwatch.stop();        
             console.log("Done.");
+            console.log("Sums: " + colCount);
             console.log("Time: " + stopwatch);
         })
         .catch(function(error) {
