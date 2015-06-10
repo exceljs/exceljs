@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 
 var utils = require('./utils/utils');
 var HrStopwatch = require('./utils/hr-stopwatch');
-var ColumnCount = require('./utils/column-sum');
+var ColumnSum = require('./utils/column-sum');
 
 var Excel = require('../excel');
 var Workbook = Excel.Workbook;
@@ -60,7 +60,7 @@ ws.columns = [
     { header: "Col 10", key:"num4", width: 12 }
 ];
 
-var colCount = new ColumnCount([3,6,7,8,10]);
+var colCount = new ColumnSum([3,6,7,8,10]);
 
 ws.getRow(1).font = fonts.arialBlackUI14;
 

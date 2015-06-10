@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 
 var utils = require('./utils/utils');
 var HrStopwatch = require('./utils/hr-stopwatch');
-var ColumnCount = require('./utils/column-sum');
+var ColumnSum = require('./utils/column-sum');
 
 var Excel = require('../excel');
 var Workbook = Excel.Workbook;
@@ -35,9 +35,8 @@ console.log(JSON.stringify(options, null, "  "));
 var stopwatch = new HrStopwatch();
 stopwatch.start();
 
-var colCount = new ColumnCount([3,6,7,8,10]);
+var colCount = new ColumnSum([3,6,7,8,10]);
 var hyperlinkCount = 0;
-
 function checkRow(row) {
     if (row.number > 1) {
         colCount.add(row);
@@ -46,6 +45,7 @@ function checkRow(row) {
             process.stdout.write("Count:" + colCount.count + "\033[0G");
         }
     }
+    row.destroy();
 }
 function report() {
     console.log("Count: " + colCount.count);
