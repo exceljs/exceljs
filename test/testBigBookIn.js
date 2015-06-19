@@ -1,4 +1,5 @@
 var fs = require('fs');
+var util = require('util');
 var _ = require('underscore');
 var Promise = require('bluebird');
 
@@ -35,6 +36,12 @@ console.log(JSON.stringify(options, null, "  "));
 var stopwatch = new HrStopwatch();
 stopwatch.start();
 
+function logProgress(count) {
+    var memory = util.inspect(process.memoryUsage())
+
+    process.stdout.write("Count:" + count + " " + JSON.stringify(memory) + "\033[0G");
+}
+
 var colCount = new ColumnSum([3,6,7,8,10]);
 var hyperlinkCount = 0;
 function checkRow(row) {
@@ -42,7 +49,7 @@ function checkRow(row) {
         colCount.add(row);
         
         if (colCount.count % 1000 === 0) {
-            process.stdout.write("Count:" + colCount.count + "\033[0G");
+            logProgress(colCount.count);
         }
     }
     row.destroy();
