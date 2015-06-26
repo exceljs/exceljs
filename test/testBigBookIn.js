@@ -29,7 +29,8 @@ var useStream = (reader === "stream");
 var options = {
     reader: (useStream ? "stream" : "document"),
     filename: filename,
-    plan: plan
+    plan: plan,
+    gc: true
 };
 console.log(JSON.stringify(options, null, "  "));
 
@@ -37,12 +38,13 @@ var stopwatch = new HrStopwatch();
 stopwatch.start();
 
 function logProgress(count) {
-    var memory = util.inspect(process.memoryUsage())
-
-    process.stdout.write("Count:" + count + " " + JSON.stringify(memory) + "\033[0G");
+    var memory = process.memoryUsage();
+    var txtCount = utils.fmt.number(count);
+    var txtHeap = utils.fmt.number(memory.heapTotal);
+    process.stdout.write("Count: " + txtCount + ", Heap Size: " + txtHeap + "\033[0G");
 }
 
-var colCount = new ColumnSum([3,6,7,8,10]);
+var colCount = new ColumnSum([3,6,7,8]);
 var hyperlinkCount = 0;
 function checkRow(row) {
     if (row.number > 1) {

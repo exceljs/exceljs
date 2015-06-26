@@ -63,6 +63,23 @@ var main = module.exports = {
     },
     randomNum: function(d) {
         return Math.round(Math.random()*d);
+    },
+    
+    fmt: {
+        number: function(n) {
+            // output large numbers with thousands separator
+            var s = n.toString();
+            var l = s.length;
+            var a = [];
+            var r = (l % 3) || 3;
+            var i = 0;
+            while (i < l) {
+                a.push(s.substr(i,r));
+                i += r;
+                r = 3;
+            }
+            return a.join(',');
+        } 
     }
 
 };
