@@ -30,7 +30,10 @@ var options = {
     reader: (useStream ? "stream" : "document"),
     filename: filename,
     plan: plan,
-    gc: true
+    gc: {
+        threshold: 150000000,
+        divisor: 500000
+    }
 };
 console.log(JSON.stringify(options, null, "  "));
 
