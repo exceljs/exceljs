@@ -26,13 +26,27 @@ var plan = process.argv.length > 4 ? process.argv[4] : "one";
 
 var useStream = (reader === "stream");
 
+function getTimeout() {
+    var memory = process.memoryUsage();
+    var heapSize = memory.heapTotal;
+    if (heapSize < 300000000) {
+        return 0;
+    }
+    if (heapSize < 600000000) {
+        return heapSize / 5000000;
+    }
+    if (heapSize < 1000000000) {
+        return heapSize / 2000000;
+    }
+    return heapSize / 1000000;
+}
+
 var options = {
     reader: (useStream ? "stream" : "document"),
     filename: filename,
     plan: plan,
     gc: {
-        threshold: 150000000,
-        divisor: 500000
+        getTimeout: getTimeout
     }
 };
 console.log(JSON.stringify(options, null, "  "));
@@ -44,7 +58,7 @@ function logProgress(count) {
     var memory = process.memoryUsage();
     var txtCount = utils.fmt.number(count);
     var txtHeap = utils.fmt.number(memory.heapTotal);
-    process.stdout.write("Count: " + txtCount + ", Heap Size: " + txtHeap + "\033[0G");
+    process.stdout.write("Count: " + txtCount + ", Heap Size: " + txtHeap + "\u001b[0G");
 }
 
 var colCount = new ColumnSum([3,6,7,8]);
