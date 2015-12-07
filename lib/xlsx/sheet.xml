@@ -5,6 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="x14ac"
         xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
+
+    <% if (typeof tabColor !== 'undefined') { %>
+    <sheetPr>
+        <tabColor rgb="<%=tabColor%>"/>
+    </sheetPr>
+    <% } %>
+
     <dimension ref="<%=dimensions%>"/>
     <sheetViews>
         <sheetView workbookViewId="0"/>
