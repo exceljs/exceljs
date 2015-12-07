@@ -179,6 +179,8 @@ dobCol.header = ["Date of Birth", "A.K.A. D.O.B."];
 dobCol.key = "dob";
 
 dobCol.width = 15;
+// Hide the column if you'd like
+dobCol.width = 0;
 
 // iterate over all current cells in this column
 dobCol.eachCell(function(cell, rowNumber) {
@@ -219,6 +221,9 @@ var row = worksheet.lastRow;
 
 // Set a specific row height
 row.height = 42.5;
+
+// Set height to zero to hide it
+row.height = 0;
 
 row.getCell(1).value = 5; // A5's value set to 5
 row.getCell("name").value = "Zeb"; // B5's value set to "Zeb" - assuming column 2 is still keyed by name
@@ -335,7 +340,7 @@ ws.columnscolumns = [
 ];
 
 // Set Column 3 to Currency Format
-ws.getColumn(3).numFmt = "£#,##0;[Red]-£#,##0";
+ws.getColumn(3).numFmt = "ï¿½#,##0;[Red]-ï¿½#,##0";
 
 // Set Row 2 to Comic Sans.
 ws.getRow(2).font = { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true };
