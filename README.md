@@ -135,8 +135,8 @@ workbook.modified = new Date();
 var sheet = workbook.addWorksheet("My Sheet");
 ```
 
-Use the second parameter of the addWorksheet function to create a worksheet with a specific tab color.
-To add a worksheet with a red tab color use this example: 
+Use the second parameter of the addWorksheet function to create a new sheet with a specific tab color.
+To add a new one with a red tab color use this example: 
 
 ```javascript
 var sheet = workbook.addWorksheet("My Sheet", "FFC0000");
