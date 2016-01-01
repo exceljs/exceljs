@@ -1,17 +1,17 @@
 {
-    "name": "exceljs",
+    "name": "exceljs2",
     "version": "0.2.3",
     "description": "Excel Workbook Manager",
     "private": false,
     "license": "MIT",
     "author": {
-        "name": "Guyon Roche",
-        "email": "cyber.sapiens@hotmail.com",
-        "url": "https://github.com/guyonroche/exceljs"
+        "name": "Muhammad Hasan",
+        "email": "hasan@lussa.net",
+        "url": "https://github.com/hasanlussa/exceljs"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/guyonroche/exceljs.git"
+        "url": "https://github.com/hasanlussa/exceljs.git"
     },
     "keywords": [
         "xlsx", "json", "csv", "excel", "font", "border", "fill", "number", "format", "number format", "alignment", "office", "spreadsheet", "workbook"
@@ -23,7 +23,7 @@
         "moment": "~2.9.0",
         "sax": "^0.6.0",
         "underscore": "1.4.4",
-        "unzip": ">= 0.1.9"
+        "unzip2": "^0.2.5"
     },
     "devDependencies": {
         "jasmine-node": "~1.14",
