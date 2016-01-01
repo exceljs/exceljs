@@ -5,13 +5,13 @@
     "private": false,
     "license": "MIT",
     "author": {
-        "name": "Muhammad Hasan",
-        "email": "hasan@lussa.net",
-        "url": "https://github.com/hasanlussa/exceljs"
+       "name": "Guyon Roche",
+        "email": "cyber.sapiens@hotmail.com",
+        "url": "https://github.com/guyonroche/exceljs"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/hasanlussa/exceljs.git"
+        "url": "https://github.com/guyonroche/exceljs.git"
     },
     "keywords": [
         "xlsx", "json", "csv", "excel", "font", "border", "fill", "number", "format", "number format", "alignment", "office", "spreadsheet", "workbook"
