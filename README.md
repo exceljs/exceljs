@@ -340,7 +340,7 @@ Styles are set by assigning the following properties:
 ws.getCell("A1").numFmt = "0.00%";
 
 // Apply styles to worksheet columns
-ws.columnscolumns = [
+ws.columns = [
     { header: "Id", key: "id", width: 10 },
     { header: "Name", key: "name", width: 32, style: { font: { name: "Arial Black" } } },
     { header: "D.O.B.", key: "DOB", width: 10, style: { numFmt: "dd/mm/yyyy" } }
