@@ -14,41 +14,17 @@ npm install exceljs
     <li>Bug Fixes
         <ul>
             <li>
-                <a href="https://github.com/guyonroche/exceljs/issues/18">Merge Cell Styles</a>
+                <a href="https://github.com/guyonroche/exceljs/issues/27">Worksheets with Ampersand Names</a>
                 <ul>
-                    <li>
-                        Merged cells now persist (and parse) their styles.
-                    </li>
+                    <li>Worksheet names are now xml-encoded and should work with all xml compatable characters</li>
                 </ul>
             </li>
         </ul>
     </li>
     <li>
-        <a href="#streaming-xlxs-writer">Streaming XLSX Writer</a>
+        <a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a>
         <ul>
-            <li>
-                At long last ExcelJS can support writing massive XLSX files in a scalable
-                memory efficient manner. Performance has been optimised and even smaller spreadsheets
-                can be faster to write than the document writer. Options have been added to control
-                the use of shared strings and styles as these can both have a considerable effect on
-                performance
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a href="#rows">Worksheet.lastRow</a>
-        <ul>
-            <li>Access the last editable row in a worksheet.</li>
-        </ul>
-    </li>
-    <li>
-        <a href="#rows">Row.commit()</a>
-        <ul>
-            <li>
-                For streaming writers, this method commits the row (and any previous rows) to the stream.
-                Committed rows will no longer be editable (and are typically deleted from the worksheet object).
-                For Document type workbooks, this method has no effect.
-            </li>
+            <li>Rows and Columns now support the hidden attribute.</li>
         </ul>
     </li>
 </ul>
@@ -186,8 +162,9 @@ dobCol.header = ["Date of Birth", "A.K.A. D.O.B."];
 dobCol.key = "dob";
 
 dobCol.width = 15;
+
 // Hide the column if you'd like
-dobCol.width = 0;
+dobCol.hidden = true;
 
 // iterate over all current cells in this column
 dobCol.eachCell(function(cell, rowNumber) {
@@ -229,8 +206,8 @@ var row = worksheet.lastRow;
 // Set a specific row height
 row.height = 42.5;
 
-// Set height to zero to hide it
-row.height = 0;
+// make row hidden
+row.hidden = true;
 
 row.getCell(1).value = 5; // A5's value set to 5
 row.getCell("name").value = "Zeb"; // B5's value set to "Zeb" - assuming column 2 is still keyed by name
@@ -921,4 +898,5 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.1.11  | <ul><li>Bug Fixes<ul><li>Fixed Vertical Middle Alignment Issue</li></ul></li><li><a href="#styles">Row and Column Styles</a></li><li><a href="#rows">Worksheet.eachRow supports options</a></li><li><a href="#rows">Row.eachCell supports options</a></li><li><a href="#columns">New function Column.eachCell</a></li></ul> |
 | 0.2.0   | <ul><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
 | 0.2.2   | <ul><li><a href="https://pbs.twimg.com/profile_images/2933552754/fc8c70829ee964c5542ae16453503d37.jpeg">One Billion Cells</a><ul><li>Achievement Unlocked: A simple test using ExcelJS has created a spreadsheet with 1,000,000,000 cells. Made using random data with 100,000,000 rows of 10 cells per row. I cannot validate the file yet as Excel will not open it and I have yet to implement the streaming reader but I have every confidence that it is good since 1,000,000 rows loads ok.</li></ul></li></ul> |
+| 0.2.3   |<ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/18">Merge Cell Styles</a><ul><li>Merged cells now persist (and parse) their styles.</li></ul></li></ul></li><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
 

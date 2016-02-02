@@ -1,77 +1,77 @@
 var fs = require('fs');
 var _ = require('underscore');
-var Promise = require('bluebird');
 
 var Workbook = require('../lib/workbook');
 
 var filename = process.argv[2];
 
-var wb = new Workbook()
+var wb = new Workbook();
 var ws = wb.addWorksheet("blort");
 
 var fonts = {
-    arialBlackUI14: { name: "Arial Black", family: 2, size: 14, underline: true, italic: true },
-    comicSansUdB16: { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true }
+  arialBlackUI14: { name: "Arial Black", family: 2, size: 14, underline: true, italic: true },
+  comicSansUdB16: { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true }
 };
 
 var alignments = [
-    { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
-    { text: "Middle Centre", alignment: { horizontal: "center", vertical: "middle" } },
-    { text: "Bottom Right", alignment: { horizontal: "right", vertical: "bottom" } },
-    { text: "Wrap Text", alignment: { wrapText: true } },
-    { text: "Indent 1", alignment: { indent: 1 } },
-    { text: "Indent 2", alignment: { indent: 2 } },
-    { text: "Rotate 15", alignment: { horizontal: "right", vertical: "bottom", textRotation: 15 } },
-    { text: "Rotate 30", alignment: { horizontal: "right", vertical: "bottom", textRotation: 30 } },
-    { text: "Rotate 45", alignment: { horizontal: "right", vertical: "bottom", textRotation: 45 } },
-    { text: "Rotate 60", alignment: { horizontal: "right", vertical: "bottom", textRotation: 60 } },
-    { text: "Rotate 75", alignment: { horizontal: "right", vertical: "bottom", textRotation: 75 } },
-    { text: "Rotate 90", alignment: { horizontal: "right", vertical: "bottom", textRotation: 90 } },
-    { text: "Rotate -15", alignment: { horizontal: "right", vertical: "bottom", textRotation: -55 } },
-    { text: "Rotate -30", alignment: { horizontal: "right", vertical: "bottom", textRotation: -30 } },
-    { text: "Rotate -45", alignment: { horizontal: "right", vertical: "bottom", textRotation: -45 } },
-    { text: "Rotate -60", alignment: { horizontal: "right", vertical: "bottom", textRotation: -60 } },
-    { text: "Rotate -75", alignment: { horizontal: "right", vertical: "bottom", textRotation: -75 } },
-    { text: "Rotate -90", alignment: { horizontal: "right", vertical: "bottom", textRotation: -90 } },
-    { text: "Vertical Text", alignment: { horizontal: "right", vertical: "bottom", textRotation: "vertical" } }
+  { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
+  { text: "Middle Centre", alignment: { horizontal: "center", vertical: "middle" } },
+  { text: "Bottom Right", alignment: { horizontal: "right", vertical: "bottom" } },
+  { text: "Wrap Text", alignment: { wrapText: true } },
+  { text: "Indent 1", alignment: { indent: 1 } },
+  { text: "Indent 2", alignment: { indent: 2 } },
+  { text: "Rotate 15", alignment: { horizontal: "right", vertical: "bottom", textRotation: 15 } },
+  { text: "Rotate 30", alignment: { horizontal: "right", vertical: "bottom", textRotation: 30 } },
+  { text: "Rotate 45", alignment: { horizontal: "right", vertical: "bottom", textRotation: 45 } },
+  { text: "Rotate 60", alignment: { horizontal: "right", vertical: "bottom", textRotation: 60 } },
+  { text: "Rotate 75", alignment: { horizontal: "right", vertical: "bottom", textRotation: 75 } },
+  { text: "Rotate 90", alignment: { horizontal: "right", vertical: "bottom", textRotation: 90 } },
+  { text: "Rotate -15", alignment: { horizontal: "right", vertical: "bottom", textRotation: -55 } },
+  { text: "Rotate -30", alignment: { horizontal: "right", vertical: "bottom", textRotation: -30 } },
+  { text: "Rotate -45", alignment: { horizontal: "right", vertical: "bottom", textRotation: -45 } },
+  { text: "Rotate -60", alignment: { horizontal: "right", vertical: "bottom", textRotation: -60 } },
+  { text: "Rotate -75", alignment: { horizontal: "right", vertical: "bottom", textRotation: -75 } },
+  { text: "Rotate -90", alignment: { horizontal: "right", vertical: "bottom", textRotation: -90 } },
+  { text: "Vertical Text", alignment: { horizontal: "right", vertical: "bottom", textRotation: "vertical" } }
 ];
 var badAlignments = [
-    { text: "Rotate -91", alignment: { textRotation: -91 } },
-    { text: "Rotate 91", alignment: { textRotation: 91 } },
-    { text: "Indent -1", alignment: { indent: -1 } },
-    { text: "Blank", alignment: {  } }
+  { text: "Rotate -91", alignment: { textRotation: -91 } },
+  { text: "Rotate 91", alignment: { textRotation: 91 } },
+  { text: "Indent -1", alignment: { indent: -1 } },
+  { text: "Blank", alignment: {  } }
 ];
 
 var borders = {
-    thin: { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}},
-    doubleRed: { color: {argb:"FFFF0000"}, top: {style:"double"}, left: {style:"double"}, bottom: {style:"double"}, right: {style:"double"}},
-    thickRainbow: {
-        top: {style:"double", color: {argb:"FFFF00FF"}},
-        left: {style:"double", color: {argb:"FF00FFFF"}},
-        bottom: {style:"double", color: {argb:"FF00FF00"}},
-        right: {style:"double", color: {argb:"FF00FF"}},
-        diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true}
-    }
+  thin: { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}},
+  doubleRed: { color: {argb:"FFFF0000"}, top: {style:"double"}, left: {style:"double"}, bottom: {style:"double"}, right: {style:"double"}},
+  thickRainbow: {
+    top: {style:"double", color: {argb:"FFFF00FF"}},
+    left: {style:"double", color: {argb:"FF00FFFF"}},
+    bottom: {style:"double", color: {argb:"FF00FF00"}},
+    right: {style:"double", color: {argb:"FF00FF"}},
+    diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true}
+  }
 };
 
 var fills = {
-    redDarkVertical: {type: "pattern", pattern:"darkVertical", fgColor:{argb:"FFFF0000"}},
-    redGreenDarkTrellis: {type: "pattern", pattern:"darkTrellis", fgColor:{argb:"FFFF0000"}, bgColor:{argb:"FF00FF00"}},
-    blueWhiteHGrad: {type: "gradient", gradient: "angle", degree: 0,
-        stops: [{position:0, color:{argb:"FF0000FF"}},{position:1, color:{argb:"FFFFFFFF"}}]},
-    rgbPathGrad: {type: "gradient", gradient: "path", center:{left:0.5,top:0.5},
-        stops: [{position:0, color:{argb:"FFFF0000"}},{position:0.5, color:{argb:"FF00FF00"}},{position:1, color:{argb:"FF0000FF"}}]}
+  redDarkVertical: {type: "pattern", pattern:"darkVertical", fgColor:{argb:"FFFF0000"}},
+  redGreenDarkTrellis: {type: "pattern", pattern:"darkTrellis", fgColor:{argb:"FFFF0000"}, bgColor:{argb:"FF00FF00"}},
+  blueWhiteHGrad: {type: "gradient", gradient: "angle", degree: 0,
+    stops: [{position:0, color:{argb:"FF0000FF"}},{position:1, color:{argb:"FFFFFFFF"}}]},
+  rgbPathGrad: {type: "gradient", gradient: "path", center:{left:0.5,top:0.5},
+    stops: [{position:0, color:{argb:"FFFF0000"}},{position:0.5, color:{argb:"FF00FF00"}},{position:1, color:{argb:"FF0000FF"}}]}
 };
 
 ws.columns = [
-    { header: "Col 1", key:"key", width: 25 },
-    { header: "Col 2", key:"name", width: 32 },
-    { header: "Col 3", key:"age", width: 21 },
-    { header: "Col 4", key:"addr1", width: 18 },
-    { header: "Col 5", key:"addr2", width: 8 },
-    { header: "Col 6", width: 8 },
-    { header: "Col 7", width: 8 },
-    { header: "Col 8", width: 8, style: { font: fonts.comicSansUdB16, alignment: alignments[1].alignment } }
+  { header: "Col 1", key:"key", width: 25 },
+  { header: "Col 2", key:"name", width: 32 },
+  { header: "Col 3", key:"age", width: 21 },
+  { header: "Col 4", key:"addr1", width: 18 },
+  { header: "Col 5", key:"addr2", width: 8 },
+  { header: "Col 6", width: 8 },
+  { header: "Col 7", width: 8 },
+  { header: "Col 8", width: 8, style: { font: fonts.comicSansUdB16, alignment: alignments[1].alignment } },
+  { header: "Col 9", width: 8, hidden: true }
 ];
 
 ws.getCell("A2").value = 7;
@@ -132,14 +132,13 @@ ws.getCell("B10").value = ">";
 ws.getCell("C10").value = "<a>";
 ws.getCell("D10").value = "><";
 
-
 ws.getRow(11).height = 40;
 _.each(alignments, function(alignment, index) {
-    var rowNumber = 11;
-    var colNumber = index + 1;
-    var cell = ws.getCell(rowNumber, colNumber);
-    cell.value = alignment.text;
-    cell.alignment = alignment.alignment;
+  var rowNumber = 11;
+  var colNumber = index + 1;
+  var cell = ws.getCell(rowNumber, colNumber);
+  cell.value = alignment.text;
+  cell.alignment = alignment.alignment;
 });
 
 var row12 = ws.getRow(12);
@@ -161,10 +160,16 @@ ws.getCell("H13").value = "Bar";
 ws.getCell("I13").value = "Baz";
 ws.getCell("H14").value = "Baz";
 
+// hidden stuff
+ws.getRow(16).hidden = true;
+ws.getCell("I15").value = "You Can't See Me!";
+ws.getCell("A16").value = "You Can't See Me!";
+
+
 wb.xlsx.writeFile(filename)
-    .then(function(){
-        console.log("Done.");
-    })
-    //.catch(function(error) {
-    //    console.log(error.message);
-    //})
+  .then(function(){
+    console.log("Done.");
+  });
+//.catch(function(error) {
+//    console.log(error.message);
+//})
