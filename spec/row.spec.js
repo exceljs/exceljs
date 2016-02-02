@@ -1,4 +1,3 @@
-var _ = require("underscore");
 var Column = require("../lib/column");
 var Row = require("../lib/row");
 var Enums = require("../lib/enums");
@@ -165,6 +164,7 @@ describe("Row", function() {
             min: 1,
             max: 4,
             height: 50,
+            hidden: false,
             style: {}
         });
         
