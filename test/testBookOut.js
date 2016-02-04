@@ -17,7 +17,7 @@ var alignments = [
   { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
   { text: "Middle Centre", alignment: { horizontal: "center", vertical: "middle" } },
   { text: "Bottom Right", alignment: { horizontal: "right", vertical: "bottom" } },
-  { text: "Wrap Text", alignment: { wrapText: true } },
+  { text: "Wrap Text - Wrapping Wrapping Wrappity Wrap Wrap Wrap", alignment: { wrapText: true } },
   { text: "Indent 1", alignment: { indent: 1 } },
   { text: "Indent 2", alignment: { indent: 2 } },
   { text: "Rotate 15", alignment: { horizontal: "right", vertical: "bottom", textRotation: 15 } },
@@ -34,12 +34,12 @@ var alignments = [
   { text: "Rotate -90", alignment: { horizontal: "right", vertical: "bottom", textRotation: -90 } },
   { text: "Vertical Text", alignment: { horizontal: "right", vertical: "bottom", textRotation: "vertical" } }
 ];
-var badAlignments = [
-  { text: "Rotate -91", alignment: { textRotation: -91 } },
-  { text: "Rotate 91", alignment: { textRotation: 91 } },
-  { text: "Indent -1", alignment: { indent: -1 } },
-  { text: "Blank", alignment: {  } }
-];
+//var badAlignments = [
+//  { text: "Rotate -91", alignment: { textRotation: -91 } },
+//  { text: "Rotate 91", alignment: { textRotation: 91 } },
+//  { text: "Indent -1", alignment: { indent: -1 } },
+//  { text: "Blank", alignment: {  } }
+//];
 
 var borders = {
   thin: { top: {style:"thin"}, left: {style:"thin"}, bottom: {style:"thin"}, right: {style:"thin"}},
@@ -164,6 +164,14 @@ ws.getCell("H14").value = "Baz";
 ws.getRow(16).hidden = true;
 ws.getCell("I15").value = "You Can't See Me!";
 ws.getCell("A16").value = "You Can't See Me!";
+
+var A18 = ws.getCell("A18");
+A18.value ="Wrap Text - Wrapping Wrapping Wrappity Wrap Wrap Wrap";
+A18.alignment = { wrapText: true };
+
+var A20 = ws.getCell("A20");
+A20.value ="Wrap Text - Wrapping Wrappity Wrap";
+A20.alignment = { shrinkToFit: true };
 
 
 wb.xlsx.writeFile(filename)
