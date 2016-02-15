@@ -1,7 +1,7 @@
 var fs = require("fs");
 var _ = require("underscore");
-var Excel = require("../excel");
-var testutils = require("./testutils");
+var Excel = require("../../excel");
+var testutils = require("./../testutils");
 
 // =============================================================================
 // Tests

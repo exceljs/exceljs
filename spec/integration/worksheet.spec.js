@@ -1,7 +1,7 @@
 var _ = require("underscore");
-var Excel = require("../excel");
-var Dimensions = require("../lib/utils/dimensions");
-var testutils = require("./testutils");
+var Excel = require("../../excel");
+var Dimensions = require("../../lib/utils/dimensions");
+var testutils = require("./../testutils");
 
 describe("Worksheet", function() {
     describe("Values", function() {

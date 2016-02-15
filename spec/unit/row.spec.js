@@ -1,6 +1,6 @@
-var Column = require("../lib/column");
-var Row = require("../lib/row");
-var Enums = require("../lib/enums");
+var Column = require("../../lib/column");
+var Row = require("../../lib/row");
+var Enums = require("../../lib/enums");
 
 function createSheetMock() {
   return {

@@ -1,6 +1,6 @@
 var _ = require("underscore");
 
-var StringBuf = require("../lib/utils/string-buf");
+var StringBuf = require("../../lib/utils/string-buf");
 
 describe("StringBuf", function() {
     // StringBuf is a lightweight string-builder used by the streaming writers to build

@@ -1,43 +1,48 @@
 {
-    "name": "exceljs",
-    "version": "0.2.4",
-    "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
-    "private": false,
-    "license": "MIT",
-    "author": {
-        "name": "Guyon Roche",
-        "email": "cyber.sapiens@hotmail.com",
-        "url": "https://github.com/guyonroche/exceljs"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/guyonroche/exceljs.git"
-    },
-    "keywords": [
-        "xlsx", "json", "csv", "excel", "font", "border", "fill", "number", "format", "number format", "alignment", "office", "spreadsheet", "workbook"
-    ],
-    "dependencies": {
-        "archiver": "0.14.3",
-        "bluebird": "*",
-        "fast-csv": "0.5.7",
-        "moment": "~2.9.0",
-        "sax": "^0.6.0",
-        "underscore": "1.4.4",
-        "unzip": ">= 0.1.9"
-    },
-    "devDependencies": {
-        "jasmine-node": "~1.14",
-        "memorystream": "*"
-    },
-    "scripts": {
-        "test": "jasmine-node spec"
-    },
-    "main": "./excel.js",
-    "files": [
-        "excel.js",
-        "lib",
-        "LICENSE",
-        "README.md",
-        "MODEL.md"
-    ]
+  "name": "exceljs",
+  "version": "0.2.4",
+  "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
+  "private": false,
+  "license": "MIT",
+  "author": {
+    "name": "Guyon Roche",
+    "email": "cyber.sapiens@hotmail.com",
+    "url": "https://github.com/guyonroche/exceljs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guyonroche/exceljs.git"
+  },
+  "keywords": [
+    "xlsx", "json", "csv", "excel", "font", "border", "fill", "number", "format", "number format", "alignment", "office", "spreadsheet", "workbook"
+  ],
+  "dependencies": {
+    "archiver": "0.14.3",
+    "bluebird": "*",
+    "fast-csv": "0.5.7",
+    "moment": "~2.9.0",
+    "sax": "^0.6.0",
+    "underscore": "1.4.4",
+    "unzip": ">= 0.1.9"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "jasmine-node": "~1.14",
+    "memorystream": "*",
+    "mocha": "*"
+  },
+  "scripts": {
+    "test": "npm run unit-test && npm run integration-test",
+
+    "unit-test": "mocha spec/unit",
+    "integration-test": "mocha spec/integration"
+  },
+  "main": "./excel.js",
+  "files": [
+    "excel.js",
+    "lib",
+    "LICENSE",
+    "README.md",
+    "MODEL.md"
+  ]
 }

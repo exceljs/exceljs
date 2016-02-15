@@ -1,0 +1,122 @@
+var expect = require("chai").expect;
+
+var _ = require("underscore");
+var colCache = require("../../lib/utils/col-cache");
+
+describe("colCache", function() {
+
+  it("caches values", function() {
+    expect(colCache.l2n("A")).to.equal(1);
+    expect(colCache._l2n.A).to.equal(1);
+    expect(colCache._n2l[1]).to.equal("A");
+
+    // also, because of the fill heuristic A-Z will be there too
+    var dic = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+    _.each(dic, function(letter, index) {
+      expect(colCache._l2n[letter]).to.equal(index+1);
+      expect(colCache._n2l[index+1]).to.equal(letter);
+    });
+
+    // next level
+    expect(colCache.n2l(27)).to.equal("AA");
+    expect(colCache._l2n.AB).to.equal(28);
+    expect(colCache._n2l[28]).to.equal("AB");
+  });
+
+  it("converts numbers to letters", function() {
+    expect(colCache.n2l(1)).to.equal("A");
+    expect(colCache.n2l(26)).to.equal("Z");
+    expect(colCache.n2l(27)).to.equal("AA");
+    expect(colCache.n2l(702)).to.equal("ZZ");
+    expect(colCache.n2l(703)).to.equal("AAA");
+  });
+  it("converts letters to numbers", function() {
+    expect(colCache.l2n("A")).to.equal(1);
+    expect(colCache.l2n("Z")).to.equal(26);
+    expect(colCache.l2n("AA")).to.equal(27);
+    expect(colCache.l2n("ZZ")).to.equal(702);
+    expect(colCache.l2n("AAA")).to.equal(703);
+  });
+
+  it("throws when out of bounds", function() {
+    expect(function() { colCache.n2l(0); }).toThrow();
+    expect(function() { colCache.n2l(-1); }).toThrow();
+    expect(function() { colCache.n2l(16385); }).toThrow();
+
+    expect(function() { colCache.l2n(""); }).toThrow();
+    expect(function() { colCache.l2n("AAAA"); }).toThrow();
+    expect(function() { colCache.l2n(16385); }).toThrow();
+  });
+
+  it("validates addresses properly", function() {
+    expect(colCache.validateAddress("A1")).to.be.ok;
+    expect(colCache.validateAddress("AA10")).to.be.ok;
+    expect(colCache.validateAddress("ABC100000")).to.be.ok;
+
+    expect(function() { colCache.validateAddress("A"); }).to.throw(Error);
+    expect(function() { colCache.validateAddress("1"); }).to.throw(Error);
+    expect(function() { colCache.validateAddress("1A"); }).to.throw(Error);
+    expect(function() { colCache.validateAddress("A 1"); }).to.throw(Error);
+    expect(function() { colCache.validateAddress("A1A"); }).to.throw(Error);
+    expect(function() { colCache.validateAddress("1A1"); }).to.throw(Error);
+    expect(function() { colCache.validateAddress("a1"); }).to.throw(Error);
+    expect(function() { colCache.validateAddress("a"); }).to.throw(Error);
+  });
+
+  it("decodes addresses", function() {
+    expect(colCache.decodeAddress("A1")).to.deep.equal({address:"A1",col:1, row: 1});
+    expect(colCache.decodeAddress("AA11")).to.deep.equal({address:"AA11",col:27, row: 11});
+  });
+
+  it("gets address structures (and caches them)", function() {
+    var addr = colCache.getAddress("D5");
+    expect(addr.address).to.equal("D5");
+    expect(addr.row).to.equal(5);
+    expect(addr.col).to.equal(4);
+    expect(colCache.getAddress("D5")).to.be(addr);
+    expect(colCache.getAddress(5,4)).to.be(addr);
+
+    addr = colCache.getAddress("E4");
+    expect(addr.address).to.equal("E4");
+    expect(addr.row).to.equal(4);
+    expect(addr.col).to.equal(5);
+    expect(colCache.getAddress("E4")).to.be(addr);
+    expect(colCache.getAddress(4,5)).to.be(addr);
+  });
+
+  it("decodes addresses and ranges", function() {
+    // address
+    expect(colCache.decode("A1")).to.deep.equal({address:"A1",col:1, row: 1});
+    expect(colCache.decode("AA11")).to.deep.equal({address:"AA11",col:27, row: 11});
+
+    // range
+    expect(colCache.decode("A1:B2")).to.deep.equal({
+      dimensions: "A1:B2",
+      tl: "A1",
+      br: "B2",
+      top: 1,
+      left: 1,
+      bottom: 2,
+      right: 2
+    });
+    // wonky ranges
+    expect(colCache.decode("A2:B1")).to.deep.equal({
+      dimensions: "A1:B2",
+      tl: "A1",
+      br: "B2",
+      top: 1,
+      left: 1,
+      bottom: 2,
+      right: 2
+    });
+    expect(colCache.decode("B2:A1")).to.deep.equal({
+      dimensions: "A1:B2",
+      tl: "A1",
+      br: "B2",
+      top: 1,
+      left: 1,
+      bottom: 2,
+      right: 2
+    });
+  });
+});

@@ -1,8 +1,8 @@
 var fs = require("fs");
 var _ = require("underscore");
-var Excel = require("../excel");
-var testutils = require("./testutils");
-var utils = require("../lib/utils/utils");
+var Excel = require("../../excel");
+var testutils = require("./../testutils");
+var utils = require("../../lib/utils/utils");
 
 describe("WorkbookWriter", function() {
        

@@ -1,7 +1,7 @@
 var _ = require("underscore");
 
-var StreamBuf = require("../lib/utils/stream-buf");
-var StringBuf = require("../lib/utils/string-buf");
+var StreamBuf = require("../../lib/utils/stream-buf");
+var StringBuf = require("../../lib/utils/string-buf");
 
 describe("StreamBuf", function() {
     // StreamBuf is designed as a general-purpose writable-readable stream

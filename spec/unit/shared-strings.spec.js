@@ -1,6 +1,6 @@
 var _ = require("underscore");
 
-var SharedStrings = require("../lib/utils/shared-strings");
+var SharedStrings = require("../../lib/utils/shared-strings");
 
 describe("SharedStrings", function() {
     

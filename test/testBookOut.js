@@ -174,6 +174,12 @@ A20.value ="Wrap Text - Wrapping Wrappity Wrap";
 A20.alignment = { shrinkToFit: true };
 
 
+ws.getCell("A2").name = "Passe";
+ws.getCell("B2").name = "Passe";
+
+ws.getCell("E2").name = "Greet";
+ws.getCell("A22").value = {formula:'E2'};
+
 wb.xlsx.writeFile(filename)
   .then(function(){
     console.log("Done.");

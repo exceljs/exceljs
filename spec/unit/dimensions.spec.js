@@ -1,5 +1,5 @@
 var _ = require("underscore");
-var Dimensions = require("../lib/utils/dimensions");
+var Dimensions = require("../../lib/utils/dimensions");
 
 describe("Dimensions", function() {
     
