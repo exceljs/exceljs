@@ -54,7 +54,7 @@ describe("Column", function() {
     var column = sheet.columns[0] = new Column(sheet, 1);
 
     column.key = "id1";
-    expect(sheet._keys["id1"]).toBe(column);
+    expect(sheet._keys["id1"]).to.equal(column);
 
     column.header = "Col 1";
     expect(sheet.getColumn(1).header).to.equal("Col 1");

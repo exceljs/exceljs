@@ -60,7 +60,7 @@ describe("Cell", function() {
     // no result
     formulaValue = {formula: "A3"};
     expect(row.cells.A1.value = formulaValue).to.deep.equal(formulaValue);
-    expect(row.cells.A1.value).to.deep.equal(formulaValue);
+    expect(row.cells.A1.value).to.deep.equal({formula: "A3", result: undefined});
     expect(row.cells.A1.type).to.equal(Enums.ValueType.Formula);
 
     var hyperlinkValue = {hyperlink: "http://www.link.com", text: "www.link.com"};
@@ -74,13 +74,13 @@ describe("Cell", function() {
   it("validates options on construction", function() {
     var row = mock.row();
     var column = mock.column();
-    expect(function() { new Cell(); }).toThrow();
-    expect(function() { new Cell(row); }).toThrow();
-    expect(function() { new Cell(row, "A"); }).toThrow();
-    expect(function() { new Cell(row, "Hello, World!"); }).toThrow();
-    expect(function() { new Cell(null, null, "A1"); }).toThrow();
-    expect(function() { new Cell(row, null, "A1"); }).toThrow();
-    expect(function() { new Cell(null, column, "A1"); }).toThrow();
+    expect(function() { new Cell(); }).to.throw(Error);
+    expect(function() { new Cell(row); }).to.throw(Error);
+    expect(function() { new Cell(row, "A"); }).to.throw(Error);
+    expect(function() { new Cell(row, "Hello, World!"); }).to.throw(Error);
+    expect(function() { new Cell(null, null, "A1"); }).to.throw(Error);
+    expect(function() { new Cell(row, null, "A1"); }).to.throw(Error);
+    expect(function() { new Cell(null, column, "A1"); }).to.throw(Error);
   });
   it("merges", function() {
     var row = mock.row();
@@ -100,8 +100,8 @@ describe("Cell", function() {
     expect(row.cells.A1.isMerged).to.be.ok;
     expect(row.cells.A2.isMerged).to.be.ok;
     expect(row.cells.A2.isMergedTo(row.cells.A1)).to.be.ok;
-    expect(row.cells.A2.master).toBe(row.cells.A1);
-    expect(row.cells.A1.master).toBe(row.cells.A1);
+    expect(row.cells.A2.master).to.equal(row.cells.A1);
+    expect(row.cells.A1.master).to.equal(row.cells.A1);
 
     // assignment of slaves write to the master
     row.cells.A2.value = 7;
@@ -119,8 +119,8 @@ describe("Cell", function() {
     expect(row.cells.A1.isMerged).to.not.be.ok;
     expect(row.cells.A2.isMerged).to.not.be.ok;
     expect(row.cells.A2.isMergedTo(row.cells.A1)).to.not.be.ok;
-    expect(row.cells.A2.master).to.be(row.cells.A2);
-    expect(row.cells.A1.master).to.be(row.cells.A1);
+    expect(row.cells.A2.master).to.equal(row.cells.A2);
+    expect(row.cells.A1.master).to.equal(row.cells.A1);
   });
 
   it("upgrades from string to hyperlink", function() {

@@ -39,13 +39,13 @@ describe("colCache", function() {
   });
 
   it("throws when out of bounds", function() {
-    expect(function() { colCache.n2l(0); }).toThrow();
-    expect(function() { colCache.n2l(-1); }).toThrow();
-    expect(function() { colCache.n2l(16385); }).toThrow();
+    expect(function() { colCache.n2l(0); }).to.throw(Error);
+    expect(function() { colCache.n2l(-1); }).to.throw(Error);
+    expect(function() { colCache.n2l(16385); }).to.throw(Error);
 
-    expect(function() { colCache.l2n(""); }).toThrow();
-    expect(function() { colCache.l2n("AAAA"); }).toThrow();
-    expect(function() { colCache.l2n(16385); }).toThrow();
+    expect(function() { colCache.l2n(""); }).to.throw(Error);
+    expect(function() { colCache.l2n("AAAA"); }).to.throw(Error);
+    expect(function() { colCache.l2n(16385); }).to.throw(Error);
   });
 
   it("validates addresses properly", function() {
@@ -64,8 +64,8 @@ describe("colCache", function() {
   });
 
   it("decodes addresses", function() {
-    expect(colCache.decodeAddress("A1")).to.deep.equal({address:"A1",col:1, row: 1});
-    expect(colCache.decodeAddress("AA11")).to.deep.equal({address:"AA11",col:27, row: 11});
+    expect(colCache.decodeAddress("A1")).to.deep.equal({address:"A1",col:1, row: 1, $col$row: "$A$1"});
+    expect(colCache.decodeAddress("AA11")).to.deep.equal({address:"AA11",col:27, row: 11, $col$row: "$AA$11"});
   });
 
   it("gets address structures (and caches them)", function() {
@@ -73,15 +73,15 @@ describe("colCache", function() {
     expect(addr.address).to.equal("D5");
     expect(addr.row).to.equal(5);
     expect(addr.col).to.equal(4);
-    expect(colCache.getAddress("D5")).to.be(addr);
-    expect(colCache.getAddress(5,4)).to.be(addr);
+    expect(colCache.getAddress("D5")).to.equal(addr);
+    expect(colCache.getAddress(5,4)).to.equal(addr);
 
     addr = colCache.getAddress("E4");
     expect(addr.address).to.equal("E4");
     expect(addr.row).to.equal(4);
     expect(addr.col).to.equal(5);
-    expect(colCache.getAddress("E4")).to.be(addr);
-    expect(colCache.getAddress(4,5)).to.be(addr);
+    expect(colCache.getAddress("E4")).to.equal(addr);
+    expect(colCache.getAddress(4,5)).to.equal(addr);
   });
 
   it("decodes addresses and ranges", function() {
