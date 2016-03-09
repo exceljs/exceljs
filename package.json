@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "chai": "*",
-    "jasmine-node": "~1.14",
+    "jshint": "*",
     "memorystream": "*",
     "mocha": "*"
   },

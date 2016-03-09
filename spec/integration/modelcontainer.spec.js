@@ -1,27 +1,31 @@
-var fs = require("fs");
-var _ = require("underscore");
-var Excel = require("../../excel");
-var model = require("./testmodel");
+'use strict';
 
-describe("ModelContainer", function() {
-  it("serializes and deserializes to file properly", function(done) {
+var expect = require('chai').expect;
+var bluebird = require('bluebird');
+var fs = require('fs');
+var fsa = bluebird.promisifyAll(fs);
+var _ = require('underscore');
+var Excel = require('../../excel');
+var model = require('./testmodel');
+
+describe('ModelContainer', function() {
+  it('serializes and deserializes to file properly', function() {
+    this.timeout(5000);
+
     // clone model
     var mcModel = JSON.parse(JSON.stringify(model));
 
     var mc = new Excel.ModelContainer(model);
-    mc.xlsx.writeFile("./mc.test.xlsx")
+    return mc.xlsx.writeFile('./mc.test.xlsx')
       .then(function() {
         var mc2 = new Excel.ModelContainer();
-        return mc2.xlsx.readFile("./mc.test.xlsx");
+        return mc2.xlsx.readFile('./mc.test.xlsx');
       })
       .then(function(mc2) {
-        expect(mc2.model).toEqual(mcModel);
+        expect(mc2.model).to.deep.equal(mcModel);
       })
       .finally(function() {
-        fs.unlink("./mc.test.xlsx", function(error) {
-          expect(error && error.message).toBeFalsy();
-          done();
-        });
+        return fsa.unlinkAsync('./mc.test.xlsx');
       });
   });
 });

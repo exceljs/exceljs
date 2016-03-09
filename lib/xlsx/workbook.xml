@@ -11,5 +11,6 @@
         <% _.each(worksheets, function(worksheet) { %><sheet name="<%=worksheet.name%>" sheetId="<%=worksheet.id%>" r:id="<%=worksheet.rId%>"/>
         <% }); %>
     </sheets>
+    <%=definedNames.xml%>
     <calcPr calcId="145621"/>
 </workbook>
