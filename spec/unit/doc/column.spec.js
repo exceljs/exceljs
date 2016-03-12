@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
-var Column = require("../../lib/column");
-var Row = require("../../lib/row");
+var Column = require("../../../lib/doc/column");
+var Row = require("../../../lib/doc/row");
 
 function createSheetMock() {
   return {

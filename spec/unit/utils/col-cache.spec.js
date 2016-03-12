@@ -88,8 +88,8 @@ describe('colCache', function() {
 
   it('decodes addresses and ranges', function() {
     // address
-    expect(colCache.decode('A1')).to.deep.equal({address:'A1',col:1, row: 1});
-    expect(colCache.decode('AA11')).to.deep.equal({address:'AA11',col:27, row: 11});
+    expect(colCache.decode('A1')).to.deep.equal({address:'A1',col:1, row: 1, $col$row: '$A$1'});
+    expect(colCache.decode('AA11')).to.deep.equal({address:'AA11',col:27, row: 11, $col$row: '$AA$11'});
 
     // range
     expect(colCache.decode('A1:B2')).to.deep.equal({
@@ -101,6 +101,7 @@ describe('colCache', function() {
       bottom: 2,
       right: 2
     });
+
     // wonky ranges
     expect(colCache.decode('A2:B1')).to.deep.equal({
       dimensions: 'A1:B2',

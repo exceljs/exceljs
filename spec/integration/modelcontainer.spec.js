@@ -6,7 +6,7 @@ var fs = require('fs');
 var fsa = bluebird.promisifyAll(fs);
 var _ = require('underscore');
 var Excel = require('../../excel');
-var model = require('./testmodel');
+var model = require('./data/testmodel');
 
 describe('ModelContainer', function() {
   it('serializes and deserializes to file properly', function() {

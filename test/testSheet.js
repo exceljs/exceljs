@@ -3,7 +3,7 @@ var _ = require('underscore');
 var Promise = require('bluebird');
 
 var SharedStrings = require('../lib/sharedstrings');
-var Worksheet = require('../lib/worksheet');
+var Worksheet = require('../lib/doc/worksheet');
 
 var sheetname = process.argv[2];
 var stringname = process.argv[3];

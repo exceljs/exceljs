@@ -1,7 +1,7 @@
 var fs = require('fs');
 var _ = require('underscore');
 
-var Workbook = require('../lib/workbook');
+var Workbook = require('../lib/doc/workbook');
 
 var filename = process.argv[2];
 

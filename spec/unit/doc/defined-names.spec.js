@@ -3,15 +3,15 @@
 var expect = require('chai').expect;
 
 var _ = require('underscore');
-var DefinedNames = require('../../../lib/xlsx/defined-names');
+var DefinedNames = require('../../../lib/doc/defined-names');
 
 describe('DefinedNames', function() {
 
-  it('Generates xml', function() {
+  it('adds names for cells', function() {
     var dn = new DefinedNames();
 
     dn.add('blort!A1','foo');
-    expect(dn.xml).to.equal('<definedNames><definedName name="foo">blort!$A$1</definedName>');
+    expect(dn.getNames('blort!A1')).to.deep.equal(['foo']);
   });
 
 });

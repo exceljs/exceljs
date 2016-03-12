@@ -281,7 +281,7 @@ describe('Workbook', function() {
 
       })
       .finally(function() {
-        return fsa.unlinkAsync('./wb.test.xlsx');
+        //return fsa.unlinkAsync('./wb.test.xlsx');
       });
   });
 

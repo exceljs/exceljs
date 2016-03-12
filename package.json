@@ -34,8 +34,8 @@
   "scripts": {
     "test": "npm run unit-test && npm run integration-test",
 
-    "unit-test": "mocha spec/unit",
-    "integration-test": "mocha spec/integration"
+    "unit-test": "mocha spec/unit --recursive",
+    "integration-test": "mocha spec/integration --recursive"
   },
   "main": "./excel.js",
   "files": [

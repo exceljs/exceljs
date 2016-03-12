@@ -1,8 +1,8 @@
 var expect = require('chai').expect;
 
-var Column = require("../../lib/column");
-var Row = require("../../lib/row");
-var Enums = require("../../lib/enums");
+var Column = require("../../../lib/doc/column");
+var Row = require("../../../lib/doc/row");
+var Enums = require("../../../lib/doc/enums");
 
 function createSheetMock() {
   return {
@@ -159,9 +159,9 @@ describe("Row", function() {
 
     expect(row1.model).to.deep.equal({
       cells:[
-        {address:"A1",type:Enums.ValueType.Number,value:5,style:{},names:[]},
-        {address:"B1",type:Enums.ValueType.String,value:"Hello, World!",style:{},names:[]},
-        {address:"D1",type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com",style:{},names:[]}
+        {address:"A1",type:Enums.ValueType.Number,value:5,style:{}},
+        {address:"B1",type:Enums.ValueType.String,value:"Hello, World!",style:{}},
+        {address:"D1",type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com",style:{}}
       ],
       number: 1,
       min: 1,
@@ -180,9 +180,9 @@ describe("Row", function() {
     var row1 = sheet.getRow(1);
     row1.model = {
       cells:[
-        {address:"A1",type:Enums.ValueType.Number,value:5,names:[]},
-        {address:"B1",type:Enums.ValueType.String,value:"Hello, World!",names:[]},
-        {address:"D1",type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com",names:[]}
+        {address:"A1",type:Enums.ValueType.Number,value:5},
+        {address:"B1",type:Enums.ValueType.String,value:"Hello, World!"},
+        {address:"D1",type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com"}
       ],
       number: 1,
       min: 1,

@@ -25,8 +25,8 @@
 var _ = require("underscore");
 
 var main = module.exports = {
-    Workbook: require("./lib/workbook"),
-    ModelContainer: require("./lib/modelcontainer"),
+    Workbook: require("./lib/doc/workbook"),
+    ModelContainer: require("./lib/doc/modelcontainer"),
     stream: {
         xlsx: {
             WorkbookWriter: require("./lib/stream/xlsx/workbook-writer"),
@@ -35,4 +35,4 @@ var main = module.exports = {
     }
 };
 
-_.extend(main, require("./lib/enums"));
+_.extend(main, require("./lib/doc/enums"));

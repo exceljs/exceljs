@@ -2,10 +2,10 @@
 
 var expect = require('chai').expect;
 
-var Excel = require('../../excel');
-var testUtils = require('../testutils');
+var Excel = require('../../../excel');
+var testUtils = require('../../testutils');
 
-var simpleWorkbookModel = require('./data/simpleWorkbook.json');
+var simpleWorkbookModel = require('./../data/simpleWorkbook.json');
 
 // =============================================================================
 // Helpers

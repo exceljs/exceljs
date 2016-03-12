@@ -31,20 +31,20 @@ describe('Dimensions', function() {
     check(new Dimensions('D5:B10'), 'B5:D10', '$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4);
     check(new Dimensions('D10:B5'), 'B5:D10', '$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4);
 
-    check(new Dimensions('G7','C16'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', '$G$16', 'G16', 7, 3, 16, 7);
-    check(new Dimensions('C7','G16'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', '$G$16', 'G16', 7, 3, 16, 7);
-    check(new Dimensions('C16','G7'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', '$G$16', 'G16', 7, 3, 16, 7);
-    check(new Dimensions('G16','C7'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', '$G$16', 'G16', 7, 3, 16, 7);
+    check(new Dimensions('G7','C16'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Dimensions('C7','G16'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Dimensions('C16','G7'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Dimensions('G16','C7'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
 
     check(new Dimensions(7, 3, 16, 7), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
     check(new Dimensions(16, 3, 7, 7), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
     check(new Dimensions(7, 7, 16, 3), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
     check(new Dimensions(16, 7, 7, 3), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
 
-    check(new Dimensions([7, 3, 16, 7]), 'C7:G16', '$C$7:$G$16', 'C7', '$C47', 'G16', '$G$16', 7, 3, 16, 7);
-    check(new Dimensions([16, 3, 7, 7]), 'C7:G16', '$C$7:$G$16', 'C7', '$C47', 'G16', '$G$16', 7, 3, 16, 7);
-    check(new Dimensions([7, 7, 16, 3]), 'C7:G16', '$C$7:$G$16', 'C7', '$C47', 'G16', '$G$16', 7, 3, 16, 7);
-    check(new Dimensions([16, 7, 7, 3]), 'C7:G16', '$C$7:$G$16', 'C7', '$C47', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Dimensions([7, 3, 16, 7]), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Dimensions([16, 3, 7, 7]), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Dimensions([7, 7, 16, 3]), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Dimensions([16, 7, 7, 3]), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
 
     check(new Dimensions('B5'), 'B5:B5', '$B$5:$B$5', 'B5', '$B$5', 'B5', '$B$5', 5, 2, 5, 2);
   });
