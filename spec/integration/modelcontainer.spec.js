@@ -11,6 +11,11 @@ var model = require('./data/testmodel');
 describe('ModelContainer', function() {
   it('serializes and deserializes to file properly', function() {
     this.timeout(5000);
+    
+    after(function() {
+      return fsa.unlinkAsync('./mc.test.xlsx')
+        .catch(function() {});
+    });
 
     // clone model
     var mcModel = JSON.parse(JSON.stringify(model));
@@ -23,9 +28,6 @@ describe('ModelContainer', function() {
       })
       .then(function(mc2) {
         expect(mc2.model).to.deep.equal(mcModel);
-      })
-      .finally(function() {
-        return fsa.unlinkAsync('./mc.test.xlsx');
       });
   });
 });
