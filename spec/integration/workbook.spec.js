@@ -17,8 +17,8 @@ describe('Workbook', function() {
 
     after(function() {
       function deleteFile(filename) {
-        return fsa.unlinkAsync('./wb.test.xlsx')
-          .catch(function() {});
+        return fsa.unlinkAsync(filename)
+          .catch(function() { });
       }
 
       return bluebird.all([
