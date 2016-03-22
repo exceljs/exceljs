@@ -11,20 +11,10 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li>Bug Fixes
-        <ul>
-            <li>
-                <a href="https://github.com/guyonroche/exceljs/issues/27">Worksheets with Ampersand Names</a>
-                <ul>
-                    <li>Worksheet names are now xml-encoded and should work with all xml compatable characters</li>
-                </ul>
-            </li>
-        </ul>
-    </li>
     <li>
-        <a href="#worksheet">Worksheet.addRows</a>
+        <a href="#defined-names">Defined Names</a>
         <ul>
-            <li>New function to add an array of rows (either array or object form) to the end of a worksheet.</li>
+            <li>Cells can now have assigned names which may then be used in formulas.</li>
         </ul>
     </li>
 </ul>
@@ -32,6 +22,8 @@ npm install exceljs
 # Backlog
 
 <ul>
+    <li>Data Validation</li>
+    <li>Typescript, ES6 and other targets</li>
     <li>XLSX Streaming Parser</li>
     <li>Parsing CSV with Headers</li>
     <li>Use WeakMap if Available</li>
@@ -87,7 +79,7 @@ npm install exceljs
 # Interface
 
 ```javascript
-var Excel = require("exceljs");
+var Excel = require('exceljs');
 ```
 
 ## Create a Workbook
@@ -99,8 +91,8 @@ var workbook = new Excel.Workbook();
 ## Set Workbook Properties
 
 ```javascript
-workbook.creator = "Me";
-workbook.lastModifiedBy = "Her";
+workbook.creator = 'Me';
+workbook.lastModifiedBy = 'Her';
 workbook.created = new Date(1985, 8, 30);
 workbook.modified = new Date();
 ```
@@ -108,14 +100,14 @@ workbook.modified = new Date();
 ## Add a Worksheet
 
 ```javascript
-var sheet = workbook.addWorksheet("My Sheet");
+var sheet = workbook.addWorksheet('My Sheet');
 ```
 
 Use the second parameter of the addWorksheet function to create a new sheet with a specific tab color.
 To add a new one with a red tab color use this example: 
 
 ```javascript
-var sheet = workbook.addWorksheet("My Sheet", "FFC0000");
+var sheet = workbook.addWorksheet('My Sheet', 'FFC0000');
 ```
 
 ## Access Worksheets
@@ -127,7 +119,7 @@ workbook.eachSheet(function(worksheet, sheetId) {
 });
 
 // fetch sheet by name
-var worksheet = workbook.getWorksheet("My Sheet");
+var worksheet = workbook.getWorksheet('My Sheet');
 
 // fetch sheet by id
 var worksheet = workbook.getWorksheet(1);
@@ -140,26 +132,26 @@ var worksheet = workbook.getWorksheet(1);
 // Note: these column structures are a workbook-building convenience only,
 // apart from the column width, they will not be fully persisted.
 worksheet.columns = [
-    { header: "Id", key: "id", width: 10 },
-    { header: "Name", key: "name", width: 32 },
-    { header: "D.O.B.", key: "DOB", width: 10 }
+    { header: 'Id', key: 'id', width: 10 },
+    { header: 'Name', key: 'name', width: 32 },
+    { header: 'D.O.B.', key: 'DOB', width: 10 }
 ];
 
 // Access an individual columns by key, letter and 1-based column number
-var idCol = worksheet.getColumn("id");
-var nameCol = worksheet.getColumn("B");
+var idCol = worksheet.getColumn('id');
+var nameCol = worksheet.getColumn('B');
 var dobCol = worksheet.getColumn(3);
     
 // set column properties
 
 // Note: will overwrite cell value C1
-dobCol.header = "Date of Birth";
+dobCol.header = 'Date of Birth';
 
 // Note: this will overwrite cell values C1:C2
-dobCol.header = ["Date of Birth", "A.K.A. D.O.B."];
+dobCol.header = ['Date of Birth', 'A.K.A. D.O.B.'];
 
-// from this point on, this column will be indexed by "dob" and not "DOB"
-dobCol.key = "dob";
+// from this point on, this column will be indexed by 'dob' and not 'DOB'
+dobCol.key = 'dob';
 
 dobCol.width = 15;
 
@@ -184,23 +176,23 @@ dobCol.eachCell({ includeEmpty: true }, function(cell, rowNumber) {
 
 ```javascript
 // Add a couple of Rows by key-value, after the last current row, using the column keys
-worksheet.addRow({id: 1, name: "John Doe", dob: new Date(1970,1,1)});
-worksheet.addRow({id: 2, name: "Jane Doe", dob: new Date(1965,1,7)});
+worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
+worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
 
 // Add a row by contiguous Array (assign to columns A, B & C)
-worksheet.addRow([3, "Sam", new Date()]);
+worksheet.addRow([3, 'Sam', new Date()]);
 
 // Add a row by sparse Array (assign to columns A, E & I)
 var rowValues = [];
 rowValues[1] = 4;
-rowValues[5] = "Kyle";
+rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
 worksheet.addRow(rowValues);
 
 // Add an array of rows
 var rows = [
-    [5,"Bob",new Date()], // row by array
-    {id:6, name: "Barbara", dob: new Date()}
+    [5,'Bob',new Date()], // row by array
+    {id:6, name: 'Barbara', dob: new Date()}
 ];
 worksheet.addRows(rows);
 
@@ -217,13 +209,13 @@ row.height = 42.5;
 row.hidden = true;
 
 row.getCell(1).value = 5; // A5's value set to 5
-row.getCell("name").value = "Zeb"; // B5's value set to "Zeb" - assuming column 2 is still keyed by name
-row.getCell("C").value = new Date(); // C5's value set to now
+row.getCell('name').value = 'Zeb'; // B5's value set to 'Zeb' - assuming column 2 is still keyed by name
+row.getCell('C').value = new Date(); // C5's value set to now
 
 // Get a row as a sparse array
 // Note: interface change: worksheet.getRow(4) ==> worksheet.getRow(4).values
 row = worksheet.getRow(4).values;
-expect(row[5]).toEqual("Kyle");
+expect(row[5]).toEqual('Kyle');
 
 // assign row values by contiguous array (where array element 0 has a value)
 row.values = [1,2,3];
@@ -234,37 +226,37 @@ expect(row.getCell(3).value).toEqual(3);
 // assign row values by sparse array  (where array element 0 is undefined)
 var values = []
 values[5] = 7;
-values[10] = "Hello, World!";
+values[10] = 'Hello, World!';
 row.values = values;
 expect(row.getCell(1).value).toBeNull();
 expect(row.getCell(5).value).toEqual(7);
-expect(row.getCell(10).value).toEqual("Hello, World!");
+expect(row.getCell(10).value).toEqual('Hello, World!');
 
 // assign row values by object, using column keys
 row.values = {
     id: 13,
-    name: "Thing 1",
+    name: 'Thing 1',
     dob: new Date()
 };
 
 // Iterate over all rows that have values in a worksheet
 worksheet.eachRow(function(row, rowNumber) {
-    console.log("Row " + rowNumber + " = " + JSON.stringify(row.values));
+    console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
 });
 
 // Iterate over all rows (including empty rows) in a worksheet
 worksheet.eachRow({ includeEmpty: true }, function(row, rowNumber) {
-    console.log("Row " + rowNumber + " = " + JSON.stringify(row.values));
+    console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
 });
 
 // Iterate over all non-null cells in a row
 row.eachCell(function(cell, colNumber) {
-    console.log("Cell " + colNumber + " = " + cell.value);
+    console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
 // Iterate over all cells in a row (including empty cells)
 row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
-    console.log("Cell " + colNumber + " = " + cell.value);
+    console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
 // Commit a completed row to stream
@@ -275,37 +267,56 @@ row.commit();
 
 ```javascript
 // Modify/Add individual cell
-worksheet.getCell("C3").value = new Date(1968, 5, 1);
+worksheet.getCell('C3').value = new Date(1968, 5, 1);
 
 // query a cell's type
-expect(worksheet.getCell("C3").type).toEqual(Excel.ValueType.Date);
+expect(worksheet.getCell('C3').type).toEqual(Excel.ValueType.Date);
 ```
 
 ## Merged Cells
 
 ```javascript
 // merge a range of cells
-worksheet.mergeCells("A4:B5");
+worksheet.mergeCells('A4:B5');
 
 // ... merged cells are linked
-worksheet.getCell("B5").value = "Hello, World!";
-expect(worksheet.getCell("B5").value).toBe(worksheet.getCell("A4").value);
-expect(worksheet.getCell("B5").master).toBe(worksheet.getCell("A4"));
+worksheet.getCell('B5').value = 'Hello, World!';
+expect(worksheet.getCell('B5').value).toBe(worksheet.getCell('A4').value);
+expect(worksheet.getCell('B5').master).toBe(worksheet.getCell('A4'));
 
 // ... merged cells share the same style object
-expect(worksheet.getCell("B5").style).toBe(worksheet.getCell("A4").style);
-worksheet.getCell("B5").style.font = myFonts.arial;
-expect(worksheet.getCell("A4").style.font).toBe(myFonts.arial);
+expect(worksheet.getCell('B5').style).toBe(worksheet.getCell('A4').style);
+worksheet.getCell('B5').style.font = myFonts.arial;
+expect(worksheet.getCell('A4').style.font).toBe(myFonts.arial);
 
 // unmerging the cells breaks the style links
-worksheet.unMergeCells("A4");
-expect(worksheet.getCell("B5").style).not.toBe(worksheet.getCell("A4").style);
-expect(worksheet.getCell("B5").style.font).not.toBe(myFonts.arial);
+worksheet.unMergeCells('A4');
+expect(worksheet.getCell('B5').style).not.toBe(worksheet.getCell('A4').style);
+expect(worksheet.getCell('B5').style.font).not.toBe(myFonts.arial);
 
 // merge by top-left, bottom-right
-worksheet.mergeCells("G10", "H11");
+worksheet.mergeCells('G10', 'H11');
 worksheet.mergeCells(10,11,12,13); // top,left,bottom,right
 
+```
+
+## Defined Names
+
+Individual cells (or multiple groups of cells) can have names assigned to them.
+ The names can be used in formulas and data validation (and probably more).
+
+```javascript
+// assign (or get) a name for a cell (will overwrite any other names that cell had)
+worksheet.getCell('A1').name = 'PI';
+expect(worksheet.getCell('A1').name).to.equal('PI');
+
+// assign (or get) an array of names for a cell (cells can have more than one name)
+worksheet.getCell('A1').names = ['thing1', 'thing2'];
+expect(worksheet.getCell('A1').names).to.have.members(['thing1', 'thing2']);
+
+// remove a name from a cell
+worksheet.getCell('A1').removeName('thing1');
+expect(worksheet.getCell('A1').names).to.have.members(['thing2']);
 ```
 
 ## Styles
@@ -321,20 +332,20 @@ Styles are set by assigning the following properties:
 
 ```javascript
 // assign a style to a cell
-ws.getCell("A1").numFmt = "0.00%";
+ws.getCell('A1').numFmt = '0.00%';
 
 // Apply styles to worksheet columns
 ws.columnscolumns = [
-    { header: "Id", key: "id", width: 10 },
-    { header: "Name", key: "name", width: 32, style: { font: { name: "Arial Black" } } },
-    { header: "D.O.B.", key: "DOB", width: 10, style: { numFmt: "dd/mm/yyyy" } }
+    { header: 'Id', key: 'id', width: 10 },
+    { header: 'Name', key: 'name', width: 32, style: { font: { name: 'Arial Black' } } },
+    { header: 'D.O.B.', key: 'DOB', width: 10, style: { numFmt: 'dd/mm/yyyy' } }
 ];
 
 // Set Column 3 to Currency Format
-ws.getColumn(3).numFmt = "�#,##0;[Red]-�#,##0";
+ws.getColumn(3).numFmt = '�#,##0;[Red]-�#,##0';
 
 // Set Row 2 to Comic Sans.
-ws.getRow(2).font = { name: "Comic Sans MS", family: 4, size: 16, underline: "double", bold: true };
+ws.getRow(2).font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
 ```
 
 When a style is applied to a row or column, it will be applied to all currently existing cells in that row or column.
@@ -355,13 +366,13 @@ Caveat: All the above properties (with the exception of numFmt, which is a strin
 ### Number Formats
 
 ```javascript
-// display value as "1 3/5"
-ws.getCell("A1").value = 1.6;
-ws.getCell("A1").numFmt = "# ?/?";
+// display value as '1 3/5'
+ws.getCell('A1').value = 1.6;
+ws.getCell('A1').numFmt = '# ?/?';
 
-// display value as "1.60%"
-ws.getCell("B1").value = 0.016;
-ws.getCell("B1").numFmt = "0.00%";
+// display value as '1.60%'
+ws.getCell('B1').value = 0.016;
+ws.getCell('B1').numFmt = '0.00%';
 ```
 
 ### Fonts
@@ -369,8 +380,8 @@ ws.getCell("B1").numFmt = "0.00%";
 ```javascript
 
 // for the wannabe graphic designers out there
-ws.getCell("A1").font = {
-    name: "Comic Sans MS",
+ws.getCell('A1').font = {
+    name: 'Comic Sans MS',
     family: 4,
     size: 16,
     underline: true,
@@ -378,9 +389,9 @@ ws.getCell("A1").font = {
 };
 
 // for the graduate graphic designers...
-ws.getCell("A2").font = {
-    name: "Arial Black",
-    color: { argb: "FF00FF00" },
+ws.getCell('A2').font = {
+    name: 'Arial Black',
+    color: { argb: 'FF00FF00' },
     family: 2,
     size: 14,
     italic: true
@@ -388,8 +399,8 @@ ws.getCell("A2").font = {
 
 // note: the cell will store a reference to the font object assigned.
 // If the font object is changed afterwards, the cell font will change also...
-var font = { name: "Arial", size: 12 };
-ws.getCell("A3").font = font;
+var font = { name: 'Arial', size: 12 };
+ws.getCell('A3').font = font;
 font.size = 20; // Cell A3 now has font size 20!
 
 // Cells that share similar fonts may reference the same font object after
@@ -399,14 +410,14 @@ font.size = 20; // Cell A3 now has font size 20!
 
 | Font Property             | Description       | Example Value(s) |
 | ------------------------- | ----------------- | ---------------- |
-| name | Font name. | "Arial", "Calibri", etc. |
+| name | Font name. | 'Arial', 'Calibri', etc. |
 | family | Font family. An integer value. | 1,2,3, etc. |
-| scheme | Font scheme. | "minor", "major", "none" |
+| scheme | Font scheme. | 'minor', 'major', 'none' |
 | charset | Font charset. An integer value. | 1, 2, etc. |
-| color | Colour description, an object containing an ARGB value. | { argb: "FFFF0000"} |
+| color | Colour description, an object containing an ARGB value. | { argb: 'FFFF0000'} |
 | bold | Font **weight** | true, false |
 | italic | Font *slope* | true, false |
-| underline | Font <u>underline</u> style | true, false, "none", "single", "double", "singleAccounting", "doubleAccounting" |
+| underline | Font <u>underline</u> style | true, false, 'none', 'single', 'double', 'singleAccounting', 'doubleAccounting' |
 | strike | Font <strike>strikethrough</strike> | true, false |
 | outline | Font outline | true, false |
 
@@ -414,20 +425,20 @@ font.size = 20; // Cell A3 now has font size 20!
 
 ```javascript
 // set cell alignment to top-left, middle-center, bottom-right
-ws.getCell("A1").alignment = { vertical: "top", horizontal: "left" };
-ws.getCell("B1").alignment = { vertical: "middle", horizontal: "center" };
-ws.getCell("C1").alignment = { vertical: "bottom", horizontal: "right" };
+ws.getCell('A1').alignment = { vertical: 'top', horizontal: 'left' };
+ws.getCell('B1').alignment = { vertical: 'middle', horizontal: 'center' };
+ws.getCell('C1').alignment = { vertical: 'bottom', horizontal: 'right' };
 
 // set cell to wrap-text
-ws.getCell("D1").alignment = { wrapText: true };
+ws.getCell('D1').alignment = { wrapText: true };
 
 // set cell indent to 1
-ws.getCell("E1").alignment = { indent: 1 };
+ws.getCell('E1').alignment = { indent: 1 };
 
 // set cell text rotation to 30deg upwards, 45deg downwards and vertical text
-ws.getCell("F1").alignment = { textRotation: 30 };
-ws.getCell("G1").alignment = { textRotation: -45 };
-ws.getCell("H1").alignment = { textRotation: "vertical" };
+ws.getCell('F1').alignment = { textRotation: 30 };
+ws.getCell('G1').alignment = { textRotation: -45 };
+ws.getCell('H1').alignment = { textRotation: 'vertical' };
 
 ```
 
@@ -448,24 +459,24 @@ ws.getCell("H1").alignment = { textRotation: "vertical" };
 
 ```javascript
 // set single thin border around A1
-ws.getCell("A1").border = {
-    top: {style:"thin"},
-    left: {style:"thin"},
-    bottom: {style:"thin"},
-    right: {style:"thin"}
+ws.getCell('A1').border = {
+    top: {style:'thin'},
+    left: {style:'thin'},
+    bottom: {style:'thin'},
+    right: {style:'thin'}
 };
 
 // set double thin green border around A3
-ws.getCell("A3").border = {
-    top: {style:"double", color: {argb:"FF00FF00"}},
-    left: {style:"double", color: {argb:"FF00FF00"}},
-    bottom: {style:"double", color: {argb:"FF00FF00"}},
-    right: {style:"double", color: {argb:"FF00FF00"}}
+ws.getCell('A3').border = {
+    top: {style:'double', color: {argb:'FF00FF00'}},
+    left: {style:'double', color: {argb:'FF00FF00'}},
+    bottom: {style:'double', color: {argb:'FF00FF00'}},
+    right: {style:'double', color: {argb:'FF00FF00'}}
 };
 
 // set thick red cross in A5
-ws.getCell("A5").border = {
-    diagonal: {up: true, down: true, style:"thick", color: {argb:"FFFF0000"}}
+ws.getCell('A5').border = {
+    diagonal: {up: true, down: true, style:'thick', color: {argb:'FFFF0000'}}
 };
 ```
 
@@ -487,41 +498,41 @@ ws.getCell("A5").border = {
 
 ```javascript
 // fill A1 with red darkVertical stripes
-ws.getCell("A1").fill = {
-    type: "pattern",
-    pattern:"darkVertical",
-    fgColor:{argb:"FFFF0000"}
+ws.getCell('A1').fill = {
+    type: 'pattern',
+    pattern:'darkVertical',
+    fgColor:{argb:'FFFF0000'}
 };
 
 // fill A2 with yellow dark trellis and blue behind
-ws.getCell("A2").fill = {
-    type: "pattern",
-    pattern:"darkTrellis",
-    fgColor:{argb:"FFFFFF00"},
-    bgColor:{argb:"FF0000FF"}
+ws.getCell('A2').fill = {
+    type: 'pattern',
+    pattern:'darkTrellis',
+    fgColor:{argb:'FFFFFF00'},
+    bgColor:{argb:'FF0000FF'}
 };
 
 // fill A3 with blue-white-blue gradient from left to right
-ws.getCell("A3").fill = {
-    type: "gradient",
-    gradient: "angle",
+ws.getCell('A3').fill = {
+    type: 'gradient',
+    gradient: 'angle',
     degree: 0,
     stops: [
-        {position:0, color:{argb:"FF0000FF"}},
-        {position:0.5, color:{argb:"FFFFFFFF"}},
-        {position:1, color:{argb:"FF0000FF"}}
+        {position:0, color:{argb:'FF0000FF'}},
+        {position:0.5, color:{argb:'FFFFFFFF'}},
+        {position:1, color:{argb:'FF0000FF'}}
     ]
 };
 
 
 // fill A4 with red-green gradient from center
-ws.getCell("A2").fill = {
-    type: "gradient",
-    gradient: "path",
+ws.getCell('A2').fill = {
+    type: 'gradient',
+    gradient: 'path',
     center:{left:0.5,top:0.5},
     stops: [
-        {position:0, color:{argb:"FFFF0000"}},
-        {position:1, color:{argb:"FF00FF00"}}
+        {position:0, color:{argb:'FFFF0000'}},
+        {position:1, color:{argb:'FF00FF00'}}
     ]
 };
 
@@ -531,7 +542,7 @@ ws.getCell("A2").fill = {
 
 | Property | Required | Description |
 | -------- | -------- | ----------- |
-| type     | Y        | Value: "pattern"<br/>Specifies this fill uses patterns |
+| type     | Y        | Value: 'pattern'<br/>Specifies this fill uses patterns |
 | pattern  | Y        | Specifies type of pattern (see <a href="#valid-pattern-types">Valid Pattern Types</a> below) |
 | fgColor  | N        | Specifies the pattern foreground color. Default is black. |
 | bgColor  | N        | Specifies the pattern background color. Default is white. |
@@ -563,10 +574,10 @@ ws.getCell("A2").fill = {
 
 | Property | Required | Description |
 | -------- | -------- | ----------- |
-| type     | Y        | Value: "gradient"<br/>Specifies this fill uses gradients |
-| gradient | Y        | Specifies gradient type. One of ["angle", "path"] |
-| degree   | angle    | For "angle" gradient, specifies the direction of the gradient. 0 is from the left to the right. Values from 1 - 359 rotates the direction clockwise |
-| center   | path     | For "path" gradient. Specifies the relative coordinates for the start of the path. "left" and "top" values range from 0 to 1 |
+| type     | Y        | Value: 'gradient'<br/>Specifies this fill uses gradients |
+| gradient | Y        | Specifies gradient type. One of ['angle', 'path'] |
+| degree   | angle    | For 'angle' gradient, specifies the direction of the gradient. 0 is from the left to the right. Values from 1 - 359 rotates the direction clockwise |
+| center   | path     | For 'path' gradient. Specifies the relative coordinates for the start of the path. 'left' and 'top' values range from 0 to 1 |
 | stops    | Y        | Specifies the gradient colour sequence. Is an array of objects containing position and color starting with position 0 and ending with position 1. Intermediatary positions may be used to specify other colours on the path. |
 
 **Caveats**
@@ -637,7 +648,7 @@ stream.pipe(workbook.csv.createInputStream());
 // read from a file with European Dates
 var workbook = new Excel.Workbook();
 var options = {
-    dateFormats: ["DD/MM/YYYY"]
+    dateFormats: ['DD/MM/YYYY']
 };
 workbook.csv.readFile(filename, options)
     .then(function(worksheet) {
@@ -679,8 +690,8 @@ The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read t
 Dates are parsed using the npm module [moment](https://www.npmjs.com/package/moment).
  If no dateFormats are supplied, the following are used:
 * moment.ISO_8601
-* "MM-DD-YYYY"
-* "YYYY-MM-DD"
+* 'MM-DD-YYYY'
+* 'YYYY-MM-DD'
 
 #### Writing CSV
 
@@ -703,7 +714,7 @@ workbook.csv.write(stream)
 // read from a file with European Date-Times
 var workbook = new Excel.Workbook();
 var options = {
-    dateFormat: "DD/MM/YYYY HH:mm:ss"
+    dateFormat: 'DD/MM/YYYY HH:mm:ss'
 };
 workbook.csv.readFile(filename, options)
     .then(function(worksheet) {
@@ -721,7 +732,7 @@ var options = {
                 return value;
             case 1:
                 // column 2 is a date
-                return moment(value).format("YYYY-MM-DD");
+                return moment(value).format('YYYY-MM-DD');
             case 2:
                 // column 3 is a formula, write just the result
                 return value.result;
@@ -787,7 +798,7 @@ If neither stream nor filename is specified in the options, the workbook writer 
 ```javascript
 // construct a streaming XLSX workbook writer with styles and shared strings
 var options = {
-    filename: "./streamed-workbook.xlsx",
+    filename: './streamed-workbook.xlsx',
     useStyles: true,
     useSharedStrings: true
 };
@@ -818,10 +829,10 @@ worksheet.addRow({
 
 The reason the WorksheetWriter does not commit rows as they are added is to allow cells to be merged across rows:
 ```javascript
-worksheet.mergeCells("A1:B2");
-worksheet.getCell("A1").value = "I am merged";
-worksheet.getCell("C1").value = "I am not";
-worksheet.getCell("C2").value = "Neither am I";
+worksheet.mergeCells('A1:B2');
+worksheet.getCell('A1').value = 'I am merged';
+worksheet.getCell('C1').value = 'I am not';
+worksheet.getCell('C2').value = 'Neither am I';
 worksheet.getRow(2).commit(); // now rows 1 and two are committed.
 ```
 
@@ -849,10 +860,10 @@ The following value types are supported.
 | Excel.ValueType.Null      | 0         | No value.         | null |
 | Excel.ValueType.Merge     | 1         | N/A               | N/A |
 | Excel.ValueType.Number    | 2         | A numerical value | 3.14 |
-| Excel.ValueType.String    | 3         | A text value      | "Hello, World!" |
+| Excel.ValueType.String    | 3         | A text value      | 'Hello, World!' |
 | Excel.ValueType.Date      | 4         | A Date value      | new Date()  |
-| Excel.ValueType.Hyperlink | 5         | A hyperlink       | { text: "www.mylink.com", hyperlink: "http://www.mylink.com" } |
-| Excel.ValueType.Formula   | 6         | A formula         | { formula: "A1+A2", result: 7 } |
+| Excel.ValueType.Hyperlink | 5         | A hyperlink       | { text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' } |
+| Excel.ValueType.Formula   | 6         | A formula         | { formula: 'A1+A2', result: 7 } |
 
 # Interface Changes
 
@@ -906,5 +917,5 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.0   | <ul><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
 | 0.2.2   | <ul><li><a href="https://pbs.twimg.com/profile_images/2933552754/fc8c70829ee964c5542ae16453503d37.jpeg">One Billion Cells</a><ul><li>Achievement Unlocked: A simple test using ExcelJS has created a spreadsheet with 1,000,000,000 cells. Made using random data with 100,000,000 rows of 10 cells per row. I cannot validate the file yet as Excel will not open it and I have yet to implement the streaming reader but I have every confidence that it is good since 1,000,000 rows loads ok.</li></ul></li></ul> |
 | 0.2.3   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/18">Merge Cell Styles</a><ul><li>Merged cells now persist (and parse) their styles.</li></ul></li></ul></li><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
-| 0.2.4   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/27">Worksheets with Ampersand Names</a><ul><li>Worksheet names are now xml-encoded and should work with all xml compatable characters</li></ul></li></ul></li><li><a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a><ul><li>Rows and Columns now support the hidden attribute.</li></ul></li></ul> |
+| 0.2.4   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/27">Worksheets with Ampersand Names</a><ul><li>Worksheet names are now xml-encoded and should work with all xml compatable characters</li></ul></li></ul></li><li><a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a><ul><li>Rows and Columns now support the hidden attribute.</li></ul></li><li><a href="#worksheet">Worksheet.addRows</a><ul><li>New function to add an array of rows (either array or object form) to the end of a worksheet.</li></ul></li></ul> |
 

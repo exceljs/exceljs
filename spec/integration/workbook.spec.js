@@ -16,8 +16,15 @@ describe('Workbook', function() {
   describe('Serialise', function() {
 
     after(function() {
-      return fsa.unlinkAsync('./wb.test.xlsx')
-        .catch(function() {});
+      function deleteFile(filename) {
+        return fsa.unlinkAsync('./wb.test.xlsx')
+          .catch(function() {});
+      }
+
+      return bluebird.all([
+        deleteFile('./wb.test.xlsx'),
+        deleteFile('./wb.test.csv')
+      ]);
     });
 
     it('creates sheets and saves with correct names', function() {
@@ -152,7 +159,11 @@ describe('Workbook', function() {
       function assign(sheet, address, value, name) {
         var cell = sheet.getCell(address);
         cell.value = value;
-        cell.name = name;
+        if (name instanceof  Array) {
+          cell.names = name;
+        } else {
+          cell.name = name;
+        }
       }
 
       // single entry
@@ -177,6 +188,14 @@ describe('Workbook', function() {
       // long distance
       assign(ws1a, 'B7', 2, 'sheets');
       assign(ws1b, 'B7', 2, 'sheets');
+
+      // two names
+      assign(ws1a, 'G1', 1, 'thing1');
+      ws1a.getCell('G1').addName('thing2');
+
+      // once removed
+      assign(ws1a, 'G2', 1, ['once', 'twice']);
+      ws1a.getCell('G2').removeName('once');
 
       return wb1.xlsx.writeFile('./wb.test.xlsx')
         .then(function() {
@@ -215,6 +234,32 @@ describe('Workbook', function() {
           // long distance
           check(ws2a, 'B7', 2, 'sheets');
           check(ws2b, 'B7', 2, 'sheets');
+
+          // two names
+          expect(ws2a.getCell('G1').names).to.have.members(['thing1', 'thing2']);
+
+          // once removed
+          expect(ws2a.getCell('G2').names).to.have.members(['twice']);
+
+          // ranges
+          function rangeCheck(name, members) {
+            var ranges = wb2.definedNames.getRanges(name);
+            expect(ranges.name).to.equal(name);
+            if (members.length) {
+              expect(ranges.ranges).to.have.members(members);
+            } else {
+              expect(ranges.ranges.length).to.equal(0);
+            }
+          }
+          rangeCheck('five', ['blort!$A$1']);
+          rangeCheck('amigos', ['blort!$A$3:$C$3']);
+          rangeCheck('verts', ['blort!$E$1:$E$3']);
+          rangeCheck('squares', ['blort!$B$5:$C$6']);
+          rangeCheck('sheets', ['blort!$B$7','foo!$B$7']);
+          rangeCheck('thing1', ['blort!$G$1']);
+          rangeCheck('thing2', ['blort!$G$1']);
+          rangeCheck('once', []);
+          rangeCheck('twice', ['blort!$G$2']);
         });
     });
 
