@@ -17,6 +17,8 @@ npm install exceljs
             <li>Cells can now have assigned names which may then be used in formulas.</li>
         </ul>
     </li>
+    <li>Converted Bluebird.defer() to new Bluebird(function(resolve, reject){}). 
+        Thanks to user <a href="https://github.com/Nishchit14">Nishchit</a> for the Pull Request</li>
 </ul>
 
 # Backlog
