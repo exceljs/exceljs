@@ -24,7 +24,7 @@
     "moment": "~2.9.0",
     "sax": "^0.6.0",
     "underscore": "1.4.4",
-    "unzip": ">= 0.1.9"
+    "unzip2": "^0.2.5"
   },
   "devDependencies": {
     "chai": "*",
