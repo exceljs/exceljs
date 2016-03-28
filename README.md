@@ -11,6 +11,13 @@ npm install exceljs
 # New Features!
 
 <ul>
+    <li>Bug Fixes
+        <ul>
+            <li><a href="https://github.com/guyonroche/exceljs/issues/87">invalid signature: 0x80014</a>: 
+                Thanks to <a href="https://github.com/hasanlussa">hasanlussa</a> for the PR
+            </li>
+        </ul>
+    </li>
     <li>
         <a href="#defined-names">Defined Names</a>
         <ul>
