@@ -21,22 +21,25 @@
     "archiver": "0.14.3",
     "bluebird": "*",
     "fast-csv": "0.5.7",
-    "moment": "~2.9.0",
+    "moment": "~2.11.0",
     "sax": "^0.6.0",
     "underscore": "1.4.4",
     "unzip2": "^0.2.5"
   },
   "devDependencies": {
     "chai": "*",
+    "express": "*",
     "jshint": "*",
     "memorystream": "*",
-    "mocha": "*"
+    "mocha": "*",
+    "request": "*"
   },
   "scripts": {
-    "test": "npm run unit-test && npm run integration-test",
+    "test": "npm run unit-test && npm run integration-test && npm run end-to-end-test",
 
     "unit-test": "mocha spec/unit --recursive",
-    "integration-test": "mocha spec/integration --recursive"
+    "integration-test": "mocha spec/integration --recursive",
+    "end-to-end-test": "mocha spec/end-to-end --recursive"
   },
   "main": "./excel.js",
   "files": [
