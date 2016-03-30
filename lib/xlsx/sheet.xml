@@ -17,24 +17,26 @@
     <sheetView workbookViewId="0"/>
   </sheetViews>
   <sheetFormatPr defaultRowHeight="15" x14ac:dyDescent="0.25"/>
-  
+
   <% if (cols) { %>
   <cols>
     <% _.each(cols, function(col) { %>
-      <col min="<%=col.min%>" 
-         max="<%=col.max%>" 
+      <col min="<%=col.min%>"
+         max="<%=col.max%>"
          width="<%=col.width%>"
          <% if (col.styleId) { %> style="<%=col.styleId%>" <% } %>
          <% if (col.hidden) { %> hidden="1" <%  } %>
+         <% if (col.outlineLevel) {%> outlineLevel="<%=col.outlineLevel%>"<% } %>
          customWidth="1"/><% }); %>
   </cols>
   <% } %>
-  
+
   <sheetData>
     <% _.each(rows, function(row) { %>
       <row r="<%=row.number%>"
            <% if(row.height) {%> ht="<%=row.height%>" customHeight="1"<% } %>
            <% if(row.hidden) {%> hidden="1"<% } %>
+           <% if(row.outlineLevel) {%> outlineLevel="<%=row.outlineLevel%>"<% } %>
            spans="<%=row.min%>:<%=row.max%>"
            <% if (row.styleId) { %> s="<%=row.styleId%>" customFormat="1" <% } %>
            x14ac:dyDescent="0.25">
@@ -51,15 +53,15 @@
     <% }); %>
   </mergeCells>
   <% } %>
-  
-  
+
+
   <% if (hyperlinks) { %>
   <hyperlinks>
     <% _.each(hyperlinks, function(hyperlink) { %>
-    <hyperlink ref="<%=hyperlink.address%>" r:id="<%=hyperlink.rId%>"/>    
+    <hyperlink ref="<%=hyperlink.address%>" r:id="<%=hyperlink.rId%>"/>
     <% }); %>
   </hyperlinks>
   <% } %>
-  
+
   <pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>
 </worksheet>

@@ -13,7 +13,7 @@ npm install exceljs
 <ul>
     <li>Bug Fixes
         <ul>
-            <li><a href="https://github.com/guyonroche/exceljs/issues/87">invalid signature: 0x80014</a>: 
+            <li><a href="https://github.com/guyonroche/exceljs/issues/87">invalid signature: 0x80014</a>:
                 Thanks to <a href="https://github.com/hasanlussa">hasanlussa</a> for the PR
             </li>
         </ul>
@@ -24,7 +24,7 @@ npm install exceljs
             <li>Cells can now have assigned names which may then be used in formulas.</li>
         </ul>
     </li>
-    <li>Converted Bluebird.defer() to new Bluebird(function(resolve, reject){}). 
+    <li>Converted Bluebird.defer() to new Bluebird(function(resolve, reject){}).
         Thanks to user <a href="https://github.com/Nishchit14">Nishchit</a> for the Pull Request</li>
 </ul>
 
@@ -113,7 +113,7 @@ var sheet = workbook.addWorksheet('My Sheet');
 ```
 
 Use the second parameter of the addWorksheet function to create a new sheet with a specific tab color.
-To add a new one with a red tab color use this example: 
+To add a new one with a red tab color use this example:
 
 ```javascript
 var sheet = workbook.addWorksheet('My Sheet', 'FFC0000');
@@ -150,7 +150,7 @@ worksheet.columns = [
 var idCol = worksheet.getColumn('id');
 var nameCol = worksheet.getColumn('B');
 var dobCol = worksheet.getColumn(3);
-    
+
 // set column properties
 
 // Note: will overwrite cell value C1
@@ -166,6 +166,12 @@ dobCol.width = 15;
 
 // Hide the column if you'd like
 dobCol.hidden = true;
+
+// set an outline level for columns
+worksheet.getColumn(4).outlineLevel = 0;
+worksheet.getColumn(5).outlineLevel = 1;
+worksheet.getColumn(6).outlineLevel = 1;
+worksheet.getColumn(7).outlineLevel = 1;
 
 // iterate over all current cells in this column
 dobCol.eachCell(function(cell, rowNumber) {
@@ -216,6 +222,12 @@ row.height = 42.5;
 
 // make row hidden
 row.hidden = true;
+
+// set an outline level for rows
+worksheet.getRow(4).outlineLevel = 0;
+worksheet.getRow(5).outlineLevel = 1;
+worksheet.getRow(6).outlineLevel = 1;
+worksheet.getRow(7).outlineLevel = 1;
 
 row.getCell(1).value = 5; // A5's value set to 5
 row.getCell('name').value = 'Zeb'; // B5's value set to 'Zeb' - assuming column 2 is still keyed by name
@@ -800,7 +812,7 @@ The constructor takes an optional options object with the following fields:
 | useStyles | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
 
 If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object
- that will store the contents of the XLSX workbook in memory. 
+ that will store the contents of the XLSX workbook in memory.
  This StreamBuf object, which can be accessed via the property workbook.stream, can be used to either
  access the bytes directly by stream.read() or to pipe the contents to another stream.
 
@@ -882,7 +894,7 @@ Every effort is made to make a good consistent interface that doesn't break thro
 
 ### Worksheet.eachRow
 
-The arguments in the callback function to Worksheet.eachRow have been swapped and changed; it was function(rowNumber,rowValues), now it is function(row, rowNumber) which gives it a look and feel more like the underscore (_.each) function and prioritises the row object over the row number. 
+The arguments in the callback function to Worksheet.eachRow have been swapped and changed; it was function(rowNumber,rowValues), now it is function(row, rowNumber) which gives it a look and feel more like the underscore (_.each) function and prioritises the row object over the row number.
 
 ### Worksheet.getRow
 
@@ -927,4 +939,3 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.2   | <ul><li><a href="https://pbs.twimg.com/profile_images/2933552754/fc8c70829ee964c5542ae16453503d37.jpeg">One Billion Cells</a><ul><li>Achievement Unlocked: A simple test using ExcelJS has created a spreadsheet with 1,000,000,000 cells. Made using random data with 100,000,000 rows of 10 cells per row. I cannot validate the file yet as Excel will not open it and I have yet to implement the streaming reader but I have every confidence that it is good since 1,000,000 rows loads ok.</li></ul></li></ul> |
 | 0.2.3   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/18">Merge Cell Styles</a><ul><li>Merged cells now persist (and parse) their styles.</li></ul></li></ul></li><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
 | 0.2.4   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/27">Worksheets with Ampersand Names</a><ul><li>Worksheet names are now xml-encoded and should work with all xml compatable characters</li></ul></li></ul></li><li><a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a><ul><li>Rows and Columns now support the hidden attribute.</li></ul></li><li><a href="#worksheet">Worksheet.addRows</a><ul><li>New function to add an array of rows (either array or object form) to the end of a worksheet.</li></ul></li></ul> |
-
