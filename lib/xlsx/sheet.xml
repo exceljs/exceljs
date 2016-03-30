@@ -14,22 +14,25 @@
 
   <dimension ref="<%=dimensions%>"/>
   <sheetViews>
-    <sheetView workbookViewId="0"/>
+    <sheetView
+        workbookViewId="0"
+        <% if(showGridLines !== undefined) {%> showGridLines="<%=showGridLines%>"<% } %>
+    />
   </sheetViews>
   <sheetFormatPr defaultRowHeight="15" x14ac:dyDescent="0.25"/>
-  
+
   <% if (cols) { %>
   <cols>
     <% _.each(cols, function(col) { %>
-      <col min="<%=col.min%>" 
-         max="<%=col.max%>" 
+      <col min="<%=col.min%>"
+         max="<%=col.max%>"
          width="<%=col.width%>"
          <% if (col.styleId) { %> style="<%=col.styleId%>" <% } %>
          <% if (col.hidden) { %> hidden="1" <%  } %>
          customWidth="1"/><% }); %>
   </cols>
   <% } %>
-  
+
   <sheetData>
     <% _.each(rows, function(row) { %>
       <row r="<%=row.number%>"
@@ -51,15 +54,15 @@
     <% }); %>
   </mergeCells>
   <% } %>
-  
-  
+
+
   <% if (hyperlinks) { %>
   <hyperlinks>
     <% _.each(hyperlinks, function(hyperlink) { %>
-    <hyperlink ref="<%=hyperlink.address%>" r:id="<%=hyperlink.rId%>"/>    
+    <hyperlink ref="<%=hyperlink.address%>" r:id="<%=hyperlink.rId%>"/>
     <% }); %>
   </hyperlinks>
   <% } %>
-  
+
   <pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>
 </worksheet>
