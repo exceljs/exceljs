@@ -3,7 +3,7 @@
 var expect = require('chai').expect;
 var _ = require('underscore');
 var Excel = require('../../excel');
-var Dimensions = require('../../lib/utils/dimensions');
+var Range = require('../../lib/doc/range');
 var testutils = require('./../testutils');
 
 describe('Worksheet', function() {
@@ -517,7 +517,7 @@ describe('Worksheet', function() {
       var ws = wb.addWorksheet('blort');
 
       var expectMaster = function(range, master) {
-        var d = new Dimensions(range);
+        var d = new Range(range);
         for (var i = d.top; i <= d.bottom; i++) {
           for (var j = d.left; j <= d.right; j++) {
             var cell = ws.getCell(i,j);

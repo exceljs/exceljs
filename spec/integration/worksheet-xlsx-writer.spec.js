@@ -3,7 +3,7 @@
 var expect = require('chai').expect;
 var _ = require('underscore');
 var Excel = require('../../excel');
-var Dimensions = require('../../lib/utils/dimensions');
+var Range = require('../../lib/doc/range');
 var testutils = require('./../testutils');
 
 var CONCATENATE_HELLO_WORLD = 'CONCATENATE("Hello", ", ", "World!")';
