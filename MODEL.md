@@ -36,7 +36,29 @@ The workbook and its components define a simple JavaScript Object model which ca
         "left": 1,
         "bottom": 3,
         "right": 6
-    }    
+    },
+
+    // setting for enable fit to page (default: false)
+    fitToPage: false,
+
+    // setting for page
+    pageSetup: {
+        paperSize: 9, 
+        scale: 100, 
+        firstPageNumber: 0, 
+        fitToWidth: 1, 
+        fitToHeight: 1, 
+        pageOrder: "downThenOver", 
+        orientation: "portrait", // (portrait | landscape)
+        usePrinterDefaults: "false",
+        blackAndWhite: "false",
+        draft: "false",
+        cellComments: "none",
+        useFirstPageNumber: "false",
+        horizontalDpi: 300,
+        verticalDpi: 300,
+        copies: 1
+    }
 }
 ```
 

@@ -890,6 +890,18 @@ This function has changed from returning a sparse array of cell values to return
 
 The sparse array of cell values is still available via Worksheet.getRow(rowNumber).values;
 
+## Print settings
+fitToPage
+```javascript
+// Fit to page
+worksheet.fitToPage = true;
+
+// Set landscape
+worksheet.pageSetup: {
+  orientation: "landscape"
+};
+```
+
 ## Interface Breaks in 0.1.1
 
 ### cell.model

@@ -6,11 +6,12 @@
     mc:Ignorable="x14ac"
     xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
 
-  <% if (typeof tabColor !== 'undefined') { %>
   <sheetPr>
+    <pageSetUpPr fitToPage="<%=fitToPage%>"/>
+  <% if (typeof tabColor !== 'undefined') { %>
     <tabColor rgb="<%=tabColor%>"/>
-  </sheetPr>
   <% } %>
+  </sheetPr>
 
   <dimension ref="<%=dimensions%>"/>
   <sheetViews>
@@ -62,4 +63,22 @@
   <% } %>
   
   <pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>
+  <% if (typeof pageSetup !== 'undefined') { %>
+  <pageSetup 
+    paperSize="<%=(pageSetup.paperSize || 9)%>"
+    scale="<%=(pageSetup.scale || 100)%>"
+    firstPageNumber="<%=(pageSetup.firstPageNumber || 0)%>"
+    fitToWidth="<%=(pageSetup.fitToWidth || 1)%>"
+    fitToHeight="<%=(pageSetup.fitToHeight || 1)%>"
+    pageOrder="<%=(pageSetup.pageOrder || 'downThenOver')%>"
+    orientation="<%=(pageSetup.orientation || 'portrait')%>"
+    usePrinterDefaults="<%=(pageSetup.usePrinterDefaults || 'false')%>"
+    blackAndWhite="<%=(pageSetup.blackAndWhite || 'false')%>"
+    draft="<%=(pageSetup.draft || 'false')%>"
+    cellComments="<%=(pageSetup.cellComments || 'none')%>"
+    useFirstPageNumber="<%=(pageSetup.useFirstPageNumber || 'false')%>"
+    horizontalDpi="<%=(pageSetup.horizontalDpi || 300)%>"
+    verticalDpi="<%=(pageSetup.verticalDpi || 300)%>"
+    copies="<%=(pageSetup.copies || 1)%>"/>
+  <% } %>
 </worksheet>
