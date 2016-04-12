@@ -899,6 +899,16 @@ worksheet.fitToPage = true;
 worksheet.pageSetup: {
   orientation: "landscape"
 };
+
+// Set page margins
+worksheet.pageMargins: {
+  left: 0.7,
+  right:0.7,
+  top: 0.75,
+  bottom: 0.75,
+  header: 0.3,
+  footer: 0.3
+};
 ```
 
 ## Interface Breaks in 0.1.1

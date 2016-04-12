@@ -58,6 +58,16 @@ The workbook and its components define a simple JavaScript Object model which ca
         horizontalDpi: 300,
         verticalDpi: 300,
         copies: 1
+    },
+
+    // setting for margins
+    pageMargins: {
+        left: 0.7,
+        right:0.7,
+        top: 0.75,
+        bottom: 0.75,
+        header: 0.3,
+        footer: 0.3
     }
 }
 ```

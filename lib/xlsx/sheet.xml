@@ -62,7 +62,16 @@
   </hyperlinks>
   <% } %>
   
-  <pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>
+  <% if (typeof pageMargins !== 'undefined') { %>
+  <pageMargins 
+    left="<%=(pageMargins.left || 0.7)%>" 
+    right="<%=(pageMargins.right || 0.7)%>" 
+    top="<%=(pageMargins.top || 0.75)%>" 
+    bottom="<%=(pageMargins.bottom || 0.75)%>" 
+    header="<%=(pageMargins.header || 0.3)%>" 
+    footer="<%=(pageMargins.footer || 0.3)%>"/>
+  <% } %>
+
   <% if (typeof pageSetup !== 'undefined') { %>
   <pageSetup 
     paperSize="<%=(pageSetup.paperSize || 9)%>"
