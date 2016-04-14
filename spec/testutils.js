@@ -139,8 +139,6 @@ var utils = module.exports = {
     B1: {
       type: 'list',
       allowBlank: true,
-      showInputMessage: true,
-      showErrorMessage: true,
       formulae: ['Nephews']
     },
 
@@ -166,7 +164,7 @@ var utils = module.exports = {
       allowBlank: true,
       showInputMessage: true,
       showErrorMessage: true,
-      formulae: ['5'],
+      formulae: [5],
       promptTitle: 'Five',
       prompt: 'The value must be Five'
     },
@@ -177,13 +175,25 @@ var utils = module.exports = {
       allowBlank: true,
       showInputMessage: true,
       showErrorMessage: true,
-      formulae: ['5'],
+      formulae: [5],
       errorStyle: 'error',
       errorTitle: 'Five',
       error: 'The value must not be Five'
     },
 
+    B15: {
+      type: 'whole',
+      operator: 'notEqual',
+      formulae: [5]
+    },
+
     types: ['whole', 'decimal', 'date', 'textLength'],
+    values: {
+      whole: { v1: 1, v2: 10 },
+      decimal: { v1: 1.5, v2: 10.2 },
+      date: { v1: new Date(2015, 0, 1), v2: new Date(2016, 0, 1) },
+      textLength: { v1: 5, v2: 15 }
+    },
     operators: ['between', 'notBetween', 'equal', 'notEqual', 'greaterThan', 'lessThan', 'greaterThanOrEqual', 'lessThanOrEqual'],
     create: function(type, operator) {
       var dataValidation = {
@@ -192,12 +202,12 @@ var utils = module.exports = {
         allowBlank: true,
         showInputMessage: true,
         showErrorMessage: true,
-        formulae: ['1']
+        formulae: [this.values[type].v1]
       };
       switch(operator) {
         case 'between':
         case 'notBetween':
-          dataValidation.formulae.push('10');
+          dataValidation.formulae.push(this.values[type].v2);
           break;
       }
       return dataValidation;
@@ -244,6 +254,10 @@ var utils = module.exports = {
 
     ws.getCell('D13').value = utils.concatenateFormula('Error');
     ws.getCell('E13').dataValidation = this.dataValidations.E13;
+
+    ws.getCell('A15').value = utils.concatenateFormula('Terse');
+    ws.getCell('B15').dataValidation = this.dataValidations.B15;
+
   },
   
   checkDataValidationSheet: function(wb) {
@@ -265,6 +279,7 @@ var utils = module.exports = {
 
     expect(ws.getCell('B13').dataValidation).to.deep.equal(this.dataValidations.B13);
     expect(ws.getCell('E13').dataValidation).to.deep.equal(this.dataValidations.E13);
+    expect(ws.getCell('B15').dataValidation).to.deep.equal(this.dataValidations.B15);
   },
 
   createTestBook: function(checkBadAlignments, WorkbookClass, options) {

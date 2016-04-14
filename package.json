@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -15,7 +15,7 @@
   },
   "keywords": [
     "xlsx", "json", "csv", "excel", "font", "border", "fill", "number", "format", "number format", "alignment", "office", "spreadsheet", "workbook",
-    "defined names"
+    "defined names", "data validations"
   ],
   "dependencies": {
     "archiver": "0.14.3",

@@ -11,32 +11,18 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li>Bug Fixes
-        <ul>
-            <li><a href="https://github.com/guyonroche/exceljs/issues/87">invalid signature: 0x80014</a>: 
-                Thanks to <a href="https://github.com/hasanlussa">hasanlussa</a> for the PR
-            </li>
-        </ul>
+    <li><a href="#data-validations">Data Validations</a>
+        <ul><li>Cells can now define validations that controls the valid values the cell can have</li></ul>
     </li>
-    <li>
-        <a href="#defined-names">Defined Names</a>
-        <ul>
-            <li>Cells can now have assigned names which may then be used in formulas.</li>
-        </ul>
-    </li>
-    <li>Converted Bluebird.defer() to new Bluebird(function(resolve, reject){}). 
-        Thanks to user <a href="https://github.com/Nishchit14">Nishchit</a> for the Pull Request</li>
 </ul>
 
 # Backlog
 
 <ul>
-    <li>Data Validation</li>
     <li>Typescript, ES6 and other targets</li>
-    <li>XLSX Streaming Parser</li>
+    <li>XLSX Streaming Reader</li>
     <li>Parsing CSV with Headers</li>
     <li>Use WeakMap if Available</li>
-    <li>Investigate streaming zip</li>
 </ul>
 
 # Contents
@@ -327,6 +313,89 @@ expect(worksheet.getCell('A1').names).to.have.members(['thing1', 'thing2']);
 worksheet.getCell('A1').removeName('thing1');
 expect(worksheet.getCell('A1').names).to.have.members(['thing2']);
 ```
+
+## Data Validations
+
+Cells can define what values are valid or not and provide prompting to the user to help guide them.
+
+Validation types can be one of the following:
+| Type       | Description |
+| ---------- | ---------- |
+| list       | Define a discrete set of valid values. Excel will offer these in a dropdown for easy entry |
+| whole      | The value must be a whole number |
+| decimal    | The value must be a decimal number |
+| textLength | The value may be text but the length is controlled |
+| custom     | A custom formula controls the valid values |
+
+For types other than list or custom, the following operators affect the validation:
+| Operator              | Description |
+| --------------------  | ---------- |
+| between               | Values must lie between formula results |
+| notBetween            | Values must not lie between formula results |
+| equal                 | Value must equal formula result |
+| notEqual              | Value must not equal formula result |
+| greaterThan           | Value must be greater than formula result |
+| lessThan              | Value must be less than formula result |
+| greaterThanOrEqual    | Value must be greater than or equal to formula result |
+| lessThanOrEqual       | Value must be less than or equal to formula result |
+
+```javascript
+// Specify list of valid values (One, Two, Three, Four). Excel will provide a dropdown with these values.
+worksheet.getCell('A1').dataValidation = {
+    type: 'list',
+    allowBlank: true,
+    formulae: ['"One,Two,Three,Four"']
+};
+
+// Specify list of valid values from a range. Excel will provide a dropdown with these values.
+worksheet.getCell('A1').dataValidation = {
+    type: 'list',
+    allowBlank: true,
+    formulae: ['$D$5:$F$5']
+};
+
+// Specify Cell must be a whole number that is not 5. Show the user an appropriate error message if they get it wrong 
+worksheet.getCell('A1').dataValidation = {
+    type: 'whole',
+    operator: 'notEqual',
+    showErrorMessage: true,
+    formulae: [5],
+    errorStyle: 'error',
+    errorTitle: 'Five',
+    error: 'The value must not be Five'
+};
+
+// Specify Cell must be a decomal number between 1.5 and 7. Add 'tooltip' to help guid the user 
+worksheet.getCell('A1').dataValidation = {
+    type: 'decimal',
+    operator: 'between',
+    allowBlank: true,
+    showInputMessage: true,
+    formulae: [1.5, 7],
+    promptTitle: 'Decimal',
+    prompt: 'The value must between 1.5 and 7'
+};
+
+// Specify Cell must be have a text length less than 15 
+worksheet.getCell('A1').dataValidation = {
+    type: 'textLength',
+    operator: 'lessThan',
+    showErrorMessage: true,
+    allowBlank: true,
+    formulae: [15]
+};
+
+// Specify Cell must be have be a date before 1st Jan 2016 
+worksheet.getCell('A1').dataValidation = {
+    type: 'date',
+    operator: 'lessThan',
+    showErrorMessage: true,
+    allowBlank: true,
+    formulae: [new Date(2016,0,1)]
+};
+
+```
+
 
 ## Styles
 
@@ -927,4 +996,5 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.2   | <ul><li><a href="https://pbs.twimg.com/profile_images/2933552754/fc8c70829ee964c5542ae16453503d37.jpeg">One Billion Cells</a><ul><li>Achievement Unlocked: A simple test using ExcelJS has created a spreadsheet with 1,000,000,000 cells. Made using random data with 100,000,000 rows of 10 cells per row. I cannot validate the file yet as Excel will not open it and I have yet to implement the streaming reader but I have every confidence that it is good since 1,000,000 rows loads ok.</li></ul></li></ul> |
 | 0.2.3   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/18">Merge Cell Styles</a><ul><li>Merged cells now persist (and parse) their styles.</li></ul></li></ul></li><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
 | 0.2.4   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/27">Worksheets with Ampersand Names</a><ul><li>Worksheet names are now xml-encoded and should work with all xml compatable characters</li></ul></li></ul></li><li><a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a><ul><li>Rows and Columns now support the hidden attribute.</li></ul></li><li><a href="#worksheet">Worksheet.addRows</a><ul><li>New function to add an array of rows (either array or object form) to the end of a worksheet.</li></ul></li></ul> |
+| 0.2.6   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/87">invalid signature: 0x80014</a>: Thanks to <a href="https://github.com/hasanlussa">hasanlussa</a> for the PR</li></ul></li><li><a href="#defined-names">Defined Names</a><ul><li>Cells can now have assigned names which may then be used in formulas.</li></ul></li><li>Converted Bluebird.defer() to new Bluebird(function(resolve, reject){}). Thanks to user <a href="https://github.com/Nishchit14">Nishchit</a> for the Pull Request</li></ul> |
 
