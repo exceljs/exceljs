@@ -3,6 +3,7 @@
     {
       "id": 1,
       "name": "blort",
+      "dataValidations": {},
       "rows": [
         {
           "cells": [

@@ -6,7 +6,7 @@ var fs = require('fs');
 var fsa = bluebird.promisifyAll(fs);
 var _ = require('underscore');
 var Excel = require('../../excel');
-var testutils = require('./../testutils');
+var testUtils = require('./../testutils');
 var utils = require('../../lib/utils/utils');
 
 describe('WorkbookWriter', function() {
@@ -31,7 +31,7 @@ describe('WorkbookWriter', function() {
         filename: './wbw.test.xlsx',
         useStyles: true
       };
-      var wb = testutils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
+      var wb = testUtils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
       //fs.writeFileSync('./testmodel.json', JSON.stringify(wb.model, null, '    '));
 
       return wb.commit()
@@ -40,7 +40,7 @@ describe('WorkbookWriter', function() {
           return wb2.xlsx.readFile('./wbw.test.xlsx');
         })
         .then(function(wb2) {
-          testutils.checkTestBook(wb2, 'xlsx', true);
+          testUtils.checkTestBook(wb2, 'xlsx', true);
         });
     });
 
@@ -49,7 +49,7 @@ describe('WorkbookWriter', function() {
         filename: './wbw.test.xlsx',
         useStyles: false
       };
-      var wb = testutils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
+      var wb = testUtils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
       //fs.writeFileSync('./testmodel.json', JSON.stringify(wb.model, null, '    '));
 
       return wb.commit()
@@ -58,7 +58,7 @@ describe('WorkbookWriter', function() {
           return wb2.xlsx.readFile('./wbw.test.xlsx');
         })
         .then(function(wb2) {
-          testutils.checkTestBook(wb2, 'xlsx', false);
+          testUtils.checkTestBook(wb2, 'xlsx', false);
         });
     });
 
@@ -71,8 +71,8 @@ describe('WorkbookWriter', function() {
       var ws = wb.addWorksheet('blort');
 
       var colStyle = {
-        font: testutils.styles.fonts.comicSansUdB16,
-        alignment: testutils.styles.namedAlignments.middleCentre
+        font: testUtils.styles.fonts.comicSansUdB16,
+        alignment: testUtils.styles.namedAlignments.middleCentre
       };
       ws.columns = [
         { header: 'A1', width: 10 },
@@ -80,7 +80,7 @@ describe('WorkbookWriter', function() {
         { header: 'C1', width: 30 },
       ];
 
-      ws.getRow(2).font = testutils.styles.fonts.broadwayRedOutline20;
+      ws.getRow(2).font = testUtils.styles.fonts.broadwayRedOutline20;
 
       ws.getCell('A2').value = 'A2';
       ws.getCell('B2').value = 'B2';
@@ -99,18 +99,18 @@ describe('WorkbookWriter', function() {
           _.each(['A1', 'B1', 'C1', 'A2', 'B2', 'C2', 'A3', 'B3', 'C3'], function(address) {
             expect(ws2.getCell(address).value).to.equal(address);
           });
-          expect(ws2.getCell('B1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-          expect(ws2.getCell('B1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-          expect(ws2.getCell('A2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-          expect(ws2.getCell('B2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-          expect(ws2.getCell('C2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-          expect(ws2.getCell('B3').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-          expect(ws2.getCell('B3').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
+          expect(ws2.getCell('B1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
+          expect(ws2.getCell('B1').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
+          expect(ws2.getCell('A2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getCell('B2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getCell('C2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getCell('B3').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
+          expect(ws2.getCell('B3').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
 
-          expect(ws2.getColumn(2).font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-          expect(ws2.getColumn(2).alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
+          expect(ws2.getColumn(2).font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
+          expect(ws2.getColumn(2).alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
 
-          expect(ws2.getRow(2).font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getRow(2).font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
         });
     });
 
@@ -177,5 +177,21 @@ describe('WorkbookWriter', function() {
           expect(ws2.getCell('E3').name).to.equal('greens');
         });
     });
+
+    it('serializes and deserializes dataValidations', function() {
+      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: './wbw.test.xlsx'});
+      testUtils.addDataValidationSheet(wb);
+
+      return wb.commit()
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile('./wbw.test.xlsx');
+        })
+        .then(function(wb2) {
+          testUtils.checkDataValidationSheet(wb2);
+        });
+    });
+
+
   });
 });
