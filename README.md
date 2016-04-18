@@ -354,7 +354,7 @@ worksheet.getCell('A1').dataValidation = {
     formulae: ['$D$5:$F$5']
 };
 
-// Specify Cell must be a whole number that is not 5. Show the user an appropriate error message if they get it wrong 
+// Specify Cell must be a whole number that is not 5. Show the user an appropriate error message if they get it wrong
 worksheet.getCell('A1').dataValidation = {
     type: 'whole',
     operator: 'notEqual',
@@ -365,7 +365,7 @@ worksheet.getCell('A1').dataValidation = {
     error: 'The value must not be Five'
 };
 
-// Specify Cell must be a decomal number between 1.5 and 7. Add 'tooltip' to help guid the user 
+// Specify Cell must be a decomal number between 1.5 and 7. Add 'tooltip' to help guid the user
 worksheet.getCell('A1').dataValidation = {
     type: 'decimal',
     operator: 'between',
@@ -376,7 +376,7 @@ worksheet.getCell('A1').dataValidation = {
     prompt: 'The value must between 1.5 and 7'
 };
 
-// Specify Cell must be have a text length less than 15 
+// Specify Cell must be have a text length less than 15
 worksheet.getCell('A1').dataValidation = {
     type: 'textLength',
     operator: 'lessThan',
@@ -385,7 +385,7 @@ worksheet.getCell('A1').dataValidation = {
     formulae: [15]
 };
 
-// Specify Cell must be have be a date before 1st Jan 2016 
+// Specify Cell must be have be a date before 1st Jan 2016
 worksheet.getCell('A1').dataValidation = {
     type: 'date',
     operator: 'lessThan',
@@ -413,7 +413,7 @@ Styles are set by assigning the following properties:
 ws.getCell('A1').numFmt = '0.00%';
 
 // Apply styles to worksheet columns
-ws.columnscolumns = [
+ws.columns = [
     { header: 'Id', key: 'id', width: 10 },
     { header: 'Name', key: 'name', width: 32, style: { font: { name: 'Arial Black' } } },
     { header: 'D.O.B.', key: 'DOB', width: 10, style: { numFmt: 'dd/mm/yyyy' } }
