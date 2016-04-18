@@ -8,7 +8,18 @@ var MemoryStream = require('memorystream');
 
 var Excel = require('../excel');
 
+
+
 var utils = module.exports = {
+  concatenateFormula: function() {
+    var args = Array.prototype.slice.call(arguments);
+    var values = args.map(function(value) {
+      return '"' + value + '"';
+    });
+    return {
+      formula: 'CONCATENATE(' + values.join(',') + ')'
+    };
+  },
   cloneByModel: function(thing1, Type) {
     var model = thing1.model;
     //console.log(JSON.stringify(model, null, '    '))
@@ -124,6 +135,153 @@ var utils = module.exports = {
     }
   },
 
+  dataValidations: {
+    B1: {
+      type: 'list',
+      allowBlank: true,
+      formulae: ['Nephews']
+    },
+
+    B3: {
+      type: 'list',
+      allowBlank: true,
+      showInputMessage: true,
+      showErrorMessage: true,
+      formulae: ['"One,Two,Three,Four"']
+    },
+
+    B5: {
+      type: 'list',
+      allowBlank: true,
+      showInputMessage: true,
+      showErrorMessage: true,
+      formulae: ['$D$5:$F$5']
+    },
+
+    B13: {
+      type: 'whole',
+      operator: 'equal',
+      allowBlank: true,
+      showInputMessage: true,
+      showErrorMessage: true,
+      formulae: [5],
+      promptTitle: 'Five',
+      prompt: 'The value must be Five'
+    },
+
+    E13: {
+      type: 'whole',
+      operator: 'notEqual',
+      allowBlank: true,
+      showInputMessage: true,
+      showErrorMessage: true,
+      formulae: [5],
+      errorStyle: 'error',
+      errorTitle: 'Five',
+      error: 'The value must not be Five'
+    },
+
+    B15: {
+      type: 'whole',
+      operator: 'notEqual',
+      formulae: [5]
+    },
+
+    types: ['whole', 'decimal', 'date', 'textLength'],
+    values: {
+      whole: { v1: 1, v2: 10 },
+      decimal: { v1: 1.5, v2: 10.2 },
+      date: { v1: new Date(2015, 0, 1), v2: new Date(2016, 0, 1) },
+      textLength: { v1: 5, v2: 15 }
+    },
+    operators: ['between', 'notBetween', 'equal', 'notEqual', 'greaterThan', 'lessThan', 'greaterThanOrEqual', 'lessThanOrEqual'],
+    create: function(type, operator) {
+      var dataValidation = {
+        type: type,
+        operator: operator,
+        allowBlank: true,
+        showInputMessage: true,
+        showErrorMessage: true,
+        formulae: [this.values[type].v1]
+      };
+      switch(operator) {
+        case 'between':
+        case 'notBetween':
+          dataValidation.formulae.push(this.values[type].v2);
+          break;
+      }
+      return dataValidation;
+    }
+  },
+
+  addDataValidationSheet: function(wb) {
+    var ws = wb.addWorksheet('data-validations');
+
+    // named list
+    ws.getCell('D1').value = 'Hewie';
+    ws.getCell('D1').name = 'Nephews';
+    ws.getCell('E1').value = 'Dewie';
+    ws.getCell('E1').name = 'Nephews';
+    ws.getCell('F1').value = 'Louie';
+    ws.getCell('F1').name = 'Nephews';
+    ws.getCell('A1').value = utils.concatenateFormula('Named List');
+    ws.getCell('B1').dataValidation = this.dataValidations.B1;
+
+    ws.getCell('A3').value = utils.concatenateFormula('Literal List');
+    ws.getCell('B3').dataValidation = this.dataValidations.B3;
+
+    ws.getCell('D5').value = 'Tom';
+    ws.getCell('E5').value = 'Dick';
+    ws.getCell('F5').value = 'Harry';
+    ws.getCell('A5').value = utils.concatenateFormula('Range List');
+    ws.getCell('B5').dataValidation = this.dataValidations.B5;
+
+    _.each(utils.dataValidations.operators, function(operator, cIndex) {
+      var col = 3 + cIndex;
+      ws.getCell(7, col).value = utils.concatenateFormula(operator);
+    });
+    _.each(utils.dataValidations.types, function(type, rIndex) {
+      var row = 8 + rIndex;
+      ws.getCell(row, 1).value = utils.concatenateFormula(type);
+      _.each(utils.dataValidations.operators, function(operator, cIndex) {
+        var col = 3 + cIndex;
+        ws.getCell(row, col).dataValidation = utils.dataValidations.create(type, operator);
+      });
+    });
+
+    ws.getCell('A13').value = utils.concatenateFormula('Prompt');
+    ws.getCell('B13').dataValidation = this.dataValidations.B13;
+
+    ws.getCell('D13').value = utils.concatenateFormula('Error');
+    ws.getCell('E13').dataValidation = this.dataValidations.E13;
+
+    ws.getCell('A15').value = utils.concatenateFormula('Terse');
+    ws.getCell('B15').dataValidation = this.dataValidations.B15;
+
+  },
+  
+  checkDataValidationSheet: function(wb) {
+    var ws = wb.getWorksheet('data-validations');
+    expect(ws).to.not.be.undefined;
+
+    expect(ws.getCell('B1').dataValidation).to.deep.equal(this.dataValidations.B1);
+    expect(ws.getCell('B3').dataValidation).to.deep.equal(this.dataValidations.B3);
+    expect(ws.getCell('B5').dataValidation).to.deep.equal(this.dataValidations.B5);
+
+    _.each(utils.dataValidations.types, function(type, rIndex) {
+      var row = 8 + rIndex;
+      ws.getCell(row, 1).value = utils.concatenateFormula(type);
+      _.each(utils.dataValidations.operators, function(operator, cIndex) {
+        var col = 3 + cIndex;
+        expect(ws.getCell(row, col).dataValidation).to.deep.equal(utils.dataValidations.create(type, operator));
+      });
+    });
+
+    expect(ws.getCell('B13').dataValidation).to.deep.equal(this.dataValidations.B13);
+    expect(ws.getCell('E13').dataValidation).to.deep.equal(this.dataValidations.E13);
+    expect(ws.getCell('B15').dataValidation).to.deep.equal(this.dataValidations.B15);
+  },
+
   createTestBook: function(checkBadAlignments, WorkbookClass, options) {
     var wb = new WorkbookClass(options);
     var ws = wb.addWorksheet('blort');
@@ -210,15 +368,6 @@ var utils = module.exports = {
     row8.commit();
 
     return wb;
-  },
-  checkFont: function(cell, font) {
-    expect(cell.font).to.not.be.undefined;
-    _.each(font, function(item, name) {
-      expect(cell.font[name]).to.equal(font[name]);
-    });
-    _.each(value, function(item, name) {
-      expect(font[name]).to.be.undefined;
-    });
   },
 
   checkTestBook: function(wb, docType, useStyles) {

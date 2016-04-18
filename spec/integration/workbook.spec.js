@@ -6,7 +6,7 @@ var fs = require('fs');
 var fsa = bluebird.promisifyAll(fs);
 var _ = require('underscore');
 var Excel = require('../../excel');
-var testutils = require('./../testutils');
+var testUtils = require('./../testutils');
 
 // =============================================================================
 // Tests
@@ -50,7 +50,7 @@ describe('Workbook', function() {
 
     it('serializes and deserializes to xlsx file properly', function() {
 
-      var wb = testutils.createTestBook(true, Excel.Workbook);
+      var wb = testUtils.createTestBook(true, Excel.Workbook);
       //fs.writeFileSync('./testmodel.json', JSON.stringify(wb.model, null, '    '));
 
       return wb.xlsx.writeFile('./wb.test.xlsx')
@@ -59,9 +59,24 @@ describe('Workbook', function() {
           return wb2.xlsx.readFile('./wb.test.xlsx');
         })
         .then(function(wb2) {
-          testutils.checkTestBook(wb2, 'xlsx', true);
+          testUtils.checkTestBook(wb2, 'xlsx', true);
         });
     });
+
+    it('serializes and deserializes dataValidations', function() {
+      var wb = new Excel.Workbook();
+      testUtils.addDataValidationSheet(wb);
+
+      return wb.xlsx.writeFile('./wb.test.xlsx')
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile('./wb.test.xlsx');
+        })
+        .then(function(wb2) {
+          testUtils.checkDataValidationSheet(wb2);
+        });
+    });
+
 
     it('serializes row styles and columns properly', function() {
       var wb = new Excel.Workbook();
@@ -69,11 +84,11 @@ describe('Workbook', function() {
 
       ws.columns = [
         { header: 'A1', width: 10 },
-        { header: 'B1', width: 20, style: { font: testutils.styles.fonts.comicSansUdB16, alignment: testutils.styles.alignments[1].alignment } },
+        { header: 'B1', width: 20, style: { font: testUtils.styles.fonts.comicSansUdB16, alignment: testUtils.styles.alignments[1].alignment } },
         { header: 'C1', width: 30 }
       ];
 
-      ws.getRow(2).font = testutils.styles.fonts.broadwayRedOutline20;
+      ws.getRow(2).font = testUtils.styles.fonts.broadwayRedOutline20;
 
       ws.getCell('A2').value = 'A2';
       ws.getCell('B2').value = 'B2';
@@ -92,18 +107,18 @@ describe('Workbook', function() {
           _.each(['A1', 'B1', 'C1', 'A2', 'B2', 'C2', 'A3', 'B3', 'C3'], function(address) {
             expect(ws2.getCell(address).value).to.equal(address);
           });
-          expect(ws2.getCell('B1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-          expect(ws2.getCell('B1').alignment).to.deep.equal(testutils.styles.alignments[1].alignment);
-          expect(ws2.getCell('A2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-          expect(ws2.getCell('B2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-          expect(ws2.getCell('C2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-          expect(ws2.getCell('B3').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-          expect(ws2.getCell('B3').alignment).to.deep.equal(testutils.styles.alignments[1].alignment);
+          expect(ws2.getCell('B1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
+          expect(ws2.getCell('B1').alignment).to.deep.equal(testUtils.styles.alignments[1].alignment);
+          expect(ws2.getCell('A2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getCell('B2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getCell('C2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getCell('B3').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
+          expect(ws2.getCell('B3').alignment).to.deep.equal(testUtils.styles.alignments[1].alignment);
 
-          expect(ws2.getColumn(2).font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-          expect(ws2.getColumn(2).alignment).to.deep.equal(testutils.styles.alignments[1].alignment);
+          expect(ws2.getColumn(2).font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
+          expect(ws2.getColumn(2).alignment).to.deep.equal(testUtils.styles.alignments[1].alignment);
 
-          expect(ws2.getRow(2).font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
+          expect(ws2.getRow(2).font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
         });
     });
 
@@ -135,7 +150,7 @@ describe('Workbook', function() {
     it('serializes and deserialises to csv file properly', function() {
       this.timeout(5000);
 
-      var wb = testutils.createTestBook(true, Excel.Workbook);
+      var wb = testUtils.createTestBook(true, Excel.Workbook);
       //fs.writeFileSync('./testmodel.json', JSON.stringify(wb.model, null, '    '));
 
       return wb.csv.writeFile('./wb.test.csv')
@@ -147,7 +162,7 @@ describe('Workbook', function() {
             });
         })
         .then(function(wb2) {
-          testutils.checkTestBook(wb2, 'csv');
+          testUtils.checkTestBook(wb2, 'csv');
         });
     });
 
@@ -300,11 +315,11 @@ describe('Workbook', function() {
         // initial values
         var B2 = ws.getCell('B2');
         B2.value = 5;
-        B2.style.font = testutils.styles.fonts.broadwayRedOutline20;
-        B2.style.border = testutils.styles.borders.doubleRed;
-        B2.style.fill = testutils.styles.fills.blueWhiteHGrad;
-        B2.style.alignment = testutils.styles.namedAlignments.middleCentre;
-        B2.style.numFmt = testutils.styles.numFmts.numFmt1;
+        B2.style.font = testUtils.styles.fonts.broadwayRedOutline20;
+        B2.style.border = testUtils.styles.borders.doubleRed;
+        B2.style.fill = testUtils.styles.fills.blueWhiteHGrad;
+        B2.style.alignment = testUtils.styles.namedAlignments.middleCentre;
+        B2.style.numFmt = testUtils.styles.numFmts.numFmt1;
 
         // expecting styles to be copied (see worksheet spec)
         ws.mergeCells('B2:C3');
@@ -317,40 +332,40 @@ describe('Workbook', function() {
           .then(function(wb2) {
             var ws2 = wb2.getWorksheet('blort');
 
-            expect(ws2.getCell('B2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-            expect(ws2.getCell('B2').border).to.deep.equal(testutils.styles.borders.doubleRed);
-            expect(ws2.getCell('B2').fill).to.deep.equal(testutils.styles.fills.blueWhiteHGrad);
-            expect(ws2.getCell('B2').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-            expect(ws2.getCell('B2').numFmt).to.equal(testutils.styles.numFmts.numFmt1);
+            expect(ws2.getCell('B2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+            expect(ws2.getCell('B2').border).to.deep.equal(testUtils.styles.borders.doubleRed);
+            expect(ws2.getCell('B2').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
+            expect(ws2.getCell('B2').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
+            expect(ws2.getCell('B2').numFmt).to.equal(testUtils.styles.numFmts.numFmt1);
 
-            expect(ws2.getCell('B3').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-            expect(ws2.getCell('B3').border).to.deep.equal(testutils.styles.borders.doubleRed);
-            expect(ws2.getCell('B3').fill).to.deep.equal(testutils.styles.fills.blueWhiteHGrad);
-            expect(ws2.getCell('B3').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-            expect(ws2.getCell('B3').numFmt).to.equal(testutils.styles.numFmts.numFmt1);
+            expect(ws2.getCell('B3').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+            expect(ws2.getCell('B3').border).to.deep.equal(testUtils.styles.borders.doubleRed);
+            expect(ws2.getCell('B3').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
+            expect(ws2.getCell('B3').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
+            expect(ws2.getCell('B3').numFmt).to.equal(testUtils.styles.numFmts.numFmt1);
 
-            expect(ws2.getCell('C2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-            expect(ws2.getCell('C2').border).to.deep.equal(testutils.styles.borders.doubleRed);
-            expect(ws2.getCell('C2').fill).to.deep.equal(testutils.styles.fills.blueWhiteHGrad);
-            expect(ws2.getCell('C2').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-            expect(ws2.getCell('C2').numFmt).to.equal(testutils.styles.numFmts.numFmt1);
+            expect(ws2.getCell('C2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+            expect(ws2.getCell('C2').border).to.deep.equal(testUtils.styles.borders.doubleRed);
+            expect(ws2.getCell('C2').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
+            expect(ws2.getCell('C2').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
+            expect(ws2.getCell('C2').numFmt).to.equal(testUtils.styles.numFmts.numFmt1);
 
-            expect(ws2.getCell('C3').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-            expect(ws2.getCell('C3').border).to.deep.equal(testutils.styles.borders.doubleRed);
-            expect(ws2.getCell('C3').fill).to.deep.equal(testutils.styles.fills.blueWhiteHGrad);
-            expect(ws2.getCell('C3').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-            expect(ws2.getCell('C3').numFmt).to.equal(testutils.styles.numFmts.numFmt1);
+            expect(ws2.getCell('C3').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+            expect(ws2.getCell('C3').border).to.deep.equal(testUtils.styles.borders.doubleRed);
+            expect(ws2.getCell('C3').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
+            expect(ws2.getCell('C3').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
+            expect(ws2.getCell('C3').numFmt).to.equal(testUtils.styles.numFmts.numFmt1);
           });
       });
     });
   });
 
   it('serialises and deserialises by model', function() {
-    var wb = testutils.createTestBook(false, Excel.Workbook);
+    var wb = testUtils.createTestBook(false, Excel.Workbook);
 
-    return testutils.cloneByModel(wb, Excel.Workbook)
+    return testUtils.cloneByModel(wb, Excel.Workbook)
       .then(function(wb2) {
-        testutils.checkTestBook(wb2, 'model');
+        testUtils.checkTestBook(wb2, 'model');
       });
   });
 
