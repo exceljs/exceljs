@@ -10,6 +10,9 @@ npm install exceljs
 
 # New Features!
 
+Fixing typo in README - <a href="https://github.com/MRdNk">MRdNk</a>
+Fixing emit in worksheet-reader - <a href="https://github.com/alangunning">Alan Gunning</a>
+
 <ul>
     <li><a href="#data-validations">Data Validations</a>
         <ul><li>Cells can now define validations that controls the valid values the cell can have</li></ul>
