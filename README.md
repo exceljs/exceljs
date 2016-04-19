@@ -929,7 +929,9 @@ To complete the XLSX document, the workbook must be committed. If any worksheet 
 
 ```javascript
 // Finished the workbook.
-workbook.commit();
+workbook.commit().then(function() {
+  // the stream has been written
+});
 ```
 
 # Value Types
