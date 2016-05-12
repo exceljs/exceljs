@@ -1,5 +1,6 @@
 'use strict';
 
+var stream = require('stream');
 var expect = require('chai').expect;
 var bluebird = require('bluebird');
 var fs = require('fs');
@@ -7,6 +8,11 @@ var fsa = bluebird.promisifyAll(fs);
 var _ = require('underscore');
 var Excel = require('../../excel');
 var testUtils = require('./../testutils');
+
+// =============================================================================
+// Sample Data
+var richTextSample = require('./data/rich-text-sample');
+var richTextSample_A1 = require('./data/rich-text-sample-a1.json');
 
 // =============================================================================
 // Tests
@@ -145,6 +151,27 @@ describe('Workbook', function() {
             expect(ws2.getCell('A1').value).to.equal(i);
           }
         });
+    });
+
+    it('deserializes in-cell formats properly in xlsx file', function() {
+
+      // Stream from input string
+      var testData = new Buffer(richTextSample, 'base64');
+
+      // Initiate the source
+      var bufferStream = new stream.PassThrough();
+
+      // Write your buffer
+      bufferStream.write(testData);
+      bufferStream.end();
+
+      var wb = new Excel.Workbook();
+      return wb.xlsx.read(bufferStream)
+          .then(function () {
+            var ws = wb.worksheets[0];
+            expect(ws.getCell("A1").value).to.deep.equal(richTextSample_A1);
+            expect(ws.getCell("A1").toString()).to.equal(ws.getCell("A2").value);
+          });
     });
 
     it('serializes and deserialises to csv file properly', function() {

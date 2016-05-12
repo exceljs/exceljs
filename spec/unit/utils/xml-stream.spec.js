@@ -2,56 +2,65 @@
 
 var expect = require('chai').expect;
 
-var StringBuf = require("../../../lib/utils/string-buf");
+var XmlStream = require('../../../lib/utils/xml-stream');
 
-describe("StringBuf", function() {
-  // StringBuf is a lightweight string-builder used by the streaming writers to build
-  // strings (e.g. for row data) without too many memory operations
-  it("writes strings as UTF8", function() {
-    var sb = new StringBuf({size:64});
-    sb.addText("Hello, World!");
-    var chunk = sb.toBuffer();
-    expect(chunk.toString("UTF8")).to.equal("Hello, World!");
+describe('XmlStream', function() {
+  it('Writes simple XML doc', function() {
+    var xmlStream = new XmlStream();
+
+    xmlStream.openXml(XmlStream.StdDocAttributes);
+    xmlStream.openNode('root', {
+      attr1: 'attr1-value',
+      attr2: 'attr2-value'
+    });
+    xmlStream.openNode('l1');
+    xmlStream.openNode('l2');
+    xmlStream.addAttribute('l2a1', 'v1');
+    xmlStream.addAttribute('l2a2', 'v2');
+    xmlStream.closeNode();
+    xmlStream.closeNode();
+    xmlStream.closeNode();
+    expect(xmlStream.xml).to.equal('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<root attr1="attr1-value" attr2="attr2-value"><l1><l2 l2a1="v1" l2a2="v2"/></l1></root>');
   });
 
-  it("grows properly", function() {
-    var sb = new StringBuf({size:8});
-    expect(sb.length).to.equal(0);
-    expect(sb.capacity).to.equal(8);
+  it('Writes text in XML doc', function() {
+    var xmlStream = new XmlStream();
 
-    // write simple UTF8 string. Should use 7 bytes
-    // that's within 4 bytes of 16
-    sb.addText("Hello, ");
-    expect(sb.length).to.equal(7);
-    expect(sb.capacity).to.equal(16);
-
-    // add some more (6 bytes)
-    sb.addText("World!");
-    expect(sb.length).to.equal(13);
-    expect(sb.capacity).to.equal(32);
-
-    // and more (7 bytes)
-    sb.addText(" Hello.");
-    expect(sb.length).to.equal(20);
-    expect(sb.capacity).to.equal(32);
-
-    // after all that - the string should be intact
-    var chunk = sb.toBuffer();
-    expect(chunk.toString("UTF8")).to.equal("Hello, World! Hello.");
+    xmlStream.openNode('root');
+    xmlStream.openNode('l1');
+    xmlStream.openNode('l2');
+    xmlStream.addAttribute('l2a1', 'v1');
+    xmlStream.writeText('Hello, World!');
+    xmlStream.closeNode();
+    xmlStream.openNode('l2');
+    xmlStream.addAttribute('l2a1', 'v2');
+    xmlStream.writeText('See ya later, Alligator!');
+    xmlStream.closeNode();
+    xmlStream.closeNode();
+    xmlStream.closeNode();
+    expect(xmlStream.xml).to.equal('<root><l1><l2 l2a1="v1">Hello, World!</l2><l2 l2a1="v2">See ya later, Alligator!</l2></l1></root>');
   });
+  it('text is escaped', function() {
+    var xmlStream = new XmlStream();
 
-  it("resets", function() {
-    var sb = new StringBuf({size:64});
-    sb.addText("Hello, ");
-    expect(sb.length).to.equal(7);
+    xmlStream.openNode('root');
+    xmlStream.openNode('l1');
+    xmlStream.writeText('<escape this!>');
+    xmlStream.closeNode();
+    xmlStream.closeNode();
+    expect(xmlStream.xml).to.equal('<root><l1>&lt;escape this!&gt;</l1></root>');
+  });
+  it('attributes are escaped', function() {
+    var xmlStream = new XmlStream();
 
-    sb.reset();
-    expect(sb.length).to.equal(0);
-
-    sb.addText("World!");
-    expect(sb.length).to.equal(6);
-
-    var chunk = sb.toBuffer();
-    expect(chunk.toString("UTF8")).to.equal("World!");
+    xmlStream.openNode('root');
+    xmlStream.openNode('l1');
+    xmlStream.addAttribute('stuff', 'this & that');
+    xmlStream.openNode('l2', {foo:'<bar>'});
+    xmlStream.closeNode();
+    xmlStream.leafNode('l2', {quote:'"this"'})
+    xmlStream.closeNode();
+    xmlStream.closeNode();
+    expect(xmlStream.xml).to.equal('<root><l1 stuff="this &amp; that"><l2 foo="&lt;bar&gt;"/><l2 quote="&quot;this&quot;"/></l1></root>');
   });
 });

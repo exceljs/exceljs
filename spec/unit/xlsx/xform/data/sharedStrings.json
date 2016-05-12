@@ -1,2 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="3" uniqueCount="3"><si><r><rPr><b/><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t>Bold,</t></r><r><rPr><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t xml:space="preserve"> </t></r><r><rPr><i/><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t>italic,</t></r><r><rPr><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t xml:space="preserve"> </t></r><r><rPr><u/><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t>underline,</t></r><r><rPr><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t xml:space="preserve"> </t></r><r><rPr><sz val="11"/><color rgb="FFFF0000"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t>red,</t></r><r><rPr><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t xml:space="preserve"> </t></r><r><rPr><sz val="11"/><color rgb="FF00B050"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t>green,</t></r><r><rPr><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t xml:space="preserve"> </t></r><r><rPr><sz val="11"/><color rgb="FF0070C0"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t>blue</t></r></si><si><t>plain text</t></si><si><r><t xml:space="preserve">This </t></r><r><rPr><sz val="11"/><color rgb="FF6C6C98"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t>color</t></r><r><rPr><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t xml:space="preserve"> is </t></r><r><rPr><sz val="11"/><color rgb="FF009900"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t>diff</t></r><r><rPr><sz val="11"/><color theme="1"/><rFont val="Calibri"/><family val="2"/><scheme val="minor"/></rPr><t>erent</t></r></si></sst>
+{
+  "values": [
+    {
+      "richText": [
+        { "font": { "size": 11, "bold": true, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": "Bold," },
+        { "font": { "size": 11, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": " " },
+        { "font": { "size": 11, "italic": true, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": "italic," },
+        { "font": { "size": 11, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": " " },
+        { "font": { "size": 11, "underline": true, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": "underline," },
+        { "font": { "size": 11, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": " " },
+        { "font": { "size": 11, "color": { "argb": "FFFF0000"}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": "red," },
+        { "font": { "size": 11, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": " " },
+        { "font": { "size": 11, "color": { "argb": "FF00B050"}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": "green," },
+        { "font": { "size": 11, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": " " },
+        { "font": { "size": 11, "color": { "argb": "FF0070C0"}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": "blue" }
+      ]
+    },
+    "plain text",
+    {
+      "richText": [
+        { "text": "This " },
+        { "font": { "size": 11, "color": { "argb": "FF6C6C98"}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": "color" },
+        { "font": { "size": 11, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": " is " },
+        { "font": { "size": 11, "color": { "argb": "FF009900"}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": "diff" },
+        { "font": { "size": 11, "color": { "theme": 1}, "name": "Calibri", "family": 2, "scheme": "minor" }, "text": "erent" }
+      ]
+    }
+  ],
+  "count": 3
+}

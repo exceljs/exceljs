@@ -12,6 +12,7 @@ npm install exceljs
 
 Fixing typo in README - <a href="https://github.com/MRdNk">MRdNk</a>
 Fixing emit in worksheet-reader - <a href="https://github.com/alangunning">Alan Gunning</a>
+Clearer Docs - <a href="https://github.com/miensol">miensol</a>
 
 <ul>
     <li><a href="#data-validations">Data Validations</a>

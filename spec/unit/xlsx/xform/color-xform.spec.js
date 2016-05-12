@@ -3,41 +3,70 @@
 var fs = require('fs');
 var Sax = require('sax');
 var Bluebird = require('bluebird');
+var _ = require('underscore');
 
 var expect = require('chai').expect;
 
 var XmlStream = require('../../../../lib/utils/xml-stream');
-var FontXform = require('../../../../lib/xlsx/xform/font-xform');
+var ColorXform = require('../../../../lib/xlsx/xform/color-xform');
+var TestXform = ColorXform;
 
-describe.only('FontXform', function() {
-  it('translate to xml', function() {
-    return new Bluebird(function(resolve, reject) {
-      var xform = new FontXform();
-      var xmlStream = new XmlStream();
-      xform.write(xmlStream, {bold: true, size: 14, color: {argb:'ff00ff00'}, name: 'Calibri', family: 2, scheme: 'minor'});
-      expect(xmlStream.xml).to.equal('<font><b/><sz val="14"/><color rgb="FF00FF00"/><name val="Calibri"/><family val="2"/><scheme val="minor"/></font>');
-    });
-  });
+var expectations = [
+  {
+    title: 'RGB',
+    model: {argb:'FF00FF00'},
+    xml: '<color rgb="FF00FF00"/>'
+  },
+  {
+    title: 'Theme',
+    model: {theme:1},
+    xml: '<color theme="1"/>'
+  },
+  {
+    title: 'Theme with Tint',
+    model: {theme:1, tint: 0.5},
+    xml: '<color theme="1" tint="0.5"/>'
+  },
+  {
+    title: 'Indexed',
+    model: {indexed: 1},
+    xml: '<color indexed="1"/>'
+  },
+  {
+    title: 'Empty',
+    model: undefined,
+    xml: '<color auto="1"/>',
+  }
+];
 
-  it.skip('translate from xml', function() {
-    return new Bluebird(function(resolve, reject) {
-      var parser = Sax.createStream(true);
-      var xform = new FontXform();
-      
-      parser.on('opentag', function(node) {
-        xform.parseOpen(node);
-      });
-      parser.on('text', function(text) {
-        xform.parseText(text);
-      });
-      parser.on('closetag', function(name) {
-        if (!xform.parseClose(name)) {
-          expect(xform.model).to.deep.equal(expectedModel);
+describe('ColorXform', function() {
+  _.each(expectations, function(expectation) {
+    describe(expectation.title, function() {
+      it('Translate to XML', function() {
+        return new Bluebird(function(resolve, reject) {
+          var xform = new TestXform();
+          var xmlStream = new XmlStream();
+          xform.write(xmlStream, expectation.model);
+          expect(xmlStream.xml).to.equal(expectation.xml);
           resolve();
-        }
+        });
       });
 
-      parser.write(sharedStringsXml);
+      it('Translate to Model', function() {
+        return new Bluebird(function(resolve, reject) {
+          var parser = Sax.createStream(true);
+          var xform = new TestXform();
+
+          xform.parse(parser)
+            .then(function(model) {
+              expect(model).to.deep.equal(expectation.model);
+              resolve();
+            })
+            .catch(reject);
+
+          parser.write(expectation.xml);
+        });
+      });
     });
   });
 });

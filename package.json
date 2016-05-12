@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "chai": "*",
+    "chai-xml": "*",
     "express": "*",
     "jshint": "*",
     "memorystream": "*",

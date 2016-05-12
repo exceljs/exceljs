@@ -64,7 +64,7 @@ describe("Workbook", function() {
         ws.columns = [
             { header: "A1", width: 10 },
             { header: "B1", width: 20, style: { font: testutils.styles.fonts.comicSansUdB16, alignment: testutils.styles.alignments[1].alignment } },
-            { header: "C1", width: 30 },
+            { header: "C1", width: 30 }
         ];
         
         ws.getRow(2).font = testutils.styles.fonts.broadwayRedOutline20;
@@ -193,7 +193,7 @@ describe("Workbook", function() {
     });
     
     it("stores shared string values properly", function() {
-        var wb = new Excel.Workbook()
+        var wb = new Excel.Workbook();
         var ws = wb.addWorksheet("blort");
         
         ws.getCell("A1").value = "Hello, World!";

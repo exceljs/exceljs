@@ -8,7 +8,7 @@ var _ = require('underscore');
 var Excel = require('../../excel');
 var model = require('./data/testmodel');
 
-describe('ModelContainer', function() {
+describe.skip('ModelContainer', function() {
   it('serializes and deserializes to file properly', function() {
     this.timeout(5000);
     
