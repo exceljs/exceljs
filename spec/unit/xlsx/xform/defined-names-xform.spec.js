@@ -3,7 +3,7 @@
 var expect = require('chai').expect;
 
 var _ = require('underscore');
-var DefinedNamesXform = require('../../../lib/xlsx/defined-names-xform');
+var DefinedNamesXform = require('../../../../lib/xlsx/xform/defined-names-xform');
 
 describe('DefinedNamesXform', function() {
   it('translate to xml', function() {
