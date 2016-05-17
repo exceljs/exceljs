@@ -15,7 +15,7 @@ var testUtils = require('./../testutils');
 // =============================================================================
 // This spec is based around the real Excel workbook 'book.xlsx'
 
-describe.only('Book', function() {
+describe('Book', function() {
 
   describe('Read', function() {
 
