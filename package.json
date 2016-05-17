@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -15,7 +15,7 @@
   },
   "keywords": [
     "xlsx", "json", "csv", "excel", "font", "border", "fill", "number", "format", "number format", "alignment", "office", "spreadsheet", "workbook",
-    "defined names", "data validations"
+    "defined names", "data validations", "rich text", "in-cell format"
   ],
   "dependencies": {
     "archiver": "0.14.3",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "chai": "*",
     "chai-xml": "*",
+    "chai-datetime": "*",
     "express": "*",
     "jshint": "*",
     "memorystream": "*",

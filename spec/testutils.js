@@ -677,5 +677,11 @@ var utils = module.exports = {
     wb.read(filename, {entries: 'emit', worksheets: 'emit'});
 
     return deferred.promise;
+  },
+  
+  toISODateString: function(dt) {
+    var iso = dt.toISOString();
+    var parts = iso.split('T');
+    return parts[0];
   }
 };

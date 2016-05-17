@@ -170,7 +170,7 @@ describe('Workbook', function() {
           .then(function () {
             var ws = wb.worksheets[0];
             expect(ws.getCell("A1").value).to.deep.equal(richTextSample_A1);
-            expect(ws.getCell("A1").toString()).to.equal(ws.getCell("A2").value);
+            expect(ws.getCell("A1").text).to.equal(ws.getCell("A2").value);
           });
     });
 

@@ -10,21 +10,25 @@ npm install exceljs
 
 # New Features!
 
-Fixing typo in README - <a href="https://github.com/MRdNk">MRdNk</a>
-Fixing emit in worksheet-reader - <a href="https://github.com/alangunning">Alan Gunning</a>
-Clearer Docs - <a href="https://github.com/miensol">miensol</a>
-
 <ul>
-    <li><a href="#data-validations">Data Validations</a>
-        <ul><li>Cells can now define validations that controls the valid values the cell can have</li></ul>
+    <li>
+        <a href="rich-text">Rich Text Value</a>
+        <ul><li>Cells now support <b><i>in-cell</i></b> formatting</li></ul>
     </li>
+    <li>Fixed typo in README - Thanks to <a href="https://github.com/MRdNk">MRdNk</a></li>
+    <li>Fixing emit in worksheet-reader - Thanks to <a href="https://github.com/alangunning">Alan Gunning</a></li>
+    <li>Clearer Docs - Thanks to <a href="https://github.com/miensol">miensol</a></li>
 </ul>
 
 # Backlog
 
 <ul>
-    <li>Typescript, ES6 and other targets</li>
-    <li>XLSX Streaming Reader</li>
+    <li>I am part-way through refactoring the xml render/parse code because I'm finding underscore templates not up to the task.
+        The code looks a bit like a dog's breakfast right now and it's going to make pull-requests more difficult but I should
+        have the refactoring complete by next release.</li>
+    <li>XLSX Streaming Reader - once the refactoring is complete, I should be in a better position to complete this (long running) task.</li>
+    <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
+        I would also like to take the time to look at transpilers to support the earlier JSs</li>
     <li>Parsing CSV with Headers</li>
     <li>Use WeakMap if Available</li>
 </ul>
@@ -50,6 +54,7 @@ Clearer Docs - <a href="https://github.com/miensol">miensol</a>
                     <li><a href="#alignment">Alignment</a></li>
                     <li><a href="#borders">Borders</a></li>
                     <li><a href="#fills">Fills</a></li>
+                    <li><a href="rich-text">Rich Text</a></li>
                 </ul>
             </li>
             <li><a href="#file-io">File I/O</a>
@@ -668,6 +673,32 @@ For example, Excel only supports angle gradients of 0, 45, 90 and 135.
 Similarly the sequence of stops may also be limited by the UI with positions [0,1] or [0,0.5,1] as the only options.
 Take care with this fill to be sure it is supported by the target XLSX viewers.
 
+#### Rich Text
+
+Individual cells now support rich text or in-cell formatting.
+ Rich text values can control the font properties of any number of sub-strings within the text value.
+ See <a href="font">Fonts</a> for a complete list of details on what font properties are supported.
+
+```javascript
+
+ws.getCell('A1').value = {
+  'richText': [
+     {'font': {'size': 12,'color': {'theme': 0},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': 'This is '},
+     {'font': {'italic': true,'size': 12,'color': {'theme': 0},'name': 'Calibri','scheme': 'minor'},'text': 'a'},
+     {'font': {'size': 12,'color': {'theme': 1},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': ' '},
+     {'font': {'size': 12,'color': {'argb': 'FFFF6600'},'name': 'Calibri','scheme': 'minor'},'text': 'colorful'},
+     {'font': {'size': 12,'color': {'theme': 1},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': ' text '},
+     {'font': {'size': 12,'color': {'argb': 'FFCCFFCC'},'name': 'Calibri','scheme': 'minor'},'text': 'with'},
+     {'font': {'size': 12,'color': {'theme': 1},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': ' in-cell '},
+     {'font': {'bold': true,'size': 12,'color': {'theme': 1},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': 'format'}
+  ]
+};
+
+expect(ws.getCell('A1').text).to.equal('This is a colorful text with in-cell format');
+expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
+
+```
+
 ## File I/O
 
 ### XLSX
@@ -1003,4 +1034,4 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.3   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/18">Merge Cell Styles</a><ul><li>Merged cells now persist (and parse) their styles.</li></ul></li></ul></li><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
 | 0.2.4   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/27">Worksheets with Ampersand Names</a><ul><li>Worksheet names are now xml-encoded and should work with all xml compatable characters</li></ul></li></ul></li><li><a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a><ul><li>Rows and Columns now support the hidden attribute.</li></ul></li><li><a href="#worksheet">Worksheet.addRows</a><ul><li>New function to add an array of rows (either array or object form) to the end of a worksheet.</li></ul></li></ul> |
 | 0.2.6   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/87">invalid signature: 0x80014</a>: Thanks to <a href="https://github.com/hasanlussa">hasanlussa</a> for the PR</li></ul></li><li><a href="#defined-names">Defined Names</a><ul><li>Cells can now have assigned names which may then be used in formulas.</li></ul></li><li>Converted Bluebird.defer() to new Bluebird(function(resolve, reject){}). Thanks to user <a href="https://github.com/Nishchit14">Nishchit</a> for the Pull Request</li></ul> |
-
+| 0.2.7   | <ul><li><a href="#data-validations">Data Validations</a><ul><li>Cells can now define validations that controls the valid values the cell can have</li></ul></li></ul> |
