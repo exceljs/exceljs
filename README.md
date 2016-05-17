@@ -13,7 +13,7 @@ npm install exceljs
 <ul>
     <li>
         <a href="rich-text">Rich Text Value</a>
-        <ul><li>Cells now support <b><i>in-cell</i></b> formatting</li></ul>
+        <ul><li>Cells now support <b><i>in-cell</i></b> formatting - Thanks to <a href="https://github.com/pvadam">Peter ADAM</a></li></ul>
     </li>
     <li>Fixed typo in README - Thanks to <a href="https://github.com/MRdNk">MRdNk</a></li>
     <li>Fixing emit in worksheet-reader - Thanks to <a href="https://github.com/alangunning">Alan Gunning</a></li>
