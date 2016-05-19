@@ -4,7 +4,12 @@ var Sax = require('sax');
 var Bluebird = require('bluebird');
 var _ = require('underscore');
 
-var expect = require('chai').expect;
+var chai    = require('chai');
+var chaiXml = require('chai-xml');
+
+var expect  = chai.expect;
+
+chai.use(chaiXml);
 
 var XmlStream = require('../../../../lib/utils/xml-stream');
 
@@ -13,7 +18,7 @@ function testXform(name, expectations) {
     _.each(expectations, function (expectation) {
       describe(expectation.title, function () {
         it('Translate to XML', function () {
-          return new Bluebird(function (resolve, reject) {
+          return new Bluebird(function (resolve) {
             var xform = expectation.create();
             var xmlStream = new XmlStream();
             xform.write(xmlStream, expectation.model);

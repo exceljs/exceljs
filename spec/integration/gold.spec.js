@@ -6,14 +6,14 @@ var expect = chai.expect;
 
 chai.use(require('chai-datetime'));
 
-var _ = require('underscore');
+// var _ = require('underscore');
 var moment = require('moment');
 
 var Excel = require('../../excel');
-var testUtils = require('./../testutils');
+// var testUtils = require('./../testutils');
 
 // =============================================================================
-// This spec is based around the real Excel workbook 'book.xlsx'
+// This spec is based around a gold standard Excel workbook 'gold.xlsx'
 
 describe('Book', function() {
 
@@ -22,7 +22,7 @@ describe('Book', function() {
     var wb;
     before(function() {
       wb = new Excel.Workbook();
-      return wb.xlsx.readFile(__dirname + '/data/book.xlsx');
+      return wb.xlsx.readFile(__dirname + '/data/gold.xlsx');
     });
 
     it('Values', function() {
