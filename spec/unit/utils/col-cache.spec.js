@@ -70,6 +70,12 @@ describe('colCache', function() {
     expect(colCache.decodeAddress('AA11')).to.deep.equal({address:'AA11',col:27, row: 11, $col$row: '$AA$11'});
   });
 
+  it('convert [sheetName!][$]col[$]row[[$]col[$]row] into address or range structures', function() {
+    expect(colCache.decodeEx('Sheet1!$H$1')).to.deep.equal({'$col$row':'$H$1', address:'H1', col:8, row:1, sheetName:'Sheet1'});
+    expect(colCache.decodeEx("'Sheet 1'!$H$1")).to.deep.equal({'$col$row':'$H$1', address:'H1', col:8, row:1, sheetName:'Sheet 1'});
+    expect(colCache.decodeEx("'Sheet !$:1'!$H$1")).to.deep.equal({'$col$row':'$H$1', address:'H1', col:8, row:1, sheetName:'Sheet !$:1'});
+  });
+
   it('gets address structures (and caches them)', function() {
     var addr = colCache.getAddress('D5');
     expect(addr.address).to.equal('D5');

@@ -17,6 +17,11 @@ describe('DefinedNames', function() {
     dn.add('blort!$B$4','bar');
     expect(dn.getNames('blort!B4')).to.deep.equal(['bar']);
     expect(dn.getNames('blort!$B$4')).to.deep.equal(['bar']);
+
+    dn.add("'blo rt'!$B$4",'bar');
+    expect(dn.getNames("'blo rt'!$B$4")).to.deep.equal(['bar']);
+    dn.add("'blo ,!rt'!$B$4",'bar');
+    expect(dn.getNames("'blo ,!rt'!$B$4")).to.deep.equal(['bar']);
   });
 
   it('removes names for cells', function() {
@@ -52,6 +57,31 @@ describe('DefinedNames', function() {
     expect(dn.getRanges('horizontal')).to.deep.equal({name: 'horizontal', ranges: ['blort!$C$1:$E$1']});
     expect(dn.getRanges('square')).to.deep.equal({name: 'square', ranges: ['blort!$C$3:$D$4']});
     expect(dn.getRanges('single')).to.deep.equal({name: 'single', ranges: ['other!$A$1']});
+  });
+
+  it('creates matrix from model', function() {
+    var dn = new DefinedNames();
+
+    dn.model = [];
+    dn.add('blort!A1','bar');
+    dn.remove('blort!A1','foo');
+
+    expect(dn.getNames('blort!A1')).to.deep.equal(['bar']);
+  });
+
+  it('skips values with invalid range', function() {
+    var dn = new DefinedNames();
+    dn.model = [
+      {name: 'eq', ranges: ['"="']},
+      {name: 'ref', ranges: ['#REF!']},
+      {name: 'single', ranges: ['Sheet3!$A$1']},
+      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']}
+    ];
+
+    expect(dn.model).to.deep.equal([
+      {name: 'single', ranges: ['Sheet3!$A$1']},
+      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']}
+    ]);
   });
 
 });
