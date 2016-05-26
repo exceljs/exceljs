@@ -16,8 +16,9 @@
   <sheetViews>
     <sheetView
         workbookViewId="0"
-        <% if(showGridLines !== undefined) {%> showGridLines="<%=showGridLines%>"<% } %>
-    />
+        <% if(showGridLines !== undefined) {%> showGridLines="<%=showGridLines%>"<% } %>>
+        <% if (freezePane) { %> <pane xSplit="<%=freezePane.x%>" ySplit="<%=freezePane.y%>" topLeftCell="<%=String.fromCharCode(freezePane.x+65,freezePane.y+49)%>" activePane="bottomRight" state="frozen"/> <% } %>
+    </sheetView>
   </sheetViews>
   <sheetFormatPr defaultRowHeight="15" x14ac:dyDescent="0.25"/>
 
