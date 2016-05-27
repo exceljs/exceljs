@@ -126,6 +126,13 @@ To add a new one with a red tab color and with grid lines hidden use this exampl
 var sheet = workbook.addWorksheet('My Sheet', 'FFC0000', true);
 ```
 
+Use the fourth parameter of the addWorksheet function to freeze panels.
+To freeze the panels at cell B5, use this example:
+
+```javascript
+var sheet = workbook.addWorksheet('My Sheet', 'FFC0000', true, {x: 2, y: 5});
+```
+
 ## Access Worksheets
 ```javascript
 // Iterate over all sheets
