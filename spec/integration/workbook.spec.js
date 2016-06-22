@@ -83,7 +83,7 @@ describe('Workbook', function() {
         });
     });
 
-    it.only("Adds an empty string", function() {
+    it("Adds an empty string", function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet();
 
