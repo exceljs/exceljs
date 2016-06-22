@@ -83,6 +83,19 @@ describe('Workbook', function() {
         });
     });
 
+    it("Adds an empty string", function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet();
+
+      ws.columns = [
+        { key: "id", width: 10 },
+        { key: "name", width: 32 }
+      ];
+
+      ws.addRow({id: 1, name: ''});
+
+      return wb.xlsx.writeFile('./wb.test.xlsx');
+    });
 
     it('serializes row styles and columns properly', function() {
       var wb = new Excel.Workbook();
