@@ -10,6 +10,7 @@ npm install exceljs
 
 # New Features!
 
+
 <ul>
     <li>
         <a href="rich-text">Rich Text Value</a>
@@ -357,10 +358,10 @@ worksheet.getCell('A1').dataValidation = {
 };
 
 // Specify list of valid values from a range. Excel will provide a dropdown with these values.
-worksheet.getCell('A1').dataValidation = {
-    type: 'list',
-    allowBlank: true,
-    formulae: ['$D$5:$F$5']
+    worksheet.getCell('A1').dataValidation = {
+        type: 'list',
+        allowBlank: true,
+        formulae: ['$D$5:$F$5']
 };
 
 // Specify Cell must be a whole number that is not 5. Show the user an appropriate error message if they get it wrong

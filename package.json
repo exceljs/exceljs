@@ -32,6 +32,7 @@
     "chai-datetime": "*",
     "express": "*",
     "jshint": "*",
+    "lodash": "*",
     "memorystream": "*",
     "mocha": "*",
     "request": "*"

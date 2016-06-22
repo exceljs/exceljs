@@ -3,7 +3,7 @@
 var expect = require('chai').expect;
 
 var _ = require('underscore');
-var DataValidationsXform = require('../../../../lib/xlsx/xform/data-validations-xform');
+var DataValidationsXform = require('../../../../lib/xlsx/xform/sheet/data-validations-xform');
 
 var expectedXML = [
   {

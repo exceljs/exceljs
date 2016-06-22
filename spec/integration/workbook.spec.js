@@ -1,7 +1,10 @@
 'use strict';
 
+var chai = require('chai');
+var expect = chai.expect;
+chai.use(require('chai-datetime'));
+
 var stream = require('stream');
-var expect = require('chai').expect;
 var bluebird = require('bluebird');
 var fs = require('fs');
 var fsa = bluebird.promisifyAll(fs);
@@ -51,6 +54,27 @@ describe('Workbook', function() {
         .then(function(wb2) {
           expect(wb2.getWorksheet('Hello, World!')).to.be.ok;
           expect(wb2.getWorksheet('This & That')).to.be.ok;
+        });
+    });
+
+    it('serialises and deserialises creator, lastModifiedBy, etc', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = 'World!'
+      wb.creator = 'Foo';
+      wb.lastModifiedBy = 'Bar';
+      wb.created = new Date(2016,0,1);
+      wb.modified = new Date(2016,4,19);
+      return wb.xlsx.writeFile('./wb.test.xlsx')
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile('./wb.test.xlsx');
+        })
+        .then(function(wb2) {
+          expect(wb2.creator).to.equal(wb.creator);
+          expect(wb2.lastModifiedBy).to.equal(wb.lastModifiedBy);
+          expect(wb2.created).to.equalDate(wb.created);
+          expect(wb2.modified).to.equalDate(wb.modified);
         });
     });
 

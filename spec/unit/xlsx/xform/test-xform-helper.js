@@ -2,7 +2,7 @@
 
 var Sax = require('sax');
 var Bluebird = require('bluebird');
-var _ = require('underscore');
+var _ = require('lodash');
 
 var chai    = require('chai');
 var chaiXml = require('chai-xml');
@@ -13,37 +13,93 @@ chai.use(chaiXml);
 
 var XmlStream = require('../../../../lib/utils/xml-stream');
 
-function testXform(name, expectations) {
-  describe(name, function () {
-    _.each(expectations, function (expectation) {
-      describe(expectation.title, function () {
-        it('Translate to XML', function () {
-          return new Bluebird(function (resolve) {
-            var xform = expectation.create();
-            var xmlStream = new XmlStream();
-            xform.write(xmlStream, expectation.model);
-            expect(xmlStream.xml).to.equal(expectation.xml);
+function getExpectation(expectation, name) {
+  if (!expectation.hasOwnProperty(name)) {
+    throw new Error('Expectation missing required field: ' + name);
+  }
+  return _.cloneDeep(expectation[name]);
+}
+
+// provides boilerplate examples for the four transform steps: prepare, write,  parse and reconcile
+//  prepare: model => preparedModel
+//  write:  preparedModel => xml
+//  parse:  xml => parsedModel
+//  reconcile: parsedModel => reconciledModel
+
+var its = {
+  prepare: function(expectation) {
+    it('Prepare Model', function() {
+      return new Bluebird(function(resolve) {
+        var model = getExpectation(expectation, 'initialModel');
+        var result = getExpectation(expectation, 'preparedModel');
+
+        var xform = expectation.create();
+        xform.prepare(model, expectation.options);
+        expect(model).to.deep.equal(result);
+        resolve();
+      });
+    });
+  },
+
+  write: function(expectation) {
+    it('Translate to XML', function () {
+      return new Bluebird(function (resolve) {
+        var model = getExpectation(expectation, 'preparedModel');
+        var result = getExpectation(expectation, 'xml');
+
+        var xform = expectation.create();
+        var xmlStream = new XmlStream();
+        xform.write(xmlStream, model);
+        // console.log(xmlStream.xml);
+        expect(xmlStream.xml).xml.to.equal(result);
+        resolve();
+      });
+    });
+  },
+
+  parse: function(expectation) {
+    it('Translate to Model', function () {
+      return new Bluebird(function (resolve, reject) {
+        var xml = getExpectation(expectation, 'xml');
+        var result = getExpectation(expectation, 'parsedModel');
+
+        var parser = Sax.createStream(true);
+        var xform = expectation.create();
+
+        xform.parse(parser)
+          .then(function (model) {
+            //console.log(JSON.stringify(model));
+            expect(model).to.deep.equal(result);
             resolve();
-          });
-        });
+          })
+          .catch(reject);
 
-        if (expectation.xml) {
-          it('Translate to Model', function () {
-            return new Bluebird(function (resolve, reject) {
-              var parser = Sax.createStream(true);
-              var xform = expectation.create();
+        parser.write(xml);
+      });
+    });
+  },
 
-              xform.parse(parser)
-                .then(function (model) {
-                  expect(model).to.deep.equal(expectation.model);
-                  resolve();
-                })
-                .catch(reject);
+  reconcile: function(expectation) {
+    it('Reconcile Model', function() {
+      return new Bluebird(function(resolve) {
+        var model = getExpectation(expectation, 'parsedModel');
+        var result = getExpectation(expectation, 'reconciledModel');
 
-              parser.write(expectation.xml);
-            });
-          });
-        }
+        var xform = expectation.create();
+        xform.reconcile(model, expectation.options);
+        expect(model).to.deep.equal(result);
+        resolve();
+      });
+    });
+  }
+};
+
+function testXform(expectations) {
+  _.each(expectations, function (expectation) {
+    var tests = getExpectation(expectation, 'tests');
+    describe(expectation.title, function () {
+      _.each(tests, function(test) {
+        its[test](expectation);
       });
     });
   });

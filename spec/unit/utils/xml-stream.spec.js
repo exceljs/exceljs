@@ -58,9 +58,25 @@ describe('XmlStream', function() {
     xmlStream.addAttribute('stuff', 'this & that');
     xmlStream.openNode('l2', {foo:'<bar>'});
     xmlStream.closeNode();
-    xmlStream.leafNode('l2', {quote:'"this"'})
+    xmlStream.leafNode('l2', {quote:'"this"'});
     xmlStream.closeNode();
     xmlStream.closeNode();
     expect(xmlStream.xml).to.equal('<root><l1 stuff="this &amp; that"><l2 foo="&lt;bar&gt;"/><l2 quote="&quot;this&quot;"/></l1></root>');
+  });
+
+  it('rolls back', function() {
+    var xmlStream = new XmlStream();
+
+    xmlStream.openNode('root');
+    xmlStream.addAttribute('in', '1');
+    xmlStream.addRollback();
+    xmlStream.addAttribute('not', '1');
+    xmlStream.openNode('invalid');
+    xmlStream.rollback();
+    xmlStream.addAttribute('also', '2');
+    xmlStream.openNode('valid');
+    xmlStream.closeNode();
+    xmlStream.closeNode();
+    expect(xmlStream.xml).to.equal('<root in="1" also="2"><valid/></root>');
   });
 });
