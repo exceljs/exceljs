@@ -1,0 +1,4 @@
+[
+  {"rId": "rId2", "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings", "target": "../printerSettings/printerSettings1.bin"},
+  {"rId": "rId1", "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink", "target": "http://www.google.com/", "targetMode": "External"}
+]

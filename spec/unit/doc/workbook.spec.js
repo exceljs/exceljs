@@ -50,7 +50,7 @@ function createSimpleWorkbook() {
 
 describe('Workbook', function() {
 
-  it('serialises and deserialises by model', function() {
+  it.skip('serialises and deserialises by model', function() {
     var wb = testUtils.createTestBook(false, Excel.Workbook);
 
     return testUtils.cloneByModel(wb, Excel.Workbook)

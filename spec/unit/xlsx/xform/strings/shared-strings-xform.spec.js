@@ -12,7 +12,7 @@ var expectations = [
     preparedModel: require('./data/sharedStrings.json'),
     xml: fs.readFileSync(__dirname + '/data/sharedStrings.xml').toString(),
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   }
 ];
 

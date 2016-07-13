@@ -1,10 +1,6 @@
 'use strict';
 
-var expect = require('chai').expect;
 var Bluebird = require('bluebird');
-var fs = require('fs');
-var fsa = Bluebird.promisifyAll(fs);
-var _ = require('underscore');
 var Excel = require('../../excel');
 var testutils = require('../testutils');
 
@@ -30,7 +26,7 @@ describe('Express', function() {
     var server = app.listen(3003);
 
     return new Bluebird(function(resolve, reject) {
-      var r = request('http://localhost:3003/workbook');
+      var r = request('http://127.0.0.1:3003/workbook');
       r.on('response', function(res) {
         var wb2 = new Excel.Workbook();
         var stream = wb2.xlsx.createInputStream();

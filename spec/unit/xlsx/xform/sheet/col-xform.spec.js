@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: {min: 2, max: 2, width: 10.15625, bestFit: true},
     get parsedModel() { return this.preparedModel; },
     xml: '<col min="2" max="2" width="10.15625" bestFit="1" customWidth="1"/>',
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   }
 ];
 

@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 0},
     xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>',
     get parsedModel() { return this.preparedModel; },
-    tests:['write', 'parse']
+    tests:['render', 'parse']
   },
   {
     title: 'Default with xfId',
@@ -18,7 +18,7 @@ var expectations = [
     preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 0, xfId: 0},
     xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>',
     get parsedModel() { return this.preparedModel; },
-    tests:['write', 'parse']
+    tests:['render', 'parse']
   },
   {
     title: 'Aligned',
@@ -26,7 +26,7 @@ var expectations = [
     preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 0, xfId: 0, alignment: { horizontal: 'center', vertical: 'middle' }},
     xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>',
     get parsedModel() { return this.preparedModel; },
-    tests:['write', 'parse']
+    tests:['render', 'parse']
   },
   {
     title: 'Font',
@@ -34,7 +34,7 @@ var expectations = [
     preparedModel: {numFmtId: 0, fontId: 5, fillId: 0, borderId: 0, xfId: 0},
     xml: '<xf numFmtId="0" fontId="5" fillId="0" borderId="0" xfId="0" applyFont="1"/>',
     get parsedModel() { return this.preparedModel; },
-    tests:['write', 'parse']
+    tests:['render', 'parse']
   },
   {
     title: 'Border',
@@ -42,7 +42,7 @@ var expectations = [
     preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 7, xfId: 0},
     xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="7" xfId="0" applyBorder="1"/>',
     get parsedModel() { return this.preparedModel; },
-    tests:['write', 'parse']
+    tests:['render', 'parse']
   },
   {
     title: 'NumFmt',
@@ -50,7 +50,7 @@ var expectations = [
     preparedModel: {numFmtId: 1, fontId: 0, fillId: 0, borderId: 0, xfId: 0},
     xml: '<xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>',
     get parsedModel() { return this.preparedModel; },
-    tests:['write', 'parse']
+    tests:['render', 'parse']
   },
   {
     title: 'Fill',
@@ -58,7 +58,7 @@ var expectations = [
     preparedModel: {numFmtId: 0, fontId: 0, fillId: 2, borderId: 0, xfId: 0},
     xml: '<xf numFmtId="0" fontId="0" fillId="2" borderId="0" xfId="0" applyFill="1"/>',
     get parsedModel() { return this.preparedModel; },
-    tests:['write', 'parse']
+    tests:['render', 'parse']
   }
 ];
 

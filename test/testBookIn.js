@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 var _ = require('underscore');
+var HrStopwatch = require('./utils/hr-stopwatch');
 
 var Excel = require('../excel');
 
@@ -18,7 +19,7 @@ var alignments = [
   { text: "Top Left", alignment: { horizontal: "left", vertical: "top" } },
   { text: "Middle Centre", alignment: { horizontal: "center", vertical: "middle" } },
   { text: "Bottom Right", alignment: { horizontal: "right", vertical: "bottom" } },
-  { text: "Wrap Text", alignment: { wrapText: true } },
+  { text: "Wrap Text - Wrapping Wrapping Wrappity Wrap Wrap Wrap", alignment: { wrapText: true } },
   { text: "Indent 1", alignment: { indent: 1 } },
   { text: "Indent 2", alignment: { indent: 2 } },
   { text: "Rotate 15", alignment: { horizontal: "right", vertical: "bottom", textRotation: 15 } },
@@ -54,7 +55,7 @@ var borders = {
     top: {style:"double", color: {argb:"FFFF00FF"}},
     left: {style:"double", color: {argb:"FF00FFFF"}},
     bottom: {style:"double", color: {argb:"FF00FF00"}},
-    right: {style:"double", color: {argb:"FF00FF"}},
+    right: {style:"double", color: {argb:"FFFF00FF"}},
     diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true}
   }
 };
@@ -80,6 +81,7 @@ var assert = function(value, failMessage, passMessage) {
 };
 
 var assertFont = function(value, expected, address) {
+  // console.log('assertFont', address, JSON.stringify(value), JSON.stringify(expected));
   assert(value, "Expected to find font object at " + address);
   _.each(expected, function(item, name) {
     assert(value[name] == expected[name], "Expected " + address + ".font[" + name + "] to be " + expected[name] + ", but was " + value[name]);
@@ -93,9 +95,16 @@ var assertEqual = function(address, name, value, expected) {
   assert(_.isEqual(value,expected), 'Expected Cell[' + address + '] ' + name + ' to be ' + JSON.stringify(expected) + ', was ' + JSON.stringify(value));
 };
 
+var stopwatch = new HrStopwatch();
+stopwatch.start();
+
 // assuming file created by testBookOut
 wb.xlsx.readFile(filename)
   .then(function() {
+    var micros = stopwatch.microseconds;
+
+    console.log('Loaded', filename);
+    console.log('Time taken:', micros);
     var ws = wb.getWorksheet("blort");
 
     assert(ws, "Expected to find a worksheet called blort");

@@ -12,7 +12,7 @@ var expectations = [
     preparedModel: require('./data/book.1.json'),
     xml: fs.readFileSync(__dirname + '/data/book.1.xml').toString().replace(/\r\n/g, '\n'),
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   }
 ];
 

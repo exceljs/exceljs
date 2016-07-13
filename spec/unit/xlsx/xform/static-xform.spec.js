@@ -19,7 +19,7 @@ var expectations = [
     preparedModel: undefined,
     get parsedModel() { return this.preparedModel; },
     xml: '<root attr="val"/>',
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Nested',
@@ -27,7 +27,7 @@ var expectations = [
     preparedModel: undefined,
     get parsedModel() { return this.preparedModel; },
     xml: '<root attr="val"><child1 attr="5"/><child2 attr="true"/></root>',
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Texted',
@@ -35,7 +35,7 @@ var expectations = [
     preparedModel: undefined,
     get parsedModel() { return this.preparedModel; },
     xml: '<root attr="val"><child1 attr="5">Hello, World!</child1></root>',
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   }
 ];
 

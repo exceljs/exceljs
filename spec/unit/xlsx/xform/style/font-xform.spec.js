@@ -11,7 +11,7 @@ var expectations = [
     preparedModel: {bold: true, size: 14, color: {argb:'FF00FF00'}, name: 'Calibri', family: 2, scheme: 'minor'},
     xml: '<font><b/><color rgb="FF00FF00"/><family val="2"/><scheme val="minor"/><sz val="14"/><name val="Calibri"/></font>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'rPr tag',
@@ -19,7 +19,7 @@ var expectations = [
     preparedModel: {italic: true, size: 14, color: {argb:'FF00FF00'}, name: 'Calibri', family: 2, scheme: 'minor'},
     xml: '<rPr><i/><color rgb="FF00FF00"/><family val="2"/><scheme val="minor"/><sz val="14"/><rFont val="Calibri"/></rPr>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   }
 ];
 

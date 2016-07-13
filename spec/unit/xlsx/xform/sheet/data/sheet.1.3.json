@@ -1,0 +1,51 @@
+{
+  "dimensions": "A1:B6",
+  "cols": [{"min": 2, "max": 2, "width": 10.15625, "bestFit": true}],
+  "rows": [
+    {
+      "number": 1, "min": 1, "max": 2,
+      "cells": [
+        {"address": "A1", "type": 3, "value": 0},
+        {"address": "B1", "type": 3, "value": 1}
+      ]
+    },
+    {
+      "number": 2, "min": 1, "max": 2,
+      "cells": [
+        {"address": "A2", "type": 3, "value": 2},
+        {"address": "B2", "type": 2, "value": 3.14}
+      ]
+    },
+    {
+      "number": 3, "min": 1, "max": 2,
+      "cells": [
+        {"address": "A3", "type": 3, "value": 3},
+        {"address": "B3", "type": 2, "value": 5}
+      ]
+    },
+    {
+      "number": 4, "min": 1, "max": 2,
+      "cells": [
+        {"address": "A4", "type": 3, "value": 4},
+        {"address": "B4", "type": 2, "value": 42507, "styleId": 1}
+      ]
+    },
+    {
+      "number": 5, "min": 1, "max": 2,
+      "cells": [
+        {"address": "A5", "type": 3, "value": 5},
+        {"address": "B5", "type": 6, "formula": "B1", "result": "I am Text"}
+      ]
+    },
+    {
+      "number": 6, "min": 1, "max": 2,
+      "cells": [
+        {"address": "A6", "type": 3, "value": 6},
+        {"address": "B6", "type": 3, "value": 7, "styleId": 2}
+      ]
+    }
+  ],
+  "hyperlinks": [
+    {"address": "B6", "rId": "rId1"}
+  ]
+}

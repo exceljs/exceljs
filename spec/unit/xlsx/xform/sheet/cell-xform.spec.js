@@ -7,8 +7,31 @@ var SharedStringsXform = require('../../../../../lib/xlsx/xform/strings/shared-s
 var Enums = require('../../../../../lib/doc/enums');
 
 var fakeStyles = {
-  addStyleModel: function() {return 0;},
-  getStyleModel: function() {return null;}
+  addStyleModel: function(style, effectiveType) {
+    if (effectiveType === Enums.ValueType.Date) {
+      return 1;
+    }
+    return 0;
+  },
+  getStyleModel: function(styleId) {
+    switch(styleId) {
+      case 1:
+        return {numFmt:'mm-dd-yy'};
+      default:
+        return null;
+    }
+  }
+};
+
+var fakeHyperlinkMap = {
+  getHyperlink: function(address) {
+    switch(address) {
+      case 'H1':
+        return 'http://www.foo.com';
+      default:
+        return;
+    }
+  }
 };
 
 var expectations = [
@@ -18,14 +41,18 @@ var expectations = [
     preparedModel: {address: 'A1', type: Enums.ValueType.Number, value: 5},
     parsedModel: {address: 'A1', type: Enums.ValueType.Number, value: 5},
     xml: '<c r="A1"><v>5</v></c>',
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Inline String',
     create:  function() { return new CellXform()},
+    initialModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     preparedModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     xml: '<c r="A1" t="str"><v>Foo</v></c>',
-    tests: ['write']
+    parsedModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
+    reconciledModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
+    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    options: { hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
     title: 'Shared String',
@@ -33,40 +60,51 @@ var expectations = [
     initialModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     preparedModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo', ssId: 0},
     xml: '<c r="A1" t="s"><v>0</v></c>',
-    tests: ['prepare', 'write'],
-    options: { sharedStrings: new SharedStringsXform(), styles: fakeStyles }
+    parsedModel: {address: 'A1', type: Enums.ValueType.String, value: 0},
+    reconciledModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
+    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    options: { sharedStrings: new SharedStringsXform(), hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
     title: 'Date',
     create:  function() { return new CellXform()},
-    preparedModel: {address: 'A1', type: Enums.ValueType.Date, value: new Date('2016-06-09T00:00:00.000Z')},
-    xml: '<c r="A1"><v>42530</v></c>',
-    tests: ['write']
+    initialModel: {address: 'A1', type: Enums.ValueType.Date, value: new Date('2016-06-09T00:00:00.000Z')},
+    preparedModel: {address: 'A1', type: Enums.ValueType.Date, value: new Date('2016-06-09T00:00:00.000Z'), styleId: 1},
+    xml: '<c r="A1" s="1"><v>42530</v></c>',
+    parsedModel: {address: 'A1', type: Enums.ValueType.Number, value: 42530, styleId: 1},
+    reconciledModel: {address: 'A1', type: Enums.ValueType.Date, value: new Date('2016-06-09T00:00:00.000Z'), style: {numFmt: 'mm-dd-yy'}},
+    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
     title: 'Hyperlink',
     create:  function() { return new CellXform()},
-    initialModel: {address: 'A1', type: Enums.ValueType.Hyperlink, hyperlink: 'http://www.foo.com', text: 'www.foo.com'},
-    preparedModel: {address: 'A1', type: Enums.ValueType.Hyperlink, hyperlink: 'http://www.foo.com', text: 'www.foo.com', ssId: 0},
-    xml: '<c r="A1" t="s"><v>0</v></c>',
-    parsedModel: {address: 'A1',  type: Enums.ValueType.String, value: 0},
-    reconciledModel: {address: 'A1', type: Enums.ValueType.Hyperlink, value: undefined, text: 'www.foo.com', hyperlink: 'http://www.foo.com'},
-    tests: ['prepare', 'write', 'parse', 'reconcile'],
-    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: {A1: 'http://www.foo.com'}, styles: fakeStyles }
+    initialModel: {address: 'H1', type: Enums.ValueType.Hyperlink, hyperlink: 'http://www.foo.com', text: 'www.foo.com'},
+    preparedModel: {address: 'H1', type: Enums.ValueType.Hyperlink, hyperlink: 'http://www.foo.com', text: 'www.foo.com', ssId: 0},
+    xml: '<c r="H1" t="s"><v>0</v></c>',
+    parsedModel: {address: 'H1',  type: Enums.ValueType.String, value: 0},
+    reconciledModel: {address: 'H1', type: Enums.ValueType.Hyperlink, text: 'www.foo.com', hyperlink: 'http://www.foo.com'},
+    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
     title: 'String Formula',
     create:  function() { return new CellXform()},
+    initialModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
     preparedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
     xml: '<c r="A1" t="str"><f>A2</f><v>Foo</v></c>',
-    tests: ['write']
+    parsedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
+    reconciledModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
+    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
     title: 'Number Formula',
     create:  function() { return new CellXform()},
     preparedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 7},
     xml: '<c r="A1"><f>A2</f><v>7</v></c>',
-    tests: ['write']
+    parsedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 7},
+    tests: ['render', 'parse']
   }
 ];
 

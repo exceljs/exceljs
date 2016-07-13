@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: true,
     get parsedModel() { return this.preparedModel; },
     xml: '<u/>',
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'double',
@@ -18,7 +18,7 @@ var expectations = [
     preparedModel: 'double',
     get parsedModel() { return this.preparedModel; },
     xml: '<u val="double"/>',
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'false',
@@ -26,7 +26,7 @@ var expectations = [
     preparedModel: false,
     get parsedModel() { return this.preparedModel; },
     xml: '',
-    tests: ['write']
+    tests: ['render']
   }
 ];
 

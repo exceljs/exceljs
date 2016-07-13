@@ -4,11 +4,11 @@
             xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"
             xmlns:x16r2="http://schemas.microsoft.com/office/spreadsheetml/2015/02/main">
     <numFmts count="5">
-        <numFmt numFmtId="8" formatCode="&quot;£&quot;#,##0.00;[Red]\-&quot;£&quot;#,##0.00"/>
-        <numFmt numFmtId="164" formatCode="d\-mmm\-yyyy"/>
-        <numFmt numFmtId="165" formatCode="[Green]#,##0\ ;[Red]\(#,##0\)"/>
+        <numFmt numFmtId="8" formatCode="&quot;£&quot;#,##0.00;[Red]-&quot;£&quot;#,##0.00"/>
+        <numFmt numFmtId="164" formatCode="d-mmm-yyyy"/>
+        <numFmt numFmtId="165" formatCode="[Green]#,##0 ;[Red](#,##0)"/>
         <numFmt numFmtId="166" formatCode="#0.000"/>
-        <numFmt numFmtId="167" formatCode="#\ ?/?%"/>
+        <numFmt numFmtId="167" formatCode="# ?/?%"/>
     </numFmts>
     <fonts count="3" x14ac:knownFonts="1">
         <font>

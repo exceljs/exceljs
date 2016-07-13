@@ -10,21 +10,21 @@ var expectations = [
     preparedModel: true,
     get parsedModel() { return this.preparedModel; },
     xml: '<boolean/>',
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'false',
     create:  function() { return new BooleanXform({tag: 'boolean', attr: 'val'})},
     preparedModel: false,
     xml: '',
-    tests: ['write']
+    tests: ['render']
   },
   {
     title: 'undefined',
     create:  function() { return new BooleanXform({tag: 'boolean', attr: 'val'})},
     preparedModel: undefined,
     xml: '',
-    tests: ['write']
+    tests: ['render']
   }
 ];
 

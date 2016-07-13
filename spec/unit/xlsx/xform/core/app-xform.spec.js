@@ -11,7 +11,7 @@ var expectations = [
     create:  function() { return new AppXform()},
     preparedModel: require('./data/app.1.json'),
     xml: fs.readFileSync(__dirname + '/data/app.1.xml').toString().replace(/\r\n/g, '\n'),
-    tests: ['write']
+    tests: ['render']
   }
 ];
 

@@ -1,6 +1,8 @@
 var fs = require('fs');
 var _ = require('underscore');
 
+var HrStopwatch = require('./utils/hr-stopwatch');
+
 var Workbook = require('../lib/doc/workbook');
 
 var filename = process.argv[2];
@@ -48,7 +50,7 @@ var borders = {
     top: {style:"double", color: {argb:"FFFF00FF"}},
     left: {style:"double", color: {argb:"FF00FFFF"}},
     bottom: {style:"double", color: {argb:"FF00FF00"}},
-    right: {style:"double", color: {argb:"FF00FF"}},
+    right: {style:"double", color: {argb:"FFFF00FF"}},
     diagonal: {style:"double", color: {argb:"FFFFFF00"}, up: true, down: true}
   }
 };
@@ -180,9 +182,14 @@ ws.getCell("B2").name = "Passe";
 ws.getCell("E2").name = "Greet";
 ws.getCell("A22").value = {formula:'E2'};
 
+
+var stopwatch = new HrStopwatch();
+stopwatch.start();
 wb.xlsx.writeFile(filename)
   .then(function(){
+    var micros = stopwatch.microseconds;
     console.log("Done.");
+    console.log("Time taken:", micros)
   });
 //.catch(function(error) {
 //    console.log(error.message);

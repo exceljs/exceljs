@@ -12,7 +12,7 @@ var expectations = [
     preparedModel: require('./data/styles.1.json'),
     xml: fs.readFileSync(__dirname + '/data/styles.1.xml').toString(),
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   }
 ];
 

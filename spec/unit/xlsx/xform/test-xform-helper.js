@@ -20,9 +20,29 @@ function getExpectation(expectation, name) {
   return _.cloneDeep(expectation[name]);
 }
 
-// provides boilerplate examples for the four transform steps: prepare, write,  parse and reconcile
+// clone objects without the undefined values
+function cloneObject(obj) {
+  var clone;
+  if (obj instanceof Array) {
+    clone = [];
+  } else if (obj instanceof Date) {
+    return obj;
+  } else if (typeof obj === 'object') {
+    clone = {};
+  } else {
+    return obj;
+  }
+  _.each(obj,  function(value, name) {
+    if (value !== undefined) {
+      clone[name] = cloneObject(value);
+    }
+  });
+  return clone;
+}
+
+// provides boilerplate examples for the four transform steps: prepare, render,  parse and reconcile
 //  prepare: model => preparedModel
-//  write:  preparedModel => xml
+//  render:  preparedModel => xml
 //  parse:  xml => parsedModel
 //  reconcile: parsedModel => reconciledModel
 
@@ -41,7 +61,7 @@ var its = {
     });
   },
 
-  write: function(expectation) {
+  render: function(expectation) {
     it('Translate to XML', function () {
       return new Bluebird(function (resolve) {
         var model = getExpectation(expectation, 'preparedModel');
@@ -49,7 +69,7 @@ var its = {
 
         var xform = expectation.create();
         var xmlStream = new XmlStream();
-        xform.write(xmlStream, model);
+        xform.render(xmlStream, model);
         // console.log(xmlStream.xml);
         expect(xmlStream.xml).xml.to.equal(result);
         resolve();
@@ -69,7 +89,11 @@ var its = {
         xform.parse(parser)
           .then(function (model) {
             //console.log(JSON.stringify(model));
-            expect(model).to.deep.equal(result);
+            
+            // eliminate the undefined
+            var clone = cloneObject(model);
+            
+            expect(clone).to.deep.equal(result);
             resolve();
           })
           .catch(reject);
@@ -87,7 +111,11 @@ var its = {
 
         var xform = expectation.create();
         xform.reconcile(model, expectation.options);
-        expect(model).to.deep.equal(result);
+
+        // eliminate the undefined
+        var clone = cloneObject(model);
+
+        expect(clone).to.deep.equal(result);
         resolve();
       });
     });

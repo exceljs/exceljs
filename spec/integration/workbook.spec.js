@@ -44,7 +44,7 @@ describe('Workbook', function() {
       var ws2 = wb.addWorksheet();
       expect(ws2.name).to.match(/sheet\d+/);
 
-      var ws3 = wb.addWorksheet('This & That');
+      wb.addWorksheet('This & That');
 
       return wb.xlsx.writeFile('./wb.test.xlsx')
         .then(function() {
@@ -60,7 +60,7 @@ describe('Workbook', function() {
     it('serialises and deserialises creator, lastModifiedBy, etc', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('Hello');
-      ws.getCell('A1').value = 'World!'
+      ws.getCell('A1').value = 'World!';
       wb.creator = 'Foo';
       wb.lastModifiedBy = 'Bar';
       wb.created = new Date(2016,0,1);
@@ -81,7 +81,6 @@ describe('Workbook', function() {
     it('serializes and deserializes to xlsx file properly', function() {
 
       var wb = testUtils.createTestBook(true, Excel.Workbook);
-      //fs.writeFileSync('./testmodel.json', JSON.stringify(wb.model, null, '    '));
 
       return wb.xlsx.writeFile('./wb.test.xlsx')
         .then(function() {
@@ -424,7 +423,7 @@ describe('Workbook', function() {
     });
   });
 
-  it('serialises and deserialises by model', function() {
+  it.skip('serialises and deserialises by model', function() {
     var wb = testUtils.createTestBook(false, Excel.Workbook);
 
     return testUtils.cloneByModel(wb, Excel.Workbook)

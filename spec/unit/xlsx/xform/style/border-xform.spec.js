@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: {},
     xml: '<border><left/><right/><top/><bottom/><diagonal/></border>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Thin Red Box',
@@ -23,7 +23,7 @@ var expectations = [
     },
     xml: '<border><left style="thin"><color rgb="FFFF0000"/></left><right style="thin"><color rgb="FFFF0000"/></right><top style="thin"><color rgb="FFFF0000"/></top><bottom style="thin"><color rgb="FFFF0000"/></bottom><diagonal/></border>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Dotted colourless Box',
@@ -36,7 +36,7 @@ var expectations = [
     },
     xml: '<border><left style="dotted"/><right style="dotted"/><top style="dotted"/><bottom style="dotted"/><diagonal/></border>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Cross',
@@ -44,7 +44,7 @@ var expectations = [
     preparedModel: {diagonal: {style: 'thin', up: true, down: true}},
     xml: '<border diagonalUp="1" diagonalDown="1"><left/><right/><top/><bottom/><diagonal style="thin"/></border>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   }
 ];
 

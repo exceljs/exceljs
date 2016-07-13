@@ -11,7 +11,7 @@ var expectations = [
     preparedModel: {name: 'foo', ranges:['bar!$A1$C1']},
     get parsedModel() { return this.preparedModel; },
     xml: '<definedName name="foo">bar!$A1$C1</definedName>',
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   }
 ];
 

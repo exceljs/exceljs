@@ -9,7 +9,7 @@ var expectations = [
     create:  function() { return new AlignmentXform()},
     preparedModel: {},
     xml: '',
-    tests: ['write']
+    tests: ['render']
   },
   {
     title: 'Top Left',
@@ -17,7 +17,7 @@ var expectations = [
     preparedModel: { horizontal: 'left', vertical: 'top' },
     xml: '<alignment horizontal="left" vertical="top"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Middle Centre',
@@ -25,7 +25,7 @@ var expectations = [
     preparedModel: { horizontal: 'center', vertical: 'middle' },
     xml: '<alignment horizontal="center" vertical="center"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Bottom Right',
@@ -33,7 +33,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom'},
     xml: '<alignment horizontal="right" vertical="bottom"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Wrap Text',
@@ -41,7 +41,7 @@ var expectations = [
     preparedModel: { wrapText: true },
     xml: '<alignment wrapText="1"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Indent 1',
@@ -49,7 +49,7 @@ var expectations = [
     preparedModel: { indent: 1 },
     xml: '<alignment indent="1"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Indent 2',
@@ -57,7 +57,7 @@ var expectations = [
     preparedModel: { indent: 2 },
     xml: '<alignment indent="2"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate 15',
@@ -65,7 +65,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: 15 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="15"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate 30',
@@ -73,7 +73,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: 30 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="30"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate 45',
@@ -81,7 +81,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: 45 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="45"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate 60',
@@ -89,7 +89,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: 60 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="60"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate 75',
@@ -97,7 +97,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: 75 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="75"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate 90',
@@ -105,7 +105,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: 90 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="90"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate -15',
@@ -113,7 +113,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: -15 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="105"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate -30',
@@ -121,7 +121,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: -30 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="120"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate -45',
@@ -129,7 +129,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: -45 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="135"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate -60',
@@ -137,7 +137,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: -60 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="150"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate -75',
@@ -145,7 +145,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: -75 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="165"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Rotate -90',
@@ -153,7 +153,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: -90 },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="180"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   },
   {
     title: 'Vertical Text',
@@ -161,7 +161,7 @@ var expectations = [
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: 'vertical' },
     xml: '<alignment horizontal="right" vertical="bottom" textRotation="255"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['write', 'parse']
+    tests: ['render', 'parse']
   }
 ];
 
