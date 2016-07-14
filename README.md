@@ -10,22 +10,18 @@ npm install exceljs
 
 # New Features!
 
-
 <ul>
-    <li>Fixed "read property 'richText' of undefined error. Thanks to  <a href="https://github.com/james075">james075</a></li>
+    <li>Refactoring Complete. All unit and integration tests pass.</li>
 </ul>
 
 # Backlog
 
 <ul>
-    <li>I am still part-way through refactoring the xml render/parse code because I'm finding underscore templates not up to the task.
-        The code looks a bit like a dog's breakfast right now and it's going to make pull-requests more difficult but I should
-        have the refactoring complete by next release.</li>
-    <li>XLSX Streaming Reader - once the refactoring is complete, I should be in a better position to complete this (long running) task.</li>
+    <li>With the refactoring done, the priority for me now is to work through the pull requests and issues to bring them down to a more respectable level.</li>
+    <li>XLSX Streaming Reader.</li>
     <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
         I would also like to take the time to look at transpilers to support the earlier JSs</li>
     <li>Parsing CSV with Headers</li>
-    <li>Use WeakMap if Available</li>
 </ul>
 
 # Contents
@@ -1031,3 +1027,5 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.6   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/guyonroche/exceljs/issues/87">invalid signature: 0x80014</a>: Thanks to <a href="https://github.com/hasanlussa">hasanlussa</a> for the PR</li></ul></li><li><a href="#defined-names">Defined Names</a><ul><li>Cells can now have assigned names which may then be used in formulas.</li></ul></li><li>Converted Bluebird.defer() to new Bluebird(function(resolve, reject){}). Thanks to user <a href="https://github.com/Nishchit14">Nishchit</a> for the Pull Request</li></ul> |
 | 0.2.7   | <ul><li><a href="#data-validations">Data Validations</a><ul><li>Cells can now define validations that controls the valid values the cell can have</li></ul></li></ul> |
 | 0.2.8   | <ul><li><a href="rich-text">Rich Text Value</a><ul><li>Cells now support <b><i>in-cell</i></b> formatting - Thanks to <a href="https://github.com/pvadam">Peter ADAM</a></li></ul></li><li>Fixed typo in README - Thanks to <a href="https://github.com/MRdNk">MRdNk</a></li><li>Fixing emit in worksheet-reader - Thanks to <a href="https://github.com/alangunning">Alan Gunning</a></li><li>Clearer Docs - Thanks to <a href="https://github.com/miensol">miensol</a></li></ul> |
+| 0.2.9   | <ul><li>Fixed "read property 'richText' of undefined error. Thanks to  <a href="https://github.com/james075">james075</a></li></ul> |
+
