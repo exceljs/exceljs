@@ -104,7 +104,7 @@ Use the second parameter of the addWorksheet function to create a new sheet with
 To add a new one with a red tab color use this example:
 
 ```javascript
-var sheet = workbook.addWorksheet('My Sheet', 'FFC0000');
+var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 ```
 
 ## Access Worksheets
