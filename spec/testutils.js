@@ -5,9 +5,9 @@ var expect = require('chai').expect;
 var Bluebird = require('bluebird');
 var _ = require('underscore');
 var MemoryStream = require('memorystream');
-
+var Row = require('../lib/doc/row');
+var Column = require('../lib/doc/column');
 var Excel = require('../excel');
-
 
 
 var utils = module.exports = {
@@ -284,7 +284,17 @@ var utils = module.exports = {
 
   createTestBook: function(checkBadAlignments, WorkbookClass, options) {
     var wb = new WorkbookClass(options);
-    var ws = wb.addWorksheet('blort');
+    var ws = wb.addWorksheet('blort', {
+      properties: {
+        outlineLevelCol: 1,
+        outlineLevelRow: 1,
+        tabColor: {argb: 'FF00FF00'}
+      }
+    });
+
+    ws.getCell('J10').value = 1;
+    ws.getColumn(10).outlineLevel = 1;
+    ws.getRow(10).outlineLevel = 1;
 
     ws.getCell('A1').value = 7;
     ws.getCell('B1').value = utils.testValues.str;
@@ -372,7 +382,7 @@ var utils = module.exports = {
 
   checkTestBook: function(wb, docType, useStyles) {
     var sheetName;
-    var checkFormulas, checkMerges, checkStyles, checkBadAlignments;
+    var checkFormulas, checkMerges, checkStyles, checkBadAlignments, checkSheetProperties;
     var dateAccuracy;
     switch(docType) {
       case 'xlsx':
@@ -381,6 +391,7 @@ var utils = module.exports = {
         checkMerges = true;
         checkStyles = useStyles;
         checkBadAlignments = useStyles;
+        checkSheetProperties = true;
         dateAccuracy = 3;
         break;
       case 'model':
@@ -388,6 +399,7 @@ var utils = module.exports = {
         checkFormulas = true;
         checkMerges = true;
         checkStyles = true;
+        checkSheetProperties = true;
         checkBadAlignments = false;
         dateAccuracy = 3;
         break;
@@ -397,6 +409,7 @@ var utils = module.exports = {
         checkMerges = false;
         checkStyles = false;
         checkBadAlignments = false;
+        checkSheetProperties = false;
         dateAccuracy = 1000;
         break;
     }
@@ -406,6 +419,16 @@ var utils = module.exports = {
     var ws = wb.getWorksheet(sheetName);
     expect(ws).to.not.be.undefined;
 
+    if (checkSheetProperties) {
+      expect(ws.getColumn(10).outlineLevel).to.equal(1);
+      expect(ws.getColumn(10).collapsed).to.equal(true);
+      expect(ws.getRow(10).outlineLevel).to.equal(1);
+      expect(ws.getRow(10).collapsed).to.equal(true);
+      expect(ws.properties.outlineLevelCol).to.equal(1);
+      expect(ws.properties.outlineLevelRow).to.equal(1);
+      expect(ws.properties.tabColor).to.deep.equal({argb:'FF00FF00'});
+    }
+    
     expect(ws.getCell('A1').value).to.equal(7);
     expect(ws.getCell('A1').type).to.equal(Excel.ValueType.Number);
     expect(ws.getCell('B1').value).to.equal(utils.testValues.str);
@@ -540,11 +563,9 @@ var utils = module.exports = {
     var deferred = Bluebird.defer();
 
     wb.on('worksheet', function(ws) {
-      console.log('Worksheet', ws.name);
       // Sheet name stored in workbook. Not guaranteed here
       // expect(ws.name).to.equal('blort');
       ws.on('row', function(row) {
-        console.log('WB Reader row', row.number)
         switch(row.number) {
           case 1:
             expect(row.getCell('A').value).to.equal(7);
@@ -683,5 +704,40 @@ var utils = module.exports = {
     var iso = dt.toISOString();
     var parts = iso.split('T');
     return parts[0];
+  },
+
+  createSheetMock: function() {
+    return {
+      _keys: {},
+      _cells: {},
+      rows: [],
+      columns: [],
+      properties: {
+        outlineLevelCol: 0,
+        outlineLevelRow: 0
+      },
+      
+      addColumn: function(colNumber, defn) {
+        return this.columns[colNumber-1] = new Column(this, colNumber, defn);
+      },
+      getColumn: function(colNumber) {
+        var column = this.columns[colNumber-1] || this._keys[colNumber];
+        if (!column) {
+          column = this.columns[colNumber-1] = new Column(this, colNumber);
+        }
+        return column;
+      },
+      getRow: function(rowNumber) {
+        var row = this.rows[rowNumber-1];
+        if (!row) {
+          row = this.rows[rowNumber-1] = new Row(this, rowNumber);
+        }
+        return row;
+      },
+      getCell: function(rowNumber, colNumber) {
+        return this.getRow(rowNumber).getCell(colNumber);
+      }
+    };
   }
+
 };

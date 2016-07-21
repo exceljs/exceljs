@@ -31,9 +31,6 @@ var fakeStyles = {
   }
 };
 
-
-
-
 var fakeHyperlinkMap = {
   getHyperlink: function(address) {
     switch(address) {

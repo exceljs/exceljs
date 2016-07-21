@@ -62,7 +62,7 @@ var its = {
   },
 
   render: function(expectation) {
-    it('Translate to XML', function () {
+    it('Render to XML', function () {
       return new Bluebird(function (resolve) {
         var model = getExpectation(expectation, 'preparedModel');
         var result = getExpectation(expectation, 'xml');
@@ -78,7 +78,7 @@ var its = {
   },
 
   parse: function(expectation) {
-    it('Translate to Model', function () {
+    it('Parse to Model', function () {
       return new Bluebird(function (resolve, reject) {
         var xml = getExpectation(expectation, 'xml');
         var result = getExpectation(expectation, 'parsedModel');

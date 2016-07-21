@@ -11,7 +11,9 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li>Refactoring Complete. All unit and integration tests pass.</li>
+    <li><a href="#outline-level">Outline Levels</a> thanks to <a href="https://github.com/cricri">cricri</a> for the contribution.</li>
+    <li><a href="#worksheet-properties">Worksheet Properties</a></li>
+    <li>Further refactoring of worksheet writer.</li>
 </ul>
 
 # Backlog
@@ -120,6 +122,30 @@ var worksheet = workbook.getWorksheet('My Sheet');
 var worksheet = workbook.getWorksheet(1);
 ```
 
+## Worksheet Properties
+
+Worksheets support a property bucket to allow control over some features of the worksheet.
+
+```javascript
+// create new sheet with properties
+var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
+
+// create a new sheet writer with properties
+var worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
+
+// adjust properties afterwards (not supported by worksheet-writer)
+worksheet.properties.outlineLevelCol = 2;
+worksheet.properties.defaultRowHeight = 15;
+```
+
+| Name             | Default    | Description |
+| ---------------- | ---------- | ----------- |
+| tabColor         | undefined  | Color of the tabs |
+| outlineLevelCol  | 0          | The worksheet column outline level |
+| outlineLevelRow  | 0          | The worksheet row outline level |
+| defaultRowHeight | 15         | Default row height |
+| dyDescent        | 55         | TBD |
+
 ## Columns
 
 ```javascript
@@ -129,7 +155,7 @@ var worksheet = workbook.getWorksheet(1);
 worksheet.columns = [
     { header: 'Id', key: 'id', width: 10 },
     { header: 'Name', key: 'name', width: 32 },
-    { header: 'D.O.B.', key: 'DOB', width: 10 }
+    { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
 ];
 
 // Access an individual columns by key, letter and 1-based column number
@@ -156,8 +182,10 @@ dobCol.hidden = true;
 // set an outline level for columns
 worksheet.getColumn(4).outlineLevel = 0;
 worksheet.getColumn(5).outlineLevel = 1;
-worksheet.getColumn(6).outlineLevel = 1;
-worksheet.getColumn(7).outlineLevel = 1;
+
+// columns support a readonly field to indicate the collapsed state based on outlineLevel
+expect(worksheet.getColumn(4).collapsed).to.equal(false);
+expect(worksheet.getColumn(5).collapsed).to.equal(true);
 
 // iterate over all current cells in this column
 dobCol.eachCell(function(cell, rowNumber) {
@@ -212,8 +240,11 @@ row.hidden = true;
 // set an outline level for rows
 worksheet.getRow(4).outlineLevel = 0;
 worksheet.getRow(5).outlineLevel = 1;
-worksheet.getRow(6).outlineLevel = 1;
-worksheet.getRow(7).outlineLevel = 1;
+
+// rows support a readonly field to indicate the collapsed state based on outlineLevel
+expect(worksheet.getRow(4).collapsed).to.equal(false);
+expect(worksheet.getRow(5).collapsed).to.equal(true);
+
 
 row.getCell(1).value = 5; // A5's value set to 5
 row.getCell('name').value = 'Zeb'; // B5's value set to 'Zeb' - assuming column 2 is still keyed by name
@@ -534,15 +565,15 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 
 **Valid Alignment Property Values**
 
-| horizontal | vertical    | wrapText | indent  | readingOrder | textRotation |
-| ---------- | ----------- | -------- | ------- | ------------ | ------------ |
-| left       | top         | true     | integer | rtl          | 0 to 90      |
-| center     | middle      | false    |         | ltr          | -1 to -90    |
-| right      | bottom      |          |         |              | vertical     |
-| fill       | distributed |          |         |              |              |
-| justify    | justify     |          |         |              |              |
-| centerContinuous |       |          |         |              |              |
-| distributed |            |          |         |              |              |
+| horizontal       | vertical    | wrapText | indent  | readingOrder | textRotation |
+| ---------------- | ----------- | -------- | ------- | ------------ | ------------ |
+| left             | top         | true     | integer | rtl          | 0 to 90      |
+| center           | middle      | false    |         | ltr          | -1 to -90    |
+| right            | bottom      |          |         |              | vertical     |
+| fill             | distributed |          |         |              |              |
+| justify          | justify     |          |         |              |              |
+| centerContinuous |             |          |         |              |              |
+| distributed      |             |          |         |              |              |
 
 
 ### Borders
@@ -701,6 +732,49 @@ expect(ws.getCell('A1').text).to.equal('This is a colorful text with in-cell for
 expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 
 ```
+
+## Outline Levels
+
+Excel supports outlining; where rows or columns can be expanded or collapsed dependingn on what level of detail the user wishes to view.
+
+Outline levels can be defined in column setup:
+```javascript
+worksheet.columns = [
+    { header: 'Id', key: 'id', width: 10 },
+    { header: 'Name', key: 'name', width: 32 },
+    { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
+];
+```
+
+Or directly on the row or column
+```javascript
+worksheet.getColumn(3).outlineLevel = 1;
+worksheet.getRow(3).outlineLevel = 1;
+```
+
+The sheet outline levels can be set on the worksheet
+```javascript
+// set column outline level
+worksheet.properties.outlineLevelCol = 1;
+
+// set row outline level
+worksheet.properties.outlineLevelRow = 1;
+```
+
+Note: adjusting outline levels on rows or columns or the outline levels on the worksheet will incur a side effect of also modifying the collapsed property of all rows or columns affected by the property change. E.g.:
+```javascript
+worksheet.properties.outlineLevelCol = 1;
+
+worksheet.getColumn(3).outlineLevel = 1;
+expect(worksheet.getColumn(3).collapsed).to.be.true;
+
+worksheet.properties.outlineLevelCol = 2;
+expect(worksheet.getColumn(3).collapsed).to.be.false;
+
+```
+
+
+
 
 ## File I/O
 
@@ -1041,3 +1115,5 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.7   | <ul><li><a href="#data-validations">Data Validations</a><ul><li>Cells can now define validations that controls the valid values the cell can have</li></ul></li></ul> |
 | 0.2.8   | <ul><li><a href="rich-text">Rich Text Value</a><ul><li>Cells now support <b><i>in-cell</i></b> formatting - Thanks to <a href="https://github.com/pvadam">Peter ADAM</a></li></ul></li><li>Fixed typo in README - Thanks to <a href="https://github.com/MRdNk">MRdNk</a></li><li>Fixing emit in worksheet-reader - Thanks to <a href="https://github.com/alangunning">Alan Gunning</a></li><li>Clearer Docs - Thanks to <a href="https://github.com/miensol">miensol</a></li></ul> |
 | 0.2.9   | <ul><li>Fixed "read property 'richText' of undefined error. Thanks to  <a href="https://github.com/james075">james075</a></li></ul> |
+| 0.2.10  | <ul><li>Refactoring Complete. All unit and integration tests pass.</li></ul> |
+

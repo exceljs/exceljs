@@ -11,6 +11,14 @@ var expectations = [
     get parsedModel() { return this.preparedModel; },
     xml: '<col min="2" max="2" width="10.15625" bestFit="1" customWidth="1"/>',
     tests: ['render', 'parse']
+  },
+  {
+    title: 'Outline',
+    create:  function() { return new ColXform()},
+    preparedModel: {min: 2, max: 2, width: 10.15625, bestFit: true, outlineLevel: 1, collapsed: true},
+    xml: '<col min="2" max="2" width="10.15625" bestFit="1" customWidth="1" outlineLevel="1" collapsed="1"/>',
+    parsedModel: {min: 2, max: 2, width: 10.15625, bestFit: true, outlineLevel: 1, collapsed: true},
+    tests: ['render', 'parse']
   }
 ];
 

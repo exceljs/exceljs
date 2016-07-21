@@ -1,40 +1,13 @@
 var expect = require("chai").expect;
 
 var Column = require("../../../lib/doc/column");
-var Row = require("../../../lib/doc/row");
-
-function createSheetMock() {
-  return {
-    _keys: {},
-    _cells: {},
-    columns: [],
-    rows: [],
-
-    getColumn: function(colNumber) {
-      var column = this.columns[colNumber-1];
-      if (!column) {
-        column = this.columns[colNumber-1] = new Column(this, colNumber);
-      }
-      return column;
-    },
-    getRow: function(rowNumber) {
-      var row = this.rows[rowNumber-1];
-      if (!row) {
-        row = this.rows[rowNumber-1] = new Row(this, rowNumber);
-      }
-      return row;
-    },
-    getCell: function(rowNumber, colNumber) {
-      return this.getRow(rowNumber).getCell(colNumber);
-    }
-  };
-}
+var createSheetMock = require('../../testutils').createSheetMock;
 
 describe("Column", function() {
   it("creates by defn", function() {
     var sheet = createSheetMock();
 
-    sheet.columns[0] = new Column(sheet, 1, {
+    sheet.addColumn(1, {
       header: "Col 1",
       key: "id1",
       width: 10
@@ -43,7 +16,8 @@ describe("Column", function() {
     expect(sheet.getColumn(1).header).to.equal("Col 1");
     expect(sheet.getColumn(1).headers).to.deep.equal(["Col 1"]);
     expect(sheet.getCell(1,1).value).to.equal("Col 1");
-
+    expect(sheet.getColumn("id1")).to.equal(sheet.getColumn(1));
+    
     sheet.getRow(2).values = { id1: "Hello, World!" };
     expect(sheet.getCell(2,1).value).to.equal("Hello, World!");
   });
@@ -51,7 +25,7 @@ describe("Column", function() {
   it("maintains properties", function() {
     var sheet = createSheetMock();
 
-    var column = sheet.columns[0] = new Column(sheet, 1);
+    var column = sheet.addColumn(1);
 
     column.key = "id1";
     expect(sheet._keys["id1"]).to.equal(column);
@@ -71,4 +45,35 @@ describe("Column", function() {
     expect(sheet.getCell(3,1).value).to.equal("Hello, World!");
   });
 
+  it("creates model", function() {
+    var sheet = createSheetMock();
+
+    sheet.addColumn(1, {
+      header: "Col 1",
+      key: "id1",
+      width: 10
+    });
+    sheet.addColumn(2, {
+      header: "Col 2",
+      key: "name",
+      width: 10
+    });
+    sheet.addColumn(3, {
+      header: "Col 2",
+      key: "dob",
+      width: 10,
+      outlineLevel: 1
+    });
+
+    var model = Column.toModel(sheet.columns);
+    expect(model.length).to.equal(2);
+
+    expect(model[0].width).to.equal(10);
+    expect(model[0].outlineLevel).to.equal(0);
+    expect(model[0].collapsed).to.equal(false);
+
+    expect(model[1].width).to.equal(10);
+    expect(model[1].outlineLevel).to.equal(1);
+    expect(model[1].collapsed).to.equal(true);
+  });
 });

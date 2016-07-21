@@ -1,39 +1,12 @@
 var expect = require('chai').expect;
 
-var Column = require("../../../lib/doc/column");
-var Row = require("../../../lib/doc/row");
 var Enums = require("../../../lib/doc/enums");
-
-function createSheetMock() {
-  return {
-    _keys: {},
-    _cells: {},
-    rows: [],
-    columns: [],
-    getColumn: function(colNumber) {
-      var column = this.columns[colNumber-1];
-      if (!column) {
-        column = this.columns[colNumber-1] = new Column(this, colNumber);
-      }
-      return column;
-    },
-    getRow: function(rowNumber) {
-      var row = this.rows[rowNumber-1];
-      if (!row) {
-        row = this.rows[rowNumber-1] = new Row(this, rowNumber);
-      }
-      return row;
-    },
-    getCell: function(address) {
-      return this._cells[address];
-    }
-  };
-}
+var createSheetMock = require('../../testutils').createSheetMock;
 
 describe("Row", function() {
   it("stores cells", function() {
     var sheet = createSheetMock();
-    sheet._keys.name = new Column(sheet, 1);
+    sheet.addColumn(1, {key: 'name'});
 
     var row1 = sheet.getRow(1);
     expect(row1.number).to.equal(1);
@@ -85,11 +58,9 @@ describe("Row", function() {
 
   it("stores values by whole row", function() {
     var sheet = createSheetMock();
-    sheet._keys = {
-      id: new Column(sheet, 1),
-      name: new Column(sheet, 2),
-      dob: new Column(sheet, 3)
-    };
+    sheet.addColumn(1, {key:'id'});
+    sheet.addColumn(2, {key:'name'});
+    sheet.addColumn(3, {key:'dob'});
 
     var now = new Date();
 
@@ -168,11 +139,28 @@ describe("Row", function() {
       max: 4,
       height: 50,
       hidden: false,
-      style: {}
+      style: {},
+      outlineLevel: 0,
+      collapsed: false
     });
 
     var row2 = sheet.getRow(2);
     expect(row2.model).to.be.null;
+
+    var row3 = sheet.getRow(3);
+    row3.getCell(1).value = 5;
+    row3.outlineLevel = 1;
+    expect(row3.model).to.deep.equal({
+      cells:[{address:"A3",type:Enums.ValueType.Number,value:5,style:{}}],
+      number: 3,
+      min: 1,
+      max: 1,
+      height: undefined,
+      hidden: false,
+      style: {},
+      outlineLevel: 1,
+      collapsed: true
+    })
   });
 
   it("builds from model", function() {
