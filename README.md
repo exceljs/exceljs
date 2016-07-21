@@ -99,7 +99,7 @@ var sheet = workbook.addWorksheet('My Sheet');
 ```
 
 Use the second parameter of the addWorksheet function to create a new sheet with a specific tab color.
-To add a new one with a red tab color use this example: 
+To add a new one with a red tab color use this example:
 
 ```javascript
 var sheet = workbook.addWorksheet('My Sheet', 'FFC0000');
@@ -136,7 +136,7 @@ worksheet.columns = [
 var idCol = worksheet.getColumn('id');
 var nameCol = worksheet.getColumn('B');
 var dobCol = worksheet.getColumn(3);
-    
+
 // set column properties
 
 // Note: will overwrite cell value C1
@@ -152,6 +152,12 @@ dobCol.width = 15;
 
 // Hide the column if you'd like
 dobCol.hidden = true;
+
+// set an outline level for columns
+worksheet.getColumn(4).outlineLevel = 0;
+worksheet.getColumn(5).outlineLevel = 1;
+worksheet.getColumn(6).outlineLevel = 1;
+worksheet.getColumn(7).outlineLevel = 1;
 
 // iterate over all current cells in this column
 dobCol.eachCell(function(cell, rowNumber) {
@@ -202,6 +208,12 @@ row.height = 42.5;
 
 // make row hidden
 row.hidden = true;
+
+// set an outline level for rows
+worksheet.getRow(4).outlineLevel = 0;
+worksheet.getRow(5).outlineLevel = 1;
+worksheet.getRow(6).outlineLevel = 1;
+worksheet.getRow(7).outlineLevel = 1;
 
 row.getCell(1).value = 5; // A5's value set to 5
 row.getCell('name').value = 'Zeb'; // B5's value set to 'Zeb' - assuming column 2 is still keyed by name
@@ -895,7 +907,7 @@ The constructor takes an optional options object with the following fields:
 | useStyles | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
 
 If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object
- that will store the contents of the XLSX workbook in memory. 
+ that will store the contents of the XLSX workbook in memory.
  This StreamBuf object, which can be accessed via the property workbook.stream, can be used to either
  access the bytes directly by stream.read() or to pipe the contents to another stream.
 
@@ -952,9 +964,10 @@ To complete the XLSX document, the workbook must be committed. If any worksheet 
 
 ```javascript
 // Finished the workbook.
-workbook.commit().then(function() {
-  // the stream has been written
-});
+workbook.commit()
+  .then(function() {
+    // the stream has been written
+  });
 ```
 
 # Value Types
@@ -979,7 +992,7 @@ Every effort is made to make a good consistent interface that doesn't break thro
 
 ### Worksheet.eachRow
 
-The arguments in the callback function to Worksheet.eachRow have been swapped and changed; it was function(rowNumber,rowValues), now it is function(row, rowNumber) which gives it a look and feel more like the underscore (_.each) function and prioritises the row object over the row number. 
+The arguments in the callback function to Worksheet.eachRow have been swapped and changed; it was function(rowNumber,rowValues), now it is function(row, rowNumber) which gives it a look and feel more like the underscore (_.each) function and prioritises the row object over the row number.
 
 ### Worksheet.getRow
 
@@ -1028,4 +1041,3 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.7   | <ul><li><a href="#data-validations">Data Validations</a><ul><li>Cells can now define validations that controls the valid values the cell can have</li></ul></li></ul> |
 | 0.2.8   | <ul><li><a href="rich-text">Rich Text Value</a><ul><li>Cells now support <b><i>in-cell</i></b> formatting - Thanks to <a href="https://github.com/pvadam">Peter ADAM</a></li></ul></li><li>Fixed typo in README - Thanks to <a href="https://github.com/MRdNk">MRdNk</a></li><li>Fixing emit in worksheet-reader - Thanks to <a href="https://github.com/alangunning">Alan Gunning</a></li><li>Clearer Docs - Thanks to <a href="https://github.com/miensol">miensol</a></li></ul> |
 | 0.2.9   | <ul><li>Fixed "read property 'richText' of undefined error. Thanks to  <a href="https://github.com/james075">james075</a></li></ul> |
-
