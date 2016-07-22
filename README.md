@@ -362,6 +362,7 @@ expect(worksheet.getCell('A1').names).to.have.members(['thing2']);
 Cells can define what values are valid or not and provide prompting to the user to help guide them.
 
 Validation types can be one of the following:
+
 | Type       | Description |
 | ---------- | ---------- |
 | list       | Define a discrete set of valid values. Excel will offer these in a dropdown for easy entry |
@@ -371,6 +372,7 @@ Validation types can be one of the following:
 | custom     | A custom formula controls the valid values |
 
 For types other than list or custom, the following operators affect the validation:
+
 | Operator              | Description |
 | --------------------  | ---------- |
 | between               | Values must lie between formula results |
@@ -1116,4 +1118,3 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.8   | <ul><li><a href="rich-text">Rich Text Value</a><ul><li>Cells now support <b><i>in-cell</i></b> formatting - Thanks to <a href="https://github.com/pvadam">Peter ADAM</a></li></ul></li><li>Fixed typo in README - Thanks to <a href="https://github.com/MRdNk">MRdNk</a></li><li>Fixing emit in worksheet-reader - Thanks to <a href="https://github.com/alangunning">Alan Gunning</a></li><li>Clearer Docs - Thanks to <a href="https://github.com/miensol">miensol</a></li></ul> |
 | 0.2.9   | <ul><li>Fixed "read property 'richText' of undefined error. Thanks to  <a href="https://github.com/james075">james075</a></li></ul> |
 | 0.2.10  | <ul><li>Refactoring Complete. All unit and integration tests pass.</li></ul> |
-
