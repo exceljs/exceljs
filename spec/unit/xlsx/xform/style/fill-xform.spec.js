@@ -9,7 +9,7 @@ var expectations = [
     create:  function() { return new FillXform()},
     preparedModel: {},
     xml: '',
-    tests: ['render']
+    tests: ['render', 'renderIn']
   },
   {
     title: 'None',
@@ -17,7 +17,7 @@ var expectations = [
     preparedModel: {type: 'pattern', pattern:'none'},
     xml: '<fill><patternFill patternType="none"/></fill>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Gray 125',
@@ -25,7 +25,7 @@ var expectations = [
     preparedModel: {type: 'pattern', pattern:'gray125'},
     xml: '<fill><patternFill patternType="gray125"/></fill>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Red Dark Vertical Pattern',
@@ -33,7 +33,7 @@ var expectations = [
     preparedModel: {type: 'pattern', pattern:'darkVertical', fgColor:{argb:'FFFF0000'}},
     xml: '<fill><patternFill patternType="darkVertical"><fgColor rgb="FFFF0000"/></patternFill></fill>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Red Green Dark Trellis Pattern',
@@ -41,7 +41,7 @@ var expectations = [
     preparedModel: {type: 'pattern', pattern:'darkTrellis', fgColor:{argb:'FFFF0000'}, bgColor:{argb:'FF00FF00'}},
     xml: '<fill><patternFill patternType="darkTrellis"><fgColor rgb="FFFF0000"/><bgColor rgb="FF00FF00"/></patternFill></fill>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Blue White Horizontal Gradient',
@@ -57,7 +57,7 @@ var expectations = [
             '<stop position="1"><color rgb="FFFFFFFF"/></stop>' +
          '</gradientFill></fill>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'RGB Path Gradient',
@@ -75,7 +75,7 @@ var expectations = [
             '<stop position="1"><color rgb="FF0000FF"/></stop>' +
          '</gradientFill></fill>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   }
 ];
 

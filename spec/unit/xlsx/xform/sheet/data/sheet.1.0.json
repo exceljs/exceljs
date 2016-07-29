@@ -1,6 +1,7 @@
 {
   "dimensions": "A1:B6",
   "properties": {"defaultRowHeight": 15, "dyDescent": 0.25},
+  "views": [{"state": "normal", "workbookViewId": 0}],
   "cols": [{"min": 2, "max": 2, "width": 10.15625, "bestFit": true}],
   "rows": [
     {

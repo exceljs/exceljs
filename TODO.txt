@@ -4,9 +4,145 @@ TODO:
 Make sure Merge cell master cells exist (nulls are not stored in xlsx)
 
 Add:
+
+default
+<sheetViews>
+    <sheetView tabSelected="1" workbookViewId="0">
+        <selection activeCell="B6" sqref="B6"/>
+    </sheetView>
+</sheetViews>
+
+split
+<sheetView tabSelected="1" workbookViewId="0">
+    <pane xSplit="9300" ySplit="3690" topLeftCell="D8" activePane="bottomRight"/>
+    <selection pane="topRight" activeCell="D1" sqref="D1"/>
+    <selection pane="bottomLeft" activeCell="A8" sqref="A8"/>
+    <selection pane="bottomRight" activeCell="D8" sqref="D8"/>
+</sheetView>
+
+Frozen
+<sheetViews>
+    <sheetView tabSelected="1" workbookViewId="0">
+        <pane xSplit="4" ySplit="4" topLeftCell="E5" activePane="bottomRight" state="frozen"/>
+    </sheetView>
+</sheetViews>
+
+Two Views (1 frozen, one split)
+<sheetViews>
+    <sheetView tabSelected="1" workbookViewId="0">
+        <pane xSplit="3" ySplit="7" topLeftCell="D8" activePane="bottomRight" state="frozenSplit"/>
+        <selection activeCell="B3" sqref="B3"/>
+        <selection pane="topRight" activeCell="D1" sqref="D1"/>
+        <selection pane="bottomLeft" activeCell="A8" sqref="A8"/>
+        <selection pane="bottomRight"/>
+    </sheetView>
+    <sheetView tabSelected="1" workbookViewId="1">
+        <pane xSplit="9300" ySplit="4176" topLeftCell="D9"/>
+        <selection pane="topRight" activeCell="D1" sqref="D1"/>
+        <selection pane="bottomLeft" activeCell="A9" sqref="A9"/>
+        <selection pane="bottomRight" activeCell="D9" sqref="D9"/>
+    </sheetView>
+</sheetViews>
+
+Page Views (not compatable with frozen):
+<sheetView tabSelected="1" view="pageLayout" topLeftCell="A2" zoomScaleNormal="100" workbookViewId="2">
+    <selection activeCell="A5" sqref="A5"/>
+</sheetView>
+<sheetView tabSelected="1" view="pageLayout" topLeftCell="A2" zoomScaleNormal="100" workbookViewId="1">
+    <pane xSplit="7896" ySplit="4716" topLeftCell="C1"/>
+    <selection activeCell="D4" sqref="D4"/>
+    <selection pane="topRight" activeCell="D5" sqref="D5"/>
+    <selection pane="bottomLeft" activeCell="A4" sqref="A4"/>
+    <selection pane="bottomRight" activeCell="F5" sqref="F5"/>
+</sheetView>
+
+Page Break Preview
+<sheetView tabSelected="1" view="pageBreakPreview" topLeftCell="A2" zoomScale="60" zoomScaleNormal="100" workbookViewId="1">
+    <pane xSplit="3870" ySplit="2592" topLeftCell="C1"/>
+    <selection activeCell="D4" sqref="D4"/>
+    <selection pane="topRight" activeCell="D5" sqref="D5"/>
+    <selection pane="bottomLeft" activeCell="A4" sqref="A4"/>
+    <selection pane="bottomRight" activeCell="F5" sqref="F5"/>
+</sheetView>
+
+Custom Views:
+<customSheetViews>
+    <customSheetView guid="{5568D28F-75F7-4C66-AD6E-E6253CA74F72}">
+        <pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>
+    </customSheetView>
+</customSheetViews>
+
+
+three views, across two sheets
+workbook
+	<bookViews>
+		<workbookView xWindow="0" yWindow="0" windowWidth="23040" windowHeight="8808"/>
+		<workbookView xWindow="0" yWindow="0" windowWidth="20100" windowHeight="8796"/>
+		<workbookView xWindow="0" yWindow="0" windowWidth="16128" windowHeight="3372" activeTab="1"/>
+	</bookViews>
+
+sheet 1
+    <sheetViews>
+        <sheetView tabSelected="1" workbookViewId="0">
+            <pane xSplit="2" ySplit="2" topLeftCell="C3" activePane="bottomRight" state="frozen"/>
+            <selection pane="topRight" activeCell="C1" sqref="C1"/>
+            <selection pane="bottomLeft" activeCell="A3" sqref="A3"/>
+            <selection pane="bottomRight" activeCell="C3" sqref="C3"/>
+        </sheetView>
+        <sheetView tabSelected="1" workbookViewId="1">
+            <pane xSplit="3432" ySplit="1152" topLeftCell="D4" activePane="bottomRight"/>
+            <selection pane="topRight" activeCell="D1" sqref="D1"/>
+            <selection pane="bottomLeft" activeCell="A4" sqref="A4"/>
+            <selection pane="bottomRight" activeCell="D4" sqref="D4"/>
+        </sheetView>
+        <sheetView workbookViewId="2"/>
+    </sheetViews>
+sheet 2
 	<sheetViews>
-		<sheetView tabSelected="1" workbookViewId="0">
-			<selection activeCell="B6" sqref="B6"/>
+		<sheetView workbookViewId="0">
+			<selection activeCell="E5" sqref="E5"/>
+		</sheetView>
+		<sheetView workbookViewId="1"/>
+		<sheetView tabSelected="1" workbookViewId="2">
+			<selection activeCell="A5" sqref="A5"/>
 		</sheetView>
 	</sheetViews>
 
+Options:
+    showRuler: true
+    showRowColHeaders: true
+    showGridlines: true
+    showFormulaBar: true // not saved in xlsx! Appears to be an Excel property!
+    zoomScale="75" zoomScaleNormal="75"
+
+worksheet1.views = [
+    {
+        state: 'frozen',
+        topLeftCell: 'C3',
+        activeCell: 'B1',
+        x: 0, y: 0, width: 23000, height: 9000, // goes in workbook
+        active: true // for which view is in focus. also goes in workbook
+        style: 'pageBreakPreview', // not pageLayout
+        visibility: 'hidden'
+    },
+    {
+        state: 'split',
+        xSplit: 1234,
+        ySplit: 3456,
+        topLeftCell: 'C3',
+        activeCell: 'B1',
+        activePane: 'bottomRight',  // default is tl
+
+        style: 'pageBreakPreview' || 'pageLayout',
+    }
+]
+
+workbook.prepare
+    iterate over sheets
+        assign workbookViewId
+        collate x,y,width,height, activeTab, visibility
+
+workbook.reconcile
+    iterate over sheets
+        iterate over views
+            assign x,y,width,height, active,  visibility

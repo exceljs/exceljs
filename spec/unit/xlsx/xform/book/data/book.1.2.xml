@@ -3,7 +3,7 @@
     <fileVersion appName="xl" lastEdited="5" lowestEdited="5" rupBuild="9303"/>
     <workbookPr filterPrivacy="1" defaultThemeVersion="164011"/>
     <bookViews>
-        <workbookView xWindow="0" yWindow="0" windowWidth="22260" windowHeight="12648"/>
+        <workbookView visibility="hidden" xWindow="0" yWindow="0" windowWidth="12000" windowHeight="24000"/>
     </bookViews>
     <sheets>
         <sheet name="Values" sheetId="1" r:id="rId1"/>

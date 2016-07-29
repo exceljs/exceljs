@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: new Date('2016-07-13T00:00:00Z'),
     xml: '<date val="2016-07-13T00:00:00.000Z"/>',
     parsedModel: new Date('2016-07-13T00:00:00Z'),
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'iso-date',
@@ -22,14 +22,14 @@ var expectations = [
     preparedModel: new Date('2016-07-13T00:00:00Z'),
     xml: '<date val="2016-07-13"/>',
     parsedModel: new Date('2016-07-14T00:00:00Z'),
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'undefined',
     create:  function() { return new DateXform({tag: 'date', attr: 'val'})},
     preparedModel: undefined,
     xml: '',
-    tests: ['render']
+    tests: ['render', 'renderIn']
   }
 ];
 

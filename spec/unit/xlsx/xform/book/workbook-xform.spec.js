@@ -9,10 +9,10 @@ var expectations = [
   {
     title: 'book.1',
     create:  function() { return new WorkbookXform()},
-    preparedModel: require('./data/book.1.json'),
-    xml: fs.readFileSync(__dirname + '/data/book.1.xml').toString().replace(/\r\n/g, '\n'),
-    get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    preparedModel: require('./data/book.1.1.json'),
+    xml: fs.readFileSync(__dirname + '/data/book.1.2.xml').toString().replace(/\r\n/g, '\n'),
+    parsedModel: require('./data/book.1.3.json'),
+    tests: ['render', 'renderIn', 'parse']
   }
 ];
 

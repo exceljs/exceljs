@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: "A1:F5",
     get parsedModel() { return this.preparedModel; },
     xml: '<dimension ref="A1:F5"/>',
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   }
 ];
 

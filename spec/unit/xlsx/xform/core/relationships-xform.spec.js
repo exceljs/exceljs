@@ -12,7 +12,7 @@ var expectations = [
     preparedModel: require('./data/worksheet.rels.1.json'),
     xml: fs.readFileSync(__dirname + '/data/worksheet.rels.xml').toString().replace(/\r\n/g, '\n'),
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   }
 ];
 

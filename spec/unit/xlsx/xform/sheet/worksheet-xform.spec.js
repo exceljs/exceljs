@@ -70,7 +70,7 @@ var expectations = [
     xml: data[0][2],
     parsedModel: data[0][3],
     reconciledModel: data[0][4],
-    tests: ['prepare', 'render', 'parse'],
+    tests: ['prepare', 'render', 'renderIn', 'parse'],
     options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
@@ -79,7 +79,7 @@ var expectations = [
     initialModel: data[1][0],
     preparedModel: data[1][1],
     xml: data[1][2],
-    tests: ['prepare', 'render'],
+    tests: ['prepare', 'render', 'renderIn'],
     options: { styles: new StylesXform(true), sharedStrings: new SharedStringsXform(), hyperlinks: []}
   }
 ];

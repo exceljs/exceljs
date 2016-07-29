@@ -463,4 +463,33 @@ describe('Workbook', function() {
         expect(success).to.equal(2);
       });
   });
+
+  describe('Sheet Views', function() {
+    it('serialises frozen panes', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('frozen');
+      ws.views = [
+        {state: 'frozen',xSplit: 2,ySplit: 3,topLeftCell: 'C4',activeCell: 'D5'}
+      ];
+      ws.getCell('A1').value = 'Let it Snow!';
+
+      return wb.xlsx.writeFile('./wb.test.xlsx')
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile('./wb.test.xlsx');
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('frozen');
+          expect(ws2).to.be.ok;
+          expect(ws2.getCell('A1').value).to.equal('Let it Snow!');
+          expect(ws2.views).to.deep.equal([{
+            state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'C4',
+            activeCell: 'D5', showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+            x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+          }])
+        });
+    });
+  });
+
+
 });

@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: "Hello, World!",
     xml: '<string val="Hello, World!"/>',
     parsedModel: "Hello, World!",
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'empty',
@@ -18,14 +18,14 @@ var expectations = [
     preparedModel: '',
     xml: '<string val=""/>',
     parsedModel: '',
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'undefined',
     create:  function() { return new StringXform({tag: 'string', attr: 'val'})},
     preparedModel: undefined,
     xml: '',
-    tests: ['render']
+    tests: ['render', 'renderIn']
   }
 ];
 

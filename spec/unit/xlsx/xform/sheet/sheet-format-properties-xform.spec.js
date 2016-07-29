@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 5, outlineLevelCol: 2},
     xml: '<sheetFormatPr defaultRowHeight="14.4" outlineLevelRow="5" outlineLevelCol="2" x14ac:dyDescent="0.55"/>',
     parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 5, outlineLevelCol: 2},
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'default',
@@ -18,7 +18,7 @@ var expectations = [
     preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55},
     xml: '<sheetFormatPr defaultRowHeight="14.4" x14ac:dyDescent="0.55"/>',
     parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 0, outlineLevelCol:  0},
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   }
 ];
 

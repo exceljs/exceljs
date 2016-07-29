@@ -12,6 +12,8 @@ var expect  = chai.expect;
 chai.use(chaiXml);
 
 var XmlStream = require('../../../../lib/utils/xml-stream');
+var CompositeXform = require('../../../../lib/xlsx/xform/composite-xform');
+var BooleanXform = require('../../../../lib/xlsx/xform/simple/boolean-xform');
 
 function getExpectation(expectation, name) {
   if (!expectation.hasOwnProperty(name)) {
@@ -40,6 +42,7 @@ function cloneObject(obj) {
   return clone;
 }
 
+// ===============================================================================================================
 // provides boilerplate examples for the four transform steps: prepare, render,  parse and reconcile
 //  prepare: model => preparedModel
 //  render:  preparedModel => xml
@@ -71,6 +74,41 @@ var its = {
         var xmlStream = new XmlStream();
         xform.render(xmlStream, model);
         // console.log(xmlStream.xml);
+        
+        expect(xmlStream.xml).xml.to.equal(result);
+        resolve();
+      });
+    });
+  },
+
+  renderIn: function(expectation) {
+    it('Render in Composite to XML ', function () {
+      return new Bluebird(function (resolve) {
+        var model = {
+          pre: true,
+          child: getExpectation(expectation, 'preparedModel'),
+          post: true
+        };
+        var result =
+          '<compy>' +
+            '<pre/>' +
+            getExpectation(expectation, 'xml') +
+            '<post/>' +
+          '</compy>';
+
+        var xform = new CompositeXform({
+          tag: 'compy',
+          children: [
+            { name: 'pre', xform: new BooleanXform({tag: 'pre', attr: 'val'}) },
+            { name: 'child', xform: expectation.create() },
+            { name: 'post', xform: new BooleanXform({tag: 'post', attr: 'val'}) }
+          ]
+        });
+        
+        var xmlStream = new XmlStream();
+        xform.render(xmlStream, model);
+        // console.log(xmlStream.xml);
+        
         expect(xmlStream.xml).xml.to.equal(result);
         resolve();
       });

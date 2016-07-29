@@ -41,7 +41,7 @@ var expectations = [
     preparedModel: {address: 'A1', type: Enums.ValueType.Number, value: 5},
     parsedModel: {address: 'A1', type: Enums.ValueType.Number, value: 5},
     xml: '<c r="A1"><v>5</v></c>',
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Inline String',
@@ -51,7 +51,7 @@ var expectations = [
     xml: '<c r="A1" t="str"><v>Foo</v></c>',
     parsedModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     reconciledModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
-    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
     options: { hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
@@ -62,7 +62,7 @@ var expectations = [
     xml: '<c r="A1" t="s"><v>0</v></c>',
     parsedModel: {address: 'A1', type: Enums.ValueType.String, value: 0},
     reconciledModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
-    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
     options: { sharedStrings: new SharedStringsXform(), hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
@@ -73,7 +73,7 @@ var expectations = [
     xml: '<c r="A1" s="1"><v>42530</v></c>',
     parsedModel: {address: 'A1', type: Enums.ValueType.Number, value: 42530, styleId: 1},
     reconciledModel: {address: 'A1', type: Enums.ValueType.Date, value: new Date('2016-06-09T00:00:00.000Z'), style: {numFmt: 'mm-dd-yy'}},
-    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
     options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
@@ -84,7 +84,7 @@ var expectations = [
     xml: '<c r="H1" t="s"><v>0</v></c>',
     parsedModel: {address: 'H1',  type: Enums.ValueType.String, value: 0},
     reconciledModel: {address: 'H1', type: Enums.ValueType.Hyperlink, text: 'www.foo.com', hyperlink: 'http://www.foo.com'},
-    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
     options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
@@ -95,7 +95,7 @@ var expectations = [
     xml: '<c r="A1" t="str"><f>A2</f><v>Foo</v></c>',
     parsedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
     reconciledModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
-    tests: ['prepare', 'render', 'parse', 'reconcile'],
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
     options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {
@@ -104,7 +104,7 @@ var expectations = [
     preparedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 7},
     xml: '<c r="A1"><f>A2</f><v>7</v></c>',
     parsedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 7},
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   }
 ];
 

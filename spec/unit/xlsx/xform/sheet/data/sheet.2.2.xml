@@ -2,7 +2,7 @@
 <worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
     <dimension ref="A1:C7"/>
     <sheetViews>
-        <sheetView workbookViewId="0"/>
+        <sheetView workbookViewId="0" tabSelected="1"/>
     </sheetViews>
     <sheetFormatPr defaultRowHeight="14.4" x14ac:dyDescent="0.55" outlineLevelRow="2"/>
     <sheetData>

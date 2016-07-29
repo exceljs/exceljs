@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: 5,
     xml: '<float val="5"/>',
     parsedModel: 5,
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'pi',
@@ -18,7 +18,7 @@ var expectations = [
     preparedModel: 3.14,
     xml: '<float val="3.14"/>',
     parsedModel: 3.14,
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'zero',
@@ -26,14 +26,14 @@ var expectations = [
     preparedModel: 0,
     xml: '<float val="0"/>',
     parsedModel: 0,
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'undefined',
     create:  function() { return new FloatXform({tag: 'float', attr: 'val'})},
     preparedModel: undefined,
     xml: '',
-    tests: ['render']
+    tests: ['render', 'renderIn']
   }
 ];
 

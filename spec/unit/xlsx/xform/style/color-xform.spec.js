@@ -10,7 +10,7 @@ var expectations = [
     preparedModel: {argb:'FF00FF00'},
     xml: '<color rgb="FF00FF00"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Theme',
@@ -18,7 +18,7 @@ var expectations = [
     preparedModel: {theme:1},
     xml: '<color theme="1"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Theme with Tint',
@@ -26,7 +26,7 @@ var expectations = [
     preparedModel: {theme:1, tint: 0.5},
     xml: '<color theme="1" tint="0.5"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Indexed',
@@ -34,14 +34,14 @@ var expectations = [
     preparedModel: {indexed: 1},
     xml: '<color indexed="1"/>',
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Undefined',
     create:  function() { return new ColorXform()},
     preparedModel: undefined,
     xml: '',
-    tests: ['render']
+    tests: ['render', 'renderIn']
   }
 ];
 

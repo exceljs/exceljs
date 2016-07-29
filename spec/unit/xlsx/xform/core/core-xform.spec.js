@@ -12,7 +12,7 @@ var expectations = [
     preparedModel: { creator: 'Guyon Roche', lastModifiedBy: 'Guyon Roche', created: new Date('2016-04-20T16:26:46Z'), modified: new Date('2016-05-12T06:52:49Z')},
     xml: fs.readFileSync(__dirname + '/data/core.xml').toString().replace(/\r\n/g, '\n'),
     get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'parse']
+    tests: ['render', 'renderIn', 'parse']
   }
 ];
 

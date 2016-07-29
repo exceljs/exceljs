@@ -1,4 +1,7 @@
 {
+  "views": [
+    {"visibility": "hidden"}
+  ],
   "sheets": [
     {"name": "Values", "id": 1, "rId": "rId1"}
   ]
