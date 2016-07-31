@@ -11,15 +11,14 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li><a href="#outline-level">Outline Levels</a> thanks to <a href="https://github.com/cricri">cricri</a> for the contribution.</li>
-    <li><a href="#worksheet-properties">Worksheet Properties</a></li>
-    <li>Further refactoring of worksheet writer.</li>
+    <li><a href="#sheet-views">Sheet Views</a> thanks to <a href="https://github.com/cricri">cricri</a> again for the contribution.</li>
 </ul>
 
 # Backlog
 
 <ul>
-    <li>With the refactoring done, the priority for me now is to work through the pull requests and issues to bring them down to a more respectable level.</li>
+    <li>With the refactoring done, the priority for me now is to work through the PRs and issues to bring them down to a more respectable level. 
+        Saying that - I have managed to reduce the number of PRs from 8 a couple of weeks ago to 11 now!</li>
     <li>XLSX Streaming Reader.</li>
     <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
         I would also like to take the time to look at transpilers to support the earlier JSs</li>
@@ -36,6 +35,7 @@ npm install exceljs
             <li><a href="#set-workbook-properties">Set Workbook Properties</a></li>
             <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
             <li><a href="#access-worksheets">Access Worksheets</a></li>
+            <li><a href="#worksheet-properties">Worksheet Properties</a></li>
             <li><a href="#columns">Columns</a></li>
             <li><a href="#rows">Rows</a></li>
             <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
@@ -159,6 +159,63 @@ worksheet.properties.defaultRowHeight = 15;
 | outlineLevelRow  | 0          | The worksheet row outline level |
 | defaultRowHeight | 15         | Default row height |
 | dyDescent        | 55         | TBD |
+
+## Worksheet Views
+
+Worksheets now support a list of views, that control how Excel presents the sheet:
+* frozen - where a number of rows and columns to the top and left are frozen in place. Only the bottom left section will scroll
+* split - where the view is split into 4 sections, each semi-independently scrollable.
+
+Each view also supports various properties:
+
+| Name              | Default   | Description |
+| ----------------- | --------- | ----------- |
+| state             | 'normal'  | Controls the view state - one of normal, frozen or split |
+| activeCell        | undefined | The currently selected cell |
+| showRuler         | true      | Shows or hides the ruler in Page Layout |
+| showRowColHeaders | true      | Shows or hides the row and column headers (e.g. A1, B1 at the top and 1,2,3 on the left |
+| showGridlines     | true      | Shows or hides the gridlines (shown for cells where borders have not been defined) |
+| zoomScale         | 100       | Percentage zoom to use for the view |
+| zoomScaleNormal   | 100       | Normal zoom for the view |
+| style             | undefined | Presentation style - one of pageBreakPreview or pageLayout. Note pageLayout is not compatable with frozen views |
+| x                 | 0         | x position of the view's window |
+| y                 | 0         | y position of the view's window |
+| width             | 12000     | Width of the view's window |
+| height            | 24000     | Height of the view's window |
+| visibility        | 'visible' | Visibility of the view - one of 'visible' or 'hidden' |
+
+### Frozen Views
+
+Frozen views support the following extra properties:
+
+| Name              | Default   | Description |
+| ----------------- | --------- | ----------- |
+| xSplit            | 0         | How many columns to freeze. To freeze rows only, set this to 0 or undefined |
+| ySplit            | 0         | How many rows to freeze. To freeze columns only, set this to 0 or undefined |
+| topLeftCell       | special   | Which cell will be top-left in the bottom-right pane. Note: cannot be a frozen cell. Defaults to first unfrozen cell |
+
+```javascript
+worksheet.views = [
+    {state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'G10', activeCell: 'A1'}
+];
+```
+
+### Split Views
+
+Split views support the following extra properties:
+
+| Name              | Default   | Description |
+| ----------------- | --------- | ----------- |
+| xSplit            | 0         | How many points from the left to place the splitter. To split vertically, set this to 0 or undefined |
+| ySplit            | 0         | How many points from the top to place the splitter. To split horizontally, set this to 0 or undefined  |
+| topLeftCell       | undefined | Which cell will be top-left in the bottom-right pane.  |
+| activePane        | undefined | Which pane will be active - one of topLeft, topRight, bottomLeft and bottomRight |
+
+```javascript
+worksheet.views = [
+    {state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'G10', activeCell: 'A1'}
+];
+```
 
 ## Columns
 
@@ -1130,4 +1187,6 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.8   | <ul><li><a href="rich-text">Rich Text Value</a><ul><li>Cells now support <b><i>in-cell</i></b> formatting - Thanks to <a href="https://github.com/pvadam">Peter ADAM</a></li></ul></li><li>Fixed typo in README - Thanks to <a href="https://github.com/MRdNk">MRdNk</a></li><li>Fixing emit in worksheet-reader - Thanks to <a href="https://github.com/alangunning">Alan Gunning</a></li><li>Clearer Docs - Thanks to <a href="https://github.com/miensol">miensol</a></li></ul> |
 | 0.2.9   | <ul><li>Fixed "read property 'richText' of undefined error. Thanks to  <a href="https://github.com/james075">james075</a></li></ul> |
 | 0.2.10  | <ul><li>Refactoring Complete. All unit and integration tests pass.</li></ul> |
+| 0.2.11  | <ul><li><a href="#outline-level">Outline Levels</a> thanks to <a href="https://github.com/cricri">cricri</a> for the contribution.</li><li><a href="#worksheet-properties">Worksheet Properties</a></li><li>Further refactoring of worksheet writer.</li></ul> |
+
 
