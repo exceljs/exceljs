@@ -11,7 +11,7 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li><a href="#sheet-views">Sheet Views</a> thanks to <a href="https://github.com/cricri">cricri</a> again for the contribution.</li>
+    <li><a href="#worksheet-views">Sheet Views</a> thanks to <a href="https://github.com/cricri">cricri</a> again for the contribution.</li>
 </ul>
 
 # Backlog
@@ -36,6 +36,7 @@ npm install exceljs
             <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
             <li><a href="#access-worksheets">Access Worksheets</a></li>
             <li><a href="#worksheet-properties">Worksheet Properties</a></li>
+            <li><a href="#worksheet-views">Worksheet Views</a></li>
             <li><a href="#columns">Columns</a></li>
             <li><a href="#rows">Rows</a></li>
             <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
