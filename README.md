@@ -108,25 +108,24 @@ workbook.modified = new Date();
 var sheet = workbook.addWorksheet('My Sheet');
 ```
 
-Use the second parameter of the addWorksheet function to create a new sheet with a specific tab color.
-To add a new one with a red tab color use this example:
+Use the second parameter of the addWorksheet function to specify options for the worksheet.
+
+E.g. tab color:
 
 ```javascript
 var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 ```
 
-Use the third parameter of the addWorksheet function to hide the grid lines (default: false).
-To add a new one with a red tab color and with grid lines hidden use this example:
+E.g. Hide grid lines
 
 ```javascript
-var sheet = workbook.addWorksheet('My Sheet', 'FFC0000', true);
+var sheet = workbook.addWorksheet('My Sheet', {properties: {showGridLines: false}});
 ```
 
-Use the fourth parameter of the addWorksheet function to freeze panels.
-To freeze the panels at cell B5, use this example:
+E.g. Freeze rows, columns
 
 ```javascript
-var sheet = workbook.addWorksheet('My Sheet', 'FFC0000', true, {x: 2, y: 5});
+var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
 ```
 
 ## Access Worksheets
