@@ -11,14 +11,21 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li><a href="#worksheet-views">Sheet Views</a> thanks to <a href="https://github.com/cricri">cricri</a> again for the contribution.</li>
+    <li>
+      Fix for <a href="https://github.com/guyonroche/exceljs/issues">exceljs might be vulnerable for regular expression denial of service</a>. 
+      Kudos to <a href="https://github.com/yonjah">yonjah</a> and <a href="https://www.youtube.com/watch?v=wCfE-9bhY2Y">Josh Emerson</a> for the resolution. 
+    </li>
+    <li>
+      Fix for <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a>.
+      My bad - overzealous sheet view code.
+    </li>
+    <li>Also fix for empty sheet generating invalid xlsx.</li>
 </ul>
 
 # Backlog
 
 <ul>
-    <li>With the refactoring done, the priority for me now is to work through the PRs and issues to bring them down to a more respectable level. 
-        Saying that - I have managed to reduce the number of PRs from 8 a couple of weeks ago to 11 now!</li>
+    <li>Currently working on pageSetup and other print settings. Still working my way through PRs and Issues.</li>
     <li>XLSX Streaming Reader.</li>
     <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
         I would also like to take the time to look at transpilers to support the earlier JSs</li>
@@ -1189,5 +1196,6 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.9   | <ul><li>Fixed "read property 'richText' of undefined error. Thanks to  <a href="https://github.com/james075">james075</a></li></ul> |
 | 0.2.10  | <ul><li>Refactoring Complete. All unit and integration tests pass.</li></ul> |
 | 0.2.11  | <ul><li><a href="#outline-level">Outline Levels</a> thanks to <a href="https://github.com/cricri">cricri</a> for the contribution.</li><li><a href="#worksheet-properties">Worksheet Properties</a></li><li>Further refactoring of worksheet writer.</li></ul> |
+| 0.2.12  | <ul><li><a href="#worksheet-views">Sheet Views</a> thanks to <a href="https://github.com/cricri">cricri</a> again for the contribution.</li></ul> |
 
 
