@@ -1,7 +1,17 @@
 {
   "dimensions": "A1:B6",
-  "properties": {"defaultRowHeight": 15, "dyDescent": 0.25},
+  "properties": {
+    "defaultRowHeight": 15, "dyDescent": 0.25,
+    "tabColor": {"argb": "FF00FF00"}
+  },
   "views": [{"state": "normal", "workbookViewId": 0}],
+  "pageSetup": {
+    "margins": {"left": 0.7, "right": 0.7, "top": 0.75, "bottom": 0.75, "header": 0.3, "footer":  0.3 },
+    "firstPageNumber": 5, "useFirstPageNumber": true, "usePrinterDefaults": true, "copies": 3,
+    "paperSize": 9, "orientation":"landscape", "horizontalDpi": 300, "verticalDpi": 300,
+    "fitToPage": true, "fitToHeight": 5, "fitToWidth": 7, "pageOrder": "overThenDown", "scale": 90,
+    "blackAndWhite": true, "cellComments": "atEnd", "draft": true, "errors": "dash"
+  },
   "cols": [{"min": 2, "max": 2, "width": 10.15625, "bestFit": true}],
   "rows": [
     {

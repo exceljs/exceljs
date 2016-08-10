@@ -1,148 +1,203 @@
 
 TODO:
 
-Make sure Merge cell master cells exist (nulls are not stored in xlsx)
+Page Setup
 
-Add:
+Themes:
+  Not supported
 
-default
-<sheetViews>
-    <sheetView tabSelected="1" workbookViewId="0">
-        <selection activeCell="B6" sqref="B6"/>
-    </sheetView>
-</sheetViews>
+Margins
+    Inches?
+	<pageMargins left="0.25" right="0.25" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>
 
-split
-<sheetView tabSelected="1" workbookViewId="0">
-    <pane xSplit="9300" ySplit="3690" topLeftCell="D8" activePane="bottomRight"/>
-    <selection pane="topRight" activeCell="D1" sqref="D1"/>
-    <selection pane="bottomLeft" activeCell="A8" sqref="A8"/>
-    <selection pane="bottomRight" activeCell="D8" sqref="D8"/>
-</sheetView>
+========================================================================================================================
+Page Setup
+    <pageSetup paperSize="9" orientation="portrait" horizontalDpi="4294967295" verticalDpi="4294967295" r:id="rId1"/>
+	<pageSetup paperSize="119" pageOrder="overThenDown" orientation="portrait" blackAndWhite="1"
+	    draft="1" cellComments="atEnd" errors="dash" horizontalDpi="4294967295" verticalDpi="4294967295" r:id="rId1"/>
+	<pageSetup paperSize="119" orientation="portrait" blackAndWhite="1" draft="1" cellComments="asDisplayed"
+	    errors="blank" horizontalDpi="4294967295" verticalDpi="4294967295" r:id="rId1"/>
+	<pageSetup paperSize="119" orientation="portrait" errors="NA" horizontalDpi="4294967295" verticalDpi="4294967295" r:id="rId1"/>
+	<pageSetup paperSize="119" scale="95" fitToWidth="2" fitToHeight="3" orientation="landscape" r:id="rId1"/>
 
-Frozen
-<sheetViews>
-    <sheetView tabSelected="1" workbookViewId="0">
-        <pane xSplit="4" ySplit="4" topLeftCell="E5" activePane="bottomRight" state="frozen"/>
-    </sheetView>
-</sheetViews>
+orientation: portrait, landscape
+pageOrder: overThenDown, downThenOver(*)
+blackAndWhite: true, false(*)
+draft: true, false(*)
+cellComments: atEnd, asDisplayed, (None)(*)
+errors: dash, blank, NA, displayed(*)
+scale: #
+fitToWidth: num pages wide
+fitToHeight: num pages high
+horizontalDpi: 4294967295 (-1?)
+verticalDpi: 4294967295
 
-Two Views (1 frozen, one split)
-<sheetViews>
-    <sheetView tabSelected="1" workbookViewId="0">
-        <pane xSplit="3" ySplit="7" topLeftCell="D8" activePane="bottomRight" state="frozenSplit"/>
-        <selection activeCell="B3" sqref="B3"/>
-        <selection pane="topRight" activeCell="D1" sqref="D1"/>
-        <selection pane="bottomLeft" activeCell="A8" sqref="A8"/>
-        <selection pane="bottomRight"/>
-    </sheetView>
-    <sheetView tabSelected="1" workbookViewId="1">
-        <pane xSplit="9300" ySplit="4176" topLeftCell="D9"/>
-        <selection pane="topRight" activeCell="D1" sqref="D1"/>
-        <selection pane="bottomLeft" activeCell="A9" sqref="A9"/>
-        <selection pane="bottomRight" activeCell="D9" sqref="D9"/>
-    </sheetView>
-</sheetViews>
+How to determine between scale and fit to page(s)
+	<sheetPr>
+		<pageSetUpPr fitToPage="1"/>
+	</sheetPr>
 
-Page Views (not compatable with frozen):
-<sheetView tabSelected="1" view="pageLayout" topLeftCell="A2" zoomScaleNormal="100" workbookViewId="2">
-    <selection activeCell="A5" sqref="A5"/>
-</sheetView>
-<sheetView tabSelected="1" view="pageLayout" topLeftCell="A2" zoomScaleNormal="100" workbookViewId="1">
-    <pane xSplit="7896" ySplit="4716" topLeftCell="C1"/>
-    <selection activeCell="D4" sqref="D4"/>
-    <selection pane="topRight" activeCell="D5" sqref="D5"/>
-    <selection pane="bottomLeft" activeCell="A4" sqref="A4"/>
-    <selection pane="bottomRight" activeCell="F5" sqref="F5"/>
-</sheetView>
-
-Page Break Preview
-<sheetView tabSelected="1" view="pageBreakPreview" topLeftCell="A2" zoomScale="60" zoomScaleNormal="100" workbookViewId="1">
-    <pane xSplit="3870" ySplit="2592" topLeftCell="C1"/>
-    <selection activeCell="D4" sqref="D4"/>
-    <selection pane="topRight" activeCell="D5" sqref="D5"/>
-    <selection pane="bottomLeft" activeCell="A4" sqref="A4"/>
-    <selection pane="bottomRight" activeCell="F5" sqref="F5"/>
-</sheetView>
-
-Custom Views:
-<customSheetViews>
-    <customSheetView guid="{5568D28F-75F7-4C66-AD6E-E6253CA74F72}">
-        <pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>
-    </customSheetView>
-</customSheetViews>
+paperSize:
+    -   : Letter (*)
+    5   : Legal
+    7   : Executive
+    9   : A4
+    11  : A5
+    13  : B5 (JIS)
+    20  : Envelope #10
+    27  : Envelope DL
+    28  : Envelope C5
+    34  : Envelope B5
+    37  : Envelope Monarch
+    82  : Double Japan Postcard Rotated
+    119 : 16K 197x273 mm
 
 
-three views, across two sheets
-workbook
-	<bookViews>
-		<workbookView xWindow="0" yWindow="0" windowWidth="23040" windowHeight="8808"/>
-		<workbookView xWindow="0" yWindow="0" windowWidth="20100" windowHeight="8796"/>
-		<workbookView xWindow="0" yWindow="0" windowWidth="16128" windowHeight="3372" activeTab="1"/>
-	</bookViews>
+========================================================================================================================
+Print Options:
+	<printOptions headings="1" gridLines="1"/>
+    <printOptions horizontalCentered="1" verticalCentered="1"/>
 
-sheet 1
-    <sheetViews>
-        <sheetView tabSelected="1" workbookViewId="0">
-            <pane xSplit="2" ySplit="2" topLeftCell="C3" activePane="bottomRight" state="frozen"/>
-            <selection pane="topRight" activeCell="C1" sqref="C1"/>
-            <selection pane="bottomLeft" activeCell="A3" sqref="A3"/>
-            <selection pane="bottomRight" activeCell="C3" sqref="C3"/>
-        </sheetView>
-        <sheetView tabSelected="1" workbookViewId="1">
-            <pane xSplit="3432" ySplit="1152" topLeftCell="D4" activePane="bottomRight"/>
-            <selection pane="topRight" activeCell="D1" sqref="D1"/>
-            <selection pane="bottomLeft" activeCell="A4" sqref="A4"/>
-            <selection pane="bottomRight" activeCell="D4" sqref="D4"/>
-        </sheetView>
-        <sheetView workbookViewId="2"/>
-    </sheetViews>
-sheet 2
-	<sheetViews>
-		<sheetView workbookViewId="0">
-			<selection activeCell="E5" sqref="E5"/>
-		</sheetView>
-		<sheetView workbookViewId="1"/>
-		<sheetView tabSelected="1" workbookViewId="2">
-			<selection activeCell="A5" sqref="A5"/>
-		</sheetView>
-	</sheetViews>
+headings: true, false(*)
+gridLines: true, false(*)
+horizontalCentered: true, false(*)
+verticalCentered: true, false(*)
 
-Options:
-    showRuler: true
-    showRowColHeaders: true
-    showGridlines: true
-    showFormulaBar: true // not saved in xlsx! Appears to be an Excel property!
-    zoomScale="75" zoomScaleNormal="75"
+========================================================================================================================
+Print Area
+In workbook.xml
+	<definedNames>
+		<definedName name="_xlnm.Print_Area" localSheetId="0">Sheet1!$A$1:$C$11</definedName>
+	</definedNames>
+In app.xml ?
+	<TitlesOfParts>
+		<vt:vector size="2" baseType="lpstr">
+			<vt:lpstr>Sheet1</vt:lpstr>
+			<vt:lpstr>Sheet1!Print_Area</vt:lpstr>
+		</vt:vector>
+	</TitlesOfParts>
 
-worksheet1.views = [
-    {
-        state: 'frozen',
-        topLeftCell: 'C3',
-        activeCell: 'B1',
-        x: 0, y: 0, width: 23000, height: 9000, // goes in workbook
-        active: true // for which view is in focus. also goes in workbook
-        style: 'pageBreakPreview', // not pageLayout
-        visibility: 'hidden'
+Manual Page Breaks
+In sheet.xml
+	<rowBreaks count="2" manualBreakCount="2">
+		<brk id="5" max="16383" man="1"/>  // id="5" means underneath row 5 max & man??? is that a spelling error?
+		<brk id="7" max="16383" man="1"/>
+	</rowBreaks>
+	<colBreaks count="3" manualBreakCount="3">
+		<brk id="3" max="1048575" man="1"/>
+		<brk id="6" max="1048575" man="1"/>
+		<brk id="9" max="1048575" man="1"/>
+	</colBreaks>
+
+Background Image
+In sheet.xml
+    <picture r:id="rId2"/>
+In sheet.xml.rels
+	<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/image2.png"/>
+
+Print Titles (rows and columns repeated on each page)
+In workbook.xml
+		<definedName name="_xlnm.Print_Titles" localSheetId="0">Sheet1!$A:$B,Sheet1!$1:$2</definedName>
+
+
+========================================================================================================================
+Headers and Footers
+	<headerFooter>
+		<oddHeader>Page &amp;P</oddHeader>
+		<oddFooter>Page &amp;P</oddFooter>
+	</headerFooter>
+	<headerFooter>
+		<oddHeader>Page &amp;P of &amp;N</oddHeader>
+		<oddFooter>&amp;A</oddFooter>
+	</headerFooter>
+	<headerFooter differentOddEven="1" differentFirst="1">
+		<oddHeader>&amp;L&amp;B Confidential&amp;B&amp;C&amp;D&amp;RPage &amp;P</oddHeader>
+		<oddFooter>&amp;F</oddFooter>
+	</headerFooter>
+	<headerFooter>
+		<oddHeader>&amp;Z&amp;F</oddHeader>
+		<oddFooter>Prepared by Guyon Roche &amp;D&amp;RPage &amp;P</oddFooter>
+	</headerFooter>
+	<headerFooter differentOddEven="1" differentFirst="1">
+		<oddHeader>&amp;L&amp;"Algerian,Italic"&amp;14&amp;S&amp;U&amp;X&amp;K05+000Formatted&amp;C&amp;Z&amp;F</oddHeader>
+		<oddFooter>Prepared by Guyon Roche &amp;D&amp;RPage &amp;P</oddFooter>
+		<evenHeader>&amp;C&amp;T</evenHeader>
+		<firstHeader>&amp;L&amp;P of &amp;N&amp;C&amp;D &amp;T
+&amp;Z&amp;F
+&amp;F
+&amp;A</firstHeader>
+	</headerFooter>
+	<headerFooter differentOddEven="1" differentFirst="1">
+		<oddHeader>&amp;L&amp;"Algerian,Italic"&amp;14&amp;S&amp;U&amp;X&amp;K05+000Formatted&amp;C&amp;K008000Colour Wheel</oddHeader>
+		<oddFooter>Prepared by Guyon Roche &amp;D&amp;RPage &amp;P</oddFooter>
+		<evenHeader>&amp;C&amp;T</evenHeader>
+		<firstHeader>&amp;L&amp;KAFD680RGB&amp;C&amp;KFF0000Std Colour&amp;R&amp;K09+059Purple Accent 6 60%</firstHeader>
+	</headerFooter>
+oddHeader is default for where there are no differences
+evenHeader & firstHeader used with appropriate options
+
+Codes
+    &P - &[Page]  - Page#
+    &N - &[Pages] - Page Count
+    &A - &[Tab]   - Sheet #
+    &D - &[Date]  - Date
+    &F - &[File]  - Filename
+    &Z - &[Path]  - Path
+    &L - Align Left
+    &C - Align Centre
+    &R - Align Right
+    &B - Bold Toggle
+    &"Font Name"
+    &14 - font size
+    &S - strikethrough
+    &U - underline
+    &X - superscript
+    &K05+000  colour?
+    &KFF0000 RGB, no alpha
+
+&[Page]&[Pages]&[Date]&[Time]&[Path]&[File]&[File]&[Tab]
+&[Picture]
+========================================================================================================================
+
+sheet.pageSetup = {
+    // in sheet
+    margins: {
+        left: 0.25, right: 0.25, top: 0.75, bottom: 0.75, header: 0.3, footer: 0.3
     },
-    {
-        state: 'split',
-        xSplit: 1234,
-        ySplit: 3456,
-        topLeftCell: 'C3',
-        activeCell: 'B1',
-        activePane: 'bottomRight',  // default is tl
+    orientation: ['portrait(*)', 'landscape'],
+    pageOrder: ['overThenDown', 'downThenOver(*)'],
+    blackAndWhite: [true,  false(*)],
+    draft: [true,  false(*)],
+    cellComments: ['atEnd', 'asDisplayed', 'None(*)'',
+    errors: ['dash', 'blank', 'NA', 'displayed(*)''],
+    scale: 90(*),
+    fitToWidth: 2,
+    fitToHeight: 3,
+    paperSize: 9,
+    showRowColHeaders: [true, false(*)],
+    showGridLines: [true, false(*)],
+    horizontalCentered: [true, false(*)],
+    verticalCentered: [true, false(*)],
 
-        style: 'pageBreakPreview' || 'pageLayout',
+    rowBreaks: [5,7],
+    colBreaks: [3,6,9],
+
+    // phase 2
+    header: {
+        odd: {
+            left: '',
+            center: '&[Page] of &[Pages]',
+            right: '',
+            raw: '&C&P of &N' // raw supercedes the others
+        },
+        even: {},  first: {}
+    },
+    footer: {}, // as per header
+
+    // defined names - phase 3
+    printArea: 'A1:D11',
+    printTitles: {
+        rows: '1:2' || '$1:$2' || 1 || '$1',
+        columns: 'B:C' || '$B:$C' | 'A' || '$A'
     }
-]
-
-workbook.prepare
-    iterate over sheets
-        assign workbookViewId
-        collate x,y,width,height, activeTab, visibility
-
-workbook.reconcile
-    iterate over sheets
-        iterate over views
-            assign x,y,width,height, active,  visibility
+}

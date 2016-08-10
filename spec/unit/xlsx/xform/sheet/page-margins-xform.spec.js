@@ -1,27 +1,19 @@
 'use strict';
 
-var SheetFormatPropertiesXform = require('../../../../../lib/xlsx/xform/sheet/sheet-format-properties-xform');
+var PageMarginsXform = require('../../../../../lib/xlsx/xform/sheet/page-margins-xform');
 var testXformHelper = require('./../test-xform-helper');
 
 var expectations = [
   {
-    title: 'full',
-    create: function() { return new SheetFormatPropertiesXform(); },
-    preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 5, outlineLevelCol: 2},
-    xml: '<sheetFormatPr defaultRowHeight="14.4" outlineLevelRow="5" outlineLevelCol="2" x14ac:dyDescent="0.55"/>',
-    parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 5, outlineLevelCol: 2},
-    tests: ['render', 'renderIn', 'parse']
-  },
-  {
-    title: 'default',
-    create: function() { return new SheetFormatPropertiesXform(); },
-    preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55},
-    xml: '<sheetFormatPr defaultRowHeight="14.4" x14ac:dyDescent="0.55"/>',
-    parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 0, outlineLevelCol:  0},
+    title: 'normal',
+    create: function() { return new PageMarginsXform(); },
+    preparedModel: {left: 0.7, right: 0.7, top: 0.75, bottom: 0.75, header: 0.3, footer:  0.3 },
+    xml: '<pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>',
+    parsedModel: {left: 0.7, right: 0.7, top: 0.75, bottom: 0.75, header: 0.3, footer:  0.3 },
     tests: ['render', 'renderIn', 'parse']
   }
 ];
 
-describe('SheetFormatPropertiesXform', function() {
+describe('PageMarginsXform', function() {
   testXformHelper(expectations);
 });

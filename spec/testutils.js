@@ -135,6 +135,19 @@ var utils = module.exports = {
     }
   },
 
+  properties: {
+    outlineLevelCol: 1,
+    outlineLevelRow: 1,
+    tabColor: {argb: 'FF00FF00'}
+  },
+  pageSetup: {
+    margins: {left: 0.7, right: 0.7, top: 0.75, bottom: 0.75, header: 0.3, footer:  0.3 },
+    firstPageNumber: 5, useFirstPageNumber: true, usePrinterDefaults: true, copies: 3,
+    paperSize: 9, orientation:'landscape', horizontalDpi: 300, verticalDpi: 300,
+    fitToPage: true, fitToHeight: 5, fitToWidth: 7, pageOrder: 'overThenDown', scale: 90,
+    blackAndWhite: true, cellComments: 'atEnd', draft: true, errors: 'dash'
+  },
+
   dataValidations: {
     B1: {
       type: 'list',
@@ -285,11 +298,8 @@ var utils = module.exports = {
   createTestBook: function(checkBadAlignments, WorkbookClass, options) {
     var wb = new WorkbookClass(options);
     var ws = wb.addWorksheet('blort', {
-      properties: {
-        outlineLevelCol: 1,
-        outlineLevelRow: 1,
-        tabColor: {argb: 'FF00FF00'}
-      }
+      properties: utils.properties,
+      pageSetup:  utils.pageSetup
     });
 
     ws.getCell('J10').value = 1;
@@ -427,6 +437,8 @@ var utils = module.exports = {
       expect(ws.properties.outlineLevelCol).to.equal(1);
       expect(ws.properties.outlineLevelRow).to.equal(1);
       expect(ws.properties.tabColor).to.deep.equal({argb:'FF00FF00'});
+      expect(ws.properties).to.deep.equal(utils.properties);
+      expect(ws.pageSetup).to.deep.equal(utils.pageSetup);
     }
     
     expect(ws.getCell('A1').value).to.equal(7);

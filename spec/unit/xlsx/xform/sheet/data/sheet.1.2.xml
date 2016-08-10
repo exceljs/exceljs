@@ -5,6 +5,10 @@
         <sheetView workbookViewId="0" tabSelected="1"/>
     </sheetViews>
     <sheetFormatPr defaultRowHeight="15" x14ac:dyDescent="0.25"/>
+    <sheetPr>
+        <tabColor rgb="FF00FF00"/>
+        <pageSetUpPr fitToPage="1"/>
+    </sheetPr>
     <cols>
         <col min="2" max="2" width="10.15625" bestFit="1" customWidth="1"/>
     </cols>
@@ -56,4 +60,7 @@
         <hyperlink ref="B6" r:id="rId1"/>
     </hyperlinks>
     <pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>
+    <pageSetup paperSize="9" pageOrder="overThenDown" orientation="landscape" horizontalDpi="300" verticalDpi="300"
+               firstPageNumber="5" useFirstPageNumber="1" usePrinterDefaults="1" copies="3"
+               fitToHeight="5" fitToWidth="7" scale="90" blackAndWhite="1" draft="1" cellComments="atEnd" errors="dash"/>
 </worksheet>

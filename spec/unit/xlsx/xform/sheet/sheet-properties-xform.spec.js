@@ -1,27 +1,43 @@
 'use strict';
 
-var SheetFormatPropertiesXform = require('../../../../../lib/xlsx/xform/sheet/sheet-format-properties-xform');
+var SheetPropertiesXform = require('../../../../../lib/xlsx/xform/sheet/sheet-properties-xform');
 var testXformHelper = require('./../test-xform-helper');
 
 var expectations = [
   {
-    title: 'full',
-    create: function() { return new SheetFormatPropertiesXform(); },
-    preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 5, outlineLevelCol: 2},
-    xml: '<sheetFormatPr defaultRowHeight="14.4" outlineLevelRow="5" outlineLevelCol="2" x14ac:dyDescent="0.55"/>',
-    parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 5, outlineLevelCol: 2},
+    title: 'empty',
+    create: function() { return new SheetPropertiesXform(); },
+    preparedModel: {},
+    xml: '',
+    parsedModel: {},
+    tests: ['render', 'renderIn']
+  },
+  {
+    title: 'tabColor',
+    create: function() { return new SheetPropertiesXform(); },
+    preparedModel: {tabColor: { argb:'FFFF0000'}},
+    xml: '<sheetPr><tabColor rgb="FFFF0000"/></sheetPr>',
+    parsedModel: {tabColor: { argb:'FFFF0000'}},
     tests: ['render', 'renderIn', 'parse']
   },
   {
-    title: 'default',
-    create: function() { return new SheetFormatPropertiesXform(); },
-    preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55},
-    xml: '<sheetFormatPr defaultRowHeight="14.4" x14ac:dyDescent="0.55"/>',
-    parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 0, outlineLevelCol:  0},
+    title: 'pageSetup',
+    create: function() { return new SheetPropertiesXform(); },
+    preparedModel: {pageSetup: {fitToPage: true}},
+    xml: '<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>',
+    parsedModel: {pageSetup: {fitToPage: true}},
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
+    title: 'tabColor + pageSetup',
+    create: function() { return new SheetPropertiesXform(); },
+    preparedModel: {tabColor: { argb:'FFFF0000'}, pageSetup: {fitToPage: true}},
+    xml: '<sheetPr><tabColor rgb="FFFF0000"/><pageSetUpPr fitToPage="1"/></sheetPr>',
+    parsedModel: {tabColor: { argb:'FFFF0000'}, pageSetup: {fitToPage: true}},
     tests: ['render', 'renderIn', 'parse']
   }
 ];
 
-describe('SheetFormatPropertiesXform', function() {
+describe('SheetPropertiesXform', function() {
   testXformHelper(expectations);
 });

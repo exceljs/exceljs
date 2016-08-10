@@ -130,7 +130,9 @@ var its = {
             
             // eliminate the undefined
             var clone = cloneObject(model);
-            
+
+            // console.log('result', JSON.stringify(clone));
+            // console.log('expect', JSON.stringify(result));
             expect(clone).to.deep.equal(result);
             resolve();
           })
