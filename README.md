@@ -16,8 +16,8 @@ npm install exceljs
       Kudos to <a href="https://github.com/yonjah">yonjah</a> and <a href="https://www.youtube.com/watch?v=wCfE-9bhY2Y">Josh Emerson</a> for the resolution. 
     </li>
     <li>
-      Fix for <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a>.
-      My bad - overzealous sheet view code.
+      Fixed <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a> again.
+      Added <a href="#workbook-views">Workbook views</a>.
     </li>
     <li>Also fix for empty sheet generating invalid xlsx.</li>
 </ul>
@@ -40,6 +40,7 @@ npm install exceljs
         <ul>
             <li><a href="#create-a-workbook">Create a Workbook</a></li>
             <li><a href="#set-workbook-properties">Set Workbook Properties</a></li>
+            <li><a href="#workbook-views">Workbook Views</a></li>
             <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
             <li><a href="#access-worksheets">Access Worksheets</a></li>
             <li><a href="#worksheet-properties">Worksheet Properties</a></li>
@@ -100,6 +101,17 @@ workbook.creator = 'Me';
 workbook.lastModifiedBy = 'Her';
 workbook.created = new Date(1985, 8, 30);
 workbook.modified = new Date();
+```
+
+## Workbook Views
+
+```javascript
+workbook.views = [
+  {
+    x: 0, y: 0, width: 10000, height: 20000, 
+    firstSheet: 0, activeTab: 1, visibility: 'visible'
+  }
+]
 ```
 
 ## Add a Worksheet
@@ -185,11 +197,6 @@ Each view also supports various properties:
 | zoomScale         | 100       | Percentage zoom to use for the view |
 | zoomScaleNormal   | 100       | Normal zoom for the view |
 | style             | undefined | Presentation style - one of pageBreakPreview or pageLayout. Note pageLayout is not compatable with frozen views |
-| x                 | 0         | x position of the view's window |
-| y                 | 0         | y position of the view's window |
-| width             | 12000     | Width of the view's window |
-| height            | 24000     | Height of the view's window |
-| visibility        | 'visible' | Visibility of the view - one of 'visible' or 'hidden' |
 
 ### Frozen Views
 
@@ -1196,5 +1203,4 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.10  | <ul><li>Refactoring Complete. All unit and integration tests pass.</li></ul> |
 | 0.2.11  | <ul><li><a href="#outline-level">Outline Levels</a> thanks to <a href="https://github.com/cricri">cricri</a> for the contribution.</li><li><a href="#worksheet-properties">Worksheet Properties</a></li><li>Further refactoring of worksheet writer.</li></ul> |
 | 0.2.12  | <ul><li><a href="#worksheet-views">Sheet Views</a> thanks to <a href="https://github.com/cricri">cricri</a> again for the contribution.</li></ul> |
-
-
+| 0.2.13  | <ul><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues">exceljs might be vulnerable for regular expression denial of service</a>. Kudos to <a href="https://github.com/yonjah">yonjah</a> and <a href="https://www.youtube.com/watch?v=wCfE-9bhY2Y">Josh Emerson</a> for the resolution.</li><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a>. My bad - overzealous sheet view code.</li><li>Also fix for empty sheet generating invalid xlsx.</li></ul>

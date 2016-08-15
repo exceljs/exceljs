@@ -40,9 +40,11 @@ describe('Workbook', function() {
       var wb = new Excel.Workbook();
       var ws1 = wb.addWorksheet('Hello, World!');
       expect(ws1.name).to.equal('Hello, World!');
+      ws1.getCell('A1').value = 'Hello, World!';
 
       var ws2 = wb.addWorksheet();
       expect(ws2.name).to.match(/sheet\d+/);
+      ws2.getCell('A1').value = ws2.name;
 
       wb.addWorksheet('This & That');
 
@@ -486,19 +488,16 @@ describe('Workbook', function() {
           expect(ws2.getCell('A1').value).to.equal('Let it Snow!');
           expect(ws2.views).to.deep.equal([
             {
-              state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'C4',
-              activeCell: 'D5', showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              workbookViewId: 0, state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'C4',
+              activeCell: 'D5', showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
             },
             {
-              state: 'frozen', xSplit: 0, ySplit: 1, topLeftCell: 'A2',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              workbookViewId: 0, state: 'frozen', xSplit: 0, ySplit: 1, topLeftCell: 'A2',
+              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
             },
             {
-              state: 'frozen', xSplit: 1, ySplit: 0, topLeftCell: 'B1',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              workbookViewId: 0, state: 'frozen', xSplit: 1, ySplit: 0, topLeftCell: 'B1',
+              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
             }
           ])
         });
@@ -524,21 +523,81 @@ describe('Workbook', function() {
           expect(ws2.getCell('A1').value).to.equal('Do the splits!');
           expect(ws2.views).to.deep.equal([
             {
-              state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'C4', activeCell: 'D5', activePane: 'bottomRight',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              workbookViewId: 0, state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'C4', activeCell: 'D5', activePane: 'bottomRight',
+              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
             },
             {
-              state: 'split', xSplit: 0, ySplit: 1500, topLeftCell: 'A10', activePane: 'bottomLeft',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              workbookViewId: 0, state: 'split', xSplit: 0, ySplit: 1500, topLeftCell: 'A10', activePane: 'bottomLeft',
+              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
             },
             {
-              state: 'split', xSplit: 1500, ySplit: 0, topLeftCell: undefined, activePane: 'topRight',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              workbookViewId: 0, state: 'split', xSplit: 1500, ySplit: 0, topLeftCell: undefined, activePane: 'topRight',
+              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
             }
           ])
+        });
+    });
+    it('multiple book views', function() {
+      var wb = new Excel.Workbook();
+      wb.views = [
+        {
+          x: 0, y: 0, width: 10000, height: 20000,
+          firstSheet: 0, activeTab: 1, visibility: 'visible'
+        },
+        {
+          x: 1, y: 2, width: 10001, height: 20002,
+          firstSheet: 1, activeTab: 1, visibility: 'hidden'
+        }
+      ];
+
+      var ws1 = wb.addWorksheet('one');
+      ws1.views = [
+        {
+          workbookViewId: 0,
+          state: 'frozen',
+          xSplit: 2,
+          ySplit: 3,
+          topLeftCell: 'C4',
+          activeCell: 'D5',
+          showRuler: true,
+          showGridlines: true,
+          showRowColHeaders: true,
+          zoomScale: 100,
+          zoomScaleNormal: 100
+        }
+      ];
+
+      var ws2 = wb.addWorksheet('two');
+      ws2.views = [
+        {
+          workbookViewId: 1,
+          state: 'split',
+          xSplit: 2000,
+          ySplit: 3000,
+          topLeftCell: 'C4',
+          activeCell: 'D5',
+          activePane: 'bottomRight',
+          showRuler: true,
+          showGridlines: true,
+          showRowColHeaders: true,
+          zoomScale: 100,
+          zoomScaleNormal: 100
+        }
+      ];
+
+      return wb.xlsx.writeFile('./wb.test.xlsx')
+        .then(function () {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile('./wb.test.xlsx');
+        })
+        .then(function (wb2) {
+          expect(wb2.views).to.deep.equal(wb.views);
+
+          var ws1b = wb2.getWorksheet('one');
+          expect(ws1b.views).to.deep.equal(ws1.views);
+
+          var ws2b = wb2.getWorksheet('two');
+          expect(ws2b.views).to.deep.equal(ws2.views);
         });
     });
   });
