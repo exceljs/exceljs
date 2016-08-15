@@ -136,6 +136,8 @@ var utils = module.exports = {
   },
 
   properties: {
+    defaultRowHeight: 16,
+    dyDescent: 56,
     outlineLevelCol: 1,
     outlineLevelRow: 1,
     tabColor: {argb: 'FF00FF00'}

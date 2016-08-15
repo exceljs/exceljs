@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -18,7 +18,7 @@
     "defined names", "data validations", "rich text", "in-cell format", "outlineLevel", "views", "frozen", "split"
   ],
   "dependencies": {
-    "archiver": "0.14.3",
+    "archiver": "0.15.0",
     "bluebird": "*",
     "fast-csv": "0.5.7",
     "moment": "2.11.2",

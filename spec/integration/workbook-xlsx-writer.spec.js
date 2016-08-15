@@ -23,10 +23,10 @@ describe('WorkbookWriter', function() {
   describe('Serialise', function() {
     after(function() {
       // delete the working file, don't care about errors
-      return fsa.unlinkAsync('./wbw.test.xlsx').catch(function(){});
+      // return fsa.unlinkAsync('./wbw.test.xlsx').catch(function(){});
     });
 
-    it('xlsx file', function() {
+    it.only('xlsx file', function() {
       var options = {
         filename: './wbw.test.xlsx',
         useStyles: true

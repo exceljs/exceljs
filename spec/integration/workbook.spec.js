@@ -36,7 +36,7 @@ describe('Workbook', function() {
       ]);
     });
 
-    it('creates sheets and saves with correct names', function() {
+    it('sheets with correct names', function() {
       var wb = new Excel.Workbook();
       var ws1 = wb.addWorksheet('Hello, World!');
       expect(ws1.name).to.equal('Hello, World!');
@@ -57,7 +57,7 @@ describe('Workbook', function() {
         });
     });
 
-    it('serialises and deserialises creator, lastModifiedBy, etc', function() {
+    it('creator, lastModifiedBy, etc', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('Hello');
       ws.getCell('A1').value = 'World!';
@@ -78,7 +78,7 @@ describe('Workbook', function() {
         });
     });
 
-    it('serializes and deserializes to xlsx file properly', function() {
+    it('xlsx file', function() {
 
       var wb = testUtils.createTestBook(true, Excel.Workbook);
 
@@ -92,7 +92,7 @@ describe('Workbook', function() {
         });
     });
 
-    it('serializes and deserializes dataValidations', function() {
+    it('dataValidations', function() {
       var wb = new Excel.Workbook();
       testUtils.addDataValidationSheet(wb);
 
@@ -106,7 +106,7 @@ describe('Workbook', function() {
         });
     });
 
-    it("Adds an empty string", function() {
+    it("empty string", function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet();
 
@@ -120,7 +120,7 @@ describe('Workbook', function() {
       return wb.xlsx.writeFile('./wb.test.xlsx');
     });
 
-    it('serializes row styles and columns properly', function() {
+    it('row styles and columns properly', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('blort');
 
@@ -164,7 +164,7 @@ describe('Workbook', function() {
         });
     });
 
-    it('serializes and deserializes a lot of sheets to xlsx file properly', function() {
+    it('a lot of sheets to xlsx file', function() {
       this.timeout(10000);
 
       var i;
@@ -189,7 +189,7 @@ describe('Workbook', function() {
         });
     });
 
-    it('deserializes in-cell formats properly in xlsx file', function() {
+    it('in-cell formats properly in xlsx file', function() {
 
       // Stream from input string
       var testData = new Buffer(richTextSample, 'base64');
@@ -210,7 +210,7 @@ describe('Workbook', function() {
           });
     });
 
-    it('serializes and deserialises to csv file properly', function() {
+    it('to csv file', function() {
       this.timeout(5000);
 
       var wb = testUtils.createTestBook(true, Excel.Workbook);
@@ -229,7 +229,7 @@ describe('Workbook', function() {
         });
     });
 
-    it('serialises and deserialises defined names', function() {
+    it('defined names', function() {
       var wb1 = new Excel.Workbook();
       var ws1a = wb1.addWorksheet('blort');
       var ws1b = wb1.addWorksheet('foo');
@@ -371,7 +371,7 @@ describe('Workbook', function() {
           });
       });
 
-      it('serialises and deserialises styles', function() {
+      it('styles', function() {
         var wb = new Excel.Workbook();
         var ws = wb.addWorksheet('blort');
 
@@ -421,15 +421,86 @@ describe('Workbook', function() {
           });
       });
     });
-  });
 
-  it.skip('serialises and deserialises by model', function() {
-    var wb = testUtils.createTestBook(false, Excel.Workbook);
+    describe('Sheet Views', function() {
+      it('frozen panes', function() {
+        var wb = new Excel.Workbook();
+        var ws = wb.addWorksheet('frozen');
+        ws.views = [
+          {state: 'frozen',xSplit: 2,ySplit: 3,topLeftCell: 'C4',activeCell: 'D5'},
+          {state: 'frozen',ySplit: 1},
+          {state: 'frozen',xSplit: 1}
+        ];
+        ws.getCell('A1').value = 'Let it Snow!';
 
-    return testUtils.cloneByModel(wb, Excel.Workbook)
-      .then(function(wb2) {
-        testUtils.checkTestBook(wb2, 'model');
+        return wb.xlsx.writeFile('./wb.test.xlsx')
+          .then(function() {
+            var wb2 = new Excel.Workbook();
+            return wb2.xlsx.readFile('./wb.test.xlsx');
+          })
+          .then(function(wb2) {
+            var ws2 = wb2.getWorksheet('frozen');
+            expect(ws2).to.be.ok;
+            expect(ws2.getCell('A1').value).to.equal('Let it Snow!');
+            expect(ws2.views).to.deep.equal([
+              {
+                state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'C4',
+                activeCell: 'D5', showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+                x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              },
+              {
+                state: 'frozen', xSplit: 0, ySplit: 1, topLeftCell: 'A2',
+                showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+                x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              },
+              {
+                state: 'frozen', xSplit: 1, ySplit: 0, topLeftCell: 'B1',
+                showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+                x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              }
+            ])
+          });
       });
+      it('split panes', function() {
+        var wb = new Excel.Workbook();
+        var ws = wb.addWorksheet('split');
+        ws.views = [
+          {state: 'split',xSplit: 2000,ySplit: 3000,topLeftCell: 'C4',activeCell: 'D5', activePane: 'bottomRight'},
+          {state: 'split',ySplit: 1500, activePane: 'bottomLeft', topLeftCell: 'A10'},
+          {state: 'split',xSplit: 1500, activePane: 'topRight'}
+        ];
+        ws.getCell('A1').value = 'Do the splits!';
+
+        return wb.xlsx.writeFile('./wb.test.xlsx')
+          .then(function() {
+            var wb2 = new Excel.Workbook();
+            return wb2.xlsx.readFile('./wb.test.xlsx');
+          })
+          .then(function(wb2) {
+            var ws2 = wb2.getWorksheet('split');
+            expect(ws2).to.be.ok;
+            expect(ws2.getCell('A1').value).to.equal('Do the splits!');
+            expect(ws2.views).to.deep.equal([
+              {
+                state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'C4', activeCell: 'D5', activePane: 'bottomRight',
+                showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+                x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              },
+              {
+                state: 'split', xSplit: 0, ySplit: 1500, topLeftCell: 'A10', activePane: 'bottomLeft',
+                showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+                x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              },
+              {
+                state: 'split', xSplit: 1500, ySplit: 0, topLeftCell: undefined, activePane: 'topRight',
+                showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+                x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
+              }
+            ])
+          });
+      });
+    });
+
   });
 
   it('throws an error when xlsx file not found', function() {
@@ -464,82 +535,4 @@ describe('Workbook', function() {
       });
   });
 
-  describe('Sheet Views', function() {
-    it('serialises frozen panes', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('frozen');
-      ws.views = [
-        {state: 'frozen',xSplit: 2,ySplit: 3,topLeftCell: 'C4',activeCell: 'D5'},
-        {state: 'frozen',ySplit: 1},
-        {state: 'frozen',xSplit: 1}
-      ];
-      ws.getCell('A1').value = 'Let it Snow!';
-
-      return wb.xlsx.writeFile('./wb.test.xlsx')
-        .then(function() {
-          var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
-        })
-        .then(function(wb2) {
-          var ws2 = wb2.getWorksheet('frozen');
-          expect(ws2).to.be.ok;
-          expect(ws2.getCell('A1').value).to.equal('Let it Snow!');
-          expect(ws2.views).to.deep.equal([
-            {
-              state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'C4',
-              activeCell: 'D5', showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
-            },
-            {
-              state: 'frozen', xSplit: 0, ySplit: 1, topLeftCell: 'A2',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
-            },
-            {
-              state: 'frozen', xSplit: 1, ySplit: 0, topLeftCell: 'B1',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
-            }
-          ])
-        });
-    });
-    it('serialises split panes', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('split');
-      ws.views = [
-        {state: 'split',xSplit: 2000,ySplit: 3000,topLeftCell: 'C4',activeCell: 'D5', activePane: 'bottomRight'},
-        {state: 'split',ySplit: 1500, activePane: 'bottomLeft', topLeftCell: 'A10'},
-        {state: 'split',xSplit: 1500, activePane: 'topRight'}
-      ];
-      ws.getCell('A1').value = 'Do the splits!';
-
-      return wb.xlsx.writeFile('./wb.test.xlsx')
-        .then(function() {
-          var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
-        })
-        .then(function(wb2) {
-          var ws2 = wb2.getWorksheet('split');
-          expect(ws2).to.be.ok;
-          expect(ws2.getCell('A1').value).to.equal('Do the splits!');
-          expect(ws2.views).to.deep.equal([
-            {
-              state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'C4', activeCell: 'D5', activePane: 'bottomRight',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
-            },
-            {
-              state: 'split', xSplit: 0, ySplit: 1500, topLeftCell: 'A10', activePane: 'bottomLeft',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
-            },
-            {
-              state: 'split', xSplit: 1500, ySplit: 0, topLeftCell: undefined, activePane: 'topRight',
-              showRuler: true, showGridlines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
-              x: 0, y: 0, width: 12000, height: 24000, active: false, visibility: 'visible'
-            }
-          ])
-        });
-    });
-  });
 });
