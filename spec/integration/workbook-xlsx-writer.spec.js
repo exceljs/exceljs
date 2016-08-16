@@ -26,7 +26,7 @@ describe('WorkbookWriter', function() {
       // return fsa.unlinkAsync('./wbw.test.xlsx').catch(function(){});
     });
 
-    it.only('xlsx file', function() {
+    it('xlsx file', function() {
       var options = {
         filename: './wbw.test.xlsx',
         useStyles: true

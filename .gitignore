@@ -9,6 +9,7 @@ pids
 
 # Test Output Folder
 out/*
+spec/out/*
 
 # Tmp folder
 tmp/*
