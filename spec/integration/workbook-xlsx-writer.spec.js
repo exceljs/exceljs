@@ -9,6 +9,8 @@ var Excel = require('../../excel');
 var testUtils = require('./../testutils');
 var utils = require('../../lib/utils/utils');
 
+var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
+
 describe('WorkbookWriter', function() {
 
   it('creates sheets with correct names', function() {
@@ -21,14 +23,9 @@ describe('WorkbookWriter', function() {
   });
 
   describe('Serialise', function() {
-    after(function() {
-      // delete the working file, don't care about errors
-      // return fsa.unlinkAsync('./wbw.test.xlsx').catch(function(){});
-    });
-
     it('xlsx file', function() {
       var options = {
-        filename: './wbw.test.xlsx',
+        filename: TEST_FILE_NAME,
         useStyles: true
       };
       var wb = testUtils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
@@ -37,7 +34,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wbw.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           testUtils.checkTestBook(wb2, 'xlsx', true);
@@ -46,7 +43,7 @@ describe('WorkbookWriter', function() {
 
     it('Without styles', function() {
       var options = {
-        filename: './wbw.test.xlsx',
+        filename: TEST_FILE_NAME,
         useStyles: false
       };
       var wb = testUtils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
@@ -55,7 +52,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wbw.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           testUtils.checkTestBook(wb2, 'xlsx', false);
@@ -64,7 +61,7 @@ describe('WorkbookWriter', function() {
 
     it('serializes row styles and columns properly', function() {
       var options = {
-        filename: './wbw.test.xlsx',
+        filename: TEST_FILE_NAME,
         useStyles: true
       };
       var wb = new Excel.stream.xlsx.WorkbookWriter(options);
@@ -92,7 +89,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wbw.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('blort');
@@ -118,7 +115,7 @@ describe('WorkbookWriter', function() {
       this.timeout(5000);
 
       var i;
-      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: './wbw.test.xlsx'});
+      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME});
       var numSheets = 90;
       // add numSheets sheets
       for (i = 1; i <= numSheets; i++) {
@@ -128,7 +125,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wbw.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           for (i = 1; i <= numSheets; i++) {
@@ -140,7 +137,7 @@ describe('WorkbookWriter', function() {
     });
 
     it('defined names', function() {
-      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: './wbw.test.xlsx'});
+      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME});
       var ws = wb.addWorksheet('blort');
       ws.getCell('A1').value = 5;
       ws.getCell('A1').name = 'five';
@@ -162,7 +159,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wbw.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('blort');
@@ -179,13 +176,13 @@ describe('WorkbookWriter', function() {
     });
 
     it('serializes and deserializes dataValidations', function() {
-      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: './wbw.test.xlsx'});
+      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME});
       testUtils.addDataValidationSheet(wb);
 
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wbw.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           testUtils.checkDataValidationSheet(wb2);

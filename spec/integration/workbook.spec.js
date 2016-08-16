@@ -6,11 +6,11 @@ chai.use(require('chai-datetime'));
 
 var stream = require('stream');
 var bluebird = require('bluebird');
-var fs = require('fs');
-var fsa = bluebird.promisifyAll(fs);
 var _ = require('underscore');
 var Excel = require('../../excel');
 var testUtils = require('./../testutils');
+
+var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 
 // =============================================================================
 // Sample Data
@@ -24,18 +24,6 @@ describe('Workbook', function() {
 
   describe('Serialise', function() {
 
-    after(function() {
-      function deleteFile(filename) {
-        return fsa.unlinkAsync(filename)
-          .catch(function() { });
-      }
-
-      return bluebird.all([
-        deleteFile('./wb.test.xlsx'),
-        deleteFile('./wb.test.csv')
-      ]);
-    });
-
     it('sheets with correct names', function() {
       var wb = new Excel.Workbook();
       var ws1 = wb.addWorksheet('Hello, World!');
@@ -48,10 +36,10 @@ describe('Workbook', function() {
 
       wb.addWorksheet('This & That');
 
-      return wb.xlsx.writeFile('./wb.test.xlsx')
+      return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           expect(wb2.getWorksheet('Hello, World!')).to.be.ok;
@@ -67,10 +55,10 @@ describe('Workbook', function() {
       wb.lastModifiedBy = 'Bar';
       wb.created = new Date(2016,0,1);
       wb.modified = new Date(2016,4,19);
-      return wb.xlsx.writeFile('./wb.test.xlsx')
+      return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           expect(wb2.creator).to.equal(wb.creator);
@@ -84,10 +72,10 @@ describe('Workbook', function() {
 
       var wb = testUtils.createTestBook(true, Excel.Workbook);
 
-      return wb.xlsx.writeFile('./wb.test.xlsx')
+      return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           testUtils.checkTestBook(wb2, 'xlsx', true);
@@ -98,10 +86,10 @@ describe('Workbook', function() {
       var wb = new Excel.Workbook();
       testUtils.addDataValidationSheet(wb);
 
-      return wb.xlsx.writeFile('./wb.test.xlsx')
+      return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           testUtils.checkDataValidationSheet(wb2);
@@ -119,7 +107,7 @@ describe('Workbook', function() {
 
       ws.addRow({id: 1, name: ''});
 
-      return wb.xlsx.writeFile('./wb.test.xlsx');
+      return wb.xlsx.writeFile(TEST_FILE_NAME);
     });
 
     it('row styles and columns properly', function() {
@@ -141,10 +129,10 @@ describe('Workbook', function() {
       ws.getCell('B3').value = 'B3';
       ws.getCell('C3').value = 'C3';
 
-      return wb.xlsx.writeFile('./wb.test.xlsx')
+      return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('blort');
@@ -177,10 +165,10 @@ describe('Workbook', function() {
         var ws = wb.addWorksheet('sheet' + i);
         ws.getCell('A1').value = i;
       }
-      return wb.xlsx.writeFile('./wb.test.xlsx')
+      return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           for (i = 1; i <= numSheets; i++) {
@@ -277,10 +265,10 @@ describe('Workbook', function() {
       assign(ws1a, 'G2', 1, ['once', 'twice']);
       ws1a.getCell('G2').removeName('once');
 
-      return wb1.xlsx.writeFile('./wb.test.xlsx')
+      return wb1.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2a = wb2.getWorksheet('blort');
@@ -353,10 +341,10 @@ describe('Workbook', function() {
 
         ws.mergeCells('B2:C3');
 
-        return wb.xlsx.writeFile('./wb.test.xlsx')
+        return wb.xlsx.writeFile(TEST_FILE_NAME)
           .then(function() {
             var wb2 = new Excel.Workbook();
-            return wb2.xlsx.readFile('./wb.test.xlsx');
+            return wb2.xlsx.readFile(TEST_FILE_NAME);
           })
           .then(function(wb2) {
             var ws2 = wb2.getWorksheet('blort');
@@ -389,10 +377,10 @@ describe('Workbook', function() {
         // expecting styles to be copied (see worksheet spec)
         ws.mergeCells('B2:C3');
 
-        return wb.xlsx.writeFile('./wb.test.xlsx')
+        return wb.xlsx.writeFile(TEST_FILE_NAME)
           .then(function() {
             var wb2 = new Excel.Workbook();
-            return wb2.xlsx.readFile('./wb.test.xlsx');
+            return wb2.xlsx.readFile(TEST_FILE_NAME);
           })
           .then(function(wb2) {
             var ws2 = wb2.getWorksheet('blort');
@@ -468,10 +456,10 @@ describe('Workbook', function() {
         ];
         ws.getCell('A1').value = 'Let it Snow!';
 
-      return wb.xlsx.writeFile('./wb.test.xlsx')
+      return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('frozen');
@@ -503,10 +491,10 @@ describe('Workbook', function() {
       ];
       ws.getCell('A1').value = 'Do the splits!';
 
-      return wb.xlsx.writeFile('./wb.test.xlsx')
+      return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('split');
@@ -576,10 +564,10 @@ describe('Workbook', function() {
         }
       ];
 
-      return wb.xlsx.writeFile('./wb.test.xlsx')
+      return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function () {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile('./wb.test.xlsx');
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function (wb2) {
           expect(wb2.views).to.deep.equal(wb.views);

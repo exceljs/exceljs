@@ -1,16 +1,13 @@
 'use strict';
 
-var stream = require('stream');
 var chai = require('chai');
 var expect = chai.expect;
 
 chai.use(require('chai-datetime'));
 
-// var _ = require('underscore');
 var moment = require('moment');
 
 var Excel = require('../../excel');
-// var testUtils = require('./../testutils');
 
 // =============================================================================
 // This spec is based around a gold standard Excel workbook 'gold.xlsx'
