@@ -299,6 +299,11 @@ var utils = module.exports = {
 
   createTestBook: function(checkBadAlignments, WorkbookClass, options) {
     var wb = new WorkbookClass(options);
+
+    wb.views = [
+      {x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0}
+    ];
+
     var ws = wb.addWorksheet('blort', {
       properties: utils.properties,
       pageSetup:  utils.pageSetup
@@ -394,7 +399,7 @@ var utils = module.exports = {
 
   checkTestBook: function(wb, docType, useStyles) {
     var sheetName;
-    var checkFormulas, checkMerges, checkStyles, checkBadAlignments, checkSheetProperties;
+    var checkFormulas, checkMerges, checkStyles, checkBadAlignments, checkSheetProperties, checkViews;
     var dateAccuracy;
     switch(docType) {
       case 'xlsx':
@@ -405,6 +410,7 @@ var utils = module.exports = {
         checkBadAlignments = useStyles;
         checkSheetProperties = true;
         dateAccuracy = 3;
+        checkViews = true;
         break;
       case 'model':
         sheetName = 'blort';
@@ -414,6 +420,7 @@ var utils = module.exports = {
         checkSheetProperties = true;
         checkBadAlignments = false;
         dateAccuracy = 3;
+        checkViews = true;
         break;
       case 'csv':
         sheetName = 'sheet1';
@@ -423,11 +430,16 @@ var utils = module.exports = {
         checkBadAlignments = false;
         checkSheetProperties = false;
         dateAccuracy = 1000;
+        checkViews = false;
         break;
     }
 
     expect(wb).to.not.be.undefined;
 
+    if (checkViews) {
+      expect(wb.views).to.deep.equal([{x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0, visibility: 'visible'}]);
+    }
+    
     var ws = wb.getWorksheet(sheetName);
     expect(ws).to.not.be.undefined;
 
