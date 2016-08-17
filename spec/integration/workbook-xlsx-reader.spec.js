@@ -1,7 +1,7 @@
 'use strict';
 
 var Excel = require('../../excel');
-var testutils = require('./../testutils');
+var testutils = require('./../utils/index');
 
 var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 

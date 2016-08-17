@@ -4,297 +4,22 @@ var expect = require('chai').expect;
 
 var Bluebird = require('bluebird');
 var _ = require('underscore');
-var MemoryStream = require('memorystream');
-var Row = require('../lib/doc/row');
-var Column = require('../lib/doc/column');
-var Excel = require('../excel');
+var Row = require('../../lib/doc/row');
+var Column = require('../../lib/doc/column');
+var Excel = require('../../excel');
+var tools = require('./tools');
 
+var dataValidations = require('./test-data-validation-sheet');
 
 var utils = module.exports = {
-  concatenateFormula: function() {
-    var args = Array.prototype.slice.call(arguments);
-    var values = args.map(function(value) {
-      return '"' + value + '"';
-    });
-    return {
-      formula: 'CONCATENATE(' + values.join(',') + ')'
-    };
-  },
-  cloneByModel: function(thing1, Type) {
-    var model = thing1.model;
-    //console.log(JSON.stringify(model, null, '    '))
-    var thing2 = new Type();
-    thing2.model = model;
-    return Bluebird.resolve(thing2);
-  },
-  cloneByStream: function(thing1, Type, end) {
-    var deferred = Bluebird.defer();
-    end = end || 'end';
-
-    var thing2 = new Type();
-    var stream = thing2.createInputStream();
-    stream.on(end, function() {
-      deferred.resolve(thing2);
-    });
-    stream.on('error', function(error) {
-      deferred.reject(error);
-    });
-
-    var memStream = new MemoryStream();
-    memStream.on('error', function(error) {
-      deferred.reject(error);
-    });
-    memStream.pipe(stream);
-    thing1.write(memStream)
-      .then(function() {
-        memStream.end();
-      });
-
-    return deferred.promise;
-  },
-  testValues: {
-    num: 7,
-    str: 'Hello, World!',
-    str2: '<a href="www.whatever.com">Talk to the H&</a>',
-    date: new Date(),
-    formulas: [
-      {formula: 'A1', result: 7},
-      {formula: 'A2', result: undefined}
-    ],
-    hyperlink: {hyperlink: 'http://www.link.com', text: 'www.link.com'},
-    numFmt1: '# ?/?',
-    numFmt2: '[Green]#,##0 ;[Red](#,##0)',
-    numFmtDate: 'dd, mmm yyyy'
-  },
-  styles: {
-    numFmts: {
-      numFmt1: '# ?/?',
-      numFmt2: '[Green]#,##0 ;[Red](#,##0)'
-    },
-    fonts: {
-      arialBlackUI14: { name: 'Arial Black', family: 2, size: 14, underline: true, italic: true },
-      comicSansUdB16: { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true },
-      broadwayRedOutline20: { name: 'Broadway', family: 5, size: 20, outline: true, color: { argb:'FFFF0000'}}
-    },
-    alignments: [
-      { text: 'Top Left', alignment: { horizontal: 'left', vertical: 'top' } },
-      { text: 'Middle Centre', alignment: { horizontal: 'center', vertical: 'middle' } },
-      { text: 'Bottom Right', alignment: { horizontal: 'right', vertical: 'bottom' } },
-      { text: 'Wrap Text', alignment: { wrapText: true } },
-      { text: 'Indent 1', alignment: { indent: 1 } },
-      { text: 'Indent 2', alignment: { indent: 2 } },
-      { text: 'Rotate 15', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 15 } },
-      { text: 'Rotate 30', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 30 } },
-      { text: 'Rotate 45', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 45 } },
-      { text: 'Rotate 60', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 60 } },
-      { text: 'Rotate 75', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 75 } },
-      { text: 'Rotate 90', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 90 } },
-      { text: 'Rotate -15', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -55 } },
-      { text: 'Rotate -30', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -30 } },
-      { text: 'Rotate -45', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -45 } },
-      { text: 'Rotate -60', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -60 } },
-      { text: 'Rotate -75', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -75 } },
-      { text: 'Rotate -90', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -90 } },
-      { text: 'Vertical Text', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 'vertical' } }
-    ],
-    namedAlignments: {
-      topLeft: { horizontal: 'left', vertical: 'top' },
-      middleCentre: { horizontal: 'center', vertical: 'middle' },
-      bottomRight: { horizontal: 'right', vertical: 'bottom' }
-    },
-    badAlignments: [
-      { text: 'Rotate -91', alignment: { textRotation: -91 } },
-      { text: 'Rotate 91', alignment: { textRotation: 91 } },
-      { text: 'Indent -1', alignment: { indent: -1 } },
-      { text: 'Blank', alignment: {  } }
-    ],
-    borders: {
-      thin: { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'}},
-      doubleRed: { top: {style:'double', color: {argb:'FFFF0000'}}, left: {style:'double', color: {argb:'FFFF0000'}}, bottom: {style:'double', color: {argb:'FFFF0000'}}, right: {style:'double', color: {argb:'FFFF0000'}}},
-      thickRainbow: {
-        top: {style:'double', color: {argb:'FFFF00FF'}},
-        left: {style:'double', color: {argb:'FF00FFFF'}},
-        bottom: {style:'double', color: {argb:'FF00FF00'}},
-        right: {style:'double', color: {argb:'FF00FF'}},
-        diagonal: {style:'double', color: {argb:'FFFFFF00'}, up: true, down: true}
-      }
-    },
-    fills: {
-      redDarkVertical: {type: 'pattern', pattern:'darkVertical', fgColor:{argb:'FFFF0000'}},
-      redGreenDarkTrellis: {type: 'pattern', pattern:'darkTrellis',
-        fgColor:{argb:'FFFF0000'}, bgColor:{argb:'FF00FF00'}},
-      blueWhiteHGrad: {type: 'gradient', gradient: 'angle', degree: 0,
-        stops: [{position:0, color:{argb:'FF0000FF'}},{position:1, color:{argb:'FFFFFFFF'}}]},
-      rgbPathGrad: {type: 'gradient', gradient: 'path', center:{left:0.5,top:0.5},
-        stops: [
-          {position:0, color:{argb:'FFFF0000'}},
-          {position:0.5, color:{argb:'FF00FF00'}},
-          {position:1, color:{argb:'FF0000FF'}}
-        ]
-      }
-    }
-  },
-
-  properties: {
-    defaultRowHeight: 16,
-    dyDescent: 56,
-    outlineLevelCol: 1,
-    outlineLevelRow: 1,
-    tabColor: {argb: 'FF00FF00'}
-  },
-  pageSetup: {
-    margins: {left: 0.7, right: 0.7, top: 0.75, bottom: 0.75, header: 0.3, footer:  0.3 },
-    firstPageNumber: 5, useFirstPageNumber: true, usePrinterDefaults: true, copies: 3,
-    paperSize: 9, orientation:'landscape', horizontalDpi: 300, verticalDpi: 300,
-    fitToPage: true, fitToHeight: 5, fitToWidth: 7, pageOrder: 'overThenDown', scale: 90,
-    blackAndWhite: true, cellComments: 'atEnd', draft: true, errors: 'dash'
-  },
+  testValues: tools.fix(require('./test-values.json')),
+  styles: tools.fix(require('./test-styles.json')),
+  properties: tools.fix(require('./sheet-properties.json')),
+  pageSetup: tools.fix(require('./page-setup.json')),
 
   dataValidations: {
-    B1: {
-      type: 'list',
-      allowBlank: true,
-      formulae: ['Nephews']
-    },
-
-    B3: {
-      type: 'list',
-      allowBlank: true,
-      showInputMessage: true,
-      showErrorMessage: true,
-      formulae: ['"One,Two,Three,Four"']
-    },
-
-    B5: {
-      type: 'list',
-      allowBlank: true,
-      showInputMessage: true,
-      showErrorMessage: true,
-      formulae: ['$D$5:$F$5']
-    },
-
-    B13: {
-      type: 'whole',
-      operator: 'equal',
-      allowBlank: true,
-      showInputMessage: true,
-      showErrorMessage: true,
-      formulae: [5],
-      promptTitle: 'Five',
-      prompt: 'The value must be Five'
-    },
-
-    E13: {
-      type: 'whole',
-      operator: 'notEqual',
-      allowBlank: true,
-      showInputMessage: true,
-      showErrorMessage: true,
-      formulae: [5],
-      errorStyle: 'error',
-      errorTitle: 'Five',
-      error: 'The value must not be Five'
-    },
-
-    B15: {
-      type: 'whole',
-      operator: 'notEqual',
-      formulae: [5]
-    },
-
-    types: ['whole', 'decimal', 'date', 'textLength'],
-    values: {
-      whole: { v1: 1, v2: 10 },
-      decimal: { v1: 1.5, v2: 10.2 },
-      date: { v1: new Date(2015, 0, 1), v2: new Date(2016, 0, 1) },
-      textLength: { v1: 5, v2: 15 }
-    },
-    operators: ['between', 'notBetween', 'equal', 'notEqual', 'greaterThan', 'lessThan', 'greaterThanOrEqual', 'lessThanOrEqual'],
-    create: function(type, operator) {
-      var dataValidation = {
-        type: type,
-        operator: operator,
-        allowBlank: true,
-        showInputMessage: true,
-        showErrorMessage: true,
-        formulae: [this.values[type].v1]
-      };
-      switch(operator) {
-        case 'between':
-        case 'notBetween':
-          dataValidation.formulae.push(this.values[type].v2);
-          break;
-      }
-      return dataValidation;
-    }
-  },
-
-  addDataValidationSheet: function(wb) {
-    var ws = wb.addWorksheet('data-validations');
-
-    // named list
-    ws.getCell('D1').value = 'Hewie';
-    ws.getCell('D1').name = 'Nephews';
-    ws.getCell('E1').value = 'Dewie';
-    ws.getCell('E1').name = 'Nephews';
-    ws.getCell('F1').value = 'Louie';
-    ws.getCell('F1').name = 'Nephews';
-    ws.getCell('A1').value = utils.concatenateFormula('Named List');
-    ws.getCell('B1').dataValidation = this.dataValidations.B1;
-
-    ws.getCell('A3').value = utils.concatenateFormula('Literal List');
-    ws.getCell('B3').dataValidation = this.dataValidations.B3;
-
-    ws.getCell('D5').value = 'Tom';
-    ws.getCell('E5').value = 'Dick';
-    ws.getCell('F5').value = 'Harry';
-    ws.getCell('A5').value = utils.concatenateFormula('Range List');
-    ws.getCell('B5').dataValidation = this.dataValidations.B5;
-
-    _.each(utils.dataValidations.operators, function(operator, cIndex) {
-      var col = 3 + cIndex;
-      ws.getCell(7, col).value = utils.concatenateFormula(operator);
-    });
-    _.each(utils.dataValidations.types, function(type, rIndex) {
-      var row = 8 + rIndex;
-      ws.getCell(row, 1).value = utils.concatenateFormula(type);
-      _.each(utils.dataValidations.operators, function(operator, cIndex) {
-        var col = 3 + cIndex;
-        ws.getCell(row, col).dataValidation = utils.dataValidations.create(type, operator);
-      });
-    });
-
-    ws.getCell('A13').value = utils.concatenateFormula('Prompt');
-    ws.getCell('B13').dataValidation = this.dataValidations.B13;
-
-    ws.getCell('D13').value = utils.concatenateFormula('Error');
-    ws.getCell('E13').dataValidation = this.dataValidations.E13;
-
-    ws.getCell('A15').value = utils.concatenateFormula('Terse');
-    ws.getCell('B15').dataValidation = this.dataValidations.B15;
-
-  },
-  
-  checkDataValidationSheet: function(wb) {
-    var ws = wb.getWorksheet('data-validations');
-    expect(ws).to.not.be.undefined;
-
-    expect(ws.getCell('B1').dataValidation).to.deep.equal(this.dataValidations.B1);
-    expect(ws.getCell('B3').dataValidation).to.deep.equal(this.dataValidations.B3);
-    expect(ws.getCell('B5').dataValidation).to.deep.equal(this.dataValidations.B5);
-
-    _.each(utils.dataValidations.types, function(type, rIndex) {
-      var row = 8 + rIndex;
-      ws.getCell(row, 1).value = utils.concatenateFormula(type);
-      _.each(utils.dataValidations.operators, function(operator, cIndex) {
-        var col = 3 + cIndex;
-        expect(ws.getCell(row, col).dataValidation).to.deep.equal(utils.dataValidations.create(type, operator));
-      });
-    });
-
-    expect(ws.getCell('B13').dataValidation).to.deep.equal(this.dataValidations.B13);
-    expect(ws.getCell('E13').dataValidation).to.deep.equal(this.dataValidations.E13);
-    expect(ws.getCell('B15').dataValidation).to.deep.equal(this.dataValidations.B15);
+    addSheet: dataValidations.addDataValidationSheet,
+    checkSheet: dataValidations.checkDataValidationSheet
   },
 
   createTestBook: function(checkBadAlignments, WorkbookClass, options) {
@@ -465,7 +190,8 @@ var utils = module.exports = {
     if (checkFormulas) {
       expect(ws.getCell('D1').value).to.deep.equal(utils.testValues.formulas[0]);
       expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Formula);
-      expect(ws.getCell('E1').value).to.deep.equal(utils.testValues.formulas[1]);
+      expect(ws.getCell('E1').value.formula).to.equal(utils.testValues.formulas[1].formula);
+      expect(ws.getCell('E1').value.value).to.be.undefined;
       expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Formula);
       expect(ws.getCell('F1').value).to.deep.equal(utils.testValues.hyperlink);
       expect(ws.getCell('F1').type).to.equal(Excel.ValueType.Hyperlink);
@@ -726,12 +452,6 @@ var utils = module.exports = {
     return deferred.promise;
   },
   
-  toISODateString: function(dt) {
-    var iso = dt.toISOString();
-    var parts = iso.split('T');
-    return parts[0];
-  },
-
   createSheetMock: function() {
     return {
       _keys: {},

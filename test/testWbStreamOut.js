@@ -1,5 +1,5 @@
 var Excel = require('../excel');
-var utils = require('../spec/testutils');
+var utils = require('../spec/utils/index');
 
 var filename = process.argv[2];
 var styles = {
@@ -16,7 +16,7 @@ var style = {
 ws.columns = [
     { header: "A1", width: 10 },
     { header: "B1", width: 20, style: style },
-    { header: "C1", width: 30 },
+    { header: "C1", width: 30 }
 ];
 
 ws.getRow(2).font = utils.styles.fonts.broadwayRedOutline20;
@@ -30,7 +30,7 @@ ws.getCell("C3").value = "C3";
 
 wb.commit()
     .then(function() {
-        console.log("Done")
+        console.log("Done");
         //var wb2 = new Excel.Workbook();
         //return wb2.xlsx.readFile("./wb.test2.xlsx");
-    })
+    });

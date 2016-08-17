@@ -8,7 +8,7 @@ var stream = require('stream');
 var bluebird = require('bluebird');
 var _ = require('underscore');
 var Excel = require('../../excel');
-var testUtils = require('./../testutils');
+var testUtils = require('./../utils/index');
 
 var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 
@@ -84,7 +84,7 @@ describe('Workbook', function() {
 
     it('dataValidations', function() {
       var wb = new Excel.Workbook();
-      testUtils.addDataValidationSheet(wb);
+      testUtils.dataValidations.addSheet(wb);
 
       return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
@@ -92,7 +92,7 @@ describe('Workbook', function() {
           return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
-          testUtils.checkDataValidationSheet(wb2);
+          testUtils.dataValidations.checkSheet(wb2);
         });
     });
 

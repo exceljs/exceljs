@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
 var Column = require("../../../lib/doc/column");
-var createSheetMock = require('../../testutils').createSheetMock;
+var createSheetMock = require('../../utils/index').createSheetMock;
 
 describe("Column", function() {
   it("creates by defn", function() {

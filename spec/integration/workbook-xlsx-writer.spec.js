@@ -2,11 +2,9 @@
 
 var expect = require('chai').expect;
 var bluebird = require('bluebird');
-var fs = require('fs');
-var fsa = bluebird.promisifyAll(fs);
 var _ = require('underscore');
 var Excel = require('../../excel');
-var testUtils = require('./../testutils');
+var testUtils = require('./../utils/index');
 var utils = require('../../lib/utils/utils');
 
 var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
@@ -177,7 +175,7 @@ describe('WorkbookWriter', function() {
 
     it('serializes and deserializes dataValidations', function() {
       var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME});
-      testUtils.addDataValidationSheet(wb);
+      testUtils.dataValidations.addSheet(wb);
 
       return wb.commit()
         .then(function() {
@@ -185,7 +183,7 @@ describe('WorkbookWriter', function() {
           return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
-          testUtils.checkDataValidationSheet(wb2);
+          testUtils.dataValidations.checkSheet(wb2);
         });
     });
 

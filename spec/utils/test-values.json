@@ -1,0 +1,14 @@
+{
+  "num": 7,
+  "str": "Hello, World!",
+  "str2": "<a href=\"www.whatever.com\">Talk to the H&</a>",
+  "date": "2016-08-16T16:23:59.720Z",
+  "formulas": [
+    {"formula": "A1", "result": 7},
+    {"formula": "A2"}
+  ],
+  "hyperlink": {"hyperlink": "http://www.link.com", "text": "www.link.com"},
+  "numFmt1": "# ?/?",
+  "numFmt2": "[Green]#,##0 ;[Red](#,##0)",
+  "numFmtDate": "dd, mmm yyyy"
+}

@@ -2,7 +2,7 @@
 
 var Bluebird = require('bluebird');
 var Excel = require('../../excel');
-var testutils = require('../testutils');
+var testutils = require('../utils/index');
 
 var express = require('express');
 var request = require('request');

@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 var Enums = require("../../../lib/doc/enums");
-var createSheetMock = require('../../testutils').createSheetMock;
+var createSheetMock = require('../../utils/index').createSheetMock;
 
 describe("Row", function() {
   it("stores cells", function() {

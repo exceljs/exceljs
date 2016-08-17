@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var _ = require("underscore");
 var Excel = require("../../../excel");
 var Dimensions = require("../../../lib/doc/range");
-var testUtils = require("../../testutils");
+var testUtils = require("../../utils/index");
 
 describe("Worksheet", function() {
   describe("Values", function() {

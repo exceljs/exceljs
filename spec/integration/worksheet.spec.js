@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var _ = require('underscore');
 var Excel = require('../../excel');
 var Range = require('../../lib/doc/range');
-var testutils = require('./../testutils');
+var testutils = require('./../utils/index');
 
 describe('Worksheet', function() {
   describe('Values', function() {

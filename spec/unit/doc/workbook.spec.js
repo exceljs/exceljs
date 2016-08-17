@@ -3,7 +3,7 @@
 var expect = require('chai').expect;
 
 var Excel = require('../../../excel');
-var testUtils = require('../../testutils');
+var testUtils = require('../../utils/index');
 
 var simpleWorkbookModel = require('./../data/simpleWorkbook.json');
 
