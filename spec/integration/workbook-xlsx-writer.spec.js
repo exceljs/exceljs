@@ -26,8 +26,7 @@ describe('WorkbookWriter', function() {
         filename: TEST_FILE_NAME,
         useStyles: true
       };
-      var wb = testUtils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
-      //fs.writeFileSync('./testmodel.json', JSON.stringify(wb.model, null, '    '));
+      var wb = testUtils.createTestBook(new Excel.stream.xlsx.WorkbookWriter(options), 'xlsx');
 
       return wb.commit()
         .then(function() {
@@ -35,7 +34,7 @@ describe('WorkbookWriter', function() {
           return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
-          testUtils.checkTestBook(wb2, 'xlsx', true);
+          testUtils.checkTestBook(wb2, 'xlsx');
         });
     });
 
@@ -44,8 +43,7 @@ describe('WorkbookWriter', function() {
         filename: TEST_FILE_NAME,
         useStyles: false
       };
-      var wb = testUtils.createTestBook(true, Excel.stream.xlsx.WorkbookWriter, options);
-      //fs.writeFileSync('./testmodel.json', JSON.stringify(wb.model, null, '    '));
+      var wb = testUtils.createTestBook(new Excel.stream.xlsx.WorkbookWriter(options), 'xlsx');
 
       return wb.commit()
         .then(function() {
@@ -53,7 +51,7 @@ describe('WorkbookWriter', function() {
           return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
-          testUtils.checkTestBook(wb2, 'xlsx', false);
+          testUtils.checkTestBook(wb2, 'xlsx', undefined, {checkStyles: false});
         });
     });
 
@@ -174,8 +172,8 @@ describe('WorkbookWriter', function() {
     });
 
     it('serializes and deserializes dataValidations', function() {
-      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME});
-      testUtils.dataValidations.addSheet(wb);
+      var options = {filename: TEST_FILE_NAME};
+      var wb = testUtils.createTestBook(new Excel.stream.xlsx.WorkbookWriter(options),'xlsx', ['dataValidations']);
 
       return wb.commit()
         .then(function() {
@@ -183,10 +181,8 @@ describe('WorkbookWriter', function() {
           return wb2.xlsx.readFile(TEST_FILE_NAME);
         })
         .then(function(wb2) {
-          testUtils.dataValidations.checkSheet(wb2);
+          testUtils.checkTestBook(wb2, 'xlsx', ['dataValidations']);
         });
     });
-
-
   });
 });

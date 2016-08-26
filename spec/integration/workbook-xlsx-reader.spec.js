@@ -10,7 +10,7 @@ var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 describe.skip('WorkbookReader', function() {
   describe('Serialise', function() {
     it('xlsx file', function() {
-      var wb = testutils.createTestBook(true, Excel.Workbook);
+      var wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
 
       return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {

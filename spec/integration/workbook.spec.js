@@ -71,7 +71,7 @@ describe('Workbook', function() {
 
     it('xlsx file', function() {
 
-      var wb = testUtils.createTestBook(true, Excel.Workbook);
+      var wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');
 
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
@@ -79,13 +79,12 @@ describe('Workbook', function() {
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
-          testUtils.checkTestBook(wb2, 'xlsx', true);
+          testUtils.checkTestBook(wb2, 'xlsx');
         });
     });
 
     it('dataValidations', function() {
-      var wb = new Excel.Workbook();
-      testUtils.dataValidations.addSheet(wb);
+      var wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx', ['dataValidations']);
 
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
@@ -93,7 +92,7 @@ describe('Workbook', function() {
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
-          testUtils.dataValidations.checkSheet(wb2);
+          testUtils.checkTestBook(wb2, 'xlsx', ['dataValidations']);
         });
     });
 
@@ -201,11 +200,10 @@ describe('Workbook', function() {
           });
     });
 
-    it('to csv file', function() {
+    it('csv file', function() {
       this.timeout(5000);
 
-      var wb = testUtils.createTestBook(true, Excel.Workbook);
-      //fs.writeFileSync('./testmodel.json', JSON.stringify(wb.model, null, '    '));
+      var wb = testUtils.createTestBook(new Excel.Workbook(), 'csv');
 
       return wb.csv.writeFile(TEST_CSV_FILE_NAME)
         .then(function() {
@@ -520,50 +518,15 @@ describe('Workbook', function() {
     it('multiple book views', function() {
       var wb = new Excel.Workbook();
       wb.views = [
-        {
-          x: 0, y: 0, width: 10000, height: 20000,
-          firstSheet: 0, activeTab: 1, visibility: 'visible'
-        },
-        {
-          x: 1, y: 2, width: 10001, height: 20002,
-          firstSheet: 1, activeTab: 1, visibility: 'hidden'
-        }
+        testUtils.views.book.visible,
+        testUtils.views.book.hidden
       ];
 
       var ws1 = wb.addWorksheet('one');
-      ws1.views = [
-        {
-          workbookViewId: 0,
-          state: 'frozen',
-          xSplit: 2,
-          ySplit: 3,
-          topLeftCell: 'C4',
-          activeCell: 'D5',
-          showRuler: true,
-          showGridlines: true,
-          showRowColHeaders: true,
-          zoomScale: 100,
-          zoomScaleNormal: 100
-        }
-      ];
+      ws1.views = [testUtils.views.sheet.frozen];
 
       var ws2 = wb.addWorksheet('two');
-      ws2.views = [
-        {
-          workbookViewId: 1,
-          state: 'split',
-          xSplit: 2000,
-          ySplit: 3000,
-          topLeftCell: 'C4',
-          activeCell: 'D5',
-          activePane: 'bottomRight',
-          showRuler: true,
-          showGridlines: true,
-          showRowColHeaders: true,
-          zoomScale: 100,
-          zoomScaleNormal: 100
-        }
-      ];
+      ws2.views = [testUtils.views.sheet.split];
 
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function () {

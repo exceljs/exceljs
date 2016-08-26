@@ -3,7 +3,6 @@
 var expect = require('chai').expect;
 
 var Excel = require('../../../excel');
-var testUtils = require('../../utils/index');
 
 var simpleWorkbookModel = require('./../data/simpleWorkbook.json');
 
@@ -49,15 +48,6 @@ function createSimpleWorkbook() {
 // Tests
 
 describe('Workbook', function() {
-
-  it.skip('serialises and deserialises by model', function() {
-    var wb = testUtils.createTestBook(false, Excel.Workbook);
-
-    return testUtils.cloneByModel(wb, Excel.Workbook)
-      .then(function(wb2) {
-        testUtils.checkTestBook(wb2, 'model');
-      });
-  });
 
   it('stores shared string values properly', function() {
     var wb = new Excel.Workbook();

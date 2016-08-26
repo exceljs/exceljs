@@ -6,7 +6,7 @@ var _ = require('underscore');
 var tools = require('./tools');
 
 var self = module.exports = {
-  dataValidations: tools.fix(require('./data-validations.json')),
+  dataValidations: tools.fix(require('./data/data-validations.json')),
   createDataValidations: function(type, operator) {
     var dataValidation = {
       type: type,
@@ -25,7 +25,7 @@ var self = module.exports = {
     return dataValidation;
   },
 
-  addDataValidationSheet: function(wb) {
+  addSheet: function(wb) {
     var ws = wb.addWorksheet('data-validations');
 
     // named list
@@ -71,7 +71,7 @@ var self = module.exports = {
 
   },
 
-  checkDataValidationSheet: function(wb) {
+  checkSheet: function(wb) {
     var ws = wb.getWorksheet('data-validations');
     expect(ws).to.not.be.undefined;
 

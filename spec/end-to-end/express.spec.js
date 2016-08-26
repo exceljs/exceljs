@@ -15,7 +15,7 @@ describe('Express', function() {
   it('downloads a workbook', function() {
     var app = express();
     app.get('/workbook', function(req, res) {
-      var wb = testutils.createTestBook(true, Excel.Workbook);
+      var wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       res.setHeader('Content-Disposition', 'attachment; filename=' + 'Report.xlsx');
       wb.xlsx.write(res)
@@ -32,7 +32,7 @@ describe('Express', function() {
         var stream = wb2.xlsx.createInputStream();
         stream.on('done', function() {
           try {
-            testutils.checkTestBook(wb2, 'xlsx', true);
+            testutils.checkTestBook(wb2, 'xlsx');
           }
           catch(ex) {
             return reject(ex);

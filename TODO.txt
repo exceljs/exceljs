@@ -38,19 +38,19 @@ How to determine between scale and fit to page(s)
 	</sheetPr>
 
 paperSize:
-    -   : Letter (*)
-    5   : Legal
-    7   : Executive
-    9   : A4
-    11  : A5
-    13  : B5 (JIS)
-    20  : Envelope #10
-    27  : Envelope DL
-    28  : Envelope C5
-    34  : Envelope B5
-    37  : Envelope Monarch
-    82  : Double Japan Postcard Rotated
-    119 : 16K 197x273 mm
+| Letter (*)  |  -  |
+| Legal  |  5  |
+| Executive  |  7  |
+| A4  |  9  |
+| A5  |  11  |
+| B5 (JIS)  |  13  |
+| Envelope #10  |  20  |
+| Envelope DL  |  27  |
+| Envelope C5  |  28  |
+| Envelope B5  |  34  |
+| Envelope Monarch  |  37  |
+| Double Japan Postcard Rotated  |  82  |
+| 16K 197x273 mm  |  119  |
 
 
 ========================================================================================================================

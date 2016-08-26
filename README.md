@@ -12,20 +12,17 @@ npm install exceljs
 
 <ul>
     <li>
-      Fix for <a href="https://github.com/guyonroche/exceljs/issues">exceljs might be vulnerable for regular expression denial of service</a>. 
-      Kudos to <a href="https://github.com/yonjah">yonjah</a> and <a href="https://www.youtube.com/watch?v=wCfE-9bhY2Y">Josh Emerson</a> for the resolution. 
+      Added <a href="#page-setup">Page Setup Properties</a>.
+      Thanks to <a href="https://github.com/jackkum">Jackkum</a> for the PR
     </li>
-    <li>
-      Fixed <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a> again.
-      Added <a href="#workbook-views">Workbook views</a>.
-    </li>
-    <li>Also fix for empty sheet generating invalid xlsx.</li>
 </ul>
 
 # Backlog
 
 <ul>
-    <li>Currently working on pageSetup and other print settings. Still working my way through PRs and Issues.</li>
+    <li>There are still more print-settings to add; Print-areas, Fixed rows/cols, etc.</li>
+    <li>Still working my way through PRs and Issues and improving the tests.</li>
+    <li>Images - background and in-cell</li>
     <li>XLSX Streaming Reader.</li>
     <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
         I would also like to take the time to look at transpilers to support the earlier JSs</li>
@@ -44,11 +41,20 @@ npm install exceljs
             <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
             <li><a href="#access-worksheets">Access Worksheets</a></li>
             <li><a href="#worksheet-properties">Worksheet Properties</a></li>
-            <li><a href="#worksheet-views">Worksheet Views</a></li>
+            <li><a href="#page-setup">Page Setup</a></li>
+            <li>
+                <a href="#worksheet-views">Worksheet Views</a>
+                <ul>
+                    <li><a href="#frozen-views">Frozen Views</a></li>
+                    <li><a href="#split-views">Split Views</a></li>
+                </ul>
+            </li>
             <li><a href="#columns">Columns</a></li>
             <li><a href="#rows">Rows</a></li>
             <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
             <li><a href="#merged-cells">Merged Cells</a></li>
+            <li><a href="#defined-names">Defined Names</a></li>
+            <li><a href="#data-validations">Data Validations</a></li>
             <li><a href="#styles">Styles</a>
                 <ul>
                     <li><a href="#number-formats">Number Formats</a></li>
@@ -59,6 +65,7 @@ npm install exceljs
                     <li><a href="rich-text">Rich Text</a></li>
                 </ul>
             </li>
+            <li><a href="#outline-levels">Outline Levels</a></li>
             <li><a href="#file-io">File I/O</a>
                 <ul>
                     <li><a href="#xlsx">XLSX</a>
@@ -71,6 +78,11 @@ npm install exceljs
                         <ul>
                             <li><a href="#reading-csv">Reading CSV</a></li>
                             <li><a href="#writing-csv">Writing CSV</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#streaming-io">Streaming I/O</a>
+                        <ul>
+                            <li><a href="#reading-csv">Streaming XLSX</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -105,6 +117,8 @@ workbook.modified = new Date();
 
 ## Workbook Views
 
+The Workbook views controls how many separate windows Excel will open when viewing the workbook.
+
 ```javascript
 workbook.views = [
   {
@@ -122,21 +136,16 @@ var sheet = workbook.addWorksheet('My Sheet');
 
 Use the second parameter of the addWorksheet function to specify options for the worksheet.
 
-E.g. tab color:
+For Example:
 
 ```javascript
+// create a sheet with red tab colour
 var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
-```
 
-E.g. Hide grid lines
-
-```javascript
+// create a sheet where the grid lines are hidden
 var sheet = workbook.addWorksheet('My Sheet', {properties: {showGridLines: false}});
-```
 
-E.g. Freeze rows, columns
-
-```javascript
+// create a sheet with the first row and column frozen
 var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
 ```
 
@@ -171,6 +180,8 @@ worksheet.properties.outlineLevelCol = 2;
 worksheet.properties.defaultRowHeight = 15;
 ```
 
+**Supported Properties**
+
 | Name             | Default    | Description |
 | ---------------- | ---------- | ----------- |
 | tabColor         | undefined  | Color of the tabs |
@@ -179,9 +190,78 @@ worksheet.properties.defaultRowHeight = 15;
 | defaultRowHeight | 15         | Default row height |
 | dyDescent        | 55         | TBD |
 
+## Page Setup
+
+All properties that can affect the printing of a sheet are held in a pageSetup object on the sheet.
+
+```javascript
+// create new sheet with pageSetup settings for A4 - landscape
+var worksheet =  workbook.addWorksheet('sheet', {
+  pageSetup:{paperSize: 9, orientation:'landscape'}
+});
+
+// create a new sheet writer with pageSetup settings for fit-to-page
+var worksheetWriter = workbookWriter.addSheet('sheet', {
+  pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
+});
+
+// adjust pageSetup settings afterwards
+worksheete.pageSetup.margins = {
+  left: 0.7, right: 0.7, 
+  top: 0.75, bottom: 0.75, 
+  header: 0.3, footer: 0.3
+};
+
+```
+
+**Supported pageSetup settings**
+
+| Name                  | Default       | Description |
+| --------------------- | ------------- | ----------- |
+| margins               |               | Whitespace on the borders of the page. Units are inches. |
+| orientation           | 'portrait'    | Orientation of the page - i.e. taller (portrait) or wider (landscape) |
+| horizontalDpi         | 4294967295    | Horizontal Dots per Inch. Default value is -1 |
+| verticalDpi           | 4294967295    | Vertical Dots per Inch. Default value is -1 |
+| fitToPage             |               | Whether to use fitToWidth and fitToHeight or scale settings. Default is based on presence of these settings in the pageSetup object - if both are present, scale wins (i.e. default will be false) |
+| pageOrder             | 'downThenOver'| Which order to print the pages - one of ['downThenOver', 'overThenDown'] |
+| blackAndWhite         | false         | Print without colour |
+| draft                 | false         | Print with less quality (and ink) |
+| cellComments          | 'None'        | Where to place comments - one of ['atEnd', 'asDisplayed', 'None'] |
+| errors                | 'displayed'   | Where to show errors - one of ['dash', 'blank', 'NA', 'displayed'] |
+| scale                 | 100           | Percentage value to increase or reduce the size of the print. Active when fitToPage is false |
+| fitToWidth            | 1             | How many pages wide the sheet should print on to. Active when fitToPage is true  |
+| fitToHeight           | 1             | How many pages high the sheet should print on to. Active when fitToPage is true  |
+| paperSize             |               | What paper size to use (see below) |
+| showRowColHeaders     | false         | Whether to show the row numbers and column letters |
+| showGridLines         | false         | Whether to show grid lines |
+| firstPageNumber       |               | Which number to use for the first page |
+| horizontalCentered    | false         | Whether to center the sheet data horizontally |
+| verticalCentered      | false         | Whether to center the sheet data vertically |
+
+**Example Paper Sizes**
+
+| Name                          | Value     |
+| ----------------------------- | --------- |
+| Letter                        | undefined | 
+| Legal                         |  5        | 
+| Executive                     |  7        | 
+| A4                            |  9        | 
+| A5                            |  11       |
+| B5 (JIS)                      |  13       |
+| Envelope #10                  |  20       |
+| Envelope DL                   |  27       |
+| Envelope C5                   |  28       |
+| Envelope B5                   |  34       |
+| Envelope Monarch              |  37       |
+| Double Japan Postcard Rotated |  82       |
+| 16K 197x273 mm                |  119      |
+
+
+
 ## Worksheet Views
 
 Worksheets now support a list of views, that control how Excel presents the sheet:
+
 * frozen - where a number of rows and columns to the top and left are frozen in place. Only the bottom left section will scroll
 * split - where the view is split into 4 sections, each semi-independently scrollable.
 
@@ -447,6 +527,7 @@ expect(worksheet.getCell('A1').names).to.have.members(['thing2']);
 Cells can define what values are valid or not and provide prompting to the user to help guide them.
 
 Validation types can be one of the following:
+
 | Type       | Description |
 | ---------- | ---------- |
 | list       | Define a discrete set of valid values. Excel will offer these in a dropdown for easy entry |
@@ -456,6 +537,7 @@ Validation types can be one of the following:
 | custom     | A custom formula controls the valid values |
 
 For types other than list or custom, the following operators affect the validation:
+
 | Operator              | Description |
 | --------------------  | ---------- |
 | between               | Values must lie between formula results |
@@ -524,12 +606,12 @@ worksheet.getCell('A1').dataValidation = {
 
 ```
 
-
 ## Styles
 
 Cells, Rows and Columns each support a rich set of styles and formats that affect how the cells are displayed.
 
 Styles are set by assigning the following properties:
+
 * <a href="#number-formats">numFmt</a>
 * <a href="#fonts">font</a>
 * <a href="#alignment">alignment</a>
@@ -687,6 +769,7 @@ ws.getCell('A5').border = {
 ```
 
 **Valid Border Styles**
+
 * thin
 * dotted
 * dashDot
@@ -754,6 +837,7 @@ ws.getCell('A2').fill = {
 | bgColor  | N        | Specifies the pattern background color. Default is white. |
 
 **Valid Pattern Types**
+
 * none
 * solid
 * darkVertical
@@ -787,6 +871,7 @@ ws.getCell('A2').fill = {
 | stops    | Y        | Specifies the gradient colour sequence. Is an array of objects containing position and color starting with position 0 and ending with position 1. Intermediatary positions may be used to specify other colours on the path. |
 
 **Caveats**
+
 Using the interface above it may be possible to create gradient fill effects not possible using the XLSX editor program.
 For example, Excel only supports angle gradients of 0, 45, 90 and 135.
 Similarly the sequence of stops may also be limited by the UI with positions [0,1] or [0,0.5,1] as the only options.
@@ -820,7 +905,7 @@ expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 
 ## Outline Levels
 
-Excel supports outlining; where rows or columns can be expanded or collapsed dependingn on what level of detail the user wishes to view.
+Excel supports outlining; where rows or columns can be expanded or collapsed depending on what level of detail the user wishes to view.
 
 Outline levels can be defined in column setup:
 ```javascript
@@ -857,9 +942,6 @@ worksheet.properties.outlineLevelCol = 2;
 expect(worksheet.getColumn(3).collapsed).to.be.false;
 
 ```
-
-
-
 
 ## File I/O
 
@@ -964,6 +1046,7 @@ The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read t
 
 Dates are parsed using the npm module [moment](https://www.npmjs.com/package/moment).
  If no dateFormats are supplied, the following are used:
+ 
 * moment.ISO_8601
 * 'MM-DD-YYYY'
 * 'YYYY-MM-DD'
@@ -1042,6 +1125,7 @@ A streaming writer (or reader) processes the workbook or worksheet data as it is
  especially when you consider that the row and cell objects are disposed once they are committed.
 
 The interface to the streaming workbook and worksheet is almost the same as the document versions with a few minor practical differences:
+
 * Once a worksheet is added to a workbook, it cannot be removed.
 * Once a row is committed, it is no longer accessible since it will have been dropped from the worksheet.
 * unMergeCells() is not supported.
@@ -1133,7 +1217,7 @@ workbook.commit()
 
 The following value types are supported.
 
-| Enum Name                 | Enum(*)   | Description       | Example Value |
+| Enum Name                 | Enum      | Description       | Example Value |
 | ------------------------- | --------- | ----------------- | ------------- |
 | Excel.ValueType.Null      | 0         | No value.         | null |
 | Excel.ValueType.Merge     | 1         | N/A               | N/A |
@@ -1159,27 +1243,6 @@ This function has changed from returning a sparse array of cell values to return
 
 The sparse array of cell values is still available via Worksheet.getRow(rowNumber).values;
 
-## Print settings
-```javascript
-// Fit to page
-worksheet.fitToPage = true;
-
-// Set landscape
-worksheet.pageSetup: {
-  orientation: "landscape"
-};
-
-// Set page margins
-worksheet.pageMargins: {
-  left: 0.7,
-  right:0.7,
-  top: 0.75,
-  bottom: 0.75,
-  header: 0.3,
-  footer: 0.3
-};
-```
-
 ## Interface Breaks in 0.1.1
 
 ### cell.model
@@ -1187,16 +1250,6 @@ worksheet.pageMargins: {
 cell.styles renamed to cell.style
 
 # Known Issues
-
-## Too Many Worksheets Results in Parse Error
-
-There appears to be an issue in one of the dependent libraries (unzip) where too many files causes the following error to be emitted:
-
-```javascript
-    invalid signature: 0x80014
-```
-
-In practical terms, this error only seems to arise with over 98 sheets (or 49 sheets with hyperlinks) so it shouldn't affect that many. I will keep an eye on it though.
 
 # Release History
 
@@ -1224,4 +1277,5 @@ In practical terms, this error only seems to arise with over 98 sheets (or 49 sh
 | 0.2.10  | <ul><li>Refactoring Complete. All unit and integration tests pass.</li></ul> |
 | 0.2.11  | <ul><li><a href="#outline-level">Outline Levels</a> thanks to <a href="https://github.com/cricri">cricri</a> for the contribution.</li><li><a href="#worksheet-properties">Worksheet Properties</a></li><li>Further refactoring of worksheet writer.</li></ul> |
 | 0.2.12  | <ul><li><a href="#worksheet-views">Sheet Views</a> thanks to <a href="https://github.com/cricri">cricri</a> again for the contribution.</li></ul> |
-| 0.2.13  | <ul><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues">exceljs might be vulnerable for regular expression denial of service</a>. Kudos to <a href="https://github.com/yonjah">yonjah</a> and <a href="https://www.youtube.com/watch?v=wCfE-9bhY2Y">Josh Emerson</a> for the resolution.</li><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a>. My bad - overzealous sheet view code.</li><li>Also fix for empty sheet generating invalid xlsx.</li></ul>
+| 0.2.13  | <ul><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues">exceljs might be vulnerable for regular expression denial of service</a>. Kudos to <a href="https://github.com/yonjah">yonjah</a> and <a href="https://www.youtube.com/watch?v=wCfE-9bhY2Y">Josh Emerson</a> for the resolution.</li><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a>. My bad - overzealous sheet view code.</li><li>Also fix for empty sheet generating invalid xlsx.</li></ul> |
+| 0.2.14  | <ul><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues">exceljs might be vulnerable for regular expression denial of service</a>. Kudos to <a href="https://github.com/yonjah">yonjah</a> and <a href="https://www.youtube.com/watch?v=wCfE-9bhY2Y">Josh Emerson</a> for the resolution.</li><li>Fixed <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a> again. Added <a href="#workbook-views">Workbook views</a>.</li><li>Also fix for empty sheet generating invalid xlsx.</li></ul> |
