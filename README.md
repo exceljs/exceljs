@@ -11,10 +11,7 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li>
-      Added <a href="#page-setup">Page Setup Properties</a>.
-      Thanks to <a href="https://github.com/jackkum">Jackkum</a> for the PR
-    </li>
+    <li>New <a href="#page-setup">Page Setup</a> Property: Print Area</li>
 </ul>
 
 # Backlog
@@ -206,11 +203,14 @@ var worksheetWriter = workbookWriter.addSheet('sheet', {
 });
 
 // adjust pageSetup settings afterwards
-worksheete.pageSetup.margins = {
+worksheet.pageSetup.margins = {
   left: 0.7, right: 0.7, 
   top: 0.75, bottom: 0.75, 
   header: 0.3, footer: 0.3
 };
+
+// Set Print Area for a sheet
+worksheet.pageSetup.printArea = 'A1:G20';
 
 ```
 
@@ -1279,3 +1279,5 @@ cell.styles renamed to cell.style
 | 0.2.12  | <ul><li><a href="#worksheet-views">Sheet Views</a> thanks to <a href="https://github.com/cricri">cricri</a> again for the contribution.</li></ul> |
 | 0.2.13  | <ul><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues">exceljs might be vulnerable for regular expression denial of service</a>. Kudos to <a href="https://github.com/yonjah">yonjah</a> and <a href="https://www.youtube.com/watch?v=wCfE-9bhY2Y">Josh Emerson</a> for the resolution.</li><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a>. My bad - overzealous sheet view code.</li><li>Also fix for empty sheet generating invalid xlsx.</li></ul> |
 | 0.2.14  | <ul><li>Fix for <a href="https://github.com/guyonroche/exceljs/issues">exceljs might be vulnerable for regular expression denial of service</a>. Kudos to <a href="https://github.com/yonjah">yonjah</a> and <a href="https://www.youtube.com/watch?v=wCfE-9bhY2Y">Josh Emerson</a> for the resolution.</li><li>Fixed <a href="https://github.com/guyonroche/exceljs/issues/162">Multiple Sheets opens in 'Group' mode in Excel</a> again. Added <a href="#workbook-views">Workbook views</a>.</li><li>Also fix for empty sheet generating invalid xlsx.</li></ul> |
+| 0.2.15  | <ul><li>Added <a href="#page-setup">Page Setup Properties</a>. Thanks to <a href="https://github.com/jackkum">Jackkum</a> for the PR</li></ul> |
+
