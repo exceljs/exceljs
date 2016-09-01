@@ -201,3 +201,95 @@ sheet.pageSetup = {
         columns: 'B:C' || '$B:$C' | 'A' || '$A'
     }
 }
+
+
+
+========================================================================================================================
+https://github.com/guyonroche/exceljs/pull/114
+
+<si>
+ <t>(a japanese text in KANJI)</t>
+ <rPh sb="0" eb="1">
+  <t>(its pronounciation in KATAKANA)</t>
+ </rPh>
+</si>
+<si>
+   <t>役割</t>  <!-- role  in English -->
+   <rPh sb="0" eb="2">
+      <t>ヤクワリ</t> <!-- Japanese phonic symbol called Katakana of role -->
+   </rPh>
+   <phoneticPr fontId="1" />
+</si>
+
+  parseSharedStrings: function (stream) {
+    return new Bluebird(function(resolve, reject) {
+      var parser = Sax.createStream(true, {});
+      var t = null;
+      var sharedStrings = [];
+      var rph = false;
+      parser.on('opentag', function (node) {
+        if (!rph && node.name === 't') {
+          t = '';
+        }
+        if (node.name === 'rPh') {
+          rph = true;
+        }
+      });
+      parser.on('closetag', function (name) {
+        if ((t !== null) && (name === 't')) {
+          sharedStrings.push(t);
+          t = null;
+        }
+        if (name === 'rPh') {
+          rph = false;
+        }
+      });
+      parser.on('text', function (text) {
+        if (t !== null) {
+          t += text;
+        }
+      });
+
+      parser.on('end', function () {
+        resolve(sharedStrings);
+      });
+      parser.on('error', function (error) {
+        reject(error);
+      });
+      stream.pipe(parser);
+    });
+  },
+
+
+
+========================================================================================================================
+Comments
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<comments xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+	<authors>
+		<author>Author</author>
+	</authors>
+	<commentList>
+		<comment ref="A1" authorId="0" shapeId="0">
+			<text>
+				<r>
+					<rPr>
+						<b/>
+						<sz val="9"/>
+						<color indexed="81"/>
+						<rFont val="Tahoma"/>
+						<charset val="1"/>
+					</rPr><t>Author:</t>
+				</r><r>
+					<rPr>
+						<sz val="9"/>
+						<color indexed="81"/>
+						<rFont val="Tahoma"/>
+						<charset val="1"/>
+					</rPr><t xml:space="preserve">
+Is it me you're looking for</t>
+				</r>
+			</text>
+		</comment>
+	</commentList>
+</comments>
