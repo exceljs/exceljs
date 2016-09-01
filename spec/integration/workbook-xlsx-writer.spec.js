@@ -133,7 +133,7 @@ describe('WorkbookWriter', function() {
         });
     });
 
-    it.only('addRow', function() {
+    it('addRow', function() {
       var options = {
         stream: fs.createWriteStream(TEST_FILE_NAME, {flags: 'w'}),
         useStyles: true,
@@ -144,7 +144,7 @@ describe('WorkbookWriter', function() {
       var newRow = worksheet.addRow(['hello']);
       newRow.commit();
       worksheet.commit();
-      workbook.commit();
+      return workbook.commit();
     });
 
     it('defined names', function() {
