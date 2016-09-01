@@ -1,5 +1,6 @@
 'use strict';
 
+var fs = require('fs');
 var expect = require('chai').expect;
 var bluebird = require('bluebird');
 var _ = require('underscore');
@@ -130,6 +131,20 @@ describe('WorkbookWriter', function() {
             expect(ws2.getCell('A1').value).to.equal(i);
           }
         });
+    });
+
+    it.only('addRow', function() {
+      var options = {
+        stream: fs.createWriteStream(TEST_FILE_NAME, {flags: 'w'}),
+        useStyles: true,
+        useSharedStrings: true
+      };
+      var workbook = new Excel.stream.xlsx.WorkbookWriter(options);
+      var worksheet = workbook.addWorksheet('test');
+      var newRow = worksheet.addRow(['hello']);
+      newRow.commit();
+      worksheet.commit();
+      workbook.commit();
     });
 
     it('defined names', function() {
