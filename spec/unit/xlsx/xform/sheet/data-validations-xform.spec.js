@@ -35,6 +35,13 @@ var expectations = [
     get parsedModel() { return this.preparedModel; },
     xml: '<dataValidations count="1"><dataValidation type="custom" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="A1"><formula1>OR(C21=5,C21=7)</formula1></dataValidation></dataValidations>',
     tests: ['render', 'renderIn', 'parse']
+  },
+  {
+    title: 'parse open office',
+    create: function() { return new DataValidationsXform(); },
+    xml: '<dataValidations count="1"><dataValidation type="whole" allowBlank="true" showInputMessage="false" sqref="A1"><formula1>5</formula1><formula2>10</formula2></dataValidation></dataValidations>',
+    parsedModel:{ A1: { type: 'whole', operator:'between', allowBlank: true, showInputMessage: false, formulae:[5, 10]} },
+    tests: ['parse']
   }
 ];
 
