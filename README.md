@@ -12,9 +12,9 @@ npm install exceljs
 
 <ul>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/119">Update xlsx.js #119</a>.
-      This should make parsing more resilient to open-office documents.
-      Thanks to <a href="https://github.com/nvitaterna">nvitaterna</a> for the contribution.
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/179">Changes from guyonroche/exceljs#127 applied to latest version #179</a>.
+      Fixes parsing of defined name values.
+      Thanks to <a href="https://github.com/agdevbridge">agdevbridge</a> and <a href="https://github.com/priitliivak">priitliivak</a> for the contribution.
     </li>
 </ul>
 
@@ -23,7 +23,7 @@ npm install exceljs
 <ul>
     <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
     <li>Still working my way through PRs and Issues and improving the tests.</li>
-    <li>Images - background and in-cell</li>
+    <li>Images - background, in-cell, printing, etc.</li>
     <li>XLSX Streaming Reader.</li>
     <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
         I would also like to take the time to look at transpilers to support the earlier JSs</li>
@@ -1287,4 +1287,5 @@ cell.styles renamed to cell.style
 | 0.2.16  | <ul><li>New <a href="#page-setup">Page Setup</a> Property: Print Area</li></ul> |
 | 0.2.17  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/114">Fix a bug on phonetic characters</a>. This fixes an issue related to reading workbooks with phonetic text in. Note phonetic text is not properly supported yet - just properly ignored. Thanks to <a href="https://github.com/zephyrrider">zephyrrider</a> and <a href="https://github.com/gen6033">gen6033</a> for the contribution.</li></ul> |
 | 0.2.18  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/175">Fix regression #150: Stream API fails to write XLSX files</a>. Apologies for the regression! Thanks to <a href="https://github.com/danieleds">danieleds</a> for the fix.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/114">Fix a bug on phonetic characters</a>. This fixes an issue related to reading workbooks with phonetic text in. Note phonetic text is not properly supported yet - just properly ignored. Thanks to <a href="https://github.com/zephyrrider">zephyrrider</a> and <a href="https://github.com/gen6033">gen6033</a> for the contribution.</li></ul> |
+| 0.2.19  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/119">Update xlsx.js #119</a>. This should make parsing more resilient to open-office documents. Thanks to <a href="https://github.com/nvitaterna">nvitaterna</a> for the contribution.</li></ul> |
 
