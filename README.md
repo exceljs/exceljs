@@ -12,9 +12,15 @@ npm install exceljs
 
 <ul>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/135">color tabs for worksheet-writer #135</a>.
-      Modified the behavoiour to print deprecation warning as tabColor has moved into options.properties.
-      Thanks to <a href="https://github.com/ethanlook">ethanlook</a> for the contribution.
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/136">Throw legible error when failing Value.getType() #136</a>.
+      Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.
+    </li>
+    <li>
+        Honourable mention to contributors whose PRs were fixed before I saw them:
+        <ul>
+            <li><a href="https://github.com/haoliangyu">haoliangyu</a></li>
+            <li><a href="https://github.com/wulfsolter">wulfsolter</a></li>
+        </ul>
     </li>
 </ul>
 
@@ -1289,4 +1295,5 @@ cell.styles renamed to cell.style
 | 0.2.18  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/175">Fix regression #150: Stream API fails to write XLSX files</a>. Apologies for the regression! Thanks to <a href="https://github.com/danieleds">danieleds</a> for the fix.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/114">Fix a bug on phonetic characters</a>. This fixes an issue related to reading workbooks with phonetic text in. Note phonetic text is not properly supported yet - just properly ignored. Thanks to <a href="https://github.com/zephyrrider">zephyrrider</a> and <a href="https://github.com/gen6033">gen6033</a> for the contribution.</li></ul> |
 | 0.2.19  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/119">Update xlsx.js #119</a>. This should make parsing more resilient to open-office documents. Thanks to <a href="https://github.com/nvitaterna">nvitaterna</a> for the contribution.</li></ul> |
 | 0.2.20  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/179">Changes from guyonroche/exceljs#127 applied to latest version #179</a>. Fixes parsing of defined name values. Thanks to <a href="https://github.com/agdevbridge">agdevbridge</a> and <a href="https://github.com/priitliivak">priitliivak</a> for the contribution.</li></ul> |
+| 0.2.21  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/135">color tabs for worksheet-writer #135</a>. Modified the behaviour to print deprecation warning as tabColor has moved into options.properties. Thanks to <a href="https://github.com/ethanlook">ethanlook</a> for the contribution.</li></ul> |
 
