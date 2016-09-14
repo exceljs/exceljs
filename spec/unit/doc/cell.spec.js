@@ -72,6 +72,9 @@ describe('Cell', function() {
 
     expect(row.cells.A1.value = null).to.be.null;
     expect(row.cells.A1.type).to.equal(Enums.ValueType.Null);
+
+    expect(row.cells.A1.value = {json:'data'}).to.deep.equal({json:'data'});
+    expect(row.cells.A1.type).to.equal(Enums.ValueType.String);
   });
   it('validates options on construction', function() {
     var row = mock.row();

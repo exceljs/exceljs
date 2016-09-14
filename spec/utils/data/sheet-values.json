@@ -10,5 +10,11 @@
   "hyperlink": {"hyperlink": "http://www.link.com", "text": "www.link.com"},
   "numFmt1": "# ?/?",
   "numFmt2": "[Green]#,##0 ;[Red](#,##0)",
-  "numFmtDate": "dd, mmm yyyy"
+  "numFmtDate": "dd, mmm yyyy",
+  "json": {
+    "raw": {
+      "num": 7, "str": "Hello, World!"
+    },
+    "string": "{\"num\":7,\"str\":\"Hello, World!\"}"
+  }
 }

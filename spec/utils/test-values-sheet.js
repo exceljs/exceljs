@@ -30,6 +30,7 @@ var self = module.exports = {
     ws.getCell('E1').value = self.testValues.formulas[1];
     ws.getCell('F1').value = self.testValues.hyperlink;
     ws.getCell('G1').value = self.testValues.str2;
+    ws.getCell('H1').value = self.testValues.json.raw;
     ws.getRow(1).commit();
 
     // merge cell square with numerical value
@@ -146,6 +147,9 @@ var self = module.exports = {
       expect(ws.getCell('F1').type).to.equal(Excel.ValueType.String);
       expect(ws.getCell('G1').value).to.equal(self.testValues.str2);
     }
+
+    expect(ws.getCell('H1').value).to.equal(self.testValues.json.string);
+    expect(ws.getCell('H1').type).to.equal(Excel.ValueType.String);
 
     // A2:B3
     expect(ws.getCell('A2').value).to.equal(5);

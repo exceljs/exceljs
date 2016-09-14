@@ -12,24 +12,19 @@ npm install exceljs
 
 <ul>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/136">Throw legible error when failing Value.getType() #136</a>.
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/137">Fall back to JSON.stringify() if unknown Cell.Type #137</a> with some modification.
+      If a cell value is assigned to an unrecognisable javascript object, the stored value in xlsx and csv files will  be JSON stringified.
+      Note that if the file is read again, no attempt will be made to parse the stringified JSON text.
       Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.
-    </li>
-    <li>
-        Honourable mention to contributors whose PRs were fixed before I saw them:
-        <ul>
-            <li><a href="https://github.com/haoliangyu">haoliangyu</a></li>
-            <li><a href="https://github.com/wulfsolter">wulfsolter</a></li>
-        </ul>
     </li>
 </ul>
 
 # Backlog
 
 <ul>
+    <li>Images - background, in-cell, printing, etc.</li>
     <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
     <li>Still working my way through PRs and Issues and improving the tests.</li>
-    <li>Images - background, in-cell, printing, etc.</li>
     <li>XLSX Streaming Reader.</li>
     <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
         I would also like to take the time to look at transpilers to support the earlier JSs</li>
@@ -1152,12 +1147,12 @@ The streaming XLSX writer is available in the ExcelJS.stream.xlsx namespace.
 
 The constructor takes an optional options object with the following fields:
 
-| Field | Description |
-| ----- | ----------- |
-| stream | Specifies a writable stream to write the XLSX workbook to. |
-| filename | If stream not specified, this field specifies the path to a file to write the XLSX workbook to. |
+| Field            | Description |
+| ---------------- | ----------- |
+| stream           | Specifies a writable stream to write the XLSX workbook to. |
+| filename         | If stream not specified, this field specifies the path to a file to write the XLSX workbook to. |
 | useSharedStrings | Specifies whether to use shared strings in the workbook. Default is false |
-| useStyles | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
+| useStyles        | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
 
 If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object
  that will store the contents of the XLSX workbook in memory.
@@ -1296,4 +1291,5 @@ cell.styles renamed to cell.style
 | 0.2.19  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/119">Update xlsx.js #119</a>. This should make parsing more resilient to open-office documents. Thanks to <a href="https://github.com/nvitaterna">nvitaterna</a> for the contribution.</li></ul> |
 | 0.2.20  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/179">Changes from guyonroche/exceljs#127 applied to latest version #179</a>. Fixes parsing of defined name values. Thanks to <a href="https://github.com/agdevbridge">agdevbridge</a> and <a href="https://github.com/priitliivak">priitliivak</a> for the contribution.</li></ul> |
 | 0.2.21  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/135">color tabs for worksheet-writer #135</a>. Modified the behaviour to print deprecation warning as tabColor has moved into options.properties. Thanks to <a href="https://github.com/ethanlook">ethanlook</a> for the contribution.</li></ul> |
+| 0.2.22  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/136">Throw legible error when failing Value.getType() #136</a>. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li><li>Honourable mention to contributors whose PRs were fixed before I saw them:<ul><li><a href="https://github.com/haoliangyu">haoliangyu</a></li><li><a href="https://github.com/wulfsolter">wulfsolter</a></li></ul></li></ul> |
 
