@@ -70,6 +70,6 @@ var expectations = [
   }
 ];
 
-describe.only('StyleXform', function () {
+describe('StyleXform', function () {
   testXformHelper(expectations);
 });

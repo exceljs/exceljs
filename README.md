@@ -12,10 +12,9 @@ npm install exceljs
 
 <ul>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/137">Fall back to JSON.stringify() if unknown Cell.Type #137</a> with some modification.
-      If a cell value is assigned to an unrecognisable javascript object, the stored value in xlsx and csv files will  be JSON stringified.
-      Note that if the file is read again, no attempt will be made to parse the stringified JSON text.
-      Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/166">Protect cell fix #166</a>.
+      This does not mean full support for protected cells merely that the parser is not confused by the extra xml.
+      Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.
     </li>
 </ul>
 
@@ -1292,4 +1291,5 @@ cell.styles renamed to cell.style
 | 0.2.20  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/179">Changes from guyonroche/exceljs#127 applied to latest version #179</a>. Fixes parsing of defined name values. Thanks to <a href="https://github.com/agdevbridge">agdevbridge</a> and <a href="https://github.com/priitliivak">priitliivak</a> for the contribution.</li></ul> |
 | 0.2.21  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/135">color tabs for worksheet-writer #135</a>. Modified the behaviour to print deprecation warning as tabColor has moved into options.properties. Thanks to <a href="https://github.com/ethanlook">ethanlook</a> for the contribution.</li></ul> |
 | 0.2.22  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/136">Throw legible error when failing Value.getType() #136</a>. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li><li>Honourable mention to contributors whose PRs were fixed before I saw them:<ul><li><a href="https://github.com/haoliangyu">haoliangyu</a></li><li><a href="https://github.com/wulfsolter">wulfsolter</a></li></ul></li></ul> |
+| 0.2.23  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/137">Fall back to JSON.stringify() if unknown Cell.Type #137</a> with some modification. If a cell value is assigned to an unrecognisable javascript object, the stored value in xlsx and csv files will  be JSON stringified. Note that if the file is read again, no attempt will be made to parse the stringified JSON text. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li></ul> |
 
