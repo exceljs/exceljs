@@ -114,6 +114,43 @@ var its = {
       });
     });
   },
+  
+  parseIn: function(expectation) {
+    it('Parse within composite', function() {
+      return new Bluebird(function (resolve, reject) {
+        var xml = '<compy><pre/>' + getExpectation(expectation, 'xml') + '<post/></compy>';
+        var childXform = expectation.create();
+        var result = {pre: true};
+        result[childXform.tag] = getExpectation(expectation, 'parsedModel');
+        result.post = true;
+        var xform = new CompositeXform({
+          tag: 'compy',
+          children: [
+            {name: 'pre', xform: new BooleanXform({tag: 'pre', attr: 'val'})},
+            {name: childXform.tag, xform: childXform},
+            {name: 'post', xform: new BooleanXform({tag: 'post', attr: 'val'})}
+          ]
+        });
+        var parser = Sax.createStream(true);
+
+        xform.parse(parser)
+          .then(function (model) {
+            console.log('parsed Model', JSON.stringify(model));
+            console.log('expected Model', JSON.stringify(result));
+
+            // eliminate the undefined
+            var clone = cloneObject(model);
+
+            // console.log('result', JSON.stringify(clone));
+            // console.log('expect', JSON.stringify(result));
+            expect(clone).to.deep.equal(result);
+            resolve();
+          })
+          .catch(reject);
+        parser.write(xml);
+      });
+    });
+  },
 
   parse: function(expectation) {
     it('Parse to Model', function () {

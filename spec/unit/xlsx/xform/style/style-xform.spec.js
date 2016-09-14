@@ -59,9 +59,17 @@ var expectations = [
     xml: '<xf numFmtId="0" fontId="0" fillId="2" borderId="0" xfId="0" applyFill="1"/>',
     get parsedModel() { return this.preparedModel; },
     tests:['render', 'renderIn', 'parse']
+  },
+  {
+    title: 'Protected',
+    create:  function() { return new StyleXform({xfId: true})},
+    preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 0, xfId: 0, alignment: { horizontal: 'center', vertical: 'middle' }},
+    xml: '<xf borderId="1" fillId="10" fontId="3" numFmtId="0" xfId="0" applyProtection="1" applyAlignment="1" applyFill="1" applyBorder="1" applyFont="1"><protection locked="0"/><alignment horizontal="center" vertical="center"/></xf>',
+    parsedModel: {borderId: 1, fillId: 10, fontId: 3, numFmtId: 0, xfId: 0, alignment: { horizontal: 'center', vertical: 'middle' }},
+    tests:['parse', 'parseIn']
   }
 ];
 
-describe('StyleXform', function () {
+describe.only('StyleXform', function () {
   testXformHelper(expectations);
 });
