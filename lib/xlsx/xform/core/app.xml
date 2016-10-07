@@ -11,7 +11,7 @@
     </HeadingPairs>
     <TitlesOfParts>
         <vt:vector size="<%=worksheets.length%>" baseType="lpstr">
-            <% _.each(worksheets, function(worksheet) { %><vt:lpstr><%=worksheet.name%></vt:lpstr>
+            <% worksheets.forEach(function(worksheet) { %><vt:lpstr><%=worksheet.name%></vt:lpstr>
             <% }); %>
         </vt:vector>
     </TitlesOfParts>

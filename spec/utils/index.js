@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 
-var _ = require('underscore');
+var _ = require('lodash');
 var Row = require('../../lib/doc/row');
 var Column = require('../../lib/doc/column');
 var tools = require('./tools');
@@ -11,7 +11,8 @@ var testWorkbookReader = require('./test-workbook-reader');
 
 var testSheets = {
   dataValidations: require('./test-data-validation-sheet'),
-  values: require('./test-values-sheet')
+  values: require('./test-values-sheet'),
+  splice: require('./test-spliced-sheet')
 };
 
 function getOptions(docType, options) {
@@ -63,8 +64,9 @@ module.exports = {
       {x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0}
     ];
     
-    _.each(sheets,  function(sheet){
-      testSheets[sheet].addSheet(workbook, options);
+    sheets.forEach(function(sheet){
+      var testSheet = _.get(testSheets, sheet);
+      testSheet.addSheet(workbook, options);
     });
 
     return workbook;
@@ -80,8 +82,9 @@ module.exports = {
       expect(workbook.views).to.deep.equal([{x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0, visibility: 'visible'}]);
     }
 
-    _.each(sheets,  function(sheet){
-      testSheets[sheet].checkSheet(workbook, options);
+    sheets.forEach(function(sheet){
+      var testSheet = _.get(testSheets, sheet);
+      testSheet.checkSheet(workbook, options);
     });
 
   },
@@ -121,5 +124,4 @@ module.exports = {
       }
     };
   }
-
 };

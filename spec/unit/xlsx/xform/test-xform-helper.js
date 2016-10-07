@@ -135,8 +135,8 @@ var its = {
 
         xform.parse(parser)
           .then(function (model) {
-            console.log('parsed Model', JSON.stringify(model));
-            console.log('expected Model', JSON.stringify(result));
+            // console.log('parsed Model', JSON.stringify(model));
+            // console.log('expected Model', JSON.stringify(result));
 
             // eliminate the undefined
             var clone = cloneObject(model);

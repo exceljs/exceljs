@@ -22,7 +22,7 @@
  */
 "use strict";
 
-var _ = require("underscore");
+var _ = require("lodash");
 
 var main = module.exports = {
     Workbook: require("./lib/doc/workbook"),

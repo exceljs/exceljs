@@ -2,7 +2,6 @@
 
 var expect = require('chai').expect;
 
-var _ = require('underscore');
 var DefinedNames = require('../../../lib/doc/defined-names');
 
 describe('DefinedNames', function() {

@@ -2,7 +2,6 @@
 
 var expect = require('chai').expect;
 
-var _ = require('underscore');
 var CellMatrix = require('../../../lib/utils/cell-matrix');
 
 describe('CellMatrix', function() {

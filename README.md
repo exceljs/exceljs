@@ -12,9 +12,10 @@ npm install exceljs
 
 <ul>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/166">Protect cell fix #166</a>.
-      This does not mean full support for protected cells merely that the parser is not confused by the extra xml.
-      Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.
+      Added functions to delete cells, rows and columns from a worksheet.
+      Modelled after the Array splice method, the functions allow cells, rows and columns to be deleted (and optionally inserted).
+      See <a href="#columns">Columns</a> and <a href="#rows">Rows</a> for details.<br />
+      Note: <a href="#splice-vs-merge">Not compatable with cell merges</a>
     </li>
 </ul>
 
@@ -366,7 +367,18 @@ dobCol.eachCell({ includeEmpty: true }, function(cell, rowNumber) {
     // ...
 });
 
+// cut one or more columns (columns to the right are shifted left)
+// If column properties have been definde, they will be cut or moved accordingly
+// Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
+worksheet.spliceColumns(3,2);
 
+// remove one column and insert two more.
+// Note: columns 4 and above will be shifted right by 1 column. 
+// Also: If the worksheet has more rows than values in the colulmn inserts, 
+//  the rows will still be shifted as if the values existed 
+var newCol3Values = [1,2,3,4,5];
+var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
+worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
 
@@ -465,6 +477,23 @@ row.eachCell(function(cell, colNumber) {
 row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
     console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
+
+// Cut one or more rows (rows below are shifted up)
+// Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
+worksheet.spliceRows(4,3);
+
+// remove one row and insert two more.
+// Note: rows 4 and below will be shifted down by 1 row. 
+var newRow3Values = [1,2,3,4,5];
+var newRow4Values = ['one', 'two', 'three', 'four', 'five'];
+worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
+
+// Cut one or more cells (cells to the right are shifted left)
+// Note: this operation will not affect other rows
+row.splice(3,2);
+
+// remove one cell and insert two more (cells to the right of the cut cell will be shifted right)
+row.splice(4,1,'new value 1', 'new value 2');
 
 // Commit a completed row to stream
 row.commit();
@@ -1255,6 +1284,10 @@ cell.styles renamed to cell.style
 
 # Known Issues
 
+## Splice vs Merge
+
+If any splice operation affects a merged cell, the merge group will not be moved correctly
+
 # Release History
 
 | Version | Changes |
@@ -1292,4 +1325,5 @@ cell.styles renamed to cell.style
 | 0.2.21  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/135">color tabs for worksheet-writer #135</a>. Modified the behaviour to print deprecation warning as tabColor has moved into options.properties. Thanks to <a href="https://github.com/ethanlook">ethanlook</a> for the contribution.</li></ul> |
 | 0.2.22  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/136">Throw legible error when failing Value.getType() #136</a>. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li><li>Honourable mention to contributors whose PRs were fixed before I saw them:<ul><li><a href="https://github.com/haoliangyu">haoliangyu</a></li><li><a href="https://github.com/wulfsolter">wulfsolter</a></li></ul></li></ul> |
 | 0.2.23  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/137">Fall back to JSON.stringify() if unknown Cell.Type #137</a> with some modification. If a cell value is assigned to an unrecognisable javascript object, the stored value in xlsx and csv files will  be JSON stringified. Note that if the file is read again, no attempt will be made to parse the stringified JSON text. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li></ul> |
+| 0.2.24  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/166">Protect cell fix #166</a>. This does not mean full support for protected cells merely that the parser is not confused by the extra xml. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
 

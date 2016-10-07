@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 
-var _ = require('underscore');
+var _ = require('lodash');
 var Excel = require('../../excel');
 var tools = require('./tools');
 

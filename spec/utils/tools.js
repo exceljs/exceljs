@@ -1,7 +1,7 @@
 'use strict';
 
 var Bluebird = require('bluebird');
-var _ = require('underscore');
+var _ = require('lodash');
 var MemoryStream = require('memorystream');
 
 var tools = module.exports  = {

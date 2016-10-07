@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var Bluebird = require('bluebird');
-var _ = require('underscore');
+var _ = require('lodash');
 var tools = require('./tools');
 
 module.exports = {

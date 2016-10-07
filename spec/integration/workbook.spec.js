@@ -6,7 +6,7 @@ chai.use(require('chai-datetime'));
 
 var stream = require('stream');
 var bluebird = require('bluebird');
-var _ = require('underscore');
+var _ = require('lodash');
 var Excel = require('../../excel');
 var testUtils = require('./../utils/index');
 
@@ -411,7 +411,37 @@ describe('Workbook', function() {
       });
     });
   });
-  
+
+  it('spliced meat and ham', function() {
+    var wb = new Excel.Workbook();
+    var sheets = [
+      'splice.rows.removeOnly',
+      'splice.rows.insertFewer',
+      'splice.rows.insertSame',
+      'splice.rows.insertMore',
+      'splice.columns.removeOnly',
+      'splice.columns.insertFewer',
+      'splice.columns.insertSame',
+      'splice.columns.insertMore'
+    ];
+    var options = {
+      checkBadAlignments: false,
+      checkSheetProperties: false,
+      checkViews: false
+    };
+
+    testUtils.createTestBook(wb, 'xlsx', sheets, options);
+
+    return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+      .then(function () {
+        var wb2 = new Excel.Workbook();
+        return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      })
+      .then(function (wb2) {
+        testUtils.checkTestBook(wb, 'xlsx', sheets, options);
+      });
+  });
+
   it('throws an error when xlsx file not found', function() {
     var wb = new Excel.Workbook();
     var success = 0;

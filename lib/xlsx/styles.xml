@@ -5,27 +5,27 @@
         mc:Ignorable="x14ac"
         xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">
     <% if (numFmts.length) { %><numFmts count="<%=numFmts.length%>">
-        <%_.each(numFmts, function(nf) {%><%=nf.xml%>
+        <%numFmts.forEach(function(nf) {%><%=nf.xml%>
         <%});%>
     </numFmts>
     <% } %>
     <fonts count="<%=fonts.length%>" x14ac:knownFonts="1">
-        <%_.each(fonts, function(font) {%><%=font.xml%>
+        <%fonts.forEach(function(font) {%><%=font.xml%>
         <%})%>
     </fonts>
     <fills count="<%=fills.length%>">
-        <%_.each(fills, function(fill) {%><%=fill.xml%>
+        <%fills.forEach(function(fill) {%><%=fill.xml%>
         <%});%>
     </fills>
     <borders count="<%=borders.length%>">
-        <%_.each(borders, function(border) {%><%=border.xml%>
+        <%borders.forEach(function(border) {%><%=border.xml%>
         <%});%>
     </borders>
     <cellStyleXfs count="1">
         <xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>
     </cellStyleXfs>
     <cellXfs count="<%=styles.length%>">
-        <%_.each(styles, function(style) {%><%=style.xml%>
+        <%styles.forEach(function(style) {%><%=style.xml%>
         <%});%>
     </cellXfs>
     <cellStyles count="1">
