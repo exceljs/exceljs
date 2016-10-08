@@ -19,6 +19,13 @@ npm install exceljs
     </li>
 </ul>
 
+# Contributions
+
+Contributions are welcome! It helps me know what features are desired or what bugs are causing the most pain.
+
+I have just one request; If you submit a pull request for a bugfix, please add a unit-test or integration-test (in the spec folder) that catches the problem.
+ Even a PR with just a failing test is fine - I can analyse what the test is doing and fix the code from that. 
+
 # Backlog
 
 <ul>
