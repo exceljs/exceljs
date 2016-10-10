@@ -7,14 +7,25 @@ describe('SharedStrings', function() {
   it('Stores and shares string values', function() {
     var ss = new SharedStrings();
 
-    var sHello = ss.add('Hello');
-    var sHello_v2 = ss.add('Hello');
-    var sGoodbye = ss.add('Goodbye');
+    var iHello = ss.add('Hello');
+    var iHello_v2 = ss.add('Hello');
+    var iGoodbye = ss.add('Goodbye');
 
-    expect(sHello).to.equal(sHello_v2);
-    expect(sGoodbye).to.not.equal(sHello_v2);
+    expect(iHello).to.equal(iHello_v2);
+    expect(iGoodbye).to.not.equal(iHello_v2);
 
     expect(ss.count).to.equal(2);
     expect(ss.totalRefs).to.equal(3);
+  });
+
+  it('Does not escape values', function() {
+    // that's the job of the xml utils
+    var ss = new SharedStrings();
+
+    var iXml = ss.add('<tag>value</tag>');
+    var iAmpersand = ss.add('&');
+
+    expect(ss.getString(iXml)).to.equal('<tag>value</tag>');
+    expect(ss.getString(iAmpersand)).to.equal('&');
   });
 });
