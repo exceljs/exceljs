@@ -72,6 +72,6 @@ var expectations = [
   }
 ];
 
-describe.only('BorderXform', function () {
+describe('BorderXform', function () {
   testXformHelper(expectations);
 });

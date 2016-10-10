@@ -12,10 +12,9 @@ npm install exceljs
 
 <ul>
     <li>
-      Added functions to delete cells, rows and columns from a worksheet.
-      Modelled after the Array splice method, the functions allow cells, rows and columns to be deleted (and optionally inserted).
-      See <a href="#columns">Columns</a> and <a href="#rows">Rows</a> for details.<br />
-      Note: <a href="#splice-vs-merge">Not compatable with cell merges</a>
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/184">Update border-xform.js #184</a>
+      Border edges without style will be parsed and rendered as no-border
+      Thanks to <a href="https://github.com/skumarnk2">skumarnk2</a> for the contribution.
     </li>
 </ul>
 
@@ -1333,4 +1332,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.22  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/136">Throw legible error when failing Value.getType() #136</a>. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li><li>Honourable mention to contributors whose PRs were fixed before I saw them:<ul><li><a href="https://github.com/haoliangyu">haoliangyu</a></li><li><a href="https://github.com/wulfsolter">wulfsolter</a></li></ul></li></ul> |
 | 0.2.23  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/137">Fall back to JSON.stringify() if unknown Cell.Type #137</a> with some modification. If a cell value is assigned to an unrecognisable javascript object, the stored value in xlsx and csv files will  be JSON stringified. Note that if the file is read again, no attempt will be made to parse the stringified JSON text. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li></ul> |
 | 0.2.24  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/166">Protect cell fix #166</a>. This does not mean full support for protected cells merely that the parser is not confused by the extra xml. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
+| 0.2.25  | <ul><li>Added functions to delete cells, rows and columns from a worksheet. Modelled after the Array splice method, the functions allow cells, rows and columns to be deleted (and optionally inserted). See <a href="#columns">Columns</a> and <a href="#rows">Rows</a> for details.<br />Note: <a href="#splice-vs-merge">Not compatable with cell merges</a></li></ul> |
 
