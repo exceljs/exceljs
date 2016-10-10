@@ -45,9 +45,33 @@ var expectations = [
     xml: '<border diagonalUp="1" diagonalDown="1"><left/><right/><top/><bottom/><diagonal style="thin"/></border>',
     get parsedModel() { return this.preparedModel; },
     tests: ['render', 'renderIn', 'parse']
+  },
+  {
+    title: 'Missing Style',
+    create:  function() { return new BorderXform()},
+    preparedModel: {
+      left: { color: {argb:'FFFF0000'} },
+      right: { color: {argb:'FFFF0000'} },
+      top: { color: {argb:'FFFF0000'}, style: 'medium' },
+      bottom: { color: {argb:'FFFF0000'}, style: 'medium' }
+    },
+    xml: '<border><left/><right/><top style="medium"><color rgb="FFFF0000"/></top><bottom style="medium"><color rgb="FFFF0000"/></bottom><diagonal/></border>',
+    tests: ['render', 'renderIn']
+  },
+  {
+    title: 'Missing Style',
+    create:  function() { return new BorderXform()},
+    xml: '<border><left><color rgb="FFFF0000"/></left><right><color rgb="FFFF0000"/></right><top style="medium"><color rgb="FFFF0000"/></top><bottom style="medium"><color rgb="FFFF0000"/></bottom><diagonal/></border>',
+    parsedModel: {
+      left: { color: {argb:'FFFF0000'} },
+      right: { color: {argb:'FFFF0000'} },
+      top: { color: {argb:'FFFF0000'}, style: 'medium' },
+      bottom: { color: {argb:'FFFF0000'}, style: 'medium' }
+    },
+    tests: ['parse']
   }
 ];
 
-describe('BorderXform', function () {
+describe.only('BorderXform', function () {
   testXformHelper(expectations);
 });
