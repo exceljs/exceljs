@@ -12,18 +12,24 @@ npm install exceljs
 
 <ul>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/184">Update border-xform.js #184</a>
-      Border edges without style will be parsed and rendered as no-border
-      Thanks to <a href="https://github.com/skumarnk2">skumarnk2</a> for the contribution.
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/187">Pass views to worksheet-writer #187</a>
+      Now also passes views to worksheet-writer.
+      Thanks to <a href="https://github.com/Temetz">Temetz</a> for the contribution.
+    </li>
+    <li>
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/189">Do not escape xml characters when using shared strings #189</a>
+      Fixing bug in shared strings.
+      Thanks to <a href="https://github.com/tkirda">tkirda</a> for the contribution.
     </li>
 </ul>
 
+
 # Contributions
 
-Contributions are welcome! It helps me know what features are desired or what bugs are causing the most pain.
+Contributions are very welcome! It helps me know what features are desired or what bugs are causing the most pain.
 
 I have just one request; If you submit a pull request for a bugfix, please add a unit-test or integration-test (in the spec folder) that catches the problem.
- Even a PR with just a failing test is fine - I can analyse what the test is doing and fix the code from that. 
+ Even a PR that just has a failing test is fine - I can analyse what the test is doing and fix the code from that. 
 
 # Backlog
 
@@ -1333,4 +1339,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.23  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/137">Fall back to JSON.stringify() if unknown Cell.Type #137</a> with some modification. If a cell value is assigned to an unrecognisable javascript object, the stored value in xlsx and csv files will  be JSON stringified. Note that if the file is read again, no attempt will be made to parse the stringified JSON text. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li></ul> |
 | 0.2.24  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/166">Protect cell fix #166</a>. This does not mean full support for protected cells merely that the parser is not confused by the extra xml. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
 | 0.2.25  | <ul><li>Added functions to delete cells, rows and columns from a worksheet. Modelled after the Array splice method, the functions allow cells, rows and columns to be deleted (and optionally inserted). See <a href="#columns">Columns</a> and <a href="#rows">Rows</a> for details.<br />Note: <a href="#splice-vs-merge">Not compatable with cell merges</a></li></ul> |
+| 0.2.26  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/184">Update border-xform.js #184</a>Border edges without style will be parsed and rendered as no-border. Thanks to <a href="https://github.com/skumarnk2">skumarnk2</a> for the contribution.</li></ul> |
 
