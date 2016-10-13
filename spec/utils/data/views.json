@@ -18,7 +18,7 @@
       "topLeftCell": "C4",
       "activeCell": "D5",
       "showRuler": true,
-      "showGridlines": true,
+      "showGridLines": true,
       "showRowColHeaders": true,
       "zoomScale": 100,
       "zoomScaleNormal": 100
@@ -32,7 +32,7 @@
       "activeCell": "D5",
       "activePane": "bottomRight",
       "showRuler": true,
-      "showGridlines": true,
+      "showGridLines": true,
       "showRowColHeaders": true,
       "zoomScale": 100,
       "zoomScaleNormal": 100
