@@ -12,14 +12,13 @@ npm install exceljs
 
 <ul>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/187">Pass views to worksheet-writer #187</a>
-      Now also passes views to worksheet-writer.
-      Thanks to <a href="https://github.com/Temetz">Temetz</a> for the contribution.
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/190">Fix tiny bug [Update hyperlink-map.js] #190</a>
+      Thanks to <a href="https://github.com/lszlkss">lszlkss</a> for the contribution.
     </li>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/189">Do not escape xml characters when using shared strings #189</a>
-      Fixing bug in shared strings.
-      Thanks to <a href="https://github.com/tkirda">tkirda</a> for the contribution.
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/196">fix typo on sheet view showGridLines option #196</a>
+      "showGridlines" should have been "showGridLines".
+      Thanks to <a href="https://github.com/gadiaz1">gadiaz1</a> for the contribution.
     </li>
 </ul>
 
@@ -1340,4 +1339,6 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.24  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/166">Protect cell fix #166</a>. This does not mean full support for protected cells merely that the parser is not confused by the extra xml. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
 | 0.2.25  | <ul><li>Added functions to delete cells, rows and columns from a worksheet. Modelled after the Array splice method, the functions allow cells, rows and columns to be deleted (and optionally inserted). See <a href="#columns">Columns</a> and <a href="#rows">Rows</a> for details.<br />Note: <a href="#splice-vs-merge">Not compatable with cell merges</a></li></ul> |
 | 0.2.26  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/184">Update border-xform.js #184</a>Border edges without style will be parsed and rendered as no-border. Thanks to <a href="https://github.com/skumarnk2">skumarnk2</a> for the contribution.</li></ul> |
+| 0.2.27  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/187">Pass views to worksheet-writer #187</a> Now also passes views to worksheet-writer. Thanks to <a href="https://github.com/Temetz">Temetz</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/189">Do not escape xml characters when using shared strings #189</a> Fixing bug in shared strings. Thanks to <a href="https://github.com/tkirda">tkirda</a> for the contribution.</li></ul> |
+
 

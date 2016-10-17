@@ -1,14 +1,10 @@
 {
   "name": "exceljs",
-  "version": "0.2.27",
+  "version": "0.2.28",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
-  "author": {
-    "name": "Guyon Roche",
-    "email": "cyber.sapiens@hotmail.com",
-    "url": "https://github.com/guyonroche/exceljs"
-  },
+  "author": "Guyon Roche",
   "repository": {
     "type": "git",
     "url": "https://github.com/guyonroche/exceljs.git"
