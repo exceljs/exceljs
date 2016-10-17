@@ -30,7 +30,7 @@ describe('StreamBuf', function() {
 
   it('signals end', function(done) {
     var stream = new StreamBuf();
-    stream.on('end', function() {
+    stream.on('finish', function() {
       done();
     });
     stream.write('Hello, World!');
