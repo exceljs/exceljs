@@ -290,7 +290,7 @@ Each view also supports various properties:
 | activeCell        | undefined | The currently selected cell |
 | showRuler         | true      | Shows or hides the ruler in Page Layout |
 | showRowColHeaders | true      | Shows or hides the row and column headers (e.g. A1, B1 at the top and 1,2,3 on the left |
-| showGridlines     | true      | Shows or hides the gridlines (shown for cells where borders have not been defined) |
+| showGridLines     | true      | Shows or hides the gridlines (shown for cells where borders have not been defined) |
 | zoomScale         | 100       | Percentage zoom to use for the view |
 | zoomScaleNormal   | 100       | Normal zoom for the view |
 | style             | undefined | Presentation style - one of pageBreakPreview or pageLayout. Note pageLayout is not compatable with frozen views |
