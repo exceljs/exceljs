@@ -32,6 +32,17 @@ var expectations = [
     options: { sharedStrings: new SharedStringsXform(), styles: fakeStyles, hyperlinkMap: fakeHyperlinkMap }
   },
   {
+    title: 'No spans',
+    create:  function() { return new RowXform()},
+    initialModel: {number: 1, style: {}, cells: [{address: 'A1', type: Enums.ValueType.Number, value: 5}]},
+    get preparedModel() { return this.initialModel; },
+    xml: '<row r="1" x14ac:dyDescent="0.25"><c r="A1"><v>5</v></c></row>',
+    parsedModel: {number: 1, cells: [{address: 'A1', type: Enums.ValueType.Number, value: 5}]},
+    reconciledModel: {number: 1, cells: [{address: 'A1', type: Enums.ValueType.Number, value: 5}], style: {}},
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
+    options: { sharedStrings: new SharedStringsXform(), styles: fakeStyles, hyperlinkMap: fakeHyperlinkMap }
+  },
+  {
     title: 'Styled',
     create:  function() { return new RowXform()},
     initialModel: {number: 2, min:1, max: 1, style: {numFmt: '#'}, cells: [{address: 'A2', type: Enums.ValueType.Number, value: 5}]},
