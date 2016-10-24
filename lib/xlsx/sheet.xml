@@ -42,7 +42,7 @@
            <% if(row.height) {%> ht="<%=row.height%>" customHeight="1"<% } %>
            <% if(row.hidden) {%> hidden="1"<% } %>
            <% if(row.outlineLevel) {%> outlineLevel="<%=row.outlineLevel%>"<% } %>
-           spans="<%=row.min%>:<%=row.max%>"
+           <% if(row.min > 0 && row.max > 0 && row.min <= row.max) {%> spans="<%=row.min%>:<%=row.max%>"<% } %>
            <% if (row.styleId) { %> s="<%=row.styleId%>" customFormat="1" <% } %>
            x14ac:dyDescent="0.25">
       <% row.cells.forEach(function(cell){ %>
