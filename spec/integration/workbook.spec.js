@@ -69,6 +69,46 @@ describe('Workbook', function() {
         });
     });
 
+    it('company, manager, etc', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = 'World!';
+      wb.company = 'Cyber Sapiens, Ltd';
+      wb.manager = 'Guyon Roche';
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          expect(wb2.company).to.equal(wb.company);
+          expect(wb2.manager).to.equal(wb.manager);
+        });
+    });
+
+    it('title, subject, etc', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = 'World!';
+      wb.title = 'the title';
+      wb.subject = 'the subject';
+      wb.keywords = 'the keywords';
+      wb.category = 'the category';
+      wb.description = 'the description';
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          expect(wb2.title).to.equal(wb.title);
+          expect(wb2.subject).to.equal(wb.subject);
+          expect(wb2.keywords).to.equal(wb.keywords);
+          expect(wb2.category).to.equal(wb.category);
+          expect(wb2.description).to.equal(wb.description);
+        });
+    });
+
     it('xlsx file', function() {
 
       var wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');
