@@ -12,18 +12,9 @@ npm install exceljs
 
 <ul>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/201">Fix issue #178 #201</a>
-      Adds the following properties to workbook:
-        <ul>
-            <li>title</li>
-            <li>subject</li>
-            <li>keywords</li>
-            <li>category</li>
-            <li>description</li>
-            <li>company</li>
-            <li>manager</li>
-        </ul>
-      Thanks to <a href="https://github.com/stavenko">stavenko</a> for the contribution.
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/203">Fix issue #163: the "spans" attribute of the row element is optional #203</a>
+      Now xlsx parsing will handle documents without row spans.
+      Thanks to <a href="https://github.com/arturas-vitkauskas">arturas-vitkauskas</a> for the contribution.
     </li>
 </ul>
 
@@ -1346,5 +1337,6 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.27  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/187">Pass views to worksheet-writer #187</a> Now also passes views to worksheet-writer. Thanks to <a href="https://github.com/Temetz">Temetz</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/189">Do not escape xml characters when using shared strings #189</a> Fixing bug in shared strings. Thanks to <a href="https://github.com/tkirda">tkirda</a> for the contribution.</li></ul> |
 | 0.2.28  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/190">Fix tiny bug [Update hyperlink-map.js] #190</a>Thanks to <a href="https://github.com/lszlkss">lszlkss</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/196">fix typo on sheet view showGridLines option #196</a> "showGridlines" should have been "showGridLines". Thanks to <a href="https://github.com/gadiaz1">gadiaz1</a> for the contribution.</li></ul> |
 | 0.2.29  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/199">Fire finish event instead of end event on write stream #199</a> and <a href="https://github.com/guyonroche/exceljs/pull/200">Listen for finish event on zip stream instead of middle stream #200</a>. Fixes issues with stream completion events. Thanks to <a href="https://github.com/junajan">junajan</a> for the contribution.</li></ul> |
+| 0.2.30  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/201">Fix issue #178 #201</a> Adds the following properties to workbook:<ul><li>title</li><li>subject</li><li>keywords</li><li>category</li><li>description</li><li>company</li><li>manager</li></ul>Thanks to <a href="https://github.com/stavenko">stavenko</a> for the contribution.</li></ul> |
 
 
