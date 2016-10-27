@@ -39,7 +39,7 @@ var expectations = [
     xml: fs.readFileSync(__dirname + '/data/core.03.xml').toString().replace(/\r\n/g, '\n'),
     get parsedModel() { return this.preparedModel; },
     tests: ['render', 'renderIn', 'parse']
-  },
+  }
 ];
 
 describe('CoreXform', function () {
