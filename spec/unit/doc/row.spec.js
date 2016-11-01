@@ -181,11 +181,12 @@ describe('Row', function() {
       cells:[
         {address:'A1',type:Enums.ValueType.Number,value:5,style:{}},
         {address:'B1',type:Enums.ValueType.String,value:"Hello, World!",style:{}},
-        {address:'D1',type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com",style:{}}
+        {address:'D1',type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com",style:{}},
+        {address:'E1',type:Enums.ValueType.Null,style:{}}
       ],
       number: 1,
       min: 1,
-      max: 4,
+      max: 5,
       height: 50,
       hidden: false,
       style: {},
