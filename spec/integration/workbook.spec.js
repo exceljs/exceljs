@@ -149,51 +149,7 @@ describe('Workbook', function() {
 
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME);
     });
-
-    it('row styles and columns properly', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
-
-      ws.columns = [
-        { header: 'A1', width: 10 },
-        { header: 'B1', width: 20, style: { font: testUtils.styles.fonts.comicSansUdB16, alignment: testUtils.styles.alignments[1].alignment } },
-        { header: 'C1', width: 30 }
-      ];
-
-      ws.getRow(2).font = testUtils.styles.fonts.broadwayRedOutline20;
-
-      ws.getCell('A2').value = 'A2';
-      ws.getCell('B2').value = 'B2';
-      ws.getCell('C2').value = 'C2';
-      ws.getCell('A3').value = 'A3';
-      ws.getCell('B3').value = 'B3';
-      ws.getCell('C3').value = 'C3';
-
-      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-        .then(function() {
-          var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
-        })
-        .then(function(wb2) {
-          var ws2 = wb2.getWorksheet('blort');
-          _.each(['A1', 'B1', 'C1', 'A2', 'B2', 'C2', 'A3', 'B3', 'C3'], function(address) {
-            expect(ws2.getCell(address).value).to.equal(address);
-          });
-          expect(ws2.getCell('B1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-          expect(ws2.getCell('B1').alignment).to.deep.equal(testUtils.styles.alignments[1].alignment);
-          expect(ws2.getCell('A2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-          expect(ws2.getCell('B2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-          expect(ws2.getCell('C2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-          expect(ws2.getCell('B3').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-          expect(ws2.getCell('B3').alignment).to.deep.equal(testUtils.styles.alignments[1].alignment);
-
-          expect(ws2.getColumn(2).font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-          expect(ws2.getColumn(2).alignment).to.deep.equal(testUtils.styles.alignments[1].alignment);
-
-          expect(ws2.getRow(2).font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-        });
-    });
-
+    
     it('a lot of sheets to xlsx file', function() {
       this.timeout(10000);
 
@@ -218,28 +174,7 @@ describe('Workbook', function() {
           }
         });
     });
-
-    it('in-cell formats properly in xlsx file', function() {
-
-      // Stream from input string
-      var testData = new Buffer(richTextSample, 'base64');
-
-      // Initiate the source
-      var bufferStream = new stream.PassThrough();
-
-      // Write your buffer
-      bufferStream.write(testData);
-      bufferStream.end();
-
-      var wb = new Excel.Workbook();
-      return wb.xlsx.read(bufferStream)
-          .then(function () {
-            var ws = wb.worksheets[0];
-            expect(ws.getCell("A1").value).to.deep.equal(richTextSample_A1);
-            expect(ws.getCell("A1").text).to.equal(ws.getCell("A2").value);
-          });
-    });
-
+    
     it('csv file', function() {
       this.timeout(5000);
 
@@ -514,16 +449,16 @@ describe('Workbook', function() {
       });
   });
 
-    describe('Sheet Views', function() {
-      it('frozen panes', function() {
-        var wb = new Excel.Workbook();
-        var ws = wb.addWorksheet('frozen');
-        ws.views = [
-          {state: 'frozen',xSplit: 2,ySplit: 3,topLeftCell: 'C4',activeCell: 'D5'},
-          {state: 'frozen',ySplit: 1},
-          {state: 'frozen',xSplit: 1}
-        ];
-        ws.getCell('A1').value = 'Let it Snow!';
+  describe('Sheet Views', function() {
+    it('frozen panes', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('frozen');
+      ws.views = [
+        {state: 'frozen',xSplit: 2,ySplit: 3,topLeftCell: 'C4',activeCell: 'D5'},
+        {state: 'frozen',ySplit: 1},
+        {state: 'frozen',xSplit: 1}
+      ];
+      ws.getCell('A1').value = 'Let it Snow!';
 
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
@@ -559,7 +494,7 @@ describe('Workbook', function() {
         {state: 'split',xSplit: 1500, activePane: 'topRight'}
       ];
       ws.getCell('A1').value = 'Do the splits!';
-
+  
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
@@ -591,13 +526,13 @@ describe('Workbook', function() {
         testUtils.views.book.visible,
         testUtils.views.book.hidden
       ];
-
+  
       var ws1 = wb.addWorksheet('one');
       ws1.views = [testUtils.views.sheet.frozen];
-
+  
       var ws2 = wb.addWorksheet('two');
       ws2.views = [testUtils.views.sheet.split];
-
+  
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function () {
           var wb2 = new Excel.Workbook();
@@ -605,10 +540,10 @@ describe('Workbook', function() {
         })
         .then(function (wb2) {
           expect(wb2.views).to.deep.equal(wb.views);
-
+  
           var ws1b = wb2.getWorksheet('one');
           expect(ws1b.views).to.deep.equal(ws1.views);
-
+  
           var ws2b = wb2.getWorksheet('two');
           expect(ws2b.views).to.deep.equal(ws2.views);
         });

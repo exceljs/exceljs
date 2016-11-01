@@ -36,6 +36,14 @@ var fakeHyperlinkMap = {
 
 var expectations = [
   {
+    title: 'Styled Null',
+    create:  function() { return new CellXform()},
+    preparedModel: {address: 'A1', type: Enums.ValueType.Null, styleId: 1},
+    xml: '<c r="A1" s="1" />',
+    parsedModel: {address: 'A1', type: Enums.ValueType.Null, styleId: 1},
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
     title: 'Number',
     create:  function() { return new CellXform()},
     preparedModel: {address: 'A1', type: Enums.ValueType.Number, value: 5},
