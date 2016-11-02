@@ -12,9 +12,8 @@ npm install exceljs
 
 <ul>
     <li>
-      Merged <a href="https://github.com/guyonroche/exceljs/pull/210">Allow styling of cells with no value. #210</a>
-      Includes Null type cells with style in the rendering parsing.
-      Thanks to <a href="https://github.com/oferns">oferns</a> for the contribution.
+      Merged <a href="https://github.com/guyonroche/exceljs/pull/212">Fix "Unexpected xml node in parseOpen" bug in LibreOffice documents for attributes dc:language and cp:revision #212</a>
+      Thanks to <a href="https://github.com/jessica-jordan">jessica-jordan</a> for the contribution.
     </li>
 </ul>
 
@@ -1341,4 +1340,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.30  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/201">Fix issue #178 #201</a> Adds the following properties to workbook:<ul><li>title</li><li>subject</li><li>keywords</li><li>category</li><li>description</li><li>company</li><li>manager</li></ul>Thanks to <a href="https://github.com/stavenko">stavenko</a> for the contribution.</li></ul> |
 | 0.2.31  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/203">Fix issue #163: the "spans" attribute of the row element is optional #203</a> Now xlsx parsing will handle documents without row spans. Thanks to <a href="https://github.com/arturas-vitkauskas">arturas-vitkauskas</a> for the contribution.</li></ul> |
 | 0.2.32  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/208">Fix issue 206 #208</a> Fixes issue reading xlsx files that have been printed. Also adds "lastPrinted" property to Workbook. Thanks to <a href="https://github.com/arturas-vitkauskas">arturas-vitkauskas</a> for the contribution.</li></ul> |
+| 0.2.33  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/210">Allow styling of cells with no value. #210</a> Includes Null type cells with style in the rendering parsing. Thanks to <a href="https://github.com/oferns">oferns</a> for the contribution.</li></ul> |
 

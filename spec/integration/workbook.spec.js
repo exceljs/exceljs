@@ -109,6 +109,23 @@ describe('Workbook', function() {
         });
     });
 
+    it('language and revision', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = 'World!';
+      wb.language = 'Klingon';
+      wb.revision = new Date(Date.UTC(2016,10,1,12));
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          expect(wb2.language).to.equal(wb.language);
+          expect(wb2.revision).to.equalDate(wb.revision);
+        });
+    });
+
     it('xlsx file', function() {
 
       var wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');

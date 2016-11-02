@@ -17,7 +17,7 @@ describe('github issues', function() {
         expect(true).to.equal(true);
       });
   });
-  it.only('issue 176 - Unexpected xml node in parseOpen', function() {
+  it('issue 176 - Unexpected xml node in parseOpen', function() {
     var wb = new Excel.Workbook();
     return wb.xlsx.readFile('./spec/integration/data/test-issue-176.xlsx')
       .then(function() {
