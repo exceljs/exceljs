@@ -239,4 +239,17 @@ describe('Row', function() {
     expect(row1.getCell(5).type).to.equal(Enums.ValueType.Null);
     expect(row1.height - 32.5).to.be.below(0.00000001);
   });
+
+  it('counts cells',  function() {
+    var sheet = createSheetMock();
+    var row1 = sheet.getRow(1);
+
+    row1.getCell(1).value = 'one';
+    row1.getCell(2).value = 'two';
+    row1.getCell(4).value = 'four';
+    row1.getCell(5).value = 'five';
+
+    expect(row1.cellCount).to.equal(5);
+    expect(row1.actualCellCount).to.equal(4);
+  });
 });

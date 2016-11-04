@@ -448,336 +448,55 @@ describe('Worksheet', function() {
       });
       expect(count).to.equal(7);
     });
-  });
 
-  it('returns sheet values', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet();
-
-    ws.getCell('A1').value = 11;
-    ws.getCell('C1').value = 'C1';
-    ws.getCell('A2').value = 21;
-    ws.getCell('B2').value = 'B2';
-    ws.getCell('A4').value = 'end';
-
-    expect(ws.getSheetValues()).to.deep.equal([
-      ,
-      [,11,,'C1'],
-      [,21,'B2'],
-      ,
-      [,'end']
-    ]);
-  });
-
-  it('sets row styles', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('basket');
-
-    ws.getCell('A1').value = 5;
-    ws.getCell('A1').numFmt = testUtils.styles.numFmts.numFmt1;
-    ws.getCell('A1').font = testUtils.styles.fonts.arialBlackUI14;
-
-    ws.getCell('C1').value = 'Hello, World!';
-    ws.getCell('C1').alignment = testUtils.styles.namedAlignments.bottomRight;
-    ws.getCell('C1').border = testUtils.styles.borders.doubleRed;
-    ws.getCell('C1').fill = testUtils.styles.fills.redDarkVertical;
-
-    ws.getRow(1).numFmt = testUtils.styles.numFmts.numFmt2;
-    ws.getRow(1).font = testUtils.styles.fonts.comicSansUdB16;
-    ws.getRow(1).alignment = testUtils.styles.namedAlignments.middleCentre;
-    ws.getRow(1).border = testUtils.styles.borders.thin;
-    ws.getRow(1).fill = testUtils.styles.fills.redGreenDarkTrellis;
-
-    expect(ws.getCell('A1').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt2);
-    expect(ws.getCell('A1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('A1').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('A1').border).to.deep.equal(testUtils.styles.borders.thin);
-    expect(ws.getCell('A1').fill).to.deep.equal(testUtils.styles.fills.redGreenDarkTrellis);
-
-    expect(ws.findCell('B1')).to.be.undefined;
-
-    expect(ws.getCell('C1').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt2);
-    expect(ws.getCell('C1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('C1').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('C1').border).to.deep.equal(testUtils.styles.borders.thin);
-    expect(ws.getCell('C1').fill).to.deep.equal(testUtils.styles.fills.redGreenDarkTrellis);
-
-    // when we 'get' the previously null cell, it should inherit the row styles
-    expect(ws.getCell('B1').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt2);
-    expect(ws.getCell('B1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('B1').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('B1').border).to.deep.equal(testUtils.styles.borders.thin);
-    expect(ws.getCell('B1').fill).to.deep.equal(testUtils.styles.fills.redGreenDarkTrellis);
-
-  });
-
-  it('sets col styles', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('basket');
-
-    ws.getCell('A1').value = 5;
-    ws.getCell('A1').numFmt = testUtils.styles.numFmts.numFmt1;
-    ws.getCell('A1').font = testUtils.styles.fonts.arialBlackUI14;
-
-    ws.getCell('A3').value = 'Hello, World!';
-    ws.getCell('A3').alignment = testUtils.styles.namedAlignments.bottomRight;
-    ws.getCell('A3').border = testUtils.styles.borders.doubleRed;
-    ws.getCell('A3').fill = testUtils.styles.fills.redDarkVertical;
-
-    ws.getColumn('A').numFmt = testUtils.styles.numFmts.numFmt2;
-    ws.getColumn('A').font = testUtils.styles.fonts.comicSansUdB16;
-    ws.getColumn('A').alignment = testUtils.styles.namedAlignments.middleCentre;
-    ws.getColumn('A').border = testUtils.styles.borders.thin;
-    ws.getColumn('A').fill = testUtils.styles.fills.redGreenDarkTrellis;
-
-    expect(ws.getCell('A1').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt2);
-    expect(ws.getCell('A1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('A1').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('A1').border).to.deep.equal(testUtils.styles.borders.thin);
-    expect(ws.getCell('A1').fill).to.deep.equal(testUtils.styles.fills.redGreenDarkTrellis);
-
-    expect(ws.findRow(2)).to.be.undefined;
-
-    expect(ws.getCell('A3').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt2);
-    expect(ws.getCell('A3').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('A3').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('A3').border).to.deep.equal(testUtils.styles.borders.thin);
-    expect(ws.getCell('A3').fill).to.deep.equal(testUtils.styles.fills.redGreenDarkTrellis);
-
-    // when we 'get' the previously null cell, it should inherit the column styles
-    expect(ws.getCell('A2').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt2);
-    expect(ws.getCell('A2').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('A2').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('A2').border).to.deep.equal(testUtils.styles.borders.thin);
-    expect(ws.getCell('A2').fill).to.deep.equal(testUtils.styles.fills.redGreenDarkTrellis);
-  });
-
-  it('adjusts collapsed property of columns', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('sheet1');
-
-    var col1 = ws.getColumn(1);
-    var col2 = ws.getColumn(2);
-    var col3 = ws.getColumn(3);
-    expect(col1.collapsed).to.be.false;
-    expect(col2.collapsed).to.be.false;
-    expect(col3.collapsed).to.be.false;
-
-    col1.outlineLevel = 0;
-    col2.outlineLevel = 1;
-    col3.outlineLevel = 2;
-    expect(col1.collapsed).to.be.false;
-    expect(col2.collapsed).to.be.true;
-    expect(col3.collapsed).to.be.true;
-
-    ws.properties.outlineLevelCol = 2;
-    expect(col1.collapsed).to.be.false;
-    expect(col2.collapsed).to.be.false;
-    expect(col3.collapsed).to.be.true;
-
-    ws.properties.outlineLevelCol = 3;
-    expect(col1.collapsed).to.be.false;
-    expect(col2.collapsed).to.be.false;
-    expect(col3.collapsed).to.be.false;
-  });
-
-  it('adjusts collapsed property of row', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('sheet1');
-
-    var row1 = ws.getRow(1);
-    var row2 = ws.getRow(2);
-    var row3 = ws.getRow(3);
-    expect(row1.collapsed).to.be.false;
-    expect(row2.collapsed).to.be.false;
-    expect(row3.collapsed).to.be.false;
-
-    row1.outlineLevel = 0;
-    row2.outlineLevel = 1;
-    row3.outlineLevel = 2;
-    expect(row1.collapsed).to.be.false;
-    expect(row2.collapsed).to.be.true;
-    expect(row3.collapsed).to.be.true;
-
-    ws.properties.outlineLevelRow = 2;
-    expect(row1.collapsed).to.be.false;
-    expect(row2.collapsed).to.be.false;
-    expect(row3.collapsed).to.be.true;
-
-    ws.properties.outlineLevelRow = 3;
-    expect(row1.collapsed).to.be.false;
-    expect(row2.collapsed).to.be.false;
-    expect(row3.collapsed).to.be.false;
-  });
-
-  it('sets outline levels via column headers', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('sheet1');
-
-    ws.columns = [
-      { key: 'id', width: 10, outlineLevel: 1 },
-      { key: 'name', width: 32, outlineLevel: 2 },
-      { key: 'dob', width: 10, outlineLevel: 3 }
-    ];
-
-    expect(ws.getColumn(1).outlineLevel).to.equal(1);
-    expect(ws.getColumn(2).outlineLevel).to.equal(2);
-    expect(ws.getColumn(3).outlineLevel).to.equal(3);
-  });
-
-  it('puts the lotion in the basket', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('basket');
-    ws.getCell('A1').value = 'lotion';
-  });
-
-  describe('Merge Cells', function() {
-    it("references the same top-left value", function() {
+    it('returns sheet values', function() {
       var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      var ws = wb.addWorksheet();
 
-      // initial values
-      ws.getCell('A1').value = 'A1';
-      ws.getCell('B1').value = 'B1';
-      ws.getCell('A2').value = 'A2';
+      ws.getCell('A1').value = 11;
+      ws.getCell('C1').value = 'C1';
+      ws.getCell('A2').value = 21;
       ws.getCell('B2').value = 'B2';
+      ws.getCell('A4').value = 'end';
 
-      ws.mergeCells('A1:B2');
-
-      expect(ws.getCell('A1').value).to.equal('A1');
-      expect(ws.getCell('B1').value).to.equal('A1');
-      expect(ws.getCell('A2').value).to.equal('A1');
-      expect(ws.getCell('B2').value).to.equal('A1');
-
-      expect(ws.getCell('A1').type).to.equal(Excel.ValueType.String);
-      expect(ws.getCell('B1').type).to.equal(Excel.ValueType.Merge);
-      expect(ws.getCell('A2').type).to.equal(Excel.ValueType.Merge);
-      expect(ws.getCell('B2').type).to.equal(Excel.ValueType.Merge);
+      expect(ws.getSheetValues()).to.deep.equal([
+        ,
+        [,11,,'C1'],
+        [,21,'B2'],
+        ,
+        [,'end']
+      ]);
     });
 
-    it('does not allow overlapping merges', function() {
+    it('calculates rowCount and actualRowCount', function() {
       var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      var ws = wb.addWorksheet();
 
-      ws.mergeCells('B2:C3');
+      ws.getCell('A1').value = 'A1';
+      ws.getCell('C1').value = 'C1';
+      ws.getCell('A3').value = 'A3';
+      ws.getCell('D3').value = 'D3';
+      ws.getCell('A4').value = null;
+      ws.getCell('B5').value = 'B5';
 
-      // intersect four corners
-      expect(function() { ws.mergeCells('A1:B2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C1:D2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C3:D4'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('A3:B4'); }).to.throw(Error);
-
-      // enclosing
-      expect(function() { ws.mergeCells('A1:D4'); }).to.throw(Error);
+      expect(ws.rowCount).to.equal(5);
+      expect(ws.actualRowCount).to.equal(3);
     });
 
-    it('merges and unmerges', function() {
+    it('calculates columnCount and actualColumnCount', function() {
       var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      var ws = wb.addWorksheet();
 
-      var expectMaster = function(range, master) {
-        var d = new Dimensions(range);
-        for (var i = d.top; i <= d.bottom; i++) {
-          for (var j = d.left; j <= d.right; j++) {
-            var cell = ws.getCell(i,j);
-            var masterCell = master ? ws.getCell(master) : cell;
-            expect(cell.master.address).to.equal(masterCell.address);
-          }
-        }
-      };
+      ws.getCell('A1').value = 'A1';
+      ws.getCell('C1').value = 'C1';
+      ws.getCell('A3').value = 'A3';
+      ws.getCell('D3').value = 'D3';
+      ws.getCell('E4').value = null;
+      ws.getCell('F5').value = 'F5';
 
-      // merge some cells, then unmerge them
-      ws.mergeCells('A1:B2');
-      expectMaster('A1:B2', 'A1');
-      ws.unMergeCells('A1:B2');
-      expectMaster('A1:B2', null);
-
-      // unmerge just one cell
-      ws.mergeCells('A1:B2');
-      expectMaster('A1:B2', 'A1');
-      ws.unMergeCells('A1');
-      expectMaster('A1:B2', null);
-
-      ws.mergeCells('A1:B2');
-      expectMaster('A1:B2', 'A1');
-      ws.unMergeCells('B2');
-      expectMaster('A1:B2', null);
-
-      // build 4 merge-squares
-      ws.mergeCells('A1:B2');
-      ws.mergeCells('D1:E2');
-      ws.mergeCells('A4:B5');
-      ws.mergeCells('D4:E5');
-
-      expectMaster('A1:B2', 'A1');
-      expectMaster('D1:E2', 'D1');
-      expectMaster('A4:B5', 'A4');
-      expectMaster('D4:E5', 'D4');
-
-      // unmerge the middle
-      ws.unMergeCells('B2:D4');
-
-      expectMaster('A1:B2', null);
-      expectMaster('D1:E2', null);
-      expectMaster('A4:B5', null);
-      expectMaster('D4:E5', null);
+      expect(ws.columnCount).to.equal(6);
+      expect(ws.actualColumnCount).to.equal(4);
     });
 
-    it('does not allow overlapping merges', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
-
-      ws.mergeCells('B2:C3');
-
-      // intersect four corners
-      expect(function() { ws.mergeCells('A1:B2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C1:D2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C3:D4'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('A3:B4'); }).to.throw(Error);
-
-      // enclosing
-      expect(function() { ws.mergeCells('A1:D4'); }).to.throw(Error);
-    });
-
-    it('merges styles', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
-
-      // initial value
-      var B2 = ws.getCell('B2');
-      B2.value = 5;
-      B2.style.font = testUtils.styles.fonts.broadwayRedOutline20;
-      B2.style.border = testUtils.styles.borders.doubleRed;
-      B2.style.fill = testUtils.styles.fills.blueWhiteHGrad;
-      B2.style.alignment = testUtils.styles.namedAlignments.middleCentre;
-      B2.style.numFmt = testUtils.styles.numFmts.numFmt1;
-
-      // expecting styles to be copied (see worksheet spec)
-      ws.mergeCells('B2:C3');
-
-      expect(ws.getCell('B2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('B2').border).to.deep.equal(testUtils.styles.borders.doubleRed);
-      expect(ws.getCell('B2').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('B2').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('B2').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt1);
-
-      expect(ws.getCell('B3').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('B3').border).to.deep.equal(testUtils.styles.borders.doubleRed);
-      expect(ws.getCell('B3').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('B3').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('B3').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt1);
-
-      expect(ws.getCell('C2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('C2').border).to.deep.equal(testUtils.styles.borders.doubleRed);
-      expect(ws.getCell('C2').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('C2').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('C2').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt1);
-
-      expect(ws.getCell('C3').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('C3').border).to.deep.equal(testUtils.styles.borders.doubleRed);
-      expect(ws.getCell('C3').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('C3').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('C3').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt1);
-    });
   });
 });
