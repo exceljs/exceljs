@@ -4,7 +4,21 @@ var expect = require('chai').expect;
 var Bluebird = require('bluebird');
 var _ = require('lodash');
 var tools = require('./tools');
+var testValues = tools.fix(require('./data/sheet-values.json'));
+var Excel = require('../../excel');
+var utils = require('../../lib/utils/utils');
 
+function fillFormula(f) {
+  return _.extend({formula:undefined, result: undefined}, f);
+}
+var streamedValues = {
+  B1: { sharedString: 0 },
+  C1: utils.dateToExcel(testValues.date),
+  D1: fillFormula(testValues.formulas[0]),
+  E1: fillFormula(testValues.formulas[1]),
+  F1: { sharedString: 1 },
+  G1: { sharedString: 2 },
+};
 module.exports = {
   testValues: tools.fix(require('./data/sheet-values.json')),
   styles: tools.fix(require('./data/styles.json')),
@@ -15,141 +29,114 @@ module.exports = {
     var wb = new Excel.stream.xlsx.WorkbookReader();
 
     // expectations
-    var dateAccuracy = 3;
+    var dateAccuracy = 0.00001;
 
     var deferred = Bluebird.defer();
+    var rowCount = 0;
 
     wb.on('worksheet', function(ws) {
       // Sheet name stored in workbook. Not guaranteed here
       // expect(ws.name).to.equal('blort');
       ws.on('row', function(row) {
-        switch(row.number) {
-          case 1:
-            expect(row.getCell('A').value).to.equal(7);
-            expect(row.getCell('A').type).to.equal(Excel.ValueType.Number);
-            expect(row.getCell('B').value).to.equal(utils.testValues.str);
-            expect(row.getCell('B').type).to.equal(Excel.ValueType.String);
-            expect(Math.abs(row.getCell('C').value.getTime() - utils.testValues.date.getTime())).to.be.below(dateAccuracy);
-            expect(row.getCell('C').type).to.equal(Excel.ValueType.Date);
+        rowCount++;
+        try {
+          switch (row.number) {
+            case 1:
+              expect(row.getCell('A').value).to.equal(7);
+              expect(row.getCell('A').type).to.equal(Excel.ValueType.Number);
+              expect(row.getCell('B').value).to.deep.equal(streamedValues.B1);
+              expect(row.getCell('B').type).to.equal(Excel.ValueType.String);
+              expect(Math.abs(row.getCell('C').value - streamedValues.C1)).to.be.below(dateAccuracy);
+              expect(row.getCell('C').type).to.equal(Excel.ValueType.Number);
 
-            expect(row.getCell('D').value).to.deep.equal(utils.testValues.formulas[0]);
-            expect(row.getCell('D').type).to.equal(Excel.ValueType.Formula);
-            expect(row.getCell('E').value).to.deep.equal(utils.testValues.formulas[1]);
-            expect(row.getCell('E').type).to.equal(Excel.ValueType.Formula);
-            expect(row.getCell('F').value).to.deep.equal(utils.testValues.hyperlink);
-            expect(row.getCell('F').type).to.equal(Excel.ValueType.Hyperlink);
-            expect(row.getCell('G').value).to.equal(utils.testValues.str2);
-            break;
+              expect(row.getCell('D').value).to.deep.equal(streamedValues.D1);
+              expect(row.getCell('D').type).to.equal(Excel.ValueType.Formula);
+              expect(row.getCell('E').value).to.deep.equal(streamedValues.E1);
+              expect(row.getCell('E').type).to.equal(Excel.ValueType.Formula);
+              expect(row.getCell('F').value).to.deep.equal(streamedValues.F1);
+              expect(row.getCell('F').type).to.equal(Excel.ValueType.SharedString);
+              expect(row.getCell('G').value).to.deep.equal(streamedValues.G1);
+              break;
 
-          case 2:
-            // A2:B3
-            expect(row.getCell('A').value).to.equal(5);
-            expect(row.getCell('A').type).to.equal(Excel.ValueType.Number);
-            //expect(row.getCell('A').master).to.equal(ws.getCell('A2'));
+            case 2:
+              // A2:B3
+              expect(row.getCell('A').value).to.equal(5);
+              expect(row.getCell('A').type).to.equal(Excel.ValueType.Number);
 
-            expect(row.getCell('B').value).to.equal(5);
-            expect(row.getCell('B').type).to.equal(Excel.ValueType.Merge);
-            //expect(row.getCell('B').master).to.equal(ws.getCell('A2'));
+              expect(row.getCell('B').type).to.equal(Excel.ValueType.Null);
 
-            // C2:D3
-            expect(row.getCell('C').value).to.be.null;
-            expect(row.getCell('C').type).to.equal(Excel.ValueType.Null);
-            //expect(row.getCell('C').master).to.equal(ws.getCell('C2'));
+              // C2:D3
+              expect(row.getCell('C').value).to.be.null;
+              expect(row.getCell('C').type).to.equal(Excel.ValueType.Null);
 
-            expect(row.getCell('D').value).to.be.null;
-            expect(row.getCell('D').type).to.equal(Excel.ValueType.Merge);
-            //expect(row.getCell('D').master).to.equal(ws.getCell('C2'));
+              expect(row.getCell('D').value).to.be.null;
+              expect(row.getCell('D').type).to.equal(Excel.ValueType.Null);
 
-            break;
+              break;
 
-          case 3:
-            expect(row.getCell('A').value).to.equal(5);
-            expect(row.getCell('A').type).to.equal(Excel.ValueType.Merge);
-            //expect(row.getCell('A').master).to.equal(ws.getCell('A2'));
+            case 3:
+              expect(row.getCell('A').value).to.equal(null);
+              expect(row.getCell('A').type).to.equal(Excel.ValueType.Null);
 
-            expect(row.getCell('B').value).to.equal(5);
-            expect(row.getCell('B').type).to.equal(Excel.ValueType.Merge);
-            //expect(row.getCell('B').master).to.equal(ws.getCell('A2'));
+              expect(row.getCell('B').value).to.equal(null);
+              expect(row.getCell('B').type).to.equal(Excel.ValueType.Null);
 
-            expect(row.getCell('C').value).to.be.null;
-            expect(row.getCell('C').type).to.equal(Excel.ValueType.Merge);
-            //expect(row.getCell('C').master).to.equal(ws.getCell('C2'));
+              expect(row.getCell('C').value).to.be.null;
+              expect(row.getCell('C').type).to.equal(Excel.ValueType.Null);
 
-            expect(row.getCell('D').value).to.be.null;
-            expect(row.getCell('D').type).to.equal(Excel.ValueType.Merge);
-            //expect(row.getCell('D').master).to.equal(ws.getCell('C2'));
-            break;
+              expect(row.getCell('D').value).to.be.null;
+              expect(row.getCell('D').type).to.equal(Excel.ValueType.Null);
+              break;
 
-          case 4:
-            expect(row.getCell('A').numFmt).to.equal(utils.testValues.numFmt1);
-            expect(row.getCell('A').type).to.equal(Excel.ValueType.Number);
-            expect(row.getCell('A').border).to.deep.equal(utils.styles.borders.thin);
-            expect(row.getCell('C').numFmt).to.equal(utils.testValues.numFmt2);
-            expect(row.getCell('C').type).to.equal(Excel.ValueType.Number);
-            expect(row.getCell('C').border).to.deep.equal(utils.styles.borders.doubleRed);
-            expect(row.getCell('E').border).to.deep.equal(utils.styles.borders.thickRainbow);
-            break;
+            case 4:
+              expect(row.getCell('A').type).to.equal(Excel.ValueType.Number);
+              expect(row.getCell('C').type).to.equal(Excel.ValueType.Number);
+              break;
 
-          case 5:
-            // test fonts and formats
-            expect(row.getCell('A').value).to.equal(utils.testValues.str);
-            expect(row.getCell('A').type).to.equal(Excel.ValueType.String);
-            expect(row.getCell('A').font).to.deep.equal(utils.styles.fonts.arialBlackUI14);
-            expect(row.getCell('B').value).to.equal(utils.testValues.str);
-            expect(row.getCell('B').type).to.equal(Excel.ValueType.String);
-            expect(row.getCell('B').font).to.deep.equal(utils.styles.fonts.broadwayRedOutline20);
-            expect(row.getCell('C').value).to.equal(utils.testValues.str);
-            expect(row.getCell('C').type).to.equal(Excel.ValueType.String);
-            expect(row.getCell('C').font).to.deep.equal(utils.styles.fonts.comicSansUdB16);
+            case 5:
+              // test fonts and formats
+              expect(row.getCell('A').value).to.deep.equal(streamedValues.B1);
+              expect(row.getCell('A').type).to.equal(Excel.ValueType.String);
+              expect(row.getCell('B').value).to.deep.equal(streamedValues.B1);
+              expect(row.getCell('B').type).to.equal(Excel.ValueType.String);
+              expect(row.getCell('C').value).to.deep.equal(streamedValues.B1);
+              expect(row.getCell('C').type).to.equal(Excel.ValueType.String);
 
-            expect(Math.abs(row.getCell('D').value - 1.6)).to.be.below(0.00000001);
-            expect(row.getCell('D').type).to.equal(Excel.ValueType.Number);
-            expect(row.getCell('D').numFmt).to.equal(utils.testValues.numFmt1);
-            expect(row.getCell('D').font).to.deep.equal(utils.styles.fonts.arialBlackUI14);
+              expect(Math.abs(row.getCell('D').value - 1.6)).to.be.below(0.00000001);
+              expect(row.getCell('D').type).to.equal(Excel.ValueType.Number);
 
-            expect(Math.abs(row.getCell('E').value - 1.6)).to.be.below(0.00000001);
-            expect(row.getCell('E').type).to.equal(Excel.ValueType.Number);
-            expect(row.getCell('E').numFmt).to.equal(utils.testValues.numFmt2);
-            expect(row.getCell('E').font).to.deep.equal(utils.styles.fonts.broadwayRedOutline20);
+              expect(Math.abs(row.getCell('E').value - 1.6)).to.be.below(0.00000001);
+              expect(row.getCell('E').type).to.equal(Excel.ValueType.Number);
 
-            expect(Math.abs(ws.getCell('F5').value.getTime() - utils.testValues.date.getTime())).to.be.below(dateAccuracy);
-            expect(ws.getCell('F5').type).to.equal(Excel.ValueType.Date);
-            expect(ws.getCell('F5').numFmt).to.equal(utils.testValues.numFmtDate);
-            expect(ws.getCell('F5').font).to.deep.equal(utils.styles.fonts.comicSansUdB16);
-            expect(row.height).to.be.undefined;
-            break;
+              expect(Math.abs(row.getCell('F').value - streamedValues.C1)).to.be.below(dateAccuracy);
+              expect(row.getCell('F').type).to.equal(Excel.ValueType.Number);
+              break;
 
-          case 6:
-            expect(ws.getRow(6).height).to.equal(42);
-            _.each(utils.styles.alignments, function(alignment, index) {
-              var colNumber = index + 1;
-              var cell = row.getCell(colNumber);
-              expect(cell.value).to.equal(alignment.text);
-              expect(cell.alignment).to.deep.equal(alignment.alignment);
-            });
-            break;
+            case 6:
+              expect(row.height).to.equal(42);
+              break;
 
-          case 7:
-            _.each(utils.styles.badAlignments, function(alignment, index) {
-              var colNumber = index + 1;
-              var cell = row.getCell(colNumber);
-              expect(cell.value).to.equal(alignment.text);
-              expect(cell.alignment).to.be.undefined;
-            });
-            break;
+            case 7:
+              break;
 
-          case 8:
-            expect(row.height).to.equal(40);
-            expect(row.getCell(1).fill).to.deep.equal(utils.styles.fills.blueWhiteHGrad);
-            expect(row.getCell(2).fill).to.deep.equal(utils.styles.fills.redDarkVertical);
-            expect(row.getCell(3).fill).to.deep.equal(utils.styles.fills.redGreenDarkTrellis);
-            expect(row.getCell(4).fill).to.deep.equal(utils.styles.fills.rgbPathGrad);
-            break;
+            case 8:
+              expect(row.height).to.equal(40);
+              break;
+          }
+        }
+        catch(error) {
+          deferred.reject(error);
         }
       });
     });
     wb.on('end', function() {
-      deferred.resolve();
+      try {
+        expect(rowCount).to.equal(9)
+        deferred.resolve();
+      }
+      catch(error) {
+        deferred.reject(error);
+      }
     });
 
     wb.read(filename, {entries: 'emit', worksheets: 'emit'});
