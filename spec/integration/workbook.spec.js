@@ -1,14 +1,16 @@
 'use strict';
 
+var fs = require('fs');
 var chai = require('chai');
 var expect = chai.expect;
 chai.use(require('chai-datetime'));
 
 var stream = require('stream');
-var bluebird = require('bluebird');
-var _ = require('lodash');
+var Bluebird = require('bluebird');
 var Excel = require('../../excel');
 var testUtils = require('./../utils/index');
+
+var fsReadFileAsync = Bluebird.promisify(fs.readFile);
 
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 var TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
@@ -466,6 +468,45 @@ describe('Workbook', function() {
       });
   });
 
+  describe('Images', function() {
+    it.only('stores background image', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('blort');
+      var ws2;
+      ws.getCell('A1').value = 'Hello, World!';
+      ws.background = {
+        type: 'image',
+        image: {
+          filename: __dirname + '/data/image.png',
+          type: 'png'
+        }
+      };
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          ws2 = wb2.getWorksheet('blort');
+          expect(ws2).to.not.be.undefined;
+
+          return fsReadFileAsync(__dirname + '/data/image.png');
+        })
+        .then(function(data) {
+          expect(ws2.background.type).to.equal('image');
+          expect(ws2.background.image.type).to.equal('png');
+          expect(Buffer.compare(data, ws2.background.image.buffer)).to.equal(0);
+        })
+    });
+    it('stores embedded image', function() {
+      expect(true).to.equal(false);
+    });
+    it('stores images and hyperlinks', function() {
+      expect(true).to.equal(false);
+    });
+  });
+
+
   describe('Sheet Views', function() {
     it('frozen panes', function() {
       var wb = new Excel.Workbook();
@@ -502,6 +543,7 @@ describe('Workbook', function() {
           ])
         });
     });
+
     it('serialises split panes', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('split');
@@ -537,6 +579,7 @@ describe('Workbook', function() {
           ])
         });
     });
+
     it('multiple book views', function() {
       var wb = new Excel.Workbook();
       wb.views = [

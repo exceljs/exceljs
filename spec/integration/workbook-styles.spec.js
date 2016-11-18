@@ -113,5 +113,90 @@ describe('Workbook', function() {
           expect(ws2.getCell('B4').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
         });
     });
+
+    it('sets row styles', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('basket');
+
+      ws.getCell('A1').value = 5;
+      ws.getCell('A1').numFmt = testutils.styles.numFmts.numFmt1;
+      ws.getCell('A1').font = testutils.styles.fonts.arialBlackUI14;
+
+      ws.getCell('C1').value = 'Hello, World!';
+      ws.getCell('C1').alignment = testutils.styles.namedAlignments.bottomRight;
+      ws.getCell('C1').border = testutils.styles.borders.doubleRed;
+      ws.getCell('C1').fill = testutils.styles.fills.redDarkVertical;
+
+      ws.getRow(1).numFmt = testutils.styles.numFmts.numFmt2;
+      ws.getRow(1).font = testutils.styles.fonts.comicSansUdB16;
+      ws.getRow(1).alignment = testutils.styles.namedAlignments.middleCentre;
+      ws.getRow(1).border = testutils.styles.borders.thin;
+      ws.getRow(1).fill = testutils.styles.fills.redGreenDarkTrellis;
+
+      expect(ws.getCell('A1').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
+      expect(ws.getCell('A1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
+      expect(ws.getCell('A1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
+      expect(ws.getCell('A1').border).to.deep.equal(testutils.styles.borders.thin);
+      expect(ws.getCell('A1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+
+      expect(ws.findCell('B1')).to.be.undefined;
+
+      expect(ws.getCell('C1').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
+      expect(ws.getCell('C1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
+      expect(ws.getCell('C1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
+      expect(ws.getCell('C1').border).to.deep.equal(testutils.styles.borders.thin);
+      expect(ws.getCell('C1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+
+      // when we 'get' the previously null cell, it should inherit the row styles
+      expect(ws.getCell('B1').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
+      expect(ws.getCell('B1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
+      expect(ws.getCell('B1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
+      expect(ws.getCell('B1').border).to.deep.equal(testutils.styles.borders.thin);
+      expect(ws.getCell('B1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+
+    });
+
+    it('sets col styles', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('basket');
+
+      ws.getCell('A1').value = 5;
+      ws.getCell('A1').numFmt = testutils.styles.numFmts.numFmt1;
+      ws.getCell('A1').font = testutils.styles.fonts.arialBlackUI14;
+
+      ws.getCell('A3').value = 'Hello, World!';
+      ws.getCell('A3').alignment = testutils.styles.namedAlignments.bottomRight;
+      ws.getCell('A3').border = testutils.styles.borders.doubleRed;
+      ws.getCell('A3').fill = testutils.styles.fills.redDarkVertical;
+
+      ws.getColumn('A').numFmt = testutils.styles.numFmts.numFmt2;
+      ws.getColumn('A').font = testutils.styles.fonts.comicSansUdB16;
+      ws.getColumn('A').alignment = testutils.styles.namedAlignments.middleCentre;
+      ws.getColumn('A').border = testutils.styles.borders.thin;
+      ws.getColumn('A').fill = testutils.styles.fills.redGreenDarkTrellis;
+
+      expect(ws.getCell('A1').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
+      expect(ws.getCell('A1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
+      expect(ws.getCell('A1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
+      expect(ws.getCell('A1').border).to.deep.equal(testutils.styles.borders.thin);
+      expect(ws.getCell('A1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+
+      expect(ws.findRow(2)).to.be.undefined;
+
+      expect(ws.getCell('A3').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
+      expect(ws.getCell('A3').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
+      expect(ws.getCell('A3').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
+      expect(ws.getCell('A3').border).to.deep.equal(testutils.styles.borders.thin);
+      expect(ws.getCell('A3').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+
+      // when we 'get' the previously null cell, it should inherit the column styles
+      expect(ws.getCell('A2').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
+      expect(ws.getCell('A2').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
+      expect(ws.getCell('A2').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
+      expect(ws.getCell('A2').border).to.deep.equal(testutils.styles.borders.thin);
+      expect(ws.getCell('A2').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+    });
+
+
   });
 });
