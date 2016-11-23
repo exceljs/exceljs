@@ -32,14 +32,7 @@ var fakeStyles = {
 };
 
 var fakeHyperlinkMap = {
-  getHyperlink: function(address) {
-    switch(address) {
-      case 'B6':
-        return 'https://www.npmjs.com/package/exceljs';
-      default:
-        return;
-    }
-  }
+  B6: 'https://www.npmjs.com/package/exceljs'
 };
 
 function fixDate(model) {

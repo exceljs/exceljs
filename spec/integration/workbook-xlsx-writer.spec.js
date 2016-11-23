@@ -217,5 +217,44 @@ describe('WorkbookWriter', function() {
           testUtils.checkTestBook(wb2, 'xlsx', ['dataValidations']);
         });
     });
+
+  });
+
+  describe('Images', function() {
+    it('stores background image', function() {
+      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME, useSharedStrings: true});
+      var ws = wb.addWorksheet('blort');
+      var ws2;
+      ws.getCell('A1').value = 'Hello, World!';
+      ws.background = {
+        type: 'image',
+        image: {
+          filename: __dirname + '/data/image.png',
+          type: 'png'
+        }
+      };
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          ws2 = wb2.getWorksheet('blort');
+          expect(ws2).to.not.be.undefined;
+
+          return fsReadFileAsync(__dirname + '/data/image.png');
+        })
+        .then(function(data) {
+          expect(ws2.background.type).to.equal('image');
+          expect(ws2.background.image.type).to.equal('png');
+          expect(Buffer.compare(data, ws2.background.image.buffer)).to.equal(0);
+        })
+    });
+    it('stores embedded image', function() {
+      expect(true).to.equal(false);
+    });
+    it('stores images and hyperlinks', function() {
+      expect(true).to.equal(false);
+    });
   });
 });

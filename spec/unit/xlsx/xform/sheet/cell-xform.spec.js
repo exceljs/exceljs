@@ -24,14 +24,7 @@ var fakeStyles = {
 };
 
 var fakeHyperlinkMap = {
-  getHyperlink: function(address) {
-    switch(address) {
-      case 'H1':
-        return 'http://www.foo.com';
-      default:
-        return;
-    }
-  }
+  H1: 'http://www.foo.com'
 };
 
 var expectations = [

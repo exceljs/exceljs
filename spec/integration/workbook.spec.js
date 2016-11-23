@@ -27,6 +27,20 @@ describe('Workbook', function() {
 
   describe('Serialise', function() {
 
+    it('xlsx file', function() {
+
+      var wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');
+
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          testUtils.checkTestBook(wb2, 'xlsx');
+        });
+    });
+
     it('sheets with correct names', function() {
       var wb = new Excel.Workbook();
       var ws1 = wb.addWorksheet('Hello, World!');
@@ -125,20 +139,6 @@ describe('Workbook', function() {
         .then(function(wb2) {
           expect(wb2.language).to.equal(wb.language);
           expect(wb2.revision).to.equalDate(wb.revision);
-        });
-    });
-
-    it('xlsx file', function() {
-
-      var wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');
-
-      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-        .then(function() {
-          var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
-        })
-        .then(function(wb2) {
-          testUtils.checkTestBook(wb2, 'xlsx');
         });
     });
 
@@ -469,7 +469,7 @@ describe('Workbook', function() {
   });
 
   describe('Images', function() {
-    it.only('stores background image', function() {
+    it('stores background image', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('blort');
       var ws2;
