@@ -23,6 +23,10 @@ npm install exceljs
         Merged <a href="https://github.com/guyonroche/exceljs/pull/232">do not skip empty string in shared strings so that indexes match #232</a>.
         Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.
     </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/233">use shared strings for streamed writes #233</a>.
+        Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.
+    </li>
 </ul>
 
 # Contributions
