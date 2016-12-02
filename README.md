@@ -12,8 +12,8 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/217">Stream reader fixes #217</a>.
-        Thanks to <a href="https://github.com/kturney">kturney</a> for the contribution.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/225">Fix output order of Sheet Properties #225</a>.
+        Thanks to <a href="https://github.com/keeneym">keeneym</a> for the contribution.
     </li>
 </ul>
 
@@ -1359,4 +1359,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.33  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/210">Allow styling of cells with no value. #210</a>. Includes Null type cells with style in the rendering parsing. Thanks to <a href="https://github.com/oferns">oferns</a> for the contribution.</li></ul> |
 | 0.2.34  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/212">Fix "Unexpected xml node in parseOpen" bug in LibreOffice documents for attributes dc:language and cp:revision #212</a>. Thanks to <a href="https://github.com/jessica-jordan">jessica-jordan</a> for the contribution.</li></ul> |
 | 0.2.35  | <ul><li>Fixed <a href="https://github.com/guyonroche/exceljs/issues/74">Getting a column/row count #74</a>. <a href="#worksheet-metrics">Worksheet</a> now has rowCount and columnCount properties (and actual variants), <a href="row">Row</a> has cellCount.</li></ul> |
+| 0.2.36  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/217">Stream reader fixes #217</a>. Thanks to <a href="https://github.com/kturney">kturney</a> for the contribution.</li></ul> |
 
