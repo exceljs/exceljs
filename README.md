@@ -15,6 +15,14 @@ npm install exceljs
         Merged <a href="https://github.com/guyonroche/exceljs/pull/225">Fix output order of Sheet Properties #225</a>.
         Thanks to <a href="https://github.com/keeneym">keeneym</a> for the contribution.
     </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/231">remove empty worksheet[0] from _worksheets #231</a>.
+        Thanks to <a href="https://github.com/pookong">pookong</a> for the contribution.
+    </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/232">do not skip empty string in shared strings so that indexes match #232</a>.
+        Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.
+    </li>
 </ul>
 
 # Contributions
