@@ -1279,7 +1279,7 @@ The following value types are supported.
 | Excel.ValueType.Number    | 2         | A numerical value | 3.14 |
 | Excel.ValueType.String    | 3         | A text value      | 'Hello, World!' |
 | Excel.ValueType.Date      | 4         | A Date value      | new Date()  |
-| Excel.ValueType.Hyperlink | 5         | A hyperlink       | { text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' } |
+| Excel.ValueType.Hyperlink | 5         | A hyperlink       | web:<br>{ text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' } <br>internal:<br> { text: 'Sheet2', hyperlink: '#\\'Sheet2\\'!A1' } |
 | Excel.ValueType.Formula   | 6         | A formula         | { formula: 'A1+A2', result: 7 } |
 
 # Interface Changes
