@@ -15,6 +15,11 @@ npm install exceljs
         Merged <a href="https://github.com/guyonroche/exceljs/pull/236">Add a comment for issue #216 #236</a>.
         Thanks to <a href="https://github.com/jsalwen">jsalwen</a> for the contribution.
     </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/237">Start on support for 1904 based dates #237</a>.
+        Fixed date handling in documents with the 1904 flag set. 
+        Thanks to <a href="https://github.com/holm">holm</a> for the contribution.
+    </li>
 </ul>
 
 # Contributions
@@ -121,6 +126,11 @@ workbook.lastModifiedBy = 'Her';
 workbook.created = new Date(1985, 8, 30);
 workbook.modified = new Date();
 workbook.lastPrinted = new Date(2016, 9, 27);
+```
+
+```javascript
+// Set workbook dates to 1904 date system
+workbook.properties.date1904 = true;
 ```
 
 ## Workbook Views
