@@ -25,4 +25,12 @@ describe('github issues', function() {
         expect(true).to.equal(true);
       });
   });
+  it.only('issue 219 - 1904 dates not supported', function() {
+    var wb = new Excel.Workbook();
+    return wb.xlsx.readFile('./spec/integration/data/1904.xlsx')
+      .then(function() {
+        var ws = wb.getWorksheet('Sheet1');
+        expect(ws.getCell('B4').value.toISOString()).to.equal('1904-01-01T00:00:00.000Z');
+      });
+  });
 });
