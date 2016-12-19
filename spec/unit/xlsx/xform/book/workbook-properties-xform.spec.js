@@ -15,9 +15,9 @@ var expectations = [
   {
     title: 'date1904',
     create: function() { return new WorkbookPropertiesXform(); },
-    preparedModel: { date1904: 1},
+    preparedModel: { date1904: true},
     xml: '<workbookPr date1904="1" defaultThemeVersion="164011" filterPrivacy="1"></workbookPr>',
-    parsedModel: { date1904: 1},
+    parsedModel: { date1904: true},
     tests: ['render', 'renderIn', 'parse']
   }
 ];

@@ -6,6 +6,6 @@
     {"name": "Values", "id": 1, "rId": "rId1"}
   ],
   "properties": {
-  	"date1904": 1
+  	"date1904": true
   }
 }
