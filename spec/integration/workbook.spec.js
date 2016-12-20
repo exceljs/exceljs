@@ -142,6 +142,26 @@ describe('Workbook', function() {
         });
     });
 
+    it('empty strings', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = 'Foo';
+      ws.getCell('A2').value = '';
+      ws.getCell('A3').value = 'Baz';
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('Hello');
+
+          expect(ws2.getCell('A1').value).to.equal('Foo');
+          expect(ws2.getCell('A2').value).to.equal('');
+          expect(ws2.getCell('A3').value).to.equal('Baz');
+        });
+    });
+
     it('dataValidations', function() {
       var wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx', ['dataValidations']);
 

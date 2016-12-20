@@ -107,4 +107,16 @@ describe('Workbook', function() {
     var wb = createSimpleWorkbook();
     expect(wb.model).to.deep.equal(simpleWorkbookModel);
   });
+
+  it('returns undefined for non-existant sheet', function() {
+    var wb = new Excel.Workbook();
+    wb.addWorksheet('first');
+    expect(wb.getWorksheet('w00t')).to.equal(undefined);
+  });
+
+  it('returns undefined for sheet 0', function() {
+    var wb = new Excel.Workbook();
+    wb.addWorksheet('first');
+    expect(wb.getWorksheet(0)).to.equal(undefined);
+  });
 });

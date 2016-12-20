@@ -12,8 +12,13 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/217">Stream reader fixes #217</a>.
-        Thanks to <a href="https://github.com/kturney">kturney</a> for the contribution.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/236">Add a comment for issue #216 #236</a>.
+        Thanks to <a href="https://github.com/jsalwen">jsalwen</a> for the contribution.
+    </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/237">Start on support for 1904 based dates #237</a>.
+        Fixed date handling in documents with the 1904 flag set. 
+        Thanks to <a href="https://github.com/holm">holm</a> for the contribution.
     </li>
 </ul>
 
@@ -121,6 +126,11 @@ workbook.lastModifiedBy = 'Her';
 workbook.created = new Date(1985, 8, 30);
 workbook.modified = new Date();
 workbook.lastPrinted = new Date(2016, 9, 27);
+```
+
+```javascript
+// Set workbook dates to 1904 date system
+workbook.properties.date1904 = true;
 ```
 
 ## Workbook Views
@@ -1279,7 +1289,7 @@ The following value types are supported.
 | Excel.ValueType.Number    | 2         | A numerical value | 3.14 |
 | Excel.ValueType.String    | 3         | A text value      | 'Hello, World!' |
 | Excel.ValueType.Date      | 4         | A Date value      | new Date()  |
-| Excel.ValueType.Hyperlink | 5         | A hyperlink       | { text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' } |
+| Excel.ValueType.Hyperlink | 5         | A hyperlink       | web:<br>{ text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' } <br>internal:<br> { text: 'Sheet2', hyperlink: '#\\'Sheet2\\'!A1' } |
 | Excel.ValueType.Formula   | 6         | A formula         | { formula: 'A1+A2', result: 7 } |
 
 # Interface Changes
@@ -1359,4 +1369,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.33  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/210">Allow styling of cells with no value. #210</a>. Includes Null type cells with style in the rendering parsing. Thanks to <a href="https://github.com/oferns">oferns</a> for the contribution.</li></ul> |
 | 0.2.34  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/212">Fix "Unexpected xml node in parseOpen" bug in LibreOffice documents for attributes dc:language and cp:revision #212</a>. Thanks to <a href="https://github.com/jessica-jordan">jessica-jordan</a> for the contribution.</li></ul> |
 | 0.2.35  | <ul><li>Fixed <a href="https://github.com/guyonroche/exceljs/issues/74">Getting a column/row count #74</a>. <a href="#worksheet-metrics">Worksheet</a> now has rowCount and columnCount properties (and actual variants), <a href="row">Row</a> has cellCount.</li></ul> |
-
+| 0.2.36  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/217">Stream reader fixes #217</a>. Thanks to <a href="https://github.com/kturney">kturney</a> for the contribution.</li></ul> |
+| 0.2.37  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/225">Fix output order of Sheet Properties #225</a>. Thanks to <a href="https://github.com/keeneym">keeneym</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/231">remove empty worksheet[0] from _worksheets #231</a>. Thanks to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/232">do not skip empty string in shared strings so that indexes match #232</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/233">use shared strings for streamed writes #233</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li></ul>
