@@ -15,6 +15,10 @@ npm install exceljs
         Merged <a href="https://github.com/guyonroche/exceljs/pull/245">Stops Bluebird warning about unreturned promise #245</a>.
         Thanks to <a href="https://github.com/robinbullocks4rb">robinbullocks4rb</a> for the contribution.
     </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/247">Added missing dependency: col-cache.js #247</a>.
+        Thanks to <a href="https://github.com/Manish2005">Manish2005</a> for the contribution.
+    </li>
 </ul>
 
 # Contributions
