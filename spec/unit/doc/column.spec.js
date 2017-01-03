@@ -30,6 +30,9 @@ describe("Column", function() {
     column.key = "id1";
     expect(sheet._keys["id1"]).to.equal(column);
 
+    expect(column.number).to.equal(1);
+    expect(column.letter).to.equal('A');
+
     column.header = "Col 1";
     expect(sheet.getColumn(1).header).to.equal("Col 1");
     expect(sheet.getColumn(1).headers).to.deep.equal(["Col 1"]);
