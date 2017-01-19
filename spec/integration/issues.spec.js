@@ -11,6 +11,23 @@ var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 
 describe('github issues', function() {
+  it('issue 99 - Too few data or empty worksheet generate malformed excel file', function() {
+      var testutils = require('../utils/index');
+      var options = {
+          filename: './spec/integration/data/test-issue-99.xlsx',
+          useStyles: true,
+          useSharedStrings: true
+      };
+      var wb = new Excel.stream.xlsx.WorkbookWriter(options);
+      var sheet = wb.addWorksheet("test");
+      sheet.commit();
+      wb.commit();
+
+      var wb2 = new Excel.Workbook();
+      wb2.xlsx.readFile('./spec/integration/data/test-issue-99.xlsx');
+      throw Error("check the file is correclty opened by excel");
+
+  });
   it('issue 163 - Error while using xslx readFile method', function() {
     var wb = new Excel.Workbook();
     return wb.xlsx.readFile('./spec/integration/data/test-issue-163.xlsx')
