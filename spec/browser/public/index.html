@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Browserify</title>
+  <script src="bundle.js"></script>
+  <script>
+    function setImmediate(cb) {
+      new Promise(function () {
+        cb();
+      })
+    }
+
+    function go() {
+      var wb = new ExcelJS.Workbook();
+      var ws = wb.addWorksheet('blort');
+
+      ws.getCell('A1').value = 'Hello, World!';
+
+      wb.xlsx.writeBuffer()
+        .then(function(buffer) {
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', '/api/upload');
+          xhr.onload = function() {
+            if(xhr.status === 200) {
+              alert('uploaded');
+            }
+          };
+          xhr.send(buffer);
+        });
+    }
+  </script>
+</head>
+<body>
+  <button onclick="go()">Go!</button>
+</body>
+</html>

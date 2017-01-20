@@ -24,7 +24,7 @@
 
 var _ = require("lodash");
 
-var main = module.exports = {
+var ExcelJS = module.exports = {
     Workbook: require("./lib/doc/workbook"),
     ModelContainer: require("./lib/doc/modelcontainer"),
     stream: {
@@ -35,4 +35,4 @@ var main = module.exports = {
     }
 };
 
-_.extend(main, require("./lib/doc/enums"));
+_.extend(ExcelJS, require("./lib/doc/enums"));

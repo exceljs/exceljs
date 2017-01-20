@@ -38,3 +38,6 @@ node_modules
 
 # gold internals
 spec/integration/data/gold
+
+# bundle files
+bundle.js

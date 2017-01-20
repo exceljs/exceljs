@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "0.2.38",
+  "version": "0.2.39",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -38,15 +38,17 @@
     "archiver": "0.15.0",
     "bluebird": "*",
     "fast-csv": "0.5.7",
+    "jszip": "^3.1.3",
     "lodash": "^4.16.2",
     "moment": "2.11.2",
     "sax": "^0.6.0",
-    "unzip2": "^0.2.5"
+    "zip-stream": "^1.1.1"
   },
   "devDependencies": {
+    "browserify": "^13.1.1",
     "chai": "*",
-    "chai-xml": "*",
     "chai-datetime": "*",
+    "chai-xml": "*",
     "express": "*",
     "jshint": "*",
     "memorystream": "*",
@@ -58,7 +60,9 @@
     "test": "npm run unit-test && npm run integration-test && npm run end-to-end-test",
     "unit-test": "mocha spec/unit --recursive",
     "integration-test": "mocha spec/integration --recursive",
-    "end-to-end-test": "mocha spec/end-to-end --recursive"
+    "end-to-end-test": "mocha spec/end-to-end --recursive",
+    "build": "./node_modules/.bin/browserify excel.js --standalone ExcelJS > bundle.js",
+    "browser-test": "node spec/browser/app.js"
   },
   "main": "./excel.js",
   "files": [
