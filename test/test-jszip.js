@@ -17,6 +17,8 @@ fsp.readFileAsync(filename)
   })
   .then(function(zip) {
     zip.forEach(function(path, entry) {
-      console.log(path, entry.name, entry)
+      if (!entry.dir) {
+        console.log(path, entry.name, entry._data.compressedSize, entry._data.uncompressedSize)
+      }
     });
   })
