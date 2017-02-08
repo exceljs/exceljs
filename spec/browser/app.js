@@ -8,7 +8,7 @@ var path = require('path');
 
 // copy the bundle to public/
 console.log('Copying bundle.js to public folder');
-fs.createReadStream(__dirname + '/../../bundle.js')
+fs.createReadStream(__dirname + '/../../browser/bundle.js')
   .pipe(fs.createWriteStream(__dirname + '/public/bundle.js'));
 
 var app = express();

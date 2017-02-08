@@ -42,7 +42,6 @@
     "lodash": "^4.16.2",
     "moment": "2.11.2",
     "sax": "^0.6.0",
-    "zip-stream": "^1.1.1",
     "unzip2": "^0.2.5"
   },
   "devDependencies": {
@@ -55,6 +54,7 @@
     "memorystream": "*",
     "mocha": "*",
     "request": "*",
+    "uglifyjs": "^2.4.10",
     "underscore": "1.4.4"
   },
   "scripts": {
@@ -62,13 +62,17 @@
     "unit-test": "mocha spec/unit --recursive",
     "integration-test": "mocha spec/integration --recursive",
     "end-to-end-test": "mocha spec/end-to-end --recursive",
-    "build": "./node_modules/.bin/browserify excel-b.js --standalone ExcelJS > bundle.js",
-    "browser-test": "node spec/browser/app.js"
+    "build": "npm run build-browserify && npm run build-browserify-min",
+    "build-browserify": "./node_modules/.bin/browserify browser/index.js --standalone ExcelJS > dist/exceljs.js",
+    "build-browserify-min": "./node_modules/.bin/browserify browser/index.js --standalone ExcelJS | ./node_modules/.bin/uglifyjs > dist/exceljs.min.js",
+    "browser-test": "node spec/browser/app.js",
+    "prepublish": "npm run build"
   },
   "main": "./excel.js",
   "files": [
     "excel.js",
     "lib",
+    "browser",
     "LICENSE",
     "README.md",
     "MODEL.md"

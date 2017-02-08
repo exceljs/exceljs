@@ -11,14 +11,15 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/245">Stops Bluebird warning about unreturned promise #245</a>.
-        Thanks to <a href="https://github.com/robinbullocks4rb">robinbullocks4rb</a> for the contribution.
-    </li>
-    <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/247">Added missing dependency: col-cache.js #247</a>.
-        Thanks to <a href="https://github.com/Manish2005">Manish2005</a> for the contribution.
-    </li>
+  <li>
+    Browser Compatable!
+    <ul>
+      <li>
+        Well mostly. I have added a browser sub-folder that contains a browserified bundle 
+        and an index.js that can be used to generate another. See <a href="#browser">Browser</a> section for details
+      </li>
+    </ul>
+  </li>
 </ul>
 
 # Contributions
@@ -31,78 +32,79 @@ I have just one request; If you submit a pull request for a bugfix, please add a
 # Backlog
 
 <ul>
-    <li>Images - background, in-cell, printing, etc.</li>
-    <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
-    <li>Still working my way through PRs and Issues and improving the tests.</li>
-    <li>XLSX Streaming Reader.</li>
-    <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
-        I would also like to take the time to look at transpilers to support the earlier JSs</li>
-    <li>Parsing CSV with Headers</li>
+  <li>Images - background, in-cell, printing, etc.</li>
+  <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
+  <li>Still working my way through PRs and Issues and improving the tests.</li>
+  <li>XLSX Streaming Reader.</li>
+  <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
+    I would also like to take the time to look at transpilers to support the earlier JSs</li>
+  <li>Parsing CSV with Headers</li>
 </ul>
 
 # Contents
 
 <ul>
-    <li>
-        <a href="#interface">Interface</a>
+  <li>
+    <a href="#interface">Interface</a>
+    <ul>
+      <li><a href="#create-a-workbook">Create a Workbook</a></li>
+      <li><a href="#set-workbook-properties">Set Workbook Properties</a></li>
+      <li><a href="#workbook-views">Workbook Views</a></li>
+      <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
+      <li><a href="#access-worksheets">Access Worksheets</a></li>
+      <li><a href="#worksheet-properties">Worksheet Properties</a></li>
+      <li><a href="#page-setup">Page Setup</a></li>
+      <li>
+        <a href="#worksheet-views">Worksheet Views</a>
         <ul>
-            <li><a href="#create-a-workbook">Create a Workbook</a></li>
-            <li><a href="#set-workbook-properties">Set Workbook Properties</a></li>
-            <li><a href="#workbook-views">Workbook Views</a></li>
-            <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
-            <li><a href="#access-worksheets">Access Worksheets</a></li>
-            <li><a href="#worksheet-properties">Worksheet Properties</a></li>
-            <li><a href="#page-setup">Page Setup</a></li>
-            <li>
-                <a href="#worksheet-views">Worksheet Views</a>
-                <ul>
-                    <li><a href="#frozen-views">Frozen Views</a></li>
-                    <li><a href="#split-views">Split Views</a></li>
-                </ul>
-            </li>
-            <li><a href="#columns">Columns</a></li>
-            <li><a href="#rows">Rows</a></li>
-            <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
-            <li><a href="#merged-cells">Merged Cells</a></li>
-            <li><a href="#defined-names">Defined Names</a></li>
-            <li><a href="#data-validations">Data Validations</a></li>
-            <li><a href="#styles">Styles</a>
-                <ul>
-                    <li><a href="#number-formats">Number Formats</a></li>
-                    <li><a href="#fonts">Fonts</a></li>
-                    <li><a href="#alignment">Alignment</a></li>
-                    <li><a href="#borders">Borders</a></li>
-                    <li><a href="#fills">Fills</a></li>
-                    <li><a href="rich-text">Rich Text</a></li>
-                </ul>
-            </li>
-            <li><a href="#outline-levels">Outline Levels</a></li>
-            <li><a href="#file-io">File I/O</a>
-                <ul>
-                    <li><a href="#xlsx">XLSX</a>
-                        <ul>
-                            <li><a href="#reading-xlsx">Reading XLSX</a></li>
-                            <li><a href="#writing-xlsx">Writing XLSX</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#csv">CSV</a>
-                        <ul>
-                            <li><a href="#reading-csv">Reading CSV</a></li>
-                            <li><a href="#writing-csv">Writing CSV</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#streaming-io">Streaming I/O</a>
-                        <ul>
-                            <li><a href="#reading-csv">Streaming XLSX</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+          <li><a href="#frozen-views">Frozen Views</a></li>
+          <li><a href="#split-views">Split Views</a></li>
         </ul>
-    </li>
-    <li><a href="#value-types">Value Types</a></li>
-    <li><a href="#known-issues">Known Issues</a></li>
-    <li><a href="#release-history">Release History</a></li>
+      </li>
+      <li><a href="#columns">Columns</a></li>
+      <li><a href="#rows">Rows</a></li>
+      <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
+      <li><a href="#merged-cells">Merged Cells</a></li>
+      <li><a href="#defined-names">Defined Names</a></li>
+      <li><a href="#data-validations">Data Validations</a></li>
+      <li><a href="#styles">Styles</a>
+        <ul>
+          <li><a href="#number-formats">Number Formats</a></li>
+          <li><a href="#fonts">Fonts</a></li>
+          <li><a href="#alignment">Alignment</a></li>
+          <li><a href="#borders">Borders</a></li>
+          <li><a href="#fills">Fills</a></li>
+          <li><a href="rich-text">Rich Text</a></li>
+        </ul>
+      </li>
+      <li><a href="#outline-levels">Outline Levels</a></li>
+      <li><a href="#file-io">File I/O</a>
+        <ul>
+          <li><a href="#xlsx">XLSX</a>
+            <ul>
+              <li><a href="#reading-xlsx">Reading XLSX</a></li>
+              <li><a href="#writing-xlsx">Writing XLSX</a></li>
+            </ul>
+          </li>
+          <li><a href="#csv">CSV</a>
+            <ul>
+              <li><a href="#reading-csv">Reading CSV</a></li>
+              <li><a href="#writing-csv">Writing CSV</a></li>
+            </ul>
+          </li>
+          <li><a href="#streaming-io">Streaming I/O</a>
+            <ul>
+              <li><a href="#reading-csv">Streaming XLSX</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#browser">Browser</a></li>
+  <li><a href="#value-types">Value Types</a></li>
+  <li><a href="#known-issues">Known Issues</a></li>
+  <li><a href="#release-history">Release History</a></li>
 </ul>
 
 # Interface
@@ -1277,6 +1279,31 @@ workbook.commit()
   });
 ```
 
+# Browser
+
+A portion of this library has been isolated and tested for use within a browser environment.
+
+Due to the streaming nature of the workbook reader and workbook writer, these have not been included.
+Only the document based workbook may be used (see <a href="#create-a-workbook">Create a Worbook</a> for details).
+
+## Prebundled
+
+The following files are pre-bundled and included inside the dist folder.
+
+* exceljs.js
+* exceljs.min.js
+ 
+## As a sub-module
+
+If you need to create your own bundle you can require the browser-safe file as follows:
+ 
+```javascript
+var ExcelJS = require('exceljs/browser');
+
+/// etc.
+
+```
+
 # Value Types
 
 The following value types are supported.
@@ -1371,3 +1398,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.36  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/217">Stream reader fixes #217</a>. Thanks to <a href="https://github.com/kturney">kturney</a> for the contribution.</li></ul> |
 | 0.2.37  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/225">Fix output order of Sheet Properties #225</a>. Thanks to <a href="https://github.com/keeneym">keeneym</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/231">remove empty worksheet[0] from _worksheets #231</a>. Thanks to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/232">do not skip empty string in shared strings so that indexes match #232</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/233">use shared strings for streamed writes #233</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li></ul> |
 | 0.2.38  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/236">Add a comment for issue #216 #236</a>. Thanks to <a href="https://github.com/jsalwen">jsalwen</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/237">Start on support for 1904 based dates #237</a>. Fixed date handling in documents with the 1904 flag set. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
+| 0.2.29  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/245">Stops Bluebird warning about unreturned promise #245</a>. Thanks to <a href="https://github.com/robinbullocks4rb">robinbullocks4rb</a> for the contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/247">Added missing dependency: col-cache.js #247</a>. Thanks to <a href="https://github.com/Manish2005">Manish2005</a> for the contribution. </li> </ul> |
