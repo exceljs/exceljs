@@ -43,4 +43,4 @@ node_modules
 spec/integration/data/gold
 
 # bundle files
-bundle.js
+/spec/browser/public/exceljs.js
