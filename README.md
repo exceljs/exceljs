@@ -32,6 +32,7 @@ I have just one request; If you submit a pull request for a bugfix, please add a
 # Backlog
 
 <ul>
+  <li>Drop unnecessary 3rd party dependencies to reduce browserify footprint.</li>
   <li>Images - background, in-cell, printing, etc.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
   <li>Still working my way through PRs and Issues and improving the tests.</li>
