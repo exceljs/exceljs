@@ -8,8 +8,8 @@ var path = require('path');
 
 // copy the bundle to public/
 console.log('Copying bundle.js to public folder');
-fs.createReadStream(__dirname + '/../../browser/bundle.js')
-  .pipe(fs.createWriteStream(__dirname + '/public/bundle.js'));
+fs.createReadStream(__dirname + '/../../dist/exceljs.js')
+  .pipe(fs.createWriteStream(__dirname + '/public/exceljs.js'));
 
 var app = express();
 

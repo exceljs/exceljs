@@ -1287,6 +1287,8 @@ A portion of this library has been isolated and tested for use within a browser 
 Due to the streaming nature of the workbook reader and workbook writer, these have not been included.
 Only the document based workbook may be used (see <a href="#create-a-workbook">Create a Worbook</a> for details).
 
+For example code using ExcelJS in the browser take a look at the <a href="https://github.com/guyonroche/exceljs/tree/master/spec/browser">spec/browser</a> folder in the github repo.
+
 ## Prebundled
 
 The following files are pre-bundled and included inside the dist folder.
