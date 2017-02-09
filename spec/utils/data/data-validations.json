@@ -50,6 +50,14 @@
     "formulae": [5]
   },
 
+  "B17": {
+    "type": "decimal",
+    "allowBlank": true,
+    "showInputMessage": true,
+    "promptTitle": "Decimal",
+    "prompt": "Value must be a decimal"
+  },
+
   "types": ["whole", "decimal", "date", "textLength"],
   "values": {
     "whole": { "v1": 1, "v2": 10 },
