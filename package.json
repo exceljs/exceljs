@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "0.2.40",
+  "version": "0.2.42",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -73,6 +73,7 @@
     "excel.js",
     "lib",
     "browser",
+    "dist",
     "LICENSE",
     "README.md",
     "MODEL.md"

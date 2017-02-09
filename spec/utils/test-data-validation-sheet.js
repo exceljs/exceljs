@@ -69,6 +69,12 @@ var self = module.exports = {
     ws.getCell('A15').value = tools.concatenateFormula('Terse');
     ws.getCell('B15').dataValidation = self.dataValidations.B15;
 
+    ws.getCell('A17').value = tools.concatenateFormula('Decimal');
+    ws.getCell('B17').dataValidation = self.dataValidations.B17;
+
+    ws.getCell('A19').value = tools.concatenateFormula('Any');
+    ws.getCell('B19').dataValidation = self.dataValidations.B19;
+
   },
 
   checkSheet: function(wb) {
@@ -91,5 +97,7 @@ var self = module.exports = {
     expect(ws.getCell('B13').dataValidation).to.deep.equal(self.dataValidations.B13);
     expect(ws.getCell('E13').dataValidation).to.deep.equal(self.dataValidations.E13);
     expect(ws.getCell('B15').dataValidation).to.deep.equal(self.dataValidations.B15);
+    expect(ws.getCell('B17').dataValidation).to.deep.equal(self.dataValidations.B17);
+    expect(ws.getCell('B19').dataValidation).to.deep.equal(self.dataValidations.B19);
   }
 };

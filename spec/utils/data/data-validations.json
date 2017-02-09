@@ -58,6 +58,13 @@
     "prompt": "Value must be a decimal"
   },
 
+  "B19": {
+    "type": "any",
+    "showInputMessage": true,
+    "promptTitle": "Any",
+    "prompt": "You can put any value here"
+  },
+
   "types": ["whole", "decimal", "date", "textLength"],
   "values": {
     "whole": { "v1": 1, "v2": 10 },

@@ -20,6 +20,14 @@ npm install exceljs
       </li>
     </ul>
   </li>
+  <li>
+    Fixed corrupted theme.xml. Apologies for letting that through. 
+  </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/253">[BUGFIX] data validation formulae undefined #253</a>.
+    Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.
+  </li>
+  
 </ul>
 
 # Contributions
