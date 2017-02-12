@@ -21,13 +21,10 @@ npm install exceljs
     </ul>
   </li>
   <li>
-    Fixed corrupted theme.xml. Apologies for letting that through. 
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/255">added a (maybe partial) solution to issue 99. i wasn't able to create an appropriate test #255</a>.
+    This fixes <a href="https://github.com/guyonroche/exceljs/issues/99">Too few data or empty worksheet generate malformed excel file #99</a>.
+    Thanks to <a href="https://github.com/mminuti">mminuti</a> for the contribution.
   </li>
-  <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/253">[BUGFIX] data validation formulae undefined #253</a>.
-    Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.
-  </li>
-  
 </ul>
 
 # Contributions
@@ -41,6 +38,7 @@ I have just one request; If you submit a pull request for a bugfix, please add a
 
 <ul>
   <li>Drop unnecessary 3rd party dependencies to reduce browserify footprint.</li>
+  <li>Add browser based unit tests</li>
   <li>Images - background, in-cell, printing, etc.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
   <li>Still working my way through PRs and Issues and improving the tests.</li>
@@ -1409,4 +1407,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.36  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/217">Stream reader fixes #217</a>. Thanks to <a href="https://github.com/kturney">kturney</a> for the contribution.</li></ul> |
 | 0.2.37  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/225">Fix output order of Sheet Properties #225</a>. Thanks to <a href="https://github.com/keeneym">keeneym</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/231">remove empty worksheet[0] from _worksheets #231</a>. Thanks to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/232">do not skip empty string in shared strings so that indexes match #232</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/233">use shared strings for streamed writes #233</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li></ul> |
 | 0.2.38  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/236">Add a comment for issue #216 #236</a>. Thanks to <a href="https://github.com/jsalwen">jsalwen</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/237">Start on support for 1904 based dates #237</a>. Fixed date handling in documents with the 1904 flag set. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
-| 0.2.29  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/245">Stops Bluebird warning about unreturned promise #245</a>. Thanks to <a href="https://github.com/robinbullocks4rb">robinbullocks4rb</a> for the contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/247">Added missing dependency: col-cache.js #247</a>. Thanks to <a href="https://github.com/Manish2005">Manish2005</a> for the contribution. </li> </ul> |
+| 0.2.39  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/245">Stops Bluebird warning about unreturned promise #245</a>. Thanks to <a href="https://github.com/robinbullocks4rb">robinbullocks4rb</a> for the contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/247">Added missing dependency: col-cache.js #247</a>. Thanks to <a href="https://github.com/Manish2005">Manish2005</a> for the contribution. </li> </ul> |
+| 0.2.42  | <ul><li>Browser Compatable!<ul><li>Well mostly. I have added a browser sub-folder that contains a browserified bundle and an index.js that can be used to generate another. See <a href="#browser">Browser</a> section for details.</li></ul></li><li>Fixed corrupted theme.xml. Apologies for letting that through.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/253">[BUGFIX] data validation formulae undefined #253</a>. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
