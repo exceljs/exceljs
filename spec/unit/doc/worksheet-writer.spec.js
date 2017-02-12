@@ -6,7 +6,7 @@ var expect = require('chai').expect;
 var WorksheetWriter = require('../../../lib/stream/xlsx/worksheet-writer');
 var StreamBuf = require('../../../lib/utils/stream-buf');
 
-describe.only('Workbook Writer', function() {
+describe('Workbook Writer', function() {
 
   it('generates valid xml even when there is no data', function() {
     // issue: https://github.com/guyonroche/exceljs/issues/99
