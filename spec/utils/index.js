@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 
-var _ = require('lodash');
+var _ = require('./under-dash');
 var Row = require('../../lib/doc/row');
 var Column = require('../../lib/doc/column');
 var tools = require('./tools');
@@ -45,7 +45,7 @@ function getOptions(docType, options) {
     default:
       throw new Error('Bad doc-type: ' + docType);
   }
-  return _.extend(result, options);
+  return Object.assign(result, options);
 }
 
 

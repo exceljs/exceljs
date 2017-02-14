@@ -6,7 +6,6 @@ chai.use(require('chai-datetime'));
 
 var stream = require('stream');
 var bluebird = require('bluebird');
-var _ = require('lodash');
 var Excel = require('../../excel');
 var testUtils = require('./../utils/index');
 

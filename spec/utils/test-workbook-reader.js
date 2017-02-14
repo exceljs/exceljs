@@ -2,14 +2,13 @@
 
 var expect = require('chai').expect;
 var Bluebird = require('bluebird');
-var _ = require('lodash');
 var tools = require('./tools');
 var testValues = tools.fix(require('./data/sheet-values.json'));
 var Excel = require('../../excel');
 var utils = require('../../lib/utils/utils');
 
 function fillFormula(f) {
-  return _.extend({formula:undefined, result: undefined}, f);
+  return Object.assign({formula:undefined, result: undefined}, f);
 }
 var streamedValues = {
   B1: { sharedString: 0 },

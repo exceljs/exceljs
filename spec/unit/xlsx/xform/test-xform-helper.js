@@ -2,7 +2,7 @@
 
 var Sax = require('sax');
 var Bluebird = require('bluebird');
-var _ = require('lodash');
+var _ = require('../../../utils/under-dash');
 
 var chai    = require('chai');
 var chaiXml = require('chai-xml');
@@ -20,26 +20,6 @@ function getExpectation(expectation, name) {
     throw new Error('Expectation missing required field: ' + name);
   }
   return _.cloneDeep(expectation[name]);
-}
-
-// clone objects without the undefined values
-function cloneObject(obj) {
-  var clone;
-  if (obj instanceof Array) {
-    clone = [];
-  } else if (obj instanceof Date) {
-    return obj;
-  } else if (typeof obj === 'object') {
-    clone = {};
-  } else {
-    return obj;
-  }
-  _.each(obj,  function(value, name) {
-    if (value !== undefined) {
-      clone[name] = cloneObject(value);
-    }
-  });
-  return clone;
 }
 
 // ===============================================================================================================
@@ -139,7 +119,7 @@ var its = {
             // console.log('expected Model', JSON.stringify(result));
 
             // eliminate the undefined
-            var clone = cloneObject(model);
+            var clone = _.cloneDeep(model, false);
 
             // console.log('result', JSON.stringify(clone));
             // console.log('expect', JSON.stringify(result));
@@ -166,7 +146,7 @@ var its = {
             //console.log(JSON.stringify(model));
             
             // eliminate the undefined
-            var clone = cloneObject(model);
+            var clone = _.cloneDeep(model, false);
 
             // console.log('result', JSON.stringify(clone));
             // console.log('expect', JSON.stringify(result));
@@ -190,7 +170,7 @@ var its = {
         xform.reconcile(model, expectation.options);
 
         // eliminate the undefined
-        var clone = cloneObject(model);
+        var clone = _.cloneDeep(model, false);
 
         expect(clone).to.deep.equal(result);
         resolve();

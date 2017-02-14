@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var _ = require('lodash');
+var _ = require('../../../lib/utils/under-dash');
 var Excel = require("../../../excel");
 var Dimensions = require("../../../lib/doc/range");
 var testUtils = require("../../utils/index");
@@ -291,7 +291,7 @@ describe('Worksheet', function() {
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      _.each(rows, function(row, index) {
+      rows.forEach(function(row, index) {
         if (row) {
           ws.addRow(row);
         }

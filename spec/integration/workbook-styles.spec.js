@@ -6,7 +6,6 @@ chai.use(require('chai-datetime'));
 
 var stream = require('stream');
 var bluebird = require('bluebird');
-var _ = require('lodash');
 var Excel = require('../../excel');
 var testUtils = require('./../utils/index');
 
@@ -51,7 +50,7 @@ describe('Workbook', function() {
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('blort');
-          _.each(['A1', 'B1', 'C1', 'A2', 'B2', 'C2', 'A3', 'B3', 'C3'], function(address) {
+          ['A1', 'B1', 'C1', 'A2', 'B2', 'C2', 'A3', 'B3', 'C3'].forEach(function(address) {
             expect(ws2.getCell(address).value).to.equal(address);
           });
           expect(ws2.getCell('B1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);

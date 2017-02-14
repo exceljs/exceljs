@@ -2,7 +2,6 @@
 
 var expect = require('chai').expect;
 
-var _ = require('lodash');
 var Excel = require('../../excel');
 var tools = require('./tools');
 
@@ -73,7 +72,7 @@ var self = module.exports = {
     ws.getRow(5).commit();
 
     ws.getRow(6).height = 42;
-    _.each(self.styles.alignments, function(alignment, index) {
+    self.styles.alignments.forEach(function(alignment, index) {
       var rowNumber = 6;
       var colNumber = index + 1;
       var cell = ws.getCell(rowNumber, colNumber);
@@ -83,7 +82,7 @@ var self = module.exports = {
     ws.getRow(6).commit();
 
     if (options.checkBadAlignments) {
-      _.each(self.styles.badAlignments, function(alignment, index) {
+      self.styles.badAlignments.forEach(function(alignment, index) {
         var rowNumber = 7;
         var colNumber = index + 1;
         var cell = ws.getCell(rowNumber, colNumber);
@@ -224,7 +223,7 @@ var self = module.exports = {
 
       expect(ws.getRow(5).height).to.be.undefined;
       expect(ws.getRow(6).height).to.equal(42);
-      _.each(self.styles.alignments, function(alignment, index) {
+      self.styles.alignments.forEach(function(alignment, index) {
         var rowNumber = 6;
         var colNumber = index + 1;
         var cell = ws.getCell(rowNumber, colNumber);
@@ -233,7 +232,7 @@ var self = module.exports = {
       });
 
       if (options.checkBadAlignments) {
-        _.each(self.styles.badAlignments, function(alignment, index) {
+        self.styles.badAlignments.forEach(function(alignment, index) {
           var rowNumber = 7;
           var colNumber = index + 1;
           var cell = ws.getCell(rowNumber, colNumber);

@@ -1,7 +1,6 @@
 'use strict';
 
 var expect = require('chai').expect;
-var _ = require('lodash');
 var Excel = require('../../excel');
 var Range = require('../../lib/doc/range');
 var testutils = require('./../utils/index');
@@ -292,7 +291,7 @@ describe('Worksheet', function() {
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      _.each(rows, function(row, index) {
+      rows.forEach(function(row, index) {
         if (row) {
           ws.addRow(row);
         }

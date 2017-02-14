@@ -2,7 +2,6 @@
 
 var expect = require('chai').expect;
 
-var _ = require('lodash');
 var tools = require('./tools');
 
 var self = module.exports = {
@@ -47,14 +46,14 @@ var self = module.exports = {
     ws.getCell('A5').value = tools.concatenateFormula('Range List');
     ws.getCell('B5').dataValidation = self.dataValidations.B5;
 
-    _.each(self.dataValidations.operators, function(operator, cIndex) {
+    self.dataValidations.operators.forEach(function(operator, cIndex) {
       var col = 3 + cIndex;
       ws.getCell(7, col).value = tools.concatenateFormula(operator);
     });
-    _.each(self.dataValidations.types, function(type, rIndex) {
+    self.dataValidations.types.forEach(function(type, rIndex) {
       var row = 8 + rIndex;
       ws.getCell(row, 1).value = tools.concatenateFormula(type);
-      _.each(self.dataValidations.operators, function(operator, cIndex) {
+      self.dataValidations.operators.forEach(function(operator, cIndex) {
         var col = 3 + cIndex;
         ws.getCell(row, col).dataValidation = self.createDataValidations(type, operator);
       });
@@ -85,10 +84,10 @@ var self = module.exports = {
     expect(ws.getCell('B3').dataValidation).to.deep.equal(self.dataValidations.B3);
     expect(ws.getCell('B5').dataValidation).to.deep.equal(self.dataValidations.B5);
 
-    _.each(self.dataValidations.types, function(type, rIndex) {
+    self.dataValidations.types.forEach(function(type, rIndex) {
       var row = 8 + rIndex;
       ws.getCell(row, 1).value = tools.concatenateFormula(type);
-      _.each(self.dataValidations.operators, function(operator, cIndex) {
+      self.dataValidations.operators.forEach(function(operator, cIndex) {
         var col = 3 + cIndex;
         expect(ws.getCell(row, col).dataValidation).to.deep.equal(self.createDataValidations(type, operator));
       });

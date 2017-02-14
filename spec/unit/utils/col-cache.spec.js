@@ -2,7 +2,6 @@
 
 var expect = require('chai').expect;
 
-var _ = require('lodash');
 var colCache = require('../../../lib/utils/col-cache');
 
 describe('colCache', function() {
@@ -14,7 +13,7 @@ describe('colCache', function() {
 
     // also, because of the fill heuristic A-Z will be there too
     var dic = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-    _.each(dic, function(letter, index) {
+    dic.forEach(function(letter, index) {
       expect(colCache._l2n[letter]).to.equal(index+1);
       expect(colCache._n2l[index+1]).to.equal(letter);
     });
