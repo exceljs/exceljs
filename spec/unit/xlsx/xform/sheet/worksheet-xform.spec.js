@@ -1,10 +1,15 @@
 'use strict';
 
 var fs = require('fs');
-var Enums = require('../../../../../lib/doc/enums');
 
-var SheetXform = require('../../../../../lib/xlsx/xform/sheet/worksheet-xform');
+var chai    = require('chai');
+var expect  = chai.expect;
+
+var Enums = require('../../../../../lib/doc/enums');
+var XmlStream = require('../../../../../lib/utils/xml-stream');
+
 var testXformHelper = require('../test-xform-helper');
+var WorksheetXform = require('../../../../../lib/xlsx/xform/sheet/worksheet-xform');
 
 var SharedStringsXform = require('../../../../../lib/xlsx/xform/strings/shared-strings-xform');
 var StylesXform = require('../../../../../lib/xlsx/xform/style/styles-xform');
@@ -68,7 +73,7 @@ var data = [
 var expectations = [
   {
     title: 'Sheet 1',
-    create:  function() { return new SheetXform(); },
+    create:  function() { return new WorksheetXform(); },
     initialModel: data[0][0],
     preparedModel: data[0][1],
     xml: data[0][2],
@@ -79,7 +84,7 @@ var expectations = [
   },
   {
     title: 'Sheet 2 - Data Validations',
-    create:  function() { return new SheetXform(); },
+    create:  function() { return new WorksheetXform(); },
     initialModel: data[1][0],
     preparedModel: data[1][1],
     xml: data[1][2],
@@ -88,7 +93,7 @@ var expectations = [
   },
   {
     title: 'Sheet 3 - Empty Sheet',
-    create:  function() { return new SheetXform(); },
+    create:  function() { return new WorksheetXform(); },
     preparedModel: data[2][0],
     xml: data[2][1],
     tests: ['render'],
@@ -96,6 +101,22 @@ var expectations = [
   }
 ];
 
-describe('SheetXform', function () {
+describe('WorksheetXform', function () {
   testXformHelper(expectations);
+
+  it('hyperlinks must be after dataValidations', function() {
+    var xform = new WorksheetXform();
+    var model = require('./data/sheet.4.0.json');
+    var xmlStream = new XmlStream();
+    var options = { styles: new StylesXform(true), sharedStrings: new SharedStringsXform(), hyperlinks: []};
+    xform.prepare(model, options);
+    xform.render(xmlStream, model);
+
+    var xml = xmlStream.xml;
+    var iHyperlinks = xml.indexOf('hyperlinks');
+    var iDataValidations = xml.indexOf('dataValidations');
+    expect(iHyperlinks).not.to.equal(-1);
+    expect(iDataValidations).not.to.equal(-1);
+    expect(iHyperlinks).to.be.greaterThan(iDataValidations);
+  });
 });
