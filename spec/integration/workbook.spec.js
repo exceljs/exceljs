@@ -463,7 +463,7 @@ describe('Workbook', function() {
         success = 2;
         // expect the right kind of error
       })
-      .finally(function() {
+      .then(function() {
         expect(success).to.equal(2);
       });
   });
@@ -479,7 +479,7 @@ describe('Workbook', function() {
         success = 2;
         // expect the right kind of error
       })
-      .finally(function() {
+      .then(function() {
         expect(success).to.equal(2);
       });
   });
