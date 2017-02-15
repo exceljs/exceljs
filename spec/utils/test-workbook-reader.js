@@ -1,7 +1,6 @@
 'use strict';
 
 var expect = require('chai').expect;
-var Bluebird = require('bluebird');
 var tools = require('./tools');
 var testValues = tools.fix(require('./data/sheet-values.json'));
 var Excel = require('../../excel');
@@ -30,7 +29,7 @@ module.exports = {
     // expectations
     var dateAccuracy = 0.00001;
 
-    return new Bluebird(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       var rowCount = 0;
 
       wb.on('worksheet', function(ws) {

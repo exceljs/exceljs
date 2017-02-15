@@ -9,6 +9,7 @@ pids
 
 # Generated files
 dist/*
+build/*
 
 # Test Output Folder
 out/*

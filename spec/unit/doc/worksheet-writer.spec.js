@@ -1,6 +1,5 @@
 'use strict';
 
-var Bluebird = require('bluebird');
 var expect = require('chai').expect;
 
 var WorksheetWriter = require('../../../lib/stream/xlsx/worksheet-writer');
@@ -11,7 +10,7 @@ describe('Workbook Writer', function() {
   it('generates valid xml even when there is no data', function() {
     // issue: https://github.com/guyonroche/exceljs/issues/99
     // PR: https://github.com/guyonroche/exceljs/pull/255
-    return new Bluebird(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       var mockWorkbook = {
         _openStream: function() {
           return this.stream;

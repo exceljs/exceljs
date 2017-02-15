@@ -1,6 +1,5 @@
 'use strict';
 
-var Bluebird = require('bluebird');
 var Excel = require('../../excel');
 var testutils = require('../utils/index');
 
@@ -25,7 +24,7 @@ describe('Express', function() {
     });
     var server = app.listen(3003);
 
-    return new Bluebird(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       var r = request('http://127.0.0.1:3003/workbook');
       r.on('response', function(res) {
         var wb2 = new Excel.Workbook();

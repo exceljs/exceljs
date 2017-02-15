@@ -1,7 +1,6 @@
 'use strict';
 
 var Sax = require('sax');
-var Bluebird = require('bluebird');
 var _ = require('../../../utils/under-dash');
 
 var chai    = require('chai');
@@ -32,7 +31,7 @@ function getExpectation(expectation, name) {
 var its = {
   prepare: function(expectation) {
     it('Prepare Model', function() {
-      return new Bluebird(function(resolve) {
+      return new Promise(function(resolve) {
         var model = getExpectation(expectation, 'initialModel');
         var result = getExpectation(expectation, 'preparedModel');
 
@@ -46,7 +45,7 @@ var its = {
 
   render: function(expectation) {
     it('Render to XML', function () {
-      return new Bluebird(function (resolve) {
+      return new Promise(function (resolve) {
         var model = getExpectation(expectation, 'preparedModel');
         var result = getExpectation(expectation, 'xml');
 
@@ -63,7 +62,7 @@ var its = {
 
   renderIn: function(expectation) {
     it('Render in Composite to XML ', function () {
-      return new Bluebird(function (resolve) {
+      return new Promise(function (resolve) {
         var model = {
           pre: true,
           child: getExpectation(expectation, 'preparedModel'),
@@ -97,7 +96,7 @@ var its = {
   
   parseIn: function(expectation) {
     it('Parse within composite', function() {
-      return new Bluebird(function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         var xml = '<compy><pre/>' + getExpectation(expectation, 'xml') + '<post/></compy>';
         var childXform = expectation.create();
         var result = {pre: true};
@@ -134,7 +133,7 @@ var its = {
 
   parse: function(expectation) {
     it('Parse to Model', function () {
-      return new Bluebird(function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         var xml = getExpectation(expectation, 'xml');
         var result = getExpectation(expectation, 'parsedModel');
 
@@ -162,7 +161,7 @@ var its = {
 
   reconcile: function(expectation) {
     it('Reconcile Model', function() {
-      return new Bluebird(function(resolve) {
+      return new Promise(function(resolve) {
         var model = getExpectation(expectation, 'parsedModel');
         var result = getExpectation(expectation, 'reconciledModel');
 

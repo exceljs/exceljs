@@ -1,6 +1,5 @@
 'use strict';
 
-var Bluebird = require('bluebird');
 var _ = require('../../lib/utils/under-dash');
 var MemoryStream = require('memorystream');
 
@@ -40,32 +39,31 @@ var tools = module.exports  = {
     //console.log(JSON.stringify(model, null, '    '))
     var thing2 = new Type();
     thing2.model = model;
-    return Bluebird.resolve(thing2);
+    return Promise.resolve(thing2);
   },
   cloneByStream: function(thing1, Type, end) {
-    var deferred = Bluebird.defer();
+    return new Promise(function(resolve, reject) {
     end = end || 'end';
 
     var thing2 = new Type();
     var stream = thing2.createInputStream();
     stream.on(end, function() {
-      deferred.resolve(thing2);
+      resolve(thing2);
     });
     stream.on('error', function(error) {
-      deferred.reject(error);
+      reject(error);
     });
 
     var memStream = new MemoryStream();
     memStream.on('error', function(error) {
-      deferred.reject(error);
+      reject(error);
     });
     memStream.pipe(stream);
     thing1.write(memStream)
       .then(function() {
         memStream.end();
       });
-
-    return deferred.promise;
+    });
   },
   toISODateString: function(dt) {
     var iso = dt.toISOString();

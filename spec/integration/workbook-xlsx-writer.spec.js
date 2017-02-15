@@ -2,7 +2,6 @@
 
 var fs = require('fs');
 var expect = require('chai').expect;
-var bluebird = require('bluebird');
 var Excel = require('../../excel');
 var testUtils = require('./../utils/index');
 var utils = require('../../lib/utils/utils');
