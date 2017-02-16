@@ -19,6 +19,7 @@ describe('github issues', function() {
         expect(true).to.equal(true);
       });
   });
+
   it('issue 176 - Unexpected xml node in parseOpen', function() {
     var wb = new Excel.Workbook();
     return wb.xlsx.readFile('./spec/integration/data/test-issue-176.xlsx')
@@ -27,6 +28,29 @@ describe('github issues', function() {
         expect(true).to.equal(true);
       });
   });
+
+  it('issue 234 - Broken XLSX because of "vertical tab" ascii character in a cell', function() {
+    var wb = new Excel.Workbook();
+    var ws = wb.addWorksheet('Sheet1');
+
+    // Start of Heading
+    ws.getCell('A1').value = 'Hello, \x01World!';
+
+    // Vertical Tab
+    ws.getCell('A2').value = 'Hello, \x0bWorld!';
+
+    return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+      .then(function() {
+        var wb2 = new Excel.Workbook();
+        return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      })
+      .then(function(wb2) {
+        var ws2 = wb2.getWorksheet('Sheet1');
+        expect(ws2.getCell('A1').value).to.equal('Hello, World!');
+        expect(ws2.getCell('A2').value).to.equal('Hello, World!');
+      });
+  });
+
   describe('issue 219 - 1904 dates not supported', function() {
     it('Reading 1904.xlsx', function () {
       var wb = new Excel.Workbook();
