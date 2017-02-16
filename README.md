@@ -16,9 +16,13 @@ npm install exceljs
     <ul>
       <li>
         Goodbye lodash, goodbye bluebird.
-        Minified bundle is now just over half what it was in the previous version.
+        Minified bundle is now just over half what it was in the first version.
       </li>
     </ul>
+  </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/256">Sheets with hyperlinks and data validations are corrupted #256</a>.
+    Thanks to <a href="https://github.com/simon-stoic">simon-stoic</a> for the contribution.
   </li>
 </ul>
 
@@ -1393,3 +1397,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.39  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/245">Stops Bluebird warning about unreturned promise #245</a>. Thanks to <a href="https://github.com/robinbullocks4rb">robinbullocks4rb</a> for the contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/247">Added missing dependency: col-cache.js #247</a>. Thanks to <a href="https://github.com/Manish2005">Manish2005</a> for the contribution. </li> </ul> |
 | 0.2.42  | <ul><li>Browser Compatable!<ul><li>Well mostly. I have added a browser sub-folder that contains a browserified bundle and an index.js that can be used to generate another. See <a href="#browser">Browser</a> section for details.</li></ul></li><li>Fixed corrupted theme.xml. Apologies for letting that through.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/253">[BUGFIX] data validation formulae undefined #253</a>. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
 | 0.2.43  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/255">added a (maybe partial) solution to issue 99. i wasn't able to create an appropriate test #255</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/99">Too few data or empty worksheet generate malformed excel file #99</a>. Thanks to <a href="https://github.com/mminuti">mminuti</a> for the contribution.</li></ul> |
+| 0.2.44  | <ul><li>Reduced Dependencies.<ul><li>Goodbye lodash, goodbye bluebird. Minified bundle is now just over half what it was in the first version.</li></ul></li></ul> |

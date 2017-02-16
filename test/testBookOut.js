@@ -175,13 +175,24 @@ var A20 = ws.getCell("A20");
 A20.value ="Wrap Text - Wrapping Wrappity Wrap";
 A20.alignment = { shrinkToFit: true };
 
-
 ws.getCell("A2").name = "Passe";
 ws.getCell("B2").name = "Passe";
 
 ws.getCell("E2").name = "Greet";
 ws.getCell("A22").value = {formula:'E2'};
 
+ws.getCell('A24').value = 'Choose';
+ws.getCell('D24').value = 'Hewie';
+ws.getCell('D24').name = 'Nephews';
+ws.getCell('E24').value = 'Dewie';
+ws.getCell('E24').name = 'Nephews';
+ws.getCell('F24').value = 'Louie';
+ws.getCell('F24').name = 'Nephews';
+ws.getCell('B24').dataValidation = {
+  type: 'list',
+  allowBlank: true,
+  formulae: ['Nephews']
+};
 
 var stopwatch = new HrStopwatch();
 stopwatch.start();
