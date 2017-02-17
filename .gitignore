@@ -45,3 +45,4 @@ spec/integration/data/gold
 
 # bundle files
 /spec/browser/public/exceljs.js
+/spec/browser/public/exceljs.min.js
