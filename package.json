@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "0.2.46",
+  "version": "0.3.0",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -36,6 +36,7 @@
   ],
   "dependencies": {
     "archiver": "0.15.0",
+    "es6-promise": "^3.0.2",
     "fast-csv": "0.5.7",
     "jszip": "3.1.3",
     "moment": "2.11.2",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.22.0",
+    "bluebird": "^3.4.7",
     "browserify": "^14.1.0",
     "chai": "*",
     "chai-datetime": "*",
