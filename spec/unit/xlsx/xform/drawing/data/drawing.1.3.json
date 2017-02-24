@@ -1,8 +1,9 @@
 [
   {
     "tl": {"row": 1, "col": 1},
-    "br": {"row": 3, "col": 7},
-    "pic": {
+    "br": {"row": 7, "col": 3},
+    "picture": {
+      "index": 1,
       "rId": "rId1"
     }
   },
@@ -10,6 +11,7 @@
     "tl": {"row": 2.5, "col": 5.5},
     "br": {"row": 10.5, "col": 8.5},
     "picture": {
+      "index": 2,
       "rId": "rId2"
     }
   }

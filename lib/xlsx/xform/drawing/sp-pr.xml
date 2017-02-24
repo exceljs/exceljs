@@ -1,1 +1,9 @@
-<xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr>
+<xdr:spPr>
+    <a:xfrm>
+        <a:off x="0" y="0"/>
+        <a:ext cx="0" cy="0"/>
+    </a:xfrm>
+    <a:prstGeom prst="rect">
+        <a:avLst/>
+    </a:prstGeom>
+</xdr:spPr>
