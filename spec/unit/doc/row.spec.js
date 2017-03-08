@@ -50,7 +50,7 @@ describe('Row', function() {
       }
       count++;
     });
-    expect(count).to.equal(3); //eachCell should only cover non-null cells
+    expect(count).to.equal(3); //eachCell should just cover non-null cells
 
     var row2 = sheet.getRow(2);
     expect(row2.dimensions).to.be.null;
