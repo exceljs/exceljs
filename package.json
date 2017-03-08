@@ -69,7 +69,7 @@
     "integration-test": "mocha spec/integration --recursive",
     "end-to-end-test": "mocha spec/end-to-end --recursive",
     "build": "./node_modules/.bin/grunt build",
-    "browser-test": "node spec/browser/app.js",
+    "manual-test": "node spec/manual/app.js",
     "prepublish": "npm run build"
   },
   "main": "./excel.js",
