@@ -3,14 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Browserify</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.js"></script>
   <script src="exceljs.js"></script>
   <script>
-    function setImmediate(cb) {
-      new Promise(function () {
-        cb();
-      })
-    }
-
     function go() {
       var wb = new ExcelJS.Workbook();
       var ws = wb.addWorksheet('blort');

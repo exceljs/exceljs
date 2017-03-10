@@ -20,7 +20,7 @@ npm install exceljs
     Thanks to <a href="https://github.com/holm">holm</a> for the contribution.
   </li>
   <li>
-    Added Promise library dependency injection. See <a href="#config">Config</a> section for more details.
+    Added automated tests in phantomjs for the browserified code.
   </li>
 </ul>
 
@@ -34,7 +34,6 @@ I have just one request; If you submit a pull request for a bugfix, please add a
 # Backlog
 
 <ul>
-  <li>Add browser based unit tests</li>
   <li>Still working my way through PRs and Issues and improving the tests.</li>
   <li>Images - background, in-cell, printing, etc.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
