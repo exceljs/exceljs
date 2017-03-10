@@ -12,8 +12,12 @@ npm install exceljs
 
 <ul>
   <li>
-    Addressed <a href="https://github.com/guyonroche/exceljs/issues/266">Breaking change removing bluebird #266</a>.
-    Appologies for any inconvenience.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/279">Update dependencies #279</a>.
+    Thanks to <a href="https://github.com/holm">holm</a> for the contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/267">Minor fixes for stream handling #267</a>.
+    Thanks to <a href="https://github.com/holm">holm</a> for the contribution.
   </li>
   <li>
     Added Promise library dependency injection. See <a href="#config">Config</a> section for more details.
@@ -1407,4 +1411,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.44  | <ul><li>Reduced Dependencies.<ul><li>Goodbye lodash, goodbye bluebird. Minified bundle is now just over half what it was in the first version.</li></ul></li></ul> |
 | 0.2.45  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/256">Sheets with hyperlinks and data validations are corrupted #256</a>. Thanks to <a href="https://github.com/simon-stoic">simon-stoic</a> for the contribution.</li></ul> |
 | 0.2.46  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/259">Exclude character controls from XML output. Fixes #234 #262</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/262">Add support for identifier #259</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/234">Broken XLSX because of "vertical tab" ascii character in a cell #234</a>. Thanks to <a href="https://github.com/NOtherDev">NOtherDev</a> for the contribution.</li></ul> |
+| 0.3.0   | <ul><li>Addressed <a href="https://github.com/guyonroche/exceljs/issues/266">Breaking change removing bluebird #266</a>. Appologies for any inconvenience.</li><li>Added Promise library dependency injection. See <a href="#config">Config</a> section for more details.</li></ul> |
 
