@@ -35,12 +35,12 @@
     "pageSetup"
   ],
   "dependencies": {
-    "archiver": "0.15.0",
-    "promish": ">=5.0.1",
-    "fast-csv": "0.5.7",
+    "archiver": "^1.3.0",
+    "fast-csv": "^2.4.0",
     "jszip": "3.1.3",
-    "moment": "2.11.2",
-    "sax": "^0.6.0",
+    "moment": "^2.17.1",
+    "promish": ">=5.0.1",
+    "sax": "^1.2.2",
     "unzip2": "^0.2.5"
   },
   "devDependencies": {
@@ -55,15 +55,15 @@
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-browserify": "^5.0.0",
+    "grunt-contrib-jasmine": "^1.1.0",
     "grunt-contrib-uglify": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-contrib-jasmine": "^1.1.0",
     "jshint": "*",
     "memorystream": "*",
     "mocha": "*",
     "request": "*",
     "uglifyjs": "^2.4.10",
-    "underscore": "1.4.4"
+    "underscore": "^1.8.3"
   },
   "scripts": {
     "test": "npm run unit-test && npm run integration-test && npm run end-to-end-test && npm run browser-test",
