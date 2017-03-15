@@ -52,6 +52,22 @@ var expectations = [
     tests: ['render', 'renderIn', 'parse']
   },
   {
+    title: 'Boolean',
+    create:  function() { return new CellXform()},
+    preparedModel: {address: 'A1', type: Enums.ValueType.Boolean, value: true},
+    parsedModel: {address: 'A1', type: Enums.ValueType.Boolean, value: true},
+    xml: '<c r="A1" t="b"><v>1</v></c>',
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
+    title: 'Error',
+    create:  function() { return new CellXform()},
+    preparedModel: {address: 'A1', type: Enums.ValueType.Error, value: { error: '#N/A'}},
+    parsedModel: {address: 'A1', type: Enums.ValueType.Error, value: { error: '#N/A'}},
+    xml: '<c r="A1" t="e"><v>#N/A</v></c>',
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
     title: 'Inline String',
     create:  function() { return new CellXform()},
     initialModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},

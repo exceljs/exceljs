@@ -30,6 +30,11 @@ var self = module.exports = {
     ws.getCell('F1').value = self.testValues.hyperlink;
     ws.getCell('G1').value = self.testValues.str2;
     ws.getCell('H1').value = self.testValues.json.raw;
+    ws.getCell('I1').value = true;
+    ws.getCell('J1').value = false;
+    ws.getCell('K1').value = self.testValues.Errors.NotApplicable;
+    ws.getCell('L1').value = self.testValues.Errors.Value;
+
     ws.getRow(1).commit();
 
     // merge cell square with numerical value
@@ -149,6 +154,16 @@ var self = module.exports = {
 
     expect(ws.getCell('H1').value).to.equal(self.testValues.json.string);
     expect(ws.getCell('H1').type).to.equal(Excel.ValueType.String);
+
+    expect(ws.getCell('I1').value).to.equal(true);
+    expect(ws.getCell('I1').type).to.equal(Excel.ValueType.Boolean);
+    expect(ws.getCell('J1').value).to.equal(false);
+    expect(ws.getCell('J1').type).to.equal(Excel.ValueType.Boolean);
+
+    expect(ws.getCell('K1').value).to.deep.equal(self.testValues.Errors.NotApplicable);
+    expect(ws.getCell('K1').type).to.equal(Excel.ValueType.Error);
+    expect(ws.getCell('L1').value).to.deep.equal(self.testValues.Errors.Value);
+    expect(ws.getCell('L1').type).to.equal(Excel.ValueType.Error);
 
     // A2:B3
     expect(ws.getCell('A2').value).to.equal(5);

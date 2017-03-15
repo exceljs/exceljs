@@ -12,12 +12,15 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/279">Update dependencies #279</a>.
-    Thanks to <a href="https://github.com/holm">holm</a> for the contribution.
+    Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/278">Boolean cell with value ="true" is returned as 1 #278</a>.
+    The fix involved adding two new Call Value types:
+    <ul>
+        <li><a href="#boolean-value">Boolean Value</a></li>
+        <li><a href="#error-value">Error Value</a></li>
+    </ul>
   </li>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/267">Minor fixes for stream handling #267</a>.
-    Thanks to <a href="https://github.com/holm">holm</a> for the contribution.
+    Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/280">Code correctness - setters don't return a value #280</a>.
   </li>
   <li>
     Added automated tests in phantomjs for the browserified code.
@@ -104,7 +107,21 @@ I have just one request; If you submit a pull request for a bugfix, please add a
     </ul>
   </li>
   <li><a href="#browser">Browser</a></li>
-  <li><a href="#value-types">Value Types</a></li>
+  <li>
+    <a href="#value-types">Value Types</a>
+    <ul>
+      <li><a href="null-value">Null Value</a></li>
+      <li><a href="merge-cell">Merge Cell</a></li>
+      <li><a href="number-value">Number Value</a></li>
+      <li><a href="string-value">String Value</a></li>
+      <li><a href="date-value">Date Value</a></li>
+      <li><a href="hyperlink-value">Hyperlink Value</a></li>
+      <li><a href="formula-value">Formula Value</a></li>
+      <li><a href="rich-text-value">Rich Text Value</a></li>
+      <li><a href="boolean-value">Boolean Value</a></li>
+      <li><a href="error-value">Error Value</a></li>
+    </ul>
+  </li>
   <li><a href="#config">Config</a></li>
   <li><a href="#known-issues">Known Issues</a></li>
   <li><a href="#release-history">Release History</a></li>
@@ -280,9 +297,9 @@ worksheet.pageSetup.printArea = 'A1:G20';
 | Name                          | Value     |
 | ----------------------------- | --------- |
 | Letter                        | undefined | 
-| Legal                         |  5        | 
+| Legal                         |  5        |
 | Executive                     |  7        | 
-| A4                            |  9        | 
+| A4                            |  9        |
 | A5                            |  11       |
 | B5 (JIS)                      |  13       |
 | Envelope #10                  |  20       |
@@ -339,7 +356,7 @@ Split views support the following extra properties:
 | ----------------- | --------- | ----------- |
 | xSplit            | 0         | How many points from the left to place the splitter. To split vertically, set this to 0 or undefined |
 | ySplit            | 0         | How many points from the top to place the splitter. To split horizontally, set this to 0 or undefined  |
-| topLeftCell       | undefined | Which cell will be top-left in the bottom-right pane.  |
+| topLeftCell       | undefined | Which cell will be top-left in the bottom-right pane. |
 | activePane        | undefined | Which pane will be active - one of topLeft, topRight, bottomLeft and bottomRight |
 
 ```javascript
@@ -569,7 +586,6 @@ expect(worksheet.getCell('B5').style.font).not.toBe(myFonts.arial);
 // merge by top-left, bottom-right
 worksheet.mergeCells('G10', 'H11');
 worksheet.mergeCells(10,11,12,13); // top,left,bottom,right
-
 ```
 
 ## Defined Names
@@ -598,7 +614,7 @@ Cells can define what values are valid or not and provide prompting to the user 
 Validation types can be one of the following:
 
 | Type       | Description |
-| ---------- | ---------- |
+| ---------- | ----------- |
 | list       | Define a discrete set of valid values. Excel will offer these in a dropdown for easy entry |
 | whole      | The value must be a whole number |
 | decimal    | The value must be a decimal number |
@@ -608,7 +624,7 @@ Validation types can be one of the following:
 For types other than list or custom, the following operators affect the validation:
 
 | Operator              | Description |
-| --------------------  | ---------- |
+| --------------------  | ----------- |
 | between               | Values must lie between formula results |
 | notBetween            | Values must not lie between formula results |
 | equal                 | Value must equal formula result |
@@ -672,7 +688,6 @@ worksheet.getCell('A1').dataValidation = {
     allowBlank: true,
     formulae: [new Date(2016,0,1)]
 };
-
 ```
 
 ## Styles
@@ -762,21 +777,20 @@ font.size = 20; // Cell A3 now has font size 20!
 
 // Cells that share similar fonts may reference the same font object after
 // the workbook is read from file or stream
-
 ```
 
-| Font Property             | Description       | Example Value(s) |
-| ------------------------- | ----------------- | ---------------- |
-| name | Font name. | 'Arial', 'Calibri', etc. |
-| family | Font family. An integer value. | 1,2,3, etc. |
-| scheme | Font scheme. | 'minor', 'major', 'none' |
-| charset | Font charset. An integer value. | 1, 2, etc. |
-| color | Colour description, an object containing an ARGB value. | { argb: 'FFFF0000'} |
-| bold | Font **weight** | true, false |
-| italic | Font *slope* | true, false |
-| underline | Font <u>underline</u> style | true, false, 'none', 'single', 'double', 'singleAccounting', 'doubleAccounting' |
-| strike | Font <strike>strikethrough</strike> | true, false |
-| outline | Font outline | true, false |
+| Font Property | Description       | Example Value(s) |
+| ------------- | ----------------- | ---------------- |
+| name          | Font name. | 'Arial', 'Calibri', etc. |
+| family        | Font family. An integer value. | 1,2,3, etc. |
+| scheme        | Font scheme. | 'minor', 'major', 'none' |
+| charset       | Font charset. An integer value. | 1, 2, etc. |
+| color         | Colour description, an object containing an ARGB value. | { argb: 'FFFF0000'} |
+| bold          | Font **weight** | true, false |
+| italic        | Font *slope* | true, false |
+| underline     | Font <u>underline</u> style | true, false, 'none', 'single', 'double', 'singleAccounting', 'doubleAccounting' |
+| strike        | Font <strike>strikethrough</strike> | true, false |
+| outline       | Font outline | true, false |
 
 ### Alignment
 
@@ -796,7 +810,6 @@ ws.getCell('E1').alignment = { indent: 1 };
 ws.getCell('F1').alignment = { textRotation: 30 };
 ws.getCell('G1').alignment = { textRotation: -45 };
 ws.getCell('H1').alignment = { textRotation: 'vertical' };
-
 ```
 
 **Valid Alignment Property Values**
@@ -893,7 +906,6 @@ ws.getCell('A2').fill = {
         {position:1, color:{argb:'FF00FF00'}}
     ]
 };
-
 ```
 
 #### Pattern Fills
@@ -937,7 +949,7 @@ ws.getCell('A2').fill = {
 | gradient | Y        | Specifies gradient type. One of ['angle', 'path'] |
 | degree   | angle    | For 'angle' gradient, specifies the direction of the gradient. 0 is from the left to the right. Values from 1 - 359 rotates the direction clockwise |
 | center   | path     | For 'path' gradient. Specifies the relative coordinates for the start of the path. 'left' and 'top' values range from 0 to 1 |
-| stops    | Y        | Specifies the gradient colour sequence. Is an array of objects containing position and color starting with position 0 and ending with position 1. Intermediatary positions may be used to specify other colours on the path. |
+| stops    | Y        | Specifies the gradient colour sequence. Is an array of objects containing position and color starting with position 0 and ending with position 1. Intermediary positions may be used to specify other colours on the path. |
 
 **Caveats**
 
@@ -1009,7 +1021,6 @@ expect(worksheet.getColumn(3).collapsed).to.be.true;
 
 worksheet.properties.outlineLevelCol = 2;
 expect(worksheet.getColumn(3).collapsed).to.be.false;
-
 ```
 
 ## File I/O
@@ -1081,7 +1092,6 @@ workbook.csv.readFile(filename, options)
         // use workbook or worksheet
     });
 
-
 // read from a file with custom value parsing
 var workbook = new Excel.Workbook();
 var options = {
@@ -1106,7 +1116,6 @@ workbook.csv.readFile(filename, options)
     .then(function(worksheet) {
         // use workbook or worksheet
     });
-
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
@@ -1136,7 +1145,6 @@ workbook.csv.write(stream)
     .then(function() {
         // done
     });
-
 
 // read from a file with European Date-Times
 var workbook = new Excel.Workbook();
@@ -1173,7 +1181,6 @@ workbook.csv.readFile(filename, options)
     .then(function(worksheet) {
         // use workbook or worksheet
     });
-
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write the CSV file.
@@ -1302,15 +1309,143 @@ The following files are pre-bundled and included inside the dist folder.
 
 The following value types are supported.
 
-| Enum Name                 | Enum      | Description       | Example Value |
-| ------------------------- | --------- | ----------------- | ------------- |
-| Excel.ValueType.Null      | 0         | No value.         | null |
-| Excel.ValueType.Merge     | 1         | N/A               | N/A |
-| Excel.ValueType.Number    | 2         | A numerical value | 3.14 |
-| Excel.ValueType.String    | 3         | A text value      | 'Hello, World!' |
-| Excel.ValueType.Date      | 4         | A Date value      | new Date()  |
-| Excel.ValueType.Hyperlink | 5         | A hyperlink       | web:<br>{ text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' } <br>internal:<br> { text: 'Sheet2', hyperlink: '#\\'Sheet2\\'!A1' } |
-| Excel.ValueType.Formula   | 6         | A formula         | { formula: 'A1+A2', result: 7 } |
+## Null Value
+
+Enum: Excel.ValueType.Null
+
+A null value indicates an absence of value and will typically not be stored when written to file (except for merged cells).
+  It can be used to remove the value from a cell.
+
+E.g.
+
+```javascript
+worksheet.getCell('A1').value = null;
+```
+
+## Merge Cell
+
+Enum: Excel.ValueType.Merge
+
+A merge cell is one that has its value bound to another 'master' cell.
+  Assigning to a merge cell will cause the master's cell to be modified.
+
+## Number Value
+
+Enum: Excel.ValueType.Number
+
+A numeric value.
+
+E.g.
+
+```javascript
+worksheet.getCell('A1').value = 5;
+worksheet.getCell('A2').value = 3.14159;
+```
+
+## String Value
+
+Enum: Excel.ValueType.String
+
+A simple text string.
+
+E.g.
+
+```javascript
+worksheet.getCell('A1').value = 'Hello, World!';
+```
+
+## Date Value
+
+Enum: Excel.ValueType.Date
+
+A date value, represented by the JavaScript Date type.
+
+E.g.
+
+```javascript
+worksheet.getCell('A1').value = new Date(2017, 2, 15);
+```
+
+## Hyperlink Value
+
+Enum: Excel.ValueType.Hyperlink
+
+A URL with both text and link value.
+
+E.g.
+```javascript
+// link to web
+worksheet.getCell('A1').value = { text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' };
+
+// internal link
+worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\'Sheet2\\'!A1' };
+```
+
+## Formula Value
+
+Enum: Excel.ValueType.Formula
+
+An Excel formula for calculating values on the fly.
+  Note that while the cell type will be Formula, the cell may have an effectiveType value that will
+  be derived from the result value.
+
+Note that ExcelJS cannot process the formula to generate a result, it must be supplied.
+
+E.g.
+
+```javascript
+worksheet.getCell('A1').value = { formula: 'A1+A2', result: 7 };
+```
+
+## Rich Text Value
+
+Enum: Excel.ValueType.RichText
+
+Rich, styled text.
+
+E.g.
+```javascript
+worksheet.getCell('A1').value = {
+  richText: [
+    { text: 'This is '},
+    {font: {italic: true}, text: 'italic'},
+  ]
+};
+```
+
+## Boolean Value
+
+Enum: Excel.ValueType.Boolean
+
+E.g.
+
+```javascript
+worksheet.getCell('A1').value = true;
+worksheet.getCell('A2').value = false;
+```
+
+## Error Value
+
+Enum: Excel.ValueType.Error
+
+E.g.
+
+```javascript
+worksheet.getCell('A1').value = { error: '#N/A' };
+worksheet.getCell('A2').value = { error: '#VALUE!' };
+```
+
+The current valid Error text values are:
+
+| Name                           | Value       |
+| ------------------------------ | ----------- |
+| Excel.ErrorValue.NotApplicable | #N/A        |
+| Excel.ErrorValue.Ref           | #REF!       |
+| Excel.ErrorValue.Name          | #NAME?      |
+| Excel.ErrorValue.DivZero       | #DIV/0!     |
+| Excel.ErrorValue.Null          | #NULL!      |
+| Excel.ErrorValue.Value         | #VALUE!     |
+| Excel.ErrorValue.Num           | #NUM!       |
 
 # Interface Changes
 
@@ -1411,4 +1546,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.45  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/256">Sheets with hyperlinks and data validations are corrupted #256</a>. Thanks to <a href="https://github.com/simon-stoic">simon-stoic</a> for the contribution.</li></ul> |
 | 0.2.46  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/259">Exclude character controls from XML output. Fixes #234 #262</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/262">Add support for identifier #259</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/234">Broken XLSX because of "vertical tab" ascii character in a cell #234</a>. Thanks to <a href="https://github.com/NOtherDev">NOtherDev</a> for the contribution.</li></ul> |
 | 0.3.0   | <ul><li>Addressed <a href="https://github.com/guyonroche/exceljs/issues/266">Breaking change removing bluebird #266</a>. Appologies for any inconvenience.</li><li>Added Promise library dependency injection. See <a href="#config">Config</a> section for more details.</li></ul> |
+| 0.3.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/279">Update dependencies #279</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/267">Minor fixes for stream handling #267</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Added automated tests in phantomjs for the browserified code.</li></ul> |
 
