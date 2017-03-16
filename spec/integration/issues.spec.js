@@ -13,7 +13,7 @@ var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 describe('github issues', function() {
 
-  it.only('issue 275 - hyperlink with query arguments corrupts workbook', function() {
+  it('issue 275 - hyperlink with query arguments corrupts workbook', function() {
     var wb = new Excel.Workbook();
     var ws = wb.addWorksheet('Sheet1');
 
