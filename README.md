@@ -18,12 +18,17 @@ npm install exceljs
         <li><a href="#boolean-value">Boolean Value</a></li>
         <li><a href="#error-value">Error Value</a></li>
     </ul>
+    Note: Minor version has been bumped up to 4 as this release introduces a couple of interface changes:
+    <ul>
+        <li>Boolean cells previously will have returned 1 or 0 will now return true or false</li>
+        <li>Error cells that previously returned a string value will now return an error structure</li>
+    </ul>
   </li>
   <li>
     Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/280">Code correctness - setters don't return a value #280</a>.
   </li>
   <li>
-    Added automated tests in phantomjs for the browserified code.
+    Addressed issue <a href="https://github.com/guyonroche/exceljs/issues/288">v0.3.1 breaks meteor build #288</a>.
   </li>
 </ul>
 

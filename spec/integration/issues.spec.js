@@ -12,6 +12,31 @@ var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 
 describe('github issues', function() {
+
+  it.only('issue 275 - hyperlink with query arguments corrupts workbook', function() {
+    var wb = new Excel.Workbook();
+    var ws = wb.addWorksheet('Sheet1');
+
+    var hyperlink = {
+      text:'Somewhere with query params',
+      hyperlink: 'www.somewhere.com?a=1&b=2&c=<>&d="\'"'
+    };
+
+    // Start of Heading
+    ws.getCell('A1').value = hyperlink;
+
+    return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+      .then(function() {
+        var wb2 = new Excel.Workbook();
+        return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      })
+      .then(function(wb2) {
+        var ws2 = wb2.getWorksheet('Sheet1');
+        expect(ws2.getCell('A1').value).to.deep.equal(hyperlink);
+      });
+  });
+
+
   it('issue 163 - Error while using xslx readFile method', function() {
     var wb = new Excel.Workbook();
     return wb.xlsx.readFile('./spec/integration/data/test-issue-163.xlsx')
@@ -71,7 +96,7 @@ describe('github issues', function() {
           var wb2 = new Excel.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then(function (wb2) {
+        .then(function () {
           return Promise.all([
             Promise.resolve('a'),
             Promise.resolve('b')
