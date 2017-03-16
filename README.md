@@ -635,21 +635,24 @@ For types other than list or custom, the following operators affect the validati
 | lessThanOrEqual       | Value must be less than or equal to formula result |
 
 ```javascript
-// Specify list of valid values (One, Two, Three, Four). Excel will provide a dropdown with these values.
+// Specify list of valid values (One, Two, Three, Four).
+// Excel will provide a dropdown with these values.
 worksheet.getCell('A1').dataValidation = {
     type: 'list',
     allowBlank: true,
     formulae: ['"One,Two,Three,Four"']
 };
 
-// Specify list of valid values from a range. Excel will provide a dropdown with these values.
+// Specify list of valid values from a range.
+// Excel will provide a dropdown with these values.
     worksheet.getCell('A1').dataValidation = {
         type: 'list',
         allowBlank: true,
         formulae: ['$D$5:$F$5']
 };
 
-// Specify Cell must be a whole number that is not 5. Show the user an appropriate error message if they get it wrong
+// Specify Cell must be a whole number that is not 5.
+// Show the user an appropriate error message if they get it wrong
 worksheet.getCell('A1').dataValidation = {
     type: 'whole',
     operator: 'notEqual',
@@ -660,7 +663,8 @@ worksheet.getCell('A1').dataValidation = {
     error: 'The value must not be Five'
 };
 
-// Specify Cell must be a decomal number between 1.5 and 7. Add 'tooltip' to help guid the user
+// Specify Cell must be a decomal number between 1.5 and 7.
+// Add 'tooltip' to help guid the user
 worksheet.getCell('A1').dataValidation = {
     type: 'decimal',
     operator: 'between',
@@ -714,7 +718,7 @@ ws.columns = [
 ];
 
 // Set Column 3 to Currency Format
-ws.getColumn(3).numFmt = '�#,##0;[Red]-�#,##0';
+ws.getColumn(3).numFmt = '"£"#,##0.00;[Red]\-"£"#,##0.00';
 
 // Set Row 2 to Comic Sans.
 ws.getRow(2).font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
@@ -725,8 +729,6 @@ When a style is applied to a row or column, it will be applied to all currently 
 
 If a cell's row and column both define a specific style (e.g. font), the cell will use the row style over the column style.
  However if the row and column define different styles (e.g. column.numFmt and row.font), the cell will inherit the font from the row and the numFmt from the column.
-
-
 
 Caveat: All the above properties (with the exception of numFmt, which is a string), are JS object structures.
  If the same style object is assigned to more than one spreadsheet entity, then each entity will share the same style object.
@@ -1451,7 +1453,7 @@ The current valid Error text values are:
 
 Every effort is made to make a good consistent interface that doesn't break through the versions but regrettably, now and then some things have to change for the greater good.
 
-## Interface Breaks in 0.1.0
+## 0.1.0
 
 ### Worksheet.eachRow
 
@@ -1463,11 +1465,21 @@ This function has changed from returning a sparse array of cell values to return
 
 The sparse array of cell values is still available via Worksheet.getRow(rowNumber).values;
 
-## Interface Breaks in 0.1.1
+## 0.1.1
 
 ### cell.model
 
 cell.styles renamed to cell.style
+
+## 0.2.44
+
+Promises returned from functions switched from Bluebird to native node Promise which can break calling code
+ if they rely on Bluebird's extra features.
+
+To mitigate this the following two changes were added to 0.3.0:
+
+* A more fully featured and still browser compatable promise lib is used by default. This lib supports many of the features of Bluebird but with a much lower footprint.
+* An option to inject a different Promise implementation. See <a href="#config">Config</a> section for more details.
 
 # Config
 
