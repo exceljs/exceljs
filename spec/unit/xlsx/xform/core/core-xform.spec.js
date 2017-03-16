@@ -39,6 +39,14 @@ var expectations = [
     xml: fs.readFileSync(__dirname + '/data/core.03.xml').toString().replace(/\r\n/g, '\n'),
     get parsedModel() { return this.preparedModel; },
     tests: ['render', 'renderIn', 'parse']
+  },
+  {
+    title: 'core.xml - with cp:contentStatus',
+    create:  function() { return new CoreXform()},
+    preparedModel: { creator: 'Guyon Roche', lastModifiedBy: 'Guyon Roche', contentStatus: 'Final', created: new Date('2016-04-20T16:26:46Z'), modified: new Date('2016-05-12T06:52:49Z')},
+    xml: fs.readFileSync(__dirname + '/data/core.04.xml').toString().replace(/\r\n/g, '\n'),
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
   }
 ];
 
