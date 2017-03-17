@@ -12,23 +12,16 @@ npm install exceljs
 
 <ul>
   <li>
-    Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/278">Boolean cell with value ="true" is returned as 1 #278</a>.
-    The fix involved adding two new Call Value types:
-    <ul>
-        <li><a href="#boolean-value">Boolean Value</a></li>
-        <li><a href="#error-value">Error Value</a></li>
-    </ul>
-    Note: Minor version has been bumped up to 4 as this release introduces a couple of interface changes:
-    <ul>
-        <li>Boolean cells previously will have returned 1 or 0 will now return true or false</li>
-        <li>Error cells that previously returned a string value will now return an error structure</li>
-    </ul>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/285">Add support for cp:contentStatus #285</a>.
+    Thanks to <a href="https://github.com/holm">holm</a> for the contribution.
   </li>
   <li>
-    Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/280">Code correctness - setters don't return a value #280</a>.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/286">Fix Valid characters in XML (allow \n and \r when saving) #286</a>.
+    Thanks to <a href="https://github.com/Rycochet">Rycochet</a> for the contribution.
   </li>
   <li>
-    Addressed issue <a href="https://github.com/guyonroche/exceljs/issues/288">v0.3.1 breaks meteor build #288</a>.
+    Fixed <a href="https://github.com/guyonroche/exceljs/issues/275">hyperlink with query arguments corrupts workbook #275</a>.
+    The hyperlink target is not escaped before serialising in the xml.
   </li>
 </ul>
 
@@ -1564,4 +1557,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.46  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/259">Exclude character controls from XML output. Fixes #234 #262</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/262">Add support for identifier #259</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/234">Broken XLSX because of "vertical tab" ascii character in a cell #234</a>. Thanks to <a href="https://github.com/NOtherDev">NOtherDev</a> for the contribution.</li></ul> |
 | 0.3.0   | <ul><li>Addressed <a href="https://github.com/guyonroche/exceljs/issues/266">Breaking change removing bluebird #266</a>. Appologies for any inconvenience.</li><li>Added Promise library dependency injection. See <a href="#config">Config</a> section for more details.</li></ul> |
 | 0.3.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/279">Update dependencies #279</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/267">Minor fixes for stream handling #267</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Added automated tests in phantomjs for the browserified code.</li></ul> |
-
+| 0.4.0   | <ul><li>Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/278">Boolean cell with value ="true" is returned as 1 #278</a>. The fix involved adding two new Call Value types:<ul><li><a href="#boolean-value">Boolean Value</a></li><li><a href="#error-value">Error Value</a></li></ul>Note: Minor version has been bumped up to 4 as this release introduces a couple of interface changes:<ul><li>Boolean cells previously will have returned 1 or 0 will now return true or false</li><li>Error cells that previously returned a string value will now return an error structure</li></ul></li><li>Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/280">Code correctness - setters don't return a value #280</a>.</li><li>Addressed issue <a href="https://github.com/guyonroche/exceljs/issues/288">v0.3.1 breaks meteor build #288</a>.</li></ul> |

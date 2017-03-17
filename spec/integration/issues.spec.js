@@ -14,7 +14,11 @@ var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 describe('github issues', function() {
 
   it('issue 275 - hyperlink with query arguments corrupts workbook', function() {
-    var wb = new Excel.Workbook();
+    var options = {
+      filename: TEST_XLSX_FILE_NAME,
+      useStyles: true
+    };
+    var wb = new Excel.stream.xlsx.WorkbookWriter(options);
     var ws = wb.addWorksheet('Sheet1');
 
     var hyperlink = {
@@ -24,8 +28,9 @@ describe('github issues', function() {
 
     // Start of Heading
     ws.getCell('A1').value = hyperlink;
+    ws.commit();
 
-    return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+    return wb.commit()
       .then(function() {
         var wb2 = new Excel.Workbook();
         return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);

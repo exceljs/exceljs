@@ -57,6 +57,7 @@ var borders = {
 };
 
 var fills = {
+  solidGreen: {type: 'pattern', pattern:'solid', fgColor:{argb:'FF00FF00'}},
   redDarkVertical: {type: 'pattern', pattern:'darkVertical', fgColor:{argb:'FFFF0000'}},
   redGreenDarkTrellis: {type: 'pattern', pattern:'darkTrellis', fgColor:{argb:'FFFF0000'}, bgColor:{argb:'FF00FF00'}},
   blueWhiteHGrad: {type: 'gradient', gradient: 'angle', degree: 0,
@@ -158,6 +159,8 @@ row12.getCell(3).value = 'Red Green Dark Trellis';
 row12.getCell(3).fill = fills.redGreenDarkTrellis;
 row12.getCell(4).value = 'RGB Path Gradient';
 row12.getCell(4).fill = fills.rgbPathGrad;
+row12.getCell(5).value = 'Solid Green';
+row12.getCell(5).fill = fills.solidGreen;
 
 // row and column styles
 ws.getRow(13).font = fonts.arialBlackUI14;
