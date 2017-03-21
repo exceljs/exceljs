@@ -13,7 +13,8 @@ var ws = wb.addWorksheet('blort');
 
 var fonts = {
   arialBlackUI14: { name: 'Arial Black', family: 2, size: 14, underline: true, italic: true },
-  comicSansUdB16: { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true }
+  comicSansUdB16: { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true },
+  whiteText: { name: 'Arial Black', family: 2, size: 14, color: { argb: 'FFFFFFFF' }},
 };
 
 var alignments = [
@@ -35,7 +36,7 @@ var alignments = [
   { text: 'Rotate -60', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -60 } },
   { text: 'Rotate -75', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -75 } },
   { text: 'Rotate -90', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -90 } },
-  { text: 'Vertical Text', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 'vertical' } }
+  { text: 'Vertical Text', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 'vertical' } },
 ];
 //var badAlignments = [
 //  { text: 'Rotate -91', alignment: { textRotation: -91 } },
@@ -52,8 +53,9 @@ var borders = {
     left: {style:'double', color: {argb:'FF00FFFF'}},
     bottom: {style:'double', color: {argb:'FF00FF00'}},
     right: {style:'double', color: {argb:'FFFF00FF'}},
-    diagonal: {style:'double', color: {argb:'FFFFFF00'}, up: true, down: true}
-  }
+    diagonal: {style:'double', color: {argb:'FFFFFF00'}, up: true, down: true},
+  },
+  thinWhite: { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'}, color: { argb: 'FFFFFFFF'}},
 };
 
 var fills = {
@@ -63,7 +65,7 @@ var fills = {
   blueWhiteHGrad: {type: 'gradient', gradient: 'angle', degree: 0,
     stops: [{position:0, color:{argb:'FF0000FF'}},{position:1, color:{argb:'FFFFFFFF'}}]},
   rgbPathGrad: {type: 'gradient', gradient: 'path', center:{left:0.5,top:0.5},
-    stops: [{position:0, color:{argb:'FFFF0000'}},{position:0.5, color:{argb:'FF00FF00'}},{position:1, color:{argb:'FF0000FF'}}]}
+    stops: [{position:0, color:{argb:'FFFF0000'}},{position:0.5, color:{argb:'FF00FF00'}},{position:1, color:{argb:'FF0000FF'}}]},
 };
 
 ws.columns = [
@@ -161,6 +163,21 @@ row12.getCell(4).value = 'RGB Path Gradient';
 row12.getCell(4).fill = fills.rgbPathGrad;
 row12.getCell(5).value = 'Solid Green';
 row12.getCell(5).fill = fills.solidGreen;
+
+// testing background and color trickery
+ws.getCell('F5').value = 'white';
+ws.getCell('F5').fill = fills.solidGreen;
+ws.getCell('F5').border = borders.thinWhite;
+ws.getCell('F5').font = fonts.whiteText;
+ws.getCell('E4').fill = fills.solidGreen;
+ws.getCell('E5').fill = fills.solidGreen;
+ws.getCell('E6').fill = fills.solidGreen;
+ws.getCell('F4').fill = fills.solidGreen;
+ws.getCell('F6').fill = fills.solidGreen;
+ws.getCell('G4').fill = fills.solidGreen;
+ws.getCell('G5').fill = fills.solidGreen;
+ws.getCell('G6').fill = fills.solidGreen;
+
 
 // row and column styles
 ws.getRow(13).font = fonts.arialBlackUI14;
