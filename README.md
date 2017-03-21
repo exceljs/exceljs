@@ -12,16 +12,18 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/285">Add support for cp:contentStatus #285</a>.
-    Thanks to <a href="https://github.com/holm">holm</a> for the contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/286">Fix Valid characters in XML (allow \n and \r when saving) #286</a>.
-    Thanks to <a href="https://github.com/Rycochet">Rycochet</a> for the contribution.
-  </li>
-  <li>
-    Fixed <a href="https://github.com/guyonroche/exceljs/issues/275">hyperlink with query arguments corrupts workbook #275</a>.
-    The hyperlink target is not escaped before serialising in the xml.
+    <p>
+      Addressed <a href="https://github.com/guyonroche/exceljs/issues/290">White text and borders being changed to black #290</a>.
+      Colours using theme/tint/index with zero values will from now be rendered and parsed correctly.
+    </p>
+    <p>
+      Regarding themes: the theme files stored inside the xlsx container hold important information regarding colours, styles etc
+      and if the theme information from a loaded xlsx file is lost, the results can be unpredictable and undesirable.
+      To address this, when an ExcelJS Workbook parses an XLSX file, it will preserve any theme files it finds and include them
+      when writing to a new XLSX. If this behaviour is not desired, the Workbook class exposes a clearThemes() function which will
+      drop the theme content. Note that this behaviour is only implemented in the document based Workbook class, not the streamed
+      Reader and Writer.
+    </p>
   </li>
 </ul>
 
@@ -1558,3 +1560,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.3.0   | <ul><li>Addressed <a href="https://github.com/guyonroche/exceljs/issues/266">Breaking change removing bluebird #266</a>. Appologies for any inconvenience.</li><li>Added Promise library dependency injection. See <a href="#config">Config</a> section for more details.</li></ul> |
 | 0.3.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/279">Update dependencies #279</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/267">Minor fixes for stream handling #267</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Added automated tests in phantomjs for the browserified code.</li></ul> |
 | 0.4.0   | <ul><li>Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/278">Boolean cell with value ="true" is returned as 1 #278</a>. The fix involved adding two new Call Value types:<ul><li><a href="#boolean-value">Boolean Value</a></li><li><a href="#error-value">Error Value</a></li></ul>Note: Minor version has been bumped up to 4 as this release introduces a couple of interface changes:<ul><li>Boolean cells previously will have returned 1 or 0 will now return true or false</li><li>Error cells that previously returned a string value will now return an error structure</li></ul></li><li>Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/280">Code correctness - setters don't return a value #280</a>.</li><li>Addressed issue <a href="https://github.com/guyonroche/exceljs/issues/288">v0.3.1 breaks meteor build #288</a>.</li></ul> |
+| 0.4.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/285">Add support for cp:contentStatus #285</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/286">Fix Valid characters in XML (allow \n and \r when saving) #286</a>. Thanks to <a href="https://github.com/Rycochet">Rycochet</a> for the contribution.</li><li>Fixed <a href="https://github.com/guyonroche/exceljs/issues/275">hyperlink with query arguments corrupts workbook #275</a>. The hyperlink target is not escaped before serialising in the xml.</li></ul> |
+
