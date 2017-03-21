@@ -13,8 +13,13 @@ npm install exceljs
 <ul>
   <li>
     <p>
-      Addressed <a href="https://github.com/guyonroche/exceljs/issues/290">White text and borders being changed to black #290</a>.
-      Colours using theme/tint/index with zero values will from now be rendered and parsed correctly.
+      Addressed the following issues:
+      <ul>
+        <li><a href="https://github.com/guyonroche/exceljs/issues/290">White text and borders being changed to black #290</a><li>
+        <li><a href="https://github.com/guyonroche/exceljs/issues/261">Losing formatting/pivot table from loaded file #261</a><li>
+        <li><a href="https://github.com/guyonroche/exceljs/issues/272">Solid fill become black #272</a><li>
+      </ul>
+      These issues are potentially caused by a bug that caused colours with zero themes, tints or indexes to be rendered and parsed incorrectly.
     </p>
     <p>
       Regarding themes: the theme files stored inside the xlsx container hold important information regarding colours, styles etc
