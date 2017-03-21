@@ -15,9 +15,9 @@ npm install exceljs
     <p>
       Addressed the following issues:
       <ul>
-        <li><a href="https://github.com/guyonroche/exceljs/issues/290">White text and borders being changed to black #290</a><li>
-        <li><a href="https://github.com/guyonroche/exceljs/issues/261">Losing formatting/pivot table from loaded file #261</a><li>
-        <li><a href="https://github.com/guyonroche/exceljs/issues/272">Solid fill become black #272</a><li>
+        <li><a href="https://github.com/guyonroche/exceljs/issues/290">White text and borders being changed to black #290</a></li>
+        <li><a href="https://github.com/guyonroche/exceljs/issues/261">Losing formatting/pivot table from loaded file #261</a></li>
+        <li><a href="https://github.com/guyonroche/exceljs/issues/272">Solid fill become black #272</a></li>
       </ul>
       These issues are potentially caused by a bug that caused colours with zero themes, tints or indexes to be rendered and parsed incorrectly.
     </p>
