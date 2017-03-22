@@ -7,7 +7,7 @@ var Excel = require('../../excel');
 var utils = require('../../lib/utils/utils');
 
 function fillFormula(f) {
-  return Object.assign({formula:undefined, result: undefined}, f);
+  return Object.assign({formula: undefined, result: undefined}, f);
 }
 var streamedValues = {
   B1: { sharedString: 0 },
@@ -120,6 +120,9 @@ module.exports = {
               case 8:
                 expect(row.height).to.equal(40);
                 break;
+
+              default:
+                break;
             }
           }
           catch(error) {
@@ -129,7 +132,7 @@ module.exports = {
       });
       wb.on('end', function() {
         try {
-          expect(rowCount).to.equal(9)
+          expect(rowCount).to.equal(9);
           resolve();
         }
         catch(error) {
@@ -138,8 +141,6 @@ module.exports = {
       });
 
       wb.read(filename, {entries: 'emit', worksheets: 'emit'});
-
     });
   }
-  
 };

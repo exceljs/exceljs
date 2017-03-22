@@ -44,6 +44,7 @@ I have just one request; If you submit a pull request for a bugfix, please add a
 <ul>
   <li>Still working my way through PRs and Issues and improving the tests.</li>
   <li>Images - background, in-cell, printing, etc.</li>
+  <li>Conditional Formatting.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
   <li>XLSX Streaming Reader.</li>
   <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.

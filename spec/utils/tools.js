@@ -3,7 +3,7 @@
 var _ = require('../../lib/utils/under-dash');
 var MemoryStream = require('memorystream');
 
-var tools = module.exports  = {
+var tools = module.exports = {
   dtMatcher: /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
   fix: function fix(o) {
     // clone the object and replace any date-like strings with new Date()
@@ -17,7 +17,7 @@ var tools = module.exports  = {
     } else {
       return o;
     }
-    _.each(o,  function(value, name) {
+    _.each(o, function(value, name) {
       if (value !== undefined) {
         clone[name] = fix(value);
       }
@@ -25,7 +25,7 @@ var tools = module.exports  = {
     return clone;
   },
 
-  concatenateFormula: function() {
+  concatenateFormula: function () {
     var args = Array.prototype.slice.call(arguments);
     var values = args.map(function(value) {
       return '"' + value + '"';
@@ -36,7 +36,6 @@ var tools = module.exports  = {
   },
   cloneByModel: function(thing1, Type) {
     var model = thing1.model;
-    //console.log(JSON.stringify(model, null, '    '))
     var thing2 = new Type();
     thing2.model = model;
     return Promise.resolve(thing2);

@@ -2,11 +2,10 @@
 
 var expect = require('chai').expect;
 
-var Excel = require('../../excel');
 var tools = require('./tools');
-var Enums = require("../../lib/doc/enums");
+var Enums = require('../../lib/doc/enums');
 
-var self = module.exports = {
+module.exports = {
   rows: {
     removeOnly: {
       addSheet: function(wb, options) {
