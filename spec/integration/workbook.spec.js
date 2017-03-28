@@ -1,16 +1,12 @@
 'use strict';
 
-var fs = require('fs');
 var chai = require('chai');
 var expect = chai.expect;
 chai.use(require('chai-datetime'));
 
 var stream = require('stream');
-var Bluebird = require('bluebird');
 var Excel = require('../../excel');
 var testUtils = require('./../utils/index');
-
-var fsReadFileAsync = Bluebird.promisify(fs.readFile);
 
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 var TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
@@ -125,12 +121,13 @@ describe('Workbook', function() {
         });
     });
 
-    it('language and revision', function() {
+    it('language, revision and contentStatus', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('Hello');
       ws.getCell('A1').value = 'World!';
       wb.language = 'Klingon';
       wb.revision = new Date(Date.UTC(2016,10,1,12));
+      wb.contentStauts = 'Final';
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
@@ -139,6 +136,7 @@ describe('Workbook', function() {
         .then(function(wb2) {
           expect(wb2.language).to.equal(wb.language);
           expect(wb2.revision).to.equalDate(wb.revision);
+          expect(wb2.contentStatus).to.equal(wb.contentStatus);
         });
     });
 

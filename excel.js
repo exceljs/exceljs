@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Guyon Roche
+ * Copyright (c) 2014-2017 Guyon Roche
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,19 +20,5 @@
  * THE SOFTWARE.
  * 
  */
-"use strict";
 
-var _ = require("lodash");
-
-var main = module.exports = {
-    Workbook: require("./lib/doc/workbook"),
-    ModelContainer: require("./lib/doc/modelcontainer"),
-    stream: {
-        xlsx: {
-            WorkbookWriter: require("./lib/stream/xlsx/workbook-writer"),
-            WorkbookReader: require("./lib/stream/xlsx/workbook-reader")
-        }
-    }
-};
-
-_.extend(main, require("./lib/doc/enums"));
+module.exports = require('./lib/exceljs.nodejs');

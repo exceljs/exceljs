@@ -1,0 +1,14 @@
+{
+  "extends": "../.eslint",
+  "rules": {
+    "no-console": ["off"],
+    "comma-style": ["off"]
+  },
+  "globals": {
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "beforeEach": true,
+    "afterEach": true
+  }
+}

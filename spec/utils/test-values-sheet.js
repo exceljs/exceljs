@@ -2,7 +2,6 @@
 
 var expect = require('chai').expect;
 
-var _ = require('lodash');
 var Excel = require('../../excel');
 var tools = require('./tools');
 
@@ -31,6 +30,11 @@ var self = module.exports = {
     ws.getCell('F1').value = self.testValues.hyperlink;
     ws.getCell('G1').value = self.testValues.str2;
     ws.getCell('H1').value = self.testValues.json.raw;
+    ws.getCell('I1').value = true;
+    ws.getCell('J1').value = false;
+    ws.getCell('K1').value = self.testValues.Errors.NotApplicable;
+    ws.getCell('L1').value = self.testValues.Errors.Value;
+
     ws.getRow(1).commit();
 
     // merge cell square with numerical value
@@ -73,7 +77,7 @@ var self = module.exports = {
     ws.getRow(5).commit();
 
     ws.getRow(6).height = 42;
-    _.each(self.styles.alignments, function(alignment, index) {
+    self.styles.alignments.forEach(function(alignment, index) {
       var rowNumber = 6;
       var colNumber = index + 1;
       var cell = ws.getCell(rowNumber, colNumber);
@@ -83,7 +87,7 @@ var self = module.exports = {
     ws.getRow(6).commit();
 
     if (options.checkBadAlignments) {
-      _.each(self.styles.badAlignments, function(alignment, index) {
+      self.styles.badAlignments.forEach(function(alignment, index) {
         var rowNumber = 7;
         var colNumber = index + 1;
         var cell = ws.getCell(rowNumber, colNumber);
@@ -150,6 +154,16 @@ var self = module.exports = {
 
     expect(ws.getCell('H1').value).to.equal(self.testValues.json.string);
     expect(ws.getCell('H1').type).to.equal(Excel.ValueType.String);
+
+    expect(ws.getCell('I1').value).to.equal(true);
+    expect(ws.getCell('I1').type).to.equal(Excel.ValueType.Boolean);
+    expect(ws.getCell('J1').value).to.equal(false);
+    expect(ws.getCell('J1').type).to.equal(Excel.ValueType.Boolean);
+
+    expect(ws.getCell('K1').value).to.deep.equal(self.testValues.Errors.NotApplicable);
+    expect(ws.getCell('K1').type).to.equal(Excel.ValueType.Error);
+    expect(ws.getCell('L1').value).to.deep.equal(self.testValues.Errors.Value);
+    expect(ws.getCell('L1').type).to.equal(Excel.ValueType.Error);
 
     // A2:B3
     expect(ws.getCell('A2').value).to.equal(5);
@@ -224,7 +238,7 @@ var self = module.exports = {
 
       expect(ws.getRow(5).height).to.be.undefined;
       expect(ws.getRow(6).height).to.equal(42);
-      _.each(self.styles.alignments, function(alignment, index) {
+      self.styles.alignments.forEach(function(alignment, index) {
         var rowNumber = 6;
         var colNumber = index + 1;
         var cell = ws.getCell(rowNumber, colNumber);
@@ -233,7 +247,7 @@ var self = module.exports = {
       });
 
       if (options.checkBadAlignments) {
-        _.each(self.styles.badAlignments, function(alignment, index) {
+        self.styles.badAlignments.forEach(function(alignment, index) {
           var rowNumber = 7;
           var colNumber = index + 1;
           var cell = ws.getCell(rowNumber, colNumber);

@@ -29,10 +29,26 @@ var expectations = [
     tests: ['render', 'renderIn', 'parse']
   },
   {
+    title: 'Theme with Tint Zero',
+    create:  function() { return new ColorXform()},
+    preparedModel: {theme:0, tint: 0},
+    xml: '<color theme="0" tint="0"/>',
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
     title: 'Indexed',
     create:  function() { return new ColorXform()},
     preparedModel: {indexed: 1},
     xml: '<color indexed="1"/>',
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
+    title: 'Indexed Zero',
+    create:  function() { return new ColorXform()},
+    preparedModel: {indexed: 0},
+    xml: '<color indexed="0"/>',
     get parsedModel() { return this.preparedModel; },
     tests: ['render', 'renderIn', 'parse']
   },

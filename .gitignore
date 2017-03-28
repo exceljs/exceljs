@@ -7,6 +7,10 @@ pids
 *.pid
 *.seed
 
+# Generated files
+dist/*
+build/*
+
 # Test Output Folder
 out/*
 spec/out/*
@@ -38,3 +42,7 @@ node_modules
 
 # gold internals
 spec/integration/data/gold
+
+# bundle files
+/spec/manual/public/exceljs.js
+/spec/manual/public/exceljs.min.js

@@ -1,6 +1,5 @@
 var expect = require('chai').expect;
 
-var _ = require('lodash');
 var Excel = require("../../../excel");
 var Dimensions = require("../../../lib/doc/range");
 var testUtils = require("../../utils/index");

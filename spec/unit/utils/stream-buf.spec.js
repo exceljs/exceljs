@@ -9,7 +9,7 @@ describe('StreamBuf', function() {
   // StreamBuf is designed as a general-purpose writable-readable stream
   // However its use in ExcelJS is primarily as a memory buffer between
   // the streaming writers and the archive, hence the tests here will
-  // focus only on that.
+  // focus just on that.
   it('writes strings as UTF8', function() {
     var stream = new StreamBuf();
     stream.write('Hello, World!');
