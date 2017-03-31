@@ -192,4 +192,18 @@ describe('github issues', function() {
         });
     });
   });
+
+
+  describe('issue xyz - copied cells treat formulas as values', function() {
+    it('Reading fibonacci.xlsx', function () {
+      var wb = new Excel.Workbook();
+      return wb.xlsx.readFile('./spec/integration/data/fibonacci.xlsx')
+        .then(function () {
+          var ws = wb.getWorksheet('fib');
+          expect(JSON.stringify(ws.getCell('A4').value)).to.equal(JSON.stringify({ formula: 'A3+1', result: 4 }));
+          expect(JSON.stringify(ws.getCell('A5').value)).to.equal(JSON.stringify({ formula: 'A4+1', result: 5 }), 'this fails, although the cells look the same in excel. Both cells are created by copying A3:B3 to A4:F19. The first row in the new block work as espected, the rest only has values (when seen through exceljs)');
+        });
+    });
+  });
+
 });
