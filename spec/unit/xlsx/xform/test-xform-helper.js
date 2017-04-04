@@ -3,16 +3,15 @@
 var Sax = require('sax');
 var _ = require('../../../utils/under-dash');
 
-var chai    = require('chai');
+var chai = require('chai');
 var chaiXml = require('chai-xml');
-
-var expect  = chai.expect;
-
-chai.use(chaiXml);
 
 var XmlStream = require('../../../../lib/utils/xml-stream');
 var CompositeXform = require('../../../../lib/xlsx/xform/composite-xform');
 var BooleanXform = require('../../../../lib/xlsx/xform/simple/boolean-xform');
+
+var expect = chai.expect;
+chai.use(chaiXml);
 
 function getExpectation(expectation, name) {
   if (!expectation.hasOwnProperty(name)) {
@@ -142,7 +141,7 @@ var its = {
 
         xform.parse(parser)
           .then(function (model) {
-            //console.log(JSON.stringify(model));
+            // console.log('parsed model', JSON.stringify(model));
             
             // eliminate the undefined
             var clone = _.cloneDeep(model, false);

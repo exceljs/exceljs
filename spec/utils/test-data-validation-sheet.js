@@ -20,6 +20,8 @@ var self = module.exports = {
       case 'notBetween':
         dataValidation.formulae.push(self.dataValidations.values[type].v2);
         break;
+      default:
+        break;
     }
     return dataValidation;
   },
@@ -73,7 +75,6 @@ var self = module.exports = {
 
     ws.getCell('A19').value = tools.concatenateFormula('Any');
     ws.getCell('B19').dataValidation = self.dataValidations.B19;
-
   },
 
   checkSheet: function(wb) {

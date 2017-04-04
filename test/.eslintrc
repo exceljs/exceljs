@@ -1,14 +1,8 @@
 {
-  "extends": "../.eslint",
+  "extends": "../.eslintrc",
   "rules": {
     "no-console": ["off"],
-    "comma-style": ["off"]
-  },
-  "globals": {
-    "describe": true,
-    "it": true,
-    "expect": true,
-    "beforeEach": true,
-    "afterEach": true
+    "comma-style": ["off"],
+    "max-len": [1, 320, 2, {"ignoreComments": true}]
   }
 }

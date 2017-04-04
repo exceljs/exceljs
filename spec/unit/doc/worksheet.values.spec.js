@@ -1,9 +1,8 @@
 var expect = require('chai').expect;
 
 var _ = require('../../../lib/utils/under-dash');
-var Excel = require("../../../excel");
-var Dimensions = require("../../../lib/doc/range");
-var testUtils = require("../../utils/index");
+var Excel = require('../../../excel');
+var testUtils = require('../../utils/index');
 
 describe('Worksheet', function() {
   describe('Values', function() {
@@ -321,13 +320,13 @@ describe('Worksheet', function() {
       });
     });
 
-    describe('Splice', function(){
+    describe('Splice', function () {
       var options = {
         checkBadAlignments: false,
         checkSheetProperties: false,
         checkViews: false
       };
-      describe('Rows', function(){
+      describe('Rows', function () {
         it('Remove only', function() {
           var wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.rows.removeOnly'], options);
@@ -349,7 +348,7 @@ describe('Worksheet', function() {
           testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertMore'], options);
         });
       });
-      describe('Columns', function(){
+      describe('Columns', function () {
         it('splices columns', function() {
           var wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.columns.removeOnly'], options);
@@ -497,6 +496,5 @@ describe('Worksheet', function() {
       expect(ws.columnCount).to.equal(6);
       expect(ws.actualColumnCount).to.equal(4);
     });
-
   });
 });

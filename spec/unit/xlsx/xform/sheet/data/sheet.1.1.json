@@ -71,7 +71,7 @@
     {
       "Id": "rId1",
       "Target": "https://www.npmjs.com/package/exceljs",
-      "TargetType": "External",
+      "TargetMode": "External",
       "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
     }
   ]

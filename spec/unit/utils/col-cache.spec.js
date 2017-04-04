@@ -5,7 +5,6 @@ var expect = require('chai').expect;
 var colCache = require('../../../lib/utils/col-cache');
 
 describe('colCache', function() {
-
   it('caches values', function() {
     expect(colCache.l2n('A')).to.equal(1);
     expect(colCache._l2n.A).to.equal(1);
@@ -14,8 +13,8 @@ describe('colCache', function() {
     // also, because of the fill heuristic A-Z will be there too
     var dic = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
     dic.forEach(function(letter, index) {
-      expect(colCache._l2n[letter]).to.equal(index+1);
-      expect(colCache._n2l[index+1]).to.equal(letter);
+      expect(colCache._l2n[letter]).to.equal(index + 1);
+      expect(colCache._n2l[index + 1]).to.equal(letter);
     });
 
     // next level
@@ -69,9 +68,9 @@ describe('colCache', function() {
     expect(colCache.decodeAddress('AA11')).to.deep.equal({address:'AA11',col:27, row: 11, $col$row: '$AA$11'});
 
     it('convert [sheetName!][$]col[$]row[[$]col[$]row] into address or range structures', function() {
-      expect(colCache.decodeEx('Sheet1!$H$1')).to.deep.equal({'$col$row':'$H$1', address:'H1', col:8, row:1, sheetName:'Sheet1'});
-      expect(colCache.decodeEx("'Sheet 1'!$H$1")).to.deep.equal({'$col$row':'$H$1', address:'H1', col:8, row:1, sheetName:'Sheet 1'});
-      expect(colCache.decodeEx("'Sheet !$:1'!$H$1")).to.deep.equal({'$col$row':'$H$1', address:'H1', col:8, row:1, sheetName:'Sheet !$:1'});
+      expect(colCache.decodeEx('Sheet1!$H$1')).to.deep.equal({$col$row:'$H$1', address:'H1', col:8, row:1, sheetName:'Sheet1'});
+      expect(colCache.decodeEx("'Sheet 1'!$H$1")).to.deep.equal({$col$row:'$H$1', address:'H1', col:8, row:1, sheetName:'Sheet 1'});
+      expect(colCache.decodeEx("'Sheet !$:1'!$H$1")).to.deep.equal({$col$row:'$H$1', address:'H1', col:8, row:1, sheetName:'Sheet !$:1'});
     });
   });
 

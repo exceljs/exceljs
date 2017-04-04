@@ -263,6 +263,5 @@ var self = module.exports = {
       expect(row8.getCell(3).fill).to.deep.equal(self.styles.fills.redGreenDarkTrellis);
       expect(row8.getCell(4).fill).to.deep.equal(self.styles.fills.rgbPathGrad);
     }
-    
   }
 };

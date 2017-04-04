@@ -4,6 +4,7 @@ var JSZip = require('jszip');
 var Bluebird = require('bluebird');
 
 var fs = require('fs');
+
 var fsp = Bluebird.promisifyAll(fs);
 
 var filename = process.argv[2];
@@ -21,4 +22,4 @@ fsp.readFileAsync(filename)
         console.log(path, entry.name, entry._data.compressedSize, entry._data.uncompressedSize)
       }
     });
-  })
+  });

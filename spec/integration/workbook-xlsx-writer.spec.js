@@ -1,15 +1,18 @@
 'use strict';
 
 var fs = require('fs');
+var Promish = require('promish');
+
 var expect = require('chai').expect;
 var Excel = require('../../excel');
 var testUtils = require('./../utils/index');
 var utils = require('../../lib/utils/utils');
 
-var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
+var fsReadFileAsync = Promish.promisify(fs.readFile);
+
+var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 describe('WorkbookWriter', function() {
-
   it('creates sheets with correct names', function() {
     var wb = new Excel.stream.xlsx.WorkbookWriter();
     var ws1 = wb.addWorksheet('Hello, World!');
@@ -22,7 +25,7 @@ describe('WorkbookWriter', function() {
   describe('Serialise', function() {
     it('xlsx file', function() {
       var options = {
-        filename: TEST_FILE_NAME,
+        filename: TEST_XLSX_FILE_NAME,
         useStyles: true
       };
       var wb = testUtils.createTestBook(new Excel.stream.xlsx.WorkbookWriter(options), 'xlsx');
@@ -30,7 +33,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_FILE_NAME);
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
           testUtils.checkTestBook(wb2, 'xlsx');
@@ -39,7 +42,7 @@ describe('WorkbookWriter', function() {
 
     it('Without styles', function() {
       var options = {
-        filename: TEST_FILE_NAME,
+        filename: TEST_XLSX_FILE_NAME,
         useStyles: false
       };
       var wb = testUtils.createTestBook(new Excel.stream.xlsx.WorkbookWriter(options), 'xlsx');
@@ -47,7 +50,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_FILE_NAME);
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
           testUtils.checkTestBook(wb2, 'xlsx', undefined, {checkStyles: false});
@@ -56,7 +59,7 @@ describe('WorkbookWriter', function() {
 
     it('serializes row styles and columns properly', function() {
       var options = {
-        filename: TEST_FILE_NAME,
+        filename: TEST_XLSX_FILE_NAME,
         useStyles: true
       };
       var wb = new Excel.stream.xlsx.WorkbookWriter(options);
@@ -84,7 +87,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_FILE_NAME);
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('blort');
@@ -110,7 +113,7 @@ describe('WorkbookWriter', function() {
       this.timeout(5000);
 
       var i;
-      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME});
+      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_XLSX_FILE_NAME});
       var numSheets = 90;
       // add numSheets sheets
       for (i = 1; i <= numSheets; i++) {
@@ -120,7 +123,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_FILE_NAME);
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
           for (i = 1; i <= numSheets; i++) {
@@ -133,7 +136,7 @@ describe('WorkbookWriter', function() {
 
     it('addRow', function() {
       var options = {
-        stream: fs.createWriteStream(TEST_FILE_NAME, {flags: 'w'}),
+        stream: fs.createWriteStream(TEST_XLSX_FILE_NAME, {flags: 'w'}),
         useStyles: true,
         useSharedStrings: true
       };
@@ -146,7 +149,7 @@ describe('WorkbookWriter', function() {
     });
 
     it('defined names', function() {
-      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME});
+      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_XLSX_FILE_NAME});
       var ws = wb.addWorksheet('blort');
       ws.getCell('A1').value = 5;
       ws.getCell('A1').name = 'five';
@@ -168,7 +171,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_FILE_NAME);
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('blort');
@@ -185,7 +188,7 @@ describe('WorkbookWriter', function() {
     });
 
     it('does not escape special xml characters', function () {
-      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME, useSharedStrings: true});
+      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_XLSX_FILE_NAME, useSharedStrings: true});
       var ws = wb.addWorksheet('blort');
       var xmlCharacters = 'xml characters: & < > "';
 
@@ -194,7 +197,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_FILE_NAME);
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('blort');
@@ -203,24 +206,23 @@ describe('WorkbookWriter', function() {
     });
 
     it('serializes and deserializes dataValidations', function() {
-      var options = {filename: TEST_FILE_NAME};
+      var options = {filename: TEST_XLSX_FILE_NAME};
       var wb = testUtils.createTestBook(new Excel.stream.xlsx.WorkbookWriter(options),'xlsx', ['dataValidations']);
 
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_FILE_NAME);
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
           testUtils.checkTestBook(wb2, 'xlsx', ['dataValidations']);
         });
     });
-
   });
 
   describe('Images', function() {
     it('stores background image', function() {
-      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_FILE_NAME, useSharedStrings: true});
+      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_XLSX_FILE_NAME, useSharedStrings: true});
       var ws = wb.addWorksheet('blort');
       var ws2;
       ws.getCell('A1').value = 'Hello, World!';

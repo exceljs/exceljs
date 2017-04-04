@@ -1,4 +1,5 @@
 'use strict';
+
 var fs = require('fs');
 
 var DrawingXform = require('../../../../../lib/xlsx/xform/drawing/drawing-xform');
@@ -16,6 +17,6 @@ var expectations = [
   }
 ];
 
-describe.only('DrawingXform', function() {
+describe('DrawingXform', function() {
   testXformHelper(expectations);
 });

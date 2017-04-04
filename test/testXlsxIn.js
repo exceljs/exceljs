@@ -14,7 +14,7 @@ wb.xlsx.readFile(filename)
     var micros = stopwatch.microseconds;
 
     console.log('Loaded', filename);
-    console.log('Time taken:', micros/1000000);
+    console.log('Time taken:', micros / 1000000);
 
     wb.eachSheet(function(sheet, id) {
       console.log(id, sheet.name);

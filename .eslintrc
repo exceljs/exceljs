@@ -3,7 +3,10 @@
   "rules": {
     "func-names": ["off", "never"],
     "linebreak-style": ["off"],
+    "arrow-parens": ["off"],
+    "no-prototype-builtins": ["off"],
     "no-var": ["off"],
+    "no-restricted-syntax": ["off"],
     "vars-on-top": ["off"],
     "no-param-reassign": ["off"],
     "prefer-arrow-callback": ["off"],
@@ -32,10 +35,16 @@
     "semi": ["off"],
     "no-path-concat": ["off"],
     "prefer-rest-params": ["off"],
+    "no-underscore-dangle": ["off"],
+    "dot-notation": ["off"],
+    "no-use-before-define": ["off"],
+    "no-empty-function": ["off"],
+    "one-var": ["off"],
+    "radix": ["off"],
+    "no-empty": ["off"],
+    "no-mixed-operators": ["off"],
+    "no-control-regex": ["off"],
+    "one-var-declaration-per-line": ["off"],
     "max-len": [1, 160, 2, {"ignoreComments": true}]
-  },
-  "globals": {
-    "describe": true,
-    "it": true
   }
 }

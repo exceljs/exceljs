@@ -1,12 +1,10 @@
 var expect = require('chai').expect;
 
-var Excel = require("../../../excel");
-var Dimensions = require("../../../lib/doc/range");
-var testUtils = require("../../utils/index");
+var Excel = require('../../../excel');
+var testUtils = require('../../utils/index');
 
 describe('Worksheet', function() {
   describe('Views', function() {
-
       it('adjusts collapsed property of columns', function() {
         var wb = new Excel.Workbook();
         var ws = wb.addWorksheet('sheet1');
@@ -79,6 +77,5 @@ describe('Worksheet', function() {
         expect(ws.getColumn(2).outlineLevel).to.equal(2);
         expect(ws.getColumn(3).outlineLevel).to.equal(3);
       });
-
   });
 });

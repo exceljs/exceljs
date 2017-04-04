@@ -1,41 +1,16 @@
 {
-  "extends": "airbnb",
+  "extends": "../.eslintrc",
   "rules": {
-    "func-names": ["off", "never"],
-    "linebreak-style": ["off"],
-    "no-var": ["off"],
-    "vars-on-top": ["off"],
-    "no-param-reassign": ["off"],
-    "prefer-arrow-callback": ["off"],
-    "comma-dangle": ["off"],
-    "eol-last": ["off"],
-    "strict": ["off"],
-    "indent": ["off"],
-    "no-multi-assign": ["off"],
-    "object-shorthand": ["off"],
-    "prefer-template": ["off"],
-    "object-curly-spacing": ["off"],
-    "no-plusplus": ["off"],
-    "no-unused-expressions": ["off"],
-    "no-trailing-spaces": ["error", { "skipBlankLines": true }],
-    "global-require": ["off"],
-    "no-sparse-arrays": ["off"],
-    "comma-spacing": ["off"],
-    "brace-style": ["off"],
-    "space-before-function-paren": ["off"],
-    "no-unused-vars": ["off"],
-    "key-spacing": ["off"],
-    "object-property-newline": ["off"],
-    "block-spacing": ["off"],
-    "consistent-return": ["off"],
-    "keyword-spacing": ["off"],
-    "semi": ["off"],
-    "no-path-concat": ["off"],
-    "prefer-rest-params": ["off"],
-    "max-len": [1, 160, 2, {"ignoreComments": true}]
+    "no-console": ["off"],
+    "max-len": ["off"],
+    "no-return-assign": ["off"],
+    "comma-style": ["off"]
   },
   "globals": {
     "describe": true,
-    "it": true
+    "it": true,
+    "expect": true,
+    "beforeEach": true,
+    "afterEach": true
   }
 }

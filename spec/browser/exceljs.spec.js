@@ -1,4 +1,5 @@
 'use strict';
+
 require('babel-polyfill');
 var ExcelJS = require('../../lib/exceljs.browser');
 

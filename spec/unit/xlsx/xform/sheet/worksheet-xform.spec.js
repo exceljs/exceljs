@@ -1,9 +1,7 @@
 'use strict';
 
 var fs = require('fs');
-
-var chai    = require('chai');
-var expect  = chai.expect;
+var chai = require('chai');
 
 var Enums = require('../../../../../lib/doc/enums');
 var XmlStream = require('../../../../../lib/utils/xml-stream');
@@ -14,22 +12,23 @@ var WorksheetXform = require('../../../../../lib/xlsx/xform/sheet/worksheet-xfor
 var SharedStringsXform = require('../../../../../lib/xlsx/xform/strings/shared-strings-xform');
 var StylesXform = require('../../../../../lib/xlsx/xform/style/styles-xform');
 
+var expect = chai.expect;
+
 var fakeStyles = {
   addStyleModel: function(style, cellType) {
     if (cellType === Enums.ValueType.Date) {
       return 1;
     } else if (style && style.font) {
       return 2;
-    } else {
-      return 0;
     }
+    return 0;
   },
   getStyleModel: function(id) {
     switch(id) {
       case 1:
-        return {"numFmt": "mm-dd-yy" };
+        return {numFmt: 'mm-dd-yy' };
       case 2:
-        return {"font": {"underline": true, "size": 11, "color": {"theme":10}, "name": "Calibri", "family": 2, "scheme": "minor"} };
+        return {font: {underline: true, size: 11, color: { theme: 10}, name: 'Calibri', family: 2, scheme: 'minor'}};
       default:
         return null;
     }

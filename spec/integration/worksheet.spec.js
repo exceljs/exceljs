@@ -421,7 +421,6 @@ describe('Worksheet', function() {
     expect(ws.getCell('B1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
     expect(ws.getCell('B1').border).to.deep.equal(testutils.styles.borders.thin);
     expect(ws.getCell('B1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
-
   });
 
   it('sets col styles', function() {

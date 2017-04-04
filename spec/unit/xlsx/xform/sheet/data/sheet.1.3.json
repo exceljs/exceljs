@@ -60,5 +60,8 @@
   ],
   "hyperlinks": [
     {"address": "B6", "rId": "rId1"}
-  ]
+  ],
+  "background": {},
+  "mergeCells": {},
+  "dataValidations": {}
 }

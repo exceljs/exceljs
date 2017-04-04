@@ -28,7 +28,7 @@ app.post('/api/upload', function(req, res) {
       .then(function() {
         var ws = wb.getWorksheet('blort');
 
-        console.log('XLSX uploaded:')
+        console.log('XLSX uploaded:');
         console.log('A1', ws.getCell('A1').value);
         console.log('A2', ws.getCell('A2').value);
 
@@ -44,7 +44,6 @@ app.post('/api/upload', function(req, res) {
             res.end();
           });
       });
-
   });
 
   req.pipe(stream);

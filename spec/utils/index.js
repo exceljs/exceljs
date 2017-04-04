@@ -64,7 +64,7 @@ module.exports = {
       {x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0}
     ];
     
-    sheets.forEach(function(sheet){
+    sheets.forEach(function(sheet) {
       var testSheet = _.get(testSheets, sheet);
       testSheet.addSheet(workbook, options);
     });
@@ -82,11 +82,10 @@ module.exports = {
       expect(workbook.views).to.deep.equal([{x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0, visibility: 'visible'}]);
     }
 
-    sheets.forEach(function(sheet){
+    sheets.forEach(function(sheet) {
       var testSheet = _.get(testSheets, sheet);
       testSheet.checkSheet(workbook, options);
     });
-
   },
 
   checkTestBookReader: testWorkbookReader.checkBook,
@@ -103,19 +102,19 @@ module.exports = {
       },
       
       addColumn: function(colNumber, defn) {
-        return this.columns[colNumber-1] = new Column(this, colNumber, defn);
+        return this.columns[colNumber - 1] = new Column(this, colNumber, defn);
       },
       getColumn: function(colNumber) {
-        var column = this.columns[colNumber-1] || this._keys[colNumber];
+        var column = this.columns[colNumber - 1] || this._keys[colNumber];
         if (!column) {
-          column = this.columns[colNumber-1] = new Column(this, colNumber);
+          column = this.columns[colNumber - 1] = new Column(this, colNumber);
         }
         return column;
       },
       getRow: function(rowNumber) {
-        var row = this.rows[rowNumber-1];
+        var row = this.rows[rowNumber - 1];
         if (!row) {
-          row = this.rows[rowNumber-1] = new Row(this, rowNumber);
+          row = this.rows[rowNumber - 1] = new Row(this, rowNumber);
         }
         return row;
       },

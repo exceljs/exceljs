@@ -1,12 +1,10 @@
 var expect = require('chai').expect;
 
-var Excel = require("../../../excel");
-var Dimensions = require("../../../lib/doc/range");
-var testUtils = require("../../utils/index");
+var Excel = require('../../../excel');
+var testUtils = require('../../utils/index');
 
 describe('Worksheet', function() {
   describe('Styles', function() {
-
     it('sets row styles', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('basket');
@@ -46,7 +44,6 @@ describe('Worksheet', function() {
       expect(ws.getCell('B1').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
       expect(ws.getCell('B1').border).to.deep.equal(testUtils.styles.borders.thin);
       expect(ws.getCell('B1').fill).to.deep.equal(testUtils.styles.fills.redGreenDarkTrellis);
-
     });
 
     it('sets col styles', function() {

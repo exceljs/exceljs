@@ -40,7 +40,7 @@ var badAlignments = [
   { text: 'Rotate -91', alignment: { textRotation: -91 } },
   { text: 'Rotate 91', alignment: { textRotation: 91 } },
   { text: 'Indent -1', alignment: { indent: -1 } },
-  { text: 'Blank', alignment: {  } }
+  { text: 'Blank', alignment: {} }
 ];
 
 var borders = {
@@ -73,10 +73,12 @@ var fills = {
 var passed = true;
 var assert = function(value, failMessage, passMessage) {
   if (!value) {
-    if (failMessage) console.log(failMessage);
+    if (failMessage) {
+      console.log(failMessage);
+    }
     passed = false;
-  } else {
-    if (passMessage) console.log(passMessage);
+  } else if (passMessage) {
+    console.log(passMessage);
   }
 };
 
@@ -84,15 +86,15 @@ var assertFont = function(value, expected, address) {
   // console.log('assertFont', address, JSON.stringify(value), JSON.stringify(expected));
   assert(value, 'Expected to find font object at ' + address);
   _.each(expected, function(item, name) {
-    assert(value[name] == expected[name], 'Expected ' + address + ".font[" + name + "] to be " + expected[name] + ", but was " + value[name]);
+    assert(value[name] === expected[name], `Expected ${address}.font[${name}] to be ${expected[name]}, but was ${value[name]}`);
   });
   _.each(value, function(item, name) {
-    assert(expected[name], 'Found unexpected ' + address + ".font[" + name + "] = " + value[name]);
+    assert(expected[name], `Found unexpected ${address}.font[${name}] = ${value[name]}`);
   });
 };
 
 var assertEqual = function(address, name, value, expected) {
-  assert(_.isEqual(value,expected), 'Expected Cell[' + address + '] ' + name + ' to be ' + JSON.stringify(expected) + ', was ' + JSON.stringify(value));
+  assert(_.isEqual(value,expected), `Expected Cell[${address}] ${name} to be ${JSON.stringify(expected)}, was ${JSON.stringify(value)}`);
 };
 
 var stopwatch = new HrStopwatch();
@@ -110,55 +112,55 @@ wb.xlsx.readFile(filename)
     assert(ws, 'Expected to find a worksheet called blort');
 
     var column1 = ws.getColumn(1);
-    assert(column1 && (column1.width == 25), "Expected column width of col 1 to be 25, was " + column1.width);
+    assert(column1 && (column1.width === 25), 'Expected column width of col 1 to be 25, was ' + column1.width);
     var column9 = ws.getColumn(9);
-    assert(column9 && column9.hidden, "Expected column 9 to be hidden: \n" + JSON.stringify(column9.defn, null, '  '));
+    assert(column9 && column9.hidden, 'Expected column 9 to be hidden: \n' + JSON.stringify(column9.defn, null, '  '));
 
     var row16 = ws.getRow(16);
     assert(row16 && (row16.hidden), 'Expected row 16 to be hidden');
 
-    assert(ws.getCell('A2').value == 7, "Expected A2 == 7");
-    assert(ws.getCell('B2').value == "Hello, World!", 'Expected B2 == "Hello, World!", was "' + ws.getCell('B2').value + '"');
+    assert(ws.getCell('A2').value === 7, 'Expected A2 == 7');
+    assert(ws.getCell('B2').value === 'Hello, World!', 'Expected B2 == "Hello, World!", was "' + ws.getCell('B2').value + '"');
     assertFont(ws.getCell('B2').font, fonts.comicSansUdB16, 'B2');
     assertEqual('B2', 'border', ws.getCell('B2').border, borders.thin);
 
-    assert(Math.abs(ws.getCell('C2').value + 5.55) < 0.000001, "Expected C2 == -5.55, was" + ws.getCell('C2').value);
-    assert(ws.getCell('C2').numFmt == '"£"#,##0.00;[Red]\-"£"#,##0.00', 'Expected C2 numFmt to be "£"#,##0.00;[Red]\-"£"#,##0.00, was ' + ws.getCell('C2').numFmt);
+    assert(Math.abs(ws.getCell('C2').value + 5.55) < 0.000001, 'Expected C2 == -5.55, was' + ws.getCell('C2').value);
+    assert(ws.getCell('C2').numFmt === '"£"#,##0.00;[Red]\-"£"#,##0.00', 'Expected C2 numFmt to be "£"#,##0.00;[Red]\-"£"#,##0.00, was ' + ws.getCell('C2').numFmt);
     assertFont(ws.getCell('C2').font, fonts.arialBlackUI14, 'C2');
 
-    assert(ws.getCell('D2').value instanceof Date, "expected D2 to be a Date, was " + ws.getCell('D2').value);
+    assert(ws.getCell('D2').value instanceof Date, 'expected D2 to be a Date, was ' + ws.getCell('D2').value);
     assertEqual('D2', 'border', ws.getCell('D2').border, borders.doubleRed);
 
     assert(ws.getCell('F2').value === true, 'Expected F2 to be true');
     assert(ws.getCell('G2').value.error === '#N/A', 'Expected G2 to be #N/A');
     assert(ws.getCell('H2').value.error === '#VALUE!', 'Expected H2 to be #VALUE!');
 
-    assert(ws.getCell('C5').value.formula, "Expected C5 to be a formula, was " + JSON.stringify(ws.getCell('C5').value));
+    assert(ws.getCell('C5').value.formula, 'Expected C5 to be a formula, was ' + JSON.stringify(ws.getCell('C5').value));
     assertEqual('C6', 'border', ws.getCell('C6').border, borders.thickRainbow);
 
-    assert(ws.getCell('A9').numFmt == "# ?/?", 'Expected A9 numFmt to be "# ?/?", was ' + ws.getCell('A9').numFmt);
-    assert(ws.getCell('B9').numFmt == 'h:mm:ss', 'Expected B9 numFmt to be "h:mm:ss", was ' + ws.getCell('B9').numFmt);
-    assert(ws.getCell('C9').numFmt == '0.00%', 'Expected C9 numFmt to be "0.00%", was ' + ws.getCell('C9').numFmt);
-    assert(ws.getCell('D9').numFmt == "[Green]#,##0 ;[Red](#,##0)", 'Expected D9 numFmt to be "[Green]#,##0 ;[Red](#,##0)", was ' + ws.getCell('D9').numFmt);
-    assert(ws.getCell('E9').numFmt == "#0.000", 'Expected E9 numFmt to be "#0.000", was ' + ws.getCell('E9').numFmt);
-    assert(ws.getCell('F9').numFmt == "# ?/?%", 'Expected F9 numFmt to be "# ?/?%", was ' + ws.getCell('F9').numFmt);
+    assert(ws.getCell('A9').numFmt === '# ?/?', 'Expected A9 numFmt to be "# ?/?", was ' + ws.getCell('A9').numFmt);
+    assert(ws.getCell('B9').numFmt === 'h:mm:ss', 'Expected B9 numFmt to be "h:mm:ss", was ' + ws.getCell('B9').numFmt);
+    assert(ws.getCell('C9').numFmt === '0.00%', 'Expected C9 numFmt to be "0.00%", was ' + ws.getCell('C9').numFmt);
+    assert(ws.getCell('D9').numFmt === '[Green]#,##0 ;[Red](#,##0)', 'Expected D9 numFmt to be "[Green]#,##0 ;[Red](#,##0)", was ' + ws.getCell('D9').numFmt);
+    assert(ws.getCell('E9').numFmt === '#0.000', 'Expected E9 numFmt to be "#0.000", was ' + ws.getCell('E9').numFmt);
+    assert(ws.getCell('F9').numFmt === '# ?/?%', 'Expected F9 numFmt to be "# ?/?%", was ' + ws.getCell('F9').numFmt);
 
-    assert(ws.getCell('A10').value == "<", 'Expected A10 to be "<", was "' + ws.getCell('A10').value + '"');
-    assert(ws.getCell('B10').value == ">", 'Expected A10 to be ">", was "' + ws.getCell('B10').value + '"');
-    assert(ws.getCell('C10').value == "<a>", 'Expected A10 to be "<a>", was "' + ws.getCell('C10').value + '"');
-    assert(ws.getCell('D10').value == "><", 'Expected A10 to be "><", was "' + ws.getCell('D10').value + '"');
+    assert(ws.getCell('A10').value === '<', 'Expected A10 to be "<", was "' + ws.getCell('A10').value + '"');
+    assert(ws.getCell('B10').value === '>', 'Expected A10 to be ">", was "' + ws.getCell('B10').value + '"');
+    assert(ws.getCell('C10').value === '<a>', 'Expected A10 to be "<a>", was "' + ws.getCell('C10').value + '"');
+    assert(ws.getCell('D10').value === '><', 'Expected A10 to be "><", was "' + ws.getCell('D10').value + '"');
 
-    assert(ws.getRow(11).height == 40, 'Expected Row 11 to be height 40, was ' + ws.getRow(11).height);
+    assert(ws.getRow(11).height === 40, 'Expected Row 11 to be height 40, was ' + ws.getRow(11).height);
     _.each(alignments, function(alignment, index) {
       var rowNumber = 11;
       var colNumber = index + 1;
       var cell = ws.getCell(rowNumber, colNumber);
-      assert(cell.value == alignment.text, 'Expected Cell[' + rowNumber + ',' + colNumber + '] to be ' + alignment.text + ', was ' + cell.value);
+      assert(cell.value === alignment.text, 'Expected Cell[' + rowNumber + ',' + colNumber + '] to be ' + alignment.text + ', was ' + cell.value);
       assert(_.isEqual(cell.alignment,alignment.alignment), 'Expected Cell[' + rowNumber + ',' + colNumber + '] alignment to be ' + JSON.stringify(alignment.alignment) + ', was ' + JSON.stringify(cell.alignment));
     });
 
     var row12 = ws.getRow(12);
-    assert(row12.height == 40, 'Expected Row 12 to be height 40, was ' + row12.height);
+    assert(row12.height === 40, 'Expected Row 12 to be height 40, was ' + row12.height);
     assert(_.isEqual(row12.getCell(1).fill, fills.blueWhiteHGrad), 'Expected [12,1] fill to be ' + JSON.stringify(fills.blueWhiteHGrad) + ', was ' + JSON.stringify(row12.getCell(1).fill));
     assert(_.isEqual(row12.getCell(2).fill, fills.redDarkVertical), 'Expected [12,2] fill to be ' + JSON.stringify(fills.redDarkVertical) + ', was ' + JSON.stringify(row12.getCell(2).fill));
     assert(_.isEqual(row12.getCell(3).fill, fills.redGreenDarkTrellis), 'Expected [12,3] fill to be ' + JSON.stringify(fills.redGreenDarkTrellis) + ', was ' + JSON.stringify(row12.getCell(3).fill));
@@ -171,11 +173,11 @@ wb.xlsx.readFile(filename)
     assertFont(ws.getCell('I13').font, fonts.arialBlackUI14, 'I13');
     assertFont(ws.getCell('H14').font, fonts.comicSansUdB16, 'H14');
 
-    assert(ws.getCell('H12').value == 'Foo', 'Expected H12 to be "Foo", was "' + ws.getCell('H12').value + '"');
-    assert(ws.getCell('G13').value == 'Foo', 'Expected G13 to be "Foo", was "' + ws.getCell('G13').value + '"');
-    assert(ws.getCell('H13').value == 'Bar', 'Expected H13 to be "Bar", was "' + ws.getCell('H13').value + '"');
-    assert(ws.getCell('I13').value == 'Baz', 'Expected I13 to be "Baz", was "' + ws.getCell('I13').value + '"');
-    assert(ws.getCell('H14').value == 'Baz', 'Expected H14 to be "Baz", was "' + ws.getCell('H14').value + '"');
+    assert(ws.getCell('H12').value === 'Foo', 'Expected H12 to be "Foo", was "' + ws.getCell('H12').value + '"');
+    assert(ws.getCell('G13').value === 'Foo', 'Expected G13 to be "Foo", was "' + ws.getCell('G13').value + '"');
+    assert(ws.getCell('H13').value === 'Bar', 'Expected H13 to be "Bar", was "' + ws.getCell('H13').value + '"');
+    assert(ws.getCell('I13').value === 'Baz', 'Expected I13 to be "Baz", was "' + ws.getCell('I13').value + '"');
+    assert(ws.getCell('H14').value === 'Baz', 'Expected H14 to be "Baz", was "' + ws.getCell('H14').value + '"');
 
-    assert(passed, 'Something went wrong', "All tests passed!");
+    assert(passed, 'Something went wrong', 'All tests passed!');
   });

@@ -1,12 +1,12 @@
 var expect = require('chai').expect;
 
-var Excel = require("../../../excel");
-var Dimensions = require("../../../lib/doc/range");
-var testUtils = require("../../utils/index");
+var Excel = require('../../../excel');
+var Dimensions = require('../../../lib/doc/range');
+var testUtils = require('../../utils/index');
 
 describe('Worksheet', function() {
   describe('Merge Cells', function() {
-    it("references the same top-left value", function() {
+    it('references the same top-left value', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('blort');
 

@@ -10,13 +10,12 @@ var request = require('request');
 // Tests
 
 describe('Express', function() {
-
   it('downloads a workbook', function() {
     var app = express();
     app.get('/workbook', function(req, res) {
       var wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      res.setHeader('Content-Disposition', 'attachment; filename=' + 'Report.xlsx');
+      res.setHeader('Content-Disposition', 'attachment; filename=Report.xlsx');
       wb.xlsx.write(res)
         .then(function() {
           res.end();
