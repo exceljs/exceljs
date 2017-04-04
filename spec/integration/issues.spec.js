@@ -6,6 +6,7 @@ chai.use(require('chai-datetime'));
 
 var Excel = require('../../excel');
 var PromishLib = require('../../lib/utils/promish');
+var Enums = require('../../lib/doc/enums');
 
 // this file to contain integration tests created from github issues
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
@@ -201,8 +202,8 @@ describe('github issues', function() {
       return wb.xlsx.readFile('./spec/integration/data/fibonacci.xlsx')
         .then(function () {
           var ws = wb.getWorksheet('fib');
-          expect(JSON.stringify(ws.getCell('A4').value)).to.equal(JSON.stringify({ formula: 'A3+1', result: 4 }));
-          expect(JSON.stringify(ws.getCell('A5').value)).to.equal(JSON.stringify({ formula: 'A4+1', result: 5 }), explain);
+          expect(ws.getCell('A4').value).to.deep.equal({ formula: 'A3+1', result: 4 });
+          expect(ws.getCell('A5').value).to.deep.equal({ sharedFormula: 'A4', result: 5 }, explain);
         });
     });
     it('copied cells should have the right types', function () {
@@ -210,8 +211,8 @@ describe('github issues', function() {
       return wb.xlsx.readFile('./spec/integration/data/fibonacci.xlsx')
         .then(function () {
           var ws = wb.getWorksheet('fib');
-          expect(ws.getCell('A4').type).to.equal(6);
-          expect(ws.getCell('A5').type).to.equal(6, explain);
+          expect(ws.getCell('A4').type).to.equal(Enums.ValueType.Formula);
+          expect(ws.getCell('A5').type).to.equal(Enums.ValueType.SharedFormula);
         });
     });
     it('copied cells should have the right _value', function () {
@@ -219,8 +220,8 @@ describe('github issues', function() {
       return wb.xlsx.readFile('./spec/integration/data/fibonacci.xlsx')
         .then(function () {
           var ws = wb.getWorksheet('fib');
-          expect(JSON.stringify(ws.getCell('A4')._value)).to.equal(JSON.stringify({"model":{"address":"A4","formula":"A3+1","type":6,"result":4}}));
-          expect(JSON.stringify(ws.getCell('A5')._value)).to.equal(JSON.stringify({"model":{"address":"A5","formula":"A4+1","type":6,"result":5}}), explain);
+          expect(JSON.stringify(ws.getCell('A4')._value)).to.deep.equal(JSON.stringify({"model":{"address":"A4","definesSi":"0","formula":"A3+1","type":6,"result":4,"value":undefined}}));
+          expect(JSON.stringify(ws.getCell('A5')._value)).to.deep.equal(JSON.stringify({"model":{"address":"A5","usesSi":"0","type":Enums.ValueType.SharedFormula,"sharedFormula":"A4","result":5}}), explain);
         });
     });
     it('copied cells should have the same fields', function () { // to see if there are other fields on the object worth comparing
