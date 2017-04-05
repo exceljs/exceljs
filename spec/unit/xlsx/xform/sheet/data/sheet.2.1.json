@@ -46,5 +46,6 @@
     "B1": { "type": "list", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "formulae": ["$C$1:$C$3"]},
     "B5": { "type": "list", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "formulae": ["\"value 1, value 2, value 3\""]},
     "B7": { "type": "whole", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "operator": "between", "formulae": ["1", "10"]}
-  }
+  },
+  "media": []
 }
