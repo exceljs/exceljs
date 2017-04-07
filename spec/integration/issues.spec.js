@@ -203,7 +203,8 @@ describe('github issues', function() {
         .then(function () {
           var ws = wb.getWorksheet('fib');
           expect(ws.getCell('A4').value).to.deep.equal({ formula: 'A3+1', result: 4 });
-          expect(ws.getCell('A5').value).to.deep.equal({ sharedFormula: 'A4', result: 5 }, explain);
+          expect(ws.getCell('A5').value).to.deep.equal({ sharedFormula: 'A4', result: 5, formula: 'A4+1' }, explain);
+          expect(ws.getCell('B5').value).to.deep.equal({ sharedFormula: 'B4', result: 5, formula: 'B3+B4' }, explain);
         });
     });
     it('copied cells should have the right types', function () {
@@ -221,7 +222,7 @@ describe('github issues', function() {
         .then(function () {
           var ws = wb.getWorksheet('fib');
           expect(JSON.stringify(ws.getCell('A4')._value)).to.deep.equal(JSON.stringify({"model":{"address":"A4","definesSi":"0","formula":"A3+1","type":6,"result":4,"value":undefined}}));
-          expect(JSON.stringify(ws.getCell('A5')._value)).to.deep.equal(JSON.stringify({"model":{"address":"A5","usesSi":"0","type":Enums.ValueType.SharedFormula,"sharedFormula":"A4","result":5}}), explain);
+          expect(JSON.stringify(ws.getCell('A5')._value)).to.deep.equal(JSON.stringify({"model":{"address":"A5","usesSi":"0","type":Enums.ValueType.SharedFormula,"sharedFormula":"A4","result":5,"formula":"A4+1"}}), explain);
         });
     });
     it('copied cells should have the same fields', function () { // to see if there are other fields on the object worth comparing
