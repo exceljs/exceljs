@@ -1,6 +1,11 @@
 'use strict';
 
 var expect = require('chai').expect;
+var Promish = require('promish');
+var fs = require('fs');
+var path = require('path');
+
+var fsa = Promish.promisifyAll(fs);
 
 var StreamBuf = require('../../../lib/utils/stream-buf');
 var StringBuf = require('../../../lib/utils/string-buf');
@@ -35,5 +40,20 @@ describe('StreamBuf', function() {
     });
     stream.write('Hello, World!');
     stream.end();
+  });
+
+  it.only('handles buffers', function() {
+    return new Promish((resolve, reject) => {
+      var s = fs.createReadStream(path.join(__dirname, 'data/image1.png'));
+      var sb = new StreamBuf();
+      sb.on('finish', () => {
+        var buf = sb.toBuffer();
+        console.log(buf)
+        expect(buf.length).to.equal(1672);
+        resolve();
+      });
+      sb.on('error', reject);
+      s.pipe(sb);
+    })
   });
 });
