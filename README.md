@@ -116,16 +116,16 @@ I have just one request; If you submit a pull request for a bugfix, please add a
   <li>
     <a href="#value-types">Value Types</a>
     <ul>
-      <li><a href="null-value">Null Value</a></li>
-      <li><a href="merge-cell">Merge Cell</a></li>
-      <li><a href="number-value">Number Value</a></li>
-      <li><a href="string-value">String Value</a></li>
-      <li><a href="date-value">Date Value</a></li>
-      <li><a href="hyperlink-value">Hyperlink Value</a></li>
-      <li><a href="formula-value">Formula Value</a></li>
-      <li><a href="rich-text-value">Rich Text Value</a></li>
-      <li><a href="boolean-value">Boolean Value</a></li>
-      <li><a href="error-value">Error Value</a></li>
+      <li><a href="#null-value">Null Value</a></li>
+      <li><a href="#merge-cell">Merge Cell</a></li>
+      <li><a href="#number-value">Number Value</a></li>
+      <li><a href="#string-value">String Value</a></li>
+      <li><a href="#date-value">Date Value</a></li>
+      <li><a href="#hyperlink-value">Hyperlink Value</a></li>
+      <li><a href="#formula-value">Formula Value</a></li>
+      <li><a href="#rich-text-value">Rich Text Value</a></li>
+      <li><a href="#boolean-value">Boolean Value</a></li>
+      <li><a href="#error-value">Error Value</a></li>
     </ul>
   </li>
   <li><a href="#config">Config</a></li>
