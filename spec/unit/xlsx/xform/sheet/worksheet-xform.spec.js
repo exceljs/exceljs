@@ -51,54 +51,47 @@ function fixDate(model) {
   model.rows[3].cells[1].value = new Date(model.rows[3].cells[1].value);
   return model;
 }
-var data = [
-  [
-    fixDate(require('./data/sheet.1.0.json')),
-    fixDate(require('./data/sheet.1.1.json')),
-    fs.readFileSync(__dirname + '/data/sheet.1.2.xml').toString(),
-    require('./data/sheet.1.3.json'),
-    fixDate(require('./data/sheet.1.4.json'))
-  ],
-  [
-    require('./data/sheet.2.0.json'),
-    require('./data/sheet.2.1.json'),
-    fs.readFileSync(__dirname + '/data/sheet.2.2.xml').toString()
-  ],
-  [
-    require('./data/sheet.3.1.json'),
-    fs.readFileSync(__dirname + '/data/sheet.3.2.xml').toString()
-  ]
-];
 
 var expectations = [
   {
     title: 'Sheet 1',
     create:  function() { return new WorksheetXform(); },
-    initialModel: data[0][0],
-    preparedModel: data[0][1],
-    xml: data[0][2],
-    parsedModel: data[0][3],
-    reconciledModel: data[0][4],
+    initialModel: fixDate(require('./data/sheet.1.0.json')),
+    preparedModel: fixDate(require('./data/sheet.1.1.json')),
+    xml: fs.readFileSync(__dirname + '/data/sheet.1.2.xml').toString(),
+    parsedModel: require('./data/sheet.1.3.json'),
+    reconciledModel: fixDate(require('./data/sheet.1.4.json')),
     tests: ['prepare', 'render', 'parse'],
-    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
+    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles, formulae: {}, siFormulae: 0 }
   },
   {
     title: 'Sheet 2 - Data Validations',
     create:  function() { return new WorksheetXform(); },
-    initialModel: data[1][0],
-    preparedModel: data[1][1],
-    xml: data[1][2],
+    initialModel: require('./data/sheet.2.0.json'),
+    preparedModel: require('./data/sheet.2.1.json'),
+    xml: fs.readFileSync(__dirname + '/data/sheet.2.2.xml').toString(),
     tests: ['prepare', 'render'],
-    options: { styles: new StylesXform(true), sharedStrings: new SharedStringsXform(), hyperlinks: []}
+    options: { styles: new StylesXform(true), sharedStrings: new SharedStringsXform(), hyperlinks: [], formulae: {}, siFormulae: 0 }
   },
   {
     title: 'Sheet 3 - Empty Sheet',
     create:  function() { return new WorksheetXform(); },
-    preparedModel: data[2][0],
-    xml: data[2][1],
+    preparedModel: require('./data/sheet.3.1.json'),
+    xml: fs.readFileSync(__dirname + '/data/sheet.3.2.xml').toString(),
     tests: ['render'],
     options: { styles: new StylesXform(true), sharedStrings: new SharedStringsXform(), hyperlinks: []}
-  }
+  },
+  {
+    title: 'Sheet 5 - Shared Formulas',
+    create:  function() { return new WorksheetXform(); },
+    initialModel: require('./data/sheet.5.0.json'),
+    preparedModel: require('./data/sheet.5.1.json'),
+    xml: fs.readFileSync(__dirname + '/data/sheet.5.2.xml').toString(),
+    parsedModel: require('./data/sheet.5.3.json'),
+    reconciledModel: require('./data/sheet.5.4.json'),
+    tests: ['prepare-render', 'parse'],
+    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles, formulae: {}, siFormulae: 0  }
+  },
 ];
 
 describe('WorksheetXform', function () {

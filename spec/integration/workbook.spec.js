@@ -20,9 +20,7 @@ var richTextSample_A1 = require('./data/rich-text-sample-a1.json');
 // Tests
 
 describe('Workbook', function() {
-
   describe('Serialise', function() {
-
     it('sheets with correct names', function() {
       var wb = new Excel.Workbook();
       var ws1 = wb.addWorksheet('Hello, World!');
@@ -127,7 +125,6 @@ describe('Workbook', function() {
     });
 
     it('xlsx file', function() {
-
       var wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');
 
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)

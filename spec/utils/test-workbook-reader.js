@@ -132,7 +132,7 @@ module.exports = {
       });
       wb.on('end', function() {
         try {
-          expect(rowCount).to.equal(9);
+          expect(rowCount).to.equal(10);
           resolve();
         }
         catch(error) {
