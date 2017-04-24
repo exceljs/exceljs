@@ -65,6 +65,24 @@ describe('Workbook', function() {
         });
     });
 
+    it('shared formula', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('Hello');
+      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [[2,3],[3,4]]);
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('Hello');
+          expect(ws2.getCell('A1').value).to.deep.equal({ formula: 'ROW()+COLUMN()', result: 2 });
+          expect(ws2.getCell('B1').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
+          expect(ws2.getCell('A2').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
+          expect(ws2.getCell('B2').value).to.deep.equal({ sharedFormula: 'A1', result: 4 });
+        });
+    });
+
     it('company, manager, etc', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('Hello');

@@ -45,6 +45,5 @@ describe('github issues', function() {
           });
       });
     });
-
   });
 });

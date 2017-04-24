@@ -1,0 +1,11 @@
+{
+  "extends": "../.eslintrc",
+  "rules": {
+    "no-new": ["off"]
+  },
+  "globals": {
+    "describe": true,
+    "beforeEach": true,
+    "it": true
+  }
+}
