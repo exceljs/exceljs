@@ -1,12 +1,13 @@
 'use strict';
 
 var chai = require('chai');
-var expect = chai.expect;
-chai.use(require('chai-datetime'));
 
 var stream = require('stream');
 var Excel = require('../../excel');
 var testUtils = require('./../utils/index');
+
+var expect = chai.expect;
+chai.use(require('chai-datetime'));
 
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 var TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
@@ -14,7 +15,7 @@ var TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
 // =============================================================================
 // Sample Data
 var richTextSample = require('./data/rich-text-sample');
-var richTextSample_A1 = require('./data/rich-text-sample-a1.json');
+var richTextSampleA1 = require('./data/rich-text-sample-a1.json');
 
 // =============================================================================
 // Tests
@@ -188,13 +189,13 @@ describe('Workbook', function() {
         });
     });
 
-    it("empty string", function() {
+    it('empty string', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet();
 
       ws.columns = [
-        { key: "id", width: 10 },
-        { key: "name", width: 32 }
+        { key: 'id', width: 10 },
+        { key: 'name', width: 32 }
       ];
 
       ws.addRow({id: 1, name: ''});
@@ -253,7 +254,7 @@ describe('Workbook', function() {
       function assign(sheet, address, value, name) {
         var cell = sheet.getCell(address);
         cell.value = value;
-        if (name instanceof  Array) {
+        if (Array.isArray(name)) {
           cell.names = name;
         } else {
           cell.name = name;
@@ -473,7 +474,7 @@ describe('Workbook', function() {
     var wb = new Excel.Workbook();
     var success = 0;
     return wb.xlsx.readFile('./wb.doesnotexist.xlsx')
-      .then(function(wb) {
+      .then(function(wb2) {
         success = 1;
       })
       .catch(function(error) {
