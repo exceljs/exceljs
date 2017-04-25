@@ -24,6 +24,8 @@ Contributions are very welcome! It helps me know what features are desired or wh
 I have just one request; If you submit a pull request for a bugfix, please add a unit-test or integration-test (in the spec folder) that catches the problem.
  Even a PR that just has a failing test is fine - I can analyse what the test is doing and fix the code from that. 
 
+To be clear, all contributions added to this library will be included in the library's MIT licence.
+
 # Backlog
 
 <ul>
@@ -107,7 +109,13 @@ I have just one request; If you submit a pull request for a bugfix, please add a
       <li><a href="string-value">String Value</a></li>
       <li><a href="date-value">Date Value</a></li>
       <li><a href="hyperlink-value">Hyperlink Value</a></li>
-      <li><a href="formula-value">Formula Value</a></li>
+      <li>
+        <a href="formula-value">Formula Value</a>
+        <ul>
+          <li><a href="shared-formula">Shared Formula</a></li>
+          <li><a href="formula-type">Formula Type</a></li>
+        </ul>
+      </li>
       <li><a href="rich-text-value">Rich Text Value</a></li>
       <li><a href="boolean-value">Boolean Value</a></li>
       <li><a href="error-value">Error Value</a></li>
@@ -1371,7 +1379,7 @@ E.g.
 worksheet.getCell('A1').value = { text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' };
 
 // internal link
-worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\'Sheet2\\'!A1' };
+worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\"Sheet2\\"!A1' };
 ```
 
 ## Formula Value
@@ -1387,8 +1395,52 @@ Note that ExcelJS cannot process the formula to generate a result, it must be su
 E.g.
 
 ```javascript
-worksheet.getCell('A1').value = { formula: 'A1+A2', result: 7 };
+worksheet.getCell('A3').value = { formula: 'A1+A2', result: 7 };
 ```
+
+Cells also support convenience getters to access the formula and result:
+
+```javascript
+worksheet.getCell('A3').formula === 'A1+A2';
+worksheet.getCell('A3').result === 7;
+```
+
+### Shared Formula
+
+Shared formulae enhance the compression of the xlsx document by increasing the repetition
+of text within the worksheet xml.
+
+A shared formula can be assigned to a cell using a new value form:
+
+```javascript
+worksheet.getCell('B3').value = { sharedFormula: 'A3', result: 10 };
+```
+
+This specifies that the cell B3 is a formula that will be derived from the formula in 
+A3 and its result is 10.
+
+The formula convenience getter will translate the formula in A3 to what it should be in B3:
+
+```javascript
+worksheet.getCell('B3').formula === 'B1+B2';
+```
+
+### Formula Type
+
+To distinguish between real and translated formula cells, use the formulaType getter:
+
+```javascript
+worksheet.getCell('A3').formulaType === Enums.FormulaType.Master;
+worksheet.getCell('B3').formulaType === Enums.FormulaType.Shared;
+```
+
+Formula type has the following values:
+
+| Name                       |  Value  |
+| -------------------------- | ------- |
+| Enums.FormulaType.None     |   0     |
+| Enums.FormulaType.Master   |   1     |
+| Enums.FormulaType.Shared   |   2     |
 
 ## Rich Text Value
 

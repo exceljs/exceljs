@@ -291,6 +291,10 @@ describe('Cell', function() {
     b1.value = { formula: 'A1+1', result: 2 };
     c1.value = { sharedFormula: 'B1', result: 3 };
 
-    expect(c1.translatedFormula).to.equal('B1+1');
+    expect(b1.type).to.equal(Enums.ValueType.Formula);
+    expect(b1.formulaType).to.equal(Enums.FormulaType.Master);
+    expect(c1.type).to.equal(Enums.ValueType.Formula);
+    expect(c1.formulaType).to.equal(Enums.FormulaType.Shared);
+    expect(c1.formula).to.equal('B1+1');
   });
 });
