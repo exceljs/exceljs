@@ -21,6 +21,10 @@ function getExpectation(expectation, name) {
   return _.cloneDeep(expectation[name]);
 }
 
+function prune(model, target) {
+  // if target has any ignore
+}
+
 // ===============================================================================================================
 // provides boilerplate examples for the four transform steps: prepare, render,  parse and reconcile
 //  prepare: model => preparedModel
@@ -54,6 +58,25 @@ var its = {
         xform.render(xmlStream, model);
         // console.log(xmlStream.xml);
         
+        expect(xmlStream.xml).xml.to.equal(result);
+        resolve();
+      });
+    });
+  },
+
+  'prepare-render': function(expectation) {
+    // when implementation details get in the way of testing the prepared result
+    it('Prepare and Render to XML', function () {
+      return new Promise(function (resolve) {
+        var model = getExpectation(expectation, 'initialModel');
+        var result = getExpectation(expectation, 'xml');
+
+        var xform = expectation.create();
+        var xmlStream = new XmlStream();
+
+        xform.prepare(model, expectation.options);
+        xform.render(xmlStream, model);
+
         expect(xmlStream.xml).xml.to.equal(result);
         resolve();
       });

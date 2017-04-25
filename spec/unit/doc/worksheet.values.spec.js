@@ -1,9 +1,9 @@
 var expect = require('chai').expect;
 
 var _ = require('../../../lib/utils/under-dash');
-var Excel = require("../../../excel");
-var Dimensions = require("../../../lib/doc/range");
-var testUtils = require("../../utils/index");
+var Excel = require('../../../excel');
+var Dimensions = require('../../../lib/doc/range');
+var testUtils = require('../../utils/index');
 
 describe('Worksheet', function() {
   describe('Values', function() {
