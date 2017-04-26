@@ -60,6 +60,7 @@ To be clear, all contributions added to this library will be included in the lib
           <li><a href="#split-views">Split Views</a></li>
         </ul>
       </li>
+      <li><a href="#auto-filters">Auto Filters</a></li>
       <li><a href="#columns">Columns</a></li>
       <li><a href="#rows">Rows</a></li>
       <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
@@ -363,6 +364,41 @@ Split views support the following extra properties:
 worksheet.views = [
     {state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'G10', activeCell: 'A1'}
 ];
+```
+
+## Auto filters
+
+It is possible to apply an auto filter to your worksheet.
+
+```javascript
+// Set an auto filter from A1 to C1
+worksheet.autoFilter = {
+    from: 'A1',
+    to: 'C1',
+}
+
+// Set an auto filter from the cell in row 3 and column 1
+// to the cell in row 5 and column 12
+worksheet.autoFilter = {
+    from: {
+        row: 3,
+        column: 1
+    },
+    to: {
+        row: 5,
+        column: 12
+    }
+}
+
+// Set an auto filter from D3 to the
+// cell in row 7 and column 5
+worksheet.autoFilter = {
+    from: 'D3',
+    to: {
+        row: 7,
+        column: 5
+    }
+}
 ```
 
 ## Columns
