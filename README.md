@@ -12,9 +12,8 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/297">Issue with copied cells #297</a>.
-        This merge adds support for shared formulas.
-        Thanks to <a href="https://github.com/muscapades">muscapades</a> for the contribution.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/304>Correct spelling #304</a>.
+        Thanks to <a href="https://github.com/toanalien">toanalien </a> for the contribution.
     </li>
 </ul>
 
@@ -1607,3 +1606,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.4.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/285">Add support for cp:contentStatus #285</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/286">Fix Valid characters in XML (allow \n and \r when saving) #286</a>. Thanks to <a href="https://github.com/Rycochet">Rycochet</a> for the contribution.</li><li>Fixed <a href="https://github.com/guyonroche/exceljs/issues/275">hyperlink with query arguments corrupts workbook #275</a>. The hyperlink target is not escaped before serialising in the xml.</li></ul> |
 | 0.4.2   | <ul><li><p>Addressed the following issues:<ul><li><a href="https://github.com/guyonroche/exceljs/issues/290">White text and borders being changed to black #290</a></li><li><a href="https://github.com/guyonroche/exceljs/issues/261">Losing formatting/pivot table from loaded file #261</a></li><li><a href="https://github.com/guyonroche/exceljs/issues/272">Solid fill become black #272</a></li></ul>These issues are potentially caused by a bug that caused colours with zero themes, tints or indexes to be rendered and parsed incorrectly.</p><p>Regarding themes: the theme files stored inside the xlsx container hold important information regarding colours, styles etc and if the theme information from a loaded xlsx file is lost, the results can be unpredictable and undesirable. To address this, when an ExcelJS Workbook parses an XLSX file, it will preserve any theme files it finds and include them when writing to a new XLSX. If this behaviour is not desired, the Workbook class exposes a clearThemes() function which will drop the theme content. Note that this behaviour is only implemented in the document based Workbook class, not the streamed Reader and Writer.</p></li></ul> |
 | 0.4.3   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/294">Support error references in cell ranges #294</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
+| 0.4.4   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/297">Issue with copied cells #297</a>. This merge adds support for shared formulas. Thanks to <a href="https://github.com/muscapades">muscapades</a> for the contribution.</li></ul> |
+            
