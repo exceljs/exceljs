@@ -11,25 +11,11 @@ npm install exceljs
 # New Features!
 
 <ul>
-  <li>
-    <p>
-      Addressed the following issues:
-      <ul>
-        <li><a href="https://github.com/guyonroche/exceljs/issues/290">White text and borders being changed to black #290</a></li>
-        <li><a href="https://github.com/guyonroche/exceljs/issues/261">Losing formatting/pivot table from loaded file #261</a></li>
-        <li><a href="https://github.com/guyonroche/exceljs/issues/272">Solid fill become black #272</a></li>
-      </ul>
-      These issues are potentially caused by a bug that caused colours with zero themes, tints or indexes to be rendered and parsed incorrectly.
-    </p>
-    <p>
-      Regarding themes: the theme files stored inside the xlsx container hold important information regarding colours, styles etc
-      and if the theme information from a loaded xlsx file is lost, the results can be unpredictable and undesirable.
-      To address this, when an ExcelJS Workbook parses an XLSX file, it will preserve any theme files it finds and include them
-      when writing to a new XLSX. If this behaviour is not desired, the Workbook class exposes a clearThemes() function which will
-      drop the theme content. Note that this behaviour is only implemented in the document based Workbook class, not the streamed
-      Reader and Writer.
-    </p>
-  </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/297">Issue with copied cells #297</a>.
+        This merge adds support for shared formulas.
+        Thanks to <a href="https://github.com/muscapades">muscapades</a> for the contribution.
+    </li>
 </ul>
 
 # Contributions
@@ -38,6 +24,8 @@ Contributions are very welcome! It helps me know what features are desired or wh
 
 I have just one request; If you submit a pull request for a bugfix, please add a unit-test or integration-test (in the spec folder) that catches the problem.
  Even a PR that just has a failing test is fine - I can analyse what the test is doing and fix the code from that. 
+
+To be clear, all contributions added to this library will be included in the library's MIT licence.
 
 # Backlog
 
@@ -86,7 +74,7 @@ I have just one request; If you submit a pull request for a bugfix, please add a
           <li><a href="#alignment">Alignment</a></li>
           <li><a href="#borders">Borders</a></li>
           <li><a href="#fills">Fills</a></li>
-          <li><a href="rich-text">Rich Text</a></li>
+          <li><a href="#rich-text">Rich Text</a></li>
         </ul>
       </li>
       <li><a href="#outline-levels">Outline Levels</a></li>
@@ -117,16 +105,22 @@ I have just one request; If you submit a pull request for a bugfix, please add a
   <li>
     <a href="#value-types">Value Types</a>
     <ul>
-      <li><a href="null-value">Null Value</a></li>
-      <li><a href="merge-cell">Merge Cell</a></li>
-      <li><a href="number-value">Number Value</a></li>
-      <li><a href="string-value">String Value</a></li>
-      <li><a href="date-value">Date Value</a></li>
-      <li><a href="hyperlink-value">Hyperlink Value</a></li>
-      <li><a href="formula-value">Formula Value</a></li>
-      <li><a href="rich-text-value">Rich Text Value</a></li>
-      <li><a href="boolean-value">Boolean Value</a></li>
-      <li><a href="error-value">Error Value</a></li>
+      <li><a href="#null-value">Null Value</a></li>
+      <li><a href="#merge-cell">Merge Cell</a></li>
+      <li><a href="#number-value">Number Value</a></li>
+      <li><a href="#string-value">String Value</a></li>
+      <li><a href="#date-value">Date Value</a></li>
+      <li><a href="#hyperlink-value">Hyperlink Value</a></li>
+      <li>
+        <a href="#formula-value">Formula Value</a>
+        <ul>
+          <li><a href="#shared-formula">Shared Formula</a></li>
+          <li><a href="#formula-type">Formula Type</a></li>
+        </ul>
+      </li>
+      <li><a href="#rich-text-value">Rich Text Value</a></li>
+      <li><a href="#boolean-value">Boolean Value</a></li>
+      <li><a href="#error-value">Error Value</a></li>
     </ul>
   </li>
   <li><a href="#config">Config</a></li>
@@ -1422,7 +1416,7 @@ E.g.
 worksheet.getCell('A1').value = { text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' };
 
 // internal link
-worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\'Sheet2\\'!A1' };
+worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\"Sheet2\\"!A1' };
 ```
 
 ## Formula Value
@@ -1438,8 +1432,52 @@ Note that ExcelJS cannot process the formula to generate a result, it must be su
 E.g.
 
 ```javascript
-worksheet.getCell('A1').value = { formula: 'A1+A2', result: 7 };
+worksheet.getCell('A3').value = { formula: 'A1+A2', result: 7 };
 ```
+
+Cells also support convenience getters to access the formula and result:
+
+```javascript
+worksheet.getCell('A3').formula === 'A1+A2';
+worksheet.getCell('A3').result === 7;
+```
+
+### Shared Formula
+
+Shared formulae enhance the compression of the xlsx document by increasing the repetition
+of text within the worksheet xml.
+
+A shared formula can be assigned to a cell using a new value form:
+
+```javascript
+worksheet.getCell('B3').value = { sharedFormula: 'A3', result: 10 };
+```
+
+This specifies that the cell B3 is a formula that will be derived from the formula in 
+A3 and its result is 10.
+
+The formula convenience getter will translate the formula in A3 to what it should be in B3:
+
+```javascript
+worksheet.getCell('B3').formula === 'B1+B2';
+```
+
+### Formula Type
+
+To distinguish between real and translated formula cells, use the formulaType getter:
+
+```javascript
+worksheet.getCell('A3').formulaType === Enums.FormulaType.Master;
+worksheet.getCell('B3').formulaType === Enums.FormulaType.Shared;
+```
+
+Formula type has the following values:
+
+| Name                       |  Value  |
+| -------------------------- | ------- |
+| Enums.FormulaType.None     |   0     |
+| Enums.FormulaType.Master   |   1     |
+| Enums.FormulaType.Shared   |   2     |
 
 ## Rich Text Value
 
@@ -1603,4 +1641,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.3.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/279">Update dependencies #279</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/267">Minor fixes for stream handling #267</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Added automated tests in phantomjs for the browserified code.</li></ul> |
 | 0.4.0   | <ul><li>Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/278">Boolean cell with value ="true" is returned as 1 #278</a>. The fix involved adding two new Call Value types:<ul><li><a href="#boolean-value">Boolean Value</a></li><li><a href="#error-value">Error Value</a></li></ul>Note: Minor version has been bumped up to 4 as this release introduces a couple of interface changes:<ul><li>Boolean cells previously will have returned 1 or 0 will now return true or false</li><li>Error cells that previously returned a string value will now return an error structure</li></ul></li><li>Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/280">Code correctness - setters don't return a value #280</a>.</li><li>Addressed issue <a href="https://github.com/guyonroche/exceljs/issues/288">v0.3.1 breaks meteor build #288</a>.</li></ul> |
 | 0.4.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/285">Add support for cp:contentStatus #285</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/286">Fix Valid characters in XML (allow \n and \r when saving) #286</a>. Thanks to <a href="https://github.com/Rycochet">Rycochet</a> for the contribution.</li><li>Fixed <a href="https://github.com/guyonroche/exceljs/issues/275">hyperlink with query arguments corrupts workbook #275</a>. The hyperlink target is not escaped before serialising in the xml.</li></ul> |
-
+| 0.4.2   | <ul><li><p>Addressed the following issues:<ul><li><a href="https://github.com/guyonroche/exceljs/issues/290">White text and borders being changed to black #290</a></li><li><a href="https://github.com/guyonroche/exceljs/issues/261">Losing formatting/pivot table from loaded file #261</a></li><li><a href="https://github.com/guyonroche/exceljs/issues/272">Solid fill become black #272</a></li></ul>These issues are potentially caused by a bug that caused colours with zero themes, tints or indexes to be rendered and parsed incorrectly.</p><p>Regarding themes: the theme files stored inside the xlsx container hold important information regarding colours, styles etc and if the theme information from a loaded xlsx file is lost, the results can be unpredictable and undesirable. To address this, when an ExcelJS Workbook parses an XLSX file, it will preserve any theme files it finds and include them when writing to a new XLSX. If this behaviour is not desired, the Workbook class exposes a clearThemes() function which will drop the theme content. Note that this behaviour is only implemented in the document based Workbook class, not the streamed Reader and Writer.</p></li></ul> |
+| 0.4.3   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/294">Support error references in cell ranges #294</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
