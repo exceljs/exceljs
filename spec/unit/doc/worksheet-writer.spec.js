@@ -6,7 +6,6 @@ var WorksheetWriter = require('../../../lib/stream/xlsx/worksheet-writer');
 var StreamBuf = require('../../../lib/utils/stream-buf');
 
 describe('Workbook Writer', function() {
-
   it('generates valid xml even when there is no data', function() {
     // issue: https://github.com/guyonroche/exceljs/issues/99
     // PR: https://github.com/guyonroche/exceljs/pull/255

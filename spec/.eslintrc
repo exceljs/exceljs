@@ -1,11 +1,16 @@
 {
   "extends": "../.eslintrc",
   "rules": {
-    "no-new": ["off"]
+    "no-new": ["off"],
+    "max-len": ["off"]
   },
   "globals": {
     "describe": true,
+    "expect": true,
+    "before": true,
+    "after": true,
     "beforeEach": true,
+    "afterEach": true,
     "it": true
   }
 }

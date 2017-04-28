@@ -16,8 +16,8 @@ wb.xlsx.readFile(filenameIn)
   })
   .then(function() {
     var micros = stopwatch.microseconds;
-    console.log("Done.");
-    console.log("Time taken:", micros)
+    console.log('Done.');
+    console.log('Time taken:', micros)
   })
   .catch(function(error) {
     console.error('Error', error.stack);

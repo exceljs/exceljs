@@ -44,7 +44,6 @@ app.post('/api/upload', function(req, res) {
             res.end();
           });
       });
-
   });
 
   req.pipe(stream);

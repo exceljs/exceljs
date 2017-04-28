@@ -7,9 +7,9 @@ var expectations = [
   {
     title: 'hello',
     create:  function() { return new StringXform({tag: 'string', attr: 'val'})},
-    preparedModel: "Hello, World!",
+    preparedModel: 'Hello, World!',
     xml: '<string val="Hello, World!"/>',
-    parsedModel: "Hello, World!",
+    parsedModel: 'Hello, World!',
     tests: ['render', 'renderIn', 'parse']
   },
   {

@@ -271,8 +271,9 @@ describe('WorksheetWriter', function() {
       var dateValue1 = new Date(1970,1,1);
       var dateValue2 = new Date(1965,1,7);
       var rows = [
-        ,[,1, 'John Doe', ,dateValue1]
-        ,[,2, 'Jane Doe', ,dateValue2]
+        ,
+        [,1, 'John Doe', ,dateValue1],
+        [,2, 'Jane Doe', ,dateValue2]
       ];
       var row3 = [];
       row3[1] = 3;

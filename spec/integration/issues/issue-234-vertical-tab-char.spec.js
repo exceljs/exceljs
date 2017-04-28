@@ -1,12 +1,13 @@
 'use strict';
 
 var chai = require('chai');
-var expect = chai.expect;
-chai.use(require('chai-datetime'));
 
 var Excel = require('../../../excel');
 var PromishLib = require('../../../lib/utils/promish');
 var Enums = require('../../../lib/doc/enums');
+
+var expect = chai.expect;
+chai.use(require('chai-datetime'));
 
 // this file to contain integration tests created from github issues
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';

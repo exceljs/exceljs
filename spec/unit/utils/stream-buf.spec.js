@@ -36,5 +36,4 @@ describe('StreamBuf', function() {
     stream.write('Hello, World!');
     stream.end();
   });
-
 });

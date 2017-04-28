@@ -9,6 +9,19 @@
     "type": "git",
     "url": "https://github.com/guyonroche/exceljs.git"
   },
+  "scripts": {
+    "test": "npm run unit-test && npm run integration-test && npm run end-to-end-test && npm run browser-test",
+    "clean-build": "npm run clean && npm run build",
+    "lint": "eslint --ext .js lib spec",
+    "browser-test": "./node_modules/.bin/grunt jasmine",
+    "unit-test": "mocha spec/unit --recursive",
+    "integration-test": "mocha spec/integration --recursive",
+    "end-to-end-test": "mocha spec/end-to-end --recursive",
+    "clean": "rm -rf build/ && rm -rf dist",
+    "build": "./node_modules/.bin/grunt build",
+    "manual-test": "node spec/manual/app.js",
+    "prepublish": "npm run build && npm test"
+  },
   "keywords": [
     "xlsx",
     "json",
@@ -70,19 +83,6 @@
     "request": "*",
     "uglifyjs": "^2.4.10",
     "underscore": "^1.8.3"
-  },
-  "scripts": {
-    "test": "npm run unit-test && npm run integration-test && npm run end-to-end-test && npm run browser-test",
-    "clean-build": "npm run clean && npm run build",
-    "lint": "eslint --ext .js lib spec",
-    "browser-test": "./node_modules/.bin/grunt jasmine",
-    "unit-test": "mocha spec/unit --recursive",
-    "integration-test": "mocha spec/integration --recursive",
-    "end-to-end-test": "mocha spec/end-to-end --recursive",
-    "clean": "rm -rf build/ && rm -rf dist",
-    "build": "./node_modules/.bin/grunt build",
-    "manual-test": "node spec/manual/app.js",
-    "prepublish": "npm run build && npm test"
   },
   "main": "./excel.js",
   "files": [

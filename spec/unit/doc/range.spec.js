@@ -4,7 +4,6 @@ var expect = require('chai').expect;
 var Range = require('../../../lib/doc/range');
 
 describe('Range', function() {
-
   function check(d, range, $range, tl, $t$l, br, $b$r, top, left, bottom, right, sheetName) {
     expect(d.range).to.equal(range);
     expect(d.$range).to.equal($range);
@@ -49,8 +48,6 @@ describe('Range', function() {
 
     check(new Range('$B$5:$D$10'), 'B5:D10', '$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4);
     check(new Range('blort!$B$5:$D$10'), 'blort!B5:D10', 'blort!$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4, 'blort');
-
-
   });
 
 

@@ -2,11 +2,10 @@
 
 var expect = require('chai').expect;
 
-var utils = require("../../../lib/utils/utils");
+var utils = require('../../../lib/utils/utils');
 
-describe("utils", function() {
-  it("encodes xml text", function() {
-
+describe('utils', function() {
+  it('encodes xml text', function() {
     expect(utils.xmlEncode('<')).to.equal('&lt;');
     expect(utils.xmlEncode('>')).to.equal('&gt;');
     expect(utils.xmlEncode('&')).to.equal('&amp;');

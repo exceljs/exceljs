@@ -1,12 +1,13 @@
 'use strict';
 
 var chai = require('chai');
-var expect = chai.expect;
-chai.use(require('chai-datetime'));
 
 var stream = require('stream');
 var Excel = require('../../excel');
 var testUtils = require('./../utils/index');
+
+var expect = chai.expect;
+chai.use(require('chai-datetime'));
 
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 var TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
@@ -14,15 +15,13 @@ var TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
 // =============================================================================
 // Sample Data
 var richTextSample = require('./data/rich-text-sample');
-var richTextSample_A1 = require('./data/rich-text-sample-a1.json');
+var richTextSampleA1 = require('./data/rich-text-sample-a1.json');
 
 // =============================================================================
 // Tests
 
 describe('Workbook', function() {
-
   describe('Styles', function() {
-
     it('row styles and columns properly', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('blort');
@@ -68,7 +67,6 @@ describe('Workbook', function() {
     });
 
     it('in-cell formats properly in xlsx file', function() {
-
       // Stream from input string
       var testData = new Buffer(richTextSample, 'base64');
 
@@ -83,8 +81,8 @@ describe('Workbook', function() {
       return wb.xlsx.read(bufferStream)
           .then(function () {
             var ws = wb.worksheets[0];
-            expect(ws.getCell("A1").value).to.deep.equal(richTextSample_A1);
-            expect(ws.getCell("A1").text).to.equal(ws.getCell("A2").value);
+            expect(ws.getCell('A1').value).to.deep.equal(richTextSampleA1);
+            expect(ws.getCell('A1').text).to.equal(ws.getCell('A2').value);
           });
     });
 

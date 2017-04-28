@@ -15,10 +15,12 @@ var self = module.exports = {
       showErrorMessage: true,
       formulae: [self.dataValidations.values[type].v1]
     };
-    switch(operator) {
+    switch (operator) {
       case 'between':
       case 'notBetween':
         dataValidation.formulae.push(self.dataValidations.values[type].v2);
+        break;
+      default:
         break;
     }
     return dataValidation;
@@ -73,7 +75,6 @@ var self = module.exports = {
 
     ws.getCell('A19').value = tools.concatenateFormula('Any');
     ws.getCell('B19').dataValidation = self.dataValidations.B19;
-
   },
 
   checkSheet: function(wb) {

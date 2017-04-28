@@ -3,10 +3,10 @@
 var Sax = require('sax');
 var _ = require('../../../utils/under-dash');
 
-var chai    = require('chai');
+var chai = require('chai');
 var chaiXml = require('chai-xml');
 
-var expect  = chai.expect;
+var expect = chai.expect;
 
 chai.use(chaiXml);
 
@@ -165,7 +165,7 @@ var its = {
 
         xform.parse(parser)
           .then(function (model) {
-            //console.log(JSON.stringify(model));
+            // console.log(JSON.stringify(model));
             
             // eliminate the undefined
             var clone = _.cloneDeep(model, false);

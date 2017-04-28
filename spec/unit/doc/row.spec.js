@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var Enums = require("../../../lib/doc/enums");
+var Enums = require('../../../lib/doc/enums');
 var createSheetMock = require('../../utils/index').createSheetMock;
 
 describe('Row', function() {
@@ -29,11 +29,11 @@ describe('Row', function() {
     expect(b1.type).to.equal(Enums.ValueType.Null);
     expect(a1.type).to.equal(Enums.ValueType.Number);
 
-    b1.value = "Hello, World!";
+    b1.value = 'Hello, World!';
     var d1 = row1.getCell(4);
-    d1.value = { hyperlink:"http://www.hyperlink.com", text: "www.hyperlink.com" };
+    d1.value = { hyperlink:'http://www.hyperlink.com', text: 'www.hyperlink.com' };
 
-    var values = [,5,"Hello, World!",,{hyperlink:"http://www.hyperlink.com", text: "www.hyperlink.com"}];
+    var values = [,5,'Hello, World!',,{hyperlink:'http://www.hyperlink.com', text: 'www.hyperlink.com'}];
     expect(row1.values).to.deep.equal(values);
     expect(row1.dimensions).to.deep.equal({min:1,max:4});
 
@@ -50,7 +50,9 @@ describe('Row', function() {
       }
       count++;
     });
-    expect(count).to.equal(3); //eachCell should just cover non-null cells
+
+    // eachCell should just cover non-null cells
+    expect(count).to.equal(3);
 
     var row2 = sheet.getRow(2);
     expect(row2.dimensions).to.be.null;
@@ -67,23 +69,23 @@ describe('Row', function() {
     var row1 = sheet.getRow(1);
 
     // set values by contiguous array
-    row1.values = [5, "Hello, World!", null];
+    row1.values = [5, 'Hello, World!', null];
     expect(row1.getCell(1).value).to.equal(5);
-    expect(row1.getCell(2).value).to.equal("Hello, World!");
+    expect(row1.getCell(2).value).to.equal('Hello, World!');
     expect(row1.getCell(3).value).to.be.null;
-    expect(row1.values).to.deep.equal([, 5, "Hello, World!"]);
+    expect(row1.values).to.deep.equal([, 5, 'Hello, World!']);
 
     // set values by sparse array
     var values = [];
     values[1] = 7;
-    values[3] = "Not Null!";
+    values[3] = 'Not Null!';
     values[5] = now;
     row1.values = values;
     expect(row1.getCell(1).value).to.equal(7);
     expect(row1.getCell(2).value).to.be.null;
-    expect(row1.getCell(3).value).to.equal("Not Null!");
+    expect(row1.getCell(3).value).to.equal('Not Null!');
     expect(row1.getCell(5).type).to.equal(Enums.ValueType.Date);
-    expect(row1.values).to.deep.equal([, 7, , "Not Null!", , now]);
+    expect(row1.values).to.deep.equal([, 7, , 'Not Null!', , now]);
 
     // set values by object
     row1.values = {
@@ -172,16 +174,16 @@ describe('Row', function() {
     var sheet = createSheetMock();
     var row1 = sheet.getRow(1);
     row1.getCell(1).value = 5;
-    row1.getCell(2).value = "Hello, World!";
-    row1.getCell(4).value = { hyperlink:"http://www.hyperlink.com", text: "www.hyperlink.com" };
+    row1.getCell(2).value = 'Hello, World!';
+    row1.getCell(4).value = { hyperlink:'http://www.hyperlink.com', text: 'www.hyperlink.com' };
     row1.getCell(5).value = null;
     row1.height = 50;
 
     expect(row1.model).to.deep.equal({
       cells:[
         {address:'A1',type:Enums.ValueType.Number,value:5,style:{}},
-        {address:'B1',type:Enums.ValueType.String,value:"Hello, World!",style:{}},
-        {address:'D1',type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com",style:{}},
+        {address:'B1',type:Enums.ValueType.String,value:'Hello, World!',style:{}},
+        {address:'D1',type:Enums.ValueType.Hyperlink,text:'www.hyperlink.com',hyperlink:'http://www.hyperlink.com',style:{}},
         {address:'E1',type:Enums.ValueType.Null,style:{}}
       ],
       number: 1,
@@ -219,8 +221,8 @@ describe('Row', function() {
     row1.model = {
       cells:[
         {address:'A1',type:Enums.ValueType.Number,value:5},
-        {address:'B1',type:Enums.ValueType.String,value:"Hello, World!"},
-        {address:'D1',type:Enums.ValueType.Hyperlink,text:"www.hyperlink.com",hyperlink:"http://www.hyperlink.com"}
+        {address:'B1',type:Enums.ValueType.String,value:'Hello, World!'},
+        {address:'D1',type:Enums.ValueType.Hyperlink,text:'www.hyperlink.com',hyperlink:'http://www.hyperlink.com'}
       ],
       number: 1,
       min: 1,
@@ -229,18 +231,18 @@ describe('Row', function() {
     };
 
     expect(row1.dimensions).to.deep.equal({min:1,max:4});
-    expect(row1.values).to.deep.equal([,5,"Hello, World!", , {hyperlink:"http://www.hyperlink.com", text: "www.hyperlink.com"}]);
+    expect(row1.values).to.deep.equal([,5,'Hello, World!', , {hyperlink:'http://www.hyperlink.com', text: 'www.hyperlink.com'}]);
     expect(row1.getCell(1).type).to.equal(Enums.ValueType.Number);
     expect(row1.getCell(1).value).to.equal(5);
     expect(row1.getCell(2).type).to.equal(Enums.ValueType.String);
-    expect(row1.getCell(2).value).to.equal("Hello, World!");
+    expect(row1.getCell(2).value).to.equal('Hello, World!');
     expect(row1.getCell(4).type).to.equal(Enums.ValueType.Hyperlink);
-    expect(row1.getCell(4).value).to.deep.equal({hyperlink:"http://www.hyperlink.com", text: "www.hyperlink.com"});
+    expect(row1.getCell(4).value).to.deep.equal({hyperlink:'http://www.hyperlink.com', text: 'www.hyperlink.com'});
     expect(row1.getCell(5).type).to.equal(Enums.ValueType.Null);
     expect(row1.height - 32.5).to.be.below(0.00000001);
   });
 
-  it('counts cells',  function() {
+  it('counts cells', function() {
     var sheet = createSheetMock();
     var row1 = sheet.getRow(1);
 

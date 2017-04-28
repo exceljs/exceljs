@@ -490,10 +490,10 @@ describe('Workbook', function() {
     var wb = new Excel.Workbook();
     var success = 0;
     return wb.csv.readFile('./wb.doesnotexist.csv')
-      .then(function(wb) {
+      .then(function(/* wb */) {
         success = 1;
       })
-      .catch(function(error) {
+      .catch(function(/* error */) {
         success = 2;
         // expect the right kind of error
       })

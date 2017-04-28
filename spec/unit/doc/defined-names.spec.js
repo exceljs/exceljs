@@ -5,7 +5,6 @@ var expect = require('chai').expect;
 var DefinedNames = require('../../../lib/doc/defined-names');
 
 describe('DefinedNames', function() {
-
   it('adds names for cells', function() {
     var dn = new DefinedNames();
 
@@ -60,27 +59,26 @@ describe('DefinedNames', function() {
 
   it('creates matrix from model', function() {
     var dn = new DefinedNames();
-    
-            dn.model = [];
+
+    dn.model = [];
     dn.add('blort!A1','bar');
     dn.remove('blort!A1','foo');
 
-        expect(dn.getNames('blort!A1')).to.deep.equal(['bar']);
+    expect(dn.getNames('blort!A1')).to.deep.equal(['bar']);
   });
 
-    it('skips values with invalid range', function() {
-        var dn = new DefinedNames();
-        dn.model = [
-            {name: 'eq', ranges: ['"="']},
-            {name: 'ref', ranges: ['#REF!']},
-            {name: 'single', ranges: ['Sheet3!$A$1']},
-            {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']}
-          ];
+  it('skips values with invalid range', function() {
+    var dn = new DefinedNames();
+    dn.model = [
+      {name: 'eq', ranges: ['"="']},
+      {name: 'ref', ranges: ['#REF!']},
+      {name: 'single', ranges: ['Sheet3!$A$1']},
+      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']}
+    ];
 
-          expect(dn.model).to.deep.equal([
-              {name: 'single', ranges: ['Sheet3!$A$1']},
-              {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']}
-            ]);
-      });
-
+    expect(dn.model).to.deep.equal([
+      {name: 'single', ranges: ['Sheet3!$A$1']},
+      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']}
+    ]);
+  });
 });

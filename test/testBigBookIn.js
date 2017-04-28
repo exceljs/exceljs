@@ -10,6 +10,7 @@ var HrStopwatch = require('./utils/hr-stopwatch');
 var ColumnSum = require('./utils/column-sum');
 
 var Excel = require('../excel');
+
 var Workbook = Excel.Workbook;
 var WorkbookReader = Excel.stream.xlsx.WorkbookReader;
 
@@ -118,6 +119,8 @@ if (useStream) {
         hyperlinks: 'emit'
       });
       break;
+    default:
+      break;
   }
 } else {
   var wb = new Workbook();
@@ -128,5 +131,3 @@ if (useStream) {
     })
     .then(report);
 }
-
-

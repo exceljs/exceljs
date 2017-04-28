@@ -4,6 +4,7 @@ var _ = require('underscore');
 var HrStopwatch = require('./utils/hr-stopwatch');
 
 var ExcelJS = require('../excel');
+
 var Workbook = ExcelJS.Workbook;
 
 var filename = process.argv[2];
@@ -38,12 +39,12 @@ var alignments = [
   { text: 'Rotate -90', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -90 } },
   { text: 'Vertical Text', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 'vertical' } },
 ];
-//var badAlignments = [
+// var badAlignments = [
 //  { text: 'Rotate -91', alignment: { textRotation: -91 } },
 //  { text: 'Rotate 91', alignment: { textRotation: 91 } },
 //  { text: 'Indent -1', alignment: { indent: -1 } },
 //  { text: 'Blank', alignment: {  } }
-//];
+// ];
 
 var borders = {
   thin: { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'}},
@@ -86,7 +87,7 @@ ws.getCell('B2').font = fonts.comicSansUdB16;
 ws.getCell('B2').border = borders.thin;
 
 ws.getCell('C2').value = -5.55;
-ws.getCell('C2').numFmt = '"£"#,##0.00;[Red]\-"£"#,##0.00';
+ws.getCell('C2').numFmt = '"£"#,##0.00;[Red]-"£"#,##0.00';
 ws.getCell('C2').font = fonts.arialBlackUI14;
 
 ws.getCell('D2').value = 3.14;
@@ -193,11 +194,11 @@ ws.getCell('I15').value = 'You Can\'t See Me!';
 ws.getCell('A16').value = 'You Can\'t See Me!';
 
 var A18 = ws.getCell('A18');
-A18.value ='Wrap Text - Wrapping Wrapping Wrappity Wrap Wrap Wrap';
+A18.value = 'Wrap Text - Wrapping Wrapping Wrappity Wrap Wrap Wrap';
 A18.alignment = { wrapText: true };
 
 var A20 = ws.getCell('A20');
-A20.value ='Wrap Text - Wrapping Wrappity Wrap';
+A20.value = 'Wrap Text - Wrapping Wrappity Wrap';
 A20.alignment = { shrinkToFit: true };
 
 ws.getCell('A2').name = 'Passe';
@@ -222,11 +223,11 @@ ws.getCell('B24').dataValidation = {
 var stopwatch = new HrStopwatch();
 stopwatch.start();
 wb.xlsx.writeFile(filename)
-  .then(function(){
+  .then(function() {
     var micros = stopwatch.microseconds;
     console.log('Done.');
     console.log('Time taken:', micros)
   });
-//.catch(function(error) {
+// .catch(function(error) {
 //    console.log(error.message);
-//})
+// })

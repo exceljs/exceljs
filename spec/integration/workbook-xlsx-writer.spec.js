@@ -9,7 +9,6 @@ var utils = require('../../lib/utils/utils');
 var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 
 describe('WorkbookWriter', function() {
-
   it('creates sheets with correct names', function() {
     var wb = new Excel.stream.xlsx.WorkbookWriter();
     var ws1 = wb.addWorksheet('Hello, World!');
