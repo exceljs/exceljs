@@ -84,7 +84,7 @@
     "uglifyjs": "^2.4.10",
     "underscore": "^1.8.3"
   },
-  "main": "./excel.js",
+  "main": "./dist/es3/excel.js",
   "files": [
     "excel.js",
     "lib",

@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 var slideFormula = require('../../../lib/utils/shared-formula').slideFormula;
 
 describe('shared-formula', () => {
-  describe.skip('slideFormula', () => {
+  describe('slideFormula', () => {
     const expectations = [
       { args: ['A1+1', 'A2', 'A3'], result: 'A2+1' },
       { args: ['A1+1', 'A2', 'B2'], result: 'B1+1' },
@@ -17,10 +17,10 @@ describe('shared-formula', () => {
       { args: ['A$1+A1', 'A2', 'A3'], result: 'A$1+A2' },
       { args: ['A$1+A1', 'A2', 'B2'], result: 'B$1+B1' },
     ];
-    // expectations.forEach(({ args, result }) => {
-    //   it(`${args[0]} from ${args[1]} to ${args[2]}`, () => {
-    //     expect(slideFormula(...args)).to.equal(result);
-    //   });
-    // });
+    expectations.forEach(({ args, result }) => {
+      it(`${args[0]} from ${args[1]} to ${args[2]}`, () => {
+        expect(slideFormula(...args)).to.equal(result);
+      });
+    });
   });
 });
