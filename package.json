@@ -9,6 +9,9 @@
     "type": "git",
     "url": "https://github.com/guyonroche/exceljs.git"
   },
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "scripts": {
     "test": "npm run unit-test && npm run integration-test && npm run end-to-end-test && npm run browser-test",
     "clean-build": "npm run clean && npm run build",

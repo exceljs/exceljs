@@ -84,6 +84,29 @@ describe('Workbook', function() {
         });
     });
 
+    it('auto filter', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = 1;
+      ws.getCell('B1').value = 1;
+      ws.getCell('A2').value = 2;
+      ws.getCell('B2').value = 2;
+      ws.getCell('A3').value = 3;
+      ws.getCell('B3').value = 3;
+
+      ws.autoFilter = 'A1:B1';
+
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('Hello');
+          expect(ws2.autoFilter).to.equal('A1:B1');
+        });
+    });
+
     it('company, manager, etc', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('Hello');
