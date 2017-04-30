@@ -12,11 +12,11 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/304>Correct spelling #304</a>.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/304">Correct spelling #304</a>.
         Thanks to <a href="https://github.com/toanalien">toanalien</a> for the contribution.
     </li>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/304>Added support for auto filters #306</a>.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/304">Added support for auto filters #306</a>.
         This adds <a href="#auto-filters">Auto Filters</a> to the Worksheet.
         Thanks to <a href="https://github.com/C4rmond4i">C4rmond4i</a> for the contribution.
     </li>
