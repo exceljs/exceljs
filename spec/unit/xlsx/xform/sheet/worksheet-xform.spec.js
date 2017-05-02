@@ -55,7 +55,7 @@ function fixDate(model) {
 var expectations = [
   {
     title: 'Sheet 1',
-    create:  function() { return new WorksheetXform(); },
+    create:  () => new WorksheetXform(),
     initialModel: fixDate(require('./data/sheet.1.0.json')),
     preparedModel: fixDate(require('./data/sheet.1.1.json')),
     xml: fs.readFileSync(__dirname + '/data/sheet.1.2.xml').toString(),
@@ -66,7 +66,7 @@ var expectations = [
   },
   {
     title: 'Sheet 2 - Data Validations',
-    create:  function() { return new WorksheetXform(); },
+    create:  () => new WorksheetXform(),
     initialModel: require('./data/sheet.2.0.json'),
     preparedModel: require('./data/sheet.2.1.json'),
     xml: fs.readFileSync(__dirname + '/data/sheet.2.2.xml').toString(),
@@ -75,7 +75,7 @@ var expectations = [
   },
   {
     title: 'Sheet 3 - Empty Sheet',
-    create:  function() { return new WorksheetXform(); },
+    create:  () => new WorksheetXform(),
     preparedModel: require('./data/sheet.3.1.json'),
     xml: fs.readFileSync(__dirname + '/data/sheet.3.2.xml').toString(),
     tests: ['render'],
@@ -83,13 +83,22 @@ var expectations = [
   },
   {
     title: 'Sheet 5 - Shared Formulas',
-    create:  function() { return new WorksheetXform(); },
+    create:  () => new WorksheetXform(),
     initialModel: require('./data/sheet.5.0.json'),
     preparedModel: require('./data/sheet.5.1.json'),
     xml: fs.readFileSync(__dirname + '/data/sheet.5.2.xml').toString(),
     parsedModel: require('./data/sheet.5.3.json'),
     reconciledModel: require('./data/sheet.5.4.json'),
     tests: ['prepare-render', 'parse'],
+    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles, formulae: {}, siFormulae: 0 }
+  },
+  {
+    title: 'Sheet 6 - AutoFilter',
+    create:  () => new WorksheetXform(),
+    preparedModel: require('./data/sheet.6.1.json'),
+    xml: fs.readFileSync(__dirname + '/data/sheet.6.2.xml').toString(),
+    parsedModel: require('./data/sheet.6.3.json'),
+    tests: ['render', 'parse'],
     options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles, formulae: {}, siFormulae: 0 }
   },
 ];

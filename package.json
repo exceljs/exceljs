@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "0.4.4",
+  "version": "0.4.6",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -8,6 +8,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/guyonroche/exceljs.git"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   },
   "scripts": {
     "test": "npm run unit-test && npm run integration-test && npm run end-to-end-test && npm run browser-test",

@@ -36,6 +36,62 @@ describe('WorkbookWriter', function() {
         });
     });
 
+    it('shared formula', function() {
+      var options = {
+        filename: TEST_FILE_NAME,
+        useStyles: false
+      };
+      var wb = new Excel.stream.xlsx.WorkbookWriter(options);
+      var ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = { formula: 'ROW()+COLUMN()', result: 2 };
+      ws.getCell('B1').value = { sharedFormula: 'A1', result: 3 };
+      ws.getCell('A2').value = { sharedFormula: 'A1', result: 3 };
+      ws.getCell('B2').value = { sharedFormula: 'A1', result: 4 };
+
+      ws.commit();
+      return wb.commit()
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('Hello');
+          expect(ws2.getCell('A1').value).to.deep.equal({ formula: 'ROW()+COLUMN()', result: 2 });
+          expect(ws2.getCell('B1').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
+          expect(ws2.getCell('A2').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
+          expect(ws2.getCell('B2').value).to.deep.equal({ sharedFormula: 'A1', result: 4 });
+        });
+    });
+
+    it('auto filter', function() {
+      var options = {
+        filename: TEST_FILE_NAME,
+        useStyles: false
+      };
+      var wb = new Excel.stream.xlsx.WorkbookWriter(options);
+      var ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = 1;
+      ws.getCell('B1').value = 1;
+      ws.getCell('A2').value = 2;
+      ws.getCell('B2').value = 2;
+      ws.getCell('A3').value = 3;
+      ws.getCell('B3').value = 3;
+
+      ws.autoFilter = 'A1:B1';
+      ws.commit();
+
+      return wb.commit()
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('Hello');
+          expect(ws2.autoFilter).to.equal('A1:B1');
+        });
+    });
+
+
     it('Without styles', function() {
       var options = {
         filename: TEST_FILE_NAME,

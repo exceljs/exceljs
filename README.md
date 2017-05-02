@@ -12,8 +12,17 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/304>Correct spelling #304</a>.
-        Thanks to <a href="https://github.com/toanalien">toanalien </a> for the contribution.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/304">Correct spelling #304</a>.
+        Thanks to <a href="https://github.com/toanalien">toanalien</a> for the contribution.
+    </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/304">Added support for auto filters #306</a>.
+        This adds <a href="#auto-filters">Auto Filters</a> to the Worksheet.
+        Thanks to <a href="https://github.com/C4rmond4i">C4rmond4i</a> for the contribution.
+    </li>
+    <li>
+        Restored NodeJS 4.0.0 compatability by removing the destructuring code.
+        My apologies for any inconvenience.
     </li>
 </ul>
 
@@ -29,13 +38,12 @@ To be clear, all contributions added to this library will be included in the lib
 # Backlog
 
 <ul>
+  <li>Babel Transpile to dist folder to take advantage of better JS syntax in the source code</li>
   <li>Still working my way through PRs and Issues and improving the tests.</li>
   <li>Images - background, in-cell, printing, etc.</li>
   <li>Conditional Formatting.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
   <li>XLSX Streaming Reader.</li>
-  <li>ES6ify - This module was originally built for NodeJS 0.12.4 but things have moved on since then and I really want to start taking advantage of the modern JS features.
-    I would also like to take the time to look at transpilers to support the earlier JSs</li>
   <li>Parsing CSV with Headers</li>
 </ul>
 
@@ -310,8 +318,6 @@ worksheet.pageSetup.printArea = 'A1:G20';
 | Double Japan Postcard Rotated |  82       |
 | 16K 197x273 mm                |  119      |
 
-
-
 ## Worksheet Views
 
 Worksheets now support a list of views, that control how Excel presents the sheet:
@@ -368,6 +374,13 @@ worksheet.views = [
 ## Auto filters
 
 It is possible to apply an auto filter to your worksheet.
+
+```javascript
+worksheet.autoFilter = 'A1:C1';
+```
+
+While the range string is the standard form of the autoFilter, the worksheet will also support the
+following values:
 
 ```javascript
 // Set an auto filter from A1 to C1
