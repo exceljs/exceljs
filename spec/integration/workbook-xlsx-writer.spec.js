@@ -2,9 +2,11 @@
 
 var fs = require('fs');
 var expect = require('chai').expect;
-var Excel = require('../../excel');
+var verquire = require('../utils/verquire');
 var testUtils = require('./../utils/index');
 var utils = require('../../lib/utils/utils');
+
+var Excel = verquire('excel');
 
 var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 

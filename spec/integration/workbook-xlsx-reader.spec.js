@@ -1,7 +1,9 @@
 'use strict';
 
-var Excel = require('../../excel');
-var testutils = require('./../utils/index');
+var verquire = require('../utils/verquire');
+var testutils = require('../utils/index');
+
+var Excel = verquire('excel');
 
 var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 

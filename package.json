@@ -23,7 +23,7 @@
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
     "manual-test": "node spec/manual/app.js",
-    "prepublish": "npm run build && npm test"
+    "prepublish": "npm run clean && npm run build && npm test"
   },
   "keywords": [
     "xlsx",
@@ -84,6 +84,7 @@
     "memorystream": "*",
     "mocha": "*",
     "request": "*",
+    "semver": "*",
     "uglifyjs": "^2.4.10",
     "underscore": "^1.8.3"
   },

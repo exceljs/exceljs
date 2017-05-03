@@ -1,10 +1,11 @@
 'use strict';
 
 var chai = require('chai');
-
-var Excel = require('../../../excel');
+var verquire = require('../../utils/verquire');
 var PromishLib = require('../../../lib/utils/promish');
 var Enums = require('../../../lib/doc/enums');
+
+var Excel = verquire('excel');
 
 var expect = chai.expect;
 chai.use(require('chai-datetime'));

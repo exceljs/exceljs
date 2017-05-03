@@ -1,9 +1,11 @@
 'use strict';
 
 var expect = require('chai').expect;
-var Excel = require('../../excel');
-var Range = require('../../lib/doc/range');
+var verquire = require('../utils/verquire');
 var testutils = require('./../utils/index');
+
+var Excel = verquire('excel');
+var Range = verquire('doc/range');
 
 describe('Worksheet', function() {
   describe('Values', function() {

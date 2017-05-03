@@ -1,9 +1,11 @@
 'use strict';
 
 var expect = require('chai').expect;
+var verquire = require('./verquire');
 
-var Excel = require('../../excel');
 var tools = require('./tools');
+
+var Excel = verquire('excel');
 
 var self = module.exports = {
   testValues: tools.fix(require('./data/sheet-values.json')),

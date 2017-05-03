@@ -1,10 +1,12 @@
 'use strict';
 
-var Excel = require('../../excel');
+var verquire = require('../utils/verquire');
 var testutils = require('../utils/index');
 
 var express = require('express');
 var request = require('request');
+
+var Excel = verquire('excel');
 
 // =============================================================================
 // Tests

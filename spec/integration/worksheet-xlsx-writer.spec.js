@@ -1,8 +1,10 @@
 'use strict';
 
 var expect = require('chai').expect;
-var Excel = require('../../excel');
+var verquire = require('../utils/verquire');
 var testutils = require('./../utils/index');
+
+var Excel = verquire('excel');
 
 var CONCATENATE_HELLO_WORLD = 'CONCATENATE("Hello", ", ", "World!")';
 

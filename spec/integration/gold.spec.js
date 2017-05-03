@@ -1,8 +1,10 @@
 'use strict';
 
+var verquire = require('../utils/verquire');
 var chai = require('chai');
 var moment = require('moment');
-var Excel = require('../../excel');
+
+var Excel = verquire('excel');
 
 var expect = chai.expect;
 chai.use(require('chai-datetime'));

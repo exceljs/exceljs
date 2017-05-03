@@ -55,7 +55,7 @@ module.exports = function(grunt) {
             ext: '.js',
           },
           {
-            './dist/es3/exceljs.js': ['./build/lib/exceljs.nodejs.js'],
+            './dist/es3/index.js': ['./build/lib/exceljs.nodejs.js'],
           }
         ],
       },

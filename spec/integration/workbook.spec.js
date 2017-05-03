@@ -3,8 +3,10 @@
 var chai = require('chai');
 
 var stream = require('stream');
-var Excel = require('../../excel');
+var verquire = require('../utils/verquire');
 var testUtils = require('./../utils/index');
+
+var Excel = verquire('excel');
 
 var expect = chai.expect;
 chai.use(require('chai-datetime'));
