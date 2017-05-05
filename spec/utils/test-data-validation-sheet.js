@@ -15,7 +15,7 @@ var self = module.exports = {
       showErrorMessage: true,
       formulae: [self.dataValidations.values[type].v1]
     };
-    switch(operator) {
+    switch (operator) {
       case 'between':
       case 'notBetween':
         dataValidation.formulae.push(self.dataValidations.values[type].v2);

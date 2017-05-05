@@ -14,7 +14,7 @@ ws.getCell('B1').value = 'Hello, World!';
 var stopwatch = new HrStopwatch();
 stopwatch.start();
 wb.xlsx.writeFile(filename)
-  .then(function () {
+  .then(function() {
     var micros = stopwatch.microseconds;
     console.log('Done.');
     console.log('Time taken:', micros)

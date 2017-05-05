@@ -28,7 +28,7 @@ describe('Column', function() {
     var column = sheet.addColumn(1);
 
     column.key = 'id1';
-    expect(sheet._keys['id1']).to.equal(column);
+    expect(sheet._keys.id1).to.equal(column);
 
     expect(column.number).to.equal(1);
     expect(column.letter).to.equal('A');

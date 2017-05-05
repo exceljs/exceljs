@@ -44,7 +44,21 @@ module.exports = function(grunt) {
         files: {
           './dist/exceljs.min.js': ['./dist/exceljs.js']
         }
-      }
+      },
+      es3: {
+        files: [
+          {
+            expand: true,
+            cwd: './build/lib/',
+            src: ['*.js', '**/*.js'],
+            dest: 'dist/es3/',
+            ext: '.js',
+          },
+          {
+            './dist/es3/index.js': ['./build/lib/exceljs.nodejs.js'],
+          }
+        ],
+      },
     },
 
     jasmine: {
@@ -58,4 +72,5 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('build', ['babel', 'browserify', 'uglify']);
+  grunt.registerTask('ug', ['uglify']);
 };

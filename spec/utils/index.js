@@ -1,13 +1,15 @@
 'use strict';
 
 var expect = require('chai').expect;
+var verquire = require('./verquire');
 
 var _ = require('./under-dash');
-var Row = require('../../lib/doc/row');
-var Column = require('../../lib/doc/column');
 var tools = require('./tools');
 
 var testWorkbookReader = require('./test-workbook-reader');
+
+var Row = verquire('doc/row');
+var Column = verquire('doc/column');
 
 var testSheets = {
   dataValidations: require('./test-data-validation-sheet'),
@@ -102,7 +104,7 @@ module.exports = {
       },
       
       addColumn: function(colNumber, defn) {
-        return this.columns[colNumber - 1] = new Column(this, colNumber, defn);
+        return (this.columns[colNumber - 1] = new Column(this, colNumber, defn));
       },
       getColumn: function(colNumber) {
         var column = this.columns[colNumber - 1] || this._keys[colNumber];

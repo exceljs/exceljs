@@ -1,9 +1,11 @@
 'use strict';
 
 var expect = require('chai').expect;
+var verquire = require('./verquire');
 
-var Excel = require('../../excel');
 var tools = require('./tools');
+
+var Excel = verquire('excel');
 
 var self = module.exports = {
   testValues: tools.fix(require('./data/sheet-values.json')),
@@ -108,6 +110,13 @@ var self = module.exports = {
     row8.getCell(4).value = 'RGB Path Gradient';
     row8.getCell(4).fill = self.styles.fills.rgbPathGrad;
     row8.commit();
+
+    // Shared Formula
+    ws.getCell('A9').value = 1;
+    ws.getCell('B9').value = {formula: 'A9+1', result: 2};
+    ws.getCell('C9').value = {sharedFormula: 'B9', result: 3};
+    ws.getCell('D9').value = {sharedFormula: 'B9', result: 4};
+    ws.getCell('E9').value = {sharedFormula: 'B9', result: 5};
   },
 
   checkSheet: function(wb, options) {
@@ -262,6 +271,25 @@ var self = module.exports = {
       expect(row8.getCell(2).fill).to.deep.equal(self.styles.fills.redDarkVertical);
       expect(row8.getCell(3).fill).to.deep.equal(self.styles.fills.redGreenDarkTrellis);
       expect(row8.getCell(4).fill).to.deep.equal(self.styles.fills.rgbPathGrad);
+
+      if (options.checkFormulas) {
+        // Shared Formula
+        expect(ws.getCell('A9').value).to.equal(1);
+        expect(ws.getCell('A9').type).to.equal(Excel.ValueType.Number);
+
+        expect(ws.getCell('B9').value).to.deep.equal({ formula:'A9+1', result: 2 });
+        expect(ws.getCell('B9').type).to.equal(Excel.ValueType.Formula);
+
+        ['C9','D9','E9'].forEach((address, index) => {
+          expect(ws.getCell(address).value).to.deep.equal({ sharedFormula: 'B9', result: index + 3 });
+          expect(ws.getCell(address).type).to.equal(Excel.ValueType.Formula);
+        });
+      } else {
+        ['A9','B9','C9','D9','E9'].forEach((address, index) => {
+          expect(ws.getCell(address).value).to.equal(index + 1);
+          expect(ws.getCell(address).type).to.equal(Excel.ValueType.Number);
+        });
+      }
     }
   }
 };

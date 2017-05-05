@@ -1,16 +1,16 @@
 {
   "extends": "../.eslintrc",
   "rules": {
-    "no-console": ["off"],
-    "max-len": ["off"],
-    "no-return-assign": ["off"],
-    "comma-style": ["off"]
+    "no-new": ["off"],
+    "max-len": ["off"]
   },
   "globals": {
     "describe": true,
-    "it": true,
     "expect": true,
+    "before": true,
+    "after": true,
     "beforeEach": true,
-    "afterEach": true
+    "afterEach": true,
+    "it": true
   }
 }

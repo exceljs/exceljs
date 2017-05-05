@@ -113,7 +113,7 @@ var expectations = [
     parsedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
     reconciledModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
     tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
-    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
+    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles, formulae: {}, siFormulae: 0 },
   },
   {
     title: 'Number Formula',
@@ -121,8 +121,45 @@ var expectations = [
     preparedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 7},
     xml: '<c r="A1"><f>A2</f><v>7</v></c>',
     parsedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 7},
-    tests: ['render', 'renderIn', 'parse']
-  }
+    tests: ['render', 'renderIn', 'parse'],
+    options: { formulae: {}, siFormulae: 0 },
+  },
+  {
+    title: 'Shared Formula',
+    create:  function() { return new CellXform()},
+    initialModel: {address: 'A2', type: Enums.ValueType.Formula, sharedFormula: 'A1', result: 2},
+    preparedModel: {address: 'A2', type: Enums.ValueType.Formula, sharedFormula: 'A1', result: 2, si: 0 },
+    xml: '<c r="A2"><f t="shared" si="0" /><v>2</v></c>',
+    parsedModel: {address: 'A2', type: Enums.ValueType.Formula, result: 2, si: '0', sharedFormula: true },
+    reconciledModel: {address: 'A2', type: Enums.ValueType.Formula, result: 2, sharedFormula: 'A1' },
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
+    options: {
+      styles: fakeStyles,
+      hyperlinks: [],
+      hyperlinkMap: fakeHyperlinkMap,
+      formulae: {
+        A1: { address: 'A1', type: Enums.ValueType.Formula, formula: 'ROW()', result: 1 },
+        0: { address: 'A1', type: Enums.ValueType.Formula, formula: 'ROW()', result: 1, si: '0' },
+      },
+      siFormulae: 0
+    },
+  },
+  {
+    title: 'Master Shared Formula',
+    create:  function() { return new CellXform()},
+    preparedModel: {address: 'A2', type: Enums.ValueType.Formula, formula: 'A1', result: 2, si: 0 },
+    xml: '<c r="A2"><f t="shared" si="0">A1</f><v>2</v></c>',
+    parsedModel: {address: 'A2', type: Enums.ValueType.Formula, formula: 'A1', result: 2, si: '0', sharedFormula: true },
+    reconciledModel: {address: 'A2', type: Enums.ValueType.Formula, formula: 'A1', result: 2 },
+    tests: ['render', 'renderIn', 'parse', 'reconcile'],
+    options: {
+      styles: fakeStyles,
+      hyperlinks: [],
+      hyperlinkMap: fakeHyperlinkMap,
+      formulae: {},
+      siFormulae: 0
+    },
+  },
 ];
 
 describe('CellXform', function () {

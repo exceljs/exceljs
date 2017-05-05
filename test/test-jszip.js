@@ -2,7 +2,6 @@
 
 var JSZip = require('jszip');
 var Bluebird = require('bluebird');
-
 var fs = require('fs');
 
 var fsp = Bluebird.promisifyAll(fs);

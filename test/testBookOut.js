@@ -2,6 +2,7 @@ var fs = require('fs');
 var _ = require('underscore');
 
 var HrStopwatch = require('./utils/hr-stopwatch');
+
 var ExcelJS = require('../excel');
 
 var Workbook = ExcelJS.Workbook;
@@ -86,7 +87,7 @@ ws.getCell('B2').font = fonts.comicSansUdB16;
 ws.getCell('B2').border = borders.thin;
 
 ws.getCell('C2').value = -5.55;
-ws.getCell('C2').numFmt = '"£"#,##0.00;[Red]\\-"£"#,##0.00';
+ws.getCell('C2').numFmt = '"£"#,##0.00;[Red]-"£"#,##0.00';
 ws.getCell('C2').font = fonts.arialBlackUI14;
 
 ws.getCell('D2').value = 3.14;
@@ -222,7 +223,7 @@ ws.getCell('B24').dataValidation = {
 var stopwatch = new HrStopwatch();
 stopwatch.start();
 wb.xlsx.writeFile(filename)
-  .then(function () {
+  .then(function() {
     var micros = stopwatch.microseconds;
     console.log('Done.');
     console.log('Time taken:', micros)

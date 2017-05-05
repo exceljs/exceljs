@@ -1,8 +1,8 @@
 {
   "extends": "../.eslintrc",
   "rules": {
-    "no-console": ["off"],
-    "comma-style": ["off"],
-    "max-len": [1, 320, 2, {"ignoreComments": true}]
+    "no-new": ["off"],
+    "max-len": ["off"],
+    "no-console": ["off"]
   }
 }

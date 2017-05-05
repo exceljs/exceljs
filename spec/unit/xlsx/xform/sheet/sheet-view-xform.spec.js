@@ -93,7 +93,7 @@ var expectations = [
             '<sheetView workbookViewId="1">' +
               '<pane xSplit="2" ySplit="3" topLeftCell="C4" activePane="bottomRight" state="frozen"/>' +
               '<selection pane="bottomRight" activeCell="D5" sqref="D5"/>' +
-            '</sheetView>'  +
+            '</sheetView>' +
           '</sheetViews>',
     parsedModel: [
       {workbookViewId: 0, state: 'normal', activeCell: 'G4', showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100},

@@ -42,7 +42,7 @@ describe('StreamBuf', function() {
     stream.end();
   });
 
-  it.only('handles buffers', function() {
+  it('handles buffers', function() {
     return new Promish((resolve, reject) => {
       var s = fs.createReadStream(path.join(__dirname, 'data/image1.png'));
       var sb = new StreamBuf();

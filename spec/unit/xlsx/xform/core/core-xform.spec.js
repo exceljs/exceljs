@@ -8,7 +8,7 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'core.xml',
-    create:  function() { return new CoreXform()},
+    create:  () => new CoreXform(),
     preparedModel: { creator: 'Guyon Roche', lastModifiedBy: 'Guyon Roche', created: new Date('2016-04-20T16:26:46Z'), modified: new Date('2016-05-12T06:52:49Z')},
     xml: fs.readFileSync(__dirname + '/data/core.01.xml').toString().replace(/\r\n/g, '\n'),
     get parsedModel() { return this.preparedModel; },
@@ -16,7 +16,7 @@ var expectations = [
   },
   {
     title: 'core.xml',
-    create:  function() { return new CoreXform()},
+    create:  () => new CoreXform(),
     preparedModel: {
       creator: 'Guyon Roche',
       title: 'My Little Xlsx',
@@ -34,7 +34,7 @@ var expectations = [
   },
   {
     title: 'core.xml - with cp:lastPrinted',
-    create:  function() { return new CoreXform()},
+    create:  () => new CoreXform(),
     preparedModel: { creator: 'Guyon Roche', lastModifiedBy: 'Guyon Roche', lastPrinted: new Date('2016-08-16T19:56:07Z'), created: new Date('2016-04-20T16:26:46Z'), modified: new Date('2016-05-12T06:52:49Z')},
     xml: fs.readFileSync(__dirname + '/data/core.03.xml').toString().replace(/\r\n/g, '\n'),
     get parsedModel() { return this.preparedModel; },
@@ -42,7 +42,7 @@ var expectations = [
   },
   {
     title: 'core.xml - with cp:contentStatus',
-    create:  function() { return new CoreXform()},
+    create:  () => new CoreXform(),
     preparedModel: { creator: 'Guyon Roche', lastModifiedBy: 'Guyon Roche', contentStatus: 'Final', created: new Date('2016-04-20T16:26:46Z'), modified: new Date('2016-05-12T06:52:49Z')},
     xml: fs.readFileSync(__dirname + '/data/core.04.xml').toString().replace(/\r\n/g, '\n'),
     get parsedModel() { return this.preparedModel; },

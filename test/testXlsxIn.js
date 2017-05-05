@@ -22,4 +22,4 @@ wb.xlsx.readFile(filename)
   })
   .catch(function(error) {
     console.error('something went wrong', error.stack);
-  })
+  });

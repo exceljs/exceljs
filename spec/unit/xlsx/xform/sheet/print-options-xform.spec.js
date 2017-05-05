@@ -31,7 +31,7 @@ var expectations = [
   {
     title: 'centered',
     create: function() { return new PrintOptionsXform(); },
-    preparedModel: {horizontalCentered: true,  verticalCentered: true},
+    preparedModel: {horizontalCentered: true, verticalCentered: true},
     xml: '<printOptions horizontalCentered="1" verticalCentered="1"/>',
     parsedModel: {showGridLines: false, showRowColHeaders: false, horizontalCentered: true, verticalCentered: true},
     tests: ['render', 'renderIn', 'parse']

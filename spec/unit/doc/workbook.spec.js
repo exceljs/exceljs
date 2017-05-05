@@ -48,7 +48,6 @@ function createSimpleWorkbook() {
 // Tests
 
 describe('Workbook', function() {
-
   it('stores shared string values properly', function() {
     var wb = new Excel.Workbook();
     var ws = wb.addWorksheet('blort');

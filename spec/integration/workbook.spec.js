@@ -1,18 +1,15 @@
 'use strict';
 
 var chai = require('chai');
-var stream = require('stream');
-var Promish = require('promish');
-var fs = require('fs');
 
-var Excel = require('../../excel');
+var stream = require('stream');
+var verquire = require('../utils/verquire');
 var testUtils = require('./../utils/index');
+
+var Excel = verquire('excel');
 
 var expect = chai.expect;
 chai.use(require('chai-datetime'));
-
-
-var fsReadFileAsync = Promish.promisify(fs.readFile);
 
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 var TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
@@ -20,8 +17,8 @@ var TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
 
 // =============================================================================
 // Sample Data
-// var richTextSample = require('./data/rich-text-sample');
-// var richTextSampleA1 = require('./data/rich-text-sample-a1.json');
+var richTextSample = require('./data/rich-text-sample');
+var richTextSampleA1 = require('./data/rich-text-sample-a1.json');
 
 // =============================================================================
 // Tests
@@ -82,6 +79,47 @@ describe('Workbook', function() {
           expect(wb2.lastModifiedBy).to.equal(wb.lastModifiedBy);
           expect(wb2.created).to.equalDate(wb.created);
           expect(wb2.modified).to.equalDate(wb.modified);
+        });
+    });
+
+    it('shared formula', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('Hello');
+      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [[2,3],[3,4]]);
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('Hello');
+          expect(ws2.getCell('A1').value).to.deep.equal({ formula: 'ROW()+COLUMN()', result: 2 });
+          expect(ws2.getCell('B1').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
+          expect(ws2.getCell('A2').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
+          expect(ws2.getCell('B2').value).to.deep.equal({ sharedFormula: 'A1', result: 4 });
+        });
+    });
+
+    it('auto filter', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = 1;
+      ws.getCell('B1').value = 1;
+      ws.getCell('A2').value = 2;
+      ws.getCell('B2').value = 2;
+      ws.getCell('A3').value = 3;
+      ws.getCell('B3').value = 3;
+
+      ws.autoFilter = 'A1:B1';
+
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('Hello');
+          expect(ws2.autoFilter).to.equal('A1:B1');
         });
     });
 
@@ -242,7 +280,7 @@ describe('Workbook', function() {
       function assign(sheet, address, value, name) {
         var cell = sheet.getCell(address);
         cell.value = value;
-        if (name instanceof Array) {
+        if (Array.isArray(name)) {
           cell.names = name;
         } else {
           cell.name = name;
@@ -478,10 +516,10 @@ describe('Workbook', function() {
     var wb = new Excel.Workbook();
     var success = 0;
     return wb.csv.readFile('./wb.doesnotexist.csv')
-      .then(function (/* wb2 */) {
+      .then(function(/* wb */) {
         success = 1;
       })
-      .catch(function (/* error */) {
+      .catch(function(/* error */) {
         success = 2;
         // expect the right kind of error
       })

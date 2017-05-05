@@ -1,10 +1,12 @@
 'use strict';
 
 var expect = require('chai').expect;
+var verquire = require('./verquire');
 var tools = require('./tools');
 var testValues = tools.fix(require('./data/sheet-values.json'));
-var Excel = require('../../excel');
 var utils = require('../../lib/utils/utils');
+
+var Excel = verquire('excel');
 
 function fillFormula(f) {
   return Object.assign({formula: undefined, result: undefined}, f);
@@ -132,7 +134,7 @@ module.exports = {
       });
       wb.on('end', function() {
         try {
-          expect(rowCount).to.equal(9);
+          expect(rowCount).to.equal(10);
           resolve();
         }
         catch(error) {

@@ -1,21 +1,19 @@
 'use strict';
 
+var verquire = require('../utils/verquire');
 var chai = require('chai');
-var expect = chai.expect;
-
-chai.use(require('chai-datetime'));
-
 var moment = require('moment');
 
-var Excel = require('../../excel');
+var Excel = verquire('excel');
+
+var expect = chai.expect;
+chai.use(require('chai-datetime'));
 
 // =============================================================================
 // This spec is based around a gold standard Excel workbook 'gold.xlsx'
 
 describe('Gold Book', function() {
-
   describe('Read', function() {
-
     var wb;
     before(function() {
       wb = new Excel.Workbook();

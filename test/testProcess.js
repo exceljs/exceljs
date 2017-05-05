@@ -14,10 +14,12 @@ var wb = new Excel.Workbook();
 var passed = true;
 var assert = function(value, failMessage, passMessage) {
   if (!value) {
-    if (failMessage) console.error(failMessage);
+    if (failMessage) {
+      console.error(failMessage);
+    }
     passed = false;
-  } else {
-    if (passMessage) console.log(passMessage);
+  } else if (passMessage) {
+    console.log(passMessage);
   }
 };
 
@@ -32,7 +34,7 @@ wb.xlsx.readFile(inputFile)
 
     var ws = wb.getWorksheet('Sheet1');
 
-    assert(ws, "Expected to find a worksheet called sheet1");
+    assert(ws, 'Expected to find a worksheet called sheet1');
 
     ws.getCell('B1').value = new Date();
     ws.getCell('B1').numFmt = 'hh:mm:ss';
@@ -41,7 +43,7 @@ wb.xlsx.readFile(inputFile)
     return wb.xlsx.writeFile(outputFile);
   })
   .then(function() {
-    assert(passed, "Something went wrong", "All tests passed!");
+    assert(passed, 'Something went wrong', 'All tests passed!');
   })
   .catch(function(error) {
     console.error(error.message);
