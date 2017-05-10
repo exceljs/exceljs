@@ -1,24 +1,21 @@
 'use strict';
 
 var chai = require('chai');
-
 var stream = require('stream');
-var verquire = require('../utils/verquire');
-var testUtils = require('./../utils/index');
+var verquire = require('../../utils/verquire');
+var testUtils = require('../../utils/index');
 
 var Excel = verquire('excel');
 
 var expect = chai.expect;
-chai.use(require('chai-datetime'));
 
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 var TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
 
-
 // =============================================================================
 // Sample Data
-var richTextSample = require('./data/rich-text-sample');
-var richTextSampleA1 = require('./data/rich-text-sample-a1.json');
+var richTextSample = require('../data/rich-text-sample');
+var richTextSampleA1 = require('../data/rich-text-sample-a1.json');
 
 // =============================================================================
 // Tests
@@ -56,8 +53,8 @@ describe('Workbook', function() {
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
-          expect(wb2.getWorksheet('Hello, World!')).to.be.ok;
-          expect(wb2.getWorksheet('This & That')).to.be.ok;
+          expect(wb2.getWorksheet('Hello, World!')).to.be.ok();
+          expect(wb2.getWorksheet('This & That')).to.be.ok();
         });
     });
 
@@ -248,7 +245,7 @@ describe('Workbook', function() {
         .then(function(wb2) {
           for (i = 1; i <= numSheets; i++) {
             var ws2 = wb2.getWorksheet('sheet' + i);
-            expect(ws2).to.be.ok;
+            expect(ws2).to.be.ok();
             expect(ws2.getCell('A1').value).to.equal(i);
           }
         });
@@ -528,45 +525,6 @@ describe('Workbook', function() {
       });
   });
 
-  describe('Images', function() {
-    it('stores background image', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
-      var ws2;
-      ws.getCell('A1').value = 'Hello, World!';
-      ws.background = {
-        type: 'image',
-        image: {
-          filename: __dirname + '/data/image.png',
-          type: 'png'
-        }
-      };
-      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-        .then(function() {
-          var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
-        })
-        .then(function(wb2) {
-          ws2 = wb2.getWorksheet('blort');
-          expect(ws2).to.not.be.undefined;
-
-          return fsReadFileAsync(__dirname + '/data/image.png');
-        })
-        .then(function(data) {
-          expect(ws2.background.type).to.equal('image');
-          expect(ws2.background.image.type).to.equal('png');
-          expect(Buffer.compare(data, ws2.background.image.buffer)).to.equal(0);
-        })
-    });
-    it('stores embedded image', function() {
-      expect(true).to.equal(false);
-    });
-    it('stores images and hyperlinks', function() {
-      expect(true).to.equal(false);
-    });
-  });
-
-
   describe('Sheet Views', function() {
     it('frozen panes', function() {
       var wb = new Excel.Workbook();
@@ -585,7 +543,7 @@ describe('Workbook', function() {
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('frozen');
-          expect(ws2).to.be.ok;
+          expect(ws2).to.be.ok();
           expect(ws2.getCell('A1').value).to.equal('Let it Snow!');
           expect(ws2.views).to.deep.equal([
             {
@@ -621,7 +579,7 @@ describe('Workbook', function() {
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('split');
-          expect(ws2).to.be.ok;
+          expect(ws2).to.be.ok();
           expect(ws2.getCell('A1').value).to.equal('Do the splits!');
           expect(ws2.views).to.deep.equal([
             {

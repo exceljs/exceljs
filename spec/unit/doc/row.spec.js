@@ -10,19 +10,19 @@ describe('Row', function() {
 
     var row1 = sheet.getRow(1);
     expect(row1.number).to.equal(1);
-    expect(row1.hasValues).to.not.be.ok;
+    expect(row1.hasValues).to.not.be.ok();
 
     var a1 = row1.getCell(1);
     expect(a1.address).to.equal('A1');
     expect(a1.type).to.equal(Enums.ValueType.Null);
-    expect(row1.hasValues).to.not.be.ok;
+    expect(row1.hasValues).to.not.be.ok();
 
     expect(row1.getCell('A')).to.equal(a1);
     expect(row1.getCell('name')).to.equal(a1);
 
     a1.value = 5;
     expect(a1.type).to.equal(Enums.ValueType.Number);
-    expect(row1.hasValues).to.be.ok;
+    expect(row1.hasValues).to.be.ok();
 
     var b1 = row1.getCell(2);
     expect(b1.address).to.equal('B1');
@@ -55,7 +55,7 @@ describe('Row', function() {
     expect(count).to.equal(3);
 
     var row2 = sheet.getRow(2);
-    expect(row2.dimensions).to.be.null;
+    expect(row2.dimensions).to.be.null()
   });
 
   it('stores values by whole row', function() {
@@ -72,7 +72,7 @@ describe('Row', function() {
     row1.values = [5, 'Hello, World!', null];
     expect(row1.getCell(1).value).to.equal(5);
     expect(row1.getCell(2).value).to.equal('Hello, World!');
-    expect(row1.getCell(3).value).to.be.null;
+    expect(row1.getCell(3).value).to.be.null()
     expect(row1.values).to.deep.equal([, 5, 'Hello, World!']);
 
     // set values by sparse array
@@ -82,7 +82,7 @@ describe('Row', function() {
     values[5] = now;
     row1.values = values;
     expect(row1.getCell(1).value).to.equal(7);
-    expect(row1.getCell(2).value).to.be.null;
+    expect(row1.getCell(2).value).to.be.null()
     expect(row1.getCell(3).value).to.equal('Not Null!');
     expect(row1.getCell(5).type).to.equal(Enums.ValueType.Date);
     expect(row1.values).to.deep.equal([, 7, , 'Not Null!', , now]);
@@ -96,7 +96,7 @@ describe('Row', function() {
     expect(row1.getCell(1).value).to.equal(9);
     expect(row1.getCell(2).value).to.equal('Dobbie');
     expect(row1.getCell(3).type).to.equal(Enums.ValueType.Date);
-    expect(row1.getCell(5).value).to.be.null;
+    expect(row1.getCell(5).value).to.be.null()
     expect(row1.values).to.deep.equal([, 9, 'Dobbie', now]);
   });
 
@@ -197,7 +197,7 @@ describe('Row', function() {
     });
 
     var row2 = sheet.getRow(2);
-    expect(row2.model).to.be.null;
+    expect(row2.model).to.be.null();
 
     var row3 = sheet.getRow(3);
     row3.getCell(1).value = 5;

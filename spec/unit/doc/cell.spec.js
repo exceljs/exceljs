@@ -116,7 +116,7 @@ describe('Cell', function() {
     expect(a1.value).to.deep.equal(hyperlinkValue);
     expect(a1.type).to.equal(Enums.ValueType.Hyperlink);
 
-    expect(a1.value = null).to.be.null;
+    expect(a1.value = null).to.be.null();
     expect(a1.type).to.equal(Enums.ValueType.Null);
 
     expect(a1.value = {json:'data'}).to.deep.equal({json:'data'});
@@ -146,9 +146,9 @@ describe('Cell', function() {
     expect(a2.value).to.equal(5);
     expect(a2.type).to.equal(Enums.ValueType.Merge);
     expect(a1._mergeCount).to.equal(1);
-    expect(a1.isMerged).to.be.ok;
-    expect(a2.isMerged).to.be.ok;
-    expect(a2.isMergedTo(a1)).to.be.ok;
+    expect(a1.isMerged).to.be.ok();
+    expect(a2.isMerged).to.be.ok();
+    expect(a2.isMergedTo(a1)).to.be.ok();
     expect(a2.master).to.equal(a1);
     expect(a1.master).to.equal(a1);
 
@@ -165,9 +165,9 @@ describe('Cell', function() {
     a2.unmerge();
     expect(a2.type).to.equal(Enums.ValueType.Null);
     expect(a1._mergeCount).to.equal(0);
-    expect(a1.isMerged).to.not.be.ok;
-    expect(a2.isMerged).to.not.be.ok;
-    expect(a2.isMergedTo(a1)).to.not.be.ok;
+    expect(a1.isMerged).to.not.be.ok();
+    expect(a2.isMerged).to.not.be.ok();
+    expect(a2.isMergedTo(a1)).to.not.be.ok();
     expect(a2.master).to.equal(a2);
     expect(a1.master).to.equal(a1);
   });

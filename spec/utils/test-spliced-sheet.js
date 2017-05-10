@@ -22,7 +22,7 @@ module.exports = {
 
       checkSheet: function(wb, options) {
         var ws = wb.getWorksheet('splice-row-remove-only');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getCell('A1').value).to.equal('1,1');
         expect(ws.getCell('A1').type).to.equal(Enums.ValueType.String);
@@ -72,7 +72,7 @@ module.exports = {
 
       checkSheet: function(wb, options) {
         var ws = wb.getWorksheet('splice-row-insert-fewer');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([,'1,1', '1,2', '1,3']);
         expect(ws.getRow(2).values).to.deep.equal([,'one', 'two', 'three']);
@@ -95,7 +95,7 @@ module.exports = {
 
       checkSheet: function(wb, options) {
         var ws = wb.getWorksheet('splice-row-insert-same');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([,'1,1', '1,2', '1,3']);
         expect(ws.getRow(2).values).to.deep.equal([,'one', 'two', 'three']);
@@ -119,7 +119,7 @@ module.exports = {
 
       checkSheet: function(wb, options) {
         var ws = wb.getWorksheet('splice-row-insert-more');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([,'1,1', '1,2', '1,3']);
         expect(ws.getRow(2).values).to.deep.equal([,'one', 'two', 'three']);
@@ -150,7 +150,7 @@ module.exports = {
 
       checkSheet: function(wb, options) {
         var ws = wb.getWorksheet('splice-column-remove-only');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getCell('A1').value).to.equal('id1');
         expect(ws.getCell('A1').type).to.equal(Enums.ValueType.String);
@@ -186,7 +186,7 @@ module.exports = {
 
       checkSheet: function(wb, options) {
         var ws = wb.getWorksheet('splice-column-insert-fewer');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([,'1,1', 'one', '1,4', '1,5']);
         expect(ws.getRow(2).values).to.deep.equal([,'2,1', 'two', '2,4', '2,5']);
@@ -214,7 +214,7 @@ module.exports = {
 
       checkSheet: function(wb, options) {
         var ws = wb.getWorksheet('splice-column-insert-same');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([,'1,1', 'one', 'une', '1,4', '1,5']);
         expect(ws.getRow(2).values).to.deep.equal([,'2,1', 'two', 'deux', '2,4', '2,5']);
@@ -243,7 +243,7 @@ module.exports = {
 
       checkSheet: function(wb, options) {
         var ws = wb.getWorksheet('splice-column-insert-more');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([,'1,1', 'one', 'une', 'uno', '1,4', '1,5']);
         expect(ws.getRow(2).values).to.deep.equal([,'2,1', 'two', 'deux', 'due', '2,4', '2,5']);

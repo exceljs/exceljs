@@ -398,8 +398,8 @@ describe('Worksheet', function() {
           });
 
           expect(ws.getColumn(1).width).to.equal(10);
-          expect(ws.getColumn(2).width).to.be.undefined;
-          expect(ws.getColumn(3).width).to.be.undefined;
+          expect(ws.getColumn(2).width).to.be.undefined();
+          expect(ws.getColumn(3).width).to.be.undefined();
           expect(ws.getColumn(4).width).to.equal(30);
           expect(ws.getColumn(5).width).to.equal(40);
         });

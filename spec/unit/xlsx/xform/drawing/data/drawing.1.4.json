@@ -1,12 +1,8 @@
 {
   "anchors":[
     {
-      "range": {
-        "tl": {"row": 1, "col": 1},
-        "br": {"row": 7, "col": 3}
-      },
+      "range": "A1:C7",
       "picture": {
-        "index": 1,
         "rId": "rId1"
       }
     },
@@ -16,7 +12,6 @@
         "br": {"row": 10.5, "col": 8.5}
       },
       "picture": {
-        "index": 2,
         "rId": "rId2"
       }
     }

@@ -2,7 +2,8 @@
   "dimensions": "A1:B1",
   "properties": {"defaultRowHeight": 14.4, "dyDescent": 0.55, "outlineLevelRow": 2, "outlineLevelCol": 0},
   "pageSetup": {
-    "fitToPage": false
+    "fitToPage": false,
+    "margins": {}
   },
   "rows": [
     {
@@ -12,5 +13,12 @@
         {"address": "B1", "type": 6, "sharedFormula": true, "si": "0", "result": 1}
       ]
     }
-  ]
+  ],
+  "background": {},
+  "mergeCells": {},
+  "dataValidations": {},
+  "drawing": {},
+  "cols": {},
+  "hyperlinks": {},
+  "views": {}
 }

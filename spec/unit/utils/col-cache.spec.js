@@ -49,9 +49,9 @@ describe('colCache', function() {
   });
 
   it('validates addresses properly', function() {
-    expect(colCache.validateAddress('A1')).to.be.ok;
-    expect(colCache.validateAddress('AA10')).to.be.ok;
-    expect(colCache.validateAddress('ABC100000')).to.be.ok;
+    expect(colCache.validateAddress('A1')).to.be.ok();
+    expect(colCache.validateAddress('AA10')).to.be.ok();
+    expect(colCache.validateAddress('ABC100000')).to.be.ok();
 
     expect(function() { colCache.validateAddress('A'); }).to.throw(Error);
     expect(function() { colCache.validateAddress('1'); }).to.throw(Error);

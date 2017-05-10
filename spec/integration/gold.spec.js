@@ -7,7 +7,6 @@ var moment = require('moment');
 var Excel = verquire('excel');
 
 var expect = chai.expect;
-chai.use(require('chai-datetime'));
 
 // =============================================================================
 // This spec is based around a gold standard Excel workbook 'gold.xlsx'

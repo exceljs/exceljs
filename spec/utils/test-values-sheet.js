@@ -121,7 +121,7 @@ var self = module.exports = {
 
   checkSheet: function(wb, options) {
     var ws = wb.getWorksheet('sheet1');
-    expect(ws).to.not.be.undefined;
+    expect(ws).to.not.be.undefined();
 
     if (options.checkSheetProperties) {
       expect(ws.getColumn(10).outlineLevel).to.equal(1);
@@ -146,7 +146,7 @@ var self = module.exports = {
       expect(ws.getCell('D1').value).to.deep.equal(self.testValues.formulas[0]);
       expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Formula);
       expect(ws.getCell('E1').value.formula).to.equal(self.testValues.formulas[1].formula);
-      expect(ws.getCell('E1').value.value).to.be.undefined;
+      expect(ws.getCell('E1').value.value).to.be.undefined();
       expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Formula);
       expect(ws.getCell('F1').value).to.deep.equal(self.testValues.hyperlink);
       expect(ws.getCell('F1').type).to.equal(Excel.ValueType.Hyperlink);
@@ -154,7 +154,7 @@ var self = module.exports = {
     } else {
       expect(ws.getCell('D1').value).to.equal(self.testValues.formulas[0].result);
       expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Number);
-      expect(ws.getCell('E1').value).to.be.null;
+      expect(ws.getCell('E1').value).to.be.null()
       expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Null);
       expect(ws.getCell('F1').value).to.deep.equal(self.testValues.hyperlink.hyperlink);
       expect(ws.getCell('F1').type).to.equal(Excel.ValueType.String);
@@ -193,19 +193,19 @@ var self = module.exports = {
       expect(ws.getCell('B3').master).to.equal(ws.getCell('A2'));
 
       // C2:D3
-      expect(ws.getCell('C2').value).to.be.null;
+      expect(ws.getCell('C2').value).to.be.null();
       expect(ws.getCell('C2').type).to.equal(Excel.ValueType.Null);
       expect(ws.getCell('C2').master).to.equal(ws.getCell('C2'));
 
-      expect(ws.getCell('D2').value).to.be.null;
+      expect(ws.getCell('D2').value).to.be.null();
       expect(ws.getCell('D2').type).to.equal(Excel.ValueType.Merge);
       expect(ws.getCell('D2').master).to.equal(ws.getCell('C2'));
 
-      expect(ws.getCell('C3').value).to.be.null;
+      expect(ws.getCell('C3').value).to.be.null();
       expect(ws.getCell('C3').type).to.equal(Excel.ValueType.Merge);
       expect(ws.getCell('C3').master).to.equal(ws.getCell('C2'));
 
-      expect(ws.getCell('D3').value).to.be.null;
+      expect(ws.getCell('D3').value).to.be.null();
       expect(ws.getCell('D3').type).to.equal(Excel.ValueType.Merge);
       expect(ws.getCell('D3').master).to.equal(ws.getCell('C2'));
     }
@@ -245,7 +245,7 @@ var self = module.exports = {
       expect(ws.getCell('F5').numFmt).to.equal(self.testValues.numFmtDate);
       expect(ws.getCell('F5').font).to.deep.equal(self.styles.fonts.comicSansUdB16);
 
-      expect(ws.getRow(5).height).to.be.undefined;
+      expect(ws.getRow(5).height).to.be.undefined();
       expect(ws.getRow(6).height).to.equal(42);
       self.styles.alignments.forEach(function(alignment, index) {
         var rowNumber = 6;
@@ -261,7 +261,7 @@ var self = module.exports = {
           var colNumber = index + 1;
           var cell = ws.getCell(rowNumber, colNumber);
           expect(cell.value).to.equal(alignment.text);
-          expect(cell.alignment).to.be.undefined;
+          expect(cell.alignment).to.be.undefined();
         });
       }
 

@@ -1,14 +1,16 @@
 'use strict';
 
 var fs = require('fs');
+var Promish = require('promish');
 var expect = require('chai').expect;
-var verquire = require('../utils/verquire');
-var testUtils = require('./../utils/index');
-var utils = require('../../lib/utils/utils');
+var verquire = require('../../utils/verquire');
+var testUtils = require('../../utils/index');
+var utils = require('../../../lib/utils/utils');
 
 var Excel = verquire('excel');
 
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
+var fsReadFileAsync = Promish.promisify(fs.readFile);
 
 describe('WorkbookWriter', function() {
   it('creates sheets with correct names', function() {
@@ -54,7 +56,7 @@ describe('WorkbookWriter', function() {
       return wb.commit()
         .then(function() {
           var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_FILE_NAME);
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('Hello');
@@ -67,7 +69,7 @@ describe('WorkbookWriter', function() {
 
     it('auto filter', function() {
       var options = {
-        filename: TEST_FILE_NAME,
+        filename: TEST_XLSX_FILE_NAME,
         useStyles: false
       };
       var wb = new Excel.stream.xlsx.WorkbookWriter(options);
@@ -182,7 +184,7 @@ describe('WorkbookWriter', function() {
         .then(function(wb2) {
           for (i = 1; i <= numSheets; i++) {
             var ws2 = wb2.getWorksheet('sheet' + i);
-            expect(ws2).to.be.ok;
+            expect(ws2).to.be.ok();
             expect(ws2.getCell('A1').value).to.equal(i);
           }
         });
@@ -271,44 +273,6 @@ describe('WorkbookWriter', function() {
         .then(function(wb2) {
           testUtils.checkTestBook(wb2, 'xlsx', ['dataValidations']);
         });
-    });
-  });
-
-  describe('Images', function() {
-    it('stores background image', function() {
-      var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_XLSX_FILE_NAME, useSharedStrings: true});
-      var ws = wb.addWorksheet('blort');
-      var ws2;
-      ws.getCell('A1').value = 'Hello, World!';
-      ws.background = {
-        type: 'image',
-        image: {
-          filename: __dirname + '/data/image.png',
-          type: 'png'
-        }
-      };
-      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-        .then(function() {
-          var wb2 = new Excel.Workbook();
-          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
-        })
-        .then(function(wb2) {
-          ws2 = wb2.getWorksheet('blort');
-          expect(ws2).to.not.be.undefined;
-
-          return fsReadFileAsync(__dirname + '/data/image.png');
-        })
-        .then(function(data) {
-          expect(ws2.background.type).to.equal('image');
-          expect(ws2.background.image.type).to.equal('png');
-          expect(Buffer.compare(data, ws2.background.image.buffer)).to.equal(0);
-        })
-    });
-    it('stores embedded image', function() {
-      expect(true).to.equal(false);
-    });
-    it('stores images and hyperlinks', function() {
-      expect(true).to.equal(false);
     });
   });
 });

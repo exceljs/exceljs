@@ -19,7 +19,7 @@ describe('StreamBuf', function() {
     var stream = new StreamBuf();
     stream.write('Hello, World!');
     var chunk = stream.read();
-    expect(chunk instanceof Buffer).to.be.ok;
+    expect(chunk instanceof Buffer).to.be.ok();
     expect(chunk.toString('UTF8')).to.equal('Hello, World!');
   });
 
@@ -29,7 +29,7 @@ describe('StreamBuf', function() {
     strBuf.addText('Hello, World!');
     stream.write(strBuf);
     var chunk = stream.read();
-    expect(chunk instanceof Buffer).to.be.ok;
+    expect(chunk instanceof Buffer).to.be.ok();
     expect(chunk.toString('UTF8')).to.equal('Hello, World!');
   });
 

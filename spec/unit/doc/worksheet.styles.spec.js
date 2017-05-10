@@ -30,7 +30,7 @@ describe('Worksheet', function() {
       expect(ws.getCell('A1').border).to.deep.equal(testUtils.styles.borders.thin);
       expect(ws.getCell('A1').fill).to.deep.equal(testUtils.styles.fills.redGreenDarkTrellis);
 
-      expect(ws.findCell('B1')).to.be.undefined;
+      expect(ws.findCell('B1')).to.be.undefined();
 
       expect(ws.getCell('C1').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt2);
       expect(ws.getCell('C1').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
@@ -71,7 +71,7 @@ describe('Worksheet', function() {
       expect(ws.getCell('A1').border).to.deep.equal(testUtils.styles.borders.thin);
       expect(ws.getCell('A1').fill).to.deep.equal(testUtils.styles.fills.redGreenDarkTrellis);
 
-      expect(ws.findRow(2)).to.be.undefined;
+      expect(ws.findRow(2)).to.be.undefined();
 
       expect(ws.getCell('A3').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt2);
       expect(ws.getCell('A3').font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);

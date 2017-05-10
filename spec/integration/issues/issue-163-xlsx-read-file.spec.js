@@ -8,7 +8,6 @@ var Enums = require('../../../lib/doc/enums');
 var Excel = verquire('excel');
 
 var expect = chai.expect;
-chai.use(require('chai-datetime'));
 
 // this file to contain integration tests created from github issues
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';

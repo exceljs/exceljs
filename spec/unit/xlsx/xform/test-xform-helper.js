@@ -4,14 +4,12 @@ var Sax = require('sax');
 var _ = require('../../../utils/under-dash');
 
 var chai = require('chai');
-var chaiXml = require('chai-xml');
 
 var XmlStream = require('../../../../lib/utils/xml-stream');
 var CompositeXform = require('../../../../lib/xlsx/xform/composite-xform');
 var BooleanXform = require('../../../../lib/xlsx/xform/simple/boolean-xform');
 
 var expect = chai.expect;
-chai.use(chaiXml);
 
 function getExpectation(expectation, name) {
   if (!expectation.hasOwnProperty(name)) {
