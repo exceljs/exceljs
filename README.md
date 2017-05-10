@@ -15,6 +15,11 @@ npm install exceljs
         Switching to transpiled code for distribution.
         This will ensure compatability with 4.0.0 and above from here on. 
     </li>
+    <li>
+        <a href="#images">Basic Image Support!</a>
+        Images can now be added to worksheets either as a tiled background or stretched over a range.
+        Note: other features like rotation, etc. are not supported yet and will reqeuire further work.
+    </li>
 </ul>
 
 # Contributions
@@ -29,9 +34,7 @@ To be clear, all contributions added to this library will be included in the lib
 # Backlog
 
 <ul>
-  <li>Babel Transpile to dist folder to take advantage of better JS syntax in the source code</li>
   <li>Still working my way through PRs and Issues and improving the tests.</li>
-  <li>Images - background, in-cell, printing, etc.</li>
   <li>Conditional Formatting.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
   <li>XLSX Streaming Reader.</li>
@@ -76,6 +79,7 @@ To be clear, all contributions added to this library will be included in the lib
         </ul>
       </li>
       <li><a href="#outline-levels">Outline Levels</a></li>
+      <li><a href="#images">Images</a></li>
       <li><a href="#file-io">File I/O</a>
         <ul>
           <li><a href="#xlsx">XLSX</a>
@@ -1063,6 +1067,10 @@ expect(worksheet.getColumn(3).collapsed).to.be.true;
 worksheet.properties.outlineLevelCol = 2;
 expect(worksheet.getColumn(3).collapsed).to.be.false;
 ```
+
+## Images
+
+TBD
 
 ## File I/O
 
