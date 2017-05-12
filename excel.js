@@ -4,4 +4,4 @@
  * or https://github.com/guyonroche/exceljs/blob/master/LICENSE
  */
 
-module.exports = require('./dist/es3');
+module.exports = require('./dist/es5');

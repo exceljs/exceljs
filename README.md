@@ -34,7 +34,6 @@ To be clear, all contributions added to this library will be included in the lib
 # Backlog
 
 <ul>
-  <li>Still working my way through PRs and Issues and improving the tests.</li>
   <li>Conditional Formatting.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
   <li>XLSX Streaming Reader.</li>
@@ -1070,7 +1069,63 @@ expect(worksheet.getColumn(3).collapsed).to.be.false;
 
 ## Images
 
-TBD
+Adding images to a worksheet is a two-step process.
+First, the image is added to the workbook via the addImage() function which will also return an imageId value.
+Then, using the imageId, the image can be added to the worksheet either as a tiled background or covering a cell range.
+
+Note: As of this version, adjusting or transforming the image is not supported.
+
+### Add Image to Workbook
+
+The Workbook.addImage function supports adding images by filename or by Buffer.
+Note that in both cases, the extension must be specified.
+Valid extension values include 'jpeg', 'png', 'gif'.
+
+```javascript
+// add image to workbook by filename
+var imageId1 = workbook.addImage({
+  filename: 'path/to/image.jpg',
+  extension: 'jpeg',
+});
+
+// add image to workbook by buffer
+var imageId2 = workbook.addImage({
+  buffer: fs.readFileSync('path/to.image.png'),
+  extension: 'png',
+});
+```
+
+### Add image background to worksheet
+
+Using the image id from Workbook.addImage, the background to a worksheet can be set using the addBackgroundImage function
+
+```javascript
+// set background
+worksheet.addBackgroundImage(imageId1);
+```
+
+### Add image over a range
+
+Using the image id from Workbook.addImage, an image can be embedded within the worksheet to cover a range.
+The coordinates calculated from the range will cover from the top-left of the first cell to the bottom right of the second.
+
+```javascript
+// insert an image over B2:D6
+worksheet.addImage(imageId2, 'B2:D6');
+```
+
+Using a structure instead of a range string, it is possible to partially cover cells.
+
+Note that the coordinate system used for this is zero based, so the top-left of A1 will be { col: 0, row: 0 }.
+Fractions of cells can be specified by using floating point numbers, e.g. the midpoint of A1 is { col: 0.5, row: 0.5 }.
+
+```javascript
+// insert an image over part of B2:D6
+worksheet.addImage(imageId2, {
+  tl: { col: 1.5, row: 1.5 },
+  br: { col: 3.5, row: 5.5 }
+});
+```
 
 ## File I/O
 

@@ -5,6 +5,7 @@ var ExcelJS = require('../../lib/exceljs.browser');
 
 function unexpectedError(done) {
   return function(error) {
+    // eslint-disable-next-line no-console
     console.error('Error Caught', error.message, error.stack);
     expect(true).toEqual(false);
     done();

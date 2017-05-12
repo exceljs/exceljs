@@ -460,7 +460,7 @@ describe('Worksheet', function() {
       expect(ws.getSheetValues()).to.deep.equal([,
         [,11,,'C1'],
         [,21,'B2'],
-        ,
+        , // eslint-disable-line comma-style
         [,'end']
       ]);
     });

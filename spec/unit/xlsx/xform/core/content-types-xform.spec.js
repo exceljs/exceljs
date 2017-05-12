@@ -9,7 +9,7 @@ var expectations = [
   {
     title: 'Three Sheets',
     create:  function() { return new ContentTypesXform()},
-    preparedModel: { worksheets: [ {id:1}, {id:2}, {id:3}, ], media:[], drawings: [] },
+    preparedModel: { worksheets: [{id:1}, {id:2}, {id:3},], media:[], drawings: [] },
     xml: fs.readFileSync(__dirname + '/data/content-types.01.xml').toString().replace(/\r\n/g, '\n'),
     tests: ['render']
   },

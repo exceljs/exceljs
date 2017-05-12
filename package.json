@@ -19,11 +19,13 @@
     "browser-test": "./node_modules/.bin/grunt jasmine",
     "unit-test": "mocha --require spec/config/setup spec/unit --recursive",
     "integration-test": "mocha --require spec/config/setup spec/integration --recursive",
+    "native-integration-test": "export EXCEL_NATIVE=yes && mocha --require spec/config/setup spec/integration --recursive",
     "end-to-end-test": "mocha --require spec/config/setup spec/end-to-end --recursive",
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
     "manual-test": "node spec/manual/app.js",
-    "prepublish": "npm run clean && npm run build && npm test"
+    "prepublish": "npm run clean && npm run build && npm test",
+    "preversion": "npm run clean && npm run build && npm test"
   },
   "keywords": [
     "xlsx",
@@ -78,6 +80,7 @@
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-browserify": "^5.0.0",
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jasmine": "^1.1.0",
     "grunt-contrib-uglify": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
@@ -89,13 +92,10 @@
     "uglifyjs": "^2.4.10",
     "underscore": "^1.8.3"
   },
-  "main": "./dist/es3/excel.js",
+  "main": "./dist/es5/excel.js",
   "files": [
-    "excel.js",
-    "lib",
     "dist",
     "LICENSE",
-    "README.md",
-    "MODEL.md"
+    "README.md"
   ]
 }

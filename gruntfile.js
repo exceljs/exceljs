@@ -5,6 +5,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.initConfig({
     babel: {
@@ -45,20 +46,29 @@ module.exports = function(grunt) {
           './dist/exceljs.min.js': ['./dist/exceljs.js']
         }
       },
-      es3: {
+      // es3: {
+      //   files: [
+      //     {
+      //       expand: true,
+      //       cwd: './build/lib/',
+      //       src: ['*.js', '**/*.js'],
+      //       dest: 'dist/es3/',
+      //       ext: '.js',
+      //     },
+      //     {
+      //       './dist/es3/index.js': ['./build/lib/exceljs.nodejs.js'],
+      //     }
+      //   ],
+      // },
+    },
+
+    copy: {
+      dist: {
         files: [
-          {
-            expand: true,
-            cwd: './build/lib/',
-            src: ['*.js', '**/*.js'],
-            dest: 'dist/es3/',
-            ext: '.js',
-          },
-          {
-            './dist/es3/index.js': ['./build/lib/exceljs.nodejs.js'],
-          }
-        ],
-      },
+          { expand: true, src: ['**'], cwd: './build/lib', dest: './dist/es5' },
+          { src: './build/lib/exceljs.nodejs.js', dest: './dist/es5/index.js'},
+        ]
+      }
     },
 
     jasmine: {
@@ -71,6 +81,6 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('build', ['babel', 'browserify', 'uglify']);
+  grunt.registerTask('build', ['babel', 'browserify', 'uglify', 'copy']);
   grunt.registerTask('ug', ['uglify']);
 };

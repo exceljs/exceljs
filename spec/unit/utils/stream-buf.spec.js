@@ -48,7 +48,6 @@ describe('StreamBuf', function() {
       var sb = new StreamBuf();
       sb.on('finish', () => {
         var buf = sb.toBuffer();
-        console.log(buf)
         expect(buf.length).to.equal(1672);
         resolve();
       });

@@ -20,8 +20,11 @@ var backgroundId = wb.addImage({
   buffer: fs.readFileSync(path.join(__dirname, 'data/bubbles.jpg')),
   extension: 'jpeg',
 });
-ws.addImage(imageId, 'C2:D3');
-ws.addImage(imageId, 'B5:E10');
+ws.addImage(imageId, {
+  tl: { col: 1, row: 1 },
+  br: { col: 3.5, row: 5.5 }
+});
+ws.addImage(imageId, 'B7:E12');
 
 ws.addBackgroundImage(backgroundId);
 

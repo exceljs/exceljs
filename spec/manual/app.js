@@ -1,12 +1,13 @@
 'use strict';
 
+/* eslint-disable no-console */
+
 var fs = require('fs');
 var express = require('express');
 var ExcelJS = require('../../excel');
 var StreamBuf = require('../../lib/utils/stream-buf')
 var path = require('path');
 
-// copy the bundle to public/
 console.log('Copying bundle.js to public folder');
 fs.createReadStream(__dirname + '/../../dist/exceljs.min.js')
   .pipe(fs.createWriteStream(__dirname + '/public/exceljs.min.js'));
