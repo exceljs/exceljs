@@ -8,26 +8,26 @@ describe('DefinedNames', function() {
   it('adds names for cells', function() {
     var dn = new DefinedNames();
 
-    dn.add('blort!A1','foo');
+    dn.add('blort!A1', 'foo');
     expect(dn.getNames('blort!A1')).to.deep.equal(['foo']);
     expect(dn.getNames('blort!$A$1')).to.deep.equal(['foo']);
 
-    dn.add('blort!$B$4','bar');
+    dn.add('blort!$B$4', 'bar');
     expect(dn.getNames('blort!B4')).to.deep.equal(['bar']);
     expect(dn.getNames('blort!$B$4')).to.deep.equal(['bar']);
 
-    dn.add("'blo rt'!$B$4",'bar');
+    dn.add("'blo rt'!$B$4", 'bar');
     expect(dn.getNames("'blo rt'!$B$4")).to.deep.equal(['bar']);
-    dn.add("'blo ,!rt'!$B$4",'bar');
+    dn.add("'blo ,!rt'!$B$4", 'bar');
     expect(dn.getNames("'blo ,!rt'!$B$4")).to.deep.equal(['bar']);
   });
 
   it('removes names for cells', function() {
     var dn = new DefinedNames();
 
-    dn.add('blort!A1','foo');
-    dn.add('blort!A1','bar');
-    dn.remove('blort!A1','foo');
+    dn.add('blort!A1', 'foo');
+    dn.add('blort!A1', 'bar');
+    dn.remove('blort!A1', 'foo');
 
     expect(dn.getNames('blort!A1')).to.deep.equal(['bar']);
   });
@@ -61,8 +61,8 @@ describe('DefinedNames', function() {
     var dn = new DefinedNames();
 
     dn.model = [];
-    dn.add('blort!A1','bar');
-    dn.remove('blort!A1','foo');
+    dn.add('blort!A1', 'bar');
+    dn.remove('blort!A1', 'foo');
 
     expect(dn.getNames('blort!A1')).to.deep.equal(['bar']);
   });

@@ -23,11 +23,26 @@ var expectations = [
   {
     title: 'normal',
     create: () => new PageSetupXform(),
-    preparedModel: {paperSize: 9, orientation:'portrait', horizontalDpi: 4294967295, verticalDpi: 4294967295},
+    preparedModel: {paperSize: 9, orientation: 'portrait', horizontalDpi: 4294967295, verticalDpi: 4294967295},
     xml: '<pageSetup paperSize="9" orientation="portrait" horizontalDpi="4294967295" verticalDpi="4294967295"/>',
-    parsedModel: {paperSize: 9, orientation:'portrait', horizontalDpi: 4294967295, verticalDpi: 4294967295,
-      firstPageNumber: 1, useFirstPageNumber: false, usePrinterDefaults: false, copies: 1,
-      blackAndWhite: false, cellComments: 'None', draft: false, errors: 'displayed', fitToHeight: 1, fitToWidth: 1, pageOrder: 'downThenOver', scale: 100},
+    parsedModel: {
+      paperSize: 9,
+      orientation: 'portrait',
+      horizontalDpi: 4294967295,
+      verticalDpi: 4294967295,
+      firstPageNumber: 1,
+      useFirstPageNumber: false,
+      usePrinterDefaults: false,
+      copies: 1,
+      blackAndWhite: false,
+      cellComments: 'None',
+      draft: false,
+      errors: 'displayed',
+      fitToHeight: 1,
+      fitToWidth: 1,
+      pageOrder: 'downThenOver',
+      scale: 100
+    },
     tests: ['render', 'renderIn', 'parse']
   },
   {

@@ -6,7 +6,7 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'true',
-    create:  function() { return new BooleanXform({tag: 'boolean', attr: 'val'})},
+    create: function() { return new BooleanXform({tag: 'boolean', attr: 'val'}); },
     preparedModel: true,
     get parsedModel() { return this.preparedModel; },
     xml: '<boolean/>',
@@ -14,20 +14,20 @@ var expectations = [
   },
   {
     title: 'false',
-    create:  function() { return new BooleanXform({tag: 'boolean', attr: 'val'})},
+    create: function() { return new BooleanXform({tag: 'boolean', attr: 'val'}); },
     preparedModel: false,
     xml: '',
     tests: ['render', 'renderIn']
   },
   {
     title: 'undefined',
-    create:  function() { return new BooleanXform({tag: 'boolean', attr: 'val'})},
+    create: function() { return new BooleanXform({tag: 'boolean', attr: 'val'}); },
     preparedModel: undefined,
     xml: '',
     tests: ['render', 'renderIn']
   }
 ];
 
-describe('BooleanXform', function () {
+describe('BooleanXform', function() {
   testXformHelper(expectations);
 });

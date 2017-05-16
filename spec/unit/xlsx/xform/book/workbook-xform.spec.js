@@ -8,7 +8,7 @@ var testXformHelper = require('../test-xform-helper');
 var expectations = [
   {
     title: 'book.1',
-    create:  function() { return new WorkbookXform()},
+    create: function() { return new WorkbookXform(); },
     preparedModel: require('./data/book.1.1.json'),
     xml: fs.readFileSync(__dirname + '/data/book.1.2.xml').toString().replace(/\r\n/g, '\n'),
     parsedModel: require('./data/book.1.3.json'),
@@ -16,6 +16,6 @@ var expectations = [
   }
 ];
 
-describe('WorkbookXform', function () {
+describe('WorkbookXform', function() {
   testXformHelper(expectations);
 });

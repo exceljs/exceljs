@@ -19,7 +19,7 @@ var testSheets = {
 
 function getOptions(docType, options) {
   var result;
-  switch(docType) {
+  switch (docType) {
     case 'xlsx':
       result = {
         sheetName: 'values',

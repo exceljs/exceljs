@@ -25,7 +25,7 @@ var fakeStyles = {
     return 0;
   },
   getStyleModel: function(id) {
-    switch(id) {
+    switch (id) {
       case 1:
         return {numFmt: 'mm-dd-yy' };
       case 2:
@@ -48,7 +48,7 @@ function fixDate(model) {
 var expectations = [
   {
     title: 'Sheet 1',
-    create:  () => new WorksheetXform(),
+    create: () => new WorksheetXform(),
     initialModel: fixDate(require('./data/sheet.1.0.json')),
     preparedModel: fixDate(require('./data/sheet.1.1.json')),
     xml: fs.readFileSync(__dirname + '/data/sheet.1.2.xml').toString(),
@@ -59,7 +59,7 @@ var expectations = [
   },
   {
     title: 'Sheet 2 - Data Validations',
-    create:  () => new WorksheetXform(),
+    create: () => new WorksheetXform(),
     initialModel: require('./data/sheet.2.0.json'),
     preparedModel: require('./data/sheet.2.1.json'),
     xml: fs.readFileSync(__dirname + '/data/sheet.2.2.xml').toString(),
@@ -68,7 +68,7 @@ var expectations = [
   },
   {
     title: 'Sheet 3 - Empty Sheet',
-    create:  () => new WorksheetXform(),
+    create: () => new WorksheetXform(),
     preparedModel: require('./data/sheet.3.1.json'),
     xml: fs.readFileSync(__dirname + '/data/sheet.3.2.xml').toString(),
     tests: ['render'],
@@ -76,7 +76,7 @@ var expectations = [
   },
   {
     title: 'Sheet 5 - Shared Formulas',
-    create:  () => new WorksheetXform(),
+    create: () => new WorksheetXform(),
     initialModel: require('./data/sheet.5.0.json'),
     preparedModel: require('./data/sheet.5.1.json'),
     xml: fs.readFileSync(__dirname + '/data/sheet.5.2.xml').toString(),
@@ -87,7 +87,7 @@ var expectations = [
   },
   {
     title: 'Sheet 6 - AutoFilter',
-    create:  () => new WorksheetXform(),
+    create: () => new WorksheetXform(),
     preparedModel: require('./data/sheet.6.1.json'),
     xml: fs.readFileSync(__dirname + '/data/sheet.6.2.xml').toString(),
     parsedModel: require('./data/sheet.6.3.json'),
@@ -96,7 +96,7 @@ var expectations = [
   },
 ];
 
-describe('WorksheetXform', function () {
+describe('WorksheetXform', function() {
   testXformHelper(expectations);
 
   it('hyperlinks must be after dataValidations', function() {

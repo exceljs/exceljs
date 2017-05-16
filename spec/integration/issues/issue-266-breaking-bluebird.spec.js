@@ -16,47 +16,47 @@ var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 describe('github issues', function() {
   describe('issue 266 - Breaking change removing bluebird', function() {
     var promish;
-    beforeEach(function () {
+    beforeEach(function() {
       promish = PromishLib.Promish;
     });
-    afterEach(function () {
+    afterEach(function() {
       PromishLib.Promish = promish;
     });
 
-    it('common bluebird functions', function () {
+    it('common bluebird functions', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('Sheet1');
       var calledFinally = false;
       ws.getCell('A1').value = 'Hello, World!';
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-        .then(function () {
+        .then(function() {
           var wb2 = new Excel.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then(function () {
+        .then(function() {
           return Promise.all([
             Promise.resolve('a'),
             Promise.resolve('b')
-          ])
+          ]);
         })
-        .map(function (value) {
+        .map(function(value) {
           return value + value;
         })
-        .spread(function (a, b) {
+        .spread(function(a, b) {
           expect(a).to.equal('aa');
           expect(b).to.equal('bb');
           return 'c';
         })
-        .finally(function () {
+        .finally(function() {
           calledFinally = true;
         })
-        .then(function (value) {
+        .then(function(value) {
           expect(value).to.equal('c');
           expect(calledFinally).to.equal(true);
           return Promise.all([
             Promise.resolve('a'),
             Promise.resolve('b')
-          ])
+          ]);
         });
     });
 

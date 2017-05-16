@@ -53,7 +53,7 @@ describe('Worksheet', function() {
         var d = new Dimensions(range);
         for (var i = d.top; i <= d.bottom; i++) {
           for (var j = d.left; j <= d.right; j++) {
-            var cell = ws.getCell(i,j);
+            var cell = ws.getCell(i, j);
             var masterCell = master ? ws.getCell(master) : cell;
             expect(cell.master.address).to.equal(masterCell.address);
           }

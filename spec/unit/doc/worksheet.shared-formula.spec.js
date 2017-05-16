@@ -10,7 +10,7 @@ describe('Worksheet', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet();
 
-      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [[2,3],[3,4]]);
+      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [[2, 3], [3, 4]]);
       expect(ws.getCell('A1').value).to.deep.equal({ formula: 'ROW()+COLUMN()', result: 2 });
       expect(ws.getCell('B1').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
       expect(ws.getCell('A2').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
@@ -20,7 +20,7 @@ describe('Worksheet', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet();
 
-      ws.fillFormula('A1:A4', 'ROW()+COLUMN()', [2,3,4,5]);
+      ws.fillFormula('A1:A4', 'ROW()+COLUMN()', [2, 3, 4, 5]);
       expect(ws.getCell('A1').value).to.deep.equal({ formula: 'ROW()+COLUMN()', result: 2 });
       expect(ws.getCell('A2').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
       expect(ws.getCell('A3').value).to.deep.equal({ sharedFormula: 'A1', result: 4 });
@@ -30,7 +30,7 @@ describe('Worksheet', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet();
 
-      ws.fillFormula('A1:D1', 'ROW()+COLUMN()', [2,3,4,5]);
+      ws.fillFormula('A1:D1', 'ROW()+COLUMN()', [2, 3, 4, 5]);
       expect(ws.getCell('A1').value).to.deep.equal({ formula: 'ROW()+COLUMN()', result: 2 });
       expect(ws.getCell('B1').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
       expect(ws.getCell('C1').value).to.deep.equal({ sharedFormula: 'A1', result: 4 });
@@ -40,7 +40,7 @@ describe('Worksheet', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet();
 
-      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [2,3,3,4]);
+      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [2, 3, 3, 4]);
       expect(ws.getCell('A1').value).to.deep.equal({ formula: 'ROW()+COLUMN()', result: 2 });
       expect(ws.getCell('B1').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });
       expect(ws.getCell('A2').value).to.deep.equal({ sharedFormula: 'A1', result: 3 });

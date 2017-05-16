@@ -33,12 +33,11 @@ describe('Express', function() {
         stream.on('done', function() {
           try {
             testutils.checkTestBook(wb2, 'xlsx');
+            server.close();
+            resolve();
+          } catch (ex) {
+            reject(ex);
           }
-          catch(ex) {
-            return reject(ex);
-          }
-          server.close();
-          resolve();
         });
         res.pipe(stream);
       });

@@ -66,10 +66,10 @@ module.exports = {
                 expect(row.getCell('B').type).to.equal(Excel.ValueType.Null);
 
                 // C2:D3
-                expect(row.getCell('C').value).to.be.null()
+                expect(row.getCell('C').value).to.be.null();
                 expect(row.getCell('C').type).to.equal(Excel.ValueType.Null);
 
-                expect(row.getCell('D').value).to.be.null()
+                expect(row.getCell('D').value).to.be.null();
                 expect(row.getCell('D').type).to.equal(Excel.ValueType.Null);
 
                 break;
@@ -126,8 +126,7 @@ module.exports = {
               default:
                 break;
             }
-          }
-          catch(error) {
+          } catch (error) {
             reject(error);
           }
         });
@@ -136,8 +135,7 @@ module.exports = {
         try {
           expect(rowCount).to.equal(10);
           resolve();
-        }
-        catch(error) {
+        } catch (error) {
           reject(error);
         }
       });

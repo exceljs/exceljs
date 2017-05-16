@@ -17,7 +17,7 @@ var expectations = [
     create: function() { return new SheetFormatPropertiesXform(); },
     preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55},
     xml: '<sheetFormatPr defaultRowHeight="14.4" x14ac:dyDescent="0.55"/>',
-    parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 0, outlineLevelCol:  0},
+    parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 0, outlineLevelCol: 0},
     tests: ['render', 'renderIn', 'parse']
   }
 ];

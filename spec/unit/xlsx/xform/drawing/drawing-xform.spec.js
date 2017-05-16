@@ -12,7 +12,7 @@ const options = {
   },
   mediaIndex: { image1: 0, image2: 1 },
   media: [{}, {}],
-}
+};
 
 var expectations = [
   {

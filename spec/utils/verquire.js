@@ -15,4 +15,4 @@ module.exports = function verquire(path) {
   return useSource ?
     require('../../lib/' + path) : // eslint-disable-line
     require('../../dist/es5/' + path);  // eslint-disable-line
-}
+};

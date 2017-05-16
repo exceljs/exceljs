@@ -31,10 +31,10 @@ describe('Range', function() {
     check(new Range('D5:B10'), 'B5:D10', '$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4);
     check(new Range('D10:B5'), 'B5:D10', '$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4);
 
-    check(new Range('G7','C16'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
-    check(new Range('C7','G16'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
-    check(new Range('C16','G7'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
-    check(new Range('G16','C7'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Range('G7', 'C16'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Range('C7', 'G16'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Range('C16', 'G7'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
+    check(new Range('G16', 'C7'), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
 
     check(new Range(7, 3, 16, 7), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
     check(new Range(16, 3, 7, 7), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
@@ -54,12 +54,12 @@ describe('Range', function() {
   it('expands properly', function() {
     var d = new Range();
 
-    d.expand(1,1,1,3);
+    d.expand(1, 1, 1, 3);
     expect(d.tl).to.equal('A1');
     expect(d.br).to.equal('C1');
     expect(d.toString()).to.equal('A1:C1');
 
-    d.expand(1,3,3,3);
+    d.expand(1, 3, 3, 3);
     expect(d.tl).to.equal('A1');
     expect(d.br).to.equal('C3');
     expect(d.toString()).to.equal('A1:C3');
@@ -68,7 +68,7 @@ describe('Range', function() {
   it('doesn\'t always include the default row/col', function() {
     var d = new Range();
 
-    d.expand(2,2,4,4);
+    d.expand(2, 2, 4, 4);
     expect(d.tl).to.equal('B2');
     expect(d.br).to.equal('D4');
     expect(d.toString()).to.equal('B2:D4');

@@ -23,7 +23,7 @@ describe('github issues', function() {
     var ws = wb.addWorksheet('Sheet1');
 
     var hyperlink = {
-      text:'Somewhere with query params',
+      text: 'Somewhere with query params',
       hyperlink: 'www.somewhere.com?a=1&b=2&c=<>&d="\'"'
     };
 

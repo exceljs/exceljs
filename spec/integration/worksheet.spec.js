@@ -32,7 +32,7 @@ describe('Worksheet', function() {
       ws.getCell('E1').value = ['Hello', 'World'].join(', ') + '!';
 
       // hyperlink
-      ws.getCell('F1').value = {text: 'www.google.com', hyperlink:'http://www.google.com'};
+      ws.getCell('F1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
 
       // number formula
       ws.getCell('A2').value = {formula: 'A1', result: 7};
@@ -97,7 +97,7 @@ describe('Worksheet', function() {
       ws.getCell('D1').value = new Date();
 
       // hyperlink
-      ws.getCell('E1').value = {text: 'www.google.com', hyperlink:'http://www.google.com'};
+      ws.getCell('E1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
 
       // number formula
       ws.getCell('A2').value = {formula: 'A1', result: 7};
@@ -225,11 +225,11 @@ describe('Worksheet', function() {
         { header: 'D.O.B.', key: 'dob', width: 10 }
       ];
 
-      var dateValue1 = new Date(1970,1,1);
-      var dateValue2 = new Date(1965,1,7);
+      var dateValue1 = new Date(1970, 1, 1);
+      var dateValue2 = new Date(1965, 1, 7);
 
-      ws.addRow({id:1, name: 'John Doe', dob: dateValue1});
-      ws.addRow({id:2, name: 'Jane Doe', dob: dateValue2});
+      ws.addRow({id: 1, name: 'John Doe', dob: dateValue1});
+      ws.addRow({id: 2, name: 'Jane Doe', dob: dateValue2});
 
       expect(ws.getCell('A2').value).to.equal(1);
       expect(ws.getCell('B2').value).to.equal('John Doe');
@@ -239,8 +239,8 @@ describe('Worksheet', function() {
       expect(ws.getCell('B3').value).to.equal('Jane Doe');
       expect(ws.getCell('C3').value).to.equal(dateValue2);
 
-      expect(ws.getRow(2).values).to.deep.equal([,1,'John Doe', dateValue1]);
-      expect(ws.getRow(3).values).to.deep.equal([,2,'Jane Doe', dateValue2]);
+      expect(ws.getRow(2).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
+      expect(ws.getRow(3).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
 
       var values = [,
         [, 'Id', 'Name', 'D.O.B.'],
@@ -259,8 +259,8 @@ describe('Worksheet', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970,1,1);
-      var dateValue2 = new Date(1965,1,7);
+      var dateValue1 = new Date(1970, 1, 1);
+      var dateValue2 = new Date(1965, 1, 7);
 
       ws.addRow([1, 'John Doe', dateValue1]);
       ws.addRow([2, 'Jane Doe', dateValue2]);
@@ -273,19 +273,19 @@ describe('Worksheet', function() {
       expect(ws.getCell('B2').value).to.equal('Jane Doe');
       expect(ws.getCell('C2').value).to.equal(dateValue2);
 
-      expect(ws.getRow(1).values).to.deep.equal([,1,'John Doe', dateValue1]);
-      expect(ws.getRow(2).values).to.deep.equal([,2,'Jane Doe', dateValue2]);
+      expect(ws.getRow(1).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
+      expect(ws.getRow(2).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
     });
 
     it('adds rows by sparse array', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970,1,1);
-      var dateValue2 = new Date(1965,1,7);
+      var dateValue1 = new Date(1970, 1, 1);
+      var dateValue2 = new Date(1965, 1, 7);
       var rows = [,
-        [,1, 'John Doe', ,dateValue1],
-        [,2, 'Jane Doe', ,dateValue2]
+        [, 1, 'John Doe', , dateValue1],
+        [, 2, 'Jane Doe', , dateValue2]
       ];
       var row3 = [];
       row3[1] = 3;
@@ -375,10 +375,10 @@ describe('Worksheet', function() {
     ws.getCell('A4').value = 'end';
 
     expect(ws.getSheetValues()).to.deep.equal([,
-      [,11,,'C1'],
-      [,21,'B2'],
+      [, 11,, 'C1'],
+      [, 21, 'B2'],
       , // eslint-disable-line comma-style
-      [,'end']
+      [, 'end']
     ]);
   });
 
@@ -518,7 +518,7 @@ describe('Worksheet', function() {
         var d = new Range(range);
         for (var i = d.top; i <= d.bottom; i++) {
           for (var j = d.left; j <= d.right; j++) {
-            var cell = ws.getCell(i,j);
+            var cell = ws.getCell(i, j);
             var masterCell = master ? ws.getCell(master) : cell;
             expect(cell.master.address).to.equal(masterCell.address);
           }

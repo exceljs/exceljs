@@ -6,7 +6,7 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'date',
-    create:  function() { return new DateXform({tag: 'date', attr: 'val'})},
+    create: function() { return new DateXform({tag: 'date', attr: 'val'}); },
     preparedModel: new Date('2016-07-13T00:00:00Z'),
     xml: '<date val="2016-07-13T00:00:00.000Z"/>',
     parsedModel: new Date('2016-07-13T00:00:00Z'),
@@ -14,11 +14,14 @@ var expectations = [
   },
   {
     title: 'iso-date',
-    create:  function() { return new DateXform({
-      tag: 'date', attr: 'val',
-      format: function(dt) {return dt.toISOString().split('T')[0]},
-      parse: function(value) { return new Date(value.replace('13', '14'))}
-    })},
+    create: function() {
+      return new DateXform({
+        tag: 'date',
+        attr: 'val',
+        format: function(dt) { return dt.toISOString().split('T')[0]; },
+        parse: function(value) { return new Date(value.replace('13', '14')); }
+      });
+    },
     preparedModel: new Date('2016-07-13T00:00:00Z'),
     xml: '<date val="2016-07-13"/>',
     parsedModel: new Date('2016-07-14T00:00:00Z'),
@@ -26,13 +29,13 @@ var expectations = [
   },
   {
     title: 'undefined',
-    create:  function() { return new DateXform({tag: 'date', attr: 'val'})},
+    create: function() { return new DateXform({tag: 'date', attr: 'val'}); },
     preparedModel: undefined,
     xml: '',
     tests: ['render', 'renderIn']
   }
 ];
 
-describe('DateXform', function () {
+describe('DateXform', function() {
   testXformHelper(expectations);
 });

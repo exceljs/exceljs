@@ -30,7 +30,7 @@ var _ = Object.assign({
     } else {
       return obj;
     }
-    _.each(obj, function (value, name) {
+    _.each(obj, function(value, name) {
       if (value !== undefined) {
         clone[name] = cloneDeep(value, preserveUndefined);
       } else if (preserveUndefined) {

@@ -17,7 +17,7 @@ var self = module.exports = {
     // call it sheet1 so this sheet can be used for csv testing
     var ws = wb.addWorksheet('sheet1', {
       properties: self.properties,
-      pageSetup:  self.pageSetup
+      pageSetup: self.pageSetup
     });
 
     ws.getCell('J10').value = 1;
@@ -130,7 +130,7 @@ var self = module.exports = {
       expect(ws.getRow(10).collapsed).to.equal(true);
       expect(ws.properties.outlineLevelCol).to.equal(1);
       expect(ws.properties.outlineLevelRow).to.equal(1);
-      expect(ws.properties.tabColor).to.deep.equal({argb:'FF00FF00'});
+      expect(ws.properties.tabColor).to.deep.equal({argb: 'FF00FF00'});
       expect(ws.properties).to.deep.equal(self.properties);
       expect(ws.pageSetup).to.deep.equal(self.pageSetup);
     }
@@ -154,7 +154,7 @@ var self = module.exports = {
     } else {
       expect(ws.getCell('D1').value).to.equal(self.testValues.formulas[0].result);
       expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Number);
-      expect(ws.getCell('E1').value).to.be.null()
+      expect(ws.getCell('E1').value).to.be.null();
       expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Null);
       expect(ws.getCell('F1').value).to.deep.equal(self.testValues.hyperlink.hyperlink);
       expect(ws.getCell('F1').type).to.equal(Excel.ValueType.String);
@@ -277,15 +277,15 @@ var self = module.exports = {
         expect(ws.getCell('A9').value).to.equal(1);
         expect(ws.getCell('A9').type).to.equal(Excel.ValueType.Number);
 
-        expect(ws.getCell('B9').value).to.deep.equal({ formula:'A9+1', result: 2 });
+        expect(ws.getCell('B9').value).to.deep.equal({ formula: 'A9+1', result: 2 });
         expect(ws.getCell('B9').type).to.equal(Excel.ValueType.Formula);
 
-        ['C9','D9','E9'].forEach((address, index) => {
+        ['C9', 'D9', 'E9'].forEach((address, index) => {
           expect(ws.getCell(address).value).to.deep.equal({ sharedFormula: 'B9', result: index + 3 });
           expect(ws.getCell(address).type).to.equal(Excel.ValueType.Formula);
         });
       } else {
-        ['A9','B9','C9','D9','E9'].forEach((address, index) => {
+        ['A9', 'B9', 'C9', 'D9', 'E9'].forEach((address, index) => {
           expect(ws.getCell(address).value).to.equal(index + 1);
           expect(ws.getCell(address).type).to.equal(Excel.ValueType.Number);
         });

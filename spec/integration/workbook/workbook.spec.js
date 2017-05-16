@@ -64,8 +64,8 @@ describe('Workbook', function() {
       ws.getCell('A1').value = 'World!';
       wb.creator = 'Foo';
       wb.lastModifiedBy = 'Bar';
-      wb.created = new Date(2016,0,1);
-      wb.modified = new Date(2016,4,19);
+      wb.created = new Date(2016, 0, 1);
+      wb.modified = new Date(2016, 4, 19);
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
@@ -82,7 +82,7 @@ describe('Workbook', function() {
     it('shared formula', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('Hello');
-      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [[2,3],[3,4]]);
+      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [[2, 3], [3, 4]]);
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
@@ -165,7 +165,7 @@ describe('Workbook', function() {
       var ws = wb.addWorksheet('Hello');
       ws.getCell('A1').value = 'World!';
       wb.language = 'Klingon';
-      wb.revision = new Date(Date.UTC(2016,10,1,12));
+      wb.revision = new Date(Date.UTC(2016, 10, 1, 12));
       wb.contentStauts = 'Final';
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
@@ -373,7 +373,7 @@ describe('Workbook', function() {
           rangeCheck('amigos', ['blort!$A$3:$C$3']);
           rangeCheck('verts', ['blort!$E$1:$E$3']);
           rangeCheck('squares', ['blort!$B$5:$C$6']);
-          rangeCheck('sheets', ['blort!$B$7','foo!$B$7']);
+          rangeCheck('sheets', ['blort!$B$7', 'foo!$B$7']);
           rangeCheck('thing1', ['blort!$G$1']);
           rangeCheck('thing2', ['blort!$G$1']);
           rangeCheck('once', []);
@@ -484,11 +484,11 @@ describe('Workbook', function() {
     testUtils.createTestBook(wb, 'xlsx', sheets, options);
 
     return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-      .then(function () {
+      .then(function() {
         var wb2 = new Excel.Workbook();
         return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
       })
-      .then(function (wb2) {
+      .then(function(wb2) {
         testUtils.checkTestBook(wb2, 'xlsx', sheets, options);
       });
   });
@@ -530,9 +530,9 @@ describe('Workbook', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('frozen');
       ws.views = [
-        {state: 'frozen',xSplit: 2,ySplit: 3,topLeftCell: 'C4',activeCell: 'D5'},
-        {state: 'frozen',ySplit: 1},
-        {state: 'frozen',xSplit: 1}
+        {state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'C4', activeCell: 'D5'},
+        {state: 'frozen', ySplit: 1},
+        {state: 'frozen', xSplit: 1}
       ];
       ws.getCell('A1').value = 'Let it Snow!';
 
@@ -558,7 +558,7 @@ describe('Workbook', function() {
               workbookViewId: 0, state: 'frozen', xSplit: 1, ySplit: 0, topLeftCell: 'B1',
               showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
             }
-          ])
+          ]);
         });
     });
 
@@ -566,9 +566,9 @@ describe('Workbook', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('split');
       ws.views = [
-        {state: 'split',xSplit: 2000,ySplit: 3000,topLeftCell: 'C4',activeCell: 'D5', activePane: 'bottomRight'},
-        {state: 'split',ySplit: 1500, activePane: 'bottomLeft', topLeftCell: 'A10'},
-        {state: 'split',xSplit: 1500, activePane: 'topRight'}
+        {state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'C4', activeCell: 'D5', activePane: 'bottomRight'},
+        {state: 'split', ySplit: 1500, activePane: 'bottomLeft', topLeftCell: 'A10'},
+        {state: 'split', xSplit: 1500, activePane: 'topRight'}
       ];
       ws.getCell('A1').value = 'Do the splits!';
   
@@ -594,7 +594,7 @@ describe('Workbook', function() {
               workbookViewId: 0, state: 'split', xSplit: 1500, ySplit: 0, topLeftCell: undefined, activePane: 'topRight',
               showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
             }
-          ])
+          ]);
         });
     });
 
@@ -612,11 +612,11 @@ describe('Workbook', function() {
       ws2.views = [testUtils.views.sheet.split];
   
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-        .then(function () {
+        .then(function() {
           var wb2 = new Excel.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then(function (wb2) {
+        .then(function(wb2) {
           expect(wb2.views).to.deep.equal(wb.views);
   
           var ws1b = wb2.getWorksheet('one');

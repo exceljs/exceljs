@@ -15,9 +15,9 @@ var expectations = [
   {
     title: 'tabColor',
     create: function() { return new SheetPropertiesXform(); },
-    preparedModel: {tabColor: { argb:'FFFF0000'}},
+    preparedModel: {tabColor: { argb: 'FFFF0000'}},
     xml: '<sheetPr><tabColor rgb="FFFF0000"/></sheetPr>',
-    parsedModel: {tabColor: { argb:'FFFF0000'}},
+    parsedModel: {tabColor: { argb: 'FFFF0000'}},
     tests: ['render', 'renderIn', 'parse']
   },
   {
@@ -31,9 +31,9 @@ var expectations = [
   {
     title: 'tabColor + pageSetup',
     create: function() { return new SheetPropertiesXform(); },
-    preparedModel: {tabColor: { argb:'FFFF0000'}, pageSetup: {fitToPage: true}},
+    preparedModel: {tabColor: { argb: 'FFFF0000'}, pageSetup: {fitToPage: true}},
     xml: '<sheetPr><tabColor rgb="FFFF0000"/><pageSetUpPr fitToPage="1"/></sheetPr>',
-    parsedModel: {tabColor: { argb:'FFFF0000'}, pageSetup: {fitToPage: true}},
+    parsedModel: {tabColor: { argb: 'FFFF0000'}, pageSetup: {fitToPage: true}},
     tests: ['render', 'renderIn', 'parse']
   }
 ];

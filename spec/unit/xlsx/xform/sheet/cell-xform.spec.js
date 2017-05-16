@@ -14,9 +14,9 @@ var fakeStyles = {
     return 0;
   },
   getStyleModel: function(styleId) {
-    switch(styleId) {
+    switch (styleId) {
       case 1:
-        return {numFmt:'mm-dd-yy'};
+        return {numFmt: 'mm-dd-yy'};
       default:
         return null;
     }
@@ -30,7 +30,7 @@ var fakeHyperlinkMap = {
 var expectations = [
   {
     title: 'Styled Null',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     preparedModel: {address: 'A1', type: Enums.ValueType.Null, styleId: 1},
     xml: '<c r="A1" s="1" />',
     parsedModel: {address: 'A1', type: Enums.ValueType.Null, styleId: 1},
@@ -38,7 +38,7 @@ var expectations = [
   },
   {
     title: 'Number',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     preparedModel: {address: 'A1', type: Enums.ValueType.Number, value: 5},
     parsedModel: {address: 'A1', type: Enums.ValueType.Number, value: 5},
     xml: '<c r="A1"><v>5</v></c>',
@@ -46,7 +46,7 @@ var expectations = [
   },
   {
     title: 'Boolean',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     preparedModel: {address: 'A1', type: Enums.ValueType.Boolean, value: true},
     parsedModel: {address: 'A1', type: Enums.ValueType.Boolean, value: true},
     xml: '<c r="A1" t="b"><v>1</v></c>',
@@ -54,7 +54,7 @@ var expectations = [
   },
   {
     title: 'Error',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     preparedModel: {address: 'A1', type: Enums.ValueType.Error, value: { error: '#N/A'}},
     parsedModel: {address: 'A1', type: Enums.ValueType.Error, value: { error: '#N/A'}},
     xml: '<c r="A1" t="e"><v>#N/A</v></c>',
@@ -62,7 +62,7 @@ var expectations = [
   },
   {
     title: 'Inline String',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     initialModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     preparedModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     xml: '<c r="A1" t="str"><v>Foo</v></c>',
@@ -73,7 +73,7 @@ var expectations = [
   },
   {
     title: 'Shared String',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     initialModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     preparedModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo', ssId: 0},
     xml: '<c r="A1" t="s"><v>0</v></c>',
@@ -84,7 +84,7 @@ var expectations = [
   },
   {
     title: 'Date',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     initialModel: {address: 'A1', type: Enums.ValueType.Date, value: new Date('2016-06-09T00:00:00.000Z')},
     preparedModel: {address: 'A1', type: Enums.ValueType.Date, value: new Date('2016-06-09T00:00:00.000Z'), styleId: 1},
     xml: '<c r="A1" s="1"><v>42530</v></c>',
@@ -95,7 +95,7 @@ var expectations = [
   },
   {
     title: 'Hyperlink',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     initialModel: {address: 'H1', type: Enums.ValueType.Hyperlink, hyperlink: 'http://www.foo.com', text: 'www.foo.com'},
     preparedModel: {address: 'H1', type: Enums.ValueType.Hyperlink, hyperlink: 'http://www.foo.com', text: 'www.foo.com', ssId: 0},
     xml: '<c r="H1" t="s"><v>0</v></c>',
@@ -106,7 +106,7 @@ var expectations = [
   },
   {
     title: 'String Formula',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     initialModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
     preparedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 'Foo'},
     xml: '<c r="A1" t="str"><f>A2</f><v>Foo</v></c>',
@@ -117,7 +117,7 @@ var expectations = [
   },
   {
     title: 'Number Formula',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     preparedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 7},
     xml: '<c r="A1"><f>A2</f><v>7</v></c>',
     parsedModel: {address: 'A1', type: Enums.ValueType.Formula, formula: 'A2', result: 7},
@@ -126,7 +126,7 @@ var expectations = [
   },
   {
     title: 'Shared Formula',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     initialModel: {address: 'A2', type: Enums.ValueType.Formula, sharedFormula: 'A1', result: 2},
     preparedModel: {address: 'A2', type: Enums.ValueType.Formula, sharedFormula: 'A1', result: 2, si: 0 },
     xml: '<c r="A2"><f t="shared" si="0" /><v>2</v></c>',
@@ -146,7 +146,7 @@ var expectations = [
   },
   {
     title: 'Master Shared Formula',
-    create:  function() { return new CellXform()},
+    create: function() { return new CellXform(); },
     preparedModel: {address: 'A2', type: Enums.ValueType.Formula, formula: 'A1', result: 2, si: 0 },
     xml: '<c r="A2"><f t="shared" si="0">A1</f><v>2</v></c>',
     parsedModel: {address: 'A2', type: Enums.ValueType.Formula, formula: 'A1', result: 2, si: '0', sharedFormula: true },
@@ -162,6 +162,6 @@ var expectations = [
   },
 ];
 
-describe('CellXform', function () {
+describe('CellXform', function() {
   testXformHelper(expectations);
 });

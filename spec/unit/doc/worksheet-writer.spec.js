@@ -21,8 +21,7 @@ describe('Workbook Writer', function() {
           var xml = mockWorkbook.stream.read().toString();
           expect(xml).xml.to.be.valid();
           resolve();
-        }
-        catch(error) {
+        } catch (error) {
           reject(error);
         }
       });

@@ -15,10 +15,10 @@ var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 describe('github issues', function() {
   describe('issue 219 - 1904 dates not supported', function() {
-    it('Reading 1904.xlsx', function () {
+    it('Reading 1904.xlsx', function() {
       var wb = new Excel.Workbook();
       return wb.xlsx.readFile('./spec/integration/data/1904.xlsx')
-        .then(function () {
+        .then(function() {
           expect(wb.properties.date1904).to.equal(true);
 
           var ws = wb.getWorksheet('Sheet1');

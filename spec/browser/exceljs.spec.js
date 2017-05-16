@@ -9,7 +9,7 @@ function unexpectedError(done) {
     console.error('Error Caught', error.message, error.stack);
     expect(true).toEqual(false);
     done();
-  }
+  };
 }
 
 describe('ExcelJS', function() {

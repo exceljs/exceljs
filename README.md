@@ -13,7 +13,8 @@ npm install exceljs
 <ul>
     <li>
         Switching to transpiled code for distribution.
-        This will ensure compatability with 4.0.0 and above from here on. 
+        This will ensure compatability with 4.0.0 and above from here on.
+        And it will also allow use of much more expressive JS code in the lib folder!
     </li>
     <li>
         <a href="#images">Basic Image Support!</a>
@@ -34,6 +35,7 @@ To be clear, all contributions added to this library will be included in the lib
 # Backlog
 
 <ul>
+  <li>ESLint - slowly turn on (justifyable) rules which should hopefully make contributions easier.</li>
   <li>Conditional Formatting.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
   <li>XLSX Streaming Reader.</li>

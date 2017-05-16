@@ -68,7 +68,7 @@ var sheetMock = {
 var fonts = {
   arialBlackUI14: { name: 'Arial Black', family: 2, size: 14, underline: true, italic: true },
   comicSansUdB16: { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true },
-  broadwayRedOutline20: { name: 'Broadway', family: 5, size: 20, outline: true, color: { argb:'FFFF0000'}}
+  broadwayRedOutline20: { name: 'Broadway', family: 5, size: 20, outline: true, color: { argb: 'FFFF0000'}}
 };
 
 describe('Cell', function() {
@@ -76,7 +76,7 @@ describe('Cell', function() {
     sheetMock.reset();
   });
   it('stores values', function() {
-    var row = sheetMock.getRow(1)
+    var row = sheetMock.getRow(1);
     var column = sheetMock.getColumn(1);
 
     var a1 = sheetMock.getCell('A1');
@@ -119,11 +119,11 @@ describe('Cell', function() {
     expect(a1.value = null).to.be.null();
     expect(a1.type).to.equal(Enums.ValueType.Null);
 
-    expect(a1.value = {json:'data'}).to.deep.equal({json:'data'});
+    expect(a1.value = {json: 'data'}).to.deep.equal({json: 'data'});
     expect(a1.type).to.equal(Enums.ValueType.String);
   });
   it('validates options on construction', function() {
-    var row = sheetMock.getRow(1)
+    var row = sheetMock.getRow(1);
     var column = sheetMock.getColumn(1);
 
     expect(function() { new Cell(); }).to.throw(Error);
@@ -173,7 +173,7 @@ describe('Cell', function() {
   });
 
   it('upgrades from string to hyperlink', function() {
-    var row = sheetMock.getRow(1)
+    var row = sheetMock.getRow(1);
     var column = sheetMock.getColumn(1);
 
     var a1 = sheetMock.getCell('A1');
@@ -189,7 +189,7 @@ describe('Cell', function() {
   });
 
   it('doesn\'t upgrade from non-string to hyperlink', function() {
-    var row = sheetMock.getRow(1)
+    var row = sheetMock.getRow(1);
     var column = sheetMock.getColumn(1);
 
     var a1 = sheetMock.getCell('A1');
@@ -225,7 +225,7 @@ describe('Cell', function() {
   });
 
   it('inherits column styles', function() {
-    var row = sheetMock.getRow(1)
+    var row = sheetMock.getRow(1);
     var column = sheetMock.getColumn(1);
 
     column.style = {
@@ -237,7 +237,7 @@ describe('Cell', function() {
   });
 
   it('inherits row styles', function() {
-    var row = sheetMock.getRow(1)
+    var row = sheetMock.getRow(1);
     var column = sheetMock.getColumn(1);
 
     row.style = {
@@ -249,7 +249,7 @@ describe('Cell', function() {
   });
 
   it('has effective types', function() {
-    var row = sheetMock.getRow(1)
+    var row = sheetMock.getRow(1);
     var column = sheetMock.getColumn(1);
 
     var a1 = sheetMock.getCell('A1');

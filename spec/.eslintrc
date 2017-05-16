@@ -2,7 +2,11 @@
   "extends": "../.eslintrc",
   "rules": {
     "no-new": ["off"],
-    "max-len": ["off"]
+    "max-len": ["off"],
+    "brace-style": ["off"],
+    "array-bracket-spacing": ["off"],
+    "no-sparse-arrays": ["off"],
+    "object-property-newline": ["off"]
   },
   "globals": {
     "describe": true,

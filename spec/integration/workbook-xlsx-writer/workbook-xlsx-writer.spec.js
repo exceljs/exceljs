@@ -243,7 +243,7 @@ describe('WorkbookWriter', function() {
         });
     });
 
-    it('does not escape special xml characters', function () {
+    it('does not escape special xml characters', function() {
       var wb = new Excel.stream.xlsx.WorkbookWriter({filename: TEST_XLSX_FILE_NAME, useSharedStrings: true});
       var ws = wb.addWorksheet('blort');
       var xmlCharacters = 'xml characters: & < > "';
@@ -263,7 +263,7 @@ describe('WorkbookWriter', function() {
 
     it('serializes and deserializes dataValidations', function() {
       var options = {filename: TEST_XLSX_FILE_NAME};
-      var wb = testUtils.createTestBook(new Excel.stream.xlsx.WorkbookWriter(options),'xlsx', ['dataValidations']);
+      var wb = testUtils.createTestBook(new Excel.stream.xlsx.WorkbookWriter(options), 'xlsx', ['dataValidations']);
 
       return wb.commit()
         .then(function() {

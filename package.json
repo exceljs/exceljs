@@ -17,15 +17,15 @@
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --ext .js lib spec",
     "browser-test": "./node_modules/.bin/grunt jasmine",
-    "unit-test": "mocha --require spec/config/setup spec/unit --recursive",
+    "unit-test": "mocha --require spec/config/setup spec/unit --require spec/config/setup-unit --recursive",
     "integration-test": "mocha --require spec/config/setup spec/integration --recursive",
     "native-integration-test": "export EXCEL_NATIVE=yes && mocha --require spec/config/setup spec/integration --recursive",
     "end-to-end-test": "mocha --require spec/config/setup spec/end-to-end --recursive",
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
     "manual-test": "node spec/manual/app.js",
-    "prepublish": "npm run clean && npm run build && npm test",
-    "preversion": "npm run clean && npm run build && npm test"
+    "preversion": "npm run clean && npm run build && npm test",
+    "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "keywords": [
     "xlsx",

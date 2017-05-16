@@ -6,7 +6,7 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'Dimension',
-    create:  function() { return new DimensionXform()},
+    create: function() { return new DimensionXform(); },
     preparedModel: 'A1:F5',
     get parsedModel() { return this.preparedModel; },
     xml: '<dimension ref="A1:F5"/>',
@@ -14,6 +14,6 @@ var expectations = [
   }
 ];
 
-describe('DimensionXform', function () {
+describe('DimensionXform', function() {
   testXformHelper(expectations);
 });

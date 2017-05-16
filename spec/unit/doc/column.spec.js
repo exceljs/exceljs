@@ -15,11 +15,11 @@ describe('Column', function() {
 
     expect(sheet.getColumn(1).header).to.equal('Col 1');
     expect(sheet.getColumn(1).headers).to.deep.equal(['Col 1']);
-    expect(sheet.getCell(1,1).value).to.equal('Col 1');
+    expect(sheet.getCell(1, 1).value).to.equal('Col 1');
     expect(sheet.getColumn('id1')).to.equal(sheet.getColumn(1));
     
     sheet.getRow(2).values = { id1: 'Hello, World!' };
-    expect(sheet.getCell(2,1).value).to.equal('Hello, World!');
+    expect(sheet.getCell(2, 1).value).to.equal('Hello, World!');
   });
 
   it('maintains properties', function() {
@@ -36,16 +36,16 @@ describe('Column', function() {
     column.header = 'Col 1';
     expect(sheet.getColumn(1).header).to.equal('Col 1');
     expect(sheet.getColumn(1).headers).to.deep.equal(['Col 1']);
-    expect(sheet.getCell(1,1).value).to.equal('Col 1');
+    expect(sheet.getCell(1, 1).value).to.equal('Col 1');
 
-    column.header = ['Col A1','Col A2'];
-    expect(sheet.getColumn(1).header).to.deep.equal(['Col A1','Col A2']);
-    expect(sheet.getColumn(1).headers).to.deep.equal(['Col A1','Col A2']);
-    expect(sheet.getCell(1,1).value).to.equal('Col A1');
-    expect(sheet.getCell(2,1).value).to.equal('Col A2');
+    column.header = ['Col A1', 'Col A2'];
+    expect(sheet.getColumn(1).header).to.deep.equal(['Col A1', 'Col A2']);
+    expect(sheet.getColumn(1).headers).to.deep.equal(['Col A1', 'Col A2']);
+    expect(sheet.getCell(1, 1).value).to.equal('Col A1');
+    expect(sheet.getCell(2, 1).value).to.equal('Col A2');
 
     sheet.getRow(3).values = { id1: 'Hello, World!' };
-    expect(sheet.getCell(3,1).value).to.equal('Hello, World!');
+    expect(sheet.getCell(3, 1).value).to.equal('Hello, World!');
   });
 
   it('creates model', function() {

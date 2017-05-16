@@ -6,7 +6,7 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'hello',
-    create:  function() { return new StringXform({tag: 'string', attr: 'val'})},
+    create: function() { return new StringXform({tag: 'string', attr: 'val'}); },
     preparedModel: 'Hello, World!',
     xml: '<string val="Hello, World!"/>',
     parsedModel: 'Hello, World!',
@@ -14,7 +14,7 @@ var expectations = [
   },
   {
     title: 'empty',
-    create:  function() { return new StringXform({tag: 'string', attr: 'val'})},
+    create: function() { return new StringXform({tag: 'string', attr: 'val'}); },
     preparedModel: '',
     xml: '<string val=""/>',
     parsedModel: '',
@@ -22,13 +22,13 @@ var expectations = [
   },
   {
     title: 'undefined',
-    create:  function() { return new StringXform({tag: 'string', attr: 'val'})},
+    create: function() { return new StringXform({tag: 'string', attr: 'val'}); },
     preparedModel: undefined,
     xml: '',
     tests: ['render', 'renderIn']
   }
 ];
 
-describe('StringXform', function () {
+describe('StringXform', function() {
   testXformHelper(expectations);
 });

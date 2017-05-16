@@ -53,6 +53,6 @@ describe('StreamBuf', function() {
       });
       sb.on('error', reject);
       s.pipe(sb);
-    })
+    });
   });
 });

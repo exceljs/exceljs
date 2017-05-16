@@ -41,8 +41,8 @@ var its = {
   },
 
   render: function(expectation) {
-    it('Render to XML', function () {
-      return new Promise(function (resolve) {
+    it('Render to XML', function() {
+      return new Promise(function(resolve) {
         var model = getExpectation(expectation, 'preparedModel');
         var result = getExpectation(expectation, 'xml');
 
@@ -59,8 +59,8 @@ var its = {
 
   'prepare-render': function(expectation) {
     // when implementation details get in the way of testing the prepared result
-    it('Prepare and Render to XML', function () {
-      return new Promise(function (resolve) {
+    it('Prepare and Render to XML', function() {
+      return new Promise(function(resolve) {
         var model = getExpectation(expectation, 'initialModel');
         var result = getExpectation(expectation, 'xml');
 
@@ -77,8 +77,8 @@ var its = {
   },
 
   renderIn: function(expectation) {
-    it('Render in Composite to XML ', function () {
-      return new Promise(function (resolve) {
+    it('Render in Composite to XML ', function() {
+      return new Promise(function(resolve) {
         var model = {
           pre: true,
           child: getExpectation(expectation, 'preparedModel'),
@@ -112,7 +112,7 @@ var its = {
   
   parseIn: function(expectation) {
     it('Parse within composite', function() {
-      return new Promise(function (resolve, reject) {
+      return new Promise(function(resolve, reject) {
         var xml = '<compy><pre/>' + getExpectation(expectation, 'xml') + '<post/></compy>';
         var childXform = expectation.create();
         var result = {pre: true};
@@ -129,7 +129,7 @@ var its = {
         var parser = Sax.createStream(true);
 
         xform.parse(parser)
-          .then(function (model) {
+          .then(function(model) {
             // console.log('parsed Model', JSON.stringify(model));
             // console.log('expected Model', JSON.stringify(result));
 
@@ -148,8 +148,8 @@ var its = {
   },
 
   parse: function(expectation) {
-    it('Parse to Model', function () {
-      return new Promise(function (resolve, reject) {
+    it('Parse to Model', function() {
+      return new Promise(function(resolve, reject) {
         var xml = getExpectation(expectation, 'xml');
         var result = getExpectation(expectation, 'parsedModel');
 
@@ -157,7 +157,7 @@ var its = {
         var xform = expectation.create();
 
         xform.parse(parser)
-          .then(function (model) {
+          .then(function(model) {
             // eliminate the undefined
             var clone = _.cloneDeep(model, false);
 
@@ -193,9 +193,9 @@ var its = {
 };
 
 function testXform(expectations) {
-  _.each(expectations, function (expectation) {
+  _.each(expectations, function(expectation) {
     var tests = getExpectation(expectation, 'tests');
-    describe(expectation.title, function () {
+    describe(expectation.title, function() {
       _.each(tests, function(test) {
         its[test](expectation);
       });

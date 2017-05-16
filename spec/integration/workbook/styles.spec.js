@@ -79,7 +79,7 @@ describe('Workbook', function() {
 
       var wb = new Excel.Workbook();
       return wb.xlsx.read(bufferStream)
-          .then(function () {
+          .then(function() {
             var ws = wb.worksheets[0];
             expect(ws.getCell('A1').value).to.deep.equal(richTextSampleA1);
             expect(ws.getCell('A1').text).to.equal(ws.getCell('A2').value);

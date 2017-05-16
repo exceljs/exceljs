@@ -32,7 +32,7 @@ e.on('finished', function() {
 
 var zip = unzip.Parse();
 zip.on('entry',function (entry) {
-    if (entry.path.match(/xl\/worksheets\/sheet\d+\.xml/)) {
+    if (entry.path.match(/xl\/worksheets\/sheet\d+[.]xml/)) {
         parseSheet(entry,e);
     }
 });
