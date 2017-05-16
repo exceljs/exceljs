@@ -5,7 +5,7 @@ var Promish = require('promish');
 var expect = require('chai').expect;
 var verquire = require('../../utils/verquire');
 var testUtils = require('../../utils/index');
-var utils = require('../../../lib/utils/utils');
+var utils = verquire('utils/utils');
 
 var Excel = verquire('excel');
 

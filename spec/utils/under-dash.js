@@ -1,5 +1,7 @@
 'use strict';
 
+var verquire = require('./verquire');
+
 var _ = Object.assign({
   get: function get(obj, path, dflt) {
     if (typeof path === 'string') {
@@ -40,6 +42,6 @@ var _ = Object.assign({
     return clone;
   }
 
-}, require('../../lib/utils/under-dash'));
+}, verquire('utils/under-dash'));
 
 module.exports = _;

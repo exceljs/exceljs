@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -92,7 +92,7 @@
     "uglifyjs": "^2.4.10",
     "underscore": "^1.8.3"
   },
-  "main": "./dist/es5/excel.js",
+  "main": "./dist/es5/index.js",
   "files": [
     "dist",
     "LICENSE",

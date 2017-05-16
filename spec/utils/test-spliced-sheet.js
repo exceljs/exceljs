@@ -2,8 +2,9 @@
 
 var expect = require('chai').expect;
 
+var verquire = require('./verquire');
 var tools = require('./tools');
-var Enums = require('../../lib/doc/enums');
+var Enums = verquire('doc/enums');
 
 module.exports = {
   rows: {

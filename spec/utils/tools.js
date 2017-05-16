@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('../../lib/utils/under-dash');
+var _ = require('./under-dash');
 var MemoryStream = require('memorystream');
 
 var tools = module.exports = {
