@@ -3,14 +3,11 @@
 var chai = require('chai');
 
 var verquire = require('../../utils/verquire');
-var Enums = verquire('doc/enums');
 
+var Enums = verquire('doc/enums');
 var Excel = verquire('excel');
 
 var expect = chai.expect;
-
-// this file to contain integration tests created from github issues
-var TEST_XLSX_FILE_NAME = '../spec/out/wb.test.xlsx';
 
 describe('github issues', function() {
   describe('Shared Formulas', function() {

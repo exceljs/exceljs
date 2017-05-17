@@ -33,7 +33,6 @@
     "no-plusplus": ["off"],
     "no-unused-expressions": ["off"],
     "global-require": ["off"],
-    "no-unused-vars": ["off"],
     "no-path-concat": ["off"],
     "prefer-rest-params": ["off"]
   }

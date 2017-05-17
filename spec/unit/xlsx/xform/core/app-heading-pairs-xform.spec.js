@@ -1,7 +1,5 @@
 'use strict';
 
-var fs = require('fs');
-
 var AppHeadingPairsXform = require('../../../../../lib/xlsx/xform/core/app-heading-pairs-xform');
 var testXformHelper = require('../test-xform-helper');
 

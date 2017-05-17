@@ -292,7 +292,7 @@ describe('Worksheet', function() {
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      rows.forEach(function(row, index) {
+      rows.forEach(function(row) {
         if (row) {
           ws.addRow(row);
         }

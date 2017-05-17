@@ -76,8 +76,8 @@ describe('Cell', function() {
     sheetMock.reset();
   });
   it('stores values', function() {
-    var row = sheetMock.getRow(1);
-    var column = sheetMock.getColumn(1);
+    sheetMock.getRow(1);
+    sheetMock.getColumn(1);
 
     var a1 = sheetMock.getCell('A1');
 
@@ -173,8 +173,8 @@ describe('Cell', function() {
   });
 
   it('upgrades from string to hyperlink', function() {
-    var row = sheetMock.getRow(1);
-    var column = sheetMock.getColumn(1);
+    sheetMock.getRow(1);
+    sheetMock.getColumn(1);
 
     var a1 = sheetMock.getCell('A1');
 
@@ -189,8 +189,8 @@ describe('Cell', function() {
   });
 
   it('doesn\'t upgrade from non-string to hyperlink', function() {
-    var row = sheetMock.getRow(1);
-    var column = sheetMock.getColumn(1);
+    sheetMock.getRow(1);
+    sheetMock.getColumn(1);
 
     var a1 = sheetMock.getCell('A1');
 
@@ -225,7 +225,7 @@ describe('Cell', function() {
   });
 
   it('inherits column styles', function() {
-    var row = sheetMock.getRow(1);
+    sheetMock.getRow(1);
     var column = sheetMock.getColumn(1);
 
     column.style = {
@@ -238,7 +238,7 @@ describe('Cell', function() {
 
   it('inherits row styles', function() {
     var row = sheetMock.getRow(1);
-    var column = sheetMock.getColumn(1);
+    sheetMock.getColumn(1);
 
     row.style = {
       font: fonts.broadwayRedOutline20
@@ -249,8 +249,8 @@ describe('Cell', function() {
   });
 
   it('has effective types', function() {
-    var row = sheetMock.getRow(1);
-    var column = sheetMock.getColumn(1);
+    sheetMock.getRow(1);
+    sheetMock.getColumn(1);
 
     var a1 = sheetMock.getCell('A1');
 

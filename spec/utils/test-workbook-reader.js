@@ -4,8 +4,8 @@ var expect = require('chai').expect;
 var verquire = require('./verquire');
 var tools = require('./tools');
 var testValues = tools.fix(require('./data/sheet-values.json'));
-var utils = verquire('utils/utils');
 
+var utils = verquire('utils/utils');
 var Excel = verquire('excel');
 
 function fillFormula(f) {

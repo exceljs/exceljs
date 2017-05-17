@@ -1,7 +1,6 @@
 var expect = require('chai').expect;
 
 var Excel = require('../../../excel');
-var testUtils = require('../../utils/index');
 
 describe('Worksheet', function() {
   describe('Views', function() {

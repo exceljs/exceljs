@@ -2,7 +2,6 @@
 
 var verquire = require('../utils/verquire');
 var chai = require('chai');
-var moment = require('moment');
 
 var Excel = verquire('excel');
 

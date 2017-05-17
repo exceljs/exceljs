@@ -3,8 +3,8 @@
 var chai = require('chai');
 
 var verquire = require('../../utils/verquire');
-var PromishLib = verquire('utils/promish');
 
+var PromishLib = verquire('utils/promish');
 var Excel = verquire('excel');
 
 var expect = chai.expect;

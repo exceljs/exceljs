@@ -8,9 +8,6 @@ var Excel = verquire('excel');
 
 var expect = chai.expect;
 
-// this file to contain integration tests created from github issues
-var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
-
 describe('github issues', function() {
   it('issue 176 - Unexpected xml node in parseOpen', function() {
     var wb = new Excel.Workbook();

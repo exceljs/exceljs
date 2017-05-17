@@ -5,12 +5,10 @@ var Promish = require('promish');
 var expect = require('chai').expect;
 var verquire = require('../../utils/verquire');
 var testUtils = require('../../utils/index');
-var utils = verquire('utils/utils');
 
 var Excel = verquire('excel');
 
 var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
-var fsReadFileAsync = Promish.promisify(fs.readFile);
 
 describe('WorkbookWriter', function() {
   it('creates sheets with correct names', function() {

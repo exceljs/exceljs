@@ -5,8 +5,6 @@ var Promish = require('promish');
 var fs = require('fs');
 var path = require('path');
 
-var fsa = Promish.promisifyAll(fs);
-
 var StreamBuf = require('../../../lib/utils/stream-buf');
 var StringBuf = require('../../../lib/utils/string-buf');
 

@@ -1,15 +1,14 @@
 'use strict';
 
 var expect = require('chai').expect;
-
 var verquire = require('./verquire');
-var tools = require('./tools');
+
 var Enums = verquire('doc/enums');
 
 module.exports = {
   rows: {
     removeOnly: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-row-remove-only');
 
         ws.addRow(['1,1', '1,2', '1,3']);
@@ -21,7 +20,7 @@ module.exports = {
         ws.spliceRows(2, 1);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-row-remove-only');
         expect(ws).to.not.be.undefined();
 
@@ -59,7 +58,7 @@ module.exports = {
       }
     },
     insertFewer: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-row-insert-fewer');
 
         ws.addRow(['1,1', '1,2', '1,3']);
@@ -71,7 +70,7 @@ module.exports = {
         ws.spliceRows(2, 2, ['one', 'two', 'three']);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-row-insert-fewer');
         expect(ws).to.not.be.undefined();
 
@@ -82,7 +81,7 @@ module.exports = {
       }
     },
     insertSame: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-row-insert-same');
 
         ws.addRow(['1,1', '1,2', '1,3']);
@@ -94,7 +93,7 @@ module.exports = {
         ws.spliceRows(2, 2, ['one', 'two', 'three'], ['une', 'deux', 'trois']);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-row-insert-same');
         expect(ws).to.not.be.undefined();
 
@@ -106,7 +105,7 @@ module.exports = {
       }
     },
     insertMore: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-row-insert-more');
 
         ws.addRow(['1,1', '1,2', '1,3']);
@@ -118,7 +117,7 @@ module.exports = {
         ws.spliceRows(2, 2, ['one', 'two', 'three'], ['une', 'deux', 'trois'], ['uno', 'due', 'tre']);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-row-insert-more');
         expect(ws).to.not.be.undefined();
 
@@ -133,7 +132,7 @@ module.exports = {
   },
   columns: {
     removeOnly: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-column-remove-only');
 
         ws.columns = [
@@ -149,7 +148,7 @@ module.exports = {
         ws.spliceColumns(2, 1);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-column-remove-only');
         expect(ws).to.not.be.undefined();
 
@@ -172,7 +171,7 @@ module.exports = {
       }
     },
     insertFewer: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-column-insert-fewer');
 
         ws.addRow(['1,1', '1,2', '1,3', '1,4', '1,5']);
@@ -185,7 +184,7 @@ module.exports = {
         ws.spliceColumns(2, 2, ['one', 'two', 'three', 'four', 'five']);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-column-insert-fewer');
         expect(ws).to.not.be.undefined();
 
@@ -197,7 +196,7 @@ module.exports = {
       }
     },
     insertSame: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-column-insert-same');
 
         ws.addRow(['1,1', '1,2', '1,3', '1,4', '1,5']);
@@ -213,7 +212,7 @@ module.exports = {
         );
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-column-insert-same');
         expect(ws).to.not.be.undefined();
 
@@ -225,7 +224,7 @@ module.exports = {
       }
     },
     insertMore: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-column-insert-more');
 
         ws.addRow(['1,1', '1,2', '1,3', '1,4', '1,5']);
@@ -242,7 +241,7 @@ module.exports = {
         );
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-column-insert-more');
         expect(ws).to.not.be.undefined();
 
