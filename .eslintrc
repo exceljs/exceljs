@@ -12,11 +12,11 @@
     "no-use-before-define": ["error", { "variables": false, "classes": false, "functions": false }],
     "no-plusplus": ["off"],
     "no-underscore-dangle": ["error", { "allowAfterThis": true, "allowAfterSuper": true }],
-
-    "no-var": ["off"],
-    "dot-notation": ["off"],
+    "no-multi-assign": ["off"],
     "one-var": ["off"],
     "one-var-declaration-per-line": ["off"],
+
+    "no-var": ["off"],
     "no-prototype-builtins": ["off"],
     "arrow-parens": ["off"],
     "quote-props": ["off"],
@@ -26,7 +26,6 @@
     "comma-dangle": ["off"],
     "strict": ["off"],
     "indent": ["off"],
-    "no-multi-assign": ["off"],
     "object-shorthand": ["off"],
     "prefer-template": ["off"],
     "object-curly-spacing": ["off"],
