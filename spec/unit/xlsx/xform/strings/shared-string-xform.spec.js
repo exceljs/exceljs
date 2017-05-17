@@ -15,9 +15,9 @@ var expectations = [
   {
     title: 'rich text',
     create: function() { return new SharedStringXform(); },
-    preparedModel: {richText: [{ 'font': { 'size': 11, 'bold': true, 'color': { 'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor' }, 'text': 'Bold,' }]},
+    preparedModel: {richText: [{ font: { size: 11, bold: true, color: { theme: 1}, name: 'Calibri', family: 2, scheme: 'minor' }, text: 'Bold,' }]},
     xml: '<si><r><rPr><b/><color theme="1"/><family val="2"/><scheme val="minor"/><sz val="11"/><rFont val="Calibri"/></rPr><t>Bold,</t></r></si>',
-    parsedModel: {richText: [{ 'font': { 'size': 11, 'bold': true, 'color': { 'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor' }, 'text': 'Bold,' }]},
+    parsedModel: {richText: [{ font: { size: 11, bold: true, color: { theme: 1}, name: 'Calibri', family: 2, scheme: 'minor' }, text: 'Bold,' }]},
     tests: ['render', 'renderIn', 'parse']
   },
   {
