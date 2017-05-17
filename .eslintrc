@@ -24,7 +24,6 @@
     "no-param-reassign": ["off"],
     "prefer-arrow-callback": ["off"],
     "comma-dangle": ["off"],
-    "eol-last": ["off"],
     "strict": ["off"],
     "indent": ["off"],
     "no-multi-assign": ["off"],
