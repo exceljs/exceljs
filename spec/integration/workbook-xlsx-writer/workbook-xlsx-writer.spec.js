@@ -1,7 +1,6 @@
 'use strict';
 
 var fs = require('fs');
-var Promish = require('promish');
 var expect = require('chai').expect;
 var verquire = require('../../utils/verquire');
 var testUtils = require('../../utils/index');
