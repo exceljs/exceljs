@@ -35,7 +35,7 @@ To be clear, all contributions added to this library will be included in the lib
 # Backlog
 
 <ul>
-  <li>ESLint - slowly turn on (justifyable) rules which should hopefully make contributions easier.</li>
+  <li>ESLint - slowly turn on (justifyable) rules which should, I hope, help make contributions easier.</li>
   <li>Conditional Formatting.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
   <li>XLSX Streaming Reader.</li>
