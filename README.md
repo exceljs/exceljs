@@ -12,14 +12,12 @@ npm install exceljs
 
 <ul>
     <li>
-        Switching to transpiled code for distribution.
-        This will ensure compatability with 4.0.0 and above from here on.
-        And it will also allow use of much more expressive JS code in the lib folder!
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/319">Add missing Office Rels #319</a>
+        Thanks goes to <a href="https://github.com/mauriciovillalobos">mauriciovillalobos</a> for the contribution.
     </li>
     <li>
-        <a href="#images">Basic Image Support!</a>
-        Images can now be added to worksheets either as a tiled background or stretched over a range.
-        Note: other features like rotation, etc. are not supported yet and will reqeuire further work.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/320">Add printTitlesRow Support #320</a>
+        Thanks goes to <a href="https://github.com/psellers89">psellers89</a> for the contribution.
     </li>
 </ul>
 
@@ -1716,3 +1714,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.4.3   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/294">Support error references in cell ranges #294</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
 | 0.4.4   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/297">Issue with copied cells #297</a>. This merge adds support for shared formulas. Thanks to <a href="https://github.com/muscapades">muscapades</a> for the contribution.</li></ul> |
 | 0.4.6   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/304">Correct spelling #304</a>. Thanks to <a href="https://github.com/toanalien">toanalien</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/304">Added support for auto filters #306</a>. This adds <a href="#auto-filters">Auto Filters</a> to the Worksheet. Thanks to <a href="https://github.com/C4rmond4i">C4rmond4i</a> for the contribution.</li><li>Restored NodeJS 4.0.0 compatability by removing the destructuring code. My apologies for any inconvenience.</li></ul> |
+| 0.4.9   | <ul><li>Switching to transpiled code for distribution. This will ensure compatability with 4.0.0 and above from here on. And it will also allow use of much more expressive JS code in the lib folder!</li><li><a href="#images">Basic Image Support!</a>Images can now be added to worksheets either as a tiled background or stretched over a range. Note: other features like rotation, etc. are not supported yet and will reqeuire further work.</li></ul> |
+ 

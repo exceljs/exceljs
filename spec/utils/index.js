@@ -122,7 +122,20 @@ module.exports = {
       },
       getCell: function(rowNumber, colNumber) {
         return this.getRow(rowNumber).getCell(colNumber);
-      }
+      },
+      getColumnKey(key) {
+        return this._keys[key];
+      },
+      setColumnKey(key, value) {
+        this._keys[key] = value;
+      },
+      deleteColumnKey(key) {
+        delete this._keys[key];
+      },
+      eachColumnKey(f) {
+        _.each(this._keys, f);
+      },
+
     };
   }
 };

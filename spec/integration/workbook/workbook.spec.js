@@ -72,6 +72,29 @@ describe('Workbook', function() {
           expect(wb2.modified).to.equalDate(wb.modified);
         });
     });
+    it('printTitlesRow', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('printHeader');
+
+      ws.getCell('A1').value = 'This is a header row repeated on every printed page';
+      ws.getCell('B2').value = 'This is a header row too';
+
+      for (var i = 0; i < 100; i++) {
+        ws.addRow(['not header row']);
+      }
+
+      ws.pageSetup.printTitlesRow = '1:2';
+
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('printHeader');
+          expect(ws2.pageSetup.printTitlesRow).to.equal('$1:$2');
+        });
+    });
 
     it('shared formula', function() {
       var wb = new Excel.Workbook();
