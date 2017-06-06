@@ -190,7 +190,7 @@ module.exports = {
 
         expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one', '1,4', '1,5']);
         expect(ws.getRow(2).values).to.deep.equal([, '2,1', 'two', '2,4', '2,5']);
-        expect(ws.getRow(3).values).to.deep.equal([, , 'three', , ]);
+        expect(ws.getRow(3).values).to.deep.equal([, , 'three', ]);
         expect(ws.getRow(4).values).to.deep.equal([, 4.1, 'four',, 4.5]);
         expect(ws.getRow(5).values).to.deep.equal([, '5,1', 'five', '5,4', '5,5']);
       }
@@ -218,7 +218,7 @@ module.exports = {
 
         expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one', 'une', '1,4', '1,5']);
         expect(ws.getRow(2).values).to.deep.equal([, '2,1', 'two', 'deux', '2,4', '2,5']);
-        expect(ws.getRow(3).values).to.deep.equal([,, 'three', 'trois', , ]);
+        expect(ws.getRow(3).values).to.deep.equal([,, 'three', 'trois', ]);
         expect(ws.getRow(4).values).to.deep.equal([, 4.1, 'four', 'quatre',, 4.5]);
         expect(ws.getRow(5).values).to.deep.equal([, '5,1', 'five', 'cinq', '5,4', '5,5']);
       }
