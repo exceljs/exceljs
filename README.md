@@ -12,11 +12,7 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/327">Avoid error on anchor with no media #327</a>.
-        Thanks goes to <a href="https://github.com/holm">holm</a> for the contribution.
-    </li>
-    <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/332">Assortment of fixes for streaming read #332</a>.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/334">Don’t set address if hyperlink r:id is undefined #334</a>.
         Thanks goes to <a href="https://github.com/holm">holm</a> for the contribution.
     </li>
 </ul>
@@ -29,6 +25,13 @@ I have just one request; If you submit a pull request for a bugfix, please add a
  Even a PR that just has a failing test is fine - I can analyse what the test is doing and fix the code from that. 
 
 To be clear, all contributions added to this library will be included in the library's MIT licence.
+
+# Notice
+
+I have to admit I'm really snowed under at the moment and will not be able to
+pursue active development of exceljs in the coming months.
+I will however keep an eye on the pull requests and endeavour to merge and release
+them as they come.
 
 # Backlog
 
@@ -1716,3 +1719,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.4.6   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/304">Correct spelling #304</a>. Thanks to <a href="https://github.com/toanalien">toanalien</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/304">Added support for auto filters #306</a>. This adds <a href="#auto-filters">Auto Filters</a> to the Worksheet. Thanks to <a href="https://github.com/C4rmond4i">C4rmond4i</a> for the contribution.</li><li>Restored NodeJS 4.0.0 compatability by removing the destructuring code. My apologies for any inconvenience.</li></ul> |
 | 0.4.9   | <ul><li>Switching to transpiled code for distribution. This will ensure compatability with 4.0.0 and above from here on. And it will also allow use of much more expressive JS code in the lib folder!</li><li><a href="#images">Basic Image Support!</a>Images can now be added to worksheets either as a tiled background or stretched over a range. Note: other features like rotation, etc. are not supported yet and will reqeuire further work.</li></ul> |
 | 0.4.10  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/319">Add missing Office Rels #319</a>. Thanks goes to <a href="https://github.com/mauriciovillalobos">mauriciovillalobos</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/320">Add printTitlesRow Support #320</a> Thanks goes to <a href="https://github.com/psellers89">psellers89</a> for the contribution.</li></ul> |
+| 0.4.11  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/327">Avoid error on anchor with no media #327</a>. Thanks goes to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/332">Assortment of fixes for streaming read #332</a>. Thanks goes to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
