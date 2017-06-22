@@ -17,6 +17,8 @@ describe('utils', function() {
           .to.equal('abc abc');
 
       expect(utils.xmlEncode('<a href="www.whatever.com">Talk to the H&</a>')).to.equal('&lt;a href=&quot;www.whatever.com&quot;&gt;Talk to the H&amp;&lt;/a&gt;');
+
+      expect(utils.xmlEncode('new\x0aline')).to.equal('new\x0aline');
     });
   });
   describe('isDateFmt', function() {
