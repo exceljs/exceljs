@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 var utils = require('../../../lib/utils/utils');
 
 describe('utils', function() {
-  describe.only('xmlEncode', function() {
+  describe('xmlEncode', function() {
     it('encodes xml text', function() {
       expect(utils.xmlEncode('<')).to.equal('&lt;');
       expect(utils.xmlEncode('>')).to.equal('&gt;');
