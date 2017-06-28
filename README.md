@@ -6,7 +6,9 @@ Reverse engineered from Excel spreadsheet files as a project.
 
 # Installation
 
+```shell
 npm install exceljs
+```
 
 # New Features!
 
