@@ -331,6 +331,7 @@ Each view also supports various properties:
 | Name              | Default   | Description |
 | ----------------- | --------- | ----------- |
 | state             | 'normal'  | Controls the view state - one of normal, frozen or split |
+| rtl        | false | Sets the worksheet view's orientation to right-to-left |
 | activeCell        | undefined | The currently selected cell |
 | showRuler         | true      | Shows or hides the ruler in Page Layout |
 | showRowColHeaders | true      | Shows or hides the row and column headers (e.g. A1, B1 at the top and 1,2,3 on the left |
