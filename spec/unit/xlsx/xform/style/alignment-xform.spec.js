@@ -156,6 +156,22 @@ var expectations = [
     tests: ['render', 'renderIn', 'parse']
   },
   {
+    title: 'Reading Order [Left To Right]',
+    create: () => new AlignmentXform(),
+    preparedModel: { readingOrder: 'ltr' },
+    xml: '<alignment readingOrder="1"/>',
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
+    title: 'Reading Order [Right To Left]',
+    create: () => new AlignmentXform(),
+    preparedModel: { readingOrder: 'rtl' },
+    xml: '<alignment readingOrder="2"/>',
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
     title: 'Vertical Text',
     create: () => new AlignmentXform(),
     preparedModel: { horizontal: 'right', vertical: 'bottom', textRotation: 'vertical' },

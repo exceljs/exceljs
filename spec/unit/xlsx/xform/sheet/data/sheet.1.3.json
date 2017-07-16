@@ -5,7 +5,16 @@
     "tabColor": {"argb": "FF00FF00"},
     "outlineLevelCol": 0, "outlineLevelRow": 0
   },
-  "views": [{"state": "normal", "showRuler": true, "showGridLines": true, "showRowColHeaders": true, "zoomScale": 100, "zoomScaleNormal": 100, "workbookViewId": 0}],
+  "views": [{
+    "state": "normal",
+    "showRuler": true,
+    "showGridLines": true,
+    "showRowColHeaders": true,
+    "zoomScale": 100,
+    "zoomScaleNormal": 100,
+    "workbookViewId": 0,
+    "rightToLeft": false
+  }],
   "pageSetup": {
     "margins": {"left": 0.7, "right": 0.7, "top": 0.75, "bottom": 0.75, "header": 0.3, "footer":  0.3 },
     "firstPageNumber": 5, "useFirstPageNumber": true, "usePrinterDefaults": true, "copies": 3,
