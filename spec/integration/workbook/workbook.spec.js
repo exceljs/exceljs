@@ -565,15 +565,18 @@ describe('Workbook', function() {
           expect(ws2.views).to.deep.equal([
             {
               workbookViewId: 0, state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'C4',
-              activeCell: 'D5', showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
+              activeCell: 'D5', showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+              rightToLeft: false,
             },
             {
               workbookViewId: 0, state: 'frozen', xSplit: 0, ySplit: 1, topLeftCell: 'A2',
-              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
+              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+              rightToLeft: false,
             },
             {
               workbookViewId: 0, state: 'frozen', xSplit: 1, ySplit: 0, topLeftCell: 'B1',
-              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
+              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100,
+              rightToLeft: false,
             }
           ]);
         });
@@ -601,15 +604,15 @@ describe('Workbook', function() {
           expect(ws2.views).to.deep.equal([
             {
               workbookViewId: 0, state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'C4', activeCell: 'D5', activePane: 'bottomRight',
-              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
+              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100, rightToLeft: false,
             },
             {
               workbookViewId: 0, state: 'split', xSplit: 0, ySplit: 1500, topLeftCell: 'A10', activePane: 'bottomLeft',
-              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
+              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100, rightToLeft: false,
             },
             {
               workbookViewId: 0, state: 'split', xSplit: 1500, ySplit: 0, topLeftCell: undefined, activePane: 'topRight',
-              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100
+              showRuler: true, showGridLines: true, showRowColHeaders: true, zoomScale: 100, zoomScaleNormal: 100, rightToLeft: false,
             }
           ]);
         });
