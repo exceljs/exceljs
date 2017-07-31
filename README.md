@@ -14,10 +14,9 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/356">Fix right to left issues #356</a>.
-        Fixes <a href="https://github.com/guyonroche/exceljs/issues/72">Add option to RTL file #72</a>
-        and <a href="https://github.com/guyonroche/exceljs/issues/126">Adding an option to set RTL worksheet #126</a>.
-        Big thank you to <a href="https://github.com/alitaheri">alitaheri</a> for this contribution.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/364">Fix #345 TypeError: Cannot read property 'date1904' of undefined #364</a>.
+        This fixes <a href="https://github.com/guyonroche/exceljs/issues/345">TypeError: Cannot read property 'date1904' of undefined #345</a>
+        Thanks to <a href="https://github.com/Diluka">Diluka</a> for this contribution.
     </li>
 </ul>
 
@@ -1728,3 +1727,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.4.12  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/334">Don’t set address if hyperlink r:id is undefined #334</a>. Thanks goes to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
 | 0.4.13  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/343">Issue 296 #343</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/296">Issue with writing newlines #296</a>. Thanks goes to <a href="https://github.com/holly-weisser">holly-weisser</a> for the contribution.</li></ul> |
 | 0.4.14  | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/350">Syntax highlighting added ✨ #350</a>. Thanks goes to <a href="https://github.com/rmariuzzo">rmariuzzo</a> for the contribution.</li></ul> |
+| 0.5.0   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/356">Fix right to left issues #356</a>. Fixes <a href="https://github.com/guyonroche/exceljs/issues/72">Add option to RTL file #72</a> and <a href="https://github.com/guyonroche/exceljs/issues/126">Adding an option to set RTL worksheet #126</a>. Big thank you to <a href="https://github.com/alitaheri">alitaheri</a> for this contribution.</li></ul> |
