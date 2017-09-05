@@ -559,6 +559,9 @@ row.values = {
     dob: new Date()
 };
 
+// Insert a page break prior to the row
+row.addPageBreak();
+
 // Iterate over all rows that have values in a worksheet
 worksheet.eachRow(function(row, rowNumber) {
     console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
