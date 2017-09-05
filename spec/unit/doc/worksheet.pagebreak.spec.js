@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 var Excel = require('../../../excel');
 
-describe.only('Worksheet', function() {
+describe('Worksheet', function() {
   describe('Page Breaks', function() {
     it('adds multiple row breaks', function() {
       var wb = new Excel.Workbook();
