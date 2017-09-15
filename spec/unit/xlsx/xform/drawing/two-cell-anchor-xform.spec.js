@@ -15,7 +15,11 @@ describe('TwoCellAnchorXform', function() {
     });
     it('should not throw on null tl', function() {
       var twoCell = new TwoCellAnchorXform();
-      expect(twoCell.reconcile({tl: null}, {})).to.not.throw;
+      expect(twoCell.reconcile({br: {col: 1, row: 1}}, {})).to.not.throw;
+    });
+    it('should not throw on null br', function() {
+      var twoCell = new TwoCellAnchorXform();
+      expect(twoCell.reconcile({tl: {col: 1, row: 1}}, {})).to.not.throw;
     });
   });
 });
