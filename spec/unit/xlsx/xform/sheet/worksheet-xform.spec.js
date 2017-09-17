@@ -94,6 +94,15 @@ var expectations = [
     tests: ['render', 'parse'],
     options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles, formulae: {}, siFormulae: 0 }
   },
+  {
+    title: 'Sheet 7 - Row Breaks',
+    create: () => new WorksheetXform(),
+    initialModel: require('./data/sheet.7.0.json'),
+    preparedModel: require('./data/sheet.7.1.json'),
+    xml: fs.readFileSync(__dirname + '/data/sheet.7.2.xml').toString(),
+    tests: ['prepare', 'render'],
+    options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles, formulae: {}, siFormulae: 0 }
+  },
 ];
 
 describe('WorksheetXform', function() {
