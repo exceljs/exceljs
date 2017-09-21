@@ -91,5 +91,44 @@ describe('Workbook', function() {
           expect(Buffer.compare(imageData, image.buffer)).to.equal(0);
         });
     });
+
+    it('stores embedded image with oneCell', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('blort');
+      var wb2, ws2;
+
+      var imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'jpeg',
+      });
+
+      ws.addImage(imageId, {
+        tl: { col: 0.1125, row: 0.4 },
+        br: { col: 2.101046875, row: 3.4 },
+        editAs: 'oneCell'
+      });
+
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function() {
+          ws2 = wb2.getWorksheet('blort');
+          expect(ws2).to.not.be.undefined();
+
+          return fsReadFileAsync(IMAGE_FILENAME);
+        })
+        .then(function(imageData) {
+          const images = ws2.getImages();
+          expect(images.length).to.equal(1);
+
+          const imageDesc = images[0];
+          expect(imageDesc.range.editAs).to.equal('oneCell');
+
+          const image = wb2.getImage(imageDesc.imageId);
+          expect(Buffer.compare(imageData, image.buffer)).to.equal(0);
+        });
+    });
   });
 });
