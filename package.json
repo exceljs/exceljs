@@ -1,5 +1,5 @@
 {
-  "name": "exceljs",
+  "name": "@digital-coupons/exceljs",
   "version": "0.6.0",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
