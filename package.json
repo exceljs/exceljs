@@ -23,7 +23,6 @@
     "end-to-end-test": "mocha --require spec/config/setup spec/end-to-end --recursive",
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
-    "prepublish": "./node_modules/.bin/grunt build",
     "manual-test": "node spec/manual/app.js",
     "preversion": "npm run clean && npm run build && npm test",
     "postversion": "git push --no-verify && git push --tags --no-verify"
@@ -97,15 +96,5 @@
     "dist",
     "LICENSE",
     "README.md"
-  ],
-  "triple-j": {
-    "prerequisites": [
-      "@digital-coupons/buildnpm.npm"
-    ],
-    "config": {
-      "project": {
-        "assignedNode": "linux"
-      }
-    }
-  }
+  ]
 }
