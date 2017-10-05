@@ -84,6 +84,7 @@
     "grunt-contrib-jasmine": "^1.1.0",
     "grunt-contrib-uglify": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-lib-phantomjs": "^1.1.0",
     "memorystream": "*",
     "mocha": "*",
     "request": "*",

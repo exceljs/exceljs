@@ -1653,6 +1653,16 @@ Please note: I have tested ExcelJS with bluebird specifically (since up until re
 
 # Known Issues
 
+## Testing with PhantomJS
+
+You may need to install phantomjs globally before running the browser-test script.
+
+It's also possible that phantomjs will not run (or can't be found). If this happens, try the following:
+
+```bash
+sudo apt-get install libfontconfig
+```
+
 ## Splice vs Merge
 
 If any splice operation affects a merged cell, the merge group will not be moved correctly
