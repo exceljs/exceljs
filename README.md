@@ -14,9 +14,10 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/403">Guard null model fields - fix and tests #403</a>.
-        Thanks to <a href="https://github.com/shdd-cjharries">thecjharries</a> for this contribution.
-        Also thanks to <a href="https://github.com/Rycochet">Ryc O'Chet</a> for help with reviewing.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/396">Add some comments in readme according csv importing #396</a>.
+        Thanks to <a href="https://github.com/Imperat">Michael Lelyakin</a> for this contribution.
+        Also thanks to <a href="https://github.com/planemar">planemar</a> for help with reviewing.
+        This also closes <a href="https://github.com/guyonroche/exceljs/issues/395">csv to stream doesn't work #395</a>.
     </li>
 </ul>
 
@@ -1745,4 +1746,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.5.0   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/356">Fix right to left issues #356</a>. Fixes <a href="https://github.com/guyonroche/exceljs/issues/72">Add option to RTL file #72</a> and <a href="https://github.com/guyonroche/exceljs/issues/126">Adding an option to set RTL worksheet #126</a>. Big thank you to <a href="https://github.com/alitaheri">alitaheri</a> for this contribution.</li></ul> |
 | 0.5.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/364">Fix #345 TypeError: Cannot read property 'date1904' of undefined #364</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/345">TypeError: Cannot read property 'date1904' of undefined #345</a>. Thanks to <a href="https://github.com/Diluka">Diluka</a> for this contribution.</li></ul>
 | 0.6.0   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/389">Add rowBreaks feature. #389</a>. Thanks to <a href="https://github.com/brucejo75">brucejo75</a> for this contribution.</li></ul> |
+| 0.6.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/403">Guard null model fields - fix and tests #403</a>. Thanks to <a href="https://github.com/shdd-cjharries">thecjharries</a> for this contribution. Also thanks to <a href="https://github.com/Rycochet">Ryc O'Chet</a> for help with reviewing.</li></ul> |
 
