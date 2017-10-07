@@ -1259,7 +1259,7 @@ workbook.csv.writeFile(filename)
 
 // write to a stream
 // Be careful that you need to provide sheetName or
-// sheetId for correct import to scv.
+// sheetId for correct import to csv.
 workbook.csv.write(stream, { sheetName: 'Page name' })
     .then(function() {
         // done
