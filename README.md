@@ -24,7 +24,7 @@ npm install exceljs
 Contributions are very welcome! It helps me know what features are desired or what bugs are causing the most pain.
 
 I have just one request; If you submit a pull request for a bugfix, please add a unit-test or integration-test (in the spec folder) that catches the problem.
- Even a PR that just has a failing test is fine - I can analyse what the test is doing and fix the code from that. 
+ Even a PR that just has a failing test is fine - I can analyse what the test is doing and fix the code from that.
 
 To be clear, all contributions added to this library will be included in the library's MIT licence.
 
@@ -168,7 +168,7 @@ The Workbook views controls how many separate windows Excel will open when viewi
 ```javascript
 workbook.views = [
   {
-    x: 0, y: 0, width: 10000, height: 20000, 
+    x: 0, y: 0, width: 10000, height: 20000,
     firstSheet: 0, activeTab: 1, visibility: 'visible'
   }
 ]
@@ -265,8 +265,8 @@ var worksheetWriter = workbookWriter.addSheet('sheet', {
 
 // adjust pageSetup settings afterwards
 worksheet.pageSetup.margins = {
-  left: 0.7, right: 0.7, 
-  top: 0.75, bottom: 0.75, 
+  left: 0.7, right: 0.7,
+  top: 0.75, bottom: 0.75,
   header: 0.3, footer: 0.3
 };
 
@@ -306,9 +306,9 @@ worksheet.pageSetup.printTitlesRow = '1:3';
 
 | Name                          | Value     |
 | ----------------------------- | --------- |
-| Letter                        | undefined | 
+| Letter                        | undefined |
 | Legal                         |  5        |
-| Executive                     |  7        | 
+| Executive                     |  7        |
 | A4                            |  9        |
 | A5                            |  11       |
 | B5 (JIS)                      |  13       |
@@ -473,9 +473,9 @@ dobCol.eachCell({ includeEmpty: true }, function(cell, rowNumber) {
 worksheet.spliceColumns(3,2);
 
 // remove one column and insert two more.
-// Note: columns 4 and above will be shifted right by 1 column. 
-// Also: If the worksheet has more rows than values in the colulmn inserts, 
-//  the rows will still be shifted as if the values existed 
+// Note: columns 4 and above will be shifted right by 1 column.
+// Also: If the worksheet has more rows than values in the colulmn inserts,
+//  the rows will still be shifted as if the values existed
 var newCol3Values = [1,2,3,4,5];
 var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
@@ -586,7 +586,7 @@ row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
 worksheet.spliceRows(4,3);
 
 // remove one row and insert two more.
-// Note: rows 4 and below will be shifted down by 1 row. 
+// Note: rows 4 and below will be shifted down by 1 row.
 var newRow3Values = [1,2,3,4,5];
 var newRow4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
@@ -1084,6 +1084,7 @@ expect(worksheet.getColumn(3).collapsed).to.be.false;
 Adding images to a worksheet is a two-step process.
 First, the image is added to the workbook via the addImage() function which will also return an imageId value.
 Then, using the imageId, the image can be added to the worksheet either as a tiled background or covering a cell range.
+The cell range can also have the property editAs with the value 'oneCell' which allows to set the anchor to cell.
 
 Note: As of this version, adjusting or transforming the image is not supported.
 
@@ -1240,7 +1241,7 @@ The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read t
 
 Dates are parsed using the npm module [moment](https://www.npmjs.com/package/moment).
  If no dateFormats are supplied, the following are used:
- 
+
 * moment.ISO_8601
 * 'MM-DD-YYYY'
 * 'YYYY-MM-DD'
@@ -1531,7 +1532,7 @@ A shared formula can be assigned to a cell using a new value form:
 worksheet.getCell('B3').value = { sharedFormula: 'A3', result: 10 };
 ```
 
-This specifies that the cell B3 is a formula that will be derived from the formula in 
+This specifies that the cell B3 is a formula that will be derived from the formula in
 A3 and its result is 10.
 
 The formula convenience getter will translate the formula in A3 to what it should be in B3:
@@ -1643,7 +1644,7 @@ To mitigate this the following two changes were added to 0.3.0:
 
 ExcelJS now supports dependency injection for the promise library.
  You can restore Bluebird promises by including the following code in your module...
- 
+
 ```javascript
 ExcelJS.config.setValue('promise', require('bluebird'));
 ```
