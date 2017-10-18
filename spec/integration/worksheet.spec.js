@@ -3,6 +3,7 @@
 var expect = require('chai').expect;
 var verquire = require('../utils/verquire');
 var testutils = require('./../utils/index');
+var path = require('path');
 
 var Excel = verquire('excel');
 var Range = verquire('doc/range');
@@ -617,6 +618,16 @@ describe('Worksheet', function() {
       expect(ws.getCell('C3').fill).to.deep.equal(testutils.styles.fills.blueWhiteHGrad);
       expect(ws.getCell('C3').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
       expect(ws.getCell('C3').numFmt).to.equal(testutils.styles.numFmts.numFmt1);
+    });
+  });
+
+  describe('When passed a non-Excel file', function() {
+    it('Should not break when importing a .numbers file', function() {
+      return new Excel.Workbook().xlsx.readFile(path.resolve(__dirname, 'data', 'numbers.numbers'))
+        .then(function(workbook) {
+          expect(workbook).to.have.property('worksheets');
+          expect(workbook.worksheets).to.have.length(0);
+        });
     });
   });
 });
