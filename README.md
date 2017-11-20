@@ -56,6 +56,7 @@ them as they come.
       <li><a href="#set-workbook-properties">Set Workbook Properties</a></li>
       <li><a href="#workbook-views">Workbook Views</a></li>
       <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
+      <li><a href="#remove-a-worksheet">Remove a Worksheet</a></li>
       <li><a href="#access-worksheets">Access Worksheets</a></li>
       <li><a href="#worksheet-properties">Worksheet Properties</a></li>
       <li><a href="#page-setup">Page Setup</a></li>
@@ -194,6 +195,20 @@ var sheet = workbook.addWorksheet('My Sheet', {properties: {showGridLines: false
 
 // create a sheet with the first row and column frozen
 var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
+```
+
+## Remove a Worksheet
+
+Use the worksheet `id` to remove the sheet from workbook.
+
+For Example:
+
+```javascript
+// Create a worksheet
+var sheet = workbook.addWorksheet('My Sheet');
+
+// Remove the worksheet using worksheet id
+workbook.removeWorksheet(sheet.id)
 ```
 
 ## Access Worksheets
