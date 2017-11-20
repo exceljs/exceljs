@@ -14,10 +14,9 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/407">Impl <xdr:twoCellAnchor editAs=oneCell> #407</a>.
-        Thanks to <a href="https://github.com/Ockejanssen">Ocke Janssen</a> and
-        <a href="https://github.com/kay-ramme">Kay Ramme</a> for this contribution.
-        This change allows control on how images are anchored to cells.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/423">Don't break when attempting to import a zip file that's not an Excel file (eg. .numbers) #423</a>.
+        Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
+        This change makes exceljs more reslilient when opening non-excel files.
     </li>
 </ul>
 
@@ -1765,4 +1764,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.6.0   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/389">Add rowBreaks feature. #389</a>. Thanks to <a href="https://github.com/brucejo75">brucejo75</a> for this contribution.</li></ul> |
 | 0.6.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/403">Guard null model fields - fix and tests #403</a>. Thanks to <a href="https://github.com/shdd-cjharries">thecjharries</a> for this contribution. Also thanks to <a href="https://github.com/Rycochet">Ryc O'Chet</a> for help with reviewing.</li></ul> |
 | 0.6.2   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/396">Add some comments in readme according csv importing #396</a>. Thanks to <a href="https://github.com/Imperat">Michael Lelyakin</a> for this contribution. Also thanks to <a href="https://github.com/planemar">planemar</a> for help with reviewing. This also closes <a href="https://github.com/guyonroche/exceljs/issues/395">csv to stream doesn't work #395</a>.</li></ul> |
-
+| 0.7.0   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/407">Impl &lt;xdr:twoCellAnchor editAs=oneCell&gt; #407</a>. Thanks to <a href="https://github.com/Ockejanssen">Ocke Janssen</a> and <a href="https://github.com/kay-ramme">Kay Ramme</a> for this contribution. This change allows control on how images are anchored to cells.</li></ul> |
