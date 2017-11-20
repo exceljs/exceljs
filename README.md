@@ -14,10 +14,10 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/396">Add some comments in readme according csv importing #396</a>.
-        Thanks to <a href="https://github.com/Imperat">Michael Lelyakin</a> for this contribution.
-        Also thanks to <a href="https://github.com/planemar">planemar</a> for help with reviewing.
-        This also closes <a href="https://github.com/guyonroche/exceljs/issues/395">csv to stream doesn't work #395</a>.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/407">Impl <xdr:twoCellAnchor editAs=oneCell> #407</a>.
+        Thanks to <a href="https://github.com/Ockejanssen">Ocke Janssen</a> and
+        <a href="https://github.com/kay-ramme">Kay Ramme</a> for this contribution.
+        This change allows control on how images are anchored to cells.
     </li>
 </ul>
 
@@ -1086,7 +1086,6 @@ expect(worksheet.getColumn(3).collapsed).to.be.false;
 Adding images to a worksheet is a two-step process.
 First, the image is added to the workbook via the addImage() function which will also return an imageId value.
 Then, using the imageId, the image can be added to the worksheet either as a tiled background or covering a cell range.
-The cell range can also have the property editAs with the value 'oneCell' which allows to set the anchor to cell.
 
 Note: As of this version, adjusting or transforming the image is not supported.
 
@@ -1139,6 +1138,23 @@ Fractions of cells can be specified by using floating point numbers, e.g. the mi
 worksheet.addImage(imageId2, {
   tl: { col: 1.5, row: 1.5 },
   br: { col: 3.5, row: 5.5 }
+});
+```
+
+The cell range can also have the eproperty 'editAs' which will control how the image is anchored to the cell(s)
+It can have one of the following values:
+
+| Value     | Description |
+| --------- | ----------- |
+| undefined | This is the default. It specifies the image will be moved and sized with cells |
+| oneCell   | Image will be moved with cells but not sized |
+| absolute  | Image will not be moved or sized with cells |
+
+```javascript
+ws.addImage(imageId, {
+  tl: { col: 0.1125, row: 0.4 },
+  br: { col: 2.101046875, row: 3.4 },
+  editAs: 'oneCell'
 });
 ```
 
@@ -1748,4 +1764,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.5.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/364">Fix #345 TypeError: Cannot read property 'date1904' of undefined #364</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/345">TypeError: Cannot read property 'date1904' of undefined #345</a>. Thanks to <a href="https://github.com/Diluka">Diluka</a> for this contribution.</li></ul>
 | 0.6.0   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/389">Add rowBreaks feature. #389</a>. Thanks to <a href="https://github.com/brucejo75">brucejo75</a> for this contribution.</li></ul> |
 | 0.6.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/403">Guard null model fields - fix and tests #403</a>. Thanks to <a href="https://github.com/shdd-cjharries">thecjharries</a> for this contribution. Also thanks to <a href="https://github.com/Rycochet">Ryc O'Chet</a> for help with reviewing.</li></ul> |
+| 0.6.2   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/396">Add some comments in readme according csv importing #396</a>. Thanks to <a href="https://github.com/Imperat">Michael Lelyakin</a> for this contribution. Also thanks to <a href="https://github.com/planemar">planemar</a> for help with reviewing. This also closes <a href="https://github.com/guyonroche/exceljs/issues/395">csv to stream doesn't work #395</a>.</li></ul> |
 
