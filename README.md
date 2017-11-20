@@ -18,6 +18,10 @@ npm install exceljs
         Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
         This change makes exceljs more reslilient when opening non-excel files.
     </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/434">Fixes #419 : Updates readme. #434</a>.
+        Thanks to <a href="https://github.com/getsomecoke">Vishnu Kyatannawar</a> for this contribution.
+    </li>
 </ul>
 
 # Contributions
