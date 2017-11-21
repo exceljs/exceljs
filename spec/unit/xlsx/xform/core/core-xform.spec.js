@@ -47,9 +47,25 @@ var expectations = [
     xml: fs.readFileSync(__dirname + '/data/core.04.xml').toString().replace(/\r\n/g, '\n'),
     get parsedModel() { return this.preparedModel; },
     tests: ['render', 'renderIn', 'parse']
-  }
+  },
+  {
+    title: 'core.xml - with empty cp:version',
+    create: () => new CoreXform(),
+    preparedModel: {
+      title: '...',
+      creator: '...',
+      lastModifiedBy: '...',
+      lastPrinted: new Date('2017-05-15T16:17:00Z'),
+      created: new Date('2015-07-15T16:27:34Z'),
+      modified: new Date('2017-09-06T15:39:12Z'),
+      version: ''
+    },
+    xml: fs.readFileSync(__dirname + '/data/core.05.xml').toString().replace(/\r\n/g, '\n'),
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  },
 ];
 
-describe('CoreXform', function() {
+describe.only('CoreXform', function() {
   testXformHelper(expectations);
 });
