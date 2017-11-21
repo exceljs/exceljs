@@ -51,21 +51,12 @@ var expectations = [
   {
     title: 'core.xml - with empty cp:version',
     create: () => new CoreXform(),
-    preparedModel: {
-      title: '...',
-      creator: '...',
-      lastModifiedBy: '...',
-      lastPrinted: new Date('2017-05-15T16:17:00Z'),
-      created: new Date('2015-07-15T16:27:34Z'),
-      modified: new Date('2017-09-06T15:39:12Z'),
-      version: ''
-    },
     xml: fs.readFileSync(__dirname + '/data/core.05.xml').toString().replace(/\r\n/g, '\n'),
-    get parsedModel() { return this.preparedModel; },
-    tests: ['render', 'renderIn', 'parse']
+    parsedModel: {title: '...', creator: '...', lastModifiedBy: '...', lastPrinted: new Date('2017-05-15T16:17:00Z'), created: new Date('2015-07-15T16:27:34Z'), modified: new Date('2017-09-06T15:39:12Z')},
+    tests: ['parse']
   },
 ];
 
-describe.only('CoreXform', function() {
+describe('CoreXform', function() {
   testXformHelper(expectations);
 });

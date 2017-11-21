@@ -22,6 +22,11 @@ npm install exceljs
         Merged <a href="https://github.com/guyonroche/exceljs/pull/434">Fixes #419 : Updates readme. #434</a>.
         Thanks to <a href="https://github.com/getsomecoke">Vishnu Kyatannawar</a> for this contribution.
     </li>
+    <li>
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/436">Don't break when docProps/core.xml contains a &lt;cp:version&gt; tag #436</a>.
+        Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
+        This change handles core.xml files with empty version tags.
+    </li>
 </ul>
 
 # Contributions
