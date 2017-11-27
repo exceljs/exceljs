@@ -1130,6 +1130,13 @@ var imageId2 = workbook.addImage({
   buffer: fs.readFileSync('path/to.image.png'),
   extension: 'png',
 });
+
+// add image to workbook by base64
+var myBase64Image = "data:image/png;base64,iVBORw0KG...";
+var imageId2 = workbook.addImage({
+  base64: myBase64Image,
+  extension: 'png',
+});
 ```
 
 ### Add image background to worksheet
