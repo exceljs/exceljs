@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - 6
+  - 7
+before_script:
+  - npm run build
+script:
+  - npm test
+notifications:
+  email: false
