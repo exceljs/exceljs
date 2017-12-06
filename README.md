@@ -18,8 +18,8 @@ npm install exceljs
         Thanks to <a href="https://github.com/jwmann">James W Mann</a> for this contribution.
     </li>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/434">Fixes #419 : Updates readme. #434</a>.
-        Thanks to <a href="https://github.com/getsomecoke">Vishnu Kyatannawar</a> for this contribution.
+        Merged <a href="https://github.com/guyonroche/exceljs/pull/453">update moment to 2.19.3 #453</a>.
+        Thanks to <a href="https://github.com/cooltoast">Markan Patel</a> for this contribution.
     </li>
 </ul>
 
@@ -34,7 +34,7 @@ To be clear, all contributions added to this library will be included in the lib
 
 # Notice
 
-I have to admit I'm really snowed under at the moment and will not be able to
+I have to admit I'm still really snowed under at the moment and will not be able to
 pursue active development of exceljs in the coming months.
 I will however keep an eye on the pull requests and endeavour to merge and release
 them as they come.
