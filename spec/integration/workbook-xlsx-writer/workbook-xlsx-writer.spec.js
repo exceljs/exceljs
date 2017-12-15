@@ -124,7 +124,7 @@ describe('WorkbookWriter', function() {
       };
       ws.columns = [
         { header: 'A1', width: 10 },
-        { header: 'B1', width: 20, style: colStyle },
+        { header: 'B1', style: colStyle },
         { header: 'C1', width: 30 }
       ];
 
@@ -157,6 +157,7 @@ describe('WorkbookWriter', function() {
 
           expect(ws2.getColumn(2).font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
           expect(ws2.getColumn(2).alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
+          expect(ws2.getColumn(2).width).to.equal(undefined);
 
           expect(ws2.getRow(2).font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
         });
