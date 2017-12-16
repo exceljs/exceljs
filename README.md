@@ -857,7 +857,7 @@ font.size = 20; // Cell A3 now has font size 20!
 | Font Property | Description       | Example Value(s) |
 | ------------- | ----------------- | ---------------- |
 | name          | Font name. | 'Arial', 'Calibri', etc. |
-| family        | Font family. An integer value. | 1,2,3, etc. |
+| family        | Font family for fallback. An integer value. | 1 - Serif, 2 - Sans Serif, 3 - Mono, Others - unkown |
 | scheme        | Font scheme. | 'minor', 'major', 'none' |
 | charset       | Font charset. An integer value. | 1, 2, etc. |
 | color         | Colour description, an object containing an ARGB value. | { argb: 'FFFF0000'} |
