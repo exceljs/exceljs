@@ -59,7 +59,7 @@
     "moment": "2.19.3",
     "promish": ">=5.0.2",
     "sax": "^1.2.2",
-    "unzip2": "^0.2.5"
+    "unzip2": "git+ssh://git@github.com/sveinburne/node-unzip-2.git"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.0",
