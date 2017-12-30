@@ -11123,10 +11123,12 @@ XLSX.prototype = {
         case 'docProps/app.xml':
           var appXform = new AppXform();
           promise = appXform.parseStream(entry).then(function (appProperties) {
-            Object.assign(model, {
-              company: appProperties.company,
-              manager: appProperties.manager
-            });
+            if (appProperties) {
+              Object.assign(model, {
+                company: appProperties.company,
+                manager: appProperties.manager
+              });
+            }
           });
           break;
 
