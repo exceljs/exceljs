@@ -6,7 +6,7 @@
 
 'use strict';
 
-var Sax = require('sax');
+var Sax = require('../../sax-shim');
 var PromishLib = require('../../utils/promish');
 
 var XmlStream = require('../../utils/xml-stream');

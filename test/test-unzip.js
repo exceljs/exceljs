@@ -1,6 +1,6 @@
 var fs = require('fs');
 var unzip = require('unzip2');
-var Sax = require('sax');
+var Sax = require('../lib/sax-shim');
 
 var filename = process.argv[2];
 

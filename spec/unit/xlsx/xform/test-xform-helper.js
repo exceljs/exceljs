@@ -1,6 +1,6 @@
 'use strict';
 
-var Sax = require('sax');
+var Sax = require('../../../../lib/sax-shim');
 var _ = require('../../../utils/under-dash');
 
 var chai = require('chai');

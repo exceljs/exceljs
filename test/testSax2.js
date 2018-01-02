@@ -2,7 +2,7 @@ var fs = require('fs');
 var events = require('events');
 var _ = require('underscore');
 var Promise = require('bluebird');
-var Sax = require('sax');
+var Sax = require('../lib/sax-shim');
 var unzip = require('unzip');
 var utils = require('./utils/utils');
 

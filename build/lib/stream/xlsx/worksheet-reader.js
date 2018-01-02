@@ -7,7 +7,7 @@
 'use strict';
 
 var events = require('events');
-var Sax = require('sax');
+var Sax = require('../../sax-shim');
 
 var _ = require('../../utils/under-dash');
 var utils = require('../../utils/utils');
