@@ -12,20 +12,20 @@ var BlipXform = require('./blip-xform');
 
 var BlipFillXform = module.exports = function () {
   this.map = {
-    'a:blip': new BlipXform()
+    'blip': new BlipXform()
   };
 };
 
 utils.inherits(BlipFillXform, BaseXform, {
 
   get tag() {
-    return 'xdr:blipFill';
+    return 'blipFill';
   },
 
   render: function render(xmlStream, model) {
-    xmlStream.openNode(this.tag);
+    xmlStream.openNode('xdr:' + this.tag);
 
-    this.map['a:blip'].render(xmlStream, model);
+    this.map['blip'].render(xmlStream, model);
 
     // TODO: options for this + parsing
     xmlStream.openNode('a:stretch');
@@ -67,7 +67,7 @@ utils.inherits(BlipFillXform, BaseXform, {
     }
     switch (name) {
       case this.tag:
-        this.model = this.map['a:blip'].model;
+        this.model = this.map['blip'].model;
         return false;
 
       default:

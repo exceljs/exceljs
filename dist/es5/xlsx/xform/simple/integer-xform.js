@@ -11,6 +11,7 @@ var BaseXform = require('../base-xform');
 
 var IntegerXform = module.exports = function (options) {
   this.tag = options.tag;
+  this.ns = options.ns;
   this.attr = options.attr;
   this.attrs = options.attrs;
 
@@ -23,7 +24,7 @@ utils.inherits(IntegerXform, BaseXform, {
   render: function render(xmlStream, model) {
     // int is different to float in that zero is not rendered
     if (model || this.zero) {
-      xmlStream.openNode(this.tag);
+      xmlStream.openNode(this.formatTag());
       if (this.attrs) {
         xmlStream.addAttributes(this.attrs);
       }

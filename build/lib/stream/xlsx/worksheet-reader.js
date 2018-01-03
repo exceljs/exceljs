@@ -222,7 +222,7 @@ utils.inherits(WorksheetReader, events.EventEmitter, {
             if (inHyperlinks) {
               var hyperlink = {
                 ref: node.attributes.ref,
-                rId: node.attributes['r:id']
+                rId: node.attributes['id']
               };
               if (emitHyperlinks) {
                 _this.emit('hyperlink', hyperlink);

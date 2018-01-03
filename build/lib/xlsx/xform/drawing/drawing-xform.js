@@ -14,7 +14,7 @@ var TwoCellAnchorXform = require('./two-cell-anchor-xform');
 
 var WorkSheetXform = module.exports = function () {
   this.map = {
-    'xdr:twoCellAnchor': new TwoCellAnchorXform()
+    'twoCellAnchor': new TwoCellAnchorXform()
   };
 };
 
@@ -25,11 +25,11 @@ utils.inherits(WorkSheetXform, BaseXform, {
   }
 }, {
   get tag() {
-    return 'xdr:wsDr';
+    return 'wsDr';
   },
 
   prepare: function prepare(model) {
-    var twoCellAnchorXform = this.map['xdr:twoCellAnchor'];
+    var twoCellAnchorXform = this.map['twoCellAnchor'];
     model.anchors.forEach(function (item, index) {
       twoCellAnchorXform.prepare(item, { index: index });
     });
@@ -37,9 +37,9 @@ utils.inherits(WorkSheetXform, BaseXform, {
 
   render: function render(xmlStream, model) {
     xmlStream.openXml(XmlStream.StdDocAttributes);
-    xmlStream.openNode(this.tag, WorkSheetXform.DRAWING_ATTRIBUTES);
+    xmlStream.openNode('xdr:wsDr', WorkSheetXform.DRAWING_ATTRIBUTES);
 
-    var twoCellAnchorXform = this.map['xdr:twoCellAnchor'];
+    var twoCellAnchorXform = this.map['twoCellAnchor'];
     model.anchors.forEach(function (item) {
       twoCellAnchorXform.render(xmlStream, item);
     });
@@ -96,7 +96,7 @@ utils.inherits(WorkSheetXform, BaseXform, {
     var _this = this;
 
     model.anchors.forEach(function (anchor) {
-      _this.map['xdr:twoCellAnchor'].reconcile(anchor, options);
+      _this.map['twoCellAnchor'].reconcile(anchor, options);
     });
   }
 });

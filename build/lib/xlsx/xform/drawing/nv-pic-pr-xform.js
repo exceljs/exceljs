@@ -14,7 +14,7 @@ var NvPicPrXform = module.exports = function () {};
 
 utils.inherits(NvPicPrXform, BaseXform, {
   get tag() {
-    return 'xdr:nvPicPr';
+    return 'nvPicPr';
   },
 
   render: function render(xmlStream, model) {

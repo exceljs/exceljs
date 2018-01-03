@@ -38,7 +38,7 @@ utils.inherits(SheetFormatPropertiesXform, BaseXform, {
     if (node.name === 'sheetFormatPr') {
       this.model = {
         defaultRowHeight: parseFloat(node.attributes.defaultRowHeight || '0'),
-        dyDescent: parseFloat(node.attributes['x14ac:dyDescent'] || '0'),
+        dyDescent: parseFloat(node.attributes['dyDescent'] || '0'),
         outlineLevelRow: parseInt(node.attributes.outlineLevelRow || '0', 10),
         outlineLevelCol: parseInt(node.attributes.outlineLevelCol || '0', 10)
       };

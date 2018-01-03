@@ -11,6 +11,7 @@ var BaseXform = require('../base-xform');
 
 var StringXform = module.exports = function (options) {
   this.tag = options.tag;
+  this.ns = options.ns;
   this.attr = options.attr;
   this.attrs = options.attrs;
 };
@@ -19,7 +20,7 @@ utils.inherits(StringXform, BaseXform, {
 
   render: function render(xmlStream, model) {
     if (model !== undefined) {
-      xmlStream.openNode(this.tag);
+      xmlStream.openNode(this.formatTag());
       if (this.attrs) {
         xmlStream.addAttributes(this.attrs);
       }

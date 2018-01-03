@@ -11,6 +11,7 @@ var BaseXform = require('../base-xform');
 
 var DateXform = module.exports = function (options) {
   this.tag = options.tag;
+  this.ns = options.ns;
   this.attr = options.attr;
   this.attrs = options.attrs;
   this._format = options.format || function (dt) {
@@ -25,7 +26,7 @@ utils.inherits(DateXform, BaseXform, {
 
   render: function render(xmlStream, model) {
     if (model) {
-      xmlStream.openNode(this.tag);
+      xmlStream.openNode(this.formatTag());
       if (this.attrs) {
         xmlStream.addAttributes(this.attrs);
       }

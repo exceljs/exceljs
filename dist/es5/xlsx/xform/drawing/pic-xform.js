@@ -17,15 +17,15 @@ var spPrJSON = require('./sp-pr');
 
 var PicXform = module.exports = function () {
   this.map = {
-    'xdr:nvPicPr': new NvPicPrXform(),
-    'xdr:blipFill': new BlipFillXform(),
-    'xdr:spPr': new StaticXform(spPrJSON)
+    'nvPicPr': new NvPicPrXform(),
+    'blipFill': new BlipFillXform(),
+    'spPr': new StaticXform(spPrJSON)
   };
 };
 
 utils.inherits(PicXform, BaseXform, {
   get tag() {
-    return 'xdr:pic';
+    return 'pic';
   },
 
   prepare: function prepare(model, options) {
@@ -33,11 +33,11 @@ utils.inherits(PicXform, BaseXform, {
   },
 
   render: function render(xmlStream, model) {
-    xmlStream.openNode(this.tag);
+    xmlStream.openNode('xdr:' + this.tag);
 
-    this.map['xdr:nvPicPr'].render(xmlStream, model);
-    this.map['xdr:blipFill'].render(xmlStream, model);
-    this.map['xdr:spPr'].render(xmlStream, model);
+    this.map['nvPicPr'].render(xmlStream, model);
+    this.map['blipFill'].render(xmlStream, model);
+    this.map['spPr'].render(xmlStream, model);
 
     xmlStream.closeNode();
   },

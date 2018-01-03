@@ -3062,15 +3062,15 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 var Sax = require("sax");
 
 var oldCreateStream = Sax.createStream;
-Sax.createStream = function () {
-    var stream = oldCreateStream.call(this, true, { xmlns: true });
+Sax.createStream = function (strict, opts) {
+    var stream = oldCreateStream.call(this, strict, opts);
 
     var oldOn = stream.on;
     stream.on = function (evt, cb) {
         oldOn.call(this, evt, function (node) {
             if (evt === 'opentag') {
                 var normalizedTag = {};
-                normalizedTag.name = node.ns && node.ns.local || node.name;
+                normalizedTag.name = removeNamespace(node.name);
                 var normalizedAttributes = {};
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -3082,7 +3082,7 @@ Sax.createStream = function () {
                             attribName = _step$value[0],
                             attrib = _step$value[1];
 
-                        normalizedAttributes[attribName] = attrib.value;
+                        normalizedAttributes[removeNamespace(attribName)] = attrib;
                     }
                 } catch (err) {
                     _didIteratorError = true;
@@ -3101,6 +3101,8 @@ Sax.createStream = function () {
 
                 normalizedTag.attributes = normalizedAttributes;
                 cb(normalizedTag);
+            } else if (evt === "closetag") {
+                cb(removeNamespace(node));
             } else {
                 cb(node);
             }
@@ -3108,6 +3110,14 @@ Sax.createStream = function () {
     };
     return stream;
 };
+function removeNamespace(tagName) {
+    var split = tagName.split(":");
+    if (split.length === 1) {
+        return split[0];
+    } else {
+        return split.splice(1).join(":");
+    }
+}
 
 module.exports = Sax;
 
@@ -4732,6 +4742,14 @@ BaseXform.prototype = {
     var xmlStream = new XmlStream();
     this.render(xmlStream, model);
     return xmlStream.xml;
+  },
+
+  formatTag: function formatTag() {
+    if (this.ns) {
+      return this.ns + ":" + this.tag;
+    } else {
+      return this.tag;
+    }
   }
 };
 
@@ -4853,7 +4871,7 @@ utils.inherits(WorksheetXform, BaseXform, {
       this.model = {
         name: utils.xmlDecode(node.attributes.name),
         id: parseInt(node.attributes.sheetId, 10),
-        rId: node.attributes['r:id']
+        rId: node.attributes['id']
       };
       return true;
     }
@@ -5453,21 +5471,21 @@ var StringXform = require('../simple/string-xform');
 
 var CoreXform = module.exports = function () {
   this.map = {
-    'dc:creator': new StringXform({ tag: 'dc:creator' }),
-    'dc:title': new StringXform({ tag: 'dc:title' }),
-    'dc:subject': new StringXform({ tag: 'dc:subject' }),
-    'dc:description': new StringXform({ tag: 'dc:description' }),
-    'dc:identifier': new StringXform({ tag: 'dc:identifier' }),
-    'dc:language': new StringXform({ tag: 'dc:language' }),
-    'cp:keywords': new StringXform({ tag: 'cp:keywords' }),
-    'cp:category': new StringXform({ tag: 'cp:category' }),
-    'cp:lastModifiedBy': new StringXform({ tag: 'cp:lastModifiedBy' }),
-    'cp:lastPrinted': new DateXform({ tag: 'cp:lastPrinted', format: CoreXform.DateFormat }),
-    'cp:revision': new DateXform({ tag: 'cp:revision' }),
-    'cp:version': new StringXform({ tag: 'cp:version' }),
-    'cp:contentStatus': new StringXform({ tag: 'cp:contentStatus' }),
-    'dcterms:created': new DateXform({ tag: 'dcterms:created', attrs: CoreXform.DateAttrs, format: CoreXform.DateFormat }),
-    'dcterms:modified': new DateXform({ tag: 'dcterms:modified', attrs: CoreXform.DateAttrs, format: CoreXform.DateFormat })
+    'creator': new StringXform({ tag: 'creator', ns: 'dc' }),
+    'title': new StringXform({ tag: 'title', ns: 'dc' }),
+    'subject': new StringXform({ tag: 'subject', ns: 'dc' }),
+    'description': new StringXform({ tag: 'description', ns: 'dc' }),
+    'identifier': new StringXform({ tag: 'identifier', ns: 'dc' }),
+    'language': new StringXform({ tag: 'language', ns: 'dc' }),
+    'keywords': new StringXform({ tag: 'keywords', ns: 'cp' }),
+    'category': new StringXform({ tag: 'category', ns: 'cp' }),
+    'lastModifiedBy': new StringXform({ tag: 'lastModifiedBy', ns: 'cp' }),
+    'lastPrinted': new DateXform({ tag: 'lastPrinted', ns: 'cp', format: CoreXform.DateFormat }),
+    'revision': new DateXform({ tag: 'revision', ns: 'cp' }),
+    'version': new StringXform({ tag: 'version', ns: 'cp' }),
+    'contentStatus': new StringXform({ tag: 'contentStatus', ns: 'cp' }),
+    'created': new DateXform({ tag: 'created', ns: 'dcterms', attrs: CoreXform.DateAttrs, format: CoreXform.DateFormat }),
+    'modified': new DateXform({ tag: 'modified', ns: 'dcterms', attrs: CoreXform.DateAttrs, format: CoreXform.DateFormat })
   };
 };
 
@@ -5490,21 +5508,21 @@ utils.inherits(CoreXform, BaseXform, {
 
     xmlStream.openNode('cp:coreProperties', CoreXform.CORE_PROPERTY_ATTRIBUTES);
 
-    this.map['dc:creator'].render(xmlStream, model.creator);
-    this.map['dc:title'].render(xmlStream, model.title);
-    this.map['dc:subject'].render(xmlStream, model.subject);
-    this.map['dc:description'].render(xmlStream, model.description);
-    this.map['dc:identifier'].render(xmlStream, model.identifier);
-    this.map['dc:language'].render(xmlStream, model.language);
-    this.map['cp:keywords'].render(xmlStream, model.keywords);
-    this.map['cp:category'].render(xmlStream, model.category);
-    this.map['cp:lastModifiedBy'].render(xmlStream, model.lastModifiedBy);
-    this.map['cp:lastPrinted'].render(xmlStream, model.lastPrinted);
-    this.map['cp:revision'].render(xmlStream, model.revision);
-    this.map['cp:version'].render(xmlStream, model.version);
-    this.map['cp:contentStatus'].render(xmlStream, model.contentStatus);
-    this.map['dcterms:created'].render(xmlStream, model.created);
-    this.map['dcterms:modified'].render(xmlStream, model.modified);
+    this.map['creator'].render(xmlStream, model.creator);
+    this.map['title'].render(xmlStream, model.title);
+    this.map['subject'].render(xmlStream, model.subject);
+    this.map['description'].render(xmlStream, model.description);
+    this.map['identifier'].render(xmlStream, model.identifier);
+    this.map['language'].render(xmlStream, model.language);
+    this.map['keywords'].render(xmlStream, model.keywords);
+    this.map['category'].render(xmlStream, model.category);
+    this.map['lastModifiedBy'].render(xmlStream, model.lastModifiedBy);
+    this.map['lastPrinted'].render(xmlStream, model.lastPrinted);
+    this.map['revision'].render(xmlStream, model.revision);
+    this.map['version'].render(xmlStream, model.version);
+    this.map['contentStatus'].render(xmlStream, model.contentStatus);
+    this.map['created'].render(xmlStream, model.created);
+    this.map['modified'].render(xmlStream, model.modified);
 
     xmlStream.closeNode();
   },
@@ -5515,7 +5533,7 @@ utils.inherits(CoreXform, BaseXform, {
       return true;
     }
     switch (node.name) {
-      case 'cp:coreProperties':
+      case 'coreProperties':
         return true;
       default:
         this.parser = this.map[node.name];
@@ -5539,22 +5557,22 @@ utils.inherits(CoreXform, BaseXform, {
       return true;
     }
     switch (name) {
-      case 'cp:coreProperties':
+      case 'coreProperties':
         this.model = {
-          creator: this.map['dc:creator'].model,
-          title: this.map['dc:title'].model,
-          subject: this.map['dc:subject'].model,
-          description: this.map['dc:description'].model,
-          identifier: this.map['dc:identifier'].model,
-          language: this.map['dc:language'].model,
-          keywords: this.map['cp:keywords'].model,
-          category: this.map['cp:category'].model,
-          lastModifiedBy: this.map['cp:lastModifiedBy'].model,
-          lastPrinted: this.map['cp:lastPrinted'].model,
-          revision: this.map['cp:revision'].model,
-          contentStatus: this.map['cp:contentStatus'].model,
-          created: this.map['dcterms:created'].model,
-          modified: this.map['dcterms:modified'].model
+          creator: this.map['creator'].model,
+          title: this.map['title'].model,
+          subject: this.map['subject'].model,
+          description: this.map['description'].model,
+          identifier: this.map['identifier'].model,
+          language: this.map['language'].model,
+          keywords: this.map['keywords'].model,
+          category: this.map['category'].model,
+          lastModifiedBy: this.map['lastModifiedBy'].model,
+          lastPrinted: this.map['lastPrinted'].model,
+          revision: this.map['revision'].model,
+          contentStatus: this.map['contentStatus'].model,
+          created: this.map['created'].model,
+          modified: this.map['modified'].model
         };
         return false;
       default:
@@ -5692,20 +5710,20 @@ var BlipXform = require('./blip-xform');
 
 var BlipFillXform = module.exports = function () {
   this.map = {
-    'a:blip': new BlipXform()
+    'blip': new BlipXform()
   };
 };
 
 utils.inherits(BlipFillXform, BaseXform, {
 
   get tag() {
-    return 'xdr:blipFill';
+    return 'blipFill';
   },
 
   render: function render(xmlStream, model) {
-    xmlStream.openNode(this.tag);
+    xmlStream.openNode('xdr:' + this.tag);
 
-    this.map['a:blip'].render(xmlStream, model);
+    this.map['blip'].render(xmlStream, model);
 
     // TODO: options for this + parsing
     xmlStream.openNode('a:stretch');
@@ -5747,7 +5765,7 @@ utils.inherits(BlipFillXform, BaseXform, {
     }
     switch (name) {
       case this.tag:
-        this.model = this.map['a:blip'].model;
+        this.model = this.map['blip'].model;
         return false;
 
       default:
@@ -5774,11 +5792,11 @@ var BlipXform = module.exports = function () {};
 utils.inherits(BlipXform, BaseXform, {
 
   get tag() {
-    return 'a:blip';
+    return 'blip';
   },
 
   render: function render(xmlStream, model) {
-    xmlStream.leafNode(this.tag, {
+    xmlStream.leafNode("a:" + this.tag, {
       'xmlns:r': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships',
       'r:embed': model.rId,
       cstate: 'print'
@@ -5790,7 +5808,7 @@ utils.inherits(BlipXform, BaseXform, {
     switch (node.name) {
       case this.tag:
         this.model = {
-          rId: node.attributes['r:embed']
+          rId: node.attributes['embed']
         };
         return true;
       default:
@@ -5828,10 +5846,10 @@ var IntegerXform = require('../simple/integer-xform');
 var CellPositionXform = module.exports = function (options) {
   this.tag = options.tag;
   this.map = {
-    'xdr:col': new IntegerXform({ tag: 'xdr:col', zero: true }),
-    'xdr:colOff': new IntegerXform({ tag: 'xdr:colOff', zero: true }),
-    'xdr:row': new IntegerXform({ tag: 'xdr:row', zero: true }),
-    'xdr:rowOff': new IntegerXform({ tag: 'xdr:rowOff', zero: true })
+    'col': new IntegerXform({ tag: 'col', ns: 'xdr', zero: true }),
+    'colOff': new IntegerXform({ tag: 'colOff', ns: 'xdr', zero: true }),
+    'row': new IntegerXform({ tag: 'row', ns: 'xdr', zero: true }),
+    'rowOff': new IntegerXform({ tag: 'rowOff', ns: 'xdr', zero: true })
   };
 };
 
@@ -5842,13 +5860,13 @@ utils.inherits(CellPositionXform, BaseXform, {
 
     var col = Math.floor(model.col);
     var colOff = Math.floor((model.col - col) * 640000);
-    this.map['xdr:col'].render(xmlStream, col);
-    this.map['xdr:colOff'].render(xmlStream, colOff);
+    this.map['col'].render(xmlStream, col);
+    this.map['colOff'].render(xmlStream, colOff);
 
     var row = Math.floor(model.row);
     var rowOff = Math.floor((model.row - row) * 180000);
-    this.map['xdr:row'].render(xmlStream, row);
-    this.map['xdr:rowOff'].render(xmlStream, rowOff);
+    this.map['row'].render(xmlStream, row);
+    this.map['rowOff'].render(xmlStream, rowOff);
 
     xmlStream.closeNode();
   },
@@ -5888,8 +5906,8 @@ utils.inherits(CellPositionXform, BaseXform, {
     switch (name) {
       case this.tag:
         this.model = {
-          col: this.map['xdr:col'].model + this.map['xdr:colOff'].model / 640000,
-          row: this.map['xdr:row'].model + this.map['xdr:rowOff'].model / 180000
+          col: this.map['col'].model + this.map['colOff'].model / 640000,
+          row: this.map['row'].model + this.map['rowOff'].model / 180000
         };
         return false;
       default:
@@ -5917,7 +5935,7 @@ var TwoCellAnchorXform = require('./two-cell-anchor-xform');
 
 var WorkSheetXform = module.exports = function () {
   this.map = {
-    'xdr:twoCellAnchor': new TwoCellAnchorXform()
+    'twoCellAnchor': new TwoCellAnchorXform()
   };
 };
 
@@ -5928,11 +5946,11 @@ utils.inherits(WorkSheetXform, BaseXform, {
   }
 }, {
   get tag() {
-    return 'xdr:wsDr';
+    return 'wsDr';
   },
 
   prepare: function prepare(model) {
-    var twoCellAnchorXform = this.map['xdr:twoCellAnchor'];
+    var twoCellAnchorXform = this.map['twoCellAnchor'];
     model.anchors.forEach(function (item, index) {
       twoCellAnchorXform.prepare(item, { index: index });
     });
@@ -5940,9 +5958,9 @@ utils.inherits(WorkSheetXform, BaseXform, {
 
   render: function render(xmlStream, model) {
     xmlStream.openXml(XmlStream.StdDocAttributes);
-    xmlStream.openNode(this.tag, WorkSheetXform.DRAWING_ATTRIBUTES);
+    xmlStream.openNode('xdr:wsDr', WorkSheetXform.DRAWING_ATTRIBUTES);
 
-    var twoCellAnchorXform = this.map['xdr:twoCellAnchor'];
+    var twoCellAnchorXform = this.map['twoCellAnchor'];
     model.anchors.forEach(function (item) {
       twoCellAnchorXform.render(xmlStream, item);
     });
@@ -5999,7 +6017,7 @@ utils.inherits(WorkSheetXform, BaseXform, {
     var _this = this;
 
     model.anchors.forEach(function (anchor) {
-      _this.map['xdr:twoCellAnchor'].reconcile(anchor, options);
+      _this.map['twoCellAnchor'].reconcile(anchor, options);
     });
   }
 });
@@ -6022,7 +6040,7 @@ var NvPicPrXform = module.exports = function () {};
 
 utils.inherits(NvPicPrXform, BaseXform, {
   get tag() {
-    return 'xdr:nvPicPr';
+    return 'nvPicPr';
   },
 
   render: function render(xmlStream, model) {
@@ -6073,15 +6091,15 @@ var spPrJSON = require('./sp-pr');
 
 var PicXform = module.exports = function () {
   this.map = {
-    'xdr:nvPicPr': new NvPicPrXform(),
-    'xdr:blipFill': new BlipFillXform(),
-    'xdr:spPr': new StaticXform(spPrJSON)
+    'nvPicPr': new NvPicPrXform(),
+    'blipFill': new BlipFillXform(),
+    'spPr': new StaticXform(spPrJSON)
   };
 };
 
 utils.inherits(PicXform, BaseXform, {
   get tag() {
-    return 'xdr:pic';
+    return 'pic';
   },
 
   prepare: function prepare(model, options) {
@@ -6089,11 +6107,11 @@ utils.inherits(PicXform, BaseXform, {
   },
 
   render: function render(xmlStream, model) {
-    xmlStream.openNode(this.tag);
+    xmlStream.openNode('xdr:' + this.tag);
 
-    this.map['xdr:nvPicPr'].render(xmlStream, model);
-    this.map['xdr:blipFill'].render(xmlStream, model);
-    this.map['xdr:spPr'].render(xmlStream, model);
+    this.map['nvPicPr'].render(xmlStream, model);
+    this.map['blipFill'].render(xmlStream, model);
+    this.map['spPr'].render(xmlStream, model);
 
     xmlStream.closeNode();
   },
@@ -6173,20 +6191,20 @@ var PicXform = require('./pic-xform');
 
 var TwoCellAnchorXform = module.exports = function () {
   this.map = {
-    'xdr:from': new CellPositionXform({ tag: 'xdr:from' }),
-    'xdr:to': new CellPositionXform({ tag: 'xdr:to' }),
-    'xdr:pic': new PicXform(),
-    'xdr:clientData': new StaticXform({ tag: 'xdr:clientData' })
+    'from': new CellPositionXform({ tag: 'from', ns: 'xdr' }),
+    'to': new CellPositionXform({ tag: 'to', ns: 'xdr' }),
+    'pic': new PicXform(),
+    'clientData': new StaticXform({ tag: 'clientData', ns: 'xdr' })
   };
 };
 
 utils.inherits(TwoCellAnchorXform, BaseXform, {
   get tag() {
-    return 'xdr:twoCellAnchor';
+    return 'twoCellAnchor';
   },
 
   prepare: function prepare(model, options) {
-    this.map['xdr:pic'].prepare(model.picture, options);
+    this.map['pic'].prepare(model.picture, options);
 
     // convert model.range into tl, br
     if (typeof model.range === 'string') {
@@ -6209,15 +6227,15 @@ utils.inherits(TwoCellAnchorXform, BaseXform, {
 
   render: function render(xmlStream, model) {
     if (model.range.editAs) {
-      xmlStream.openNode(this.tag, { editAs: model.range.editAs });
+      xmlStream.openNode('xdr:' + this.tag, { editAs: model.range.editAs });
     } else {
-      xmlStream.openNode(this.tag);
+      xmlStream.openNode('xdr:' + this.tag);
     }
 
-    this.map['xdr:from'].render(xmlStream, model.tl);
-    this.map['xdr:to'].render(xmlStream, model.br);
-    this.map['xdr:pic'].render(xmlStream, model.picture);
-    this.map['xdr:clientData'].render(xmlStream, {});
+    this.map['from'].render(xmlStream, model.tl);
+    this.map['to'].render(xmlStream, model.br);
+    this.map['pic'].render(xmlStream, model.picture);
+    this.map['clientData'].render(xmlStream, {});
 
     xmlStream.closeNode();
   },
@@ -6260,9 +6278,9 @@ utils.inherits(TwoCellAnchorXform, BaseXform, {
     switch (name) {
       case this.tag:
         this.model = this.model || {};
-        this.model.tl = this.map['xdr:from'].model;
-        this.model.br = this.map['xdr:to'].model;
-        this.model.picture = this.map['xdr:pic'].model;
+        this.model.tl = this.map['from'].model;
+        this.model.br = this.map['to'].model;
+        this.model.picture = this.map['pic'].model;
         return false;
       default:
         // could be some unrecognised tags
@@ -7171,7 +7189,7 @@ utils.inherits(DrawingXform, BaseXform, {
     switch (node.name) {
       case this.tag:
         this.model = {
-          rId: node.attributes['r:id']
+          rId: node.attributes['id']
         };
         return true;
       default:
@@ -7216,7 +7234,7 @@ utils.inherits(HyperlinkXform, BaseXform, {
     if (node.name === 'hyperlink') {
       this.model = {
         address: node.attributes.ref,
-        rId: node.attributes['r:id']
+        rId: node.attributes['id']
       };
       return true;
     }
@@ -7623,7 +7641,7 @@ utils.inherits(PictureXform, BaseXform, {
     switch (node.name) {
       case this.tag:
         this.model = {
-          rId: node.attributes['r:id']
+          rId: node.attributes['id']
         };
         return true;
       default:
@@ -7936,7 +7954,7 @@ utils.inherits(SheetFormatPropertiesXform, BaseXform, {
     if (node.name === 'sheetFormatPr') {
       this.model = {
         defaultRowHeight: parseFloat(node.attributes.defaultRowHeight || '0'),
-        dyDescent: parseFloat(node.attributes['x14ac:dyDescent'] || '0'),
+        dyDescent: parseFloat(node.attributes['dyDescent'] || '0'),
         outlineLevelRow: parseInt(node.attributes.outlineLevelRow || '0', 10),
         outlineLevelCol: parseInt(node.attributes.outlineLevelCol || '0', 10)
       };
@@ -8578,6 +8596,7 @@ var BaseXform = require('../base-xform');
 
 var BooleanXform = module.exports = function (options) {
   this.tag = options.tag;
+  this.ns = options.ns;
   this.attr = options.attr;
 };
 
@@ -8585,7 +8604,7 @@ utils.inherits(BooleanXform, BaseXform, {
 
   render: function render(xmlStream, model) {
     if (model) {
-      xmlStream.openNode(this.tag);
+      xmlStream.openNode(this.formatTag());
       xmlStream.closeNode();
     }
   },
@@ -8616,6 +8635,7 @@ var BaseXform = require('../base-xform');
 
 var DateXform = module.exports = function (options) {
   this.tag = options.tag;
+  this.ns = options.ns;
   this.attr = options.attr;
   this.attrs = options.attrs;
   this._format = options.format || function (dt) {
@@ -8630,7 +8650,7 @@ utils.inherits(DateXform, BaseXform, {
 
   render: function render(xmlStream, model) {
     if (model) {
-      xmlStream.openNode(this.tag);
+      xmlStream.openNode(this.formatTag());
       if (this.attrs) {
         xmlStream.addAttributes(this.attrs);
       }
@@ -8680,6 +8700,7 @@ var BaseXform = require('../base-xform');
 
 var IntegerXform = module.exports = function (options) {
   this.tag = options.tag;
+  this.ns = options.ns;
   this.attr = options.attr;
   this.attrs = options.attrs;
 
@@ -8692,7 +8713,7 @@ utils.inherits(IntegerXform, BaseXform, {
   render: function render(xmlStream, model) {
     // int is different to float in that zero is not rendered
     if (model || this.zero) {
-      xmlStream.openNode(this.tag);
+      xmlStream.openNode(this.formatTag());
       if (this.attrs) {
         xmlStream.addAttributes(this.attrs);
       }
@@ -8744,6 +8765,7 @@ var BaseXform = require('../base-xform');
 
 var StringXform = module.exports = function (options) {
   this.tag = options.tag;
+  this.ns = options.ns;
   this.attr = options.attr;
   this.attrs = options.attrs;
 };
@@ -8752,7 +8774,7 @@ utils.inherits(StringXform, BaseXform, {
 
   render: function render(xmlStream, model) {
     if (model !== undefined) {
-      xmlStream.openNode(this.tag);
+      xmlStream.openNode(this.formatTag());
       if (this.attrs) {
         xmlStream.addAttributes(this.attrs);
       }

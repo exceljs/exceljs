@@ -93,6 +93,14 @@ BaseXform.prototype = {
     var xmlStream = new XmlStream();
     this.render(xmlStream, model);
     return xmlStream.xml;
+  },
+
+  formatTag: function formatTag() {
+    if (this.ns) {
+      return this.ns + ":" + this.tag;
+    } else {
+      return this.tag;
+    }
   }
 };
 //# sourceMappingURL=base-xform.js.map

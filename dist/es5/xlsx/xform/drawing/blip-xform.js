@@ -14,11 +14,11 @@ var BlipXform = module.exports = function () {};
 utils.inherits(BlipXform, BaseXform, {
 
   get tag() {
-    return 'a:blip';
+    return 'blip';
   },
 
   render: function render(xmlStream, model) {
-    xmlStream.leafNode(this.tag, {
+    xmlStream.leafNode("a:" + this.tag, {
       'xmlns:r': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships',
       'r:embed': model.rId,
       cstate: 'print'
@@ -30,7 +30,7 @@ utils.inherits(BlipXform, BaseXform, {
     switch (node.name) {
       case this.tag:
         this.model = {
-          rId: node.attributes['r:embed']
+          rId: node.attributes['embed']
         };
         return true;
       default:

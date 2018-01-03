@@ -26,7 +26,7 @@ utils.inherits(WorksheetXform, BaseXform, {
       this.model = {
         name: utils.xmlDecode(node.attributes.name),
         id: parseInt(node.attributes.sheetId, 10),
-        rId: node.attributes['r:id']
+        rId: node.attributes['id']
       };
       return true;
     }

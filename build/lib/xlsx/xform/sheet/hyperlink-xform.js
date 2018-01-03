@@ -28,7 +28,7 @@ utils.inherits(HyperlinkXform, BaseXform, {
     if (node.name === 'hyperlink') {
       this.model = {
         address: node.attributes.ref,
-        rId: node.attributes['r:id']
+        rId: node.attributes['id']
       };
       return true;
     }
