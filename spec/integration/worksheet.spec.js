@@ -630,4 +630,12 @@ describe('Worksheet', function() {
         });
     });
   });
+
+  it('Should not break when importing an Excel file that contains a chartsheet', function() {
+    return new Excel.Workbook().xlsx.readFile(path.resolve(__dirname, 'data', 'chart-sheet.xlsx'))
+      .then(function(workbook) {
+        expect(workbook).to.have.property('worksheets');
+        expect(workbook.worksheets).to.have.length(1);
+      });
+  });
 });
