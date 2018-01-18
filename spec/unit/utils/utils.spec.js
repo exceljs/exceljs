@@ -39,4 +39,33 @@ describe('utils', function() {
       });
     });
   });
+
+  describe('dateToExcel', function() {
+    it('should convert date to excel properly', function() {
+      const myDate = new Date(Date.UTC(2017, 11, 15, 17, 0, 0, 0));
+    
+      const excelDate = utils.dateToExcel(myDate, false);
+
+      expect(excelDate).to.equal(43084.70833333333);
+    });
+  });
+
+  describe('excelToDate', function() {
+    it('should round to the nearest millisecond when parsing excel date', function() {
+      const myDate = new Date(Date.UTC(2017, 11, 15, 17, 0, 0, 0));
+      const excelDate = utils.dateToExcel(myDate, false);
+      
+      const dateConverted = utils.excelToDate(excelDate, false);
+
+      expect(dateConverted).to.deep.equal(myDate);
+    });
+    it('should not lost millisecond precision when parsing excel date', function() {
+      const myDate = new Date(Date.UTC(2017, 11, 15, 17, 0, 0, 0));
+      const excelDate = utils.dateToExcel(myDate, false);
+      
+      const dateConverted = utils.excelToDate(excelDate, false);
+
+      expect(dateConverted).to.deep.equal(myDate);
+    });
+  });
 });
