@@ -118,4 +118,16 @@ describe('Workbook', function() {
     wb.addWorksheet('first');
     expect(wb.getWorksheet(0)).to.equal(undefined);
   });
+  
+  it('returns undefined for sheet 0 after accessing wb.worksheets or wb.eachSheet ', function() {
+    var wb = new Excel.Workbook();
+    var sheet = wb.addWorksheet('first');
+    
+    wb.eachSheet(function(){});
+    var numSheets = wb.worksheets.length;
+    
+    expect(numSheets).to.equal(1);
+    expect(wb.getWorksheet(0)).to.equal(undefined);
+    expect(wb.getWorksheet(1) === sheet).to.equal(true);
+  });
 });
