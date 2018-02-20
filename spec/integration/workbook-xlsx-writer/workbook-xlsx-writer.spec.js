@@ -195,7 +195,6 @@ describe('WorkbookWriter', function() {
         })
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('Hello');
-          console.log('>>>', ws2.getCell('A1').value)
           expect(ws2.getCell('A1').value).to.deep.equal({
             richText: [
               {
