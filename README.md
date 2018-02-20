@@ -14,13 +14,9 @@ npm install exceljs
 
 <ul>
     <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/466">Don't break when loading an Excel file containing a chartsheet #466</a>.
-        Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
-    </li>
-    <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/471">Hotfix/sheet order#257 #471</a>.
-        This fixes <a href="https://github.com/guyonroche/exceljs/issues/257">Sheet Order #257</a>.
-        Thanks to <a href="https://github.com/robbi">Robbi</a> for this contribution.
+        Assimilated <a href="https://github.com/guyonroche/exceljs/pull/463">fix #79 outdated dependencies in unzip2</a>.
+        Thanks to <a href="https://github.com/jsamr">Jules Sam. Randolph</a> for starting this fix
+        and a really big thanks to <a href="https://github.com/kachkaev">Alexander Kachkaev</a> for finding the final solution.
     </li>
 </ul>
 
@@ -1794,4 +1790,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.7.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/423">Don't break when attempting to import a zip file that's not an Excel file (eg. .numbers) #423</a>. Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. This change makes exceljs more reslilient when opening non-excel files.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/434">Fixes #419 : Updates readme. #434</a>. Thanks to <a href="https://github.com/getsomecoke">Vishnu Kyatannawar</a> for this contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/436">Don't break when docProps/core.xml contains a &lt;cp:version&gt; tag #436</a>. Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. This change handles core.xml files with empty version tags.</li></ul>
 | 0.8.0   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/442">Add Base64 Image support for the .addImage() method #442</a>. Thanks to <a href="https://github.com/jwmann">James W Mann</a> for this contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/453">update moment to 2.19.3 #453</a>. Thanks to <a href="https://github.com/cooltoast">Markan Patel</a> for this contribution.</li></ul> |
 | 0.8.1   | <ul><li> Merged <a href="https://github.com/guyonroche/exceljs/pull/457">Additional information about font family property #457</a>. Thanks to <a href="https://github.com/kayakyakr">kayakyakr</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/459">Fixes #458 #459</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/458">Add style to column causes it to be hidden #458</a>. Thanks to <a href="https://github.com/AJamesPhillips">Alexander James Phillips</a> for this contribution. </li> </ul> |
+| 0.8.2   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/466">Don't break when loading an Excel file containing a chartsheet #466</a>. Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/471">Hotfix/sheet order#257 #471</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/257">Sheet Order #257</a>. Thanks to <a href="https://github.com/robbi">Robbi</a> for this contribution. </li> </ul>
 
