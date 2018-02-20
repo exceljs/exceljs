@@ -61,13 +61,33 @@ var expectations = [
     tests: ['render', 'renderIn', 'parse']
   },
   {
-    title: 'Inline String',
+    title: 'String',
     create: function() { return new CellXform(); },
     initialModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     preparedModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     xml: '<c r="A1" t="str"><v>Foo</v></c>',
     parsedModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
     reconciledModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
+    options: { hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
+  },
+  {
+    title: 'Inline String with plain text',
+    create: function() { return new CellXform(); },
+    xml: '<c r="A1" t="inlineStr"><is><t>Foo</t></is></c>',
+    parsedModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
+    reconciledModel: {address: 'A1', type: Enums.ValueType.String, value: 'Foo'},
+    tests: ['parse', 'reconcile'],
+    options: { hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
+  },
+  {
+    title: 'Inline String with RichText',
+    create: function() { return new CellXform(); },
+    initialModel: {address: 'A1', type: Enums.ValueType.String, value: { richText: [ {font: {color: {argb: 'FF0000'}}, text: 'red'}, {font: {color: {argb: '00FF00'}}, text: 'green'} ] }},
+    preparedModel: {address: 'A1', type: Enums.ValueType.String, value: { richText: [ {font: {color: {argb: 'FF0000'}}, text: 'red'}, {font: {color: {argb: '00FF00'}}, text: 'green'} ] }},
+    xml: '<c r="A1" t="inlineStr"><is><r><rPr><color rgb="FF0000"/></rPr><t>red</t></r><r><rPr><color rgb="00FF00"/></rPr><t>green</t></r></is></c>',
+    parsedModel: {address: 'A1', type: Enums.ValueType.String, value: { richText: [ {font: {color: {argb: 'FF0000'}}, text: 'red'}, {font: {color: {argb: '00FF00'}}, text: 'green'} ] }},
+    reconciledModel: {address: 'A1', type: Enums.ValueType.RichText, value: { richText: [ {font: {color: {argb: 'FF0000'}}, text: 'red'}, {font: {color: {argb: '00FF00'}}, text: 'green'} ] }},
     tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
     options: { hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
