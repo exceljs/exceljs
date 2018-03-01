@@ -1094,6 +1094,15 @@ worksheet.properties.outlineLevelCol = 2;
 expect(worksheet.getColumn(3).collapsed).to.be.false;
 ```
 
+The outline properties can be set on the worksheet
+
+```javascript
+worksheet.properties.outlineProperties = {
+  summaryBelow: false,
+  summaryRight: false,
+};
+```
+
 ## Images
 
 Adding images to a worksheet is a two-step process.
