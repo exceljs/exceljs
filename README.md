@@ -14,8 +14,9 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/485">Bug fix: wb.worksheets/wb.eachSheet caused getWorksheet(0) to return sheet #485</a>.
-    Thanks to <a href="https://github.com/mah110020">mah110020</a> for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/489">Feature/issue 424 #489</a>.
+    This fixes <a href="https://github.com/guyonroche/exceljs/issues/424">No way to control summaryBelow or summaryRight #424</a>.
+    Many thanks to <a href="https://github.com/sarahdmsi">Sarah</a> for this contribution.
   </li>
 </ul>
 
@@ -1801,4 +1802,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.8.2   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/466">Don't break when loading an Excel file containing a chartsheet #466</a>. Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/471">Hotfix/sheet order#257 #471</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/257">Sheet Order #257</a>. Thanks to <a href="https://github.com/robbi">Robbi</a> for this contribution. </li> </ul> |
 | 0.8.2   | <ul> <li> Assimilated <a href="https://github.com/guyonroche/exceljs/pull/463">fix #79 outdated dependencies in unzip2</a>. Thanks to <a href="https://github.com/jsamr">Jules Sam. Randolph</a> for starting this fix and a really big thanks to <a href="https://github.com/kachkaev">Alexander Kachkaev</a> for finding the final solution. </li> </ul> |
 | 0.8.4   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/479">Round Excel date to nearest millisecond when converting to javascript date #479</a>. Thanks to <a href="https://github.com/bjet007">Benoit Jean</a> for this contribution. </li> </ul> |
+| 0.8.5   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/485">Bug fix: wb.worksheets/wb.eachSheet caused getWorksheet(0) to return sheet #485</a>. Thanks to <a href="https://github.com/mah110020">mah110020</a> for this contribution. </li> </ul> |
  
