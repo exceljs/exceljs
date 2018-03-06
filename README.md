@@ -14,9 +14,8 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/490">add type definition #490</a>.
-    This adds type definitions to ExcelJS!
-    Many thanks to <a href="https://github.com/taoqf">taoqf</a> for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/494">Add Node 8 and Node 9 to continuous integration testing #494</a>.
+    Many thanks to <a href="https://github.com/cooltoast">Markan Patel</a> for this contribution.
   </li>
 </ul>
 
@@ -1804,3 +1803,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.8.4   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/479">Round Excel date to nearest millisecond when converting to javascript date #479</a>. Thanks to <a href="https://github.com/bjet007">Benoit Jean</a> for this contribution. </li> </ul> |
 | 0.8.5   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/485">Bug fix: wb.worksheets/wb.eachSheet caused getWorksheet(0) to return sheet #485</a>. Thanks to <a href="https://github.com/mah110020">mah110020</a> for this contribution. </li> </ul> |
 | 0.9.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/489">Feature/issue 424 #489</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/424">No way to control summaryBelow or summaryRight #424</a>. Many thanks to <a href="https://github.com/sarahdmsi">Sarah</a> for this contribution. </li> </ul>  |
+| 0.9.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/490">add type definition #490</a>. This adds type definitions to ExcelJS! Many thanks to <a href="https://github.com/taoqf">taoqf</a> for this contribution. </li> </ul> |
