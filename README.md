@@ -14,10 +14,11 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/479">Round Excel date to nearest millisecond when converting to javascript date #479</a>.
-    Thanks to <a href="https://github.com/bjet007">Benoit Jean</a> for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/494">Add Node 8 and Node 9 to continuous integration testing #494</a>.
+    Many thanks to <a href="https://github.com/cooltoast">Markan Patel</a> for this contribution.
   </li>
 </ul>
+
 # Contributions
 
 Contributions are very welcome! It helps me know what features are desired or what bugs are causing the most pain.
@@ -1093,6 +1094,15 @@ worksheet.properties.outlineLevelCol = 2;
 expect(worksheet.getColumn(3).collapsed).to.be.false;
 ```
 
+The outline properties can be set on the worksheet
+
+```javascript
+worksheet.properties.outlineProperties = {
+  summaryBelow: false,
+  summaryRight: false,
+};
+```
+
 ## Images
 
 Adding images to a worksheet is a two-step process.
@@ -1790,3 +1800,7 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.8.1   | <ul><li> Merged <a href="https://github.com/guyonroche/exceljs/pull/457">Additional information about font family property #457</a>. Thanks to <a href="https://github.com/kayakyakr">kayakyakr</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/459">Fixes #458 #459</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/458">Add style to column causes it to be hidden #458</a>. Thanks to <a href="https://github.com/AJamesPhillips">Alexander James Phillips</a> for this contribution. </li> </ul> |
 | 0.8.2   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/466">Don't break when loading an Excel file containing a chartsheet #466</a>. Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/471">Hotfix/sheet order#257 #471</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/257">Sheet Order #257</a>. Thanks to <a href="https://github.com/robbi">Robbi</a> for this contribution. </li> </ul> |
 | 0.8.3   | <ul> <li> Assimilated <a href="https://github.com/guyonroche/exceljs/pull/463">fix #79 outdated dependencies in unzip2</a>. Thanks to <a href="https://github.com/jsamr">Jules Sam. Randolph</a> for starting this fix and a really big thanks to <a href="https://github.com/kachkaev">Alexander Kachkaev</a> for finding the final solution. </li> </ul> |
+| 0.8.4   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/479">Round Excel date to nearest millisecond when converting to javascript date #479</a>. Thanks to <a href="https://github.com/bjet007">Benoit Jean</a> for this contribution. </li> </ul> |
+| 0.8.5   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/485">Bug fix: wb.worksheets/wb.eachSheet caused getWorksheet(0) to return sheet #485</a>. Thanks to <a href="https://github.com/mah110020">mah110020</a> for this contribution. </li> </ul> |
+| 0.9.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/489">Feature/issue 424 #489</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/424">No way to control summaryBelow or summaryRight #424</a>. Many thanks to <a href="https://github.com/sarahdmsi">Sarah</a> for this contribution. </li> </ul>  |
+| 0.9.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/490">add type definition #490</a>. This adds type definitions to ExcelJS! Many thanks to <a href="https://github.com/taoqf">taoqf</a> for this contribution. </li> </ul> |
