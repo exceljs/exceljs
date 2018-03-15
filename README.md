@@ -21,6 +21,11 @@ npm install exceljs
     Merged <a href="https://github.com/guyonroche/exceljs/pull/508">Small README fix #508</a>.
     Many thanks to <a href="https://github.com/lbguilherme">Guilherme Bernal</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/501">Add support for inlineStr, including rich text #501</a>.
+    Many thanks to <a href="https://github.com/linguamatics-pdenes">linguamatics-pdenes</a>
+     and <a href="https://github.com/robscotts4rb">Rob Scott</a> for their efforts towards this contribution.
+  </li>
 </ul>
 
 # Contributions

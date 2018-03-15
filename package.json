@@ -15,7 +15,8 @@
   "scripts": {
     "pretest": "npm run build",
     "test": "npm run test:full",
-    "test:full": "npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
+    "test:full": "npm run test:nsp && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
+    "test:nsp": "nsp check",
     "test:unit": "mocha --require spec/config/setup spec/unit --require spec/config/setup-unit --recursive",
     "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
     "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
@@ -90,6 +91,7 @@
     "grunt-lib-phantomjs": "^1.1.0",
     "memorystream": "*",
     "mocha": "*",
+    "nsp": "^3.2.1",
     "request": "*",
     "semver": "*",
     "uglifyjs": "^2.4.10",
