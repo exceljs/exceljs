@@ -17,6 +17,10 @@ npm install exceljs
     Merged <a href="https://github.com/guyonroche/exceljs/pull/494">Add Node 8 and Node 9 to continuous integration testing #494</a>.
     Many thanks to <a href="https://github.com/cooltoast">Markan Patel</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/508">Small README fix #508</a>.
+    Many thanks to <a href="https://github.com/lbguilherme">Guilherme Bernal</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
