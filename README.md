@@ -25,6 +25,7 @@ npm install exceljs
     Merged <a href="https://github.com/guyonroche/exceljs/pull/501">Add support for inlineStr, including rich text #501</a>.
     Many thanks to <a href="https://github.com/linguamatics-pdenes">linguamatics-pdenes</a>
      and <a href="https://github.com/robscotts4rb">Rob Scott</a> for their efforts towards this contribution.
+    Since this change is technically a breaking change (the rendered XML for inline strings will change) I'm making this a major release!
   </li>
 </ul>
 
