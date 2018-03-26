@@ -124,6 +124,67 @@ describe('Row', function() {
       expect(row.getCell(8).address).to.equal('H1');
     });
 
+    it('remove to end', function() {
+      var sheet = createSheetMock();
+      var row = sheet.getRow(1);
+
+      row.getCell(1).value = 1;
+      row.getCell(2).value = 2;
+      row.getCell(3).value = 3;
+      row.getCell(4).value = 4;
+      row.getCell(5).value = 5;
+
+      row.splice(4, 2);
+      expect(row.getCell(1).value).to.equal(1);
+      expect(row.getCell(2).value).to.equal(2);
+      expect(row.getCell(3).value).to.equal(3);
+      expect(row.getCell(4).value).to.be.null();
+      expect(row.getCell(5).value).to.be.null();
+      expect(row.getCell(6).value).to.be.null();
+    });
+
+    it('remove almost to end', function() {
+      var sheet = createSheetMock();
+      var row = sheet.getRow(1);
+
+      row.getCell(1).value = 1;
+      row.getCell(2).value = 2;
+      row.getCell(3).value = 3;
+      row.getCell(4).value = 4;
+      row.getCell(5).value = 5;
+      row.getCell(6).value = 6;
+
+      row.splice(4, 2);
+      expect(row.getCell(1).value).to.equal(1);
+      expect(row.getCell(2).value).to.equal(2);
+      expect(row.getCell(3).value).to.equal(3);
+      expect(row.getCell(4).value).to.equal(6);
+      expect(row.getCell(5).value).to.be.null();
+      expect(row.getCell(6).value).to.be.null();
+    });
+
+    it('remove past end', function() {
+      var sheet = createSheetMock();
+      var row = sheet.getRow(1);
+
+      row.getCell(1).value = 1;
+      row.getCell(2).value = 2;
+      row.getCell(3).value = 3;
+      row.getCell(4).value = 4;
+      row.getCell(5).value = 5;
+      row.getCell(6).value = 6;
+
+      row.splice(4, 4);
+      expect(row.getCell(1).value).to.equal(1);
+      expect(row.getCell(2).value).to.equal(2);
+      expect(row.getCell(3).value).to.equal(3);
+      expect(row.getCell(4).value).to.be.null();
+      expect(row.getCell(5).value).to.be.null();
+      expect(row.getCell(6).value).to.be.null();
+      expect(row.getCell(7).value).to.be.null();
+      expect(row.getCell(8).value).to.be.null();
+    });
+
     it('remove and insert fewer', function() {
       var sheet = createSheetMock();
       var row = sheet.getRow(1);

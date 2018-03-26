@@ -404,7 +404,7 @@ describe('Worksheet', function() {
           expect(ws.getColumn(5).width).to.equal(40);
         });
 
-        it.skip('Splices to end', function() {
+        it('Splices to end', function() {
           var wb = new Excel.Workbook();
           var ws = wb.addWorksheet('splice-to-end');
           ws.columns = [
