@@ -16,10 +16,11 @@ npm install exceljs
 
 <ul>
   <li>
-    Fixed <a href="https://github.com/guyonroche/exceljs/issues/520">spliceColumns problem when the number of columns are important #520</a>.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/524">Loosen exceljs's dependency requirements for moment #524</a>.
+    Many thanks to <a href="https://github.com/nicoladefranceschi">nicoladefranceschi</a> for this contribution.
+    This change addresses <a href="https://github.com/guyonroche/exceljs/issues/517">Ability to use external "moment" package #517</a>.
   </li>
 </ul>
-
 # Contributions
 
 Contributions are very welcome! It helps me know what features are desired or what bugs are causing the most pain.
