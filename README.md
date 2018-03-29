@@ -485,10 +485,10 @@ dobCol.eachCell({ includeEmpty: true }, function(cell, rowNumber) {
 });
 
 // add a column of new values
-worksheet.getColumn(6).values = [,,2,3,,5,,7,,,,11];
+worksheet.getColumn(6).values = [1,2,3,4,5];
 
 // add a sparse column of values
-worksheet.getColumn(7).values = [1,2,3,4,5];
+worksheet.getColumn(7).values = [,,2,3,,5,,7,,,,11];
 
 // cut one or more columns (columns to the right are shifted left)
 // If column properties have been definde, they will be cut or moved accordingly
