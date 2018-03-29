@@ -16,11 +16,11 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/524">Loosen exceljs's dependency requirements for moment #524</a>.
-    Many thanks to <a href="https://github.com/nicoladefranceschi">nicoladefranceschi</a> for this contribution.
-    This change addresses <a href="https://github.com/guyonroche/exceljs/issues/517">Ability to use external "moment" package #517</a>.
+    Addressed <a href="https://github.com/guyonroche/exceljs/issues/514">Is there a way inserting values in columns. #514</a>.
+    Added a new getter/setter property to Column to get and set column values (see <a href="#columns">Columns</a> for details).
   </li>
 </ul>
+
 # Contributions
 
 Contributions are very welcome! It helps me know what features are desired or what bugs are causing the most pain.
@@ -483,6 +483,12 @@ dobCol.eachCell(function(cell, rowNumber) {
 dobCol.eachCell({ includeEmpty: true }, function(cell, rowNumber) {
     // ...
 });
+
+// add a column of new values
+worksheet.getColumn(6).values = [,,2,3,,5,,7,,,,11];
+
+// add a sparse column of values
+worksheet.getColumn(7).values = [1,2,3,4,5];
 
 // cut one or more columns (columns to the right are shifted left)
 // If column properties have been definde, they will be cut or moved accordingly
@@ -1808,3 +1814,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.9.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/490">add type definition #490</a>. This adds type definitions to ExcelJS! Many thanks to <a href="https://github.com/taoqf">taoqf</a> for this contribution. </li> </ul> |
 | 1.0.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/494">Add Node 8 and Node 9 to continuous integration testing #494</a>. Many thanks to <a href="https://github.com/cooltoast">Markan Patel</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/508">Small README fix #508</a>. Many thanks to <a href="https://github.com/lbguilherme">Guilherme Bernal</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/501">Add support for inlineStr, including rich text #501</a>. Many thanks to <a href="https://github.com/linguamatics-pdenes">linguamatics-pdenes</a> and <a href="https://github.com/robscotts4rb">Rob Scott</a> for their efforts towards this contribution. Since this change is technically a breaking change (the rendered XML for inline strings will change) I'm making this a major release! </li> </ul> |
 | 1.0.1   | <ul> <li> Fixed <a href="https://github.com/guyonroche/exceljs/issues/520">spliceColumns problem when the number of columns are important #520</a>. </li> </ul> |
+| 1.0.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/524">Loosen exceljs's dependency requirements for moment #524</a>. Many thanks to <a href="https://github.com/nicoladefranceschi">nicoladefranceschi</a> for this contribution. This change addresses <a href="https://github.com/guyonroche/exceljs/issues/517">Ability to use external "moment" package #517</a>. </li> </ul> |
