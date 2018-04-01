@@ -101,6 +101,7 @@
   "files": [
     "dist",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "index.d.ts"
   ]
 }
