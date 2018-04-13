@@ -16,8 +16,8 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/536">Don't break when docProps/core.xml contains <cp:contentType /> #536</a>.
-    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> (and reviewers) for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/537">Try to handle the case where a &lt;c&gt; element is missing an r attribute #537</a>.
+    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
   </li>
 </ul>
 
@@ -1817,3 +1817,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.0.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/524">Loosen exceljs's dependency requirements for moment #524</a>. Many thanks to <a href="https://github.com/nicoladefranceschi">nicoladefranceschi</a> for this contribution. This change addresses <a href="https://github.com/guyonroche/exceljs/issues/517">Ability to use external "moment" package #517</a>. </li> </ul> |
 | 1.1.0   | <ul> <li> Addressed <a href="https://github.com/guyonroche/exceljs/issues/514">Is there a way inserting values in columns. #514</a>. Added a new getter/setter property to Column to get and set column values (see <a href="#columns">Columns</a> for details). </li> </ul> |
 | 1.1.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/532">Include index.d.ts in published packages #532</a>. To fix <a href="https://github.com/guyonroche/exceljs/issues/525">TypeScript definitions missing from npm package #525</a>. Many thanks to <a href="https://github.com/saschanaz">Kagami Sascha Rosylight</a> for this contribution. </li> </ul> |
+| 1.1.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/536">Don't break when docProps/core.xml contains <cp:contentType /> #536</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> (and reviewers) for this contribution. </li> </ul> |
