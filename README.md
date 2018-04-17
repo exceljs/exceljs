@@ -1363,6 +1363,8 @@ The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write 
 
 Dates are formatted using the npm module [moment](https://www.npmjs.com/package/moment).
  If no dateFormat is supplied, moment.ISO_8601 is used.
+ When writing a CSV you can supply the boolean dateUTC as true to have ExcelJS parse the date without automatically
+ converting the timezone using `moment.utc()`.
 
 ### Streaming I/O
 

@@ -1100,6 +1100,7 @@ export interface CsvReadOptions {
 
 export interface CsvWriteOptions {
 	dateFormat: string;
+	dateUTC: boolean;
 }
 
 export interface Csv {
