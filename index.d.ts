@@ -833,7 +833,7 @@ export interface WorksheetModel {
 
 export interface Worksheet {
 	readonly id: number;
-	readonly name: string;
+	name: string;
 	readonly workbook: Workbook;
 	readonly hasMerges: boolean;
 
