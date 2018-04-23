@@ -98,6 +98,7 @@
     "underscore": "^1.8.3"
   },
   "main": "./dist/es5/index.js",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "LICENSE",
