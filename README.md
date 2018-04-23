@@ -16,8 +16,8 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/547">worksheet name is writable #547</a>.
-    Many thanks to <a href="https://github.com/f111fei">xzper</a> for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/549">Add CSV write buffer support #549</a>.
+    Many thanks to <a href="https://github.com/jloveridge">Jarom Loveridge</a> for this contribution.
   </li>
 </ul>
 
@@ -1823,3 +1823,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.1.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/536">Don't break when docProps/core.xml contains <cp:contentType /> #536</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> (and reviewers) for this contribution. </li> </ul> |
 | 1.1.3   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/537">Try to handle the case where a &lt;c&gt; element is missing an r attribute #537</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
 | 1.2.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/544">Add dateUTC flag to CSV Writing #544</a>. Many thanks to <a href="https://github.com/zgriesinger">Zackery Griesinger</a> for this contribution. </li> </ul> |
+| 1.2.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/547">worksheet name is writable #547</a>. Many thanks to <a href="https://github.com/f111fei">xzper</a> for this contribution. </li> </ul> |
