@@ -33,7 +33,7 @@ describe('WorkbookReader', function() {
           .then(function() {
             throw new Error('Promise unexpectedly fulfilled');
           }, function(err) {
-            expect(err.message).to.equal('The number of rows exceeds the limit');
+            expect(err.message).to.equal('Max row count exceeded');
           });
       });
 
@@ -53,7 +53,7 @@ describe('WorkbookReader', function() {
           .then(function() {
             throw new Error('Promise unexpectedly fulfilled');
           }, function(err) {
-            expect(err.message).to.equal('The number of rows exceeds the limit');
+            expect(err.message).to.equal('Max row count exceeded');
           });
       });
 
