@@ -63,4 +63,57 @@ describe('WorkbookReader', function() {
       });
     });
   });
+
+  describe('with a spreadsheet that contains formulas', function() {
+    before(function() {
+      var testContext = this;
+      var workbook = new Excel.Workbook();
+      return workbook.xlsx.read(fs.createReadStream('./spec/integration/data/formulas.xlsx'))
+        .then(function() {
+          testContext.worksheet = workbook.getWorksheet();
+        });
+    });
+
+    describe('with a cell that contains a regular formula', function() {
+      beforeEach(function() {
+        this.cell = this.worksheet.getCell('A2');
+      });
+
+      it('should be classified as a formula cell', function() {
+        expect(this.cell.type).to.equal(Excel.ValueType.Formula);
+        expect(this.cell.isFormula).to.be.true;
+      });
+
+      it('should have text corresponding to the evaluated formula result', function() {
+        expect(this.cell.text).to.equal('someone@example.com');
+      });
+
+      it('should have the formula source', function() {
+        expect(this.cell.model.formula).to.equal('_xlfn.CONCAT("someone","@example.com")');
+      });
+    });
+
+    describe('with a cell that contains a hyperlinked formula', function() {
+      beforeEach(function() {
+        this.cell = this.worksheet.getCell('A1');
+      });
+
+      it('should be classified as a formula cell', function() {
+        expect(this.cell.type).to.equal(Excel.ValueType.Hyperlink);
+      });
+
+      it('should have text corresponding to the evaluated formula result', function() {
+        expect(this.cell.value.text).to.equal('someone@example.com');
+      });
+
+      it('should have the formula source', function() {
+        expect(this.cell.model.formula).to.equal('_xlfn.CONCAT("someone","@example.com")');
+      });
+
+      it('should contain the linked url', function() {
+        expect(this.cell.value.hyperlink).to.equal('mailto:someone@example.com');
+        expect(this.cell.hyperlink).to.equal('mailto:someone@example.com');
+      });
+    });
+  });
 });
