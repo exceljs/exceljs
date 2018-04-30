@@ -37,6 +37,17 @@ describe('WorkbookReader', function() {
           });
       });
 
+      it('should fail fast on a huge file', function() {
+        this.timeout(1000);
+        var workbook = new Excel.Workbook();
+        return workbook.xlsx.readFile('./spec/integration/data/huge.xlsx', {maxRows: 100})
+          .then(function() {
+            throw new Error('Promise unexpectedly fulfilled');
+          }, function(err) {
+            expect(err.message).to.equal('Max row count exceeded');
+          });
+      });
+
       it('should parse fine if the limit is not exceeded', function() {
         var workbook = new Excel.Workbook();
         return workbook.xlsx.readFile('./spec/integration/data/fibonacci.xlsx', {maxRows: 20});
