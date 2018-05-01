@@ -582,7 +582,7 @@ row.values = {
     dob: new Date()
 };
 
-// Insert a page break prior to the row
+// Insert a page break below the row
 row.addPageBreak();
 
 // Iterate over all rows that have values in a worksheet
