@@ -38,7 +38,7 @@ describe('WorkbookReader', function() {
       });
 
       it('should fail fast on a huge file', function() {
-        this.timeout(1000);
+        this.timeout(2000);
         var workbook = new Excel.Workbook();
         return workbook.xlsx.readFile('./spec/integration/data/huge.xlsx', {maxRows: 100})
           .then(function() {
