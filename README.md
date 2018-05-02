@@ -16,7 +16,7 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/552">Get the right text out of hyperlinked formula cells #552</a>.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/556">Add test case with a huge file #556</a>.
     Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> and
     <a href="https://github.com/holm">Christian Holm</a> for this contribution.
   </li>
@@ -1827,3 +1827,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.2.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/547">worksheet name is writable #547</a>. Many thanks to <a href="https://github.com/f111fei">xzper</a> for this contribution. </li> </ul> |
 | 1.3.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/549">Add CSV write buffer support #549</a>. Many thanks to <a href="https://github.com/jloveridge">Jarom Loveridge</a> for this contribution. </li> </ul> |
 | 1.4.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/541">Discussion: Customizable row/cell limit #541</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
+| 1.4.3   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/552">Get the right text out of hyperlinked formula cells #552</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> and <a href="https://github.com/holm">Christian Holm</a> for this contribution. </li> </ul> |
