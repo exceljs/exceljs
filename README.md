@@ -19,6 +19,10 @@ npm install exceljs
     Merged <a href="https://github.com/guyonroche/exceljs/pull/557">Update README.md to reflect correct functionality of row.addPageBreak() #557</a>.
     Many thanks to <a href="https://github.com/raj7desai">RajDesai</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/558">fix index.d.ts #558</a>.
+    Many thanks to <a href="https://github.com/Diluka">Diluka</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
