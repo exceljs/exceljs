@@ -1075,7 +1075,13 @@ export interface Xlsx {
 	/**
 	 * read from a file
 	 */
-	readFile(path: string): Promise<void>;
+	readFile(path: string): Promise<Workbook>;
+
+	/**
+	 * read from a stream
+	 * @param stream 
+	 */
+	read(stream: Stream): Promise<Workbook>;
 
 	/**
 	 * Create input stream for reading
