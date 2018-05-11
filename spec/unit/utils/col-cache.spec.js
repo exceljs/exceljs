@@ -68,6 +68,16 @@ describe('colCache', function() {
     expect(colCache.decodeAddress('AA11')).to.deep.equal({address: 'AA11', col: 27, row: 11, $col$row: '$AA$11'});
   });
 
+  describe('with a malformed address', function() {
+    it('tolerates a missing row number', function() {
+      expect(colCache.decodeAddress('$B')).to.deep.equal({address: 'B', col: 2, row: undefined, $col$row: '$B$'});
+    });
+
+    it('tolerates a missing column number', function() {
+      expect(colCache.decodeAddress('$2')).to.deep.equal({address: '2', col: undefined, row: 2, $col$row: '$$2'});
+    });
+  });
+
   it('convert [sheetName!][$]col[$]row[[$]col[$]row] into address or range structures', function() {
     expect(colCache.decodeEx('Sheet1!$H$1')).to.deep.equal({$col$row: '$H$1', address: 'H1', col: 8, row: 1, sheetName: 'Sheet1'});
     expect(colCache.decodeEx("'Sheet 1'!$H$1")).to.deep.equal({$col$row: '$H$1', address: 'H1', col: 8, row: 1, sheetName: 'Sheet 1'});
