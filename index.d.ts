@@ -1334,7 +1334,7 @@ export namespace stream {
 		class WorkbookWriter extends Workbook {
 			constructor(options: Partial<WorkbookWriterOptions>);
 			// commit all worksheets, then add suplimentary files
-			commit(): void;
+			commit(): Promise<void>;
 			addStyles(): Promise<void>;
 			addThemes(): Promise<void>;
 			addOfficeRels(): Promise<void>;
