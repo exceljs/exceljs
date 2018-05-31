@@ -16,12 +16,8 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/557">Update README.md to reflect correct functionality of row.addPageBreak() #557</a>.
-    Many thanks to <a href="https://github.com/raj7desai">RajDesai</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/558">fix index.d.ts #558</a>.
-    Many thanks to <a href="https://github.com/Diluka">Diluka</a> for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/562">List /xl/sharedStrings.xml in [Content_Types].xml only if one of the … #562</a>.
+    Many thanks to <a href="https://github.com/priidikvaikla">Priidik Vaikla</a> for this contribution.
   </li>
 </ul>
 
@@ -1832,3 +1828,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.4.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/541">Discussion: Customizable row/cell limit #541</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
 | 1.4.3   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/552">Get the right text out of hyperlinked formula cells #552</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> and <a href="https://github.com/holm">Christian Holm</a> for this contribution. </li> </ul> |
 | 1.4.5   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/556">Add test case with a huge file #556</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> and <a href="https://github.com/holm">Christian Holm</a> for this contribution. </li> </ul> |
+| 1.4.6   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/557">Update README.md to reflect correct functionality of row.addPageBreak() #557</a>. Many thanks to <a href="https://github.com/raj7desai">RajDesai</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/558">fix index.d.ts #558</a>. Many thanks to <a href="https://github.com/Diluka">Diluka</a> for this contribution. </li> </ul> |
