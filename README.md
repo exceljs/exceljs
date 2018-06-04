@@ -22,6 +22,9 @@ npm install exceljs
   <li>
     Fixed issue with above where shared strings were used but the content type was not added.
   </li>
+  <li>
+    Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/581">1.4.8 broke writing Excel files with useSharedStrings:true #581</a>.
+  </li>
 </ul>
 
 # Contributions
