@@ -19,6 +19,10 @@ npm install exceljs
     Merged <a href="https://github.com/guyonroche/exceljs/pull/582">Update index.d.ts #582</a>.
     Many thanks to <a href="https://github.com/hankolsen">hankolsen</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/584">Decode the _x<4 hex chars>_ escape notation in shared strings #584</a>.
+    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
