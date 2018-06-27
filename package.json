@@ -53,6 +53,7 @@
     "pageSetup"
   ],
   "dependencies": {
+    "@types/node": "@latest",
     "archiver": "^1.3.0",
     "fast-csv": "^2.4.0",
     "jszip": "3.1.3",
@@ -62,7 +63,6 @@
     "unzip2": "^0.2.5"
   },
   "devDependencies": {
-    "@types/node": "@latest",
     "babel-eslint": "^7.2.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
