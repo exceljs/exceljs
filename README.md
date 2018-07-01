@@ -234,11 +234,13 @@ var worksheet = workbook.getWorksheet(1);
 
 ## Worksheet State
 
+```javascript
 // make worksheet visible
 worksheet.state = 'show';
 
 // make worksheet hidden
 worksheet.state = 'hidden';
+```
 
 ## Worksheet Properties
 
