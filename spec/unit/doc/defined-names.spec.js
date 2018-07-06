@@ -77,8 +77,8 @@ describe('DefinedNames', function() {
     ];
 
     expect(dn.model).to.deep.equal([
-      {name: 'eq', ranges: ['"="'], formula: ''},
-      {name: 'ref', ranges: ['#REF!'], formula: ''},
+      {name: 'eq', ranges: [], formula: ''},
+      {name: 'ref', ranges: [], formula: ''},
       {name: 'single', ranges: ['Sheet3!$A$1'], formula: ''},
       {name: 'range', ranges: ['Sheet3!$A$2:$F$2228'], formula: ''}
     ]);
