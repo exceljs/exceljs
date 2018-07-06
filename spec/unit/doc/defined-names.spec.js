@@ -51,10 +51,10 @@ describe('DefinedNames', function() {
 
     dn.add('other!A1', 'single');
 
-    expect(dn.getRanges('vertical')).to.deep.equal({name: 'vertical', ranges: ['blort!$A$1:$A$3']});
-    expect(dn.getRanges('horizontal')).to.deep.equal({name: 'horizontal', ranges: ['blort!$C$1:$E$1']});
-    expect(dn.getRanges('square')).to.deep.equal({name: 'square', ranges: ['blort!$C$3:$D$4']});
-    expect(dn.getRanges('single')).to.deep.equal({name: 'single', ranges: ['other!$A$1']});
+    expect(dn.getRanges('vertical')).to.deep.equal({name: 'vertical', ranges: ['blort!$A$1:$A$3'], formula: ''});
+    expect(dn.getRanges('horizontal')).to.deep.equal({name: 'horizontal', ranges: ['blort!$C$1:$E$1'], formula: ''});
+    expect(dn.getRanges('square')).to.deep.equal({name: 'square', ranges: ['blort!$C$3:$D$4'], formula: ''});
+    expect(dn.getRanges('single')).to.deep.equal({name: 'single', ranges: ['other!$A$1'], formula: ''});
   });
 
   it('creates matrix from model', function() {
@@ -70,15 +70,17 @@ describe('DefinedNames', function() {
   it('skips values with invalid range', function() {
     var dn = new DefinedNames();
     dn.model = [
-      {name: 'eq', ranges: ['"="']},
-      {name: 'ref', ranges: ['#REF!']},
-      {name: 'single', ranges: ['Sheet3!$A$1']},
-      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']}
+      {name: 'eq', ranges: ['"="'], formula: ''},
+      {name: 'ref', ranges: ['#REF!'], formula: ''},
+      {name: 'single', ranges: ['Sheet3!$A$1'], formula: ''},
+      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228'], formula: ''}
     ];
 
     expect(dn.model).to.deep.equal([
-      {name: 'single', ranges: ['Sheet3!$A$1']},
-      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']}
+      {name: 'eq', ranges: ['"="'], formula: ''},
+      {name: 'ref', ranges: ['#REF!'], formula: ''},
+      {name: 'single', ranges: ['Sheet3!$A$1'], formula: ''},
+      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228'], formula: ''}
     ]);
   });
 });

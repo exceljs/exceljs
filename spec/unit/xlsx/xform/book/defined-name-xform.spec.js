@@ -8,17 +8,17 @@ var expectations = [
   {
     title: 'Defined Names',
     create: function() { return new DefinedNameXform(); },
-    preparedModel: {name: 'foo', ranges: ['bar!$A$1:$C$1']},
+    preparedModel: {name: 'foo', ranges: ['bar!$A$1:$C$1'], formula: ''},
     xml: '<definedName name="foo">bar!$A$1:$C$1</definedName>',
-    parsedModel: {name: 'foo', ranges: ['bar!$A$1:$C$1']},
+    parsedModel: {name: 'foo', ranges: ['bar!$A$1:$C$1'], formula: ''},
     tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Print Area',
     create: function() { return new DefinedNameXform(); },
-    preparedModel: {name: '_xlnm.Print_Area', localSheetId: 0, ranges: ['bar!$A$1:$C$10']},
+    preparedModel: {name: '_xlnm.Print_Area', localSheetId: 0, ranges: ['bar!$A$1:$C$10'], formula: ''},
     xml: '<definedName name="_xlnm.Print_Area" localSheetId="0">bar!$A$1:$C$10</definedName>',
-    parsedModel: {name: '_xlnm.Print_Area', localSheetId: 0, ranges: ['bar!$A$1:$C$10']},
+    parsedModel: {name: '_xlnm.Print_Area', localSheetId: 0, ranges: ['bar!$A$1:$C$10'], formula: ''},
     tests: ['render', 'renderIn', 'parse']
   }
 ];
