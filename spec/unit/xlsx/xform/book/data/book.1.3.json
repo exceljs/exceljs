@@ -3,7 +3,8 @@
     {"visibility": "hidden", "x": 0, "y": 0, "width": 12000, "height": 24000}
   ],
   "sheets": [
-    {"name": "Values", "id": 1, "rId": "rId1"}
+    {"name": "Values", "id": 1, "rId": "rId1", "state": "show"},
+    {"name": "Other", "id": 2, "rId": "rId2", "state": "hidden"}
   ],
   "properties": {
   	"date1904": true

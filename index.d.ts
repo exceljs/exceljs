@@ -1,6 +1,6 @@
-/// <reference types="node" />
-
-import { Writable, Stream } from 'stream';
+declare interface Buffer { }
+declare interface Stream { }
+declare interface Writable { }
 
 export const enum RelationshipType {
 	None = 0,
@@ -833,7 +833,7 @@ export interface WorksheetModel {
 
 export interface Worksheet {
 	readonly id: number;
-	readonly name: string;
+	name: string;
 	readonly workbook: Workbook;
 	readonly hasMerges: boolean;
 
@@ -941,7 +941,7 @@ export interface Worksheet {
 	addRows(rows: any[]): void;
 
 	/**
-	 * Get or create row by 0-based index
+	 * Get or create row by 1-based index
 	 */
 	getRow(index: number): Row;
 
@@ -1075,12 +1075,23 @@ export interface Xlsx {
 	/**
 	 * read from a file
 	 */
-	readFile(path: string): Promise<void>;
+	readFile(path: string): Promise<Workbook>;
+
+	/**
+	 * read from a stream
+	 * @param stream 
+	 */
+	read(stream: Stream): Promise<Workbook>;
 
 	/**
 	 * Create input stream for reading
 	 */
 	createInputStream(): Writable;
+
+	/**
+	 * write to a buffer
+	 */
+	writeBuffer(): Promise<Buffer>;
 
 	/**
 	 * write to a file
@@ -1100,6 +1111,7 @@ export interface CsvReadOptions {
 
 export interface CsvWriteOptions {
 	dateFormat: string;
+	dateUTC: boolean;
 }
 
 export interface Csv {
@@ -1117,6 +1129,11 @@ export interface Csv {
 	 * Create input stream for reading
 	 */
 	createInputStream(): Writable;
+
+	/**
+	 * write to a buffer
+	 */
+	writeBuffer(): Promise<Buffer>;
 
 	/**
 	 * write to a file
@@ -1317,7 +1334,7 @@ export namespace stream {
 		class WorkbookWriter extends Workbook {
 			constructor(options: Partial<WorkbookWriterOptions>);
 			// commit all worksheets, then add suplimentary files
-			commit(): void;
+			commit(): Promise<void>;
 			addStyles(): Promise<void>;
 			addThemes(): Promise<void>;
 			addOfficeRels(): Promise<void>;

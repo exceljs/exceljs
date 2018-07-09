@@ -166,6 +166,49 @@ describe('WorkbookWriter', function() {
         });
     });
 
+    it('rich text', function() {
+      var options = {
+        filename: TEST_XLSX_FILE_NAME,
+        useStyles: true
+      };
+      var wb = new Excel.stream.xlsx.WorkbookWriter(options);
+      var ws = wb.addWorksheet('Hello');
+
+      ws.getCell('A1').value = {
+        richText: [
+          {
+            font: {color: {argb: 'FF0000'}}, text: 'red '
+          },
+          {
+            font: {color: {argb: '00FF00'}, bold: true}, text: ' bold green'
+          }
+        ]
+      };
+
+      ws.getCell('B1').value = 'plain text'
+
+      ws.commit();
+      return wb.commit()
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('Hello');
+          expect(ws2.getCell('A1').value).to.deep.equal({
+            richText: [
+              {
+                font: {color: {argb: 'FF0000'}}, text: 'red '
+              },
+              {
+                font: {color: {argb: '00FF00'}, bold: true}, text: ' bold green'
+              }
+            ]
+          });
+          expect(ws2.getCell('B1').value).to.equal('plain text');
+        });
+    });
+
     it('A lot of sheets', function() {
       this.timeout(5000);
 

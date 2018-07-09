@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "0.8.2",
+  "version": "1.5.1",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -13,18 +13,21 @@
     "node": ">=4.0.0"
   },
   "scripts": {
-    "test": "npm run unit-test && npm run integration-test && npm run end-to-end-test && npm run browser-test",
+    "pretest": "npm run build",
+    "test": "npm run test:full",
+    "test:full": "npm run test:nsp && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
+    "test:nsp": "nsp check",
+    "test:unit": "mocha --require spec/config/setup spec/unit --require spec/config/setup-unit --recursive",
+    "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
+    "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
+    "test:browser": "./node_modules/.bin/grunt jasmine",
+    "test:native-integration": "export EXCEL_NATIVE=yes && mocha --require spec/config/setup spec/integration --recursive",
+    "test:manual": "node spec/manual/app.js",
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --ext .js lib spec",
-    "browser-test": "./node_modules/.bin/grunt jasmine",
-    "unit-test": "mocha --require spec/config/setup spec/unit --require spec/config/setup-unit --recursive",
-    "integration-test": "mocha --require spec/config/setup spec/integration --recursive",
-    "native-integration-test": "export EXCEL_NATIVE=yes && mocha --require spec/config/setup spec/integration --recursive",
-    "end-to-end-test": "mocha --require spec/config/setup spec/end-to-end --recursive",
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
-    "manual-test": "node spec/manual/app.js",
-    "preversion": "npm run clean && npm run build && npm test",
+    "preversion": "npm run clean && npm run build && npm run test:full",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "keywords": [
@@ -53,14 +56,14 @@
     "pageSetup"
   ],
   "dependencies": {
-    "@types/node": "@latest",
+    "@types/node": "*",
     "archiver": "^1.3.0",
     "fast-csv": "^2.4.0",
     "jszip": "3.1.3",
-    "moment": "2.19.3",
+    "moment": ">=2.19.3",
+    "node-unzip-2": "^0.2.7",
     "promish": ">=5.0.2",
-    "sax": "^1.2.2",
-    "unzip2": "^0.2.5"
+    "sax": "^1.2.2"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.0",
@@ -88,15 +91,18 @@
     "grunt-lib-phantomjs": "^1.1.0",
     "memorystream": "*",
     "mocha": "*",
+    "nsp": "^3.2.1",
     "request": "*",
     "semver": "*",
     "uglifyjs": "^2.4.10",
     "underscore": "^1.8.3"
   },
   "main": "./dist/es5/index.js",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "index.d.ts"
   ]
 }

@@ -1,5 +1,7 @@
 # ExcelJS
 
+[![Build Status](https://travis-ci.org/guyonroche/exceljs.svg?branch=master)](https://travis-ci.org/guyonroche/exceljs)
+
 Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
 Reverse engineered from Excel spreadsheet files as a project.
@@ -13,15 +15,14 @@ npm install exceljs
 # New Features!
 
 <ul>
-    <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/466">Don't break when loading an Excel file containing a chartsheet #466</a>.
-        Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
-    </li>
-    <li>
-        Merged <a href="https://github.com/guyonroche/exceljs/pull/471">Hotfix/sheet order#257 #471</a>.
-        This fixes <a href="https://github.com/guyonroche/exceljs/issues/257">Sheet Order #257</a>.
-        Thanks to <a href="https://github.com/robbi">Robbi</a> for this contribution.
-    </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/582">Update index.d.ts #582</a>.
+    Many thanks to <a href="https://github.com/hankolsen">hankolsen</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/584">Decode the _x<4 hex chars>_ escape notation in shared strings #584</a>.
+    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
@@ -62,6 +63,7 @@ them as they come.
       <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
       <li><a href="#remove-a-worksheet">Remove a Worksheet</a></li>
       <li><a href="#access-worksheets">Access Worksheets</a></li>
+      <li><a href="#worksheet-state">Worksheet State</a></li>
       <li><a href="#worksheet-properties">Worksheet Properties</a></li>
       <li><a href="#page-setup">Page Setup</a></li>
       <li>
@@ -229,6 +231,14 @@ var worksheet = workbook.getWorksheet('My Sheet');
 // fetch sheet by id
 var worksheet = workbook.getWorksheet(1);
 ```
+
+## Worksheet State
+
+// make worksheet visible
+worksheet.state = 'show';
+
+// make worksheet hidden
+worksheet.state = 'hidden';
 
 ## Worksheet Properties
 
@@ -487,6 +497,12 @@ dobCol.eachCell({ includeEmpty: true }, function(cell, rowNumber) {
     // ...
 });
 
+// add a column of new values
+worksheet.getColumn(6).values = [1,2,3,4,5];
+
+// add a sparse column of values
+worksheet.getColumn(7).values = [,,2,3,,5,,7,,,,11];
+
 // cut one or more columns (columns to the right are shifted left)
 // If column properties have been definde, they will be cut or moved accordingly
 // Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
@@ -578,7 +594,7 @@ row.values = {
     dob: new Date()
 };
 
-// Insert a page break prior to the row
+// Insert a page break below the row
 row.addPageBreak();
 
 // Iterate over all rows that have values in a worksheet
@@ -1099,6 +1115,15 @@ worksheet.properties.outlineLevelCol = 2;
 expect(worksheet.getColumn(3).collapsed).to.be.false;
 ```
 
+The outline properties can be set on the worksheet
+
+```javascript
+worksheet.properties.outlineProperties = {
+  summaryBelow: false,
+  summaryRight: false,
+};
+```
+
 ## Images
 
 Adding images to a worksheet is a two-step process.
@@ -1311,7 +1336,8 @@ workbook.csv.write(stream, { sheetName: 'Page name' })
 // read from a file with European Date-Times
 var workbook = new Excel.Workbook();
 var options = {
-    dateFormat: 'DD/MM/YYYY HH:mm:ss'
+    dateFormat: 'DD/MM/YYYY HH:mm:ss',
+    dateUTC: true, // use utc when rendering dates
 };
 workbook.csv.readFile(filename, options)
     .then(function(worksheet) {
@@ -1351,6 +1377,8 @@ The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write 
 
 Dates are formatted using the npm module [moment](https://www.npmjs.com/package/moment).
  If no dateFormat is supplied, moment.ISO_8601 is used.
+ When writing a CSV you can supply the boolean dateUTC as true to have ExcelJS parse the date without automatically
+ converting the timezone using `moment.utc()`.
 
 ### Streaming I/O
 
@@ -1794,4 +1822,31 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.7.1   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/423">Don't break when attempting to import a zip file that's not an Excel file (eg. .numbers) #423</a>. Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. This change makes exceljs more reslilient when opening non-excel files.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/434">Fixes #419 : Updates readme. #434</a>. Thanks to <a href="https://github.com/getsomecoke">Vishnu Kyatannawar</a> for this contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/436">Don't break when docProps/core.xml contains a &lt;cp:version&gt; tag #436</a>. Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. This change handles core.xml files with empty version tags.</li></ul>
 | 0.8.0   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/442">Add Base64 Image support for the .addImage() method #442</a>. Thanks to <a href="https://github.com/jwmann">James W Mann</a> for this contribution.</li><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/453">update moment to 2.19.3 #453</a>. Thanks to <a href="https://github.com/cooltoast">Markan Patel</a> for this contribution.</li></ul> |
 | 0.8.1   | <ul><li> Merged <a href="https://github.com/guyonroche/exceljs/pull/457">Additional information about font family property #457</a>. Thanks to <a href="https://github.com/kayakyakr">kayakyakr</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/459">Fixes #458 #459</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/458">Add style to column causes it to be hidden #458</a>. Thanks to <a href="https://github.com/AJamesPhillips">Alexander James Phillips</a> for this contribution. </li> </ul> |
+| 0.8.2   | <ul><li>Merged <a href="https://github.com/guyonroche/exceljs/pull/466">Don't break when loading an Excel file containing a chartsheet #466</a>. Thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/471">Hotfix/sheet order#257 #471</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/257">Sheet Order #257</a>. Thanks to <a href="https://github.com/robbi">Robbi</a> for this contribution. </li> </ul> |
+| 0.8.3   | <ul> <li> Assimilated <a href="https://github.com/guyonroche/exceljs/pull/463">fix #79 outdated dependencies in unzip2</a>. Thanks to <a href="https://github.com/jsamr">Jules Sam. Randolph</a> for starting this fix and a really big thanks to <a href="https://github.com/kachkaev">Alexander Kachkaev</a> for finding the final solution. </li> </ul> |
+| 0.8.4   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/479">Round Excel date to nearest millisecond when converting to javascript date #479</a>. Thanks to <a href="https://github.com/bjet007">Benoit Jean</a> for this contribution. </li> </ul> |
+| 0.8.5   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/485">Bug fix: wb.worksheets/wb.eachSheet caused getWorksheet(0) to return sheet #485</a>. Thanks to <a href="https://github.com/mah110020">mah110020</a> for this contribution. </li> </ul> |
+| 0.9.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/489">Feature/issue 424 #489</a>. This fixes <a href="https://github.com/guyonroche/exceljs/issues/424">No way to control summaryBelow or summaryRight #424</a>. Many thanks to <a href="https://github.com/sarahdmsi">Sarah</a> for this contribution. </li> </ul>  |
+| 0.9.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/490">add type definition #490</a>. This adds type definitions to ExcelJS! Many thanks to <a href="https://github.com/taoqf">taoqf</a> for this contribution. </li> </ul> |
+| 1.0.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/494">Add Node 8 and Node 9 to continuous integration testing #494</a>. Many thanks to <a href="https://github.com/cooltoast">Markan Patel</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/508">Small README fix #508</a>. Many thanks to <a href="https://github.com/lbguilherme">Guilherme Bernal</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/501">Add support for inlineStr, including rich text #501</a>. Many thanks to <a href="https://github.com/linguamatics-pdenes">linguamatics-pdenes</a> and <a href="https://github.com/robscotts4rb">Rob Scott</a> for their efforts towards this contribution. Since this change is technically a breaking change (the rendered XML for inline strings will change) I'm making this a major release! </li> </ul> |
+| 1.0.1   | <ul> <li> Fixed <a href="https://github.com/guyonroche/exceljs/issues/520">spliceColumns problem when the number of columns are important #520</a>. </li> </ul> |
+| 1.0.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/524">Loosen exceljs's dependency requirements for moment #524</a>. Many thanks to <a href="https://github.com/nicoladefranceschi">nicoladefranceschi</a> for this contribution. This change addresses <a href="https://github.com/guyonroche/exceljs/issues/517">Ability to use external "moment" package #517</a>. </li> </ul> |
+| 1.1.0   | <ul> <li> Addressed <a href="https://github.com/guyonroche/exceljs/issues/514">Is there a way inserting values in columns. #514</a>. Added a new getter/setter property to Column to get and set column values (see <a href="#columns">Columns</a> for details). </li> </ul> |
+| 1.1.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/532">Include index.d.ts in published packages #532</a>. To fix <a href="https://github.com/guyonroche/exceljs/issues/525">TypeScript definitions missing from npm package #525</a>. Many thanks to <a href="https://github.com/saschanaz">Kagami Sascha Rosylight</a> for this contribution. </li> </ul> |
+| 1.1.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/536">Don't break when docProps/core.xml contains <cp:contentType /> #536</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> (and reviewers) for this contribution. </li> </ul> |
+| 1.1.3   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/537">Try to handle the case where a &lt;c&gt; element is missing an r attribute #537</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
+| 1.2.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/544">Add dateUTC flag to CSV Writing #544</a>. Many thanks to <a href="https://github.com/zgriesinger">Zackery Griesinger</a> for this contribution. </li> </ul> |
+| 1.2.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/547">worksheet name is writable #547</a>. Many thanks to <a href="https://github.com/f111fei">xzper</a> for this contribution. </li> </ul> |
+| 1.3.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/549">Add CSV write buffer support #549</a>. Many thanks to <a href="https://github.com/jloveridge">Jarom Loveridge</a> for this contribution. </li> </ul> |
+| 1.4.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/541">Discussion: Customizable row/cell limit #541</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
+| 1.4.3   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/552">Get the right text out of hyperlinked formula cells #552</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> and <a href="https://github.com/holm">Christian Holm</a> for this contribution. </li> </ul> |
+| 1.4.5   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/556">Add test case with a huge file #556</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> and <a href="https://github.com/holm">Christian Holm</a> for this contribution. </li> </ul> |
+| 1.4.6   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/557">Update README.md to reflect correct functionality of row.addPageBreak() #557</a>. Many thanks to <a href="https://github.com/raj7desai">RajDesai</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/558">fix index.d.ts #558</a>. Many thanks to <a href="https://github.com/Diluka">Diluka</a> for this contribution. </li> </ul> |
+| 1.4.7   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/562">List /xl/sharedStrings.xml in [Content_Types].xml only if one of the … #562</a>. Many thanks to <a href="https://github.com/priidikvaikla">Priidik Vaikla</a> for this contribution. </li> </ul> |
+| 1.4.8   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/562">List /xl/sharedStrings.xml in [Content_Types].xml only if one of the … #562</a>. Many thanks to <a href="https://github.com/priidikvaikla">Priidik Vaikla</a> for this contribution. </li> <li> Fixed issue with above where shared strings were used but the content type was not added. </li> </ul> |
+| 1.4.9   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/562">List /xl/sharedStrings.xml in [Content_Types].xml only if one of the … #562</a>. Many thanks to <a href="https://github.com/priidikvaikla">Priidik Vaikla</a> for this contribution. </li> <li> Fixed issue with above where shared strings were used but the content type was not added. </li> <li> Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/581">1.4.8 broke writing Excel files with useSharedStrings:true #581</a>. </li> </ul> |
+| 1.4.10  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/564">core-xform: Tolerate a missing cp: namespace for the coreProperties element #564</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
+| 1.4.12  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/567">Avoid error on malformed address #567</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/571">Added a missing Promise&lt;void&gt; in index.d.ts #571</a>. Many thanks to <a href="https://github.com/carboneater">Gabriel Fournier</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/548">Is workbook.commit() still a promise or not #548</a> </li> </ul> |
+| 1.4.13  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/574">Issue #488 #574</a>. Many thanks to <a href="https://github.com/dljenkins">dljenkins</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. </li> </ul> |
+| 1.5.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/577">Sheet add state for hidden or show #577</a>. Many thanks to <a href="https://github.com/Hsinfu">Freddie Hsinfu Huang</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/226">hide worksheet and reorder sheets #226</a>. </li> </ul> |
 

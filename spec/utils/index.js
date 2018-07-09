@@ -135,7 +135,24 @@ module.exports = {
       eachColumnKey(f) {
         _.each(this._keys, f);
       },
-
+      eachRow(opt, f) {
+        if (!f) {
+          f = opt;
+          opt = {};
+        }
+        if (opt && opt.includeEmpty) {
+          var n = this.rows.length;
+          for (var i = 1; i <= n; i++) {
+            f(this.getRow(i), i);
+          }
+        } else {
+          this.rows.forEach(function (r, i) {
+            if (r || includeEmpty) {
+              f(r, i + 1);
+            }
+          });
+        }
+      },
     };
   }
 };

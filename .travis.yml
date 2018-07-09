@@ -2,8 +2,8 @@ language: node_js
 node_js:
   - 6
   - 7
-before_script:
-  - npm run build
+  - 8
+  - 9
 script:
   - npm test
 notifications:
