@@ -333,7 +333,7 @@ export interface CellHyperlinkValue {
 
 export interface CellFormulaValue {
 	formula: string;
-	result: number | string | Date;
+	result?: number | string | Date;
 }
 
 export interface CellSharedFormulaValue {
