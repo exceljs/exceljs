@@ -235,10 +235,13 @@ var worksheet = workbook.getWorksheet(1);
 ## Worksheet State
 
 // make worksheet visible
-worksheet.state = 'show';
+worksheet.state = 'visible';
 
 // make worksheet hidden
 worksheet.state = 'hidden';
+
+// make worksheet hidden from 'hide/unhide' dialog
+worksheet.state = 'veryHidden';
 
 ## Worksheet Properties
 
@@ -1849,4 +1852,3 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.4.12  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/567">Avoid error on malformed address #567</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/571">Added a missing Promise&lt;void&gt; in index.d.ts #571</a>. Many thanks to <a href="https://github.com/carboneater">Gabriel Fournier</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/548">Is workbook.commit() still a promise or not #548</a> </li> </ul> |
 | 1.4.13  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/574">Issue #488 #574</a>. Many thanks to <a href="https://github.com/dljenkins">dljenkins</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. </li> </ul> |
 | 1.5.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/577">Sheet add state for hidden or show #577</a>. Many thanks to <a href="https://github.com/Hsinfu">Freddie Hsinfu Huang</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/226">hide worksheet and reorder sheets #226</a>. </li> </ul> |
-
