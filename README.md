@@ -645,11 +645,20 @@ var numValues = row.actualCellCount;
 ## Handling Individual Cells
 
 ```javascript
+var cell = worksheet.getCell('C3');
+
 // Modify/Add individual cell
-worksheet.getCell('C3').value = new Date(1968, 5, 1);
+cell.value = new Date(1968, 5, 1);
 
 // query a cell's type
-expect(worksheet.getCell('C3').type).toEqual(Excel.ValueType.Date);
+expect(cell.type).toEqual(Excel.ValueType.Date);
+
+// use string value of cell
+myInput.value = cell.text;
+
+// use html-safe string for rendering...
+var html = '<div>' + cell.html + '</div>';
+
 ```
 
 ## Merged Cells
