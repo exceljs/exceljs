@@ -182,7 +182,7 @@ describe('Workbook', function() {
       var ws = wb.addWorksheet('Hello');
       ws.getCell('A1').value = 'World!';
       wb.language = 'Klingon';
-      wb.revision = new Date(Date.UTC(2016, 10, 1, 12));
+      wb.revision = 2;
       wb.contentStauts = 'Final';
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
@@ -191,7 +191,7 @@ describe('Workbook', function() {
         })
         .then(function(wb2) {
           expect(wb2.language).to.equal(wb.language);
-          expect(wb2.revision).to.equalDate(wb.revision);
+          expect(wb2.revision).to.equal(wb.revision);
           expect(wb2.contentStatus).to.equal(wb.contentStatus);
         });
     });
@@ -242,7 +242,7 @@ describe('Workbook', function() {
 
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME);
     });
-    
+
     it('a lot of sheets to xlsx file', function() {
       this.timeout(10000);
 
@@ -267,7 +267,7 @@ describe('Workbook', function() {
           }
         });
     });
-    
+
     it('csv file', function() {
       this.timeout(5000);
 
@@ -591,7 +591,7 @@ describe('Workbook', function() {
         {state: 'split', xSplit: 1500, activePane: 'topRight'}
       ];
       ws.getCell('A1').value = 'Do the splits!';
-  
+
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
@@ -624,13 +624,13 @@ describe('Workbook', function() {
         testUtils.views.book.visible,
         testUtils.views.book.hidden
       ];
-  
+
       var ws1 = wb.addWorksheet('one');
       ws1.views = [testUtils.views.sheet.frozen];
-  
+
       var ws2 = wb.addWorksheet('two');
       ws2.views = [testUtils.views.sheet.split];
-  
+
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
           var wb2 = new Excel.Workbook();
@@ -638,10 +638,10 @@ describe('Workbook', function() {
         })
         .then(function(wb2) {
           expect(wb2.views).to.deep.equal(wb.views);
-  
+
           var ws1b = wb2.getWorksheet('one');
           expect(ws1b.views).to.deep.equal(ws1.views);
-  
+
           var ws2b = wb2.getWorksheet('two');
           expect(ws2b.views).to.deep.equal(ws2.views);
         });

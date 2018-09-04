@@ -941,7 +941,7 @@ export interface Worksheet {
 	addRows(rows: any[]): void;
 
 	/**
-	 * Get or create row by 0-based index
+	 * Get or create row by 1-based index
 	 */
 	getRow(index: number): Row;
 

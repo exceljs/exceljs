@@ -127,4 +127,20 @@ describe('WorkbookReader', function() {
       });
     });
   });
+
+  describe('with a spreadsheet that contains a shared string with an escaped underscore', function() {
+    before(function() {
+      var testContext = this;
+      var workbook = new Excel.Workbook();
+      return workbook.xlsx.read(fs.createReadStream('./spec/integration/data/shared_string_with_escape.xlsx'))
+        .then(function() {
+          testContext.worksheet = workbook.getWorksheet();
+        });
+    });
+
+    it('should decode the underscore', function() {
+      const cell = this.worksheet.getCell('A1');
+      expect(cell.value).to.equal('_x000D_');
+    });
+  });
 });

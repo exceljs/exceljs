@@ -6,7 +6,8 @@
         <workbookView visibility="hidden" xWindow="0" yWindow="0" windowWidth="12000" windowHeight="24000"/>
     </bookViews>
     <sheets>
-        <sheet name="Values" sheetId="1" r:id="rId1"/>
+        <sheet name="Values" sheetId="1" r:id="rId1" state="show"/>
+        <sheet name="Other" sheetId="2" r:id="rId2" state="hidden"/>
     </sheets>
     <calcPr calcId="171027"/>
 </workbook>

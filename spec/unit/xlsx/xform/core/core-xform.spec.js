@@ -25,6 +25,7 @@ var expectations = [
       keywords: 'xlsx,test',
       category: 'unit test material',
       lastModifiedBy: 'Guyon Roche',
+      revision: 1,
       created: new Date('2016-04-20T16:26:46Z'),
       modified: new Date('2016-05-12T06:52:49Z')
     },

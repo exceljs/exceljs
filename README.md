@@ -16,13 +16,8 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/567">Avoid error on malformed address #567</a>.
-    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/571">Added a missing Promise<void> in index.d.ts #571</a>.
-    Many thanks to <a href="https://github.com/carboneater">Gabriel Fournier</a> for this contribution.
-    This release should fix <a href="https://github.com/guyonroche/exceljs/issues/548">Is workbook.commit() still a promise or not #548</a>
+    Added .html property to Cells to facilitate html-safe rendering.
+    See <a href="#handling-individual-cells">Handling Individual Cells</a> for details.
   </li>
 </ul>
 
@@ -64,6 +59,7 @@ them as they come.
       <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
       <li><a href="#remove-a-worksheet">Remove a Worksheet</a></li>
       <li><a href="#access-worksheets">Access Worksheets</a></li>
+      <li><a href="#worksheet-state">Worksheet State</a></li>
       <li><a href="#worksheet-properties">Worksheet Properties</a></li>
       <li><a href="#page-setup">Page Setup</a></li>
       <li>
@@ -231,6 +227,14 @@ var worksheet = workbook.getWorksheet('My Sheet');
 // fetch sheet by id
 var worksheet = workbook.getWorksheet(1);
 ```
+
+## Worksheet State
+
+// make worksheet visible
+worksheet.state = 'show';
+
+// make worksheet hidden
+worksheet.state = 'hidden';
 
 ## Worksheet Properties
 
@@ -637,11 +641,20 @@ var numValues = row.actualCellCount;
 ## Handling Individual Cells
 
 ```javascript
+var cell = worksheet.getCell('C3');
+
 // Modify/Add individual cell
-worksheet.getCell('C3').value = new Date(1968, 5, 1);
+cell.value = new Date(1968, 5, 1);
 
 // query a cell's type
-expect(worksheet.getCell('C3').type).toEqual(Excel.ValueType.Date);
+expect(cell.type).toEqual(Excel.ValueType.Date);
+
+// use string value of cell
+myInput.value = cell.text;
+
+// use html-safe string for rendering...
+var html = '<div>' + cell.html + '</div>';
+
 ```
 
 ## Merged Cells
@@ -1838,3 +1851,7 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.4.8   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/562">List /xl/sharedStrings.xml in [Content_Types].xml only if one of the … #562</a>. Many thanks to <a href="https://github.com/priidikvaikla">Priidik Vaikla</a> for this contribution. </li> <li> Fixed issue with above where shared strings were used but the content type was not added. </li> </ul> |
 | 1.4.9   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/562">List /xl/sharedStrings.xml in [Content_Types].xml only if one of the … #562</a>. Many thanks to <a href="https://github.com/priidikvaikla">Priidik Vaikla</a> for this contribution. </li> <li> Fixed issue with above where shared strings were used but the content type was not added. </li> <li> Fixed issue <a href="https://github.com/guyonroche/exceljs/issues/581">1.4.8 broke writing Excel files with useSharedStrings:true #581</a>. </li> </ul> |
 | 1.4.10  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/564">core-xform: Tolerate a missing cp: namespace for the coreProperties element #564</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
+| 1.4.12  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/567">Avoid error on malformed address #567</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/571">Added a missing Promise&lt;void&gt; in index.d.ts #571</a>. Many thanks to <a href="https://github.com/carboneater">Gabriel Fournier</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/548">Is workbook.commit() still a promise or not #548</a> </li> </ul> |
+| 1.4.13  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/574">Issue #488 #574</a>. Many thanks to <a href="https://github.com/dljenkins">dljenkins</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. </li> </ul> |
+| 1.5.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/577">Sheet add state for hidden or show #577</a>. Many thanks to <a href="https://github.com/Hsinfu">Freddie Hsinfu Huang</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/226">hide worksheet and reorder sheets #226</a>. </li> </ul> |
+| 1.5.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/582">Update index.d.ts #582</a>. Many thanks to <a href="https://github.com/hankolsen">hankolsen</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/584">Decode the _x<4 hex chars>_ escape notation in shared strings #584</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
