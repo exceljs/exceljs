@@ -16,8 +16,13 @@ npm install exceljs
 
 <ul>
   <li>
-    Added .html property to Cells to facilitate html-safe rendering.
-    See <a href="#handling-individual-cells">Handling Individual Cells</a> for details.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/587">Fix Issue #488 where dt is an invalid date format. #587</a>
+    to fix  <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>.
+    Many thanks to <a href="https://github.com/ilijaz">Iliya Zubakin</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/590">drawing element must be below rowBreaks according to spec or corrupt worksheet #590</a>
+    Many thanks to <a href="https://github.com/nevace">Liam Neville</a> for this contribution.
   </li>
 </ul>
 
@@ -1855,3 +1860,6 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.4.13  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/574">Issue #488 #574</a>. Many thanks to <a href="https://github.com/dljenkins">dljenkins</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. </li> </ul> |
 | 1.5.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/577">Sheet add state for hidden or show #577</a>. Many thanks to <a href="https://github.com/Hsinfu">Freddie Hsinfu Huang</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/226">hide worksheet and reorder sheets #226</a>. </li> </ul> |
 | 1.5.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/582">Update index.d.ts #582</a>. Many thanks to <a href="https://github.com/hankolsen">hankolsen</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/584">Decode the _x<4 hex chars>_ escape notation in shared strings #584</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
+| 1.6.0   | <ul> <li> Added .html property to Cells to facilitate html-safe rendering. See <a href="#handling-individual-cells">Handling Individual Cells</a> for details. </li> </ul> |
+| 1.6.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/587">Fix Issue #488 where dt is an invalid date format. #587</a> to fix  <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. Many thanks to <a href="https://github.com/ilijaz">Iliya Zubakin</a> for this contribution. </li> </ul> |
+
