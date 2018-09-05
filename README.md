@@ -1,6 +1,8 @@
 # ExcelJS
 
 [![Build Status](https://travis-ci.org/guyonroche/exceljs.svg?branch=master)](https://travis-ci.org/guyonroche/exceljs)
+[![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/guyonroche/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/guyonroche/exceljs/context:javascript)
+[![Total Alerts](https://img.shields.io/lgtm/alerts/g/guyonroche/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/guyonroche/exceljs/alerts)
 
 Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
