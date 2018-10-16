@@ -236,7 +236,7 @@ var worksheet = workbook.getWorksheet(1);
 ## Worksheet State
 
 // make worksheet visible
-worksheet.state = 'show';
+worksheet.state = 'visible';
 
 // make worksheet hidden
 worksheet.state = 'hidden';
