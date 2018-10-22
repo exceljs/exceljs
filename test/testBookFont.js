@@ -1,7 +1,3 @@
-var fs = require('fs');
-var _ = require('underscore');
-var Promise = require('bluebird');
-
 var Workbook = require('../lib/doc/workbook');
 
 var filename = process.argv[2];

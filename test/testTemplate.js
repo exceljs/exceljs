@@ -1,9 +1,5 @@
 'use strict';
 
-var fs = require('fs');
-var _ = require('underscore');
-var HrStopwatch = require('./utils/hr-stopwatch');
-
 var Excel = require('../excel');
 
 var inputFile = process.argv[2];

@@ -4,7 +4,10 @@
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
-  "author": "Guyon Roche",
+  "author": {
+    "name": "Guyon Roche",
+    "email": "guyon@live.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/guyonroche/exceljs.git"
@@ -85,17 +88,15 @@
     "grunt-babel": "^6.0.0",
     "grunt-browserify": "^5.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jasmine": "^1.1.0",
+    "grunt-contrib-jasmine": "^2.0.2",
     "grunt-contrib-uglify": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-lib-phantomjs": "^1.1.0",
     "memorystream": "*",
     "mocha": "*",
-    "nsp": "^3.2.1",
     "request": "*",
     "semver": "*",
-    "uglifyjs": "^2.4.10",
-    "underscore": "^1.8.3"
+    "uglifyjs": "^2.4.10"
   },
   "main": "./dist/es5/index.js",
   "types": "./index.d.ts",
