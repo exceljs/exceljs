@@ -28,15 +28,15 @@ class Writable {
 
 var zipEntries = {};
 var zipStream = unzip.Parse();
-zipStream.on('entry',function (entry) {
+zipStream.on('entry', function(entry) {
   if (entry.path === 'xl/media/image1.png') {
     console.log('entry', entry);
   }
   var writable = new Writable(entry.path);
   entry.pipe(writable);
 });
-zipStream.on('close', function () {
-  console.log('zip close')
+zipStream.on('close', function() {
+  console.log('zip close');
 });
 
 var readStream = fs.createReadStream(filename);

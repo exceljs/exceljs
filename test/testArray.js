@@ -9,5 +9,5 @@ a[5] = 'five';
 a[0] = 'zero';
 
 _.each(a, function(i) {
-    console.log(i);
-})
+  console.log(i);
+});

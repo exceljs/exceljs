@@ -3,7 +3,7 @@ var colCache = require('../lib/colcache');
 var arg = process.argv[2];
 
 var match = arg.match(/^[A-Z]+$/);
-var n,l;
+var n, l;
 if (match) {
   n = colCache.l2n(match[0]);
   l = colCache.n2l(n);

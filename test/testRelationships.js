@@ -15,7 +15,7 @@ var tests = {
       filename: '',
       path: '',
       templatename: '',
-      templatepath: ''
+      templatepath: '',
     });
     rt.addOfficeDocument();
   },
@@ -24,7 +24,7 @@ var tests = {
       filename: 'sheet1.xml',
       path: out + '/xl/worksheets',
       templatename: 'sheet.xml',
-      templatepath: '../templates/xl/worksheets'
+      templatepath: '../templates/xl/worksheets',
     });
 
     var lst = ['http://www.google.com', 'https://www.facebook.com'];
@@ -37,17 +37,18 @@ var tests = {
       filename: 'workbook.xml',
       path: out + '/xl',
       templatename: 'workbook.xml',
-      templatepath: '../templates/xl'
+      templatepath: '../templates/xl',
     });
 
     rt.addWorksheet(1);
     rt.addTheme(1);
     rt.addStyles();
     rt.addSharedStrings();
-  }
-}
+  },
+};
 
-testUtils.cleanDir(out)
+testUtils
+  .cleanDir(out)
   .then(function() {
     // init test
     tests[mode]();
@@ -56,13 +57,11 @@ testUtils.cleanDir(out)
     var fullpath = out + '/' + filename;
     console.log('Writing relationship table to ' + fullpath);
     var stream = fs.createWriteStream(fullpath);
-    rt.write(stream)
-      .then(function(){
-        stream.close();
-        console.log('Done.');
-      });
+    rt.write(stream).then(function() {
+      stream.close();
+      console.log('Done.');
+    });
   })
   .catch(function(err) {
     console.log('Caught Error: ' + err);
   });
-

@@ -4,7 +4,7 @@ var filename = process.argv[2];
 (async () => {
   const workbook = new Excel.stream.xlsx.WorkbookWriter({
     filename,
-    useSharedStrings: true
+    useSharedStrings: true,
   });
 
   const worksheet = workbook.addWorksheet('myWorksheet');

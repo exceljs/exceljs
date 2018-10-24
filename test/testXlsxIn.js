@@ -9,7 +9,8 @@ var wb = new Excel.Workbook();
 var stopwatch = new HrStopwatch();
 stopwatch.start();
 
-wb.xlsx.readFile(filename)
+wb.xlsx
+  .readFile(filename)
   .then(function() {
     var micros = stopwatch.microseconds;
 

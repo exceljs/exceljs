@@ -30,7 +30,8 @@
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
     "preversion": "npm run clean && npm run build && npm run test:full",
-    "postversion": "git push --no-verify && git push --tags --no-verify"
+    "postversion": "git push --no-verify && git push --tags --no-verify",
+    "prettier": "prettier --write \"{lib,src,test}/**/*.{ts,tsx,js,jsx,json,css}\""
   },
   "keywords": [
     "xlsx",
@@ -67,11 +68,11 @@
     "sax": "^1.2.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
     "@types/node": "^10.12.0",
     "babel-eslint": "^10.0.1",
     "babel-polyfill": "^6.26.0",
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
     "bluebird": "^3.5.2",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
@@ -80,6 +81,7 @@
     "dirty-chai": "^2.0.1",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
@@ -92,8 +94,10 @@
     "grunt-contrib-uglify": "^4.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-lib-phantomjs": "^1.1.0",
+    "lint-staged": "^7.3.0",
     "memorystream": "^0.3.1",
     "mocha": "^5.2.0",
+    "prettier": "^1.14.3",
     "request": "^2.88.0",
     "semver": "^5.6.0",
     "uglify-js": "^3.4.9"
@@ -105,5 +109,14 @@
     "LICENSE",
     "README.md",
     "index.d.ts"
-  ]
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "{lib,src,test}/**/*.{ts,tsx,js,jsx,json,css}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
 }

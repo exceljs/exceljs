@@ -22,7 +22,7 @@ var filename = process.argv[2];
 var reader = process.argv.length > 3 ? process.argv[3] : 'stream';
 var plan = process.argv.length > 4 ? process.argv[4] : 'one';
 
-var useStream = (reader === 'stream');
+var useStream = reader === 'stream';
 
 function getTimeout() {
   var memory = process.memoryUsage();
@@ -40,12 +40,12 @@ function getTimeout() {
 }
 
 var options = {
-  reader: (useStream ? 'stream' : 'document'),
+  reader: useStream ? 'stream' : 'document',
   filename: filename,
   plan: plan,
   gc: {
-    getTimeout: getTimeout
-  }
+    getTimeout: getTimeout,
+  },
 };
 console.log(JSON.stringify(options, null, '  '));
 
@@ -59,7 +59,7 @@ function logProgress(count) {
   process.stdout.write('Count: ' + txtCount + ', Heap Size: ' + txtHeap + '\u001b[0G');
 }
 
-var colCount = new ColumnSum([3,6,7,8]);
+var colCount = new ColumnSum([3, 6, 7, 8]);
 var hyperlinkCount = 0;
 function checkRow(row) {
   if (row.number > 1) {
@@ -82,7 +82,9 @@ function report() {
 
 if (useStream) {
   var wb = new WorkbookReader(options);
-  wb.on('end', function() { console.log('reached end of stream');});
+  wb.on('end', function() {
+    console.log('reached end of stream');
+  });
   wb.on('finished', report);
   wb.on('worksheet', function(worksheet) {
     worksheet.on('row', checkRow);
@@ -98,20 +100,20 @@ if (useStream) {
   switch (options.plan) {
     case 'zero':
       wb.read(filename, {
-        entries: 'emit'
+        entries: 'emit',
       });
       break;
     case 'one':
       wb.read(filename, {
         entries: 'emit',
-        worksheets: 'emit'
+        worksheets: 'emit',
       });
       break;
     case 'two':
       break;
     case 'hyperlinks':
       wb.read(filename, {
-        hyperlinks: 'emit'
+        hyperlinks: 'emit',
       });
       break;
     default:
@@ -119,7 +121,8 @@ if (useStream) {
   }
 } else {
   var wb = new Workbook();
-  wb.xlsx.readFile(filename)
+  wb.xlsx
+    .readFile(filename)
     .then(function() {
       var ws = wb.getWorksheet('blort');
       ws.eachRow(checkRow);

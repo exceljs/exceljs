@@ -22,7 +22,7 @@ var backgroundId = wb.addImage({
 });
 ws.addImage(imageId, {
   tl: { col: 1, row: 1 },
-  br: { col: 3.5, row: 5.5 }
+  br: { col: 3.5, row: 5.5 },
 });
 ws.addImage(imageId, 'B7:E12');
 
@@ -30,12 +30,13 @@ ws.addBackgroundImage(backgroundId);
 
 var stopwatch = new HrStopwatch();
 stopwatch.start();
-wb.xlsx.writeFile(filename)
+wb.xlsx
+  .writeFile(filename)
   .then(function() {
     var micros = stopwatch.microseconds;
     console.log('Done.');
-    console.log('Time taken:', micros)
+    console.log('Time taken:', micros);
   })
   .catch(function(error) {
-     console.error(error.stack);
+    console.error(error.stack);
   });

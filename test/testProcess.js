@@ -20,7 +20,8 @@ var assert = function(value, failMessage, passMessage) {
 };
 
 // assuming file created by testBookOut
-wb.xlsx.readFile(inputFile)
+wb.xlsx
+  .readFile(inputFile)
   .then(function() {
     console.log('Loaded', inputFile);
 

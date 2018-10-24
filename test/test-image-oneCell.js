@@ -17,17 +17,18 @@ var imageId = wb.addImage({
 ws.addImage(imageId, {
   tl: { col: 0.1125, row: 0.4 },
   br: { col: 2.101046875, row: 3.4 },
-  editAs: 'oneCell'
+  editAs: 'oneCell',
 });
 
 var stopwatch = new HrStopwatch();
 stopwatch.start();
-wb.xlsx.writeFile(filename)
+wb.xlsx
+  .writeFile(filename)
   .then(function() {
     var micros = stopwatch.microseconds;
     console.log('Done.');
-    console.log('Time taken:', micros)
+    console.log('Time taken:', micros);
   })
   .catch(function(error) {
-     console.error(error.stack);
+    console.error(error.stack);
   });

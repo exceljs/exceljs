@@ -5,7 +5,7 @@ var HrStopwatch = require('./utils/hr-stopwatch');
 
 var StreamBuf = require('../lib/utils/stream-buf.js');
 
-var sb = new StreamBuf({bufSize:64});
+var sb = new StreamBuf({ bufSize: 64 });
 sb.write('Hello, World!');
 console.log('Buffer after write: ' + sb.buffers[0].buffer);
 var chunk = sb.read();

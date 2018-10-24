@@ -13,15 +13,15 @@ function testWrite(results) {
     return function() {
       console.log('Write: ' + size);
       var text = utils.randomName(size);
-      var sb = new StringBuf({size:SIZE + 10});
+      var sb = new StringBuf({ size: SIZE + 10 });
       var sw = new HrStopwatch();
       sw.start();
       while (sb.length < SIZE) {
         sb.addText(text);
       }
       sw.stop();
-      a.push('' + size + ':' + (Math.round(sw.span*1000)));
-    }
+      a.push('' + size + ':' + Math.round(sw.span * 1000));
+    };
   }
   return Promise.resolve()
     .then(test(1))
@@ -50,15 +50,15 @@ function testGrow(results) {
     return function() {
       console.log('Grow: ' + size);
       var text = utils.randomName(size);
-      var sb = new StringBuf({size:8});
+      var sb = new StringBuf({ size: 8 });
       var sw = new HrStopwatch();
       sw.start();
       while (sb.length < SIZE) {
         sb.addText(text);
       }
       sw.stop();
-      a.push('' + size + ':' + (Math.round(sw.span*1000)));
-    }
+      a.push('' + size + ':' + Math.round(sw.span * 1000));
+    };
   }
   return Promise.resolve()
     .then(test(1))

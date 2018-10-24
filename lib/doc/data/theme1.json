@@ -61,36 +61,36 @@
         "ea": { "typeface": "" },
         "cs": { "typeface": "" },
         "fonts": [
-          { "script":"Jpan", "typeface": "游ゴシック" },
-          { "script":"Hang", "typeface": "맑은 고딕" },
-          { "script":"Hans", "typeface": "等线" },
-          { "script":"Hant", "typeface": "新細明體" },
-          { "script":"Arab", "typeface": "Arial" },
-          { "script":"Hebr", "typeface": "Arial" },
-          { "script":"Thai", "typeface": "Tahoma" },
-          { "script":"Ethi", "typeface": "Nyala" },
-          { "script":"Beng", "typeface": "Vrinda" },
-          { "script":"Gujr", "typeface": "Shruti" },
-          { "script":"Khmr", "typeface": "DaunPenh" },
-          { "script":"Knda", "typeface": "Tunga" },
-          { "script":"Guru", "typeface": "Raavi" },
-          { "script":"Cans", "typeface": "Euphemia" },
-          { "script":"Cher", "typeface": "Plantagenet Cherokee" },
-          { "script":"Yiii", "typeface": "Microsoft Yi Baiti" },
-          { "script":"Tibt", "typeface": "Microsoft Himalaya" },
-          { "script":"Thaa", "typeface": "MV Boli" },
-          { "script":"Deva", "typeface": "Mangal" },
-          { "script":"Telu", "typeface": "Gautami" },
-          { "script":"Taml", "typeface": "Latha" },
-          { "script":"Syrc", "typeface": "Estrangelo Edessa" },
-          { "script":"Orya", "typeface": "Kalinga" },
-          { "script":"Mlym", "typeface": "Kartika" },
-          { "script":"Laoo", "typeface": "DokChampa" },
-          { "script":"Sinh", "typeface": "Iskoola Pota" },
-          { "script":"Mong", "typeface": "Mongolian Baiti" },
-          { "script":"Viet", "typeface": "Arial" },
-          { "script":"Uigh", "typeface": "Microsoft Uighur" },
-          { "script":"Geor", "typeface": "Sylfaen" }
+          { "script": "Jpan", "typeface": "游ゴシック" },
+          { "script": "Hang", "typeface": "맑은 고딕" },
+          { "script": "Hans", "typeface": "等线" },
+          { "script": "Hant", "typeface": "新細明體" },
+          { "script": "Arab", "typeface": "Arial" },
+          { "script": "Hebr", "typeface": "Arial" },
+          { "script": "Thai", "typeface": "Tahoma" },
+          { "script": "Ethi", "typeface": "Nyala" },
+          { "script": "Beng", "typeface": "Vrinda" },
+          { "script": "Gujr", "typeface": "Shruti" },
+          { "script": "Khmr", "typeface": "DaunPenh" },
+          { "script": "Knda", "typeface": "Tunga" },
+          { "script": "Guru", "typeface": "Raavi" },
+          { "script": "Cans", "typeface": "Euphemia" },
+          { "script": "Cher", "typeface": "Plantagenet Cherokee" },
+          { "script": "Yiii", "typeface": "Microsoft Yi Baiti" },
+          { "script": "Tibt", "typeface": "Microsoft Himalaya" },
+          { "script": "Thaa", "typeface": "MV Boli" },
+          { "script": "Deva", "typeface": "Mangal" },
+          { "script": "Telu", "typeface": "Gautami" },
+          { "script": "Taml", "typeface": "Latha" },
+          { "script": "Syrc", "typeface": "Estrangelo Edessa" },
+          { "script": "Orya", "typeface": "Kalinga" },
+          { "script": "Mlym", "typeface": "Kartika" },
+          { "script": "Laoo", "typeface": "DokChampa" },
+          { "script": "Sinh", "typeface": "Iskoola Pota" },
+          { "script": "Mong", "typeface": "Mongolian Baiti" },
+          { "script": "Viet", "typeface": "Arial" },
+          { "script": "Uigh", "typeface": "Microsoft Uighur" },
+          { "script": "Geor", "typeface": "Sylfaen" }
         ]
       }
     },
@@ -102,9 +102,9 @@
           "type": "gradFill",
           "rotWithShape": true,
           "gsLst": [
-            { "pos":0,      "schemeClr": { "val": "phClr", "lumMod": 110000, "satMod": 105000, "tint": 67000 } },
-            { "pos":50000,  "schemeClr": { "val": "phClr", "lumMod": 105000, "satMod": 103000, "tint": 73000 } },
-            { "pos":100000, "schemeClr": { "val": "phClr", "lumMod": 105000, "satMod": 109000, "tint": 81000 } }
+            { "pos": 0, "schemeClr": { "val": "phClr", "lumMod": 110000, "satMod": 105000, "tint": 67000 } },
+            { "pos": 50000, "schemeClr": { "val": "phClr", "lumMod": 105000, "satMod": 103000, "tint": 73000 } },
+            { "pos": 100000, "schemeClr": { "val": "phClr", "lumMod": 105000, "satMod": 109000, "tint": 81000 } }
           ],
           "lin": { "ang": 5400000, "scaled": false }
         },
@@ -112,28 +112,37 @@
           "type": "gradFill",
           "rotWithShape": true,
           "gsLst": [
-            { "pos":0,      "schemeClr": { "val": "phClr", "satMod": 103000, "lumMod": 102000, "tint":  94000 } },
-            { "pos":50000,  "schemeClr": { "val": "phClr", "satMod": 110000, "lumMod": 100000, "shade": 100000 } },
-            { "pos":100000, "schemeClr": { "val": "phClr", "lumMod": 99000,  "satMod": 120000, "tint":  78000 } }
+            { "pos": 0, "schemeClr": { "val": "phClr", "satMod": 103000, "lumMod": 102000, "tint": 94000 } },
+            { "pos": 50000, "schemeClr": { "val": "phClr", "satMod": 110000, "lumMod": 100000, "shade": 100000 } },
+            { "pos": 100000, "schemeClr": { "val": "phClr", "lumMod": 99000, "satMod": 120000, "tint": 78000 } }
           ],
           "lin": { "ang": 5400000, "scaled": false }
         }
       ],
       "lnStyleLst": [
         {
-          "w": 6350, "cap": "flat", "cmpd": "sng", "algn": "ctr",
+          "w": 6350,
+          "cap": "flat",
+          "cmpd": "sng",
+          "algn": "ctr",
           "solidFill": { "schemeClr": { "val": "phClr" } },
           "prstDash": { "val": "solid" },
           "miter": { "lim": 800000 }
         },
         {
-          "w": 12700, "cap": "flat", "cmpd": "sng", "algn": "ctr",
+          "w": 12700,
+          "cap": "flat",
+          "cmpd": "sng",
+          "algn": "ctr",
           "solidFill": { "schemeClr": { "val": "phClr" } },
           "prstDash": { "val": "solid" },
           "miter": { "lim": 800000 }
         },
         {
-          "w": 19050, "cap": "flat", "cmpd": "sng", "algn": "ctr",
+          "w": 19050,
+          "cap": "flat",
+          "cmpd": "sng",
+          "algn": "ctr",
           "solidFill": { "schemeClr": { "val": "phClr" } },
           "prstDash": { "val": "solid" },
           "miter": { "lim": 800000 }
@@ -146,10 +155,14 @@
           "effectLst": [
             {
               "type": "outerShdw",
-              "blurRad": 57150, "dist": 19050, "dir": 5400000, "algn": "ctr", "rotWithShape": false,
+              "blurRad": 57150,
+              "dist": 19050,
+              "dir": 5400000,
+              "algn": "ctr",
+              "rotWithShape": false,
               "srgbClr": {
                 "val": "000000",
-                "alpha": {"val": 63000 }
+                "alpha": { "val": 63000 }
               }
             }
           ]
@@ -162,9 +175,9 @@
           "type": "gradFill",
           "rotWithShape": true,
           "gsLst": [
-            { "pos":0,      "schemeClr": { "val": "phClr", "tint": 93000, "satMod": 150000, "shade": 90000, "lumMod": 102000 } },
-            { "pos":50000,  "schemeClr": { "val": "phClr", "tint": 98000, "satMod": 130000, "shade": 73000, "lumMod": 103000 } },
-            { "pos":100000, "schemeClr": { "val": "phClr", "shade": 63000, "satMod": 120000 } }
+            { "pos": 0, "schemeClr": { "val": "phClr", "tint": 93000, "satMod": 150000, "shade": 90000, "lumMod": 102000 } },
+            { "pos": 50000, "schemeClr": { "val": "phClr", "tint": 98000, "satMod": 130000, "shade": 73000, "lumMod": 103000 } },
+            { "pos": 100000, "schemeClr": { "val": "phClr", "shade": 63000, "satMod": 120000 } }
           ],
           "lin": { "ang": 5400000, "scaled": false }
         }

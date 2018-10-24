@@ -7,14 +7,14 @@ var sheetname = process.argv[2];
 var stringname = process.argv[3];
 var relname = process.argv[4];
 
-var ws = new Worksheet()
+var ws = new Worksheet();
 
 ws.columns = [
-  { header: 'Col 1', key:'key', width: 25 },
-  { header: 'Col 2', key:'name', width: 25 },
-  { header: 'Col 3', key:'age' },
-  { header: 'Col 4', key:'addr1', width: 8 },
-  { header: 'Col 5', key:'addr2', width: 10 },
+  { header: 'Col 1', key: 'key', width: 25 },
+  { header: 'Col 2', key: 'name', width: 25 },
+  { header: 'Col 3', key: 'age' },
+  { header: 'Col 4', key: 'addr1', width: 8 },
+  { header: 'Col 5', key: 'addr2', width: 10 },
 ];
 
 ws.getCell('A2').value = 'Hello, World!';
@@ -31,9 +31,9 @@ ws.getCell('B5').value = 'merge 3x3';
 ws.mergeCells('B5', 'D7');
 
 ws.getCell('C8').value = 'merge 1x2';
-ws.mergeCells(8,3,9,3);
+ws.mergeCells(8, 3, 9, 3);
 
-ws.getCell('A10').value = {text:'www.google.com', hyperlink: 'http://www.google.com'};
+ws.getCell('A10').value = { text: 'www.google.com', hyperlink: 'http://www.google.com' };
 
 var promises = [];
 
@@ -49,11 +49,9 @@ console.log('Writing relationship table to ' + relname);
 var relstream = fs.createWriteStream(relname);
 promises.push(ws.relationships.write(relstream));
 
-
-Promise.all(promises)
-  .then(function(){
-    sheetstream.close();
-    stringstream.close();
-    relstream.close();
-    console.log('Done.');
-  });
+Promise.all(promises).then(function() {
+  sheetstream.close();
+  stringstream.close();
+  relstream.close();
+  console.log('Done.');
+});

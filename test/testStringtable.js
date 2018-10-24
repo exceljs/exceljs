@@ -13,8 +13,7 @@ _.each(lst, function(item) {
 
 console.log('Writing sharedstrings to ' + filename);
 var stream = fs.createWriteStream(filename);
-st.write(stream)
-  .then(function() {
-    stream.close();
-    console.log('Done.');
-  });
+st.write(stream).then(function() {
+  stream.close();
+  console.log('Done.');
+});

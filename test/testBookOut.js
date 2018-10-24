@@ -14,7 +14,7 @@ var ws = wb.addWorksheet('blort');
 var fonts = {
   arialBlackUI14: { name: 'Arial Black', family: 2, size: 14, underline: true, italic: true },
   comicSansUdB16: { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true },
-  whiteText: { name: 'Arial Black', family: 2, size: 14, color: { argb: 'FFFFFFFF' }},
+  whiteText: { name: 'Arial Black', family: 2, size: 14, color: { argb: 'FFFFFFFF' } },
 };
 
 var alignments = [
@@ -46,38 +46,62 @@ var alignments = [
 // ];
 
 var borders = {
-  thin: { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'}},
-  doubleRed: { color: {argb:'FFFF0000'}, top: {style:'double'}, left: {style:'double'}, bottom: {style:'double'}, right: {style:'double'}},
-  thickRainbow: {
-    top: {style:'double', color: {argb:'FFFF00FF'}},
-    left: {style:'double', color: {argb:'FF00FFFF'}},
-    bottom: {style:'double', color: {argb:'FF00FF00'}},
-    right: {style:'double', color: {argb:'FFFF00FF'}},
-    diagonal: {style:'double', color: {argb:'FFFFFF00'}, up: true, down: true},
+  thin: { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } },
+  doubleRed: {
+    color: { argb: 'FFFF0000' },
+    top: { style: 'double' },
+    left: { style: 'double' },
+    bottom: { style: 'double' },
+    right: { style: 'double' },
   },
-  thinWhite: { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'}, color: { argb: 'FFFFFFFF'}},
+  thickRainbow: {
+    top: { style: 'double', color: { argb: 'FFFF00FF' } },
+    left: { style: 'double', color: { argb: 'FF00FFFF' } },
+    bottom: { style: 'double', color: { argb: 'FF00FF00' } },
+    right: { style: 'double', color: { argb: 'FFFF00FF' } },
+    diagonal: { style: 'double', color: { argb: 'FFFFFF00' }, up: true, down: true },
+  },
+  thinWhite: {
+    top: { style: 'thin' },
+    left: { style: 'thin' },
+    bottom: { style: 'thin' },
+    right: { style: 'thin' },
+    color: { argb: 'FFFFFFFF' },
+  },
 };
 
 var fills = {
-  solidGreen: {type: 'pattern', pattern:'solid', fgColor:{argb:'FF00FF00'}},
-  redDarkVertical: {type: 'pattern', pattern:'darkVertical', fgColor:{argb:'FFFF0000'}},
-  redGreenDarkTrellis: {type: 'pattern', pattern:'darkTrellis', fgColor:{argb:'FFFF0000'}, bgColor:{argb:'FF00FF00'}},
-  blueWhiteHGrad: {type: 'gradient', gradient: 'angle', degree: 0,
-    stops: [{position:0, color:{argb:'FF0000FF'}},{position:1, color:{argb:'FFFFFFFF'}}]},
-  rgbPathGrad: {type: 'gradient', gradient: 'path', center:{left:0.5,top:0.5},
-    stops: [{position:0, color:{argb:'FFFF0000'}},{position:0.5, color:{argb:'FF00FF00'}},{position:1, color:{argb:'FF0000FF'}}]},
+  solidGreen: { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF00FF00' } },
+  redDarkVertical: { type: 'pattern', pattern: 'darkVertical', fgColor: { argb: 'FFFF0000' } },
+  redGreenDarkTrellis: { type: 'pattern', pattern: 'darkTrellis', fgColor: { argb: 'FFFF0000' }, bgColor: { argb: 'FF00FF00' } },
+  blueWhiteHGrad: {
+    type: 'gradient',
+    gradient: 'angle',
+    degree: 0,
+    stops: [{ position: 0, color: { argb: 'FF0000FF' } }, { position: 1, color: { argb: 'FFFFFFFF' } }],
+  },
+  rgbPathGrad: {
+    type: 'gradient',
+    gradient: 'path',
+    center: { left: 0.5, top: 0.5 },
+    stops: [
+      { position: 0, color: { argb: 'FFFF0000' } },
+      { position: 0.5, color: { argb: 'FF00FF00' } },
+      { position: 1, color: { argb: 'FF0000FF' } },
+    ],
+  },
 };
 
 ws.columns = [
-  { header: 'Col 1', key:'key', width: 25 },
-  { header: 'Col 2', key:'name', width: 32 },
-  { header: 'Col 3', key:'age', width: 21 },
-  { header: 'Col 4', key:'addr1', width: 18 },
-  { header: 'Col 5', key:'addr2', width: 8 },
+  { header: 'Col 1', key: 'key', width: 25 },
+  { header: 'Col 2', key: 'name', width: 32 },
+  { header: 'Col 3', key: 'age', width: 21 },
+  { header: 'Col 4', key: 'addr1', width: 18 },
+  { header: 'Col 5', key: 'addr2', width: 8 },
   { header: 'Col 6', width: 8 },
   { header: 'Col 7', width: 8 },
   { header: 'Col 8', width: 8, style: { font: fonts.comicSansUdB16, alignment: alignments[1].alignment } },
-  { header: 'Col 9', width: 8, hidden: true }
+  { header: 'Col 9', width: 8, hidden: true },
 ];
 
 ws.getCell('A2').value = 7;
@@ -98,31 +122,31 @@ ws.getCell('D2').border = borders.doubleRed;
 ws.getCell('E2').value = ['Hello', 'World'].join(', ') + '!';
 
 ws.getCell('F2').value = true;
-ws.getCell('G2').value = { error:  '#N/A'};
-ws.getCell('H2').value = { error:  '#VALUE!'};
+ws.getCell('G2').value = { error: '#N/A' };
+ws.getCell('H2').value = { error: '#VALUE!' };
 
-ws.getCell('A3').value = {text: 'www.google.com', hyperlink:'http://www.google.com'};
+ws.getCell('A3').value = { text: 'www.google.com', hyperlink: 'http://www.google.com' };
 ws.getCell('A4').value = 'Boo!';
 ws.getCell('C4').value = 'Hoo!';
 ws.mergeCells('A4', 'C4');
 
 ws.getCell('A5').value = 1;
 ws.getCell('B5').value = 2;
-ws.getCell('C5').value = {formula:'A5+B5', result:3};
+ws.getCell('C5').value = { formula: 'A5+B5', result: 3 };
 
 ws.getCell('A6').value = 'Hello';
 ws.getCell('B6').value = 'World';
-ws.getCell('C6').value = {formula:'CONCATENATE(A6,", ",B6,"!")', result:'Hello, World!'};
+ws.getCell('C6').value = { formula: 'CONCATENATE(A6,", ",B6,"!")', result: 'Hello, World!' };
 ws.getCell('C6').border = borders.thickRainbow;
 
 ws.getCell('A7').value = 1;
 ws.getCell('B7').value = 2;
-ws.getCell('C7').value = {formula:'A7+B7'};
+ws.getCell('C7').value = { formula: 'A7+B7' };
 
 var now = new Date();
 ws.getCell('A8').value = now;
 ws.getCell('B8').value = 0;
-ws.getCell('C8').value = {formula:'A8+B8', result: now};
+ws.getCell('C8').value = { formula: 'A8+B8', result: now };
 
 ws.getCell('A9').value = 1.6;
 ws.getCell('A9').numFmt = '# ?/?';
@@ -178,7 +202,6 @@ ws.getCell('G4').fill = fills.solidGreen;
 ws.getCell('G5').fill = fills.solidGreen;
 ws.getCell('G6').fill = fills.solidGreen;
 
-
 // row and column styles
 ws.getRow(13).font = fonts.arialBlackUI14;
 ws.getCell('H12').value = 'Foo';
@@ -189,8 +212,8 @@ ws.getCell('H14').value = 'Baz';
 
 // hidden stuff
 ws.getRow(16).hidden = true;
-ws.getCell('I15').value = 'You Can\'t See Me!';
-ws.getCell('A16').value = 'You Can\'t See Me!';
+ws.getCell('I15').value = "You Can't See Me!";
+ws.getCell('A16').value = "You Can't See Me!";
 
 var A18 = ws.getCell('A18');
 A18.value = 'Wrap Text - Wrapping Wrapping Wrappity Wrap Wrap Wrap';
@@ -204,7 +227,7 @@ ws.getCell('A2').name = 'Passe';
 ws.getCell('B2').name = 'Passe';
 
 ws.getCell('E2').name = 'Greet';
-ws.getCell('A22').value = {formula:'E2'};
+ws.getCell('A22').value = { formula: 'E2' };
 
 ws.getCell('A24').value = 'Choose';
 ws.getCell('D24').value = 'Hewie';
@@ -216,17 +239,16 @@ ws.getCell('F24').name = 'Nephews';
 ws.getCell('B24').dataValidation = {
   type: 'list',
   allowBlank: true,
-  formulae: ['Nephews']
+  formulae: ['Nephews'],
 };
 
 var stopwatch = new HrStopwatch();
 stopwatch.start();
-wb.xlsx.writeFile(filename)
-  .then(function() {
-    var micros = stopwatch.microseconds;
-    console.log('Done.');
-    console.log('Time taken:', micros)
-  });
+wb.xlsx.writeFile(filename).then(function() {
+  var micros = stopwatch.microseconds;
+  console.log('Done.');
+  console.log('Time taken:', micros);
+});
 // .catch(function(error) {
 //    console.log(error.message);
 // })
