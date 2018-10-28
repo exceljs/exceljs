@@ -83,7 +83,7 @@ describe('Workbook', function() {
         ws.addRow(['not header row']);
       }
 
-      ws.pageSetup.printTitlesRow = '1:2';
+      ws.pageSetup.printTitlesRow = '$1:$2';
 
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
         .then(function() {
