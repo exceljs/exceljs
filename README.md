@@ -309,7 +309,7 @@ worksheet.pageSetup.margins = {
 worksheet.pageSetup.printArea = 'A1:G20';
 
 // Repeat specific rows on every printed page
-worksheet.pageSetup.printTitlesRow = '1:3';
+worksheet.pageSetup.printTitlesRow = '$1:$3';
 
 ```
 
