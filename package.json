@@ -35,11 +35,11 @@
     "pageSetup"
   ],
   "dependencies": {
-    "archiver": "0.15.0",
+    "archiver": "^3.0.0",
     "bluebird": "*",
     "fast-csv": "0.5.7",
     "lodash": "^4.16.2",
-    "moment": "2.11.2",
+    "moment": "^2.22.2",
     "sax": "^0.6.0",
     "unzip2": "^0.2.5"
   },
