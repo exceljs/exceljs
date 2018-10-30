@@ -1,3 +1,4 @@
+Please add demo that shows how to send to client from server and download to the computer instead of only downloading to app
 # ExcelJS
 
 [![Build Status](https://travis-ci.org/guyonroche/exceljs.svg?branch=master)](https://travis-ci.org/guyonroche/exceljs)
