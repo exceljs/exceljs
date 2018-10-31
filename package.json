@@ -29,7 +29,7 @@
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --ext .js lib spec",
     "clean": "rm -rf build/ && rm -rf dist",
-    "build": "./node_modules/.bin/grunt build",
+    "build": "./node_modules/.bin/grunt build --verbose",
     "preversion": "npm run clean && npm run build && npm run test:full",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
