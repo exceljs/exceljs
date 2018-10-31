@@ -29,7 +29,7 @@
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --ext .js lib spec",
     "clean": "rm -rf build/ && rm -rf dist",
-    "build": "./node_modules/.bin/grunt build --verbose",
+    "build": "./node_modules/.bin/grunt build",
     "preversion": "npm run clean && npm run build && npm run test:full",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
@@ -88,7 +88,7 @@
     "grunt-babel": "^6.0.0",
     "grunt-browserify": "^5.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jasmine": "^2.0.2",
+    "grunt-contrib-jasmine": "^1.1.0",
     "grunt-contrib-uglify": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-lib-phantomjs": "^1.1.0",
