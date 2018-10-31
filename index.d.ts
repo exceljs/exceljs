@@ -313,6 +313,12 @@ export interface DataValidation {
 	showInputMessage?: boolean;
 }
 
+export interface Hyperlink {
+	mode: 'external' | 'internal';
+	target: string;
+	display?: string;
+}
+
 export interface CellErrorValue {
 	error: '#N/A' | '#REF!' | '#NAME?' | '#DIV/0!' | '#NULL!' | '#VALUE!' | '#NUM!';
 }
@@ -389,7 +395,6 @@ export interface Cell extends Style, Address {
 	readonly isMerged: boolean;
 	readonly master: Cell;
 	readonly isHyperlink: boolean;
-	readonly hyperlink: string;	// todo
 	readonly text: string;
 	readonly fullAddress: {
 		sheetName: string;
@@ -413,6 +418,10 @@ export interface Cell extends Style, Address {
 	 * prompting to the user to help guide them.
 	 */
 	dataValidation: DataValidation;
+    /**
+	 * Hyperlink for cell
+     */
+    hyperlink: Hyperlink;
 
 	/**
 	 * Value of the cell
@@ -1079,7 +1088,7 @@ export interface Xlsx {
 
 	/**
 	 * read from a stream
-	 * @param stream 
+	 * @param stream
 	 */
 	read(stream: Stream): Promise<Workbook>;
 

@@ -27,8 +27,9 @@ function createSimpleWorkbook() {
   // date-time
   ws.getCell('D1').value = new Date();
 
-  // hyperlink
-  ws.getCell('E1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
+  // hyperlink in number formula
+  ws.getCell('E1').value = {formula: 'A1', result: 7};
+  ws.getCell('E1').hyperlink = {target: 'www.google.com', mode: 'external'};
 
   // number formula
   ws.getCell('A2').value = {formula: 'A1', result: 7};
@@ -75,7 +76,8 @@ describe('Workbook', function() {
     expect(ws.getCell('B1').type).to.equal(Excel.ValueType.String);
     expect(ws.getCell('C1').type).to.equal(Excel.ValueType.Number);
     expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Date);
-    expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Hyperlink);
+
+    expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Formula);
 
     expect(ws.getCell('A2').type).to.equal(Excel.ValueType.Formula);
     expect(ws.getCell('B2').type).to.equal(Excel.ValueType.Formula);
@@ -118,14 +120,14 @@ describe('Workbook', function() {
     wb.addWorksheet('first');
     expect(wb.getWorksheet(0)).to.equal(undefined);
   });
-  
+
   it('returns undefined for sheet 0 after accessing wb.worksheets or wb.eachSheet ', function() {
     var wb = new Excel.Workbook();
     var sheet = wb.addWorksheet('first');
-    
+
     wb.eachSheet(function(){});
     var numSheets = wb.worksheets.length;
-    
+
     expect(numSheets).to.equal(1);
     expect(wb.getWorksheet(0)).to.equal(undefined);
     expect(wb.getWorksheet(1) === sheet).to.equal(true);

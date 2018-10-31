@@ -32,9 +32,6 @@ describe('Worksheet', function() {
       // constructed string - will share recored with B1
       ws.getCell('E1').value = ['Hello', 'World'].join(', ') + '!';
 
-      // hyperlink
-      ws.getCell('F1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
-
       // number formula
       ws.getCell('A2').value = {formula: 'A1', result: 7};
 
@@ -49,8 +46,6 @@ describe('Worksheet', function() {
       expect(ws.getCell('C1').value).to.equal(3.14);
       expect(ws.getCell('D1').value).to.equal(now);
       expect(ws.getCell('E1').value).to.equal('Hello, World!');
-      expect(ws.getCell('F1').value.text).to.equal('www.google.com');
-      expect(ws.getCell('F1').value.hyperlink).to.equal('http://www.google.com');
 
       expect(ws.getCell('A2').value.formula).to.equal('A1');
       expect(ws.getCell('A2').value.result).to.equal(7);
@@ -97,9 +92,6 @@ describe('Worksheet', function() {
       // date-time
       ws.getCell('D1').value = new Date();
 
-      // hyperlink
-      ws.getCell('E1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
-
       // number formula
       ws.getCell('A2').value = {formula: 'A1', result: 7};
 
@@ -113,7 +105,6 @@ describe('Worksheet', function() {
       expect(ws.getCell('B1').type).to.equal(Excel.ValueType.String);
       expect(ws.getCell('C1').type).to.equal(Excel.ValueType.Number);
       expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Date);
-      expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Hyperlink);
 
       expect(ws.getCell('A2').type).to.equal(Excel.ValueType.Formula);
       expect(ws.getCell('B2').type).to.equal(Excel.ValueType.Formula);

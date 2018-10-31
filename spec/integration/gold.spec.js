@@ -29,7 +29,8 @@ describe('Gold Book', function() {
       expect(ws.getCell('B4').value).to.equalDate(new Date('2016-05-17T00:00:00.000Z'));
       expect(ws.getCell('B5').value).to.deep.equal({formula: 'B1', result: 'I am Text'});
 
-      expect(ws.getCell('B6').value).to.deep.equal({hyperlink: 'https://www.npmjs.com/package/exceljs', text: 'exceljs'});
+      expect(ws.getCell('B6').value).to.equal('exceljs');
+      expect(ws.getCell('B6').hyperlink).to.deep.equal({target: 'https://www.npmjs.com/package/exceljs', mode: 'external'});
     });
 
     it('Styles', function() {

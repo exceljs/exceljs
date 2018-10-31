@@ -29,7 +29,6 @@ var self = module.exports = {
     ws.getCell('C1').value = self.testValues.date;
     ws.getCell('D1').value = self.testValues.formulas[0];
     ws.getCell('E1').value = self.testValues.formulas[1];
-    ws.getCell('F1').value = self.testValues.hyperlink;
     ws.getCell('G1').value = self.testValues.str2;
     ws.getCell('H1').value = self.testValues.json.raw;
     ws.getCell('I1').value = true;
@@ -148,16 +147,12 @@ var self = module.exports = {
       expect(ws.getCell('E1').value.formula).to.equal(self.testValues.formulas[1].formula);
       expect(ws.getCell('E1').value.value).to.be.undefined();
       expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Formula);
-      expect(ws.getCell('F1').value).to.deep.equal(self.testValues.hyperlink);
-      expect(ws.getCell('F1').type).to.equal(Excel.ValueType.Hyperlink);
       expect(ws.getCell('G1').value).to.equal(self.testValues.str2);
     } else {
       expect(ws.getCell('D1').value).to.equal(self.testValues.formulas[0].result);
       expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Number);
       expect(ws.getCell('E1').value).to.be.null();
       expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Null);
-      expect(ws.getCell('F1').value).to.deep.equal(self.testValues.hyperlink.hyperlink);
-      expect(ws.getCell('F1').type).to.equal(Excel.ValueType.String);
       expect(ws.getCell('G1').value).to.equal(self.testValues.str2);
     }
 

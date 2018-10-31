@@ -60,7 +60,8 @@ describe('Workbook', function() {
       });
 
       ws.getCell('A1').value = 'Hello, World!';
-      ws.getCell('A2').value = { hyperlink: 'http://www.somewhere.com', text: 'www.somewhere.com' };
+      ws.getCell('A2').value = 'www.somewhere.com';
+      ws.getCell('A2').hyperlink = {target: 'http://www.somewhere.com', mode: 'external'};
       ws.addImage(imageId, 'C3:E6');
 
       return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
@@ -72,11 +73,8 @@ describe('Workbook', function() {
           ws2 = wb2.getWorksheet('blort');
           expect(ws2).to.not.be.undefined();
 
-          expect(ws.getCell('A1').value).to.equal('Hello, World!');
-          expect(ws.getCell('A2').value).to.deep.equal({
-            hyperlink: 'http://www.somewhere.com',
-            text: 'www.somewhere.com'
-          });
+          expect(ws2.getCell('A1').value).to.equal('Hello, World!');
+          expect(ws2.getCell('A2').hyperlink).to.deep.equal({target: 'http://www.somewhere.com', mode: 'external'});
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })

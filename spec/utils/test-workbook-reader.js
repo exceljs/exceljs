@@ -16,8 +16,7 @@ var streamedValues = {
   C1: utils.dateToExcel(testValues.date),
   D1: fillFormula(testValues.formulas[0]),
   E1: fillFormula(testValues.formulas[1]),
-  F1: { sharedString: 1 },
-  G1: { sharedString: 2 },
+  G1: { sharedString: 1 },
 };
 module.exports = {
   testValues: tools.fix(require('./data/sheet-values.json')),
@@ -53,8 +52,6 @@ module.exports = {
                 expect(row.getCell('D').type).to.equal(Excel.ValueType.Formula);
                 expect(row.getCell('E').value).to.deep.equal(streamedValues.E1);
                 expect(row.getCell('E').type).to.equal(Excel.ValueType.Formula);
-                expect(row.getCell('F').value).to.deep.equal(streamedValues.F1);
-                expect(row.getCell('F').type).to.equal(Excel.ValueType.SharedString);
                 expect(row.getCell('G').value).to.deep.equal(streamedValues.G1);
                 break;
 

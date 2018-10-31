@@ -110,20 +110,19 @@ describe('WorkbookReader', function() {
       });
 
       it('should be classified as a formula cell', function() {
-        expect(this.cell.type).to.equal(Excel.ValueType.Hyperlink);
+        expect(this.cell.type).to.equal(Excel.ValueType.Formula);
       });
 
       it('should have text corresponding to the evaluated formula result', function() {
-        expect(this.cell.value.text).to.equal('someone@example.com');
+        expect(this.cell.result).to.equal('someone@example.com');
       });
 
       it('should have the formula source', function() {
-        expect(this.cell.model.formula).to.equal('_xlfn.CONCAT("someone","@example.com")');
+        expect(this.cell.formula).to.equal('_xlfn.CONCAT("someone","@example.com")');
       });
 
       it('should contain the linked url', function() {
-        expect(this.cell.value.hyperlink).to.equal('mailto:someone@example.com');
-        expect(this.cell.hyperlink).to.equal('mailto:someone@example.com');
+        expect(this.cell.hyperlink.target).to.equal('mailto:someone@example.com');
       });
     });
   });

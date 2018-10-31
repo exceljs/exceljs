@@ -54,12 +54,15 @@
       "cells": [
         {"address": "A6", "type": 3, "value": "Hyperlink"},
         {
-          "address": "B6", "type": 5, "hyperlink": "https://www.npmjs.com/package/exceljs", "text": "exceljs",
+          "address": "B6", "type": 3, "value": "https://www.npmjs.com/package/exceljs",
           "style": {"font": {"underline": true, "size": 11, "color": {"theme":10}, "name": "Calibri", "family": 2, "scheme": "minor"} }
         }
       ]
     }
   ],
+  "hyperlinks": {
+    "B6": {"target": "https://www.npmjs.com/package/exceljs", "mode": "external"}
+  },
   "media": [],
   "rowBreaks": []
 }

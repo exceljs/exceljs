@@ -54,7 +54,7 @@
       "cells": [
         {"address": "A6", "type": 3, "value": "Hyperlink", "ssId": 6},
         {
-          "address": "B6", "type": 5, "hyperlink": "https://www.npmjs.com/package/exceljs", "text": "exceljs", "ssId": 7, "styleId": 2,
+          "address": "B6", "type": 3, "value": "https://www.npmjs.com/package/exceljs", "ssId": 7, "styleId": 2,
           "style": {"font": {"underline": true, "size": 11, "color": {"theme":10}, "name": "Calibri", "family": 2, "scheme": "minor"} }
         }
       ]
@@ -63,8 +63,7 @@
   "mergeCells": [],
   "hyperlinks": [
     {
-      "address": "B6", "rId": "rId1",
-      "target": "https://www.npmjs.com/package/exceljs"
+      "address": "B6", "rId": "rId1"
     }
   ],
   "rels": [

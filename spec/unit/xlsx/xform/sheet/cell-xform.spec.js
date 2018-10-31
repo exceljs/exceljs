@@ -24,7 +24,7 @@ var fakeStyles = {
 };
 
 var fakeHyperlinkMap = {
-  H1: 'http://www.foo.com'
+  H1: {target: 'http://www.foo.com', mode: 'external'}
 };
 
 var expectations = [
@@ -116,12 +116,12 @@ var expectations = [
   {
     title: 'Hyperlink',
     create: function() { return new CellXform(); },
-    initialModel: {address: 'H1', type: Enums.ValueType.Hyperlink, hyperlink: 'http://www.foo.com', text: 'www.foo.com'},
-    preparedModel: {address: 'H1', type: Enums.ValueType.Hyperlink, hyperlink: 'http://www.foo.com', text: 'www.foo.com', ssId: 0},
+    initialModel: {address: 'H1', type: Enums.ValueType.String, value: 'Foo'},
+    preparedModel: {address: 'H1', type: Enums.ValueType.String, value: 'Foo', ssId: 0},
     xml: '<c r="H1" t="s"><v>0</v></c>',
     parsedModel: {address: 'H1', type: Enums.ValueType.String, value: 0},
-    reconciledModel: {address: 'H1', type: Enums.ValueType.Hyperlink, text: 'www.foo.com', hyperlink: 'http://www.foo.com'},
     tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
+    reconciledModel: {address: 'H1', type: Enums.ValueType.String, value: 'Foo'},
     options: { sharedStrings: new SharedStringsXform(), hyperlinks: [], hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles }
   },
   {

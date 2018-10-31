@@ -111,11 +111,6 @@ describe('Cell', function() {
     expect(a1.value).to.deep.equal({formula: 'A3', result: undefined});
     expect(a1.type).to.equal(Enums.ValueType.Formula);
 
-    var hyperlinkValue = {hyperlink: 'http://www.link.com', text: 'www.link.com'};
-    expect(a1.value = hyperlinkValue).to.deep.equal(hyperlinkValue);
-    expect(a1.value).to.deep.equal(hyperlinkValue);
-    expect(a1.type).to.equal(Enums.ValueType.Hyperlink);
-
     expect(a1.value = null).to.be.null();
     expect(a1.type).to.equal(Enums.ValueType.Null);
 
@@ -172,58 +167,6 @@ describe('Cell', function() {
     expect(a1.master).to.equal(a1);
   });
 
-  it('upgrades from string to hyperlink', function() {
-    sheetMock.getRow(1);
-    sheetMock.getColumn(1);
-
-    var a1 = sheetMock.getCell('A1');
-
-    var strValue = 'www.link.com';
-    var linkValue = 'http://www.link.com';
-
-    a1.value = strValue;
-
-    a1._upgradeToHyperlink(linkValue);
-
-    expect(a1.type).to.equal(Enums.ValueType.Hyperlink);
-  });
-
-  it('doesn\'t upgrade from non-string to hyperlink', function() {
-    sheetMock.getRow(1);
-    sheetMock.getColumn(1);
-
-    var a1 = sheetMock.getCell('A1');
-
-    var linkValue = 'http://www.link.com';
-
-    // null
-    a1._upgradeToHyperlink(linkValue);
-    expect(a1.type).to.equal(Enums.ValueType.Null);
-
-    // number
-    a1.value = 5;
-    a1._upgradeToHyperlink(linkValue);
-    expect(a1.type).to.equal(Enums.ValueType.Number);
-
-    // date
-    a1.value = new Date();
-    a1._upgradeToHyperlink(linkValue);
-    expect(a1.type).to.equal(Enums.ValueType.Date);
-
-    // formula
-    a1.value = {formula: 'A2'};
-    a1._upgradeToHyperlink(linkValue);
-    expect(a1.type).to.equal(Enums.ValueType.Formula);
-
-    // hyperlink
-    a1.value = {hyperlink: 'http://www.link2.com', text: 'www.link2.com'};
-    a1._upgradeToHyperlink(linkValue);
-    expect(a1.type).to.deep.equal(Enums.ValueType.Hyperlink);
-
-    // cleanup
-    a1.value = null;
-  });
-
   it('inherits column styles', function() {
     sheetMock.getRow(1);
     var column = sheetMock.getColumn(1);
@@ -277,9 +220,6 @@ describe('Cell', function() {
     expect(a1.type).to.deep.equal(Enums.ValueType.Formula);
     expect(a1.effectiveType).to.equal(Enums.ValueType.String);
 
-    a1.value = {hyperlink: 'http://www.link.com', text: 'www.link.com'};
-    expect(a1.type).to.deep.equal(Enums.ValueType.Hyperlink);
-    expect(a1.effectiveType).to.equal(Enums.ValueType.Hyperlink);
   });
 
   it('shares formulas', () => {
