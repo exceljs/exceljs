@@ -1,3 +1,7 @@
+# Forked version to fix
+- Memory leaks and high cpu usage when using read streams
+- Shared strings parsing when using read streams
+
 # ExcelJS
 
 [![Build Status](https://travis-ci.org/guyonroche/exceljs.svg?branch=master)](https://travis-ci.org/guyonroche/exceljs)
