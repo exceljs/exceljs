@@ -1,11 +1,11 @@
 var fs = require('fs');
-var _ = require('underscore');
+var _ = require('../../lib/utils/under-dash.js');
 var Promise = require('bluebird');
 
 var main = module.exports = {
     cleanDir: function(path) {
         var deferred = Promise.defer();
-        
+
         var remove = function(file) {
             var myDeferred = Promise.defer();
             var myHandler = function(err) { if (err) { myDeferred.reject(err)} else { myDeferred.resolve(); }}
@@ -28,7 +28,7 @@ var main = module.exports = {
             });
             return myDeferred.promise;
         }
-        
+
         fs.readdir(path, function(err, files) {
             if(err) {
                 deferred.reject(err);
@@ -37,7 +37,7 @@ var main = module.exports = {
                 _.each(files, function(file) {
                     promises.push(remove(path + "/" + file));
                 });
-                
+
                 Promise.all(promises)
                     .then(function() {
                         deferred.resolve();
@@ -47,24 +47,24 @@ var main = module.exports = {
                     });
             }
         });
-        
+
         return deferred.promise;
     },
-    
+
     randomName: function(length) {
         length = length || 5;
         var text = [];
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    
+
         for( var i=0; i < length; i++ )
             text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
-    
+
         return text.join('');
     },
     randomNum: function(d) {
         return Math.round(Math.random()*d);
     },
-    
+
     fmt: {
         number: function(n) {
             // output large numbers with thousands separator
@@ -79,7 +79,7 @@ var main = module.exports = {
                 r = 3;
             }
             return a.join(',');
-        } 
+        }
     }
 
 };

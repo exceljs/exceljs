@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('../lib/utils/under-dash.js');
 
 var a = [];
 a[3] = 'three';

@@ -1,4 +1,4 @@
-var _ = require('underscore');
+var _ = require('../../lib/utils/under-dash.js');
 
 var ColumnSum = module.exports = function(columns) {
     this.columns = columns;
@@ -16,7 +16,7 @@ ColumnSum.prototype = {
         });
         this.count++;
     },
-    
+
     toString: function() {
         return this.sums.join(', ');
     },

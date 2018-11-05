@@ -1,8 +1,5 @@
 var fs = require('fs');
 var unzip = require('unzip2');
-var _ = require('underscore');
-
-var ss = null;
 
 var filename = process.argv[2];
 console.log('Reading ' + filename);

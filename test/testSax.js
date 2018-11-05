@@ -1,7 +1,5 @@
 var fs = require('fs');
 var events = require('events');
-var _ = require('underscore');
-var Promise = require('bluebird');
 var Sax = require('sax');
 var unzip = require('unzip');
 
@@ -21,7 +19,7 @@ var count = 0;
 var e = new events.EventEmitter();
 e.on('row', function(row) {
     count++;
-    
+
     if (count % 1000 === 0) {
         process.stdout.write('Count:' + count + '\u001b[0G'); // "\033[0G"
     }
