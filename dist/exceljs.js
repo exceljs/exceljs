@@ -8634,9 +8634,9 @@ utils.inherits(WorkSheetXform, BaseXform, {
     this.map.pageMargins.render(xmlStream, pageMarginsModel);
     this.map.printOptions.render(xmlStream, printOptionsModel);
     this.map.pageSetup.render(xmlStream, model.pageSetup);
-    this.map.drawing.render(xmlStream, model.drawing);
-    this.map.picture.render(xmlStream, model.background); // Note: must be after drawing
     this.map.rowBreaks.render(xmlStream, model.rowBreaks);
+    this.map.drawing.render(xmlStream, model.drawing); // Note: must be after rowBreaks
+    this.map.picture.render(xmlStream, model.background); // Note: must be after drawing
 
     xmlStream.closeNode();
   },
@@ -8828,6 +8828,7 @@ var DateXform = module.exports = function (options) {
   this.attrs = options.attrs;
   this._format = options.format || function (dt) {
     try {
+      if (isNaN(dt.getTime())) return '';
       return dt.toISOString();
     } catch (e) {
       return '';

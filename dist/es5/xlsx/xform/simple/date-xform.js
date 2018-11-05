@@ -15,6 +15,7 @@ var DateXform = module.exports = function (options) {
   this.attrs = options.attrs;
   this._format = options.format || function (dt) {
     try {
+      if (isNaN(dt.getTime())) return '';
       return dt.toISOString();
     } catch (e) {
       return '';
