@@ -46,3 +46,5 @@ spec/integration/data/gold
 # bundle files
 /spec/manual/public/exceljs.js
 /spec/manual/public/exceljs.min.js
+
+package-lock.json

@@ -16,13 +16,16 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/587">Fix Issue #488 where dt is an invalid date format. #587</a>
-    to fix  <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>.
-    Many thanks to <a href="https://github.com/ilijaz">Iliya Zubakin</a> for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/595">set type optional #595</a>
+    Many thanks to <a href="https://github.com/taoqf">taoqf</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/590">drawing element must be below rowBreaks according to spec or corrupt worksheet #590</a>
-    Many thanks to <a href="https://github.com/nevace">Liam Neville</a> for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/578">Fix some xlsx stream read xlsx not in guaranteed order problem #578</a>
+    Many thanks to <a href="https://github.com/KMethod">KMethod</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/599">Fix formatting issue in README #599</a>
+    Many thanks to <a href="https://github.com/getsomecoke">Vishnu Kyatannawar</a> for this contribution.
   </li>
 </ul>
 
@@ -138,7 +141,6 @@ them as they come.
       <li><a href="#error-value">Error Value</a></li>
     </ul>
   </li>
-  <li><a href="#Hyperlink">Hyperlink</a></li>
   <li><a href="#config">Config</a></li>
   <li><a href="#known-issues">Known Issues</a></li>
   <li><a href="#release-history">Release History</a></li>
@@ -235,7 +237,8 @@ var worksheet = workbook.getWorksheet(1);
 ```
 
 ## Worksheet State
-```
+
+```javascript
 // make worksheet visible
 worksheet.state = 'visible';
 
@@ -310,7 +313,7 @@ worksheet.pageSetup.margins = {
 worksheet.pageSetup.printArea = 'A1:G20';
 
 // Repeat specific rows on every printed page
-worksheet.pageSetup.printTitlesRow = '$1:$3';
+worksheet.pageSetup.printTitlesRow = '1:3';
 
 ```
 
@@ -1571,13 +1574,20 @@ E.g.
 worksheet.getCell('A1').value = new Date(2017, 2, 15);
 ```
 
-## ~~Hyperlink Value~~ (Deprecated, DO NOT USE)
+## Hyperlink Value
 
-~~Enum: Excel.ValueType.Hyperlink~~
+Enum: Excel.ValueType.Hyperlink
 
-~~A URL with both text and link value.~~
+A URL with both text and link value.
 
-Please refer to [hyperlink](#Hyperlink).
+E.g.
+```javascript
+// link to web
+worksheet.getCell('A1').value = { text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' };
+
+// internal link
+worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\"Sheet2\\"!A1' };
+```
 
 ## Formula Value
 
@@ -1688,22 +1698,6 @@ The current valid Error text values are:
 | Excel.ErrorValue.Null          | #NULL!      |
 | Excel.ErrorValue.Value         | #VALUE!     |
 | Excel.ErrorValue.Num           | #NUM!       |
-
-# Hyperlink
-Internal & external hyperlinks are supported, however, Stream I/O does not support hyperlinks.
-You can add hyperlink to any cell types:
-
-E.g.
-
-```javascript
-worksheet.getCell('A1').value = 'Hello World';
-// Set internal hyperlink, link to Sheet2!A1
-worksheet.getCell('A1').hyperlink = { mode: 'internal', target: 'Sheet2!A1' };
-
-worksheet.getCell('A2').value = { formula: 'A1+A3', result: 7 };
-// Set External hyperlink, link to 'https://google.com'
-worksheet.getCell('A1').hyperlink = { mode: 'external', target: 'https://www.google.com' };
-```
 
 # Interface Changes
 
@@ -1876,4 +1870,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.5.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/582">Update index.d.ts #582</a>. Many thanks to <a href="https://github.com/hankolsen">hankolsen</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/584">Decode the _x<4 hex chars>_ escape notation in shared strings #584</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
 | 1.6.0   | <ul> <li> Added .html property to Cells to facilitate html-safe rendering. See <a href="#handling-individual-cells">Handling Individual Cells</a> for details. </li> </ul> |
 | 1.6.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/587">Fix Issue #488 where dt is an invalid date format. #587</a> to fix  <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. Many thanks to <a href="https://github.com/ilijaz">Iliya Zubakin</a> for this contribution. </li> </ul> |
-
+| 1.6.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/587">Fix Issue #488 where dt is an invalid date format. #587</a> to fix  <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. Many thanks to <a href="https://github.com/ilijaz">Iliya Zubakin</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/590">drawing element must be below rowBreaks according to spec or corrupt worksheet #590</a> Many thanks to <a href="https://github.com/nevace">Liam Neville</a> for this contribution. </li> </ul> |
