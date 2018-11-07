@@ -23,6 +23,10 @@ npm install exceljs
     Merged <a href="https://github.com/guyonroche/exceljs/pull/578">Fix some xlsx stream read xlsx not in guaranteed order problem #578</a>
     Many thanks to <a href="https://github.com/KMethod">KMethod</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/599">Fix formatting issue in README #599</a>
+    Many thanks to <a href="https://github.com/getsomecoke">Vishnu Kyatannawar</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
