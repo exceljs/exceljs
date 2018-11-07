@@ -141,6 +141,7 @@ them as they come.
       <li><a href="#error-value">Error Value</a></li>
     </ul>
   </li>
+  <li><a href="#Hyperlink">Hyperlink</a></li>
   <li><a href="#config">Config</a></li>
   <li><a href="#known-issues">Known Issues</a></li>
   <li><a href="#release-history">Release History</a></li>
@@ -313,7 +314,7 @@ worksheet.pageSetup.margins = {
 worksheet.pageSetup.printArea = 'A1:G20';
 
 // Repeat specific rows on every printed page
-worksheet.pageSetup.printTitlesRow = '1:3';
+worksheet.pageSetup.printTitlesRow = '$1:$3';
 
 ```
 
@@ -1574,20 +1575,13 @@ E.g.
 worksheet.getCell('A1').value = new Date(2017, 2, 15);
 ```
 
-## Hyperlink Value
+## ~~Hyperlink Value~~ (Deprecated, DO NOT USE)
 
-Enum: Excel.ValueType.Hyperlink
+~~Enum: Excel.ValueType.Hyperlink~~
 
-A URL with both text and link value.
+~~A URL with both text and link value.~~
 
-E.g.
-```javascript
-// link to web
-worksheet.getCell('A1').value = { text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' };
-
-// internal link
-worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\"Sheet2\\"!A1' };
-```
+Please refer to [hyperlink](#Hyperlink).
 
 ## Formula Value
 
@@ -1698,6 +1692,20 @@ The current valid Error text values are:
 | Excel.ErrorValue.Null          | #NULL!      |
 | Excel.ErrorValue.Value         | #VALUE!     |
 | Excel.ErrorValue.Num           | #NUM!       |
+
+# Hyperlink
+Internal & external hyperlinks are supported, however, Stream I/O does not support hyperlinks.
+You can add hyperlink to any cell types:
+ E.g.
+ ```javascript
+worksheet.getCell('A1').value = 'Hello World';
+// Set internal hyperlink, link to Sheet2!A1
+worksheet.getCell('A1').hyperlink = { mode: 'internal', target: 'Sheet2!A1' };
+ worksheet.getCell('A2').value = { formula: 'A1+A3', result: 7 };
+// Set External hyperlink, link to 'https://google.com'
+worksheet.getCell('A1').hyperlink = { mode: 'external', target: 'https://www.google.com' };
+```
+
 
 # Interface Changes
 
