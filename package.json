@@ -18,8 +18,8 @@
   "scripts": {
     "pretest": "npm run build",
     "test": "npm run test:full",
-    "test:full": "npm run test:nsp && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
-    "test:nsp": "nsp check",
+    "test:full": "npm run test:audit && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
+    "test:audit": "npm audit",
     "test:unit": "mocha --require spec/config/setup spec/unit --require spec/config/setup-unit --recursive",
     "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
     "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
