@@ -1,4 +1,4 @@
-declare interface Buffer { }
+declare interface Buffer extends ArrayBuffer { }
 declare interface Stream { }
 declare interface Writable { }
 
