@@ -18,11 +18,11 @@ var expectations = [
   {
     title: 'Drawing 1',
     create: function() { return new DrawingXform({tag: 'xdr:from'}); },
-    initialModel: require('./data/drawing.1.0.json'),
-    preparedModel: require('./data/drawing.1.1.json'),
+    initialModel: require('./data/drawing.1.0.js'),
+    preparedModel: require('./data/drawing.1.1.js'),
     xml: fs.readFileSync(__dirname + '/data/drawing.1.2.xml').toString(),
-    parsedModel: require('./data/drawing.1.3.json'),
-    reconciledModel: require('./data/drawing.1.4.json'),
+    parsedModel: require('./data/drawing.1.3.js'),
+    reconciledModel: require('./data/drawing.1.4.js'),
     tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
     options,
   }
