@@ -158,9 +158,16 @@ utils.inherits(WorkbookXform, BaseXform, {
         return;
       }
       worksheet = model.worksheetHash['xl/' + rel.Target];
-      worksheet.name = sheet.name;
-      worksheet.id = sheet.id;
-      worksheets[index++] = worksheet;
+      // If there are "chartsheets" in the file, rel.Target will
+      // come out as chartsheets/sheet1.xml or similar here, and
+      // that won't be in model.worksheetHash.
+      // As we don't have the infrastructure to support chartsheets,
+      // we will ignore them for now:
+      if (worksheet) {
+        worksheet.name = sheet.name;
+        worksheet.id = sheet.id;
+        worksheets[index++] = worksheet;
+      }
     });
 
     // reconcile print areas

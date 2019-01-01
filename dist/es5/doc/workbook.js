@@ -29,10 +29,12 @@ var Workbook = module.exports = function () {
 
 Workbook.prototype = {
   get xlsx() {
-    return this._xlsx || (this._xlsx = new XLSX(this));
+    if (!this._xlsx) this._xlsx = new XLSX(this);
+    return this._xlsx;
   },
   get csv() {
-    return this._csv || (this._csv = new CSV(this));
+    if (!this._csv) this._csv = new CSV(this);
+    return this._csv;
   },
   get nextId() {
     // find the next unique spot to add worksheet
@@ -69,9 +71,13 @@ Workbook.prototype = {
       }
     }
 
+    var lastOrderNo = this._worksheets.reduce(function (acc, ws) {
+      return (ws && ws.orderNo) > acc ? ws.orderNo : acc;
+    }, 0);
     var worksheetOptions = Object.assign({}, options, {
       id: id,
       name: name,
+      orderNo: lastOrderNo + 1,
       workbook: this
     });
 
@@ -107,11 +113,15 @@ Workbook.prototype = {
 
   get worksheets() {
     // return a clone of _worksheets
-    return this._worksheets.filter(Boolean);
+    return this._worksheets.sort(function (a, b) {
+      return a.orderNo - b.orderNo;
+    }).filter(Boolean);
   },
 
   eachSheet: function eachSheet(iteratee) {
-    this._worksheets.forEach(function (sheet) {
+    this._worksheets.sort(function (a, b) {
+      return a.orderNo - b.orderNo;
+    }).forEach(function (sheet) {
       iteratee(sheet, sheet.id);
     });
   },
@@ -148,6 +158,11 @@ Workbook.prototype = {
       worksheets: this._worksheets.filter(Boolean).map(function (worksheet) {
         return worksheet.model;
       }),
+      sheets: this._worksheets.sort(function (a, b) {
+        return a.orderNo - b.orderNo;
+      }).map(function (ws) {
+        return ws.model;
+      }).filter(Boolean),
       definedNames: this._definedNames.model,
       views: this.views,
       company: this.company,
@@ -188,9 +203,13 @@ Workbook.prototype = {
     value.worksheets.forEach(function (worksheetModel) {
       var id = worksheetModel.id;
       var name = worksheetModel.name;
+      var orderNo = value.sheets.findIndex(function (ws) {
+        return ws.id === id;
+      });
       var worksheet = _this._worksheets[id] = new Worksheet({
         id: id,
         name: name,
+        orderNo: orderNo,
         workbook: _this
       });
 

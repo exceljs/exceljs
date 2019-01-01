@@ -26,6 +26,7 @@ var Worksheet = module.exports = function (options) {
 
   // in a workbook, each sheet will have a number
   this.id = options.id;
+  this.orderNo = options.orderNo;
 
   // and a name
   this.name = options.name || 'Sheet' + this.id;
