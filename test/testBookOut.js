@@ -1,5 +1,4 @@
-var fs = require('fs');
-var _ = require('underscore');
+var _ = require('../lib/utils/under-dash.js');
 
 var HrStopwatch = require('./utils/hr-stopwatch');
 

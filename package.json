@@ -1,22 +1,24 @@
 {
   "name": "exceljs",
-  "version": "1.5.1",
+  "version": "1.6.3",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
-  "author": "Guyon Roche",
+  "author": {
+    "name": "Guyon Roche",
+    "email": "guyon@live.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/guyonroche/exceljs.git"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "scripts": {
     "pretest": "npm run build",
     "test": "npm run test:full",
-    "test:full": "npm run test:nsp && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
-    "test:nsp": "nsp check",
+    "test:full": "npm run test:unit && npm run test:integration && npm run test:end-to-end",
     "test:unit": "mocha --require spec/config/setup spec/unit --require spec/config/setup-unit --recursive",
     "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
     "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
@@ -56,16 +58,17 @@
     "pageSetup"
   ],
   "dependencies": {
+    "@types/node": "*",
     "archiver": "^1.3.0",
     "fast-csv": "^2.4.0",
     "jszip": "3.1.3",
     "moment": ">=2.19.3",
     "node-unzip-2": "^0.2.7",
     "promish": ">=5.0.2",
-    "sax": "^1.2.2"
+    "sax": "^1.2.2",
+    "temp": "0.8.3"
   },
   "devDependencies": {
-    "@types/node": "*",
     "babel-eslint": "^7.2.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
@@ -85,17 +88,15 @@
     "grunt-babel": "^6.0.0",
     "grunt-browserify": "^5.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jasmine": "^1.1.0",
+    "grunt-contrib-jasmine": "^2.0.2",
     "grunt-contrib-uglify": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-lib-phantomjs": "^1.1.0",
     "memorystream": "*",
     "mocha": "*",
-    "nsp": "^3.2.1",
     "request": "*",
     "semver": "*",
-    "uglifyjs": "^2.4.10",
-    "underscore": "^1.8.3"
+    "uglifyjs": "^2.4.10"
   },
   "main": "./dist/es5/index.js",
   "types": "./index.d.ts",

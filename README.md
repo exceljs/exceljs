@@ -16,12 +16,16 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/582">Update index.d.ts #582</a>.
-    Many thanks to <a href="https://github.com/hankolsen">hankolsen</a> for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/595">set type optional #595</a>
+    Many thanks to <a href="https://github.com/taoqf">taoqf</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/guyonroche/exceljs/pull/584">Decode the _x<4 hex chars>_ escape notation in shared strings #584</a>.
-    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/578">Fix some xlsx stream read xlsx not in guaranteed order problem #578</a>
+    Many thanks to <a href="https://github.com/KMethod">KMethod</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/guyonroche/exceljs/pull/599">Fix formatting issue in README #599</a>
+    Many thanks to <a href="https://github.com/getsomecoke">Vishnu Kyatannawar</a> for this contribution.
   </li>
 </ul>
 
@@ -234,11 +238,13 @@ var worksheet = workbook.getWorksheet(1);
 
 ## Worksheet State
 
+```javascript
 // make worksheet visible
 worksheet.state = 'show';
 
 // make worksheet hidden
 worksheet.state = 'hidden';
+```
 
 ## Worksheet Properties
 
@@ -645,11 +651,20 @@ var numValues = row.actualCellCount;
 ## Handling Individual Cells
 
 ```javascript
+var cell = worksheet.getCell('C3');
+
 // Modify/Add individual cell
-worksheet.getCell('C3').value = new Date(1968, 5, 1);
+cell.value = new Date(1968, 5, 1);
 
 // query a cell's type
-expect(worksheet.getCell('C3').type).toEqual(Excel.ValueType.Date);
+expect(cell.type).toEqual(Excel.ValueType.Date);
+
+// use string value of cell
+myInput.value = cell.text;
+
+// use html-safe string for rendering...
+var html = '<div>' + cell.html + '</div>';
+
 ```
 
 ## Merged Cells
@@ -1853,3 +1868,7 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.4.12  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/567">Avoid error on malformed address #567</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/571">Added a missing Promise&lt;void&gt; in index.d.ts #571</a>. Many thanks to <a href="https://github.com/carboneater">Gabriel Fournier</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/548">Is workbook.commit() still a promise or not #548</a> </li> </ul> |
 | 1.4.13  | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/574">Issue #488 #574</a>. Many thanks to <a href="https://github.com/dljenkins">dljenkins</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. </li> </ul> |
 | 1.5.0   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/577">Sheet add state for hidden or show #577</a>. Many thanks to <a href="https://github.com/Hsinfu">Freddie Hsinfu Huang</a> for this contribution. This release should fix <a href="https://github.com/guyonroche/exceljs/issues/226">hide worksheet and reorder sheets #226</a>. </li> </ul> |
+| 1.5.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/582">Update index.d.ts #582</a>. Many thanks to <a href="https://github.com/hankolsen">hankolsen</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/584">Decode the _x<4 hex chars>_ escape notation in shared strings #584</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
+| 1.6.0   | <ul> <li> Added .html property to Cells to facilitate html-safe rendering. See <a href="#handling-individual-cells">Handling Individual Cells</a> for details. </li> </ul> |
+| 1.6.1   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/587">Fix Issue #488 where dt is an invalid date format. #587</a> to fix  <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. Many thanks to <a href="https://github.com/ilijaz">Iliya Zubakin</a> for this contribution. </li> </ul> |
+| 1.6.2   | <ul> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/587">Fix Issue #488 where dt is an invalid date format. #587</a> to fix  <a href="https://github.com/guyonroche/exceljs/issues/488">Invalid time value Exception #488</a>. Many thanks to <a href="https://github.com/ilijaz">Iliya Zubakin</a> for this contribution. </li> <li> Merged <a href="https://github.com/guyonroche/exceljs/pull/590">drawing element must be below rowBreaks according to spec or corrupt worksheet #590</a> Many thanks to <a href="https://github.com/nevace">Liam Neville</a> for this contribution. </li> </ul> |
