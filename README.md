@@ -1580,7 +1580,11 @@ A URL with both text and link value.
 E.g.
 ```javascript
 // link to web
-worksheet.getCell('A1').value = { text: 'www.mylink.com', hyperlink: 'http://www.mylink.com' };
+worksheet.getCell('A1').value = {
+  text: 'www.mylink.com',
+  hyperlink: 'http://www.mylink.com',
+  tooltip: 'www.mylink.com'
+};
 
 // internal link
 worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\"Sheet2\\"!A1' };
