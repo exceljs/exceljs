@@ -76,9 +76,9 @@ describe('WorkbookReader', function() {
   });
   
   describe('edit styles in existing file', function(){
-    beforeEach(async function(){
+    beforeEach(function(){
       this.wb = new Excel.Workbook();
-      await this.wb.xlsx.readFile('./spec/integration/data/test-row-styles.xlsx');
+      return this.wb.xlsx.readFile('./spec/integration/data/test-row-styles.xlsx');
     });
     
     it('edit styles of single row instead of all', function () {
