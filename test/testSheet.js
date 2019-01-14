@@ -1,8 +1,6 @@
 var fs = require('fs');
-var _ = require('underscore');
 var Promise = require('bluebird');
 
-var SharedStrings = require('../lib/utils/shared-strings');
 var Worksheet = require('../lib/doc/worksheet');
 
 var sheetname = process.argv[2];

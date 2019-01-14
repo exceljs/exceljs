@@ -33,7 +33,16 @@ var expectations = [
     preparedModel: undefined,
     xml: '',
     tests: ['render', 'renderIn']
+  },
+  {
+    title: 'invalid date',
+    create: function() { return new DateXform({tag: 'date', attr: undefined}); },
+    preparedModel: new Date(undefined),
+    xml: '<date />',
+    tests: ['render']
   }
+
+
 ];
 
 describe('DateXform', function() {

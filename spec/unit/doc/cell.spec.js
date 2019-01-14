@@ -297,4 +297,12 @@ describe('Cell', function() {
     expect(c1.formulaType).to.equal(Enums.FormulaType.Shared);
     expect(c1.formula).to.equal('B1+1');
   });
+
+  it('escapes dangerous html', () => {
+    var a1 = sheetMock.getCell('A1');
+
+    a1.value = '<script>alert("yoohoo")</script>';
+
+    expect(a1.html).to.equal('&lt;script&gt;alert(&quot;yoohoo&quot;)&lt;/script&gt;');
+  });
 });
