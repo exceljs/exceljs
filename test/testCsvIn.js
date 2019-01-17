@@ -1,6 +1,4 @@
-var fs = require('fs');
-var _ = require('underscore');
-var Promise = require('bluebird');
+var _ = require('../lib/utils/under-dash.js');
 
 var Excel = require('../excel');
 

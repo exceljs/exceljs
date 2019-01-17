@@ -1,5 +1,5 @@
 var fs = require('fs');
-var _ = require('underscore');
+var _ = require('../lib/utils/under-dash.js');
 var SharedStrings = require('../lib/utils/shared-strings');
 
 var filename = process.argv[2];

@@ -1,6 +1,3 @@
-var fs = require('fs');
-var _ = require('underscore');
-
 var ExcelJS = require('../excel');
 
 var Workbook = ExcelJS.Workbook;

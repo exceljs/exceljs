@@ -1,5 +1,4 @@
-var fs = require('fs');
-var _ = require('underscore');
+var _ = require('../lib/utils/under-dash.js');
 
 var HrStopwatch = require('./utils/hr-stopwatch');
 
@@ -102,7 +101,7 @@ ws.getCell('F2').value = true;
 ws.getCell('G2').value = { error:  '#N/A'};
 ws.getCell('H2').value = { error:  '#VALUE!'};
 
-ws.getCell('A3').value = {text: 'www.google.com', hyperlink:'http://www.google.com'};
+ws.getCell('A3').value = {text: 'www.google.com', hyperlink:'http://www.google.com', tooltip: 'Google!'};
 ws.getCell('A4').value = 'Boo!';
 ws.getCell('C4').value = 'Hoo!';
 ws.mergeCells('A4', 'C4');
