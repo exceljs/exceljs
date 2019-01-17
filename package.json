@@ -64,7 +64,8 @@
     "moment": "^2.22.2",
     "node-unzip-2": "^0.2.7",
     "promish": "^5.1.1",
-    "sax": "^1.2.4"
+    "sax": "^1.2.4",
+    "temp": "0.8.3"
   },
   "devDependencies": {
     "@types/node": "^10.12.0",
