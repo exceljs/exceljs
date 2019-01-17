@@ -1,19 +1,21 @@
 'use strict';
 
-var PageSetupPropertiesXform = require('../../../../../lib/xlsx/xform/sheet/page-setup-properties-xform');
-var testXformHelper = require('./../test-xform-helper');
+const PageSetupPropertiesXform = require('../../../../../lib/xlsx/xform/sheet/page-setup-properties-xform');
+const testXformHelper = require('./../test-xform-helper');
 
-var expectations = [
+const expectations = [
   {
     title: 'fitToPage',
-    create: function() { return new PageSetupPropertiesXform(); },
-    preparedModel: {fitToPage: true},
+    create() {
+      return new PageSetupPropertiesXform();
+    },
+    preparedModel: { fitToPage: true },
     xml: '<pageSetUpPr fitToPage="1"/>',
-    parsedModel: {fitToPage: true},
-    tests: ['render', 'renderIn', 'parse']
-  }
+    parsedModel: { fitToPage: true },
+    tests: ['render', 'renderIn', 'parse'],
+  },
 ];
 
-describe('PageSetupPropertiesXform', function() {
+describe('PageSetupPropertiesXform', () => {
   testXformHelper(expectations);
 });

@@ -1,28 +1,29 @@
 'use strict';
 
-var fs = require('fs');
-var Promish = require('promish');
-var chai = require('chai');
-var verquire = require('../../utils/verquire');
+const fs = require('fs');
+const Promish = require('promish');
+const chai = require('chai');
+const verquire = require('../../utils/verquire');
 
-var Excel = verquire('excel');
+const Excel = verquire('excel');
 
-var expect = chai.expect;
+const expect = chai.expect;
 
-const IMAGE_FILENAME = __dirname + '/../data/image.png';
-var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
-var fsReadFileAsync = Promish.promisify(fs.readFile);
+const IMAGE_FILENAME = `${__dirname}/../data/image.png`;
+const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
+const fsReadFileAsync = Promish.promisify(fs.readFile);
 
 // =============================================================================
 // Tests
 
-describe('Workbook', function() {
-  describe('Images', function() {
-    it('stores background image', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
-      var wb2, ws2;
-      var imageId = wb.addImage({
+describe('Workbook', () => {
+  describe('Images', () => {
+    it('stores background image', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      let wb2;
+      let ws2;
+      const imageId = wb.addImage({
         filename: IMAGE_FILENAME,
         extension: 'jpeg',
       });
@@ -30,18 +31,19 @@ describe('Workbook', function() {
       ws.getCell('A1').value = 'Hello, World!';
       ws.addBackgroundImage(imageId);
 
-      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-        .then(function() {
+      return wb.xlsx
+        .writeFile(TEST_XLSX_FILE_NAME)
+        .then(() => {
           wb2 = new Excel.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then(function() {
+        .then(() => {
           ws2 = wb2.getWorksheet('blort');
           expect(ws2).to.not.be.undefined();
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })
-        .then(function(imageData) {
+        .then(imageData => {
           const backgroundId2 = ws2.getBackgroundImageId();
           const image = wb2.getImage(backgroundId2);
 
@@ -49,38 +51,43 @@ describe('Workbook', function() {
         });
     });
 
-    it('stores embedded image and hyperlink', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
-      var wb2, ws2;
+    it('stores embedded image and hyperlink', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      let wb2;
+      let ws2;
 
-      var imageId = wb.addImage({
+      const imageId = wb.addImage({
         filename: IMAGE_FILENAME,
         extension: 'jpeg',
       });
 
       ws.getCell('A1').value = 'Hello, World!';
-      ws.getCell('A2').value = { hyperlink: 'http://www.somewhere.com', text: 'www.somewhere.com' };
+      ws.getCell('A2').value = {
+        hyperlink: 'http://www.somewhere.com',
+        text: 'www.somewhere.com',
+      };
       ws.addImage(imageId, 'C3:E6');
 
-      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-        .then(function() {
+      return wb.xlsx
+        .writeFile(TEST_XLSX_FILE_NAME)
+        .then(() => {
           wb2 = new Excel.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then(function() {
+        .then(() => {
           ws2 = wb2.getWorksheet('blort');
           expect(ws2).to.not.be.undefined();
 
           expect(ws.getCell('A1').value).to.equal('Hello, World!');
           expect(ws.getCell('A2').value).to.deep.equal({
             hyperlink: 'http://www.somewhere.com',
-            text: 'www.somewhere.com'
+            text: 'www.somewhere.com',
           });
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })
-        .then(function(imageData) {
+        .then(imageData => {
           const images = ws2.getImages();
           expect(images.length).to.equal(1);
 
@@ -92,12 +99,13 @@ describe('Workbook', function() {
         });
     });
 
-    it('stores embedded image with oneCell', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
-      var wb2, ws2;
+    it('stores embedded image with oneCell', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      let wb2;
+      let ws2;
 
-      var imageId = wb.addImage({
+      const imageId = wb.addImage({
         filename: IMAGE_FILENAME,
         extension: 'jpeg',
       });
@@ -105,21 +113,22 @@ describe('Workbook', function() {
       ws.addImage(imageId, {
         tl: { col: 0.1125, row: 0.4 },
         br: { col: 2.101046875, row: 3.4 },
-        editAs: 'oneCell'
+        editAs: 'oneCell',
       });
 
-      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-        .then(function() {
+      return wb.xlsx
+        .writeFile(TEST_XLSX_FILE_NAME)
+        .then(() => {
           wb2 = new Excel.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then(function() {
+        .then(() => {
           ws2 = wb2.getWorksheet('blort');
           expect(ws2).to.not.be.undefined();
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })
-        .then(function(imageData) {
+        .then(imageData => {
           const images = ws2.getImages();
           expect(images.length).to.equal(1);
 

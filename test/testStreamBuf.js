@@ -1,13 +1,13 @@
-var Promise = require('bluebird');
+const Promise = require('bluebird');
 
-var utils = require('./utils/utils');
-var HrStopwatch = require('./utils/hr-stopwatch');
+const utils = require('./utils/utils');
+const HrStopwatch = require('./utils/hr-stopwatch');
 
-var StreamBuf = require('../lib/utils/stream-buf.js');
+const StreamBuf = require('../lib/utils/stream-buf.js');
 
-var sb = new StreamBuf({bufSize:64});
+const sb = new StreamBuf({ bufSize: 64 });
 sb.write('Hello, World!');
-console.log('Buffer after write: ' + sb.buffers[0].buffer);
-var chunk = sb.read();
-console.log('Chunk: ' + chunk);
-console.log('to UTF8: ' + chunk.toString('UTF8'));
+console.log(`Buffer after write: ${sb.buffers[0].buffer}`);
+const chunk = sb.read();
+console.log(`Chunk: ${chunk}`);
+console.log(`to UTF8: ${chunk.toString('UTF8')}`);

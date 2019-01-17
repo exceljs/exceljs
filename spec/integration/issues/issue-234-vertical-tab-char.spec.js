@@ -1,20 +1,20 @@
 'use strict';
 
-var chai = require('chai');
+const chai = require('chai');
 
-var verquire = require('../../utils/verquire');
+const verquire = require('../../utils/verquire');
 
-var Excel = verquire('excel');
+const Excel = verquire('excel');
 
-var expect = chai.expect;
+const expect = chai.expect;
 
 // this file to contain integration tests created from github issues
-var TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
+const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
-describe('github issues', function() {
-  it('issue 234 - Broken XLSX because of "vertical tab" ascii character in a cell', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('Sheet1');
+describe('github issues', () => {
+  it('issue 234 - Broken XLSX because of "vertical tab" ascii character in a cell', () => {
+    const wb = new Excel.Workbook();
+    const ws = wb.addWorksheet('Sheet1');
 
     // Start of Heading
     ws.getCell('A1').value = 'Hello, \x01World!';
@@ -22,13 +22,14 @@ describe('github issues', function() {
     // Vertical Tab
     ws.getCell('A2').value = 'Hello, \x0bWorld!';
 
-    return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
-      .then(function() {
-        var wb2 = new Excel.Workbook();
+    return wb.xlsx
+      .writeFile(TEST_XLSX_FILE_NAME)
+      .then(() => {
+        const wb2 = new Excel.Workbook();
         return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
       })
-      .then(function(wb2) {
-        var ws2 = wb2.getWorksheet('Sheet1');
+      .then(wb2 => {
+        const ws2 = wb2.getWorksheet('Sheet1');
         expect(ws2.getCell('A1').value).to.equal('Hello, World!');
         expect(ws2.getCell('A2').value).to.equal('Hello, World!');
       });
