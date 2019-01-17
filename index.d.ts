@@ -469,7 +469,7 @@ export interface RowModel {
 	min: number;
 	max: number;
 	height: number;
-	style: Style;
+	style: Partial<Style>;
 	hidden: boolean;
 	outlineLevel: number;
 	collapsed: boolean;
@@ -479,7 +479,7 @@ export interface Row extends Style {
 	readonly worksheet: Worksheet;
 	readonly hasValues: boolean;
 	readonly dimensions: number;
-	model: RowModel | null;
+	model: Partial<RowModel> | null;
 	/**
 	 * Set a specific row height
 	 */
