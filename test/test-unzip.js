@@ -1,43 +1,48 @@
-var fs = require('fs');
-var unzip = require('unzip2');
-var Sax = require('sax');
+const fs = require('fs');
+const unzip = require('unzip2');
+const Sax = require('sax');
 
-var filename = process.argv[2];
+const filename = process.argv[2];
 
 class Writable {
   constructor(name) {
     this.name = name;
     this.buffs = [];
   }
+
   write(buf) {
     this.buffs.push(buf);
   }
+
   end(buf) {
     if (buf) {
       this.buffs.push(buf);
     }
     if (this.name[this.name.length - 1] !== '/') {
-      var length = this.buffs.reduce((t, b) => t + b.length, 0);
+      const length = this.buffs.reduce((t, b) => t + b.length, 0);
       console.log(this.name, length);
     }
   }
+
   on() {}
+
   once() {}
+
   emit() {}
 }
 
-var zipEntries = {};
-var zipStream = unzip.Parse();
-zipStream.on('entry',function (entry) {
+const zipEntries = {};
+const zipStream = unzip.Parse();
+zipStream.on('entry', entry => {
   if (entry.path === 'xl/media/image1.png') {
     console.log('entry', entry);
   }
-  var writable = new Writable(entry.path);
+  const writable = new Writable(entry.path);
   entry.pipe(writable);
 });
-zipStream.on('close', function () {
-  console.log('zip close')
+zipStream.on('close', () => {
+  console.log('zip close');
 });
 
-var readStream = fs.createReadStream(filename);
+const readStream = fs.createReadStream(filename);
 readStream.pipe(zipStream);

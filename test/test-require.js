@@ -1,1 +1,1 @@
-var Excel = require('../excel');
+const Excel = require('../excel');

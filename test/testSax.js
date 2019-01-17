@@ -1,104 +1,107 @@
-var fs = require('fs');
-var events = require('events');
-var Sax = require('sax');
-var unzip = require('unzip');
+const fs = require('fs');
+const events = require('events');
+const Sax = require('sax');
+const unzip = require('node-unzip-2');
 
-var filename = process.argv[2];
+const filename = process.argv[2];
 
-var Row = function(r) {
-    this.number = r;
-    this.cells = {};
-}
+const Row = function(r) {
+  this.number = r;
+  this.cells = {};
+};
 Row.prototype = {
-    add: function(cell) {
-        this.cells[cell.address] = cell;
-    }
-}
+  add(cell) {
+    this.cells[cell.address] = cell;
+  },
+};
 
-var count = 0;
-var e = new events.EventEmitter();
-e.on('row', function(row) {
-    count++;
+let count = 0;
+const e = new events.EventEmitter();
+e.on('row', row => {
+  count++;
 
-    if (count % 1000 === 0) {
-        process.stdout.write('Count:' + count + '\u001b[0G'); // "\033[0G"
-    }
+  if (count % 1000 === 0) {
+    process.stdout.write(`Count:${count}\u001b[0G`); // "\033[0G"
+  }
 });
-e.on('finished', function() {
-    console.log('Finished worksheet: ' + count);
+e.on('finished', () => {
+  console.log(`Finished worksheet: ${count}`);
 });
 
-var zip = unzip.Parse();
-zip.on('entry',function (entry) {
-    if (entry.path.match(/xl\/worksheets\/sheet\d+[.]xml/)) {
-        parseSheet(entry,e);
-    }
+const zip = unzip.Parse();
+zip.on('entry', entry => {
+  if (entry.path.match(/xl\/worksheets\/sheet\d+[.]xml/)) {
+    parseSheet(entry, e);
+  }
 });
 
 function parseSheet(entry, emitter) {
-    var parser = Sax.createStream(true, {});
-    var row = null;
-    var cell = null;
-    var current = null;
-    parser.on('opentag', function(node) {
-        switch(node.name) {
-            case 'row':
-                var r = parseInt(node.attributes.r);
-                row = new Row(r);
-                break;
-            case 'c':
-                cell = {
-                    address: node.attributes.r,
-                    s: parseInt(node.attributes.s),
-                    t: node.attributes.t
-                };
-                break;
-            case 'v':
-                current = cell.v = { text: '' };
-                break;
-            case 'f':
-                current = cell.f = { text: '' };
-                break;
-        }
-    });
-    parser.on('text', function (text) {
-        if (current) {
-            current.text += text;
-        }
-    });
-    parser.on('closetag', function(name) {
-        switch(name) {
-            case 'row':
-                emitter.emit('row', row);
-                row = null;
-                break;
-            case 'c':
-                row.add(cell);
-                break;
-        }
-    });
-    parser.on('end', function() {
-        e.emit('finished');
-    });
-    entry.pipe(parser);
+  const parser = Sax.createStream(true, {});
+  let row = null;
+  let cell = null;
+  let current = null;
+  parser.on('opentag', node => {
+    switch (node.name) {
+      case 'row': {
+        const r = parseInt(node.attributes.r, 10);
+        row = new Row(r);
+        break;
+      }
+      case 'c':
+        cell = {
+          address: node.attributes.r,
+          s: parseInt(node.attributes.s, 10),
+          t: node.attributes.t,
+        };
+        break;
+      case 'v':
+        current = cell.v = { text: '' };
+        break;
+      case 'f':
+        current = cell.f = { text: '' };
+        break;
+      default:
+    }
+  });
+  parser.on('text', text => {
+    if (current) {
+      current.text += text;
+    }
+  });
+  parser.on('closetag', name => {
+    switch (name) {
+      case 'row':
+        emitter.emit('row', row);
+        row = null;
+        break;
+      case 'c':
+        row.add(cell);
+        break;
+      default:
+    }
+  });
+  parser.on('end', () => {
+    e.emit('finished');
+  });
+  entry.pipe(parser);
 }
 
-var stream = fs.createReadStream(filename);
-var eod = false;
-stream.on('end', function() {
-    eod = true;
+const stream = fs.createReadStream(filename);
+let eod = false;
+stream.on('end', () => {
+  eod = true;
 });
 function schedule() {
-    setImmediate(function() {
-        if (!eod) {
-            var data = stream.read(16384);
-            if (data && data.length) {
-                zip.write(data);
-            }
-            schedule();
-        }
-    });
+  setImmediate(() => {
+    if (!eod) {
+      const data = stream.read(16384);
+      if (data && data.length) {
+        zip.write(data);
+      }
+      schedule();
+    }
+  });
 }
 
-//stream.pipe(zip);
+// stream.pipe(zip);
 schedule();

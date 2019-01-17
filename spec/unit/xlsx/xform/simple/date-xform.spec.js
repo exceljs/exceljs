@@ -1,50 +1,58 @@
 'use strict';
 
-var DateXform = require('../../../../../lib/xlsx/xform/simple/date-xform');
-var testXformHelper = require('./../test-xform-helper');
+const DateXform = require('../../../../../lib/xlsx/xform/simple/date-xform');
+const testXformHelper = require('./../test-xform-helper');
 
-var expectations = [
+const expectations = [
   {
     title: 'date',
-    create: function() { return new DateXform({tag: 'date', attr: 'val'}); },
+    create() {
+      return new DateXform({ tag: 'date', attr: 'val' });
+    },
     preparedModel: new Date('2016-07-13T00:00:00Z'),
     xml: '<date val="2016-07-13T00:00:00.000Z"/>',
     parsedModel: new Date('2016-07-13T00:00:00Z'),
-    tests: ['render', 'renderIn', 'parse']
+    tests: ['render', 'renderIn', 'parse'],
   },
   {
     title: 'iso-date',
-    create: function() {
+    create() {
       return new DateXform({
         tag: 'date',
         attr: 'val',
-        format: function(dt) { return dt.toISOString().split('T')[0]; },
-        parse: function(value) { return new Date(value.replace('13', '14')); }
+        format(dt) {
+          return dt.toISOString().split('T')[0];
+        },
+        parse(value) {
+          return new Date(value.replace('13', '14'));
+        },
       });
     },
     preparedModel: new Date('2016-07-13T00:00:00Z'),
     xml: '<date val="2016-07-13"/>',
     parsedModel: new Date('2016-07-14T00:00:00Z'),
-    tests: ['render', 'renderIn', 'parse']
+    tests: ['render', 'renderIn', 'parse'],
   },
   {
     title: 'undefined',
-    create: function() { return new DateXform({tag: 'date', attr: 'val'}); },
+    create() {
+      return new DateXform({ tag: 'date', attr: 'val' });
+    },
     preparedModel: undefined,
     xml: '',
-    tests: ['render', 'renderIn']
+    tests: ['render', 'renderIn'],
   },
   {
     title: 'invalid date',
-    create: function() { return new DateXform({tag: 'date', attr: undefined}); },
+    create() {
+      return new DateXform({ tag: 'date', attr: undefined });
+    },
     preparedModel: new Date(undefined),
     xml: '<date />',
-    tests: ['render']
-  }
-
-
+    tests: ['render'],
+  },
 ];
 
-describe('DateXform', function() {
+describe('DateXform', () => {
   testXformHelper(expectations);
 });

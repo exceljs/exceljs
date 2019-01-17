@@ -1,86 +1,90 @@
-var events = require('events');
-var Sax = require('sax');
-var utils = require('./utils/utils');
+const events = require('events');
+const Sax = require('sax');
+const utils = require('./utils/utils');
 
-var Row = function(r) {
-    this.number = r;
-    this.cells = {};
-}
+const Row = function(r) {
+  this.number = r;
+  this.cells = {};
+};
 Row.prototype = {
-    add: function(cell) {
-        this.cells[cell.address] = cell;
-    }
-}
+  add(cell) {
+    this.cells[cell.address] = cell;
+  },
+};
 
-var parser = Sax.createStream(true, {});
+const parser = Sax.createStream(true, {});
 
-var target = 0;
-var count = 0;
-var e = new events.EventEmitter();
-e.on('drain', function() {
-    setImmediate(function() {
-        var a = [];
-        for (var i = 0; i < 1000; i++) {
-            a.push('<row r="' + (target++) + '">');
-            for (var j = 0; j < 10; j++) {
-                a.push('<cell c="' + j + '">' + utils.randomNum(10000) + '</cell>');
-            }
-            a.push('</row>');
-        }
-        var buf = new Buffer(a.join(''));
-        parser.write(buf);
-    });
-});
-e.on('row', function(row) {
-    if (++count % 1000 === 0) {
-        process.stdout.write('Count:' + count + ', ' + target + '\u001b[0G'); // "\033[0G"
+let target = 0;
+let count = 0;
+const e = new events.EventEmitter();
+e.on('drain', () => {
+  setImmediate(() => {
+    const a = [];
+    for (let i = 0; i < 1000; i++) {
+      a.push(`<row r="${target++}">`);
+      for (let j = 0; j < 10; j++) {
+        a.push(`<cell c="${j}">${utils.randomNum(10000)}</cell>`);
+      }
+      a.push('</row>');
     }
-    if (target - count < 100) {
-        e.emit('drain');
-    }
+    const buf = new Buffer(a.join(''));
+    parser.write(buf);
+  });
 });
-e.on('finished', function() {
-    console.log('Finished worksheet: ' + count);
+e.on('row', row => {
+  if (++count % 1000 === 0) {
+    process.stdout.write(`Count:${count}, ${target}\u001b[0G`); // "\033[0G"
+  }
+  if (target - count < 100) {
+    e.emit('drain');
+  }
+});
+e.on('finished', () => {
+  console.log(`Finished worksheet: ${count}`);
 });
 
-var row = null;
-var cell = null;
-parser.on('opentag', function(node) {
-    //console.log('opentag ' + node.name);
-    switch(node.name) {
-        case 'row':
-            var r = parseInt(node.attributes.r);
-            row = new Row(r);
-            break;
-        case 'cell':
-            var c = parseInt(node.attributes.c);
-            cell = {
-                c: c,
-                value: ''
-            };
-            break;
+let row = null;
+let cell = null;
+parser.on('opentag', node => {
+  // console.log('opentag ' + node.name);
+  switch (node.name) {
+    case 'row': {
+      const r = parseInt(node.attributes.r, 10);
+      row = new Row(r);
+      break;
     }
-});
-parser.on('text', function (text) {
-    //console.log('text ' + text);
-    if (cell) {
-        cell.value += text;
+    case 'cell': {
+      const c = parseInt(node.attributes.c, 10);
+      cell = {
+        c,
+        value: '',
+      };
+      break;
     }
+    default:
+  }
 });
-parser.on('closetag', function(name) {
-    //console.log('closetag ' + name);
-    switch(name) {
-        case 'row':
-            e.emit('row', row);
-            row = null;
-            break;
-        case 'cell':
-            row.add(cell);
-            break;
-    }
+parser.on('text', text => {
+  // console.log('text ' + text);
+  if (cell) {
+    cell.value += text;
+  }
 });
-parser.on('end', function() {
-    e.emit('finished');
+parser.on('closetag', name => {
+  // console.log('closetag ' + name);
+  switch (name) {
+    case 'row':
+      e.emit('row', row);
+      row = null;
+      break;
+    case 'cell':
+      row.add(cell);
+      break;
+    default:
+  }
+});
+parser.on('end', () => {
+  e.emit('finished');
 });
 
 parser.write('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>');

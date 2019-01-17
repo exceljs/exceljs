@@ -1,25 +1,25 @@
 'use strict';
 
-var fs = require('fs');
-var chai = require('chai');
-var expect = chai.expect;
+const fs = require('fs');
+const chai = require('chai');
 
-var TwoCellAnchorXform = require('../../../../../lib/xlsx/xform/drawing/two-cell-anchor-xform');
+const expect = chai.expect;
 
+const TwoCellAnchorXform = require('../../../../../lib/xlsx/xform/drawing/two-cell-anchor-xform');
 
-describe('TwoCellAnchorXform', function() {
-  describe('reconcile', function() {
-    it('should not throw on null picture', function() {
-      var twoCell = new TwoCellAnchorXform();
-      expect(twoCell.reconcile({picture: null}, {})).to.not.throw;
+describe('TwoCellAnchorXform', () => {
+  describe('reconcile', () => {
+    it('should not throw on null picture', () => {
+      const twoCell = new TwoCellAnchorXform();
+      expect(twoCell.reconcile({ picture: null }, {})).to.not.throw;
     });
-    it('should not throw on null tl', function() {
-      var twoCell = new TwoCellAnchorXform();
-      expect(twoCell.reconcile({br: {col: 1, row: 1}}, {})).to.not.throw;
+    it('should not throw on null tl', () => {
+      const twoCell = new TwoCellAnchorXform();
+      expect(twoCell.reconcile({ br: { col: 1, row: 1 } }, {})).to.not.throw;
     });
-    it('should not throw on null br', function() {
-      var twoCell = new TwoCellAnchorXform();
-      expect(twoCell.reconcile({tl: {col: 1, row: 1}}, {})).to.not.throw;
+    it('should not throw on null br', () => {
+      const twoCell = new TwoCellAnchorXform();
+      expect(twoCell.reconcile({ tl: { col: 1, row: 1 } }, {})).to.not.throw;
     });
   });
 });
