@@ -1,4 +1,4 @@
-declare interface Buffer { }
+declare interface Buffer extends ArrayBuffer { }
 declare interface Stream { }
 declare interface Writable { }
 
@@ -585,6 +585,11 @@ export interface Column {
 	 * Styles applied to the column
 	 */
 	style: Partial<Style>;
+
+	/**
+	 * The cell values in the column
+	 */
+	values: ReadonlyArray<CellValue>;
 }
 
 export interface ColumnExtension extends Partial<Style> {
