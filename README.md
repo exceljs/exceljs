@@ -232,10 +232,13 @@ var worksheet = workbook.getWorksheet(1);
 
 ```javascript
 // make worksheet visible
-worksheet.state = 'show';
+worksheet.state = 'visible';
 
 // make worksheet hidden
 worksheet.state = 'hidden';
+
+// make worksheet hidden from 'hide/unhide' dialog
+worksheet.state = 'veryHidden';
 ```
 
 ## Worksheet Properties
