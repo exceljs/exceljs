@@ -9,7 +9,7 @@ var Excel = verquire('excel');
 var expect = chai.expect;
 
 describe('github issues', function() {
-    it('issue 73 and 226 - Read worksheet hidden state', function() {
+    it('pull request 728 - Read worksheet hidden state', function() {
         var wb = new Excel.Workbook();
         return wb.xlsx.readFile('./spec/integration/data/test-pr-728.xlsx')
             .then(function() {
