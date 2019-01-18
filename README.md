@@ -1236,6 +1236,13 @@ workbook.xlsx.readFile(filename)
 // pipe from stream
 var workbook = new Excel.Workbook();
 stream.pipe(workbook.xlsx.createInputStream());
+
+// load from buffer
+var workbook = new Excel.Workbook();
+workbook.xlsx.load(data)
+    .then(function() {
+        // use workbook
+    });
 ```
 
 #### Writing XLSX
