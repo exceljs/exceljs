@@ -1,15 +1,11 @@
 'use strict';
 
-var fs = require('fs');
-var util = require('util');
-var _ = require('underscore');
-var Promise = require('bluebird');
-
 var utils = require('./utils/utils');
 var HrStopwatch = require('./utils/hr-stopwatch');
 var ColumnSum = require('./utils/column-sum');
 
 var Excel = require('../excel');
+
 var Workbook = Excel.Workbook;
 var WorkbookReader = Excel.stream.xlsx.WorkbookReader;
 
@@ -118,6 +114,8 @@ if (useStream) {
         hyperlinks: 'emit'
       });
       break;
+    default:
+      break;
   }
 } else {
   var wb = new Workbook();
@@ -128,5 +126,3 @@ if (useStream) {
     })
     .then(report);
 }
-
-

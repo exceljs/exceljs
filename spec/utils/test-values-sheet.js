@@ -1,10 +1,11 @@
 'use strict';
 
 var expect = require('chai').expect;
+var verquire = require('./verquire');
 
-var _ = require('lodash');
-var Excel = require('../../excel');
 var tools = require('./tools');
+
+var Excel = verquire('excel');
 
 var self = module.exports = {
   testValues: tools.fix(require('./data/sheet-values.json')),
@@ -16,7 +17,7 @@ var self = module.exports = {
     // call it sheet1 so this sheet can be used for csv testing
     var ws = wb.addWorksheet('sheet1', {
       properties: self.properties,
-      pageSetup:  self.pageSetup
+      pageSetup: self.pageSetup
     });
 
     ws.getCell('J10').value = 1;
@@ -31,6 +32,11 @@ var self = module.exports = {
     ws.getCell('F1').value = self.testValues.hyperlink;
     ws.getCell('G1').value = self.testValues.str2;
     ws.getCell('H1').value = self.testValues.json.raw;
+    ws.getCell('I1').value = true;
+    ws.getCell('J1').value = false;
+    ws.getCell('K1').value = self.testValues.Errors.NotApplicable;
+    ws.getCell('L1').value = self.testValues.Errors.Value;
+
     ws.getRow(1).commit();
 
     // merge cell square with numerical value
@@ -73,7 +79,7 @@ var self = module.exports = {
     ws.getRow(5).commit();
 
     ws.getRow(6).height = 42;
-    _.each(self.styles.alignments, function(alignment, index) {
+    self.styles.alignments.forEach(function(alignment, index) {
       var rowNumber = 6;
       var colNumber = index + 1;
       var cell = ws.getCell(rowNumber, colNumber);
@@ -83,7 +89,7 @@ var self = module.exports = {
     ws.getRow(6).commit();
 
     if (options.checkBadAlignments) {
-      _.each(self.styles.badAlignments, function(alignment, index) {
+      self.styles.badAlignments.forEach(function(alignment, index) {
         var rowNumber = 7;
         var colNumber = index + 1;
         var cell = ws.getCell(rowNumber, colNumber);
@@ -104,11 +110,18 @@ var self = module.exports = {
     row8.getCell(4).value = 'RGB Path Gradient';
     row8.getCell(4).fill = self.styles.fills.rgbPathGrad;
     row8.commit();
+
+    // Shared Formula
+    ws.getCell('A9').value = 1;
+    ws.getCell('B9').value = {formula: 'A9+1', result: 2};
+    ws.getCell('C9').value = {sharedFormula: 'B9', result: 3};
+    ws.getCell('D9').value = {sharedFormula: 'B9', result: 4};
+    ws.getCell('E9').value = {sharedFormula: 'B9', result: 5};
   },
 
   checkSheet: function(wb, options) {
     var ws = wb.getWorksheet('sheet1');
-    expect(ws).to.not.be.undefined;
+    expect(ws).to.not.be.undefined();
 
     if (options.checkSheetProperties) {
       expect(ws.getColumn(10).outlineLevel).to.equal(1);
@@ -117,7 +130,7 @@ var self = module.exports = {
       expect(ws.getRow(10).collapsed).to.equal(true);
       expect(ws.properties.outlineLevelCol).to.equal(1);
       expect(ws.properties.outlineLevelRow).to.equal(1);
-      expect(ws.properties.tabColor).to.deep.equal({argb:'FF00FF00'});
+      expect(ws.properties.tabColor).to.deep.equal({argb: 'FF00FF00'});
       expect(ws.properties).to.deep.equal(self.properties);
       expect(ws.pageSetup).to.deep.equal(self.pageSetup);
     }
@@ -133,7 +146,7 @@ var self = module.exports = {
       expect(ws.getCell('D1').value).to.deep.equal(self.testValues.formulas[0]);
       expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Formula);
       expect(ws.getCell('E1').value.formula).to.equal(self.testValues.formulas[1].formula);
-      expect(ws.getCell('E1').value.value).to.be.undefined;
+      expect(ws.getCell('E1').value.value).to.be.undefined();
       expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Formula);
       expect(ws.getCell('F1').value).to.deep.equal(self.testValues.hyperlink);
       expect(ws.getCell('F1').type).to.equal(Excel.ValueType.Hyperlink);
@@ -141,7 +154,7 @@ var self = module.exports = {
     } else {
       expect(ws.getCell('D1').value).to.equal(self.testValues.formulas[0].result);
       expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Number);
-      expect(ws.getCell('E1').value).to.be.null;
+      expect(ws.getCell('E1').value).to.be.null();
       expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Null);
       expect(ws.getCell('F1').value).to.deep.equal(self.testValues.hyperlink.hyperlink);
       expect(ws.getCell('F1').type).to.equal(Excel.ValueType.String);
@@ -150,6 +163,16 @@ var self = module.exports = {
 
     expect(ws.getCell('H1').value).to.equal(self.testValues.json.string);
     expect(ws.getCell('H1').type).to.equal(Excel.ValueType.String);
+
+    expect(ws.getCell('I1').value).to.equal(true);
+    expect(ws.getCell('I1').type).to.equal(Excel.ValueType.Boolean);
+    expect(ws.getCell('J1').value).to.equal(false);
+    expect(ws.getCell('J1').type).to.equal(Excel.ValueType.Boolean);
+
+    expect(ws.getCell('K1').value).to.deep.equal(self.testValues.Errors.NotApplicable);
+    expect(ws.getCell('K1').type).to.equal(Excel.ValueType.Error);
+    expect(ws.getCell('L1').value).to.deep.equal(self.testValues.Errors.Value);
+    expect(ws.getCell('L1').type).to.equal(Excel.ValueType.Error);
 
     // A2:B3
     expect(ws.getCell('A2').value).to.equal(5);
@@ -170,19 +193,19 @@ var self = module.exports = {
       expect(ws.getCell('B3').master).to.equal(ws.getCell('A2'));
 
       // C2:D3
-      expect(ws.getCell('C2').value).to.be.null;
+      expect(ws.getCell('C2').value).to.be.null();
       expect(ws.getCell('C2').type).to.equal(Excel.ValueType.Null);
       expect(ws.getCell('C2').master).to.equal(ws.getCell('C2'));
 
-      expect(ws.getCell('D2').value).to.be.null;
+      expect(ws.getCell('D2').value).to.be.null();
       expect(ws.getCell('D2').type).to.equal(Excel.ValueType.Merge);
       expect(ws.getCell('D2').master).to.equal(ws.getCell('C2'));
 
-      expect(ws.getCell('C3').value).to.be.null;
+      expect(ws.getCell('C3').value).to.be.null();
       expect(ws.getCell('C3').type).to.equal(Excel.ValueType.Merge);
       expect(ws.getCell('C3').master).to.equal(ws.getCell('C2'));
 
-      expect(ws.getCell('D3').value).to.be.null;
+      expect(ws.getCell('D3').value).to.be.null();
       expect(ws.getCell('D3').type).to.equal(Excel.ValueType.Merge);
       expect(ws.getCell('D3').master).to.equal(ws.getCell('C2'));
     }
@@ -222,9 +245,9 @@ var self = module.exports = {
       expect(ws.getCell('F5').numFmt).to.equal(self.testValues.numFmtDate);
       expect(ws.getCell('F5').font).to.deep.equal(self.styles.fonts.comicSansUdB16);
 
-      expect(ws.getRow(5).height).to.be.undefined;
+      expect(ws.getRow(5).height).to.be.undefined();
       expect(ws.getRow(6).height).to.equal(42);
-      _.each(self.styles.alignments, function(alignment, index) {
+      self.styles.alignments.forEach(function(alignment, index) {
         var rowNumber = 6;
         var colNumber = index + 1;
         var cell = ws.getCell(rowNumber, colNumber);
@@ -233,12 +256,12 @@ var self = module.exports = {
       });
 
       if (options.checkBadAlignments) {
-        _.each(self.styles.badAlignments, function(alignment, index) {
+        self.styles.badAlignments.forEach(function(alignment, index) {
           var rowNumber = 7;
           var colNumber = index + 1;
           var cell = ws.getCell(rowNumber, colNumber);
           expect(cell.value).to.equal(alignment.text);
-          expect(cell.alignment).to.be.undefined;
+          expect(cell.alignment).to.be.undefined();
         });
       }
 
@@ -248,7 +271,25 @@ var self = module.exports = {
       expect(row8.getCell(2).fill).to.deep.equal(self.styles.fills.redDarkVertical);
       expect(row8.getCell(3).fill).to.deep.equal(self.styles.fills.redGreenDarkTrellis);
       expect(row8.getCell(4).fill).to.deep.equal(self.styles.fills.rgbPathGrad);
+
+      if (options.checkFormulas) {
+        // Shared Formula
+        expect(ws.getCell('A9').value).to.equal(1);
+        expect(ws.getCell('A9').type).to.equal(Excel.ValueType.Number);
+
+        expect(ws.getCell('B9').value).to.deep.equal({ formula: 'A9+1', result: 2 });
+        expect(ws.getCell('B9').type).to.equal(Excel.ValueType.Formula);
+
+        ['C9', 'D9', 'E9'].forEach((address, index) => {
+          expect(ws.getCell(address).value).to.deep.equal({ sharedFormula: 'B9', result: index + 3 });
+          expect(ws.getCell(address).type).to.equal(Excel.ValueType.Formula);
+        });
+      } else {
+        ['A9', 'B9', 'C9', 'D9', 'E9'].forEach((address, index) => {
+          expect(ws.getCell(address).value).to.equal(index + 1);
+          expect(ws.getCell(address).type).to.equal(Excel.ValueType.Number);
+        });
+      }
     }
-    
   }
 };

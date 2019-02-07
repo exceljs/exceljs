@@ -6,7 +6,9 @@
         <workbookView visibility="hidden" xWindow="0" yWindow="0" windowWidth="12000" windowHeight="24000"/>
     </bookViews>
     <sheets>
-        <sheet name="Values" sheetId="1" r:id="rId1"/>
+        <sheet name="Visible" sheetId="1" r:id="rId1" state="visible"/>
+        <sheet name="Hidden" sheetId="2" r:id="rId2" state="hidden"/>
+        <sheet name="VeryHidden" sheetId="3" r:id="rId3" state="veryHidden"/>
     </sheets>
     <calcPr calcId="171027"/>
 </workbook>

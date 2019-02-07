@@ -6,7 +6,7 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'text',
-    create:  function() { return new PhoneticTextXform(); },
+    create: function() { return new PhoneticTextXform(); },
     preparedModel: { text: 'Hello, World!', sb: 0, eb: 1 },
     xml: '<rPh sb="0" eb="1"><t>Hello, World!</t></rPh>',
     parsedModel: { text: 'Hello, World!', sb: 0, eb: 1 },
@@ -14,14 +14,14 @@ var expectations = [
   },
   {
     title: 'Katakana',
-    create:  function() { return new PhoneticTextXform(); },
-    preparedModel: { sb:0, eb:2, text: 'ヤクワリ'},
+    create: function() { return new PhoneticTextXform(); },
+    preparedModel: { sb: 0, eb: 2, text: 'ヤクワリ'},
     xml: '<rPh sb="0" eb="2"><t>ヤクワリ</t></rPh>',
-    parsedModel: { sb:0, eb:2, text: 'ヤクワリ'},
+    parsedModel: { sb: 0, eb: 2, text: 'ヤクワリ'},
     tests: ['render', 'renderIn', 'parse']
   }
 ];
 
-describe('PhoneticTextXform', function () {
+describe('PhoneticTextXform', function() {
   testXformHelper(expectations);
 });

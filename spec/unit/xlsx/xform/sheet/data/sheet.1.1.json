@@ -64,9 +64,17 @@
   "hyperlinks": [
     {
       "address": "B6", "rId": "rId1",
-      "target": "https://www.npmjs.com/package/exceljs",
-      "targetMode": "External",
-      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
+      "target": "https://www.npmjs.com/package/exceljs"
     }
-  ]
+  ],
+  "rels": [
+    {
+      "Id": "rId1",
+      "Target": "https://www.npmjs.com/package/exceljs",
+      "TargetMode": "External",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
+    }
+  ],
+  "media": [],
+  "rowBreaks": []
 }

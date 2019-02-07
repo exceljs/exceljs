@@ -1,15 +1,14 @@
 'use strict';
 
 var expect = require('chai').expect;
+var verquire = require('./verquire');
 
-var Excel = require('../../excel');
-var tools = require('./tools');
-var Enums = require("../../lib/doc/enums");
+var Enums = verquire('doc/enums');
 
-var self = module.exports = {
+module.exports = {
   rows: {
     removeOnly: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-row-remove-only');
 
         ws.addRow(['1,1', '1,2', '1,3']);
@@ -18,12 +17,12 @@ var self = module.exports = {
         ws.getCell('C4').value = 4.3;
         ws.addRow(['5,1', '5,2', '5,3']);
 
-        ws.spliceRows(2,1);
+        ws.spliceRows(2, 1);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-row-remove-only');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getCell('A1').value).to.equal('1,1');
         expect(ws.getCell('A1').type).to.equal(Enums.ValueType.String);
@@ -59,7 +58,7 @@ var self = module.exports = {
       }
     },
     insertFewer: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-row-insert-fewer');
 
         ws.addRow(['1,1', '1,2', '1,3']);
@@ -68,21 +67,21 @@ var self = module.exports = {
         ws.getCell('C4').value = 4.3;
         ws.addRow(['5,1', '5,2', '5,3']);
 
-        ws.spliceRows(2,2, ['one', 'two', 'three']);
+        ws.spliceRows(2, 2, ['one', 'two', 'three']);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-row-insert-fewer');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
-        expect(ws.getRow(1).values).to.deep.equal([,'1,1', '1,2', '1,3']);
-        expect(ws.getRow(2).values).to.deep.equal([,'one', 'two', 'three']);
-        expect(ws.getRow(3).values).to.deep.equal([,4.1,,4.3]);
-        expect(ws.getRow(4).values).to.deep.equal([,'5,1', '5,2', '5,3']);
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3']);
+        expect(ws.getRow(2).values).to.deep.equal([, 'one', 'two', 'three']);
+        expect(ws.getRow(3).values).to.deep.equal([, 4.1,, 4.3]);
+        expect(ws.getRow(4).values).to.deep.equal([, '5,1', '5,2', '5,3']);
       }
     },
     insertSame: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-row-insert-same');
 
         ws.addRow(['1,1', '1,2', '1,3']);
@@ -91,22 +90,22 @@ var self = module.exports = {
         ws.getCell('C4').value = 4.3;
         ws.addRow(['5,1', '5,2', '5,3']);
 
-        ws.spliceRows(2,2, ['one', 'two', 'three'], ['une', 'deux', 'trois']);
+        ws.spliceRows(2, 2, ['one', 'two', 'three'], ['une', 'deux', 'trois']);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-row-insert-same');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
-        expect(ws.getRow(1).values).to.deep.equal([,'1,1', '1,2', '1,3']);
-        expect(ws.getRow(2).values).to.deep.equal([,'one', 'two', 'three']);
-        expect(ws.getRow(3).values).to.deep.equal([,'une', 'deux', 'trois']);
-        expect(ws.getRow(4).values).to.deep.equal([,4.1,,4.3]);
-        expect(ws.getRow(5).values).to.deep.equal([,'5,1', '5,2', '5,3']);
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3']);
+        expect(ws.getRow(2).values).to.deep.equal([, 'one', 'two', 'three']);
+        expect(ws.getRow(3).values).to.deep.equal([, 'une', 'deux', 'trois']);
+        expect(ws.getRow(4).values).to.deep.equal([, 4.1,, 4.3]);
+        expect(ws.getRow(5).values).to.deep.equal([, '5,1', '5,2', '5,3']);
       }
     },
     insertMore: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-row-insert-more');
 
         ws.addRow(['1,1', '1,2', '1,3']);
@@ -115,25 +114,25 @@ var self = module.exports = {
         ws.getCell('C4').value = 4.3;
         ws.addRow(['5,1', '5,2', '5,3']);
 
-        ws.spliceRows(2,2, ['one', 'two', 'three'], ['une', 'deux', 'trois'], ['uno', 'due', 'tre']);
+        ws.spliceRows(2, 2, ['one', 'two', 'three'], ['une', 'deux', 'trois'], ['uno', 'due', 'tre']);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-row-insert-more');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
-        expect(ws.getRow(1).values).to.deep.equal([,'1,1', '1,2', '1,3']);
-        expect(ws.getRow(2).values).to.deep.equal([,'one', 'two', 'three']);
-        expect(ws.getRow(3).values).to.deep.equal([,'une', 'deux', 'trois']);
-        expect(ws.getRow(4).values).to.deep.equal([,'uno', 'due', 'tre']);
-        expect(ws.getRow(5).values).to.deep.equal([,4.1,,4.3]);
-        expect(ws.getRow(6).values).to.deep.equal([,'5,1', '5,2', '5,3']);
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3']);
+        expect(ws.getRow(2).values).to.deep.equal([, 'one', 'two', 'three']);
+        expect(ws.getRow(3).values).to.deep.equal([, 'une', 'deux', 'trois']);
+        expect(ws.getRow(4).values).to.deep.equal([, 'uno', 'due', 'tre']);
+        expect(ws.getRow(5).values).to.deep.equal([, 4.1,, 4.3]);
+        expect(ws.getRow(6).values).to.deep.equal([, '5,1', '5,2', '5,3']);
       }
     }
   },
   columns: {
     removeOnly: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-column-remove-only');
 
         ws.columns = [
@@ -142,16 +141,16 @@ var self = module.exports = {
           { key: 'dob', width: 10 }
         ];
 
-        ws.addRow({id: 'id1', name: 'name1', dob:'dob1'});
-        ws.addRow({id: 2, dob:'dob2'});
-        ws.addRow({name: 'name3', dob:3});
+        ws.addRow({id: 'id1', name: 'name1', dob: 'dob1'});
+        ws.addRow({id: 2, dob: 'dob2'});
+        ws.addRow({name: 'name3', dob: 3});
 
         ws.spliceColumns(2, 1);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-column-remove-only');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
         expect(ws.getCell('A1').value).to.equal('id1');
         expect(ws.getCell('A1').type).to.equal(Enums.ValueType.String);
@@ -172,7 +171,7 @@ var self = module.exports = {
       }
     },
     insertFewer: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-column-insert-fewer');
 
         ws.addRow(['1,1', '1,2', '1,3', '1,4', '1,5']);
@@ -182,22 +181,22 @@ var self = module.exports = {
         ws.getCell('E4').value = 4.5;
         ws.addRow(['5,1', '5,2', '5,3', '5,4', '5,5']);
 
-        ws.spliceColumns(2,2, ['one', 'two', 'three', 'four', 'five']);
+        ws.spliceColumns(2, 2, ['one', 'two', 'three', 'four', 'five']);
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-column-insert-fewer');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
-        expect(ws.getRow(1).values).to.deep.equal([,'1,1', 'one', '1,4', '1,5']);
-        expect(ws.getRow(2).values).to.deep.equal([,'2,1', 'two', '2,4', '2,5']);
-        expect(ws.getRow(3).values).to.deep.equal([,,'three',,]);
-        expect(ws.getRow(4).values).to.deep.equal([,4.1,'four',,4.5]);
-        expect(ws.getRow(5).values).to.deep.equal([,'5,1', 'five', '5,4', '5,5']);
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one', '1,4', '1,5']);
+        expect(ws.getRow(2).values).to.deep.equal([, '2,1', 'two', '2,4', '2,5']);
+        expect(ws.getRow(3).values).to.deep.equal([, , 'three', ]);
+        expect(ws.getRow(4).values).to.deep.equal([, 4.1, 'four',, 4.5]);
+        expect(ws.getRow(5).values).to.deep.equal([, '5,1', 'five', '5,4', '5,5']);
       }
     },
     insertSame: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-column-insert-same');
 
         ws.addRow(['1,1', '1,2', '1,3', '1,4', '1,5']);
@@ -207,25 +206,25 @@ var self = module.exports = {
         ws.getCell('E4').value = 4.5;
         ws.addRow(['5,1', '5,2', '5,3', '5,4', '5,5']);
 
-        ws.spliceColumns(2,2,
+        ws.spliceColumns(2, 2,
           ['one', 'two', 'three', 'four', 'five'],
           ['une', 'deux', 'trois', 'quatre', 'cinq']
         );
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-column-insert-same');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
-        expect(ws.getRow(1).values).to.deep.equal([,'1,1', 'one', 'une', '1,4', '1,5']);
-        expect(ws.getRow(2).values).to.deep.equal([,'2,1', 'two', 'deux', '2,4', '2,5']);
-        expect(ws.getRow(3).values).to.deep.equal([,,'three', 'trois',,]);
-        expect(ws.getRow(4).values).to.deep.equal([,4.1,'four','quatre',,4.5]);
-        expect(ws.getRow(5).values).to.deep.equal([,'5,1', 'five', 'cinq', '5,4', '5,5']);
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one', 'une', '1,4', '1,5']);
+        expect(ws.getRow(2).values).to.deep.equal([, '2,1', 'two', 'deux', '2,4', '2,5']);
+        expect(ws.getRow(3).values).to.deep.equal([,, 'three', 'trois', ]);
+        expect(ws.getRow(4).values).to.deep.equal([, 4.1, 'four', 'quatre',, 4.5]);
+        expect(ws.getRow(5).values).to.deep.equal([, '5,1', 'five', 'cinq', '5,4', '5,5']);
       }
     },
     insertMore: {
-      addSheet: function(wb, options) {
+      addSheet: function(wb) {
         var ws = wb.addWorksheet('splice-column-insert-more');
 
         ws.addRow(['1,1', '1,2', '1,3', '1,4', '1,5']);
@@ -235,22 +234,22 @@ var self = module.exports = {
         ws.getCell('E4').value = 4.5;
         ws.addRow(['5,1', '5,2', '5,3', '5,4', '5,5']);
 
-        ws.spliceColumns(2,2,
+        ws.spliceColumns(2, 2,
           ['one', 'two', 'three', 'four', 'five'],
           ['une', 'deux', 'trois', 'quatre', 'cinq'],
           ['uno', 'due', 'tre', 'quatro', 'cinque']
         );
       },
 
-      checkSheet: function(wb, options) {
+      checkSheet: function(wb) {
         var ws = wb.getWorksheet('splice-column-insert-more');
-        expect(ws).to.not.be.undefined;
+        expect(ws).to.not.be.undefined();
 
-        expect(ws.getRow(1).values).to.deep.equal([,'1,1', 'one', 'une', 'uno', '1,4', '1,5']);
-        expect(ws.getRow(2).values).to.deep.equal([,'2,1', 'two', 'deux', 'due', '2,4', '2,5']);
-        expect(ws.getRow(3).values).to.deep.equal([,,'three', 'trois','tre',]);
-        expect(ws.getRow(4).values).to.deep.equal([,4.1,'four','quatre','quatro',,4.5]);
-        expect(ws.getRow(5).values).to.deep.equal([,'5,1', 'five', 'cinq', 'cinque', '5,4','5,5']);
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one', 'une', 'uno', '1,4', '1,5']);
+        expect(ws.getRow(2).values).to.deep.equal([, '2,1', 'two', 'deux', 'due', '2,4', '2,5']);
+        expect(ws.getRow(3).values).to.deep.equal([,, 'three', 'trois', 'tre', ]);
+        expect(ws.getRow(4).values).to.deep.equal([, 4.1, 'four', 'quatre', 'quatro',, 4.5]);
+        expect(ws.getRow(5).values).to.deep.equal([, '5,1', 'five', 'cinq', 'cinque', '5,4', '5,5']);
       }
     }
   }

@@ -28,7 +28,7 @@ function createSimpleWorkbook() {
   ws.getCell('D1').value = new Date();
 
   // hyperlink
-  ws.getCell('E1').value = {text: 'www.google.com', hyperlink:'http://www.google.com'};
+  ws.getCell('E1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
 
   // number formula
   ws.getCell('A2').value = {formula: 'A1', result: 7};
@@ -48,7 +48,6 @@ function createSimpleWorkbook() {
 // Tests
 
 describe('Workbook', function() {
-
   it('stores shared string values properly', function() {
     var wb = new Excel.Workbook();
     var ws = wb.addWorksheet('blort');
@@ -87,15 +86,15 @@ describe('Workbook', function() {
     var wb = new Excel.Workbook();
     var ws = wb.addWorksheet('blort');
     ws.getCell('A1').value = {
-      'richText': [
-        {'font': {'size': 12,'color': {'theme': 0},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': 'This is '},
-        {'font': {'italic': true,'size': 12,'color': {'theme': 0},'name': 'Calibri','scheme': 'minor'},'text': 'a'},
-        {'font': {'size': 12,'color': {'theme': 1},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': ' '},
-        {'font': {'size': 12,'color': {'argb': 'FFFF6600'},'name': 'Calibri','scheme': 'minor'},'text': 'colorful'},
-        {'font': {'size': 12,'color': {'theme': 1},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': ' text '},
-        {'font': {'size': 12,'color': {'argb': 'FFCCFFCC'},'name': 'Calibri','scheme': 'minor'},'text': 'with'},
-        {'font': {'size': 12,'color': {'theme': 1},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': ' in-cell '},
-        {'font': {'bold': true,'size': 12,'color': {'theme': 1},'name': 'Calibri','family': 2,'scheme': 'minor'},'text': 'format'}
+      richText: [
+        {font: {size: 12, color: {theme: 0}, name: 'Calibri', family: 2, scheme: 'minor'}, text: 'This is '},
+        {font: {italic: true, size: 12, color: {theme: 0}, name: 'Calibri', scheme: 'minor'}, text: 'a'},
+        {font: {size: 12, color: {theme: 1}, name: 'Calibri', family: 2, scheme: 'minor'}, text: ' '},
+        {font: {size: 12, color: {argb: 'FFFF6600'}, name: 'Calibri', scheme: 'minor'}, text: 'colorful'},
+        {font: {size: 12, color: {theme: 1}, name: 'Calibri', family: 2, scheme: 'minor'}, text: ' text '},
+        {font: {size: 12, color: {argb: 'FFCCFFCC'}, name: 'Calibri', scheme: 'minor'}, text: 'with'},
+        {font: {size: 12, color: {theme: 1}, name: 'Calibri', family: 2, scheme: 'minor'}, text: ' in-cell '},
+        {font: {bold: true, size: 12, color: {theme: 1}, name: 'Calibri', family: 2, scheme: 'minor'}, text: 'format'}
       ]
     };
 
@@ -118,5 +117,17 @@ describe('Workbook', function() {
     var wb = new Excel.Workbook();
     wb.addWorksheet('first');
     expect(wb.getWorksheet(0)).to.equal(undefined);
+  });
+  
+  it('returns undefined for sheet 0 after accessing wb.worksheets or wb.eachSheet ', function() {
+    var wb = new Excel.Workbook();
+    var sheet = wb.addWorksheet('first');
+    
+    wb.eachSheet(function(){});
+    var numSheets = wb.worksheets.length;
+    
+    expect(numSheets).to.equal(1);
+    expect(wb.getWorksheet(0)).to.equal(undefined);
+    expect(wb.getWorksheet(1) === sheet).to.equal(true);
   });
 });

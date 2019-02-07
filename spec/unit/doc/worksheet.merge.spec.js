@@ -1,13 +1,12 @@
 var expect = require('chai').expect;
 
-var _ = require('lodash');
-var Excel = require("../../../excel");
-var Dimensions = require("../../../lib/doc/range");
-var testUtils = require("../../utils/index");
+var Excel = require('../../../excel');
+var Dimensions = require('../../../lib/doc/range');
+var testUtils = require('../../utils/index');
 
 describe('Worksheet', function() {
   describe('Merge Cells', function() {
-    it("references the same top-left value", function() {
+    it('references the same top-left value', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('blort');
 
@@ -54,7 +53,7 @@ describe('Worksheet', function() {
         var d = new Dimensions(range);
         for (var i = d.top; i <= d.bottom; i++) {
           for (var j = d.left; j <= d.right; j++) {
-            var cell = ws.getCell(i,j);
+            var cell = ws.getCell(i, j);
             var masterCell = master ? ws.getCell(master) : cell;
             expect(cell.master.address).to.equal(masterCell.address);
           }

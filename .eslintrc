@@ -1,0 +1,36 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "max-len": [1, 160, 2, {"ignoreComments": true}],
+    "semi": ["error", "always"],
+    "object-property-newline": ["off", { "allowMultiplePropertiesPerLine": true }],
+    "func-names": ["off", "never"],
+    "space-before-function-paren": ["error", "never"],
+    "no-trailing-spaces": ["error", { "skipBlankLines": true }],
+    "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
+    "linebreak-style": ["off"],
+    "no-use-before-define": ["error", { "variables": false, "classes": false, "functions": false }],
+    "no-plusplus": ["off"],
+    "no-underscore-dangle": ["error", { "allowAfterThis": true, "allowAfterSuper": true }],
+    "no-multi-assign": ["off"],
+    "one-var": ["off"],
+    "one-var-declaration-per-line": ["off"],
+    "vars-on-top": ["off"],
+
+    "no-var": ["off"],
+    "arrow-parens": ["off"],
+    "no-prototype-builtins": ["off"],
+    "no-param-reassign": ["off"],
+    "prefer-arrow-callback": ["off"],
+    "comma-dangle": ["off"],
+    "strict": ["off"],
+    "indent": ["off"],
+    "object-shorthand": ["off"],
+    "prefer-template": ["off"],
+    "object-curly-spacing": ["off"],
+    "no-unused-expressions": ["off"],
+    "global-require": ["off"],
+    "no-path-concat": ["off"],
+    "prefer-rest-params": ["off"]
+  }
+}

@@ -15,7 +15,7 @@ var testXformHelper = require('./test-xform-helper');
 var expectations = [
   {
     title: 'Leaf',
-    create:  function() { return new StaticXform({tag: 'root', $: {attr: 'val'}})},
+    create: function() { return new StaticXform({tag: 'root', $: {attr: 'val'}}); },
     preparedModel: undefined,
     get parsedModel() { return this.preparedModel; },
     xml: '<root attr="val"/>',
@@ -23,7 +23,7 @@ var expectations = [
   },
   {
     title: 'Nested',
-    create:  function() { return new StaticXform({tag: 'root', $: {attr: 'val'}, c: [{tag:'child1', $: {attr: 5}},{tag:'child2', $: {attr: true}}]})},
+    create: function() { return new StaticXform({tag: 'root', $: {attr: 'val'}, c: [{tag: 'child1', $: {attr: 5}}, {tag: 'child2', $: {attr: true}}]}); },
     preparedModel: undefined,
     get parsedModel() { return this.preparedModel; },
     xml: '<root attr="val"><child1 attr="5"/><child2 attr="true"/></root>',
@@ -31,7 +31,7 @@ var expectations = [
   },
   {
     title: 'Texted',
-    create:  function() { return new StaticXform({tag: 'root', $: {attr: 'val'}, c: [{tag:'child1', $: {attr: 5}, t:'Hello, World!'}]})},
+    create: function() { return new StaticXform({tag: 'root', $: {attr: 'val'}, c: [{tag: 'child1', $: {attr: 5}, t: 'Hello, World!'}]}); },
     preparedModel: undefined,
     get parsedModel() { return this.preparedModel; },
     xml: '<root attr="val"><child1 attr="5">Hello, World!</child1></root>',
@@ -39,6 +39,6 @@ var expectations = [
   }
 ];
 
-describe('StaticXform', function () {
+describe('StaticXform', function() {
   testXformHelper(expectations);
 });

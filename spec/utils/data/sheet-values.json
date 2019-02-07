@@ -16,5 +16,9 @@
       "num": 7, "str": "Hello, World!"
     },
     "string": "{\"num\":7,\"str\":\"Hello, World!\"}"
+  },
+  "Errors": {
+    "NotApplicable":  {"error": "#N/A"},
+    "Value":  {"error": "#VALUE!"}
   }
 }

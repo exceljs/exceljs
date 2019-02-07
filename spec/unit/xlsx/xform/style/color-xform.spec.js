@@ -6,45 +6,61 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'RGB',
-    create:  function() { return new ColorXform()},
-    preparedModel: {argb:'FF00FF00'},
+    create: () => new ColorXform(),
+    preparedModel: {argb: 'FF00FF00'},
     xml: '<color rgb="FF00FF00"/>',
     get parsedModel() { return this.preparedModel; },
     tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Theme',
-    create:  function() { return new ColorXform()},
-    preparedModel: {theme:1},
+    create: () => new ColorXform(),
+    preparedModel: {theme: 1},
     xml: '<color theme="1"/>',
     get parsedModel() { return this.preparedModel; },
     tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'Theme with Tint',
-    create:  function() { return new ColorXform()},
-    preparedModel: {theme:1, tint: 0.5},
+    create: () => new ColorXform(),
+    preparedModel: {theme: 1, tint: 0.5},
     xml: '<color theme="1" tint="0.5"/>',
     get parsedModel() { return this.preparedModel; },
     tests: ['render', 'renderIn', 'parse']
   },
   {
+    title: 'Theme with Tint Zero',
+    create: () => new ColorXform(),
+    preparedModel: {theme: 0, tint: 0},
+    xml: '<color theme="0" tint="0"/>',
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
     title: 'Indexed',
-    create:  function() { return new ColorXform()},
+    create: () => new ColorXform(),
     preparedModel: {indexed: 1},
     xml: '<color indexed="1"/>',
     get parsedModel() { return this.preparedModel; },
     tests: ['render', 'renderIn', 'parse']
   },
   {
+    title: 'Indexed Zero',
+    create: () => new ColorXform(),
+    preparedModel: {indexed: 0},
+    xml: '<color indexed="0"/>',
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  },
+  {
     title: 'Undefined',
-    create:  function() { return new ColorXform()},
+    create: () => new ColorXform(),
     preparedModel: undefined,
     xml: '',
     tests: ['render', 'renderIn']
   }
 ];
 
-describe('ColorXform', function () {
+describe('ColorXform', function() {
   testXformHelper(expectations);
 });

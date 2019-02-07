@@ -22,17 +22,32 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'normal',
-    create: function() { return new PageSetupXform(); },
-    preparedModel: {paperSize: 9, orientation:'portrait', horizontalDpi: 4294967295, verticalDpi: 4294967295},
+    create: () => new PageSetupXform(),
+    preparedModel: {paperSize: 9, orientation: 'portrait', horizontalDpi: 4294967295, verticalDpi: 4294967295},
     xml: '<pageSetup paperSize="9" orientation="portrait" horizontalDpi="4294967295" verticalDpi="4294967295"/>',
-    parsedModel: {paperSize: 9, orientation:'portrait', horizontalDpi: 4294967295, verticalDpi: 4294967295,
-      firstPageNumber: 1, useFirstPageNumber: false, usePrinterDefaults: false, copies: 1,
-      blackAndWhite: false, cellComments: 'None', draft: false, errors: 'displayed', fitToHeight: 1, fitToWidth: 1, pageOrder: 'downThenOver', scale: 100},
+    parsedModel: {
+      paperSize: 9,
+      orientation: 'portrait',
+      horizontalDpi: 4294967295,
+      verticalDpi: 4294967295,
+      firstPageNumber: 1,
+      useFirstPageNumber: false,
+      usePrinterDefaults: false,
+      copies: 1,
+      blackAndWhite: false,
+      cellComments: 'None',
+      draft: false,
+      errors: 'displayed',
+      fitToHeight: 1,
+      fitToWidth: 1,
+      pageOrder: 'downThenOver',
+      scale: 100
+    },
     tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'options',
-    create: function() { return new PageSetupXform(); },
+    create: () => new PageSetupXform(),
     preparedModel: {paperSize: 119, pageOrder: 'overThenDown', orientation: 'portrait', blackAndWhite: true, draft: true, cellComments: 'atEnd', errors: 'dash'},
     xml: '<pageSetup paperSize="119" pageOrder="overThenDown" orientation="portrait" blackAndWhite="1" draft="1" cellComments="atEnd" errors="dash"/>',
     parsedModel: {paperSize: 119, pageOrder: 'overThenDown', orientation: 'portrait', blackAndWhite: true, draft: true, cellComments: 'atEnd', errors: 'dash',
@@ -42,7 +57,7 @@ var expectations = [
   },
   {
     title: 'defaults',
-    create: function() { return new PageSetupXform(); },
+    create: () => new PageSetupXform(),
     preparedModel: {pageOrder: 'downThenOver', orientation: 'portrait', cellComments: 'None', errors: 'displayed'},
     xml: '<pageSetup orientation="portrait"/>',
     parsedModel: {pageOrder: 'downThenOver', orientation: 'portrait', cellComments: 'None', errors: 'displayed',
@@ -52,7 +67,7 @@ var expectations = [
   },
   {
     title: 'scale and fit',
-    create: function() { return new PageSetupXform(); },
+    create: () => new PageSetupXform(),
     preparedModel: {paperSize: 119, scale: 95, fitToWidth: 2, fitToHeight: 3, orientation: 'landscape'},
     xml: '<pageSetup paperSize="119" scale="95" fitToWidth="2" fitToHeight="3" orientation="landscape"/>',
     parsedModel: {paperSize: 119, scale: 95, fitToWidth: 2, fitToHeight: 3, orientation: 'landscape',

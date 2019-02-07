@@ -2,7 +2,6 @@
 
 var expect = require('chai').expect;
 
-var _ = require('lodash');
 var tools = require('./tools');
 
 var self = module.exports = {
@@ -16,10 +15,12 @@ var self = module.exports = {
       showErrorMessage: true,
       formulae: [self.dataValidations.values[type].v1]
     };
-    switch(operator) {
+    switch (operator) {
       case 'between':
       case 'notBetween':
         dataValidation.formulae.push(self.dataValidations.values[type].v2);
+        break;
+      default:
         break;
     }
     return dataValidation;
@@ -47,14 +48,14 @@ var self = module.exports = {
     ws.getCell('A5').value = tools.concatenateFormula('Range List');
     ws.getCell('B5').dataValidation = self.dataValidations.B5;
 
-    _.each(self.dataValidations.operators, function(operator, cIndex) {
+    self.dataValidations.operators.forEach(function(operator, cIndex) {
       var col = 3 + cIndex;
       ws.getCell(7, col).value = tools.concatenateFormula(operator);
     });
-    _.each(self.dataValidations.types, function(type, rIndex) {
+    self.dataValidations.types.forEach(function(type, rIndex) {
       var row = 8 + rIndex;
       ws.getCell(row, 1).value = tools.concatenateFormula(type);
-      _.each(self.dataValidations.operators, function(operator, cIndex) {
+      self.dataValidations.operators.forEach(function(operator, cIndex) {
         var col = 3 + cIndex;
         ws.getCell(row, col).dataValidation = self.createDataValidations(type, operator);
       });
@@ -69,20 +70,25 @@ var self = module.exports = {
     ws.getCell('A15').value = tools.concatenateFormula('Terse');
     ws.getCell('B15').dataValidation = self.dataValidations.B15;
 
+    ws.getCell('A17').value = tools.concatenateFormula('Decimal');
+    ws.getCell('B17').dataValidation = self.dataValidations.B17;
+
+    ws.getCell('A19').value = tools.concatenateFormula('Any');
+    ws.getCell('B19').dataValidation = self.dataValidations.B19;
   },
 
   checkSheet: function(wb) {
     var ws = wb.getWorksheet('data-validations');
-    expect(ws).to.not.be.undefined;
+    expect(ws).to.not.be.undefined();
 
     expect(ws.getCell('B1').dataValidation).to.deep.equal(self.dataValidations.B1);
     expect(ws.getCell('B3').dataValidation).to.deep.equal(self.dataValidations.B3);
     expect(ws.getCell('B5').dataValidation).to.deep.equal(self.dataValidations.B5);
 
-    _.each(self.dataValidations.types, function(type, rIndex) {
+    self.dataValidations.types.forEach(function(type, rIndex) {
       var row = 8 + rIndex;
       ws.getCell(row, 1).value = tools.concatenateFormula(type);
-      _.each(self.dataValidations.operators, function(operator, cIndex) {
+      self.dataValidations.operators.forEach(function(operator, cIndex) {
         var col = 3 + cIndex;
         expect(ws.getCell(row, col).dataValidation).to.deep.equal(self.createDataValidations(type, operator));
       });
@@ -91,5 +97,7 @@ var self = module.exports = {
     expect(ws.getCell('B13').dataValidation).to.deep.equal(self.dataValidations.B13);
     expect(ws.getCell('E13').dataValidation).to.deep.equal(self.dataValidations.E13);
     expect(ws.getCell('B15').dataValidation).to.deep.equal(self.dataValidations.B15);
+    expect(ws.getCell('B17').dataValidation).to.deep.equal(self.dataValidations.B17);
+    expect(ws.getCell('B19').dataValidation).to.deep.equal(self.dataValidations.B19);
   }
 };

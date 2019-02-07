@@ -1,45 +1,21 @@
 'use strict';
 
 var Sax = require('sax');
-var Bluebird = require('bluebird');
-var _ = require('lodash');
+var _ = require('../../../utils/under-dash');
 
-var chai    = require('chai');
-var chaiXml = require('chai-xml');
-
-var expect  = chai.expect;
-
-chai.use(chaiXml);
+var chai = require('chai');
 
 var XmlStream = require('../../../../lib/utils/xml-stream');
 var CompositeXform = require('../../../../lib/xlsx/xform/composite-xform');
 var BooleanXform = require('../../../../lib/xlsx/xform/simple/boolean-xform');
+
+var expect = chai.expect;
 
 function getExpectation(expectation, name) {
   if (!expectation.hasOwnProperty(name)) {
     throw new Error('Expectation missing required field: ' + name);
   }
   return _.cloneDeep(expectation[name]);
-}
-
-// clone objects without the undefined values
-function cloneObject(obj) {
-  var clone;
-  if (obj instanceof Array) {
-    clone = [];
-  } else if (obj instanceof Date) {
-    return obj;
-  } else if (typeof obj === 'object') {
-    clone = {};
-  } else {
-    return obj;
-  }
-  _.each(obj,  function(value, name) {
-    if (value !== undefined) {
-      clone[name] = cloneObject(value);
-    }
-  });
-  return clone;
 }
 
 // ===============================================================================================================
@@ -52,7 +28,7 @@ function cloneObject(obj) {
 var its = {
   prepare: function(expectation) {
     it('Prepare Model', function() {
-      return new Bluebird(function(resolve) {
+      return new Promise(function(resolve) {
         var model = getExpectation(expectation, 'initialModel');
         var result = getExpectation(expectation, 'preparedModel');
 
@@ -65,8 +41,8 @@ var its = {
   },
 
   render: function(expectation) {
-    it('Render to XML', function () {
-      return new Bluebird(function (resolve) {
+    it('Render to XML', function() {
+      return new Promise(function(resolve) {
         var model = getExpectation(expectation, 'preparedModel');
         var result = getExpectation(expectation, 'xml');
 
@@ -81,9 +57,28 @@ var its = {
     });
   },
 
+  'prepare-render': function(expectation) {
+    // when implementation details get in the way of testing the prepared result
+    it('Prepare and Render to XML', function() {
+      return new Promise(function(resolve) {
+        var model = getExpectation(expectation, 'initialModel');
+        var result = getExpectation(expectation, 'xml');
+
+        var xform = expectation.create();
+        var xmlStream = new XmlStream();
+
+        xform.prepare(model, expectation.options);
+        xform.render(xmlStream, model);
+
+        expect(xmlStream.xml).xml.to.equal(result);
+        resolve();
+      });
+    });
+  },
+
   renderIn: function(expectation) {
-    it('Render in Composite to XML ', function () {
-      return new Bluebird(function (resolve) {
+    it('Render in Composite to XML ', function() {
+      return new Promise(function(resolve) {
         var model = {
           pre: true,
           child: getExpectation(expectation, 'preparedModel'),
@@ -117,7 +112,7 @@ var its = {
   
   parseIn: function(expectation) {
     it('Parse within composite', function() {
-      return new Bluebird(function (resolve, reject) {
+      return new Promise(function(resolve, reject) {
         var xml = '<compy><pre/>' + getExpectation(expectation, 'xml') + '<post/></compy>';
         var childXform = expectation.create();
         var result = {pre: true};
@@ -134,12 +129,12 @@ var its = {
         var parser = Sax.createStream(true);
 
         xform.parse(parser)
-          .then(function (model) {
+          .then(function(model) {
             // console.log('parsed Model', JSON.stringify(model));
             // console.log('expected Model', JSON.stringify(result));
 
             // eliminate the undefined
-            var clone = cloneObject(model);
+            var clone = _.cloneDeep(model, false);
 
             // console.log('result', JSON.stringify(clone));
             // console.log('expect', JSON.stringify(result));
@@ -153,8 +148,8 @@ var its = {
   },
 
   parse: function(expectation) {
-    it('Parse to Model', function () {
-      return new Bluebird(function (resolve, reject) {
+    it('Parse to Model', function() {
+      return new Promise(function(resolve, reject) {
         var xml = getExpectation(expectation, 'xml');
         var result = getExpectation(expectation, 'parsedModel');
 
@@ -162,11 +157,9 @@ var its = {
         var xform = expectation.create();
 
         xform.parse(parser)
-          .then(function (model) {
-            //console.log(JSON.stringify(model));
-            
+          .then(function(model) {
             // eliminate the undefined
-            var clone = cloneObject(model);
+            var clone = _.cloneDeep(model, false);
 
             // console.log('result', JSON.stringify(clone));
             // console.log('expect', JSON.stringify(result));
@@ -182,7 +175,7 @@ var its = {
 
   reconcile: function(expectation) {
     it('Reconcile Model', function() {
-      return new Bluebird(function(resolve) {
+      return new Promise(function(resolve) {
         var model = getExpectation(expectation, 'parsedModel');
         var result = getExpectation(expectation, 'reconciledModel');
 
@@ -190,7 +183,7 @@ var its = {
         xform.reconcile(model, expectation.options);
 
         // eliminate the undefined
-        var clone = cloneObject(model);
+        var clone = _.cloneDeep(model, false);
 
         expect(clone).to.deep.equal(result);
         resolve();
@@ -200,9 +193,9 @@ var its = {
 };
 
 function testXform(expectations) {
-  _.each(expectations, function (expectation) {
+  _.each(expectations, function(expectation) {
     var tests = getExpectation(expectation, 'tests');
-    describe(expectation.title, function () {
+    describe(expectation.title, function() {
       _.each(tests, function(test) {
         its[test](expectation);
       });

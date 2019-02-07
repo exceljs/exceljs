@@ -1,9 +1,5 @@
 'use strict';
 
-var fs = require('fs');
-var _ = require('underscore');
-var HrStopwatch = require('./utils/hr-stopwatch');
-
 var Excel = require('../excel');
 
 var inputFile = process.argv[2];
@@ -13,10 +9,12 @@ var outputFile = process.argv[3];
 var passed = true;
 var assert = function(value, failMessage, passMessage) {
   if (!value) {
-    if (failMessage) console.error(failMessage);
+    if (failMessage) {
+      console.error(failMessage);
+    }
     passed = false;
-  } else {
-    if (passMessage) console.log(passMessage);
+  } else if (passMessage) {
+    console.log(passMessage);
   }
 };
 
@@ -29,9 +27,9 @@ workbook.xlsx.readFile('./out/template.xlsx')
       useStyles: true
     };
 
-    return stream.xlsx.writeFile("./out/template-out.xlsx", options)
+    return stream.xlsx.writeFile('./out/template-out.xlsx', options)
       .then(function(){
-        console.log("Done.");
+        console.log('Done.');
       })
   })
   .catch(function(error) {

@@ -1,9 +1,8 @@
 var expect = require('chai').expect;
 
-var _ = require('lodash');
-var Excel = require("../../../excel");
-var Dimensions = require("../../../lib/doc/range");
-var testUtils = require("../../utils/index");
+var _ = require('../../../lib/utils/under-dash');
+var Excel = require('../../../excel');
+var testUtils = require('../../utils/index');
 
 describe('Worksheet', function() {
   describe('Values', function() {
@@ -30,7 +29,7 @@ describe('Worksheet', function() {
       ws.getCell('E1').value = ['Hello', 'World'].join(', ') + '!';
 
       // hyperlink
-      ws.getCell('F1').value = {text: 'www.google.com', hyperlink:'http://www.google.com'};
+      ws.getCell('F1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
 
       // number formula
       ws.getCell('A2').value = {formula: 'A1', result: 7};
@@ -95,7 +94,7 @@ describe('Worksheet', function() {
       ws.getCell('D1').value = new Date();
 
       // hyperlink
-      ws.getCell('E1').value = {text: 'www.google.com', hyperlink:'http://www.google.com'};
+      ws.getCell('E1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
 
       // number formula
       ws.getCell('A2').value = {formula: 'A1', result: 7};
@@ -223,11 +222,11 @@ describe('Worksheet', function() {
         { header: 'D.O.B.', key: 'dob', width: 10 }
       ];
 
-      var dateValue1 = new Date(1970,1,1);
-      var dateValue2 = new Date(1965,1,7);
+      var dateValue1 = new Date(1970, 1, 1);
+      var dateValue2 = new Date(1965, 1, 7);
 
-      ws.addRow({id:1, name: 'John Doe', dob: dateValue1});
-      ws.addRow({id:2, name: 'Jane Doe', dob: dateValue2});
+      ws.addRow({id: 1, name: 'John Doe', dob: dateValue1});
+      ws.addRow({id: 2, name: 'Jane Doe', dob: dateValue2});
 
       expect(ws.getCell('A2').value).to.equal(1);
       expect(ws.getCell('B2').value).to.equal('John Doe');
@@ -237,11 +236,10 @@ describe('Worksheet', function() {
       expect(ws.getCell('B3').value).to.equal('Jane Doe');
       expect(ws.getCell('C3').value).to.equal(dateValue2);
 
-      expect(ws.getRow(2).values).to.deep.equal([,1,'John Doe', dateValue1]);
-      expect(ws.getRow(3).values).to.deep.equal([,2,'Jane Doe', dateValue2]);
+      expect(ws.getRow(2).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
+      expect(ws.getRow(3).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
 
-      var values = [
-        ,
+      var values = [,
         [, 'Id', 'Name', 'D.O.B.'],
         [, 1, 'John Doe', dateValue1],
         [, 2, 'Jane Doe', dateValue2]
@@ -258,8 +256,8 @@ describe('Worksheet', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970,1,1);
-      var dateValue2 = new Date(1965,1,7);
+      var dateValue1 = new Date(1970, 1, 1);
+      var dateValue2 = new Date(1965, 1, 7);
 
       ws.addRow([1, 'John Doe', dateValue1]);
       ws.addRow([2, 'Jane Doe', dateValue2]);
@@ -272,26 +270,26 @@ describe('Worksheet', function() {
       expect(ws.getCell('B2').value).to.equal('Jane Doe');
       expect(ws.getCell('C2').value).to.equal(dateValue2);
 
-      expect(ws.getRow(1).values).to.deep.equal([,1,'John Doe', dateValue1]);
-      expect(ws.getRow(2).values).to.deep.equal([,2,'Jane Doe', dateValue2]);
+      expect(ws.getRow(1).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
+      expect(ws.getRow(2).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
     });
 
     it('adds rows by sparse array', function() {
       var wb = new Excel.Workbook();
       var ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970,1,1);
-      var dateValue2 = new Date(1965,1,7);
-      var rows = [
-        ,[,1, 'John Doe', ,dateValue1]
-        ,[,2, 'Jane Doe', ,dateValue2]
+      var dateValue1 = new Date(1970, 1, 1);
+      var dateValue2 = new Date(1965, 1, 7);
+      var rows = [,
+        [, 1, 'John Doe', , dateValue1],
+        [, 2, 'Jane Doe', , dateValue2]
       ];
       var row3 = [];
       row3[1] = 3;
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      _.each(rows, function(row, index) {
+      rows.forEach(function(row) {
         if (row) {
           ws.addRow(row);
         }
@@ -321,13 +319,13 @@ describe('Worksheet', function() {
       });
     });
 
-    describe('Splice', function(){
+    describe('Splice', function() {
       var options = {
         checkBadAlignments: false,
         checkSheetProperties: false,
         checkViews: false
       };
-      describe('Rows', function(){
+      describe('Rows', function() {
         it('Remove only', function() {
           var wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.rows.removeOnly'], options);
@@ -349,7 +347,7 @@ describe('Worksheet', function() {
           testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertMore'], options);
         });
       });
-      describe('Columns', function(){
+      describe('Columns', function() {
         it('splices columns', function() {
           var wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.columns.removeOnly'], options);
@@ -388,22 +386,161 @@ describe('Worksheet', function() {
             ws.addRow(value);
           });
 
-          ws.spliceColumns(2,1, ['B1', 'B2'], ['C1', 'C2']);
+          ws.spliceColumns(2, 1, ['B1', 'B2'], ['C1', 'C2']);
 
           values.forEach(function(rowValues, index) {
             var row = ws.getRow(index + 1);
             _.each(rowValues, function(value, key) {
               if (key !== 'dob') {
-                expect(row.getCell(key).value).to.equal(value)
+                expect(row.getCell(key).value).to.equal(value);
               }
             });
           });
 
           expect(ws.getColumn(1).width).to.equal(10);
-          expect(ws.getColumn(2).width).to.be.undefined;
-          expect(ws.getColumn(3).width).to.be.undefined;
+          expect(ws.getColumn(2).width).to.be.undefined();
+          expect(ws.getColumn(3).width).to.be.undefined();
           expect(ws.getColumn(4).width).to.equal(30);
           expect(ws.getColumn(5).width).to.equal(40);
+        });
+
+        it('Splices to end', function() {
+          var wb = new Excel.Workbook();
+          var ws = wb.addWorksheet('splice-to-end');
+          ws.columns = [
+            { header: 'Col-1', width: 10 },
+            { header: 'Col-2', width: 10 },
+            { header: 'Col-3', width: 10 },
+            { header: 'Col-4', width: 10 },
+            { header: 'Col-5', width: 10 },
+            { header: 'Col-6', width: 10 },
+          ];
+
+          ws.addRow([1,2,3,4,5,6]);
+          ws.addRow([1,2,3,4,5,6]);
+
+          // splice last 3 columns
+          ws.spliceColumns(4, 3);
+          expect(ws.getCell(1,1).value).to.equal('Col-1');
+          expect(ws.getCell(1,2).value).to.equal('Col-2');
+          expect(ws.getCell(1,3).value).to.equal('Col-3');
+          expect(ws.getCell(1,4).value).to.be.null();
+          expect(ws.getCell(1,5).value).to.be.null();
+          expect(ws.getCell(1,6).value).to.be.null();
+          expect(ws.getCell(1,7).value).to.be.null();
+          expect(ws.getCell(2,1).value).to.equal(1);
+          expect(ws.getCell(2,2).value).to.equal(2);
+          expect(ws.getCell(2,3).value).to.equal(3);
+          expect(ws.getCell(2,4).value).to.be.null();
+          expect(ws.getCell(2,5).value).to.be.null();
+          expect(ws.getCell(2,6).value).to.be.null();
+          expect(ws.getCell(2,7).value).to.be.null();
+          expect(ws.getCell(3,1).value).to.equal(1);
+          expect(ws.getCell(3,2).value).to.equal(2);
+          expect(ws.getCell(3,3).value).to.equal(3);
+          expect(ws.getCell(3,4).value).to.be.null();
+          expect(ws.getCell(3,5).value).to.be.null();
+          expect(ws.getCell(3,6).value).to.be.null();
+          expect(ws.getCell(3,7).value).to.be.null();
+
+          expect(ws.getColumn(1).header).to.equal('Col-1');
+          expect(ws.getColumn(2).header).to.equal('Col-2');
+          expect(ws.getColumn(3).header).to.equal('Col-3');
+          expect(ws.getColumn(4).header).to.be.undefined();
+          expect(ws.getColumn(5).header).to.be.undefined();
+          expect(ws.getColumn(6).header).to.be.undefined();
+        });
+        it('Splices past end', function() {
+          var wb = new Excel.Workbook();
+          var ws = wb.addWorksheet('splice-to-end');
+          ws.columns = [
+            { header: 'Col-1', width: 10 },
+            { header: 'Col-2', width: 10 },
+            { header: 'Col-3', width: 10 },
+            { header: 'Col-4', width: 10 },
+            { header: 'Col-5', width: 10 },
+            { header: 'Col-6', width: 10 },
+          ];
+
+          ws.addRow([1,2,3,4,5,6]);
+          ws.addRow([1,2,3,4,5,6]);
+
+          // splice last 3 columns
+          ws.spliceColumns(4, 4);
+          expect(ws.getCell(1,1).value).to.equal('Col-1');
+          expect(ws.getCell(1,2).value).to.equal('Col-2');
+          expect(ws.getCell(1,3).value).to.equal('Col-3');
+          expect(ws.getCell(1,4).value).to.be.null();
+          expect(ws.getCell(1,5).value).to.be.null();
+          expect(ws.getCell(1,6).value).to.be.null();
+          expect(ws.getCell(1,7).value).to.be.null();
+          expect(ws.getCell(2,1).value).to.equal(1);
+          expect(ws.getCell(2,2).value).to.equal(2);
+          expect(ws.getCell(2,3).value).to.equal(3);
+          expect(ws.getCell(2,4).value).to.be.null();
+          expect(ws.getCell(2,5).value).to.be.null();
+          expect(ws.getCell(2,6).value).to.be.null();
+          expect(ws.getCell(2,7).value).to.be.null();
+          expect(ws.getCell(3,1).value).to.equal(1);
+          expect(ws.getCell(3,2).value).to.equal(2);
+          expect(ws.getCell(3,3).value).to.equal(3);
+          expect(ws.getCell(3,4).value).to.be.null();
+          expect(ws.getCell(3,5).value).to.be.null();
+          expect(ws.getCell(3,6).value).to.be.null();
+          expect(ws.getCell(3,7).value).to.be.null();
+
+          expect(ws.getColumn(1).header).to.equal('Col-1');
+          expect(ws.getColumn(2).header).to.equal('Col-2');
+          expect(ws.getColumn(3).header).to.equal('Col-3');
+          expect(ws.getColumn(4).header).to.be.undefined();
+          expect(ws.getColumn(5).header).to.be.undefined();
+          expect(ws.getColumn(6).header).to.be.undefined();
+        });
+        it('Splices almost to end', function() {
+          var wb = new Excel.Workbook();
+          var ws = wb.addWorksheet('splice-to-end');
+          ws.columns = [
+            { header: 'Col-1', width: 10 },
+            { header: 'Col-2', width: 10 },
+            { header: 'Col-3', width: 10 },
+            { header: 'Col-4', width: 10 },
+            { header: 'Col-5', width: 10 },
+            { header: 'Col-6', width: 10 },
+          ];
+
+          ws.addRow([1,2,3,4,5,6]);
+          ws.addRow([1,2,3,4,5,6]);
+
+          // splice last 3 columns
+          ws.spliceColumns(4, 2);
+          expect(ws.getCell(1,1).value).to.equal('Col-1');
+          expect(ws.getCell(1,2).value).to.equal('Col-2');
+          expect(ws.getCell(1,3).value).to.equal('Col-3');
+          expect(ws.getCell(1,4).value).to.equal('Col-6');
+          expect(ws.getCell(1,5).value).to.be.null();
+          expect(ws.getCell(1,6).value).to.be.null();
+          expect(ws.getCell(1,7).value).to.be.null();
+          expect(ws.getCell(2,1).value).to.equal(1);
+          expect(ws.getCell(2,2).value).to.equal(2);
+          expect(ws.getCell(2,3).value).to.equal(3);
+          expect(ws.getCell(2,4).value).to.equal(6);
+          expect(ws.getCell(2,5).value).to.be.null();
+          expect(ws.getCell(2,6).value).to.be.null();
+          expect(ws.getCell(2,7).value).to.be.null();
+          expect(ws.getCell(3,1).value).to.equal(1);
+          expect(ws.getCell(3,2).value).to.equal(2);
+          expect(ws.getCell(3,3).value).to.equal(3);
+          expect(ws.getCell(3,4).value).to.equal(6);
+          expect(ws.getCell(3,5).value).to.be.null();
+          expect(ws.getCell(3,6).value).to.be.null();
+          expect(ws.getCell(3,7).value).to.be.null();
+
+          expect(ws.getColumn(1).header).to.equal('Col-1');
+          expect(ws.getColumn(2).header).to.equal('Col-2');
+          expect(ws.getColumn(3).header).to.equal('Col-3');
+          expect(ws.getColumn(4).header).to.equal('Col-6');
+          expect(ws.getColumn(5).header).to.be.undefined();
+          expect(ws.getColumn(6).header).to.be.undefined();
         });
       });
     });
@@ -459,12 +596,11 @@ describe('Worksheet', function() {
       ws.getCell('B2').value = 'B2';
       ws.getCell('A4').value = 'end';
 
-      expect(ws.getSheetValues()).to.deep.equal([
-        ,
-        [,11,,'C1'],
-        [,21,'B2'],
-        ,
-        [,'end']
+      expect(ws.getSheetValues()).to.deep.equal([,
+        [, 11,, 'C1'],
+        [, 21, 'B2'],
+        , // eslint-disable-line comma-style
+        [, 'end']
       ]);
     });
 
@@ -497,6 +633,5 @@ describe('Worksheet', function() {
       expect(ws.columnCount).to.equal(6);
       expect(ws.actualColumnCount).to.equal(4);
     });
-
   });
 });

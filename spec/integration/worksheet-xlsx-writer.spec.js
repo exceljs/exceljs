@@ -1,9 +1,10 @@
 'use strict';
 
 var expect = require('chai').expect;
-var _ = require('lodash');
-var Excel = require('../../excel');
+var verquire = require('../utils/verquire');
 var testutils = require('./../utils/index');
+
+var Excel = verquire('excel');
 
 var CONCATENATE_HELLO_WORLD = 'CONCATENATE("Hello", ", ", "World!")';
 
@@ -32,7 +33,7 @@ describe('WorksheetWriter', function() {
       ws.getCell('E1').value = ['Hello', 'World'].join(', ') + '!';
 
       // hyperlink
-      ws.getCell('F1').value = {text: 'www.google.com', hyperlink:'http://www.google.com'};
+      ws.getCell('F1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
 
       // number formula
       ws.getCell('A2').value = {formula: 'A1', result: 7};
@@ -97,7 +98,7 @@ describe('WorksheetWriter', function() {
       ws.getCell('D1').value = new Date();
 
       // hyperlink
-      ws.getCell('E1').value = {text: 'www.google.com', hyperlink:'http://www.google.com'};
+      ws.getCell('E1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
 
       // number formula
       ws.getCell('A2').value = {formula: 'A1', result: 7};
@@ -225,11 +226,11 @@ describe('WorksheetWriter', function() {
         { header: 'D.O.B.', key: 'dob', width: 10 }
       ];
 
-      var dateValue1 = new Date(1970,1,1);
-      var dateValue2 = new Date(1965,1,7);
+      var dateValue1 = new Date(1970, 1, 1);
+      var dateValue2 = new Date(1965, 1, 7);
 
-      ws.addRow({id:1, name: 'John Doe', dob: dateValue1});
-      ws.addRow({id:2, name: 'Jane Doe', dob: dateValue2});
+      ws.addRow({id: 1, name: 'John Doe', dob: dateValue1});
+      ws.addRow({id: 2, name: 'Jane Doe', dob: dateValue2});
 
       expect(ws.getCell('A2').value).to.equal(1);
       expect(ws.getCell('B2').value).to.equal('John Doe');
@@ -239,16 +240,16 @@ describe('WorksheetWriter', function() {
       expect(ws.getCell('B3').value).to.equal('Jane Doe');
       expect(ws.getCell('C3').value).to.equal(dateValue2);
 
-      expect(ws.getRow(2).values).to.deep.equal([,1,'John Doe', dateValue1]);
-      expect(ws.getRow(3).values).to.deep.equal([,2,'Jane Doe', dateValue2]);
+      expect(ws.getRow(2).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
+      expect(ws.getRow(3).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
     });
 
     it('adds rows by contiguous array', function() {
       var wb = new Excel.stream.xlsx.WorkbookWriter();
       var ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970,1,1);
-      var dateValue2 = new Date(1965,1,7);
+      var dateValue1 = new Date(1970, 1, 1);
+      var dateValue2 = new Date(1965, 1, 7);
 
       ws.addRow([1, 'John Doe', dateValue1]);
       ws.addRow([2, 'Jane Doe', dateValue2]);
@@ -261,26 +262,26 @@ describe('WorksheetWriter', function() {
       expect(ws.getCell('B2').value).to.equal('Jane Doe');
       expect(ws.getCell('C2').value).to.equal(dateValue2);
 
-      expect(ws.getRow(1).values).to.deep.equal([,1,'John Doe', dateValue1]);
-      expect(ws.getRow(2).values).to.deep.equal([,2,'Jane Doe', dateValue2]);
+      expect(ws.getRow(1).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
+      expect(ws.getRow(2).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
     });
 
     it('adds rows by sparse array', function() {
       var wb = new Excel.stream.xlsx.WorkbookWriter();
       var ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970,1,1);
-      var dateValue2 = new Date(1965,1,7);
-      var rows = [
-        ,[,1, 'John Doe', ,dateValue1]
-        ,[,2, 'Jane Doe', ,dateValue2]
+      var dateValue1 = new Date(1970, 1, 1);
+      var dateValue2 = new Date(1965, 1, 7);
+      var rows = [,
+        [, 1, 'John Doe', , dateValue1],
+        [, 2, 'Jane Doe', , dateValue2]
       ];
       var row3 = [];
       row3[1] = 3;
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      _.each(rows, function(row, index) {
+      rows.forEach(function(row) {
         if (row) {
           ws.addRow(row);
         }
@@ -328,7 +329,7 @@ describe('WorksheetWriter', function() {
       expect(ws.getCell('A1').border).to.deep.equal(testutils.styles.borders.thin);
       expect(ws.getCell('A1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
 
-      expect(ws.findCell('B1')).to.be.undefined;
+      expect(ws.findCell('B1')).to.be.undefined();
 
       expect(ws.getCell('C1').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
       expect(ws.getCell('C1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
@@ -369,7 +370,7 @@ describe('WorksheetWriter', function() {
       expect(ws.getCell('A1').border).to.deep.equal(testutils.styles.borders.thin);
       expect(ws.getCell('A1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
 
-      expect(ws.findRow(2)).to.be.undefined;
+      expect(ws.findRow(2)).to.be.undefined();
 
       expect(ws.getCell('A3').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
       expect(ws.getCell('A3').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);

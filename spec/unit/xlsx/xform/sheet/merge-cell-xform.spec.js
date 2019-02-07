@@ -6,7 +6,7 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'Merge',
-    create:  function() { return new MergeCellXform()},
+    create: function() { return new MergeCellXform(); },
     preparedModel: 'B2:C4',
     xml: '<mergeCell ref="B2:C4"/>',
     parsedModel: 'B2:C4',
@@ -14,6 +14,6 @@ var expectations = [
   }
 ];
 
-describe('MergeCellXform', function () {
+describe('MergeCellXform', function() {
   testXformHelper(expectations);
 });

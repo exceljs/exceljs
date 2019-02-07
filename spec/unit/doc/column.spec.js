@@ -1,69 +1,69 @@
-var expect = require("chai").expect;
+var expect = require('chai').expect;
 
-var Column = require("../../../lib/doc/column");
+var Column = require('../../../lib/doc/column');
 var createSheetMock = require('../../utils/index').createSheetMock;
 
-describe("Column", function() {
-  it("creates by defn", function() {
+describe('Column', function() {
+  it('creates by defn', function() {
     var sheet = createSheetMock();
 
     sheet.addColumn(1, {
-      header: "Col 1",
-      key: "id1",
+      header: 'Col 1',
+      key: 'id1',
       width: 10
     });
 
-    expect(sheet.getColumn(1).header).to.equal("Col 1");
-    expect(sheet.getColumn(1).headers).to.deep.equal(["Col 1"]);
-    expect(sheet.getCell(1,1).value).to.equal("Col 1");
-    expect(sheet.getColumn("id1")).to.equal(sheet.getColumn(1));
+    expect(sheet.getColumn(1).header).to.equal('Col 1');
+    expect(sheet.getColumn(1).headers).to.deep.equal(['Col 1']);
+    expect(sheet.getCell(1, 1).value).to.equal('Col 1');
+    expect(sheet.getColumn('id1')).to.equal(sheet.getColumn(1));
     
-    sheet.getRow(2).values = { id1: "Hello, World!" };
-    expect(sheet.getCell(2,1).value).to.equal("Hello, World!");
+    sheet.getRow(2).values = { id1: 'Hello, World!' };
+    expect(sheet.getCell(2, 1).value).to.equal('Hello, World!');
   });
 
-  it("maintains properties", function() {
+  it('maintains properties', function() {
     var sheet = createSheetMock();
 
     var column = sheet.addColumn(1);
 
-    column.key = "id1";
-    expect(sheet._keys["id1"]).to.equal(column);
+    column.key = 'id1';
+    expect(sheet._keys.id1).to.equal(column);
 
     expect(column.number).to.equal(1);
     expect(column.letter).to.equal('A');
 
-    column.header = "Col 1";
-    expect(sheet.getColumn(1).header).to.equal("Col 1");
-    expect(sheet.getColumn(1).headers).to.deep.equal(["Col 1"]);
-    expect(sheet.getCell(1,1).value).to.equal("Col 1");
+    column.header = 'Col 1';
+    expect(sheet.getColumn(1).header).to.equal('Col 1');
+    expect(sheet.getColumn(1).headers).to.deep.equal(['Col 1']);
+    expect(sheet.getCell(1, 1).value).to.equal('Col 1');
 
-    column.header = ["Col A1","Col A2"];
-    expect(sheet.getColumn(1).header).to.deep.equal(["Col A1","Col A2"]);
-    expect(sheet.getColumn(1).headers).to.deep.equal(["Col A1","Col A2"]);
-    expect(sheet.getCell(1,1).value).to.equal("Col A1");
-    expect(sheet.getCell(2,1).value).to.equal("Col A2");
+    column.header = ['Col A1', 'Col A2'];
+    expect(sheet.getColumn(1).header).to.deep.equal(['Col A1', 'Col A2']);
+    expect(sheet.getColumn(1).headers).to.deep.equal(['Col A1', 'Col A2']);
+    expect(sheet.getCell(1, 1).value).to.equal('Col A1');
+    expect(sheet.getCell(2, 1).value).to.equal('Col A2');
 
-    sheet.getRow(3).values = { id1: "Hello, World!" };
-    expect(sheet.getCell(3,1).value).to.equal("Hello, World!");
+    sheet.getRow(3).values = { id1: 'Hello, World!' };
+    expect(sheet.getCell(3, 1).value).to.equal('Hello, World!');
   });
 
-  it("creates model", function() {
+  it('creates model', function() {
     var sheet = createSheetMock();
 
     sheet.addColumn(1, {
-      header: "Col 1",
-      key: "id1",
+      header: 'Col 1',
+      key: 'id1',
       width: 10
     });
     sheet.addColumn(2, {
-      header: "Col 2",
-      key: "name",
+      header: 'Col 2',
+      key: 'name',
       width: 10
     });
     sheet.addColumn(3, {
-      header: "Col 2",
-      key: "dob",
+      header: 'Col 2',
+      key: 'dob',
       width: 10,
       outlineLevel: 1
     });
@@ -78,5 +78,65 @@ describe("Column", function() {
     expect(model[1].width).to.equal(10);
     expect(model[1].outlineLevel).to.equal(1);
     expect(model[1].collapsed).to.equal(true);
+  });
+
+  it('gets column values', function() {
+    var sheet = createSheetMock();
+    sheet.getCell(1,1).value = 'a';
+    sheet.getCell(2,1).value = 'b';
+    sheet.getCell(4,1).value = 'd';
+
+    expect(sheet.getColumn(1).values).to.deep.equal([,'a', 'b', , 'd']);
+  });
+  it('sets column values', function() {
+    var sheet = createSheetMock();
+
+    sheet.getColumn(1).values = [2,3,5,7,11];
+
+    expect(sheet.getCell(1,1).value).to.equal(2);
+    expect(sheet.getCell(2,1).value).to.equal(3);
+    expect(sheet.getCell(3,1).value).to.equal(5);
+    expect(sheet.getCell(4,1).value).to.equal(7);
+    expect(sheet.getCell(5,1).value).to.equal(11);
+    expect(sheet.getCell(6,1).value).to.equal(null);
+  });
+  it('sets sparse column values', function() {
+    var sheet = createSheetMock();
+    var values = [];
+    values[2] = 2;
+    values[3] = 3;
+    values[5] = 5;
+    values[11] = 11;
+    sheet.getColumn(1).values = values;
+
+    expect(sheet.getCell(1,1).value).to.equal(null);
+    expect(sheet.getCell(2,1).value).to.equal(2);
+    expect(sheet.getCell(3,1).value).to.equal(3);
+    expect(sheet.getCell(4,1).value).to.equal(null);
+    expect(sheet.getCell(5,1).value).to.equal(5);
+    expect(sheet.getCell(6,1).value).to.equal(null);
+    expect(sheet.getCell(7,1).value).to.equal(null);
+    expect(sheet.getCell(8,1).value).to.equal(null);
+    expect(sheet.getCell(9,1).value).to.equal(null);
+    expect(sheet.getCell(10,1).value).to.equal(null);
+    expect(sheet.getCell(11,1).value).to.equal(11);
+    expect(sheet.getCell(12,1).value).to.equal(null);
+  });
+  it('sets sparse column values', function() {
+    var sheet = createSheetMock();
+    sheet.getColumn(1).values = [,,2,3,,5,,7,,,,11];
+
+    expect(sheet.getCell(1,1).value).to.equal(null);
+    expect(sheet.getCell(2,1).value).to.equal(2);
+    expect(sheet.getCell(3,1).value).to.equal(3);
+    expect(sheet.getCell(4,1).value).to.equal(null);
+    expect(sheet.getCell(5,1).value).to.equal(5);
+    expect(sheet.getCell(6,1).value).to.equal(null);
+    expect(sheet.getCell(7,1).value).to.equal(7);
+    expect(sheet.getCell(8,1).value).to.equal(null);
+    expect(sheet.getCell(9,1).value).to.equal(null);
+    expect(sheet.getCell(10,1).value).to.equal(null);
+    expect(sheet.getCell(11,1).value).to.equal(11);
+    expect(sheet.getCell(12,1).value).to.equal(null);
   });
 });

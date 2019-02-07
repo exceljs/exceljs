@@ -6,7 +6,7 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'single',
-    create:  function() { return new UnderlineXform()},
+    create: function() { return new UnderlineXform(); },
     preparedModel: true,
     get parsedModel() { return this.preparedModel; },
     xml: '<u/>',
@@ -14,7 +14,7 @@ var expectations = [
   },
   {
     title: 'double',
-    create:  function() { return new UnderlineXform()},
+    create: function() { return new UnderlineXform(); },
     preparedModel: 'double',
     get parsedModel() { return this.preparedModel; },
     xml: '<u val="double"/>',
@@ -22,7 +22,7 @@ var expectations = [
   },
   {
     title: 'false',
-    create:  function() { return new UnderlineXform()},
+    create: function() { return new UnderlineXform(); },
     preparedModel: false,
     get parsedModel() { return this.preparedModel; },
     xml: '',
@@ -30,6 +30,6 @@ var expectations = [
   }
 ];
 
-describe('UnderlineXform', function () {
+describe('UnderlineXform', function() {
   testXformHelper(expectations);
 });

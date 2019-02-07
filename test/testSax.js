@@ -1,7 +1,5 @@
 var fs = require('fs');
-var events = require("events");
-var _ = require('underscore');
-var Promise = require('bluebird');
+var events = require('events');
 var Sax = require('sax');
 var unzip = require('unzip');
 
@@ -19,20 +17,20 @@ Row.prototype = {
 
 var count = 0;
 var e = new events.EventEmitter();
-e.on("row", function(row) {
+e.on('row', function(row) {
     count++;
-    
+
     if (count % 1000 === 0) {
-        process.stdout.write("Count:" + count + "\033[0G");
+        process.stdout.write('Count:' + count + '\u001b[0G'); // "\033[0G"
     }
 });
-e.on("finished", function() {
-    console.log("Finished worksheet: " + count);
+e.on('finished', function() {
+    console.log('Finished worksheet: ' + count);
 });
 
 var zip = unzip.Parse();
 zip.on('entry',function (entry) {
-    if (entry.path.match(/xl\/worksheets\/sheet\d+\.xml/)) {
+    if (entry.path.match(/xl\/worksheets\/sheet\d+[.]xml/)) {
         parseSheet(entry,e);
     }
 });
@@ -44,22 +42,22 @@ function parseSheet(entry, emitter) {
     var current = null;
     parser.on('opentag', function(node) {
         switch(node.name) {
-            case "row":
+            case 'row':
                 var r = parseInt(node.attributes.r);
                 row = new Row(r);
                 break;
-            case "c":
+            case 'c':
                 cell = {
                     address: node.attributes.r,
                     s: parseInt(node.attributes.s),
                     t: node.attributes.t
                 };
                 break;
-            case "v":
-                current = cell.v = { text: "" };
+            case 'v':
+                current = cell.v = { text: '' };
                 break;
-            case "f":
-                current = cell.f = { text: "" };
+            case 'f':
+                current = cell.f = { text: '' };
                 break;
         }
     });
@@ -70,11 +68,11 @@ function parseSheet(entry, emitter) {
     });
     parser.on('closetag', function(name) {
         switch(name) {
-            case "row":
-                emitter.emit("row", row);
+            case 'row':
+                emitter.emit('row', row);
                 row = null;
                 break;
-            case "c":
+            case 'c':
                 row.add(cell);
                 break;
         }

@@ -6,7 +6,7 @@ var testXformHelper = require('./../test-xform-helper');
 var expectations = [
   {
     title: 'five',
-    create:  function() { return new IntegerXform({tag: 'integer', attr: 'val'})},
+    create: function() { return new IntegerXform({tag: 'integer', attr: 'val'}); },
     preparedModel: 5,
     xml: '<integer val="5"/>',
     parsedModel: 5,
@@ -14,20 +14,20 @@ var expectations = [
   },
   {
     title: 'zero',
-    create:  function() { return new IntegerXform({tag: 'integer', attr: 'val'})},
+    create: function() { return new IntegerXform({tag: 'integer', attr: 'val'}); },
     preparedModel: 0,
     xml: '',
     tests: ['render', 'renderIn']
   },
   {
     title: 'undefined',
-    create:  function() { return new IntegerXform({tag: 'integer', attr: 'val'})},
+    create: function() { return new IntegerXform({tag: 'integer', attr: 'val'}); },
     preparedModel: undefined,
     xml: '',
     tests: ['render', 'renderIn']
   }
 ];
 
-describe('IntegerXform', function () {
+describe('IntegerXform', function() {
   testXformHelper(expectations);
 });
