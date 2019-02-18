@@ -61,8 +61,8 @@
     "archiver": "^3.0.0",
     "fast-csv": "^2.4.1",
     "jszip": "^3.1.5",
-    "moment": "^2.22.2",
-    "node-unzip-2": "^0.2.7",
+    "moment": "^2.22.2",    
+    "unzipper": "^0.9.7",
     "promish": "^5.1.1",
     "sax": "^1.2.4",
     "temp": "0.8.3"
