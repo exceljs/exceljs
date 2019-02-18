@@ -22,7 +22,7 @@ npm install exceljs
     Many thanks to <a href="https://github.com/xcorail">Xavier RENE-CORAIL</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/646">Add type definition for Column.values #646</a> Many thanks to <a href="https://github.com/emlai">Emil Laine</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/663">Update README.md with load() option #663</a> Many thanks to <a href="https://github.com/thinksentient">Joanna Walker</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/699">Update index.d.ts #699</a> Many thanks to <a href="https://github.com/rayyen">Ray Yen</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/636">Fix misinterpreted ranges from <definedName> #636</a>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/636">Fix misinterpreted ranges from &lt;definedName&gt; #636</a>
     Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/646">Add type definition for Column.values #646</a> Many thanks to <a href="https://github.com/emlai">Emil Laine</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/663">Update README.md with load() option #663</a> Many thanks to <a href="https://github.com/thinksentient">Joanna Walker</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/699">Update index.d.ts #699</a> Many thanks to <a href="https://github.com/rayyen">Ray Yen</a> for this contribution.
   </li>
 </ul>
