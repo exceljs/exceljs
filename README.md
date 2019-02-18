@@ -238,7 +238,6 @@ var worksheet = workbook.getWorksheet(1);
 
 ```javascript
 // make worksheet visible
-worksheet.state = 'show';
 worksheet.state = 'visible';
 
 // make worksheet hidden
