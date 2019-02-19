@@ -230,6 +230,11 @@ describe('WorkbookReader', function () {
           }
         })
       });
+      
+  describe('with a spreadsheet containing a defined name that kinda looks like it contains a range', function() {
+    it('should not crash', function() {
+      var workbook = new Excel.Workbook();
+      return workbook.xlsx.read(fs.createReadStream('./spec/integration/data/bogus-defined-name.xlsx'));
     });
   });
 });
