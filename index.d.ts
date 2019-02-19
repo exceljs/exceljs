@@ -835,6 +835,7 @@ export interface WorksheetModel {
 	autoFilter: AutoFilter;
 	media: Media[];
 }
+export type WorksheetState = 'visible' | 'hidden' | 'veryHidden';
 
 export interface Worksheet {
 	readonly id: number;
@@ -851,7 +852,7 @@ export interface Worksheet {
 	/**
 	 * Worksheet State
 	 */
-	state: 'visible' | 'hidden' | 'veryHidden';
+	state: WorksheetState;
 
 	/**
 	 * Worksheet Properties
@@ -1072,7 +1073,7 @@ export interface AddWorksheetOptions {
 	properties: Partial<WorksheetProperties>;
 	pageSetup: Partial<PageSetup>;
 	views: Array<Partial<WorksheetView>>;
-	state: 'visible' | 'hidden' | 'veryHidden';
+	state: WorksheetState;
 }
 
 export interface WorkbookProperties {
