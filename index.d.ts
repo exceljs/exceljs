@@ -851,7 +851,7 @@ export interface Worksheet {
 	/**
 	 * Worksheet State
 	 */
-	state:  'show' | 'visible' | 'hidden' | 'veryHidden';
+	state: 'visible' | 'hidden' | 'veryHidden';
 
 	/**
 	 * Worksheet Properties
