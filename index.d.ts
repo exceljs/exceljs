@@ -1072,7 +1072,7 @@ export interface AddWorksheetOptions {
 	properties: Partial<WorksheetProperties>;
 	pageSetup: Partial<PageSetup>;
 	views: Array<Partial<WorksheetView>>;
-	state: 'visible' | 'show' | 'hidden' | 'veryHidden';
+	state: 'visible' | 'hidden' | 'veryHidden';
 }
 
 export interface WorkbookProperties {
