@@ -26,7 +26,13 @@ function createSimpleWorkbook() {
 
   // date-time
   ws.getCell('D1').value = new Date();
-
+  ws.getCell('D1').dataValidation = {
+    type: 'date',
+    operator: 'greaterThan',
+    showErrorMessage: true,
+    allowBlank: true,
+    formulae: [new Date(2016, 0, 1)]
+  };
   // hyperlink
   ws.getCell('E1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
 
@@ -40,6 +46,7 @@ function createSimpleWorkbook() {
 
   // date formula
   ws.getCell('C2').value = {formula: 'D1', result: new Date()};
+  ws.getCell('C3').value = {formula: 'D1'};
 
   return wb;
 }
@@ -118,14 +125,14 @@ describe('Workbook', function() {
     wb.addWorksheet('first');
     expect(wb.getWorksheet(0)).to.equal(undefined);
   });
-  
+
   it('returns undefined for sheet 0 after accessing wb.worksheets or wb.eachSheet ', function() {
     var wb = new Excel.Workbook();
     var sheet = wb.addWorksheet('first');
-    
-    wb.eachSheet(function(){});
+
+    wb.eachSheet(function() {});
     var numSheets = wb.worksheets.length;
-    
+
     expect(numSheets).to.equal(1);
     expect(wb.getWorksheet(0)).to.equal(undefined);
     expect(wb.getWorksheet(1) === sheet).to.equal(true);
