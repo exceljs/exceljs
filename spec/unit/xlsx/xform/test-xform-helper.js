@@ -34,7 +34,7 @@ var its = {
 
         var xform = expectation.create();
         xform.prepare(model, expectation.options);
-        expect(model).to.deep.equal(result);
+        expect(_.cloneDeep(model)).to.deep.equal(result);
         resolve();
       });
     });
