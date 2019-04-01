@@ -18,46 +18,10 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/636">Fix misinterpreted ranges from &lt;definedName&gt; #636</a>
-    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li>
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/640">Add LGTM code quality badges #640</a>
-    Many thanks to <a href="https://github.com/xcorail">Xavier RENE-CORAIL</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/646">Add type definition for Column.values #646</a>
-    Many thanks to <a href="https://github.com/emlai">Emil Laine</a> for this contribution.
-    This fixes <a href="https://github.com/exceljs/exceljs/issues/645">Column.values is missing TypeScript definitions #645</a>.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/663">Update README.md with load() option #663</a>
-    Many thanks to <a href="https://github.com/thinksentient">Joanna Walker</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/677">fixed packages according to npm audit #677</a>
-    Many thanks to <a href="https://github.com/misleadingTitle">Manuel Minuti</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/699">Update index.d.ts #699</a>
-    Many thanks to <a href="https://github.com/rayyen">Ray Yen</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/708">Replaced node-unzip-2 to unzipper package which is more robust #708</a>
-    Many thanks to <a href="https://github.com/johnmalkovich100">johnmalkovich100</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/728">Read worksheet hidden state #728</a>
-    Many thanks to <a href="https://github.com/LesterLyu">Dishu(Lester) Lyu</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/736">add Worksheet.state typescript definition fix #714 #736</a>
-    Many thanks to <a href="https://github.com/ilyes-kechidi">Ilyes Kechidi</a> for this contribution.
-    This fixes <a href="https://github.com/exceljs/exceljs/issues/714">Worksheet State does not exist in index.d.ts #714</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/702">Improvements for images (correct reading/writing possitions) #702</a>
+    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li>
   </li>
 </ul>
-
-And a big thank you to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for a lot of the behind the scenes work.
 
 # Contributions
 
@@ -67,13 +31,6 @@ I have just one request; If you submit a pull request for a bugfix, please add a
  Even a PR that just has a failing test is fine - I can analyse what the test is doing and fix the code from that.
 
 To be clear, all contributions added to this library will be included in the library's MIT licence.
-
-# Notice
-
-I have to admit I'm still really snowed under at the moment and will not be able to
-pursue active development of exceljs in the coming months.
-I will however keep an eye on the pull requests and endeavour to merge and release
-them as they come.
 
 # Backlog
 
@@ -1914,3 +1871,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.6.2   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/587">Fix Issue #488 where dt is an invalid date format. #587</a> to fix  <a href="https://github.com/exceljs/exceljs/issues/488">Invalid time value Exception #488</a>. Many thanks to <a href="https://github.com/ilijaz">Iliya Zubakin</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/590">drawing element must be below rowBreaks according to spec or corrupt worksheet #590</a> Many thanks to <a href="https://github.com/nevace">Liam Neville</a> for this contribution. </li> </ul> |
 | 1.6.3   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/595">set type optional #595</a> Many thanks to <a href="https://github.com/taoqf">taoqf</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/578">Fix some xlsx stream read xlsx not in guaranteed order problem #578</a> Many thanks to <a href="https://github.com/KMethod">KMethod</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/599">Fix formatting issue in README #599</a> Many thanks to <a href="https://github.com/getsomecoke">Vishnu Kyatannawar</a> for this contribution. </li> </ul> |
 | 1.7.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/602">Ability to set tooltip for hyperlink #602</a> Many thanks to <a href="https://github.com/kalexey89">Kuznetsov Aleksey</a> for this contribution. </li> </ul> |
+| 1.8.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/636">Fix misinterpreted ranges from &lt;definedName&gt; #636</a> Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/640">Add LGTM code quality badges #640</a> Many thanks to <a href="https://github.com/xcorail">Xavier RENE-CORAIL</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/646">Add type definition for Column.values #646</a> Many thanks to <a href="https://github.com/emlai">Emil Laine</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/645">Column.values is missing TypeScript definitions #645</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/663">Update README.md with load() option #663</a> Many thanks to <a href="https://github.com/thinksentient">Joanna Walker</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/677">fixed packages according to npm audit #677</a> Many thanks to <a href="https://github.com/misleadingTitle">Manuel Minuti</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/699">Update index.d.ts #699</a> Many thanks to <a href="https://github.com/rayyen">Ray Yen</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/708">Replaced node-unzip-2 to unzipper package which is more robust #708</a> Many thanks to <a href="https://github.com/johnmalkovich100">johnmalkovich100</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/728">Read worksheet hidden state #728</a> Many thanks to <a href="https://github.com/LesterLyu">Dishu(Lester) Lyu</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/736">add Worksheet.state typescript definition fix #714 #736</a> Many thanks to <a href="https://github.com/ilyes-kechidi">Ilyes Kechidi</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/714">Worksheet State does not exist in index.d.ts #714</a>. </li> </ul> |
+
