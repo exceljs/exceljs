@@ -92,7 +92,6 @@ describe('WorkbookReader', function() {
 
       it('should be classified as a formula cell', function() {
         expect(this.cell.type).to.equal(Excel.ValueType.Formula);
-        expect(this.cell.isFormula).to.be.true();
       });
 
       it('should have text corresponding to the evaluated formula result', function() {
