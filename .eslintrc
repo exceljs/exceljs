@@ -1,5 +1,10 @@
 {
   "extends": "airbnb",
+  "env": {
+    "es6": true,
+    "mocha": true,
+    "node": true
+  },
   "rules": {
     "max-len": [1, 160, 2, {"ignoreComments": true}],
     "semi": ["error", "always"],
