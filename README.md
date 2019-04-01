@@ -18,7 +18,9 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/702">Improvements for images (correct reading/writing possitions) #702</a>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/702">Improvements for images (correct reading/writing possitions) #702</a>.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/650">Image location don't respect Column width #650</a> and
+    <a href="https://github.com/exceljs/exceljs/issues/467">Image position - stretching image #467</a>.
     Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li>
   </li>
 </ul>
