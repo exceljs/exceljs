@@ -1,13 +1,13 @@
 'use strict';
 
-var verquire = require('../utils/verquire');
-var testutils = require('../utils/index');
-var fs = require('fs');
-var expect = require('chai').expect;
+const verquire = require('../utils/verquire');
+const testutils = require('../utils/index');
+const fs = require('fs');
+const expect = require('chai').expect;
 
-var Excel = verquire('excel');
+const Excel = verquire('excel');
 
-var TEST_FILE_NAME = './spec/out/wb.test.xlsx';
+const TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 
 // need some architectural changes to make stream read work properly
 // because of: shared strings, sheet names, etc are not read in guaranteed order
@@ -15,7 +15,7 @@ describe('WorkbookReader', function() {
   describe('Serialise', function() {
     it('xlsx file', function() {
       this.timeout(10000);
-      var wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
+      const wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
 
       return wb.xlsx.writeFile(TEST_FILE_NAME)
         .then(function() {
@@ -27,7 +27,7 @@ describe('WorkbookReader', function() {
   describe('#readFile', function() {
     describe('Row limit', function() {
       it('should bail out if the file contains more rows than the limit', function() {
-        var workbook = new Excel.Workbook();
+        const workbook = new Excel.Workbook();
         // The Fibonacci sheet has 19 rows
         return workbook.xlsx.readFile('./spec/integration/data/fibonacci.xlsx', {maxRows: 10})
           .then(function() {
@@ -39,7 +39,7 @@ describe('WorkbookReader', function() {
 
       it('should fail fast on a huge file', function() {
         this.timeout(20000);
-        var workbook = new Excel.Workbook();
+        const workbook = new Excel.Workbook();
         return workbook.xlsx.readFile('./spec/integration/data/huge.xlsx', {maxRows: 100})
           .then(function() {
             throw new Error('Promise unexpectedly fulfilled');
@@ -49,7 +49,7 @@ describe('WorkbookReader', function() {
       });
 
       it('should parse fine if the limit is not exceeded', function() {
-        var workbook = new Excel.Workbook();
+        const workbook = new Excel.Workbook();
         return workbook.xlsx.readFile('./spec/integration/data/fibonacci.xlsx', {maxRows: 20});
       });
     });
@@ -58,7 +58,7 @@ describe('WorkbookReader', function() {
   describe('#read', function() {
     describe('Row limit', function() {
       it('should bail out if the file contains more rows than the limit', function() {
-        var workbook = new Excel.Workbook();
+        const workbook = new Excel.Workbook();
         // The Fibonacci sheet has 19 rows
         return workbook.xlsx.read(fs.createReadStream('./spec/integration/data/fibonacci.xlsx'), {maxRows: 10})
           .then(function() {
@@ -69,16 +69,39 @@ describe('WorkbookReader', function() {
       });
 
       it('should parse fine if the limit is not exceeded', function() {
-        var workbook = new Excel.Workbook();
+        const workbook = new Excel.Workbook();
         return workbook.xlsx.read(fs.createReadStream('./spec/integration/data/fibonacci.xlsx'), {maxRows: 20});
       });
     });
   });
+  
+  describe('edit styles in existing file', function(){
+    beforeEach(function(){
+      this.wb = new Excel.Workbook();
+      return this.wb.xlsx.readFile('./spec/integration/data/test-row-styles.xlsx');
+    });
+    
+    it('edit styles of single row instead of all', function () {
+      const ws = this.wb.getWorksheet(1);
+
+      ws.eachRow((row, rowNo) => {
+        rowNo % 5 === 0 && (row.font = {color: {argb: '00ff00'}})
+      });
+      
+      expect(ws.getRow(3).font.color.argb).to.be.equal(ws.getRow(6).font.color.argb);
+      expect(ws.getRow(6).font.color.argb).to.be.equal(ws.getRow(9).font.color.argb);
+      expect(ws.getRow(9).font.color.argb).to.be.equal(ws.getRow(12).font.color.argb);
+      expect(ws.getRow(12).font.color.argb).not.to.be.equal(ws.getRow(15).font.color.argb);
+      expect(ws.getRow(15).font.color.argb).not.to.be.equal(ws.getRow(18).font.color.argb);
+      expect(ws.getRow(15).font.color.argb).to.be.equal(ws.getRow(10).font.color.argb);
+      expect(ws.getRow(10).font.color.argb).to.be.equal(ws.getRow(5).font.color.argb);
+    })
+  });
 
   describe('with a spreadsheet that contains formulas', function() {
     before(function() {
-      var testContext = this;
-      var workbook = new Excel.Workbook();
+      const testContext = this;
+      const workbook = new Excel.Workbook();
       return workbook.xlsx.read(fs.createReadStream('./spec/integration/data/formulas.xlsx'))
         .then(function() {
           testContext.worksheet = workbook.getWorksheet();
@@ -129,8 +152,8 @@ describe('WorkbookReader', function() {
 
   describe('with a spreadsheet that contains a shared string with an escaped underscore', function() {
     before(function() {
-      var testContext = this;
-      var workbook = new Excel.Workbook();
+      const testContext = this;
+      const workbook = new Excel.Workbook();
       return workbook.xlsx.read(fs.createReadStream('./spec/integration/data/shared_string_with_escape.xlsx'))
         .then(function() {
           testContext.worksheet = workbook.getWorksheet();
