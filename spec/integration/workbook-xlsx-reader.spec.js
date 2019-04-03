@@ -53,6 +53,35 @@ describe('WorkbookReader', function() {
         return workbook.xlsx.readFile('./spec/integration/data/fibonacci.xlsx', {maxRows: 20});
       });
     });
+
+    describe('Column limit', function() {
+      it('should bail out if the file contains more cells than the limit', function() {
+        const workbook = new Excel.Workbook();
+        // The many-columns sheet has 20 columns in row 2
+        return workbook.xlsx.readFile('./spec/integration/data/many-columns.xlsx', {maxCols: 15})
+          .then(function() {
+            throw new Error('Promise unexpectedly fulfilled');
+          }, function(err) {
+            expect(err.message).to.equal('Max column count exceeded');
+          });
+      });
+
+      it('should fail fast on a huge file', function() {
+        this.timeout(20000);
+        const workbook = new Excel.Workbook();
+        return workbook.xlsx.readFile('./spec/integration/data/huge.xlsx', {maxCols: 10})
+          .then(function() {
+            throw new Error('Promise unexpectedly fulfilled');
+          }, function(err) {
+            expect(err.message).to.equal('Max column count exceeded');
+          });
+      });
+
+      it('should parse fine if the limit is not exceeded', function() {
+        const workbook = new Excel.Workbook();
+        return workbook.xlsx.readFile('./spec/integration/data/many-columns.xlsx', {maxCols: 40});
+      });
+    });
   });
 
   describe('#read', function() {
