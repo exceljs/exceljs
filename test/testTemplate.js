@@ -1,13 +1,12 @@
 'use strict';
 
-var Excel = require('../excel');
+const Excel = require('../excel');
 
-var inputFile = process.argv[2];
-var outputFile = process.argv[3];
+const inputFile = process.argv[2];
+const outputFile = process.argv[3];
 
-
-var passed = true;
-var assert = function(value, failMessage, passMessage) {
+let passed = true;
+const assert = function(value, failMessage, passMessage) {
   if (!value) {
     if (failMessage) {
       console.error(failMessage);
@@ -18,21 +17,22 @@ var assert = function(value, failMessage, passMessage) {
   }
 };
 
-
-var workbook = new Excel.Workbook();
-workbook.xlsx.readFile('./out/template.xlsx')
-  .then(function(stream) {
-    var options = {
+const workbook = new Excel.Workbook();
+workbook.xlsx
+  .readFile('./out/template.xlsx')
+  .then(stream => {
+    const options = {
       useSharedStrings: true,
-      useStyles: true
+      useStyles: true,
     };
 
-    return stream.xlsx.writeFile('./out/template-out.xlsx', options)
-      .then(function(){
+    return stream.xlsx
+      .writeFile('./out/template-out.xlsx', options)
+      .then(() => {
         console.log('Done.');
-      })
+      });
   })
-  .catch(function(error) {
+  .catch(error => {
     console.error(error.message);
     console.error(error.stack);
   });

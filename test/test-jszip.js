@@ -1,25 +1,31 @@
 'use strict';
 
-var JSZip = require('jszip');
-var Bluebird = require('bluebird');
-var fs = require('fs');
+const JSZip = require('jszip');
+const Bluebird = require('bluebird');
+const fs = require('fs');
 
-var fsp = Bluebird.promisifyAll(fs);
+const fsp = Bluebird.promisifyAll(fs);
 
-var filename = process.argv[2];
+const filename = process.argv[2];
 
-var jsZip = new JSZip();
+const jsZip = new JSZip();
 
-fsp.readFileAsync(filename)
-  .then(function(data) {
-    console.log('data', data)
+fsp
+  .readFileAsync(filename)
+  .then(data => {
+    console.log('data', data);
     return jsZip.loadAsync(data);
   })
-  .then(function(zip) {
-    zip.forEach(function(path, entry) {
+  .then(zip => {
+    zip.forEach((path, entry) => {
       if (!entry.dir) {
         // console.log(path, entry)
-        console.log(path, entry.name, entry._data.compressedSize, entry._data.uncompressedSize)
+        console.log(
+          path,
+          entry.name,
+          entry._data.compressedSize,
+          entry._data.uncompressedSize
+        );
       }
     });
   });

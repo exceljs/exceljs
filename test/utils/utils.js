@@ -1,85 +1,92 @@
-var fs = require('fs');
-var _ = require('../../lib/utils/under-dash.js');
-var Promise = require('bluebird');
+const fs = require('fs');
+const Promise = require('bluebird');
+const _ = require('../../lib/utils/under-dash.js');
 
-var main = module.exports = {
-    cleanDir: function(path) {
-        var deferred = Promise.defer();
+const main = {
+  cleanDir(path) {
+    const deferred = Promise.defer();
 
-        var remove = function(file) {
-            var myDeferred = Promise.defer();
-            var myHandler = function(err) { if (err) { myDeferred.reject(err)} else { myDeferred.resolve(); }}
-            fs.stat(file, function(err, stat) {
-                if (err) {
-                    myDeferred.reject(err);
-                } else {
-                    if (stat.isFile()) {
-                        console.log("unlink " + file);
-                        fs.unlink(file, myHandler);
-                    } else if (stat.isDirectory()) {
-                        main.cleanDir(file)
-                            .then(function() {
-                                console.log("rmdir " + file);
-                                fs.rmdir(file, myHandler);
-                            })
-                            .catch(myHandler);
-                    }
-                }
-            });
-            return myDeferred.promise;
+    const remove = function(file) {
+      const myDeferred = Promise.defer();
+      const myHandler = function(err) {
+        if (err) {
+          myDeferred.reject(err);
+        } else {
+          myDeferred.resolve();
         }
+      };
+      fs.stat(file, (err, stat) => {
+        if (err) {
+          myDeferred.reject(err);
+        } else if (stat.isFile()) {
+          console.log(`unlink ${file}`);
+          fs.unlink(file, myHandler);
+        } else if (stat.isDirectory()) {
+          main
+            .cleanDir(file)
+            .then(() => {
+              console.log(`rmdir ${file}`);
+              fs.rmdir(file, myHandler);
+            })
+            .catch(myHandler);
+        }
+      });
+      return myDeferred.promise;
+    };
 
-        fs.readdir(path, function(err, files) {
-            if(err) {
-                deferred.reject(err);
-            } else {
-                var promises = [];
-                _.each(files, function(file) {
-                    promises.push(remove(path + "/" + file));
-                });
-
-                Promise.all(promises)
-                    .then(function() {
-                        deferred.resolve();
-                    })
-                    .catch(function(err) {
-                        deferred.reject(err);
-                    });
-            }
+    fs.readdir(path, (err, files) => {
+      if (err) {
+        deferred.reject(err);
+      } else {
+        const promises = [];
+        _.each(files, file => {
+          promises.push(remove(`${path}/${file}`));
         });
 
-        return deferred.promise;
+        Promise.all(promises)
+          .then(() => {
+            deferred.resolve();
+          })
+          .catch(err => {
+            deferred.reject(err);
+          });
+      }
+    });
+
+    return deferred.promise;
+  },
+
+  randomName(length) {
+    length = length || 5;
+    const text = [];
+    const possible =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < length; i++)
+      text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
+
+    return text.join('');
+  },
+  randomNum(d) {
+    return Math.round(Math.random() * d);
+  },
+
+  fmt: {
+    number(n) {
+      // output large numbers with thousands separator
+      const s = n.toString();
+      const l = s.length;
+      const a = [];
+      let r = l % 3 || 3;
+      let i = 0;
+      while (i < l) {
+        a.push(s.substr(i, r));
+        i += r;
+        r = 3;
+      }
+      return a.join(',');
     },
-
-    randomName: function(length) {
-        length = length || 5;
-        var text = [];
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        for( var i=0; i < length; i++ )
-            text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
-
-        return text.join('');
-    },
-    randomNum: function(d) {
-        return Math.round(Math.random()*d);
-    },
-
-    fmt: {
-        number: function(n) {
-            // output large numbers with thousands separator
-            var s = n.toString();
-            var l = s.length;
-            var a = [];
-            var r = (l % 3) || 3;
-            var i = 0;
-            while (i < l) {
-                a.push(s.substr(i,r));
-                i += r;
-                r = 3;
-            }
-            return a.join(',');
-        }
-    }
-
+  },
 };
+
+module.exports = main;
