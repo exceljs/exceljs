@@ -346,6 +346,11 @@ describe('Worksheet', function() {
           testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertMore'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertMore'], options);
         });
+        it('Insert style', function() {
+          var wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertStyle'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertStyle'], options);
+        });
       });
       describe('Columns', function() {
         it('splices columns', function() {
