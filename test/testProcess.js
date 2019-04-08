@@ -1,14 +1,14 @@
 'use strict';
 
-var Excel = require('../excel');
+const Excel = require('../excel');
 
-var inputFile = process.argv[2];
-var outputFile = process.argv[3];
+const inputFile = process.argv[2];
+const outputFile = process.argv[3];
 
-var wb = new Excel.Workbook();
+const wb = new Excel.Workbook();
 
-var passed = true;
-var assert = function(value, failMessage, passMessage) {
+let passed = true;
+const assert = function(value, failMessage, passMessage) {
   if (!value) {
     if (failMessage) {
       console.error(failMessage);
@@ -20,15 +20,16 @@ var assert = function(value, failMessage, passMessage) {
 };
 
 // assuming file created by testBookOut
-wb.xlsx.readFile(inputFile)
-  .then(function() {
+wb.xlsx
+  .readFile(inputFile)
+  .then(() => {
     console.log('Loaded', inputFile);
 
-    wb.eachSheet(function(sheet) {
+    wb.eachSheet(sheet => {
       console.log(sheet.name);
     });
 
-    var ws = wb.getWorksheet('Sheet1');
+    const ws = wb.getWorksheet('Sheet1');
 
     assert(ws, 'Expected to find a worksheet called sheet1');
 
@@ -38,10 +39,10 @@ wb.xlsx.readFile(inputFile)
     ws.addRow([1, 'hello']);
     return wb.xlsx.writeFile(outputFile);
   })
-  .then(function() {
+  .then(() => {
     assert(passed, 'Something went wrong', 'All tests passed!');
   })
-  .catch(function(error) {
+  .catch(error => {
     console.error(error.message);
     console.error(error.stack);
   });

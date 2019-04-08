@@ -1,20 +1,20 @@
 'use strict';
 
-var expect = require('chai').expect;
-var verquire = require('../utils/verquire');
-var testutils = require('./../utils/index');
-var path = require('path');
+const expect = require('chai').expect;
+const path = require('path');
+const verquire = require('../utils/verquire');
+const testutils = require('./../utils/index');
 
-var Excel = verquire('excel');
-var Range = verquire('doc/range');
+const Excel = verquire('excel');
+const Range = verquire('doc/range');
 
-describe('Worksheet', function() {
-  describe('Values', function() {
-    it('stores values properly', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+describe('Worksheet', () => {
+  describe('Values', () => {
+    it('stores values properly', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
-      var now = new Date();
+      const now = new Date();
 
       // plain number
       ws.getCell('A1').value = 7;
@@ -30,19 +30,25 @@ describe('Worksheet', function() {
       ws.getCell('D1').value = now;
 
       // constructed string - will share recored with B1
-      ws.getCell('E1').value = ['Hello', 'World'].join(', ') + '!';
+      ws.getCell('E1').value = `${['Hello', 'World'].join(', ')}!`;
 
       // hyperlink
-      ws.getCell('F1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
+      ws.getCell('F1').value = {
+        text: 'www.google.com',
+        hyperlink: 'http://www.google.com',
+      };
 
       // number formula
-      ws.getCell('A2').value = {formula: 'A1', result: 7};
+      ws.getCell('A2').value = { formula: 'A1', result: 7 };
 
       // string formula
-      ws.getCell('B2').value = {formula: 'CONCATENATE("Hello", ", ", "World!")', result: 'Hello, World!'};
+      ws.getCell('B2').value = {
+        formula: 'CONCATENATE("Hello", ", ", "World!")',
+        result: 'Hello, World!',
+      };
 
       // date formula
-      ws.getCell('C2').value = {formula: 'D1', result: now};
+      ws.getCell('C2').value = { formula: 'D1', result: now };
 
       expect(ws.getCell('A1').value).to.equal(7);
       expect(ws.getCell('B1').value).to.equal('Hello, World!');
@@ -50,29 +56,36 @@ describe('Worksheet', function() {
       expect(ws.getCell('D1').value).to.equal(now);
       expect(ws.getCell('E1').value).to.equal('Hello, World!');
       expect(ws.getCell('F1').value.text).to.equal('www.google.com');
-      expect(ws.getCell('F1').value.hyperlink).to.equal('http://www.google.com');
+      expect(ws.getCell('F1').value.hyperlink).to.equal(
+        'http://www.google.com'
+      );
 
       expect(ws.getCell('A2').value.formula).to.equal('A1');
       expect(ws.getCell('A2').value.result).to.equal(7);
 
-      expect(ws.getCell('B2').value.formula).to.equal('CONCATENATE("Hello", ", ", "World!")');
+      expect(ws.getCell('B2').value.formula).to.equal(
+        'CONCATENATE("Hello", ", ", "World!")'
+      );
       expect(ws.getCell('B2').value.result).to.equal('Hello, World!');
 
       expect(ws.getCell('C2').value.formula).to.equal('D1');
       expect(ws.getCell('C2').value.result).to.equal(now);
     });
 
-    it('stores shared string values properly', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('stores shared string values properly', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.getCell('A1').value = 'Hello, World!';
 
       ws.getCell('A2').value = 'Hello';
       ws.getCell('B2').value = 'World';
-      ws.getCell('C2').value = {formula: 'CONCATENATE(A2, ", ", B2, "!")', result: 'Hello, World!'};
+      ws.getCell('C2').value = {
+        formula: 'CONCATENATE(A2, ", ", B2, "!")',
+        result: 'Hello, World!',
+      };
 
-      ws.getCell('A3').value = ['Hello', 'World'].join(', ') + '!';
+      ws.getCell('A3').value = `${['Hello', 'World'].join(', ')}!`;
 
       // A1 and A3 should reference the same string object
       expect(ws.getCell('A1').value).to.equal(ws.getCell('A3').value);
@@ -81,9 +94,9 @@ describe('Worksheet', function() {
       expect(ws.getCell('A1').value).to.equal(ws.getCell('C2').value.result);
     });
 
-    it('assigns cell types properly', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('assigns cell types properly', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // plain number
       ws.getCell('A1').value = 7;
@@ -98,16 +111,22 @@ describe('Worksheet', function() {
       ws.getCell('D1').value = new Date();
 
       // hyperlink
-      ws.getCell('E1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
+      ws.getCell('E1').value = {
+        text: 'www.google.com',
+        hyperlink: 'http://www.google.com',
+      };
 
       // number formula
-      ws.getCell('A2').value = {formula: 'A1', result: 7};
+      ws.getCell('A2').value = { formula: 'A1', result: 7 };
 
       // string formula
-      ws.getCell('B2').value = {formula: 'CONCATENATE("Hello", ", ", "World!")', result: 'Hello, World!'};
+      ws.getCell('B2').value = {
+        formula: 'CONCATENATE("Hello", ", ", "World!")',
+        result: 'Hello, World!',
+      };
 
       // date formula
-      ws.getCell('C2').value = {formula: 'D1', result: new Date()};
+      ws.getCell('C2').value = { formula: 'D1', result: new Date() };
 
       expect(ws.getCell('A1').type).to.equal(Excel.ValueType.Number);
       expect(ws.getCell('B1').type).to.equal(Excel.ValueType.String);
@@ -120,14 +139,14 @@ describe('Worksheet', function() {
       expect(ws.getCell('C2').type).to.equal(Excel.ValueType.Formula);
     });
 
-    it('adds columns', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('adds columns', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.columns = [
         { key: 'id', width: 10 },
         { key: 'name', width: 32 },
-        { key: 'dob', width: 10 }
+        { key: 'dob', width: 10 },
       ];
 
       expect(ws.getColumn('id').number).to.equal(1);
@@ -146,14 +165,14 @@ describe('Worksheet', function() {
       expect(ws.getColumn(3)).to.equal(ws.getColumn('dob'));
     });
 
-    it('adds column headers', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('adds column headers', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.columns = [
         { header: 'Id', width: 10 },
         { header: 'Name', width: 32 },
-        { header: 'D.O.B.', width: 10 }
+        { header: 'D.O.B.', width: 10 },
       ];
 
       expect(ws.getCell('A1').value).to.equal('Id');
@@ -161,9 +180,9 @@ describe('Worksheet', function() {
       expect(ws.getCell('C1').value).to.equal('D.O.B.');
     });
 
-    it('adds column headers by number', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('adds column headers by number', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // by defn
       ws.getColumn(1).defn = { key: 'id', header: 'Id', width: 10 };
@@ -188,9 +207,9 @@ describe('Worksheet', function() {
       expect(ws.getColumn(2).width).to.equal(32);
     });
 
-    it('adds column headers by letter', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('adds column headers by letter', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // by defn
       ws.getColumn('A').defn = { key: 'id', header: 'Id', width: 10 };
@@ -215,22 +234,22 @@ describe('Worksheet', function() {
       expect(ws.getColumn('B').width).to.equal(32);
     });
 
-    it('adds rows by object', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('adds rows by object', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // add columns to define column keys
       ws.columns = [
         { header: 'Id', key: 'id', width: 10 },
         { header: 'Name', key: 'name', width: 32 },
-        { header: 'D.O.B.', key: 'dob', width: 10 }
+        { header: 'D.O.B.', key: 'dob', width: 10 },
       ];
 
-      var dateValue1 = new Date(1970, 1, 1);
-      var dateValue2 = new Date(1965, 1, 7);
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
 
-      ws.addRow({id: 1, name: 'John Doe', dob: dateValue1});
-      ws.addRow({id: 2, name: 'Jane Doe', dob: dateValue2});
+      ws.addRow({ id: 1, name: 'John Doe', dob: dateValue1 });
+      ws.addRow({ id: 2, name: 'Jane Doe', dob: dateValue2 });
 
       expect(ws.getCell('A2').value).to.equal(1);
       expect(ws.getCell('B2').value).to.equal('John Doe');
@@ -243,25 +262,26 @@ describe('Worksheet', function() {
       expect(ws.getRow(2).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
       expect(ws.getRow(3).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
 
-      var values = [,
+      const values = [
+        ,
         [, 'Id', 'Name', 'D.O.B.'],
         [, 1, 'John Doe', dateValue1],
-        [, 2, 'Jane Doe', dateValue2]
+        [, 2, 'Jane Doe', dateValue2],
       ];
-      ws.eachRow(function(row, rowNumber) {
+      ws.eachRow((row, rowNumber) => {
         expect(row.values).to.deep.equal(values[rowNumber]);
-        row.eachCell(function(cell, colNumber) {
+        row.eachCell((cell, colNumber) => {
           expect(cell.value).to.equal(values[rowNumber][colNumber]);
         });
       });
     });
 
-    it('adds rows by contiguous array', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('adds rows by contiguous array', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970, 1, 1);
-      var dateValue2 = new Date(1965, 1, 7);
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
 
       ws.addRow([1, 'John Doe', dateValue1]);
       ws.addRow([2, 'Jane Doe', dateValue2]);
@@ -278,22 +298,23 @@ describe('Worksheet', function() {
       expect(ws.getRow(2).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
     });
 
-    it('adds rows by sparse array', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('adds rows by sparse array', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970, 1, 1);
-      var dateValue2 = new Date(1965, 1, 7);
-      var rows = [,
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+      const rows = [
+        ,
         [, 1, 'John Doe', , dateValue1],
-        [, 2, 'Jane Doe', , dateValue2]
+        [, 2, 'Jane Doe', , dateValue2],
       ];
-      var row3 = [];
+      const row3 = [];
       row3[1] = 3;
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      rows.forEach(function(row) {
+      rows.forEach(row => {
         if (row) {
           ws.addRow(row);
         }
@@ -315,59 +336,59 @@ describe('Worksheet', function() {
       expect(ws.getRow(2).values).to.deep.equal(rows[2]);
       expect(ws.getRow(3).values).to.deep.equal(rows[3]);
 
-      ws.eachRow(function(row, rowNumber) {
+      ws.eachRow((row, rowNumber) => {
         expect(row.values).to.deep.equal(rows[rowNumber]);
-        row.eachCell(function(cell, colNumber) {
+        row.eachCell((cell, colNumber) => {
           expect(cell.value).to.equal(rows[rowNumber][colNumber]);
         });
       });
     });
 
-    it('iterates over rows', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('iterates over rows', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.getCell('A1').value = 1;
       ws.getCell('B2').value = 2;
       ws.getCell('D4').value = 4;
       ws.getCell('F6').value = 6;
-      ws.eachRow(function(row, rowNumber) {
+      ws.eachRow((row, rowNumber) => {
         expect(rowNumber).not.to.equal(3);
         expect(rowNumber).not.to.equal(5);
       });
 
-      var count = 1;
-      ws.eachRow({includeEmpty: true}, function(row, rowNumber) {
+      let count = 1;
+      ws.eachRow({ includeEmpty: true }, (row, rowNumber) => {
         expect(rowNumber).to.equal(count++);
       });
     });
 
-    it('iterates over collumn cells', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('iterates over collumn cells', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.getCell('A1').value = 1;
       ws.getCell('A2').value = 2;
       ws.getCell('A4').value = 4;
       ws.getCell('A6').value = 6;
-      var colA = ws.getColumn('A');
-      colA.eachCell(function(cell, rowNumber) {
+      const colA = ws.getColumn('A');
+      colA.eachCell((cell, rowNumber) => {
         expect(rowNumber).not.to.equal(3);
         expect(rowNumber).not.to.equal(5);
         expect(cell.value).to.equal(rowNumber);
       });
 
-      var count = 1;
-      colA.eachCell({includeEmpty: true}, function(cell, rowNumber) {
+      let count = 1;
+      colA.eachCell({ includeEmpty: true }, (cell, rowNumber) => {
         expect(rowNumber).to.equal(count++);
       });
       expect(count).to.equal(7);
     });
   });
 
-  it('returns sheet values', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet();
+  it('returns sheet values', () => {
+    const wb = new Excel.Workbook();
+    const ws = wb.addWorksheet();
 
     ws.getCell('A1').value = 11;
     ws.getCell('C1').value = 'C1';
@@ -375,17 +396,18 @@ describe('Worksheet', function() {
     ws.getCell('B2').value = 'B2';
     ws.getCell('A4').value = 'end';
 
-    expect(ws.getSheetValues()).to.deep.equal([,
-      [, 11,, 'C1'],
-      [, 21, 'B2'],
-      , // eslint-disable-line comma-style
-      [, 'end']
+    expect(ws.getSheetValues()).to.deep.equal([
+      ,
+      [, 11, , 'C1'],
+      [, 21, 'B2'], // eslint-disable-line comma-style
+      ,
+      [, 'end'],
     ]);
   });
 
-  it('sets row styles', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('basket');
+  it('sets row styles', () => {
+    const wb = new Excel.Workbook();
+    const ws = wb.addWorksheet('basket');
 
     ws.getCell('A1').value = 5;
     ws.getCell('A1').numFmt = testutils.styles.numFmts.numFmt1;
@@ -403,30 +425,54 @@ describe('Worksheet', function() {
     ws.getRow(1).fill = testutils.styles.fills.redGreenDarkTrellis;
 
     expect(ws.getCell('A1').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
-    expect(ws.getCell('A1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('A1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('A1').border).to.deep.equal(testutils.styles.borders.thin);
-    expect(ws.getCell('A1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+    expect(ws.getCell('A1').font).to.deep.equal(
+      testutils.styles.fonts.comicSansUdB16
+    );
+    expect(ws.getCell('A1').alignment).to.deep.equal(
+      testutils.styles.namedAlignments.middleCentre
+    );
+    expect(ws.getCell('A1').border).to.deep.equal(
+      testutils.styles.borders.thin
+    );
+    expect(ws.getCell('A1').fill).to.deep.equal(
+      testutils.styles.fills.redGreenDarkTrellis
+    );
 
     expect(ws.findCell('B1')).to.be.undefined();
 
     expect(ws.getCell('C1').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
-    expect(ws.getCell('C1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('C1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('C1').border).to.deep.equal(testutils.styles.borders.thin);
-    expect(ws.getCell('C1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+    expect(ws.getCell('C1').font).to.deep.equal(
+      testutils.styles.fonts.comicSansUdB16
+    );
+    expect(ws.getCell('C1').alignment).to.deep.equal(
+      testutils.styles.namedAlignments.middleCentre
+    );
+    expect(ws.getCell('C1').border).to.deep.equal(
+      testutils.styles.borders.thin
+    );
+    expect(ws.getCell('C1').fill).to.deep.equal(
+      testutils.styles.fills.redGreenDarkTrellis
+    );
 
     // when we 'get' the previously null cell, it should inherit the row styles
     expect(ws.getCell('B1').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
-    expect(ws.getCell('B1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('B1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('B1').border).to.deep.equal(testutils.styles.borders.thin);
-    expect(ws.getCell('B1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+    expect(ws.getCell('B1').font).to.deep.equal(
+      testutils.styles.fonts.comicSansUdB16
+    );
+    expect(ws.getCell('B1').alignment).to.deep.equal(
+      testutils.styles.namedAlignments.middleCentre
+    );
+    expect(ws.getCell('B1').border).to.deep.equal(
+      testutils.styles.borders.thin
+    );
+    expect(ws.getCell('B1').fill).to.deep.equal(
+      testutils.styles.fills.redGreenDarkTrellis
+    );
   });
 
-  it('sets col styles', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('basket');
+  it('sets col styles', () => {
+    const wb = new Excel.Workbook();
+    const ws = wb.addWorksheet('basket');
 
     ws.getCell('A1').value = 5;
     ws.getCell('A1').numFmt = testutils.styles.numFmts.numFmt1;
@@ -444,37 +490,61 @@ describe('Worksheet', function() {
     ws.getColumn('A').fill = testutils.styles.fills.redGreenDarkTrellis;
 
     expect(ws.getCell('A1').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
-    expect(ws.getCell('A1').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('A1').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('A1').border).to.deep.equal(testutils.styles.borders.thin);
-    expect(ws.getCell('A1').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+    expect(ws.getCell('A1').font).to.deep.equal(
+      testutils.styles.fonts.comicSansUdB16
+    );
+    expect(ws.getCell('A1').alignment).to.deep.equal(
+      testutils.styles.namedAlignments.middleCentre
+    );
+    expect(ws.getCell('A1').border).to.deep.equal(
+      testutils.styles.borders.thin
+    );
+    expect(ws.getCell('A1').fill).to.deep.equal(
+      testutils.styles.fills.redGreenDarkTrellis
+    );
 
     expect(ws.findRow(2)).to.be.undefined();
 
     expect(ws.getCell('A3').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
-    expect(ws.getCell('A3').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('A3').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('A3').border).to.deep.equal(testutils.styles.borders.thin);
-    expect(ws.getCell('A3').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+    expect(ws.getCell('A3').font).to.deep.equal(
+      testutils.styles.fonts.comicSansUdB16
+    );
+    expect(ws.getCell('A3').alignment).to.deep.equal(
+      testutils.styles.namedAlignments.middleCentre
+    );
+    expect(ws.getCell('A3').border).to.deep.equal(
+      testutils.styles.borders.thin
+    );
+    expect(ws.getCell('A3').fill).to.deep.equal(
+      testutils.styles.fills.redGreenDarkTrellis
+    );
 
     // when we 'get' the previously null cell, it should inherit the column styles
     expect(ws.getCell('A2').numFmt).to.equal(testutils.styles.numFmts.numFmt2);
-    expect(ws.getCell('A2').font).to.deep.equal(testutils.styles.fonts.comicSansUdB16);
-    expect(ws.getCell('A2').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-    expect(ws.getCell('A2').border).to.deep.equal(testutils.styles.borders.thin);
-    expect(ws.getCell('A2').fill).to.deep.equal(testutils.styles.fills.redGreenDarkTrellis);
+    expect(ws.getCell('A2').font).to.deep.equal(
+      testutils.styles.fonts.comicSansUdB16
+    );
+    expect(ws.getCell('A2').alignment).to.deep.equal(
+      testutils.styles.namedAlignments.middleCentre
+    );
+    expect(ws.getCell('A2').border).to.deep.equal(
+      testutils.styles.borders.thin
+    );
+    expect(ws.getCell('A2').fill).to.deep.equal(
+      testutils.styles.fills.redGreenDarkTrellis
+    );
   });
 
-  it('puts the lotion in the basket', function() {
-    var wb = new Excel.Workbook();
-    var ws = wb.addWorksheet('basket');
+  it('puts the lotion in the basket', () => {
+    const wb = new Excel.Workbook();
+    const ws = wb.addWorksheet('basket');
     ws.getCell('A1').value = 'lotion';
   });
 
-  describe('Merge Cells', function() {
-    it('references the same top-left value', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+  describe('Merge Cells', () => {
+    it('references the same top-left value', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // initial values
       ws.getCell('A1').value = 'A1';
@@ -495,32 +565,42 @@ describe('Worksheet', function() {
       expect(ws.getCell('B2').type).to.equal(Excel.ValueType.Merge);
     });
 
-    it('does not allow overlapping merges', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('does not allow overlapping merges', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.mergeCells('B2:C3');
 
       // intersect four corners
-      expect(function() { ws.mergeCells('A1:B2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C1:D2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C3:D4'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('A3:B4'); }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A1:B2');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('C1:D2');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('C3:D4');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A3:B4');
+      }).to.throw(Error);
 
       // enclosing
-      expect(function() { ws.mergeCells('A1:D4'); }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A1:D4');
+      }).to.throw(Error);
     });
 
-    it('merges and unmerges', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('merges and unmerges', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
-      var expectMaster = function(range, master) {
-        var d = new Range(range);
-        for (var i = d.top; i <= d.bottom; i++) {
-          for (var j = d.left; j <= d.right; j++) {
-            var cell = ws.getCell(i, j);
-            var masterCell = master ? ws.getCell(master) : cell;
+      const expectMaster = function(range, master) {
+        const d = new Range(range);
+        for (let i = d.top; i <= d.bottom; i++) {
+          for (let j = d.left; j <= d.right; j++) {
+            const cell = ws.getCell(i, j);
+            const masterCell = master ? ws.getCell(master) : cell;
             expect(cell.master.address).to.equal(masterCell.address);
           }
         }
@@ -563,28 +643,38 @@ describe('Worksheet', function() {
       expectMaster('D4:E5', null);
     });
 
-    it('does not allow overlapping merges', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('does not allow overlapping merges', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.mergeCells('B2:C3');
 
       // intersect four corners
-      expect(function() { ws.mergeCells('A1:B2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C1:D2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C3:D4'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('A3:B4'); }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A1:B2');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('C1:D2');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('C3:D4');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A3:B4');
+      }).to.throw(Error);
 
       // enclosing
-      expect(function() { ws.mergeCells('A1:D4'); }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A1:D4');
+      }).to.throw(Error);
     });
 
-    it('merges styles', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('merges styles', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // initial value
-      var B2 = ws.getCell('B2');
+      const B2 = ws.getCell('B2');
       B2.value = 5;
       B2.style.font = testutils.styles.fonts.broadwayRedOutline20;
       B2.style.border = testutils.styles.borders.doubleRed;
@@ -595,47 +685,87 @@ describe('Worksheet', function() {
       // expecting styles to be copied (see worksheet spec)
       ws.mergeCells('B2:C3');
 
-      expect(ws.getCell('B2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('B2').border).to.deep.equal(testutils.styles.borders.doubleRed);
-      expect(ws.getCell('B2').fill).to.deep.equal(testutils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('B2').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('B2').numFmt).to.equal(testutils.styles.numFmts.numFmt1);
+      expect(ws.getCell('B2').font).to.deep.equal(
+        testutils.styles.fonts.broadwayRedOutline20
+      );
+      expect(ws.getCell('B2').border).to.deep.equal(
+        testutils.styles.borders.doubleRed
+      );
+      expect(ws.getCell('B2').fill).to.deep.equal(
+        testutils.styles.fills.blueWhiteHGrad
+      );
+      expect(ws.getCell('B2').alignment).to.deep.equal(
+        testutils.styles.namedAlignments.middleCentre
+      );
+      expect(ws.getCell('B2').numFmt).to.equal(
+        testutils.styles.numFmts.numFmt1
+      );
 
-      expect(ws.getCell('B3').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('B3').border).to.deep.equal(testutils.styles.borders.doubleRed);
-      expect(ws.getCell('B3').fill).to.deep.equal(testutils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('B3').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('B3').numFmt).to.equal(testutils.styles.numFmts.numFmt1);
+      expect(ws.getCell('B3').font).to.deep.equal(
+        testutils.styles.fonts.broadwayRedOutline20
+      );
+      expect(ws.getCell('B3').border).to.deep.equal(
+        testutils.styles.borders.doubleRed
+      );
+      expect(ws.getCell('B3').fill).to.deep.equal(
+        testutils.styles.fills.blueWhiteHGrad
+      );
+      expect(ws.getCell('B3').alignment).to.deep.equal(
+        testutils.styles.namedAlignments.middleCentre
+      );
+      expect(ws.getCell('B3').numFmt).to.equal(
+        testutils.styles.numFmts.numFmt1
+      );
 
-      expect(ws.getCell('C2').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('C2').border).to.deep.equal(testutils.styles.borders.doubleRed);
-      expect(ws.getCell('C2').fill).to.deep.equal(testutils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('C2').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('C2').numFmt).to.equal(testutils.styles.numFmts.numFmt1);
+      expect(ws.getCell('C2').font).to.deep.equal(
+        testutils.styles.fonts.broadwayRedOutline20
+      );
+      expect(ws.getCell('C2').border).to.deep.equal(
+        testutils.styles.borders.doubleRed
+      );
+      expect(ws.getCell('C2').fill).to.deep.equal(
+        testutils.styles.fills.blueWhiteHGrad
+      );
+      expect(ws.getCell('C2').alignment).to.deep.equal(
+        testutils.styles.namedAlignments.middleCentre
+      );
+      expect(ws.getCell('C2').numFmt).to.equal(
+        testutils.styles.numFmts.numFmt1
+      );
 
-      expect(ws.getCell('C3').font).to.deep.equal(testutils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('C3').border).to.deep.equal(testutils.styles.borders.doubleRed);
-      expect(ws.getCell('C3').fill).to.deep.equal(testutils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('C3').alignment).to.deep.equal(testutils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('C3').numFmt).to.equal(testutils.styles.numFmts.numFmt1);
+      expect(ws.getCell('C3').font).to.deep.equal(
+        testutils.styles.fonts.broadwayRedOutline20
+      );
+      expect(ws.getCell('C3').border).to.deep.equal(
+        testutils.styles.borders.doubleRed
+      );
+      expect(ws.getCell('C3').fill).to.deep.equal(
+        testutils.styles.fills.blueWhiteHGrad
+      );
+      expect(ws.getCell('C3').alignment).to.deep.equal(
+        testutils.styles.namedAlignments.middleCentre
+      );
+      expect(ws.getCell('C3').numFmt).to.equal(
+        testutils.styles.numFmts.numFmt1
+      );
     });
   });
 
-  describe('When passed a non-Excel file', function() {
-    it('Should not break when importing a .numbers file', function() {
-      return new Excel.Workbook().xlsx.readFile(path.resolve(__dirname, 'data', 'numbers.numbers'))
-        .then(function(workbook) {
+  describe('When passed a non-Excel file', () => {
+    it('Should not break when importing a .numbers file', () =>
+      new Excel.Workbook().xlsx
+        .readFile(path.resolve(__dirname, 'data', 'numbers.numbers'))
+        .then(workbook => {
           expect(workbook).to.have.property('worksheets');
           expect(workbook.worksheets).to.have.length(0);
-        });
-    });
+        }));
   });
 
-  it('Should not break when importing an Excel file that contains a chartsheet', function() {
-    return new Excel.Workbook().xlsx.readFile(path.resolve(__dirname, 'data', 'chart-sheet.xlsx'))
-      .then(function(workbook) {
+  it('Should not break when importing an Excel file that contains a chartsheet', () =>
+    new Excel.Workbook().xlsx
+      .readFile(path.resolve(__dirname, 'data', 'chart-sheet.xlsx'))
+      .then(workbook => {
         expect(workbook).to.have.property('worksheets');
         expect(workbook.worksheets).to.have.length(1);
-      });
-  });
+      }));
 });
