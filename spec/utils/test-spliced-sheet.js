@@ -8,8 +8,8 @@ var Enums = verquire('doc/enums');
 module.exports = {
   rows: {
     removeOnly: {
-      addSheet: function(wb) {
-        var ws = wb.addWorksheet('splice-row-remove-only');
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-row-remove-only');
 
         ws.addRow(['1,1', '1,2', '1,3']);
         ws.addRow(['2,1', '2,2', '2,3']);
@@ -20,8 +20,8 @@ module.exports = {
         ws.spliceRows(2, 1);
       },
 
-      checkSheet: function(wb) {
-        var ws = wb.getWorksheet('splice-row-remove-only');
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-row-remove-only');
         expect(ws).to.not.be.undefined();
 
         expect(ws.getCell('A1').value).to.equal('1,1');
@@ -58,8 +58,8 @@ module.exports = {
       }
     },
     insertFewer: {
-      addSheet: function(wb) {
-        var ws = wb.addWorksheet('splice-row-insert-fewer');
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-row-insert-fewer');
 
         ws.addRow(['1,1', '1,2', '1,3']);
         ws.addRow(['2,1', '2,2', '2,3']);
@@ -70,8 +70,8 @@ module.exports = {
         ws.spliceRows(2, 2, ['one', 'two', 'three']);
       },
 
-      checkSheet: function(wb) {
-        var ws = wb.getWorksheet('splice-row-insert-fewer');
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-row-insert-fewer');
         expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3']);
@@ -81,8 +81,8 @@ module.exports = {
       }
     },
     insertSame: {
-      addSheet: function(wb) {
-        var ws = wb.addWorksheet('splice-row-insert-same');
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-row-insert-same');
 
         ws.addRow(['1,1', '1,2', '1,3']);
         ws.addRow(['2,1', '2,2', '2,3']);
@@ -93,8 +93,8 @@ module.exports = {
         ws.spliceRows(2, 2, ['one', 'two', 'three'], ['une', 'deux', 'trois']);
       },
 
-      checkSheet: function(wb) {
-        var ws = wb.getWorksheet('splice-row-insert-same');
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-row-insert-same');
         expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3']);
@@ -105,8 +105,8 @@ module.exports = {
       }
     },
     insertMore: {
-      addSheet: function(wb) {
-        var ws = wb.addWorksheet('splice-row-insert-more');
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-row-insert-more');
 
         ws.addRow(['1,1', '1,2', '1,3']);
         ws.addRow(['2,1', '2,2', '2,3']);
@@ -117,8 +117,8 @@ module.exports = {
         ws.spliceRows(2, 2, ['one', 'two', 'three'], ['une', 'deux', 'trois'], ['uno', 'due', 'tre']);
       },
 
-      checkSheet: function(wb) {
-        var ws = wb.getWorksheet('splice-row-insert-more');
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-row-insert-more');
         expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3']);
@@ -129,56 +129,185 @@ module.exports = {
         expect(ws.getRow(6).values).to.deep.equal([, '5,1', '5,2', '5,3']);
       }
     },
+    removeStyle: {
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-row-remove-style');
+        ws.addRow(['1,1', '1,2', '1,3', '1,4']);
+        ws.addRow(['2,1', '2,2', '2,3', '2,4']);
+        ws.addRow(['3,1', '3,2', '3,3', '3,4']);
+        ws.addRow(['4,1', '4,2', '4,3', '4,4']);
+
+        ws.getCell('A1').numFmt = '# ?/?';
+        ws.getCell('B2').fill = {
+          type: 'pattern',
+          pattern: 'darkVertical',
+          fgColor: { argb: 'FFFF0000' },
+        };
+        ws.getRow(3).border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' },
+        };
+        ws.getRow(4).alignment = {
+          horizontal: 'left',
+          vertical: 'middle',
+        };
+
+        // remove rows 2 & 3
+        ws.spliceRows(2, 2);
+      },
+
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-row-remove-style');
+        expect(ws).to.not.be.undefined();
+
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3', '1,4']);
+        expect(ws.getRow(2).values).to.deep.equal([, '4,1', '4,2', '4,3', '4,4']);
+
+        expect(ws.getCell('A1').style).to.deep.equal({
+          numFmt: '# ?/?',
+        });
+        expect(ws.getRow(2).style).to.deep.equal({
+          alignment: {
+            horizontal: 'left',
+            vertical: 'middle',
+          },
+        });
+      }
+    },
     insertStyle: {
-      addSheet: function(wb) {
-        var ws = wb.addWorksheet('splice-row-insert-style');
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-row-insert-style');
 
         ws.addRow(['1,1', '1,2', '1,3']);
         ws.addRow(['2,1', '2,2', '2,3']);
         ws.getCell('A2').fill = {
           type: 'pattern',
-          pattern:'darkVertical',
-          fgColor: { argb:'FFFF0000' }
+          pattern: 'darkVertical',
+          fgColor: { argb: 'FFFF0000' },
+        };
+        ws.getRow(2).alignment = {
+          horizontal: 'left',
+          vertical: 'middle',
         };
 
         ws.spliceRows(2, 0, ['one', 'two', 'three']);
         ws.getCell('A2').border = {
-          top: { style:'thin' },
-          left: { style:'thin' },
-          bottom: { style:'thin' },
-          right: { style:'thin' }
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' }
         };
       },
 
-      checkSheet: function(wb) {
-        var ws = wb.getWorksheet('splice-row-insert-style');
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-row-insert-style');
         expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3']);
         expect(ws.getRow(2).values).to.deep.equal([, 'one', 'two', 'three']);
         expect(ws.getRow(3).values).to.deep.equal([, '2,1', '2,2', '2,3']);
+
+        expect(ws.getRow(3).style).to.deep.equal({
+          alignment: {
+            horizontal: 'left',
+            vertical: 'middle',
+          },
+        });
         expect(ws.getCell('A2').style).to.deep.equal({
           border: {
-            top: { style:'thin' },
-            left: { style:'thin' },
-            bottom: { style:'thin' },
-            right: { style:'thin' }
+            top: { style: 'thin' },
+            left: { style: 'thin' },
+            bottom: { style: 'thin' },
+            right: { style: 'thin' }
           }
         });
         expect(ws.getCell('A3').style).to.deep.equal({
+          alignment: {
+            horizontal: 'left',
+            vertical: 'middle',
+          },
           fill: {
             type: 'pattern',
-            pattern:'darkVertical',
-            fgColor: { argb:'FFFF0000' }
+            pattern: 'darkVertical',
+            fgColor: { argb: 'FFFF0000' }
           }
+        });
+      }
+    },
+    replaceStyle: {
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-row-replace-style');
+        ws.addRow(['1,1', '1,2', '1,3', '1,4']);
+        ws.addRow(['2,1', '2,2', '2,3', '2,4']);
+        ws.addRow(['3,1', '3,2', '3,3', '3,4']);
+
+        ws.getCell('B1').numFmt = 'top';
+        ws.getCell('B2').numFmt = 'middle';
+        ws.getCell('B3').numFmt = 'bottom';
+
+        ws.getRow(1).alignment = {
+          horizontal: 'left',
+          vertical: 'top',
+        };
+        ws.getRow(2).alignment = {
+          horizontal: 'center',
+          vertical: 'middle',
+        };
+        ws.getRow(3).alignment = {
+          horizontal: 'right',
+          vertical: 'bottom',
+        };
+
+        // remove rows 2 & 3
+        ws.spliceRows(2, 1, ['two-one', 'two-two', 'two-three', 'two-four']);
+      },
+
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-row-replace-style');
+        expect(ws).to.not.be.undefined();
+
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3', '1,4']);
+        expect(ws.getRow(2).values).to.deep.equal([, 'two-one', 'two-two', 'two-three', 'two-four']);
+        expect(ws.getRow(3).values).to.deep.equal([, '3,1', '3,2', '3,3', '3,4']);
+
+
+        expect(ws.getCell('B1').style).to.deep.equal({
+          numFmt: 'top',
+          alignment: {
+            horizontal: 'left',
+            vertical: 'top',
+          },
+        });
+        expect(ws.getCell('B2').style).to.deep.equal({});
+        expect(ws.getCell('B3').style).to.deep.equal({
+          numFmt: 'bottom',
+          alignment: {
+            horizontal: 'right',
+            vertical: 'bottom',
+          },
+        });
+        expect(ws.getRow(1).style).to.deep.equal({
+          alignment: {
+            horizontal: 'left',
+            vertical: 'top',
+          },
+        });
+        expect(ws.getRow(2).style).to.deep.equal({});
+        expect(ws.getRow(3).style).to.deep.equal({
+          alignment: {
+            horizontal: 'right',
+            vertical: 'bottom',
+          },
         });
       }
     },
   },
   columns: {
     removeOnly: {
-      addSheet: function(wb) {
-        var ws = wb.addWorksheet('splice-column-remove-only');
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-column-remove-only');
 
         ws.columns = [
           { key: 'id', width: 10 },
@@ -193,8 +322,8 @@ module.exports = {
         ws.spliceColumns(2, 1);
       },
 
-      checkSheet: function(wb) {
-        var ws = wb.getWorksheet('splice-column-remove-only');
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-column-remove-only');
         expect(ws).to.not.be.undefined();
 
         expect(ws.getCell('A1').value).to.equal('id1');
@@ -216,8 +345,8 @@ module.exports = {
       }
     },
     insertFewer: {
-      addSheet: function(wb) {
-        var ws = wb.addWorksheet('splice-column-insert-fewer');
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-column-insert-fewer');
 
         ws.addRow(['1,1', '1,2', '1,3', '1,4', '1,5']);
         ws.addRow(['2,1', '2,2', '2,3', '2,4', '2,5']);
@@ -229,8 +358,8 @@ module.exports = {
         ws.spliceColumns(2, 2, ['one', 'two', 'three', 'four', 'five']);
       },
 
-      checkSheet: function(wb) {
-        var ws = wb.getWorksheet('splice-column-insert-fewer');
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-column-insert-fewer');
         expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one', '1,4', '1,5']);
@@ -241,8 +370,8 @@ module.exports = {
       }
     },
     insertSame: {
-      addSheet: function(wb) {
-        var ws = wb.addWorksheet('splice-column-insert-same');
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-column-insert-same');
 
         ws.addRow(['1,1', '1,2', '1,3', '1,4', '1,5']);
         ws.addRow(['2,1', '2,2', '2,3', '2,4', '2,5']);
@@ -257,8 +386,8 @@ module.exports = {
         );
       },
 
-      checkSheet: function(wb) {
-        var ws = wb.getWorksheet('splice-column-insert-same');
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-column-insert-same');
         expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one', 'une', '1,4', '1,5']);
@@ -269,8 +398,8 @@ module.exports = {
       }
     },
     insertMore: {
-      addSheet: function(wb) {
-        var ws = wb.addWorksheet('splice-column-insert-more');
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-column-insert-more');
 
         ws.addRow(['1,1', '1,2', '1,3', '1,4', '1,5']);
         ws.addRow(['2,1', '2,2', '2,3', '2,4', '2,5']);
@@ -286,8 +415,8 @@ module.exports = {
         );
       },
 
-      checkSheet: function(wb) {
-        var ws = wb.getWorksheet('splice-column-insert-more');
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-column-insert-more');
         expect(ws).to.not.be.undefined();
 
         expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one', 'une', 'uno', '1,4', '1,5']);
@@ -296,6 +425,188 @@ module.exports = {
         expect(ws.getRow(4).values).to.deep.equal([, 4.1, 'four', 'quatre', 'quatro',, 4.5]);
         expect(ws.getRow(5).values).to.deep.equal([, '5,1', 'five', 'cinq', 'cinque', '5,4', '5,5']);
       }
-    }
+    },
+    removeStyle: {
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-col-remove-style');
+        ws.addRow(['1,1', '1,2', '1,3', '1,4']);
+        ws.addRow(['2,1', '2,2', '2,3', '2,4']);
+        ws.addRow(['3,1', '3,2', '3,3', '3,4']);
+        ws.addRow(['4,1', '4,2', '4,3', '4,4']);
+
+        ws.getCell('A1').numFmt = '# ?/?';
+        ws.getCell('B2').fill = {
+          type: 'pattern',
+          pattern: 'darkVertical',
+          fgColor: { argb: 'FFFF0000' },
+        };
+        ws.getColumn(3).border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' },
+        };
+        ws.getColumn(4).alignment = {
+          horizontal: 'left',
+          vertical: 'middle',
+        };
+
+        // remove cols 2 & 3
+        ws.spliceColumns(2, 2);
+      },
+
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-col-remove-style');
+        expect(ws).to.not.be.undefined();
+
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', '1,4']);
+        expect(ws.getRow(2).values).to.deep.equal([, '2,1', '2,4']);
+        expect(ws.getRow(3).values).to.deep.equal([, '3,1', '3,4']);
+        expect(ws.getRow(4).values).to.deep.equal([, '4,1', '4,4']);
+
+        expect(ws.getCell('A1').style).to.deep.equal({
+          numFmt: '# ?/?',
+        });
+        expect(ws.getColumn(2).style).to.deep.equal({
+          alignment: {
+            horizontal: 'left',
+            vertical: 'middle',
+          },
+        });
+        expect(ws.getCell('B4').style).to.deep.equal({
+          alignment: {
+            horizontal: 'left',
+            vertical: 'middle',
+          },
+        });
+      }
+    },
+    insertStyle: {
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-col-insert-style');
+
+        ws.addRow(['1,1', '1,2', '1,3']);
+        ws.addRow(['2,1', '2,2', '2,3']);
+        ws.addRow(['3,1', '3,2', '3,3']);
+        ws.getCell('B2').fill = {
+          type: 'pattern',
+          pattern: 'darkVertical',
+          fgColor: { argb: 'FFFF0000' },
+        };
+        ws.getColumn(2).alignment = {
+          horizontal: 'left',
+          vertical: 'middle',
+        };
+
+        ws.spliceColumns(2, 0, ['one', 'two', 'three']);
+        ws.getCell('B2').border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' }
+        };
+      },
+
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-col-insert-style');
+        expect(ws).to.not.be.undefined();
+
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one', '1,2', '1,3']);
+        expect(ws.getRow(2).values).to.deep.equal([, '2,1', 'two', '2,2', '2,3']);
+        expect(ws.getRow(3).values).to.deep.equal([, '3,1', 'three', '3,2', '3,3']);
+
+        expect(ws.getColumn(3).style).to.deep.equal({
+          alignment: {
+            horizontal: 'left',
+            vertical: 'middle',
+          },
+        });
+        expect(ws.getCell('B2').style).to.deep.equal({
+          border: {
+            top: { style: 'thin' },
+            left: { style: 'thin' },
+            bottom: { style: 'thin' },
+            right: { style: 'thin' }
+          }
+        });
+        expect(ws.getCell('C2').style).to.deep.equal({
+          alignment: {
+            horizontal: 'left',
+            vertical: 'middle',
+          },
+          fill: {
+            type: 'pattern',
+            pattern: 'darkVertical',
+            fgColor: { argb: 'FFFF0000' }
+          }
+        });
+      }
+    },
+    replaceStyle: {
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-col-replace-style');
+        ws.addRow(['1,1', '1,2', '1,3', '1,4']);
+        ws.addRow(['2,1', '2,2', '2,3', '2,4']);
+        ws.addRow(['3,1', '3,2', '3,3', '3,4']);
+
+        ws.getCell('A2').numFmt = 'left';
+        ws.getCell('B2').numFmt = 'center';
+        ws.getCell('C2').numFmt = 'right';
+
+        ws.getColumn(1).alignment = {
+          horizontal: 'left',
+          vertical: 'top',
+        };
+        ws.getColumn(2).alignment = {
+          horizontal: 'center',
+          vertical: 'middle',
+        };
+        ws.getColumn(3).alignment = {
+          horizontal: 'right',
+          vertical: 'bottom',
+        };
+
+        // remove rows 2 & 3
+        ws.spliceColumns(2, 1, ['one-two', 'two-two', 'three-two']);
+      },
+
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-col-replace-style');
+        expect(ws).to.not.be.undefined();
+
+        expect(ws.getRow(1).values).to.deep.equal([, '1,1', 'one-two', '1,3', '1,4']);
+        expect(ws.getRow(2).values).to.deep.equal([, '2,1', 'two-two', '2,3', '2,4']);
+        expect(ws.getRow(3).values).to.deep.equal([, '3,1', 'three-two', '3,3', '3,4']);
+
+        expect(ws.getCell('A2').style).to.deep.equal({
+          numFmt: 'left',
+          alignment: {
+            horizontal: 'left',
+            vertical: 'top',
+          },
+        });
+        expect(ws.getCell('B2').style).to.deep.equal({});
+        expect(ws.getCell('C2').style).to.deep.equal({
+          numFmt: 'right',
+          alignment: {
+            horizontal: 'right',
+            vertical: 'bottom',
+          },
+        });
+        expect(ws.getColumn(1).style).to.deep.equal({
+          alignment: {
+            horizontal: 'left',
+            vertical: 'top',
+          },
+        });
+        expect(ws.getColumn(2).style).to.deep.equal({});
+        expect(ws.getColumn(3).style).to.deep.equal({
+          alignment: {
+            horizontal: 'right',
+            vertical: 'bottom',
+          },
+        });
+      }
+    },
   }
 };
