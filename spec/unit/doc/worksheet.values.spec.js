@@ -588,6 +588,21 @@ describe('Worksheet', function() {
           testUtils.createTestBook(wb, 'xlsx', ['splice.columns.replaceStyle'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.replaceStyle'], options);
         });
+        it('Remove defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.removeDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.removeDefinedNames'], options);
+        });
+        it('Insert defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertDefinedNames'], options);
+        });
+        it('Replace defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.replaceDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.replaceDefinedNames'], options);
+        });
       });
     });
 
