@@ -25,6 +25,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/737">Fix existing row styles when using spliceRows #737</a>.
     Many thanks to <a href="https://github.com/cxam">cxam</a> for this contribution. </li>
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/774">Consistent code quality #774</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li>
+  </li>
 </ul>
 
 # Contributions
