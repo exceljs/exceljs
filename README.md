@@ -18,16 +18,7 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/619">Add Typescript support for formulas without results #619</a>.
-    Many thanks to <a href="https://github.com/Wolfchin">Loursin</a> for this contribution. </li>
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/737">Fix existing row styles when using spliceRows #737</a>.
-    Many thanks to <a href="https://github.com/cxam">cxam</a> for this contribution. </li>
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/774">Consistent code quality #774</a>.
-    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li>
+    Fixed effect of splicing rows and columns on defined names
   </li>
 </ul>
 
@@ -1881,3 +1872,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.7.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/602">Ability to set tooltip for hyperlink #602</a> Many thanks to <a href="https://github.com/kalexey89">Kuznetsov Aleksey</a> for this contribution. </li> </ul> |
 | 1.8.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/636">Fix misinterpreted ranges from &lt;definedName&gt; #636</a> Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/640">Add LGTM code quality badges #640</a> Many thanks to <a href="https://github.com/xcorail">Xavier RENE-CORAIL</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/646">Add type definition for Column.values #646</a> Many thanks to <a href="https://github.com/emlai">Emil Laine</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/645">Column.values is missing TypeScript definitions #645</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/663">Update README.md with load() option #663</a> Many thanks to <a href="https://github.com/thinksentient">Joanna Walker</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/677">fixed packages according to npm audit #677</a> Many thanks to <a href="https://github.com/misleadingTitle">Manuel Minuti</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/699">Update index.d.ts #699</a> Many thanks to <a href="https://github.com/rayyen">Ray Yen</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/708">Replaced node-unzip-2 to unzipper package which is more robust #708</a> Many thanks to <a href="https://github.com/johnmalkovich100">johnmalkovich100</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/728">Read worksheet hidden state #728</a> Many thanks to <a href="https://github.com/LesterLyu">Dishu(Lester) Lyu</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/736">add Worksheet.state typescript definition fix #714 #736</a> Many thanks to <a href="https://github.com/ilyes-kechidi">Ilyes Kechidi</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/714">Worksheet State does not exist in index.d.ts #714</a>. </li> </ul> |
 | 1.9.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/702">Improvements for images (correct reading/writing possitions) #702</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/650">Image location don't respect Column width #650</a> and <a href="https://github.com/exceljs/exceljs/issues/467">Image position - stretching image #467</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> </li> </ul> |
+| 1.9.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/619">Add Typescript support for formulas without results #619</a>. Many thanks to <a href="https://github.com/Wolfchin">Loursin</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/737">Fix existing row styles when using spliceRows #737</a>. Many thanks to <a href="https://github.com/cxam">cxam</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/774">Consistent code quality #774</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> </li> </ul> |
+
