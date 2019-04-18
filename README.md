@@ -1212,6 +1212,17 @@ ws.addImage(imageId, {
 });
 ```
 
+### Add image to a cell
+
+You can add an image to a cell and then define its width and height in pixels at 96dpi.
+
+```javascript
+worksheet.addImage(imageId2, {
+  tl: { col: 0, row: 0 },
+  ext: { width: 500, height: 200 }
+});
+```
+
 ## File I/O
 
 ### XLSX

@@ -793,6 +793,11 @@ export interface ImageRange {
 	br: { col: number; row: number } | Anchor;
 }
 
+export interface ImagePosition {
+	tl: { col: number; row: number };
+	ext: { width: number; height: number };
+}
+
 export interface Range extends Location {
 	sheetName: string;
 
@@ -1051,7 +1056,7 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange | { editAs?: string; } & ImagePosition): void;
 
 	getImages(): Array<{
 		type: 'image',
