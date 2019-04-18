@@ -361,6 +361,21 @@ describe('Worksheet', function() {
           testUtils.createTestBook(wb, 'xlsx', ['splice.rows.replaceStyle'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.replaceStyle'], options);
         });
+        it('Remove defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.removeDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.removeDefinedNames'], options);
+        });
+        it('Insert defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertDefinedNames'], options);
+        });
+        it('Replace defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.replaceDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.replaceDefinedNames'], options);
+        });
       });
       describe('Columns', function() {
         it('splices columns', function() {

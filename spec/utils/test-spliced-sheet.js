@@ -303,6 +303,186 @@ module.exports = {
         });
       }
     },
+    removeDefinedNames: {
+      addSheet(wb) {
+        const wsSquare = wb.addWorksheet('splice-row-remove-defined-names-square');
+        wsSquare.addRow(['1,1', '1,2', '1,3', '1,4']);
+        wsSquare.addRow(['2,1', '2,2', '2,3', '2,4']);
+        wsSquare.addRow(['3,1', '3,2', '3,3', '3,4']);
+        wsSquare.addRow(['4,1', '4,2', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3, 4].forEach(row => {
+            wsSquare.getCell(col + row).name = 'square';
+          });
+        });
+
+        wsSquare.spliceRows(2, 2);
+
+        const wsSingles = wb.addWorksheet('splice-row-remove-defined-names-singles');
+        wsSingles.getCell('A1').value = '1,1';
+        wsSingles.getCell('A4').value = '4,1';
+        wsSingles.getCell('D1').value = '1,4';
+        wsSingles.getCell('D4').value = '4,4';
+
+        ['A', 'D'].forEach(col => {
+          [1, 4].forEach(row => {
+            wsSingles.getCell(col + row).name = `single-${col}${row}`;
+          });
+        });
+
+        wsSingles.spliceRows(2, 2);
+      },
+
+      checkSheet(wb) {
+        const wsSquare = wb.getWorksheet('splice-row-remove-defined-names-square');
+        expect(wsSquare).to.not.be.undefined();
+
+        expect(wsSquare.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3', '1,4']);
+        expect(wsSquare.getRow(2).values).to.deep.equal([, '4,1', '4,2', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3].forEach(row => {
+            if (row === 3) {
+              expect(wsSquare.getCell(col + row).name).to.be.undefined();
+            } else {
+              expect(wsSquare.getCell(col + row).name).to.equal('square');
+            }
+          });
+        });
+
+        const wsSingles = wb.addWorksheet('splice-row-remove-defined-names-singles');
+        expect(wsSingles.getRow(1).values).to.deep.equal([, '1,1', , , '1,4']);
+        expect(wsSingles.getRow(2).values).to.deep.equal([, '4,1', , , '4,4']);
+
+        expect(wsSingles.getCell('A1').name).to.equal('single-A1');
+        expect(wsSingles.getCell('A2').name).to.equal('single-A4');
+        expect(wsSingles.getCell('D1').name).to.equal('single-D1');
+        expect(wsSingles.getCell('D2').name).to.equal('single-D4');
+      }
+    },
+    insertDefinedNames: {
+      addSheet(wb) {
+        const wsSquare = wb.addWorksheet('splice-row-insert-defined-names-square');
+        wsSquare.addRow(['1,1', '1,2', '1,3', '1,4']);
+        wsSquare.addRow(['2,1', '2,2', '2,3', '2,4']);
+        wsSquare.addRow(['3,1', '3,2', '3,3', '3,4']);
+        wsSquare.addRow(['4,1', '4,2', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3, 4].forEach(row => {
+            wsSquare.getCell(col + row).name = 'square';
+          });
+        });
+
+        wsSquare.spliceRows(3, 0, ['foo', 'bar', 'baz', 'qux']);
+
+        const wsSingles = wb.addWorksheet('splice-row-insert-defined-names-singles');
+        wsSingles.getCell('A1').value = '1,1';
+        wsSingles.getCell('A4').value = '4,1';
+        wsSingles.getCell('D1').value = '1,4';
+        wsSingles.getCell('D4').value = '4,4';
+
+        ['A', 'D'].forEach(col => {
+          [1, 4].forEach(row => {
+            wsSingles.getCell(col + row).name = `single-${col}${row}`;
+          });
+        });
+
+        wsSingles.spliceRows(3, 0, ['foo', 'bar', 'baz', 'qux']);
+      },
+
+      checkSheet(wb) {
+        const wsSquare = wb.getWorksheet('splice-row-insert-defined-names-square');
+        expect(wsSquare).to.not.be.undefined();
+
+        expect(wsSquare.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3', '1,4']);
+        expect(wsSquare.getRow(2).values).to.deep.equal([, '2,1', '2,2', '2,3', '2,4']);
+        expect(wsSquare.getRow(3).values).to.deep.equal([, 'foo', 'bar', 'baz', 'qux']);
+        expect(wsSquare.getRow(3).values).to.deep.equal([, '3,1', '3,2', '3,3', '3,4']);
+        expect(wsSquare.getRow(4).values).to.deep.equal([, '4,1', '4,2', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3, 4, 5].forEach(row => {
+            if (row === 3) {
+              expect(wsSquare.getCell(col + row).name).to.be.undefined();
+            } else {
+              expect(wsSquare.getCell(col + row).name).to.equal('square');
+            }
+          });
+        });
+
+        const wsSingles = wb.addWorksheet('splice-row-insert-defined-names-singles');
+        expect(wsSingles.getRow(1).values).to.deep.equal([, '1,1',      ,      , '1,4']);
+        expect(wsSingles.getRow(3).values).to.deep.equal([, 'foo', 'bar', 'baz', 'qux']);
+        expect(wsSingles.getRow(5).values).to.deep.equal([, '4,1',      ,      , '4,4']);
+
+        expect(wsSingles.getCell('A1').name).to.equal('single-A1');
+        expect(wsSingles.getCell('A5').name).to.equal('single-A4');
+        expect(wsSingles.getCell('D1').name).to.equal('single-D1');
+        expect(wsSingles.getCell('D5').name).to.equal('single-D4');
+      }
+    },
+    replaceDefinedNames: {
+      addSheet(wb) {
+        const wsSquare = wb.addWorksheet('splice-row-replace-defined-names-square');
+        wsSquare.addRow(['1,1', '1,2', '1,3', '1,4']);
+        wsSquare.addRow(['2,1', '2,2', '2,3', '2,4']);
+        wsSquare.addRow(['3,1', '3,2', '3,3', '3,4']);
+        wsSquare.addRow(['4,1', '4,2', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3, 4].forEach(row => {
+            wsSquare.getCell(col + row).name = 'square';
+          });
+        });
+
+        wsSquare.spliceRows(2, 2, ['foo', 'bar', 'baz', 'qux']);
+
+        const wsSingles = wb.addWorksheet('splice-row-replace-defined-names-singles');
+        wsSingles.getCell('A1').value = '1,1';
+        wsSingles.getCell('A4').value = '4,1';
+        wsSingles.getCell('D1').value = '1,4';
+        wsSingles.getCell('D4').value = '4,4';
+
+        ['A', 'D'].forEach(col => {
+          [1, 4].forEach(row => {
+            wsSingles.getCell(col + row).name = `single-${col}${row}`;
+          });
+        });
+
+        wsSingles.spliceRows(2, 2, ['foo', 'bar', 'baz', 'qux']);
+      },
+
+      checkSheet(wb) {
+        const wsSquare = wb.getWorksheet('splice-row-replace-defined-names-square');
+        expect(wsSquare).to.not.be.undefined();
+
+        expect(wsSquare.getRow(1).values).to.deep.equal([, '1,1', '1,2', '1,3', '1,4']);
+        expect(wsSquare.getRow(2).values).to.deep.equal([, 'foo', 'bar', 'baz', 'qux']);
+        expect(wsSquare.getRow(3).values).to.deep.equal([, '4,1', '4,2', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3, 4].forEach(row => {
+            if (row % 2 === 0) {
+              expect(wsSquare.getCell(col + row).name).to.be.undefined();
+            } else {
+              expect(wsSquare.getCell(col + row).name).to.equal('square');
+            }
+          });
+        });
+
+        const wsSingles = wb.addWorksheet('splice-row-replace-defined-names-singles');
+        expect(wsSingles.getRow(1).values).to.deep.equal([, '1,1',      ,      , '1,4']);
+        expect(wsSingles.getRow(2).values).to.deep.equal([, 'foo', 'bar', 'qux']);
+        expect(wsSingles.getRow(3).values).to.deep.equal([, '4,1',      ,      , '4,4']);
+
+        expect(wsSingles.getCell('A1').name).to.equal('single-A1');
+        expect(wsSingles.getCell('A3').name).to.equal('single-A4');
+        expect(wsSingles.getCell('D1').name).to.equal('single-D1');
+        expect(wsSingles.getCell('D3').name).to.equal('single-D4');
+      }
+    },
   },
   columns: {
     removeOnly: {
@@ -606,6 +786,186 @@ module.exports = {
             vertical: 'bottom',
           },
         });
+      }
+    },
+    removeDefinedNames: {
+      addSheet(wb) {
+        const wsSquare = wb.addWorksheet('splice-col-remove-defined-names-square');
+        wsSquare.addRow(['1,1', '1,2', '1,3', '1,4']);
+        wsSquare.addRow(['2,1', '2,2', '2,3', '2,4']);
+        wsSquare.addRow(['3,1', '3,2', '3,3', '3,4']);
+        wsSquare.addRow(['4,1', '4,2', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3, 4].forEach(row => {
+            wsSquare.getCell(col + row).name = 'square';
+          });
+        });
+
+        wsSquare.spliceColumns(2, 2);
+
+        const wsSingles = wb.addWorksheet('splice-col-remove-defined-names-singles');
+        wsSingles.getCell('A1').value = '1,1';
+        wsSingles.getCell('A4').value = '4,1';
+        wsSingles.getCell('D1').value = '1,4';
+        wsSingles.getCell('D4').value = '4,4';
+
+        ['A', 'D'].forEach(col => {
+          [1, 4].forEach(row => {
+            wsSingles.getCell(col + row).name = `single-${col}${row}`;
+          });
+        });
+
+        wsSingles.spliceColumns(2, 2);
+      },
+
+      checkSheet(wb) {
+        const wsSquare = wb.getWorksheet('splice-col-remove-defined-names-square');
+        expect(wsSquare).to.not.be.undefined();
+
+        expect(wsSquare.getRow(1).values).to.deep.equal([, '1,1', '1,4']);
+        expect(wsSquare.getRow(2).values).to.deep.equal([, '2,1', '2,4']);
+        expect(wsSquare.getRow(3).values).to.deep.equal([, '3,1', '2,4']);
+        expect(wsSquare.getRow(4).values).to.deep.equal([, '4,1', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3].forEach(row => {
+            if (['C', 'D'].includes(col)) {
+              expect(wsSquare.getCell(col + row).name).to.be.undefined();
+            } else {
+              expect(wsSquare.getCell(col + row).name).to.equal('square');
+            }
+          });
+        });
+
+        const wsSingles = wb.addWorksheet('splice-col-remove-defined-names-singles');
+        expect(wsSingles.getRow(1).values).to.deep.equal([, '1,1', '1,4']);
+        expect(wsSingles.getRow(4).values).to.deep.equal([, '4,1', '4,4']);
+
+        expect(wsSingles.getCell('A1').name).to.equal('single-A1');
+        expect(wsSingles.getCell('A4').name).to.equal('single-A4');
+        expect(wsSingles.getCell('B1').name).to.equal('single-D1');
+        expect(wsSingles.getCell('B4').name).to.equal('single-D4');
+      }
+    },
+    insertDefinedNames: {
+      addSheet(wb) {
+        const wsSquare = wb.addWorksheet('splice-col-insert-defined-names-square');
+        wsSquare.addRow(['1,1', '1,2', '1,3', '1,4']);
+        wsSquare.addRow(['2,1', '2,2', '2,3', '2,4']);
+        wsSquare.addRow(['3,1', '3,2', '3,3', '3,4']);
+        wsSquare.addRow(['4,1', '4,2', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3, 4].forEach(row => {
+            wsSquare.getCell(col + row).name = 'square';
+          });
+        });
+
+        wsSquare.spliceColumns(3, 0, ['foo', 'bar', 'BOO', 'baz', 'qux']);
+
+        const wsSingles = wb.addWorksheet('splice-col-insert-defined-names-singles');
+        wsSingles.getCell('A1').value = '1,1';
+        wsSingles.getCell('A4').value = '4,1';
+        wsSingles.getCell('D1').value = '1,4';
+        wsSingles.getCell('D4').value = '4,4';
+
+        ['A', 'D'].forEach(col => {
+          [1, 4].forEach(row => {
+            wsSingles.getCell(col + row).name = `single-${col}${row}`;
+          });
+        });
+
+        wsSingles.spliceColumns(3, 0, ['foo', 'bar', 'baz', 'qux']);
+      },
+
+      checkSheet(wb) {
+        const wsSquare = wb.getWorksheet('splice-col-insert-defined-names-square');
+        expect(wsSquare).to.not.be.undefined();
+
+        expect(wsSquare.getRow(1).values).to.deep.equal([, '1,1', '1,2', 'foo', '1,3', '1,4']);
+        expect(wsSquare.getRow(2).values).to.deep.equal([, '2,1', '2,2', 'bar', '2,3', '2,4']);
+        expect(wsSquare.getRow(3).values).to.deep.equal([, '3,1', '3,2', 'baz', '3,3', '3,4']);
+        expect(wsSquare.getRow(4).values).to.deep.equal([, '4,1', '4,2', 'qux', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D', 'E'].forEach(col => {
+          [1, 2, 3, 4, 5].forEach(row => {
+            if (col === 'C') {
+              expect(wsSquare.getCell(col + row).name).to.be.undefined();
+            } else {
+              expect(wsSquare.getCell(col + row).name).to.equal('square');
+            }
+          });
+        });
+
+        const wsSingles = wb.addWorksheet('splice-col-insert-defined-names-singles');
+        expect(wsSingles.getRow(1).values).to.deep.equal([, '1,1',      , 'foo',      , '1,4']);
+        expect(wsSingles.getRow(4).values).to.deep.equal([, '4,1',      , 'qux',      , '4,4']);
+
+        expect(wsSingles.getCell('A1').name).to.equal('single-A1');
+        expect(wsSingles.getCell('A4').name).to.equal('single-A4');
+        expect(wsSingles.getCell('E1').name).to.equal('single-D1');
+        expect(wsSingles.getCell('E4').name).to.equal('single-D4');
+      }
+    },
+    replaceDefinedNames: {
+      addSheet(wb) {
+        const wsSquare = wb.addWorksheet('splice-col-replace-defined-names-square');
+        wsSquare.addRow(['1,1', '1,2', '1,3', '1,4']);
+        wsSquare.addRow(['2,1', '2,2', '2,3', '2,4']);
+        wsSquare.addRow(['3,1', '3,2', '3,3', '3,4']);
+        wsSquare.addRow(['4,1', '4,2', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3, 4].forEach(row => {
+            wsSquare.getCell(col + row).name = 'square';
+          });
+        });
+
+        wsSquare.spliceColumns(2, 1, ['foo', 'bar', 'baz', 'qux']);
+
+        const wsSingles = wb.addWorksheet('splice-col-replace-defined-names-singles');
+        wsSingles.getCell('A1').value = '1,1';
+        wsSingles.getCell('A4').value = '4,1';
+        wsSingles.getCell('D1').value = '1,4';
+        wsSingles.getCell('D4').value = '4,4';
+
+        ['A', 'D'].forEach(col => {
+          [1, 4].forEach(row => {
+            wsSingles.getCell(col + row).name = `single-${col}${row}`;
+          });
+        });
+
+        wsSingles.spliceColumns(2, 2, ['foo', 'bar', 'baz', 'qux']);
+      },
+
+      checkSheet(wb) {
+        const wsSquare = wb.getWorksheet('splice-col-replace-defined-names-square');
+        expect(wsSquare).to.not.be.undefined();
+
+        expect(wsSquare.getRow(1).values).to.deep.equal([, '1,1', 'foo', '1,3', '1,4']);
+        expect(wsSquare.getRow(2).values).to.deep.equal([, '2,1', 'bar', '2,3', '2,4']);
+        expect(wsSquare.getRow(3).values).to.deep.equal([, '3,1', 'baz', '3,3', '3,4']);
+        expect(wsSquare.getRow(4).values).to.deep.equal([, '4,1', 'qux', '4,3', '4,4']);
+
+        ['A', 'B', 'C', 'D'].forEach(col => {
+          [1, 2, 3, 4].forEach(row => {
+            if (col === 'B') {
+              expect(wsSquare.getCell(col + row).name).to.be.undefined();
+            } else {
+              expect(wsSquare.getCell(col + row).name).to.equal('square');
+            }
+          });
+        });
+
+        const wsSingles = wb.addWorksheet('splice-col-replace-defined-names-singles');
+        expect(wsSingles.getRow(1).values).to.deep.equal([, '1,1', 'foo', , '1,4']);
+        expect(wsSingles.getRow(4).values).to.deep.equal([, '4,1', 'qux', , '4,4']);
+
+        expect(wsSingles.getCell('A1').name).to.equal('single-A1');
+        expect(wsSingles.getCell('A4').name).to.equal('single-A4');
+        expect(wsSingles.getCell('D1').name).to.equal('single-D1');
+        expect(wsSingles.getCell('D4').name).to.equal('single-D4');
       }
     },
   }
