@@ -866,7 +866,7 @@ export interface Worksheet {
 	readonly workbook: Workbook;
 	readonly hasMerges: boolean;
 
-	readonly dimensions: Range[];
+	readonly dimensions: Range;
 	/**
 	 * Contains information related to how a worksheet is printed
 	 */
