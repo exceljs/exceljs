@@ -785,7 +785,7 @@ export class Anchor implements IAnchor{
     private readonly colWidth: number;
     private readonly rowHeight: number;
     worksheet: Worksheet;
-    
+
     constructor(model?: IAnchor|object});
 }
 export interface ImageRange {
@@ -1114,7 +1114,7 @@ export interface Xlsx {
 
 	/**
 	 * read from a stream
-	 * @param stream 
+	 * @param stream
 	 */
 	read(stream: Stream): Promise<Workbook>;
 
