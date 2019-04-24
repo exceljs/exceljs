@@ -57,6 +57,45 @@ describe('DefinedNames', function() {
     expect(dn.getRanges('single')).to.deep.equal({name: 'single', ranges: ['other!$A$1']});
   });
 
+  it('splices', () => {
+    var dn = new DefinedNames();
+    dn.add('vertical!A1', 'vertical');
+    dn.add('vertical!A2', 'vertical');
+    dn.add('vertical!A3', 'vertical');
+    dn.add('vertical!A4', 'vertical');
+
+    dn.add('horizontal!A1', 'horizontal');
+    dn.add('horizontal!B1', 'horizontal');
+    dn.add('horizontal!C1', 'horizontal');
+    dn.add('horizontal!D1', 'horizontal');
+
+    ['A', 'B', 'C', 'D'].forEach(col => {
+      [1, 2, 3, 4].forEach(row => {
+        dn.add(`square!${col}${row}`, 'square');
+      });
+    });
+
+    dn.add('single!A1', 'singleA1');
+    dn.add('single!D1', 'singleD1');
+    dn.add('single!A4', 'singleA4');
+    dn.add('single!D4', 'singleD4');
+
+    dn.spliceRows('vertical', 2, 2, 1);
+    dn.spliceColumns('horizontal', 2, 2, 1);
+    dn.spliceRows('square', 2, 2, 1);
+    dn.spliceColumns('square', 2, 2, 1);
+    dn.spliceRows('single', 2, 2, 1);
+    dn.spliceColumns('single', 2, 2, 1);
+
+    expect(dn.getRanges('vertical')).to.deep.equal({name: 'vertical', ranges: ['vertical!$A$1', 'vertical!$A$3']});
+    expect(dn.getRanges('horizontal')).to.deep.equal({name: 'horizontal', ranges: ['horizontal!$A$1', 'horizontal!$C$1']});
+    expect(dn.getRanges('square')).to.deep.equal({name: 'square', ranges: ['square!$A$1', 'square!$C$1', 'square!$A$3', 'square!$C$3']});
+    expect(dn.getRanges('singleA1')).to.deep.equal({name: 'singleA1', ranges: ['single!$A$1']});
+    expect(dn.getRanges('singleD1')).to.deep.equal({name: 'singleD1', ranges: ['single!$C$1']});
+    expect(dn.getRanges('singleA4')).to.deep.equal({name: 'singleA4', ranges: ['single!$A$3']});
+    expect(dn.getRanges('singleD4')).to.deep.equal({name: 'singleD4', ranges: ['single!$C$3']});
+  });
+
   it('creates matrix from model', function() {
     var dn = new DefinedNames();
 
