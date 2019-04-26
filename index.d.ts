@@ -226,6 +226,7 @@ export interface Font {
 	bold: boolean;
 	italic: boolean;
 	underline: boolean | 'none' | 'single' | 'double' | 'singleAccounting' | 'doubleAccounting';
+  vertAlign: 'superscript' | 'subscript';
 	strike: boolean;
 	outline: boolean;
 }
