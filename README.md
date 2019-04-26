@@ -877,6 +877,11 @@ ws.getCell('A2').font = {
     italic: true
 };
 
+// for the vertical align 
+ws.getCell('A3').font = {
+  vertAlign: 'superscript'
+};
+
 // note: the cell will store a reference to the font object assigned.
 // If the font object is changed afterwards, the cell font will change also...
 var font = { name: 'Arial', size: 12 };
@@ -899,6 +904,7 @@ font.size = 20; // Cell A3 now has font size 20!
 | underline     | Font <u>underline</u> style | true, false, 'none', 'single', 'double', 'singleAccounting', 'doubleAccounting' |
 | strike        | Font <strike>strikethrough</strike> | true, false |
 | outline       | Font outline | true, false |
+| vertAlign     | Vertical align | 'superscript', 'subscript'
 
 ### Alignment
 
