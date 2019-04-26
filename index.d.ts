@@ -786,7 +786,7 @@ export class Anchor implements IAnchor{
     private readonly rowHeight: number;
     worksheet: Worksheet;
 
-    constructor(model?: IAnchor|object});
+    constructor(model?: IAnchor|object);
 }
 export interface ImageRange {
 	tl: { col: number; row: number } | Anchor;
