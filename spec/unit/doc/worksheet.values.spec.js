@@ -1,16 +1,16 @@
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
-var _ = require('../../../lib/utils/under-dash');
-var Excel = require('../../../excel');
-var testUtils = require('../../utils/index');
+const _ = require('../../../lib/utils/under-dash');
+const Excel = require('../../../excel');
+const testUtils = require('../../utils/index');
 
 describe('Worksheet', function() {
   describe('Values', function() {
     it('stores values properly', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
-      var now = new Date();
+      const now = new Date();
 
       // plain number
       ws.getCell('A1').value = 7;
@@ -59,8 +59,8 @@ describe('Worksheet', function() {
     });
 
     it('stores shared string values properly', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.getCell('A1').value = 'Hello, World!';
 
@@ -78,8 +78,8 @@ describe('Worksheet', function() {
     });
 
     it('assigns cell types properly', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // plain number
       ws.getCell('A1').value = 7;
@@ -117,8 +117,8 @@ describe('Worksheet', function() {
     });
 
     it('adds columns', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.columns = [
         { key: 'id', width: 10 },
@@ -143,8 +143,8 @@ describe('Worksheet', function() {
     });
 
     it('adds column headers', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.columns = [
         { header: 'Id', width: 10 },
@@ -158,8 +158,8 @@ describe('Worksheet', function() {
     });
 
     it('adds column headers by number', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // by defn
       ws.getColumn(1).defn = { key: 'id', header: 'Id', width: 10 };
@@ -185,8 +185,8 @@ describe('Worksheet', function() {
     });
 
     it('adds column headers by letter', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // by defn
       ws.getColumn('A').defn = { key: 'id', header: 'Id', width: 10 };
@@ -212,8 +212,8 @@ describe('Worksheet', function() {
     });
 
     it('adds rows by object', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // add columns to define column keys
       ws.columns = [
@@ -222,8 +222,8 @@ describe('Worksheet', function() {
         { header: 'D.O.B.', key: 'dob', width: 10 }
       ];
 
-      var dateValue1 = new Date(1970, 1, 1);
-      var dateValue2 = new Date(1965, 1, 7);
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
 
       ws.addRow({id: 1, name: 'John Doe', dob: dateValue1});
       ws.addRow({id: 2, name: 'Jane Doe', dob: dateValue2});
@@ -239,7 +239,7 @@ describe('Worksheet', function() {
       expect(ws.getRow(2).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
       expect(ws.getRow(3).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
 
-      var values = [,
+      const values = [,
         [, 'Id', 'Name', 'D.O.B.'],
         [, 1, 'John Doe', dateValue1],
         [, 2, 'Jane Doe', dateValue2]
@@ -253,11 +253,11 @@ describe('Worksheet', function() {
     });
 
     it('adds rows by contiguous array', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970, 1, 1);
-      var dateValue2 = new Date(1965, 1, 7);
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
 
       ws.addRow([1, 'John Doe', dateValue1]);
       ws.addRow([2, 'Jane Doe', dateValue2]);
@@ -275,16 +275,16 @@ describe('Worksheet', function() {
     });
 
     it('adds rows by sparse array', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
-      var dateValue1 = new Date(1970, 1, 1);
-      var dateValue2 = new Date(1965, 1, 7);
-      var rows = [,
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+      const rows = [,
         [, 1, 'John Doe', , dateValue1],
         [, 2, 'Jane Doe', , dateValue2]
       ];
-      var row3 = [];
+      const row3 = [];
       row3[1] = 3;
       row3[3] = 'Sam';
       row3[5] = dateValue1;
@@ -320,57 +320,87 @@ describe('Worksheet', function() {
     });
 
     describe('Splice', function() {
-      var options = {
+      const options = {
         checkBadAlignments: false,
         checkSheetProperties: false,
         checkViews: false
       };
       describe('Rows', function() {
         it('Remove only', function() {
-          var wb = new Excel.Workbook();
+          const wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.rows.removeOnly'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.removeOnly'], options);
         });
         it('Remove and insert fewer', function() {
-          var wb = new Excel.Workbook();
+          const wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertFewer'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertFewer'], options);
         });
         it('Remove and insert same', function() {
-          var wb = new Excel.Workbook();
+          const wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertSame'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertSame'], options);
         });
         it('Remove and insert more', function() {
-          var wb = new Excel.Workbook();
+          const wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertMore'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertMore'], options);
+        });
+        it('Remove style', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.removeStyle'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.removeStyle'], options);
+        });
+        it('Insert style', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertStyle'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertStyle'], options);
+        });
+        it('Replace style', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.replaceStyle'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.replaceStyle'], options);
+        });
+        it('Remove defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.removeDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.removeDefinedNames'], options);
+        });
+        it('Insert defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertDefinedNames'], options);
+        });
+        it('Replace defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.replaceDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.replaceDefinedNames'], options);
         });
       });
       describe('Columns', function() {
         it('splices columns', function() {
-          var wb = new Excel.Workbook();
+          const wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.columns.removeOnly'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.removeOnly'], options);
         });
         it('Remove and insert fewer', function() {
-          var wb = new Excel.Workbook();
+          const wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertFewer'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertFewer'], options);
         });
         it('Remove and insert same', function() {
-          var wb = new Excel.Workbook();
+          const wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertSame'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertSame'], options);
         });
         it('Remove and insert more', function() {
-          var wb = new Excel.Workbook();
+          const wb = new Excel.Workbook();
           testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertMore'], options);
           testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertMore'], options);
         });
         it('handles column keys', function() {
-          var wb = new Excel.Workbook();
-          var ws = wb.addWorksheet('splice-column-insert-fewer');
+          const wb = new Excel.Workbook();
+          const ws = wb.addWorksheet('splice-column-insert-fewer');
           ws.columns = [
             { key: 'id', width: 10 },
             { key: 'dob', width: 20 },
@@ -378,7 +408,7 @@ describe('Worksheet', function() {
             { key: 'age', width: 40 }
           ];
 
-          var values = [
+          const values = [
             {id: '123', name: 'Jack', dob: new Date(), age: 0},
             {id: '124', name: 'Jill', dob: new Date(), age: 0},
           ];
@@ -389,7 +419,7 @@ describe('Worksheet', function() {
           ws.spliceColumns(2, 1, ['B1', 'B2'], ['C1', 'C2']);
 
           values.forEach(function(rowValues, index) {
-            var row = ws.getRow(index + 1);
+            const row = ws.getRow(index + 1);
             _.each(rowValues, function(value, key) {
               if (key !== 'dob') {
                 expect(row.getCell(key).value).to.equal(value);
@@ -405,8 +435,8 @@ describe('Worksheet', function() {
         });
 
         it('Splices to end', function() {
-          var wb = new Excel.Workbook();
-          var ws = wb.addWorksheet('splice-to-end');
+          const wb = new Excel.Workbook();
+          const ws = wb.addWorksheet('splice-to-end');
           ws.columns = [
             { header: 'Col-1', width: 10 },
             { header: 'Col-2', width: 10 },
@@ -451,8 +481,8 @@ describe('Worksheet', function() {
           expect(ws.getColumn(6).header).to.be.undefined();
         });
         it('Splices past end', function() {
-          var wb = new Excel.Workbook();
-          var ws = wb.addWorksheet('splice-to-end');
+          const wb = new Excel.Workbook();
+          const ws = wb.addWorksheet('splice-to-end');
           ws.columns = [
             { header: 'Col-1', width: 10 },
             { header: 'Col-2', width: 10 },
@@ -497,8 +527,8 @@ describe('Worksheet', function() {
           expect(ws.getColumn(6).header).to.be.undefined();
         });
         it('Splices almost to end', function() {
-          var wb = new Excel.Workbook();
-          var ws = wb.addWorksheet('splice-to-end');
+          const wb = new Excel.Workbook();
+          const ws = wb.addWorksheet('splice-to-end');
           ws.columns = [
             { header: 'Col-1', width: 10 },
             { header: 'Col-2', width: 10 },
@@ -542,12 +572,43 @@ describe('Worksheet', function() {
           expect(ws.getColumn(5).header).to.be.undefined();
           expect(ws.getColumn(6).header).to.be.undefined();
         });
+
+        it('Remove style', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.removeStyle'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.removeStyle'], options);
+        });
+        it('Insert style', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertStyle'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertStyle'], options);
+        });
+        it('Replace style', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.replaceStyle'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.replaceStyle'], options);
+        });
+        it('Remove defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.removeDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.removeDefinedNames'], options);
+        });
+        it('Insert defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertDefinedNames'], options);
+        });
+        it('Replace defined names', function() {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.replaceDefinedNames'], options);
+          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.replaceDefinedNames'], options);
+        });
       });
     });
 
     it('iterates over rows', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.getCell('A1').value = 1;
       ws.getCell('B2').value = 2;
@@ -558,28 +619,28 @@ describe('Worksheet', function() {
         expect(rowNumber).not.to.equal(5);
       });
 
-      var count = 1;
+      let count = 1;
       ws.eachRow({includeEmpty: true}, function(row, rowNumber) {
         expect(rowNumber).to.equal(count++);
       });
     });
 
     it('iterates over collumn cells', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.getCell('A1').value = 1;
       ws.getCell('A2').value = 2;
       ws.getCell('A4').value = 4;
       ws.getCell('A6').value = 6;
-      var colA = ws.getColumn('A');
+      const colA = ws.getColumn('A');
       colA.eachCell(function(cell, rowNumber) {
         expect(rowNumber).not.to.equal(3);
         expect(rowNumber).not.to.equal(5);
         expect(cell.value).to.equal(rowNumber);
       });
 
-      var count = 1;
+      let count = 1;
       colA.eachCell({includeEmpty: true}, function(cell, rowNumber) {
         expect(rowNumber).to.equal(count++);
       });
@@ -587,8 +648,8 @@ describe('Worksheet', function() {
     });
 
     it('returns sheet values', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet();
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet();
 
       ws.getCell('A1').value = 11;
       ws.getCell('C1').value = 'C1';
@@ -605,8 +666,8 @@ describe('Worksheet', function() {
     });
 
     it('calculates rowCount and actualRowCount', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet();
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet();
 
       ws.getCell('A1').value = 'A1';
       ws.getCell('C1').value = 'C1';
@@ -620,8 +681,8 @@ describe('Worksheet', function() {
     });
 
     it('calculates columnCount and actualColumnCount', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet();
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet();
 
       ws.getCell('A1').value = 'A1';
       ws.getCell('C1').value = 'C1';

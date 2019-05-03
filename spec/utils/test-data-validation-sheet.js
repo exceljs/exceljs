@@ -75,6 +75,15 @@ var self = module.exports = {
 
     ws.getCell('A19').value = tools.concatenateFormula('Any');
     ws.getCell('B19').dataValidation = self.dataValidations.B19;
+
+    ws.getCell('A20').value = new Date();
+    ws.getCell('A20').dataValidation = {
+      type: 'date',
+      operator: 'greaterThan',
+      showErrorMessage: true,
+      allowBlank: true,
+      formulae: [new Date(2016, 0, 1)]
+    };
   },
 
   checkSheet: function(wb) {

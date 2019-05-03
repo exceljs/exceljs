@@ -1,36 +1,38 @@
 {
-  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "script"
+  },
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "mocha": true,
+    "node": true
+  },
   "rules": {
-    "max-len": [1, 160, 2, {"ignoreComments": true}],
-    "semi": ["error", "always"],
-    "object-property-newline": ["off", { "allowMultiplePropertiesPerLine": true }],
+    "comma-dangle": ["error", {"arrays": "always-multiline", "objects": "always-multiline", "imports": "always-multiline", "exports": "always-multiline", "functions": "never"}],
     "func-names": ["off", "never"],
-    "space-before-function-paren": ["error", "never"],
-    "no-trailing-spaces": ["error", { "skipBlankLines": true }],
-    "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
-    "linebreak-style": ["off"],
-    "no-use-before-define": ["error", { "variables": false, "classes": false, "functions": false }],
-    "no-plusplus": ["off"],
-    "no-underscore-dangle": ["error", { "allowAfterThis": true, "allowAfterSuper": true }],
-    "no-multi-assign": ["off"],
-    "one-var": ["off"],
-    "one-var-declaration-per-line": ["off"],
-    "vars-on-top": ["off"],
-
-    "no-var": ["off"],
-    "arrow-parens": ["off"],
-    "no-prototype-builtins": ["off"],
-    "no-param-reassign": ["off"],
-    "prefer-arrow-callback": ["off"],
-    "comma-dangle": ["off"],
-    "strict": ["off"],
-    "indent": ["off"],
-    "object-shorthand": ["off"],
-    "prefer-template": ["off"],
-    "object-curly-spacing": ["off"],
-    "no-unused-expressions": ["off"],
     "global-require": ["off"],
+    "max-len": ["error", {"code": 160, "ignoreComments": true}],
+    "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
+    "no-multi-assign": ["off"],
+    "no-param-reassign": ["off"],
     "no-path-concat": ["off"],
-    "prefer-rest-params": ["off"]
+    "no-plusplus": ["off"],
+    "no-prototype-builtins": ["off"],
+    "no-trailing-spaces": ["error", { "skipBlankLines": true }],
+    "no-underscore-dangle": ["error", { "allowAfterThis": true, "allowAfterSuper": true }],
+    "no-use-before-define": ["error", { "variables": false, "classes": false, "functions": false }],
+    "object-property-newline": ["off", { "allowMultiplePropertiesPerLine": true }],
+    "prefer-destructuring": ["warn"],
+    "prefer-rest-params": ["off"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "space-before-function-paren": ["error", "never"],
+    "strict": ["off"]
   }
 }

@@ -226,6 +226,7 @@ export interface Font {
 	bold: boolean;
 	italic: boolean;
 	underline: boolean | 'none' | 'single' | 'double' | 'singleAccounting' | 'doubleAccounting';
+  vertAlign: 'superscript' | 'subscript';
 	strike: boolean;
 	outline: boolean;
 }
@@ -333,13 +334,15 @@ export interface CellHyperlinkValue {
 
 export interface CellFormulaValue {
 	formula: string;
-	result: number | string | Date;
+	result?: number | string | Date | { error: CellErrorValue };
+	date1904: boolean;
 }
 
 export interface CellSharedFormulaValue {
 	sharedFormula: string;
 	readonly formula?: string;
-	result: number | string | Date;
+	result?: number | string | Date| { error: CellErrorValue };
+	date1904: boolean;
 }
 
 export const enum ValueType {
@@ -764,10 +767,36 @@ export interface Image {
 	filename?: string;
 	buffer?: Buffer;
 }
+export interface IAnchor {
+    col: number;
+    row: number;
+    nativeCol: number;
+    nativeRow: number;
+    nativeColOff: number;
+    nativeRowOff: number;
+}
+export class Anchor implements IAnchor{
+    col: number;
+    nativeCol: number;
+    nativeColOff: number;
+    nativeRow: number;
+    nativeRowOff: number;
+    row: number;
 
+    private readonly colWidth: number;
+    private readonly rowHeight: number;
+    worksheet: Worksheet;
+
+    constructor(model?: IAnchor|object);
+}
 export interface ImageRange {
+	tl: { col: number; row: number } | Anchor;
+	br: { col: number; row: number } | Anchor;
+}
+
+export interface ImagePosition {
 	tl: { col: number; row: number };
-	br: { col: number; row: number };
+	ext: { width: number; height: number };
 }
 
 export interface Range extends Location {
@@ -835,6 +864,7 @@ export interface WorksheetModel {
 	autoFilter: AutoFilter;
 	media: Media[];
 }
+export type WorksheetState = 'visible' | 'hidden' | 'veryHidden';
 
 export interface Worksheet {
 	readonly id: number;
@@ -842,11 +872,16 @@ export interface Worksheet {
 	readonly workbook: Workbook;
 	readonly hasMerges: boolean;
 
-	readonly dimensions: Range[];
+	readonly dimensions: Range;
 	/**
 	 * Contains information related to how a worksheet is printed
 	 */
 	pageSetup: Partial<PageSetup>;
+
+	/**
+	 * Worksheet State
+	 */
+	state: WorksheetState;
 
 	/**
 	 * Worksheet Properties
@@ -1022,7 +1057,7 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange | { editAs?: string; } & ImagePosition): void;
 
 	getImages(): Array<{
 		type: 'image',
@@ -1067,6 +1102,7 @@ export interface AddWorksheetOptions {
 	properties: Partial<WorksheetProperties>;
 	pageSetup: Partial<PageSetup>;
 	views: Array<Partial<WorksheetView>>;
+	state: WorksheetState;
 }
 
 export interface WorkbookProperties {
@@ -1084,7 +1120,7 @@ export interface Xlsx {
 
 	/**
 	 * read from a stream
-	 * @param stream 
+	 * @param stream
 	 */
 	read(stream: Stream): Promise<Workbook>;
 
