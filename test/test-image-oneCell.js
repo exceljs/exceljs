@@ -1,33 +1,33 @@
-var fs = require('fs');
-var path = require('path');
+const path = require('path');
 
-var HrStopwatch = require('./utils/hr-stopwatch');
+const HrStopwatch = require('./utils/hr-stopwatch');
 
-var Workbook = require('../excel').Workbook;
+const { Workbook } = require('../lib/exceljs.nodejs');
 
-var filename = process.argv[2];
+const filename = process.argv[2];
 
-var wb = new Workbook();
-var ws = wb.addWorksheet('blort');
+const wb = new Workbook();
+const ws = wb.addWorksheet('blort');
 
-var imageId = wb.addImage({
+const imageId = wb.addImage({
   filename: path.join(__dirname, 'data/image2.png'),
   extension: 'png',
 });
 ws.addImage(imageId, {
   tl: { col: 0.1125, row: 0.4 },
   br: { col: 2.101046875, row: 3.4 },
-  editAs: 'oneCell'
+  editAs: 'oneCell',
 });
 
-var stopwatch = new HrStopwatch();
+const stopwatch = new HrStopwatch();
 stopwatch.start();
-wb.xlsx.writeFile(filename)
-  .then(function() {
-    var micros = stopwatch.microseconds;
+wb.xlsx
+  .writeFile(filename)
+  .then(() => {
+    const micros = stopwatch.microseconds;
     console.log('Done.');
-    console.log('Time taken:', micros)
+    console.log('Time taken:', micros);
   })
-  .catch(function(error) {
-     console.error(error.stack);
+  .catch(error => {
+    console.error(error.stack);
   });

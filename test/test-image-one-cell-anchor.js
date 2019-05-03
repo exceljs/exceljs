@@ -1,40 +1,42 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var HrStopwatch = require('./utils/hr-stopwatch');
+const HrStopwatch = require('./utils/hr-stopwatch');
 
-var Workbook = require('../excel').Workbook;
+const { Workbook } = require('../lib/exceljs.nodejs');
 
-var filename = process.argv[2];
+const filename = process.argv[2];
 
-var wb = new Workbook();
-var ws = wb.addWorksheet('blort');
+const wb = new Workbook();
+const ws = wb.addWorksheet('blort');
 
 ws.getCell('B2').value = 'Hello, World!';
 
-var imageId = wb.addImage({
+const imageId = wb.addImage({
   filename: path.join(__dirname, 'data/image2.png'),
   extension: 'png',
 });
-var backgroundId = wb.addImage({
+const backgroundId = wb.addImage({
   buffer: fs.readFileSync(path.join(__dirname, 'data/bubbles.jpg')),
   extension: 'jpeg',
 });
 ws.addImage(imageId, {
-  tl: { col: 1, row: 1 },
-  ext: { width: 100, height: 100 }
+  // tl: { col: 1, row: 1 },
+  tl: 'B2',
+  ext: { width: 100, height: 100 },
 });
 
 ws.addBackgroundImage(backgroundId);
 
-var stopwatch = new HrStopwatch();
+const stopwatch = new HrStopwatch();
 stopwatch.start();
-wb.xlsx.writeFile(filename)
-  .then(function() {
-    var micros = stopwatch.microseconds;
+wb.xlsx
+  .writeFile(filename)
+  .then(() => {
+    const micros = stopwatch.microseconds;
     console.log('Done.');
-    console.log('Time taken:', micros)
+    console.log('Time taken:', micros);
   })
-  .catch(function(error) {
-     console.error(error.stack);
+  .catch(error => {
+    console.error(error.stack);
   });

@@ -20,6 +20,10 @@ npm install exceljs
   <li>
     Fixed effect of splicing rows and columns on defined names
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/746">Add support for adding images anchored to one cell #746</a>.
+    Many thanks to <a href="https://github.com/karlvr">Karl von Randow</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
