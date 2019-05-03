@@ -1,20 +1,29 @@
-var Anchor = require('../../../../../../lib/doc/anchor');
-
 module.exports = {
-  "anchors":[
+  anchors: [
     {
-      "tl": new Anchor({"row": 0, "col": 0}),
-      "br": new Anchor({"row": 7, "col": 3}),
-      "picture": {
-        "rId": "rId1"
-      }
+      range: {
+        tl: { nativeRow: 0, nativeRowOff: 0, nativeCol: 0, nativeColOff: 0 },
+        br: { nativeRow: 7, nativeRowOff: 0, nativeCol: 3, nativeColOff: 0 },
+        editAs: 'oneCell',
+      },
+      picture: {
+        rId: 'rId1',
+      },
     },
     {
-      "tl": new Anchor({"row": 2.5, "col": 5.5}),
-      "br": new Anchor({"row": 10.5, "col": 8.5}),
-      "picture": {
-        "rId": "rId2"
-      }
-    }
-  ]
+      range: {
+        tl: {
+          nativeRow: 2,
+          nativeRowOff: 90000,
+          nativeCol: 5,
+          nativeColOff: 320000,
+        },
+        ext: { width: 100, height: 200 },
+        editAs: 'oneCell',
+      },
+      picture: {
+        rId: 'rId2',
+      },
+    },
+  ],
 };

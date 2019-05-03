@@ -22,7 +22,6 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier-eslint --write",
       "eslint --format node_modules/eslint-friendly-formatter",
       "git add"
     ]

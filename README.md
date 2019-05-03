@@ -20,6 +20,10 @@ npm install exceljs
   <li>
     Fixed effect of splicing rows and columns on defined names
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/746">Add support for adding images anchored to one cell #746</a>.
+    Many thanks to <a href="https://github.com/karlvr">Karl von Randow</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
@@ -1215,6 +1219,17 @@ ws.addImage(imageId, {
   tl: { col: 0.1125, row: 0.4 },
   br: { col: 2.101046875, row: 3.4 },
   editAs: 'oneCell'
+});
+```
+
+### Add image to a cell
+
+You can add an image to a cell and then define its width and height in pixels at 96dpi.
+
+```javascript
+worksheet.addImage(imageId2, {
+  tl: { col: 0, row: 0 },
+  ext: { width: 500, height: 200 }
 });
 ```
 

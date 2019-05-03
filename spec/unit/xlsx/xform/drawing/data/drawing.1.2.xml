@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
           xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
-  <xdr:twoCellAnchor>
+  <xdr:twoCellAnchor editAs="oneCell">
     <xdr:from>
       <xdr:col>0</xdr:col>
       <xdr:colOff>0</xdr:colOff>
@@ -45,19 +45,13 @@
     </xdr:pic>
     <xdr:clientData/>
   </xdr:twoCellAnchor>
-  <xdr:twoCellAnchor>
+  <xdr:oneCellAnchor editAs="oneCell">
     <xdr:from>
       <xdr:col>5</xdr:col>
       <xdr:colOff>320000</xdr:colOff>
       <xdr:row>2</xdr:row>
       <xdr:rowOff>90000</xdr:rowOff>
     </xdr:from>
-    <xdr:to>
-      <xdr:col>8</xdr:col>
-      <xdr:colOff>320000</xdr:colOff>
-      <xdr:row>10</xdr:row>
-      <xdr:rowOff>90000</xdr:rowOff>
-    </xdr:to>
     <xdr:pic>
       <xdr:nvPicPr>
         <xdr:cNvPr id="2" name="Picture 2">
@@ -88,5 +82,6 @@
       </xdr:spPr>
     </xdr:pic>
     <xdr:clientData/>
-  </xdr:twoCellAnchor>
+    <xdr:ext cx="952500" cy="1905000"/>
+  </xdr:oneCellAnchor>
 </xdr:wsDr>
