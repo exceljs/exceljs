@@ -24,6 +24,26 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/746">Add support for adding images anchored to one cell #746</a>.
     Many thanks to <a href="https://github.com/karlvr">Karl von Randow</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/758">Add vertical align property #758</a>.
+    Many thanks to <a href="https://github.com/MikeZyatkov">MikeZyatkov</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/775">Replace the temp lib to tmp #775</a>.
+    Many thanks to <a href="https://github.com/coldhiber">Ivan Sotnikov</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/780">Replace the temp lib to tmp #775</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/793">Update Worksheet.dimensions return type #793</a>.
+    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/795">One more types fix #795</a>.
+    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
@@ -869,7 +889,7 @@ ws.getCell('A2').font = {
     italic: true
 };
 
-// for the vertical align 
+// for the vertical align
 ws.getCell('A3').font = {
   vertAlign: 'superscript'
 };
