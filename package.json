@@ -117,6 +117,9 @@
   },
   "main": "./dist/es5/index.js",
   "types": "./index.d.ts",
+  "browser": {
+    "./dist/es5/index.js": "./dist/es5/exceljs.browser.js"
+  },
   "files": [
     "dist",
     "LICENSE",
