@@ -1,23 +1,23 @@
-var _ = require('../lib/utils/under-dash.js');
+const _ = require('../lib/utils/under-dash.js');
 
-var HrStopwatch = require('./utils/hr-stopwatch');
+const HrStopwatch = require('./utils/hr-stopwatch');
 
-var ExcelJS = require('../excel');
+const ExcelJS = require('../excel');
 
-var Workbook = ExcelJS.Workbook;
+const {Workbook} = ExcelJS;
 
-var filename = process.argv[2];
+const [,, filename] = process.argv;
 
-var wb = new Workbook();
-var ws = wb.addWorksheet('blort');
+const wb = new Workbook();
+const ws = wb.addWorksheet('blort');
 
-var fonts = {
+const fonts = {
   arialBlackUI14: { name: 'Arial Black', family: 2, size: 14, underline: true, italic: true },
   comicSansUdB16: { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true },
   whiteText: { name: 'Arial Black', family: 2, size: 14, color: { argb: 'FFFFFFFF' }},
 };
 
-var alignments = [
+const alignments = [
   { text: 'Top Left', alignment: { horizontal: 'left', vertical: 'top' } },
   { text: 'Middle Centre', alignment: { horizontal: 'center', vertical: 'middle' } },
   { text: 'Bottom Right', alignment: { horizontal: 'right', vertical: 'bottom' } },
@@ -38,14 +38,14 @@ var alignments = [
   { text: 'Rotate -90', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: -90 } },
   { text: 'Vertical Text', alignment: { horizontal: 'right', vertical: 'bottom', textRotation: 'vertical' } },
 ];
-// var badAlignments = [
+// const badAlignments = [
 //  { text: 'Rotate -91', alignment: { textRotation: -91 } },
 //  { text: 'Rotate 91', alignment: { textRotation: 91 } },
 //  { text: 'Indent -1', alignment: { indent: -1 } },
 //  { text: 'Blank', alignment: {  } }
 // ];
 
-var borders = {
+const borders = {
   thin: { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'}},
   doubleRed: { color: {argb:'FFFF0000'}, top: {style:'double'}, left: {style:'double'}, bottom: {style:'double'}, right: {style:'double'}},
   thickRainbow: {
@@ -58,7 +58,7 @@ var borders = {
   thinWhite: { top: {style:'thin'}, left: {style:'thin'}, bottom: {style:'thin'}, right: {style:'thin'}, color: { argb: 'FFFFFFFF'}},
 };
 
-var fills = {
+const fills = {
   solidGreen: {type: 'pattern', pattern:'solid', fgColor:{argb:'FF00FF00'}},
   redDarkVertical: {type: 'pattern', pattern:'darkVertical', fgColor:{argb:'FFFF0000'}},
   redGreenDarkTrellis: {type: 'pattern', pattern:'darkTrellis', fgColor:{argb:'FFFF0000'}, bgColor:{argb:'FF00FF00'}},
@@ -77,7 +77,7 @@ ws.columns = [
   { header: 'Col 6', width: 8 },
   { header: 'Col 7', width: 8 },
   { header: 'Col 8', width: 8, style: { font: fonts.comicSansUdB16, alignment: alignments[1].alignment } },
-  { header: 'Col 9', width: 8, hidden: true }
+  { header: 'Col 9', width: 8, hidden: true },
 ];
 
 ws.getCell('A2').value = 7;
@@ -95,6 +95,7 @@ ws.getCell('D2').numFmt = 'd-mmm-yyyy';
 ws.getCell('D2').font = fonts.comicSansUdB16;
 ws.getCell('D2').border = borders.doubleRed;
 
+// eslint-disable-next-line prefer-template
 ws.getCell('E2').value = ['Hello', 'World'].join(', ') + '!';
 
 ws.getCell('F2').value = true;
@@ -119,7 +120,7 @@ ws.getCell('A7').value = 1;
 ws.getCell('B7').value = 2;
 ws.getCell('C7').value = {formula:'A7+B7'};
 
-var now = new Date();
+const now = new Date();
 ws.getCell('A8').value = now;
 ws.getCell('B8').value = 0;
 ws.getCell('C8').value = {formula:'A8+B8', result: now};
@@ -143,15 +144,15 @@ ws.getCell('C10').value = '<a>';
 ws.getCell('D10').value = '><';
 
 ws.getRow(11).height = 40;
-_.each(alignments, function(alignment, index) {
-  var rowNumber = 11;
-  var colNumber = index + 1;
-  var cell = ws.getCell(rowNumber, colNumber);
+_.each(alignments, (alignment, index) => {
+  const rowNumber = 11;
+  const colNumber = index + 1;
+  const cell = ws.getCell(rowNumber, colNumber);
   cell.value = alignment.text;
   cell.alignment = alignment.alignment;
 });
 
-var row12 = ws.getRow(12);
+const row12 = ws.getRow(12);
 row12.height = 40;
 row12.getCell(1).value = 'Blue White Horizontal Gradient';
 row12.getCell(1).fill = fills.blueWhiteHGrad;
@@ -192,11 +193,11 @@ ws.getRow(16).hidden = true;
 ws.getCell('I15').value = 'You Can\'t See Me!';
 ws.getCell('A16').value = 'You Can\'t See Me!';
 
-var A18 = ws.getCell('A18');
+const A18 = ws.getCell('A18');
 A18.value = 'Wrap Text - Wrapping Wrapping Wrappity Wrap Wrap Wrap';
 A18.alignment = { wrapText: true };
 
-var A20 = ws.getCell('A20');
+const A20 = ws.getCell('A20');
 A20.value = 'Wrap Text - Wrapping Wrappity Wrap';
 A20.alignment = { shrinkToFit: true };
 
@@ -216,17 +217,17 @@ ws.getCell('F24').name = 'Nephews';
 ws.getCell('B24').dataValidation = {
   type: 'list',
   allowBlank: true,
-  formulae: ['Nephews']
+  formulae: ['Nephews'],
 };
 
-var stopwatch = new HrStopwatch();
+const stopwatch = new HrStopwatch();
 stopwatch.start();
 wb.xlsx.writeFile(filename)
-  .then(function() {
-    var micros = stopwatch.microseconds;
+  .then(() => {
+    const micros = stopwatch.microseconds;
     console.log('Done.');
-    console.log('Time taken:', micros)
+    console.log('Time taken:', micros);
+  })
+  .catch(error => {
+     console.log(error.message);
   });
-// .catch(function(error) {
-//    console.log(error.message);
-// })
