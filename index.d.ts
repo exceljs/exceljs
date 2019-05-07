@@ -754,6 +754,11 @@ export interface PageSetup {
 	 * Repeat specific rows on every printed page, e.g. `'1:3'`
 	 */
 	printTitlesRow: string;
+
+	/**
+	 * Repeat specific columns on every printed page, e.g. `'A:C'`
+	 */
+	printTitlesColumn: string;
 }
 
 export type AutoFilter = string | {

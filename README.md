@@ -302,6 +302,8 @@ worksheet.pageSetup.printArea = 'A1:G20';
 // Repeat specific rows on every printed page
 worksheet.pageSetup.printTitlesRow = '1:3';
 
+// Repeat specific columns on every printed page
+worksheet.pageSetup.printTitlesColumn = 'A:C';
 ```
 
 **Supported pageSetup settings**

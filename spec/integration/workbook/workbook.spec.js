@@ -93,6 +93,71 @@ describe('Workbook', function() {
         .then(function(wb2) {
           var ws2 = wb2.getWorksheet('printHeader');
           expect(ws2.pageSetup.printTitlesRow).to.equal('$1:$2');
+          expect(ws2.pageSetup.printTitlesColumn).to.be.undefined;
+        });
+    });
+    it('printTitlesColumn', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('printColumn');
+
+      ws.getCell('A1').value = 'This is a column repeated on every printed page';
+      ws.getCell('A2').value = 'This is a column repeated on every printed page';
+      ws.getCell('B1').value = 'This is a repeated column too';
+      ws.getCell('B2').value = 'This is a repeated column too';
+
+      ws.getCell('C1').value = 'This is a regular column';
+      ws.getCell('C2').value = 'This is a regular column';
+      ws.getCell('D1').value = 'This is a regular column';
+      ws.getCell('D2').value = 'This is a regular column';
+
+      ws.pageSetup.printTitlesRow = 'A:B';
+
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('printColumn');
+          expect(ws2.pageSetup.printTitlesRow).to.be.undefined;
+          expect(ws2.pageSetup.printTitlesColumn).to.equal('$A:$B');
+        });
+    });
+    it('printTitlesRowAndColumn', function() {
+      var wb = new Excel.Workbook();
+      var ws = wb.addWorksheet('printHeaderAndColumn');
+
+      ws.getCell('A1').value = 'This is a column / row repeated on every printed page';
+      ws.getCell('A2').value = 'This is a column / row repeated on every printed page';
+      ws.getCell('B1').value = 'This is a repeated column / row too';
+      ws.getCell('B2').value = 'This is a repeated column / row too';
+
+      ws.getCell('C1').value = 'This is a regular column, repeated row';
+      ws.getCell('C2').value = 'This is a regular column, repeated row';
+      ws.getCell('D1').value = 'This is a regular column, repeated row';
+      ws.getCell('D2').value = 'This is a regular column, repeated row';
+
+      ws.getCell('A3').value = 'This is a repeated column';
+      ws.getCell('B3').value = 'This is a repeated column';
+      ws.getCell('C3').value = 'This is a regular column / row';
+      ws.getCell('D3').value = 'This is a regular column / row';
+
+      ws.pageSetup.printTitlesColumn = 'A:B';
+      ws.pageSetup.printTitlesRow = '1:2';
+
+      for (var i = 0; i < 100; i++) {
+        ws.addRow(['repeated column, not repeated row', 'repeated column, not repeated row', 'no repeat', 'no repeat']);
+      }
+
+      return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME)
+        .then(function() {
+          var wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(function(wb2) {
+          var ws2 = wb2.getWorksheet('printHeaderAndColumn');
+          expect(ws2.pageSetup.printTitlesRow).to.equal('$1:$2');
+          expect(ws2.pageSetup.printTitlesColumn).to.equal('$A:$B');
         });
     });
 
