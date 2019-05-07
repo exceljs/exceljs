@@ -116,6 +116,7 @@
     "uglify-js": "^3.4.9"
   },
   "main": "./dist/es5/index.js",
+  "browser": "./dist/es5/exceljs.browser.js",
   "types": "./index.d.ts",
   "files": [
     "dist",
