@@ -21,6 +21,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/776">Add the ability to bail out of parsing if the number of columns exceeds a given limit #776</a>.
     Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/799">Add support for repeated columns on every page when printing. #799</a>.
+    Many thanks to <a href="https://github.com/FreakenK">Jasmin Auger</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
