@@ -116,6 +116,7 @@
     "prettier-eslint-cli": "^4.6.1"
   },
   "main": "./dist/es5/index.js",
+  "browser": "./dist/es5/exceljs.browser.js",
   "types": "./index.d.ts",
   "files": [
     "dist",

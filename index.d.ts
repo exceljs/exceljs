@@ -1130,6 +1130,12 @@ export interface Xlsx {
 	read(stream: Stream): Promise<Workbook>;
 
 	/**
+	 * load from an array buffer
+	 * @param buffer
+	 */
+	load(buffer: Buffer): Promise<Workbook>;
+
+	/**
 	 * Create input stream for reading
 	 */
 	createInputStream(): Writable;
