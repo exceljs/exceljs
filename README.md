@@ -141,6 +141,9 @@ To be clear, all contributions added to this library will be included in the lib
 
 ```javascript
 var Excel = require('exceljs');
+
+// or, for node.js version 8+
+const Excel = require('exceljs/nodejs');
 ```
 
 ## Create a Workbook
