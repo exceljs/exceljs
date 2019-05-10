@@ -1,12 +1,12 @@
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
-var Excel = require('../../../excel');
+const Excel = require('../../../excel');
 
-describe('Worksheet', function() {
-  describe('Page Breaks', function() {
-    it('adds multiple row breaks', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+describe('Worksheet', () => {
+  describe('Page Breaks', () => {
+    it('adds multiple row breaks', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // initial values
       ws.getCell('A1').value = 'A1';
@@ -15,8 +15,8 @@ describe('Worksheet', function() {
       ws.getCell('B2').value = 'B2';
       ws.getCell('A3').value = 'A3';
       ws.getCell('B3').value = 'B3';
-      
-      var row = ws.getRow(1);
+
+      let row = ws.getRow(1);
       row.addPageBreak();
       row = ws.getRow(2);
       row.addPageBreak();

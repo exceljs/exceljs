@@ -1,17 +1,17 @@
 'use strict';
 
-var expect = require('chai').expect;
-var verquire = require('./verquire');
-var tools = require('./tools');
-var testValues = tools.fix(require('./data/sheet-values.json'));
+const expect = require('chai').expect;
+const verquire = require('./verquire');
+const tools = require('./tools');
+const testValues = tools.fix(require('./data/sheet-values.json'));
 
-var utils = verquire('utils/utils');
-var Excel = verquire('excel');
+const utils = verquire('utils/utils');
+const Excel = verquire('excel');
 
 function fillFormula(f) {
-  return Object.assign({formula: undefined, result: undefined}, f);
+  return Object.assign({ formula: undefined, result: undefined }, f);
 }
-var streamedValues = {
+const streamedValues = {
   B1: { sharedString: 0 },
   C1: utils.dateToExcel(testValues.date),
   D1: fillFormula(testValues.formulas[0]),
@@ -25,19 +25,19 @@ module.exports = {
   properties: tools.fix(require('./data/sheet-properties.json')),
   pageSetup: tools.fix(require('./data/page-setup.json')),
 
-  checkBook: function(filename) {
-    var wb = new Excel.stream.xlsx.WorkbookReader();
+  checkBook(filename) {
+    const wb = new Excel.stream.xlsx.WorkbookReader();
 
     // expectations
-    var dateAccuracy = 0.00001;
+    const dateAccuracy = 0.00001;
 
-    return new Promise(function(resolve, reject) {
-      var rowCount = 0;
+    return new Promise((resolve, reject) => {
+      let rowCount = 0;
 
-      wb.on('worksheet', function(ws) {
+      wb.on('worksheet', ws => {
         // Sheet name stored in workbook. Not guaranteed here
         // expect(ws.name).to.equal('blort');
-        ws.on('row', function(row) {
+        ws.on('row', row => {
           rowCount++;
           try {
             switch (row.number) {
@@ -46,7 +46,9 @@ module.exports = {
                 expect(row.getCell('A').type).to.equal(Excel.ValueType.Number);
                 expect(row.getCell('B').value).to.deep.equal(streamedValues.B1);
                 expect(row.getCell('B').type).to.equal(Excel.ValueType.String);
-                expect(Math.abs(row.getCell('C').value - streamedValues.C1)).to.be.below(dateAccuracy);
+                expect(
+                  Math.abs(row.getCell('C').value - streamedValues.C1)
+                ).to.be.below(dateAccuracy);
                 expect(row.getCell('C').type).to.equal(Excel.ValueType.Number);
 
                 expect(row.getCell('D').value).to.deep.equal(streamedValues.D1);
@@ -54,7 +56,9 @@ module.exports = {
                 expect(row.getCell('E').value).to.deep.equal(streamedValues.E1);
                 expect(row.getCell('E').type).to.equal(Excel.ValueType.Formula);
                 expect(row.getCell('F').value).to.deep.equal(streamedValues.F1);
-                expect(row.getCell('F').type).to.equal(Excel.ValueType.SharedString);
+                expect(row.getCell('F').type).to.equal(
+                  Excel.ValueType.SharedString
+                );
                 expect(row.getCell('G').value).to.deep.equal(streamedValues.G1);
                 break;
 
@@ -102,13 +106,19 @@ module.exports = {
                 expect(row.getCell('C').value).to.deep.equal(streamedValues.B1);
                 expect(row.getCell('C').type).to.equal(Excel.ValueType.String);
 
-                expect(Math.abs(row.getCell('D').value - 1.6)).to.be.below(0.00000001);
+                expect(Math.abs(row.getCell('D').value - 1.6)).to.be.below(
+                  0.00000001
+                );
                 expect(row.getCell('D').type).to.equal(Excel.ValueType.Number);
 
-                expect(Math.abs(row.getCell('E').value - 1.6)).to.be.below(0.00000001);
+                expect(Math.abs(row.getCell('E').value - 1.6)).to.be.below(
+                  0.00000001
+                );
                 expect(row.getCell('E').type).to.equal(Excel.ValueType.Number);
 
-                expect(Math.abs(row.getCell('F').value - streamedValues.C1)).to.be.below(dateAccuracy);
+                expect(
+                  Math.abs(row.getCell('F').value - streamedValues.C1)
+                ).to.be.below(dateAccuracy);
                 expect(row.getCell('F').type).to.equal(Excel.ValueType.Number);
                 break;
 
@@ -131,7 +141,7 @@ module.exports = {
           }
         });
       });
-      wb.on('end', function() {
+      wb.on('end', () => {
         try {
           expect(rowCount).to.equal(10);
           resolve();
@@ -140,7 +150,7 @@ module.exports = {
         }
       });
 
-      wb.read(filename, {entries: 'emit', worksheets: 'emit'});
+      wb.read(filename, { entries: 'emit', worksheets: 'emit' });
     });
-  }
+  },
 };
