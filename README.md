@@ -896,6 +896,7 @@ font.size = 20; // Cell A3 now has font size 20!
 | family        | Font family for fallback. An integer value. | 1 - Serif, 2 - Sans Serif, 3 - Mono, Others - unknown |
 | scheme        | Font scheme. | 'minor', 'major', 'none' |
 | charset       | Font charset. An integer value. | 1, 2, etc. |
+| size          | Font <span style="font-size: 1.5em">size</span>. An integer value. | 9, 10, 12, 16, etc. |
 | color         | Colour description, an object containing an ARGB value. | { argb: 'FFFF0000'} |
 | bold          | Font **weight** | true, false |
 | italic        | Font *slope* | true, false |
@@ -1033,7 +1034,6 @@ ws.getCell('A2').fill = {
 
 * none
 * solid
-* darkVertical
 * darkGray
 * mediumGray
 * lightGray
@@ -1051,7 +1051,6 @@ ws.getCell('A2').fill = {
 * lightUp
 * lightGrid
 * lightTrellis
-* lightGrid
 
 #### Gradient Fills
 
@@ -1070,7 +1069,7 @@ For example, Excel only supports angle gradients of 0, 45, 90 and 135.
 Similarly the sequence of stops may also be limited by the UI with positions [0,1] or [0,0.5,1] as the only options.
 Take care with this fill to be sure it is supported by the target XLSX viewers.
 
-#### Rich Text
+### Rich Text
 
 Individual cells now support rich text or in-cell formatting.
  Rich text values can control the font properties of any number of sub-strings within the text value.
