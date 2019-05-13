@@ -896,7 +896,7 @@ font.size = 20; // Cell A3 now has font size 20!
 | family        | Font family for fallback. An integer value. | 1 - Serif, 2 - Sans Serif, 3 - Mono, Others - unknown |
 | scheme        | Font scheme. | 'minor', 'major', 'none' |
 | charset       | Font charset. An integer value. | 1, 2, etc. |
-| size          | Font <span style="font-size: 1.5em">size</span>. An integer value. | 9, 10, 12, 16, etc. |
+| size          | Font size. An integer value. | 9, 10, 12, 16, etc. |
 | color         | Colour description, an object containing an ARGB value. | { argb: 'FFFF0000'} |
 | bold          | Font **weight** | true, false |
 | italic        | Font *slope* | true, false |
