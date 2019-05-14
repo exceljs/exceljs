@@ -15,17 +15,15 @@
   "engines": {
     "node": ">=6.0.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --format node_modules/eslint-friendly-formatter",
-      "git add"
-    ]
-  },
+  "main": "./dist/es5/index.js",
+  "browser": "./dist/es5/exceljs.browser.js",
+  "types": "./index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "index.d.ts"
+  ],
   "scripts": {
     "pretest": "npm run build",
     "test": "npm run test:full",
@@ -43,6 +41,17 @@
     "build": "./node_modules/.bin/grunt build",
     "preversion": "npm run clean && npm run build && npm run test:full",
     "postversion": "git push --no-verify && git push --tags --no-verify"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --format node_modules/eslint-friendly-formatter",
+      "git add"
+    ]
   },
   "keywords": [
     "xlsx",
@@ -114,14 +123,5 @@
     "request": "^2.88.0",
     "semver": "^5.6.0",
     "uglify-js": "^3.4.9"
-  },
-  "main": "./dist/es5/index.js",
-  "browser": "./dist/es5/exceljs.browser.js",
-  "types": "./index.d.ts",
-  "files": [
-    "dist",
-    "LICENSE",
-    "README.md",
-    "index.d.ts"
-  ]
+  }
 }
