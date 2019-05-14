@@ -1,9 +1,9 @@
 'use strict';
 
-const expect = require('chai').expect;
-const Promish = require('promish');
+const {expect} = require('chai');
 const fs = require('fs');
 const path = require('path');
+const { Promise } = require('../../../lib/utils/promise');
 
 const StreamBuf = require('../../../lib/utils/stream-buf');
 const StringBuf = require('../../../lib/utils/string-buf');
@@ -41,7 +41,7 @@ describe('StreamBuf', () => {
   });
 
   it('handles buffers', () =>
-    new Promish((resolve, reject) => {
+    new Promise((resolve, reject) => {
       const s = fs.createReadStream(path.join(__dirname, 'data/image1.png'));
       const sb = new StreamBuf();
       sb.on('finish', () => {
