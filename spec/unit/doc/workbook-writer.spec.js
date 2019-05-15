@@ -2,9 +2,9 @@
 
 const Stream = require('stream');
 
-const expect = require('chai').expect;
+const {expect} = require('chai');
 
-const Excel = require('../../../excel');
+const Excel = require('../../../lib/exceljs.nodejs');
 
 describe('Workbook Writer', () => {
   it('returns undefined for non-existant sheet', () => {

@@ -51,3 +51,6 @@ spec/integration/data/gold
 /spec/manual/public/exceljs.min.js
 
 package-lock.json
+
+# optional switch off tests
+.disable-test-*
