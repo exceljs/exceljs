@@ -25,6 +25,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/799">Add support for repeated columns on every page when printing. #799</a>.
     Many thanks to <a href="https://github.com/FreakenK">Jasmin Auger</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/815">Do not use a promise polyfill on modern setups #815</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
