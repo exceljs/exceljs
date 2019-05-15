@@ -1,28 +1,28 @@
 'use strict';
 
 const chai = require('chai');
+const promish = require('promish');
 
 const verquire = require('../../utils/verquire');
 
-const PromishLib = verquire('utils/promish');
+const PromiseLib = verquire('utils/promise');
 const Excel = verquire('excel');
 
-const expect = chai.expect;
+const {expect} = chai;
 
 // this file to contain integration tests created from github issues
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 describe('github issues', () => {
   describe('issue 266 - Breaking change removing bluebird', () => {
-    let promish;
     beforeEach(() => {
-      promish = PromishLib.Promish;
+      PromiseLib.Promise = promish;
     });
     afterEach(() => {
-      PromishLib.Promish = promish;
+      PromiseLib.Promise = promish;
     });
 
-    it('common bluebird functions', () => {
+    it('promish supports common bluebird functions', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('Sheet1');
       let calledFinally = false;
