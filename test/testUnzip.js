@@ -1,18 +1,17 @@
-var fs = require('fs');
-var unzip = require('unzip2');
+const fs = require('fs');
+const unzip = require('node-unzip-2');
 
-var filename = process.argv[2];
-console.log('Reading ' + filename);
+const filename = process.argv[2];
+console.log(`Reading ${filename}`);
 fs.createReadStream(filename)
   .pipe(unzip.Parse())
-  .on('entry',function (entry) {
-    var buf = entry.read();
+  .on('entry', entry => {
+    const buf = entry.read();
     console.log(entry.path, buf.length);
   })
-  .on('close', function () {
+  .on('close', () => {
     console.log('Finished');
   })
-  .on('error', function (error) {
-    console.log('Error: ' + error.message);
+  .on('error', error => {
+    console.log(`Error: ${error.message}`);
   });
-

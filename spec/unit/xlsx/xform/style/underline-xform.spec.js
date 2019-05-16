@@ -1,35 +1,47 @@
 'use strict';
 
-var UnderlineXform = require('../../../../../lib/xlsx/xform/style/underline-xform');
-var testXformHelper = require('./../test-xform-helper');
+const UnderlineXform = require('../../../../../lib/xlsx/xform/style/underline-xform');
+const testXformHelper = require('./../test-xform-helper');
 
-var expectations = [
+const expectations = [
   {
     title: 'single',
-    create: function() { return new UnderlineXform(); },
+    create() {
+      return new UnderlineXform();
+    },
     preparedModel: true,
-    get parsedModel() { return this.preparedModel; },
+    get parsedModel() {
+      return this.preparedModel;
+    },
     xml: '<u/>',
-    tests: ['render', 'renderIn', 'parse']
+    tests: ['render', 'renderIn', 'parse'],
   },
   {
     title: 'double',
-    create: function() { return new UnderlineXform(); },
+    create() {
+      return new UnderlineXform();
+    },
     preparedModel: 'double',
-    get parsedModel() { return this.preparedModel; },
+    get parsedModel() {
+      return this.preparedModel;
+    },
     xml: '<u val="double"/>',
-    tests: ['render', 'renderIn', 'parse']
+    tests: ['render', 'renderIn', 'parse'],
   },
   {
     title: 'false',
-    create: function() { return new UnderlineXform(); },
+    create() {
+      return new UnderlineXform();
+    },
     preparedModel: false,
-    get parsedModel() { return this.preparedModel; },
+    get parsedModel() {
+      return this.preparedModel;
+    },
     xml: '',
-    tests: ['render', 'renderIn']
-  }
+    tests: ['render', 'renderIn'],
+  },
 ];
 
-describe('UnderlineXform', function() {
+describe('UnderlineXform', () => {
   testXformHelper(expectations);
 });

@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const Promish = require('promish');
+const { promisify } = require('util');
 const { expect } = require('chai');
 const verquire = require('../../utils/verquire');
 
@@ -9,7 +9,7 @@ const Excel = verquire('excel');
 
 const IMAGE_FILENAME = `${__dirname}/../data/image.png`;
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
-const fsReadFileAsync = Promish.promisify(fs.readFile);
+const fsReadFileAsync = promisify(fs.readFile);
 
 // =============================================================================
 // Tests

@@ -1,12 +1,12 @@
-const expect = require('chai').expect;
+const {expect} = require('chai');
 
 const _ = require('../../../lib/utils/under-dash');
-const Excel = require('../../../excel');
+const Excel = require('../../../lib/exceljs.nodejs');
 const testUtils = require('../../utils/index');
 
-describe('Worksheet', function() {
-  describe('Values', function() {
-    it('stores values properly', function() {
+describe('Worksheet', () => {
+  describe('Values', () => {
+    it('stores values properly', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -26,19 +26,25 @@ describe('Worksheet', function() {
       ws.getCell('D1').value = now;
 
       // constructed string - will share recorded with B1
-      ws.getCell('E1').value = ['Hello', 'World'].join(', ') + '!';
+      ws.getCell('E1').value = `${['Hello', 'World'].join(', ')}!`;
 
       // hyperlink
-      ws.getCell('F1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
+      ws.getCell('F1').value = {
+        text: 'www.google.com',
+        hyperlink: 'http://www.google.com',
+      };
 
       // number formula
-      ws.getCell('A2').value = {formula: 'A1', result: 7};
+      ws.getCell('A2').value = { formula: 'A1', result: 7 };
 
       // string formula
-      ws.getCell('B2').value = {formula: 'CONCATENATE("Hello", ", ", "World!")', result: 'Hello, World!'};
+      ws.getCell('B2').value = {
+        formula: 'CONCATENATE("Hello", ", ", "World!")',
+        result: 'Hello, World!',
+      };
 
       // date formula
-      ws.getCell('C2').value = {formula: 'D1', result: now};
+      ws.getCell('C2').value = { formula: 'D1', result: now };
 
       expect(ws.getCell('A1').value).to.equal(7);
       expect(ws.getCell('B1').value).to.equal('Hello, World!');
@@ -46,19 +52,23 @@ describe('Worksheet', function() {
       expect(ws.getCell('D1').value).to.equal(now);
       expect(ws.getCell('E1').value).to.equal('Hello, World!');
       expect(ws.getCell('F1').value.text).to.equal('www.google.com');
-      expect(ws.getCell('F1').value.hyperlink).to.equal('http://www.google.com');
+      expect(ws.getCell('F1').value.hyperlink).to.equal(
+        'http://www.google.com'
+      );
 
       expect(ws.getCell('A2').value.formula).to.equal('A1');
       expect(ws.getCell('A2').value.result).to.equal(7);
 
-      expect(ws.getCell('B2').value.formula).to.equal('CONCATENATE("Hello", ", ", "World!")');
+      expect(ws.getCell('B2').value.formula).to.equal(
+        'CONCATENATE("Hello", ", ", "World!")'
+      );
       expect(ws.getCell('B2').value.result).to.equal('Hello, World!');
 
       expect(ws.getCell('C2').value.formula).to.equal('D1');
       expect(ws.getCell('C2').value.result).to.equal(now);
     });
 
-    it('stores shared string values properly', function() {
+    it('stores shared string values properly', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -66,9 +76,12 @@ describe('Worksheet', function() {
 
       ws.getCell('A2').value = 'Hello';
       ws.getCell('B2').value = 'World';
-      ws.getCell('C2').value = {formula: 'CONCATENATE(A2, ", ", B2, "!")', result: 'Hello, World!'};
+      ws.getCell('C2').value = {
+        formula: 'CONCATENATE(A2, ", ", B2, "!")',
+        result: 'Hello, World!',
+      };
 
-      ws.getCell('A3').value = ['Hello', 'World'].join(', ') + '!';
+      ws.getCell('A3').value = `${['Hello', 'World'].join(', ')}!`;
 
       // A1 and A3 should reference the same string object
       expect(ws.getCell('A1').value).to.equal(ws.getCell('A3').value);
@@ -77,7 +90,7 @@ describe('Worksheet', function() {
       expect(ws.getCell('A1').value).to.equal(ws.getCell('C2').value.result);
     });
 
-    it('assigns cell types properly', function() {
+    it('assigns cell types properly', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -94,16 +107,22 @@ describe('Worksheet', function() {
       ws.getCell('D1').value = new Date();
 
       // hyperlink
-      ws.getCell('E1').value = {text: 'www.google.com', hyperlink: 'http://www.google.com'};
+      ws.getCell('E1').value = {
+        text: 'www.google.com',
+        hyperlink: 'http://www.google.com',
+      };
 
       // number formula
-      ws.getCell('A2').value = {formula: 'A1', result: 7};
+      ws.getCell('A2').value = { formula: 'A1', result: 7 };
 
       // string formula
-      ws.getCell('B2').value = {formula: 'CONCATENATE("Hello", ", ", "World!")', result: 'Hello, World!'};
+      ws.getCell('B2').value = {
+        formula: 'CONCATENATE("Hello", ", ", "World!")',
+        result: 'Hello, World!',
+      };
 
       // date formula
-      ws.getCell('C2').value = {formula: 'D1', result: new Date()};
+      ws.getCell('C2').value = { formula: 'D1', result: new Date() };
 
       expect(ws.getCell('A1').type).to.equal(Excel.ValueType.Number);
       expect(ws.getCell('B1').type).to.equal(Excel.ValueType.String);
@@ -116,14 +135,14 @@ describe('Worksheet', function() {
       expect(ws.getCell('C2').type).to.equal(Excel.ValueType.Formula);
     });
 
-    it('adds columns', function() {
+    it('adds columns', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
       ws.columns = [
         { key: 'id', width: 10 },
         { key: 'name', width: 32 },
-        { key: 'dob', width: 10 }
+        { key: 'dob', width: 10 },
       ];
 
       expect(ws.getColumn('id').number).to.equal(1);
@@ -142,14 +161,14 @@ describe('Worksheet', function() {
       expect(ws.getColumn(3)).to.equal(ws.getColumn('dob'));
     });
 
-    it('adds column headers', function() {
+    it('adds column headers', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
       ws.columns = [
         { header: 'Id', width: 10 },
         { header: 'Name', width: 32 },
-        { header: 'D.O.B.', width: 10 }
+        { header: 'D.O.B.', width: 10 },
       ];
 
       expect(ws.getCell('A1').value).to.equal('Id');
@@ -157,7 +176,7 @@ describe('Worksheet', function() {
       expect(ws.getCell('C1').value).to.equal('D.O.B.');
     });
 
-    it('adds column headers by number', function() {
+    it('adds column headers by number', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -184,7 +203,7 @@ describe('Worksheet', function() {
       expect(ws.getColumn(2).width).to.equal(32);
     });
 
-    it('adds column headers by letter', function() {
+    it('adds column headers by letter', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -211,7 +230,7 @@ describe('Worksheet', function() {
       expect(ws.getColumn('B').width).to.equal(32);
     });
 
-    it('adds rows by object', function() {
+    it('adds rows by object', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -219,14 +238,14 @@ describe('Worksheet', function() {
       ws.columns = [
         { header: 'Id', key: 'id', width: 10 },
         { header: 'Name', key: 'name', width: 32 },
-        { header: 'D.O.B.', key: 'dob', width: 10 }
+        { header: 'D.O.B.', key: 'dob', width: 10 },
       ];
 
       const dateValue1 = new Date(1970, 1, 1);
       const dateValue2 = new Date(1965, 1, 7);
 
-      ws.addRow({id: 1, name: 'John Doe', dob: dateValue1});
-      ws.addRow({id: 2, name: 'Jane Doe', dob: dateValue2});
+      ws.addRow({ id: 1, name: 'John Doe', dob: dateValue1 });
+      ws.addRow({ id: 2, name: 'Jane Doe', dob: dateValue2 });
 
       expect(ws.getCell('A2').value).to.equal(1);
       expect(ws.getCell('B2').value).to.equal('John Doe');
@@ -239,20 +258,21 @@ describe('Worksheet', function() {
       expect(ws.getRow(2).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
       expect(ws.getRow(3).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
 
-      const values = [,
+      const values = [
+        ,
         [, 'Id', 'Name', 'D.O.B.'],
         [, 1, 'John Doe', dateValue1],
-        [, 2, 'Jane Doe', dateValue2]
+        [, 2, 'Jane Doe', dateValue2],
       ];
-      ws.eachRow(function(row, rowNumber) {
+      ws.eachRow((row, rowNumber) => {
         expect(row.values).to.deep.equal(values[rowNumber]);
-        row.eachCell(function(cell, colNumber) {
+        row.eachCell((cell, colNumber) => {
           expect(cell.value).to.equal(values[rowNumber][colNumber]);
         });
       });
     });
 
-    it('adds rows by contiguous array', function() {
+    it('adds rows by contiguous array', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -274,22 +294,23 @@ describe('Worksheet', function() {
       expect(ws.getRow(2).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
     });
 
-    it('adds rows by sparse array', function() {
+    it('adds rows by sparse array', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
       const dateValue1 = new Date(1970, 1, 1);
       const dateValue2 = new Date(1965, 1, 7);
-      const rows = [,
+      const rows = [
+        ,
         [, 1, 'John Doe', , dateValue1],
-        [, 2, 'Jane Doe', , dateValue2]
+        [, 2, 'Jane Doe', , dateValue2],
       ];
       const row3 = [];
       row3[1] = 3;
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      rows.forEach(function(row) {
+      rows.forEach(row => {
         if (row) {
           ws.addRow(row);
         }
@@ -311,116 +332,256 @@ describe('Worksheet', function() {
       expect(ws.getRow(2).values).to.deep.equal(rows[2]);
       expect(ws.getRow(3).values).to.deep.equal(rows[3]);
 
-      ws.eachRow(function(row, rowNumber) {
+      ws.eachRow((row, rowNumber) => {
         expect(row.values).to.deep.equal(rows[rowNumber]);
-        row.eachCell(function(cell, colNumber) {
+        row.eachCell((cell, colNumber) => {
           expect(cell.value).to.equal(rows[rowNumber][colNumber]);
         });
       });
     });
 
-    describe('Splice', function() {
+    describe('Splice', () => {
       const options = {
         checkBadAlignments: false,
         checkSheetProperties: false,
-        checkViews: false
+        checkViews: false,
       };
-      describe('Rows', function() {
-        it('Remove only', function() {
+      describe('Rows', () => {
+        it('Remove only', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.removeOnly'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.removeOnly'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.removeOnly'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.removeOnly'],
+            options
+          );
         });
-        it('Remove and insert fewer', function() {
+        it('Remove and insert fewer', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertFewer'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertFewer'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertFewer'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertFewer'],
+            options
+          );
         });
-        it('Remove and insert same', function() {
+        it('Remove and insert same', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertSame'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertSame'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertSame'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertSame'],
+            options
+          );
         });
-        it('Remove and insert more', function() {
+        it('Remove and insert more', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertMore'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertMore'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertMore'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertMore'],
+            options
+          );
         });
-        it('Remove style', function() {
+        it('Remove style', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.removeStyle'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.removeStyle'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.removeStyle'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.removeStyle'],
+            options
+          );
         });
-        it('Insert style', function() {
+        it('Insert style', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertStyle'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertStyle'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertStyle'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertStyle'],
+            options
+          );
         });
-        it('Replace style', function() {
+        it('Replace style', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.replaceStyle'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.replaceStyle'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.replaceStyle'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.replaceStyle'],
+            options
+          );
         });
-        it('Remove defined names', function() {
+        it('Remove defined names', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.removeDefinedNames'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.removeDefinedNames'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.removeDefinedNames'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.removeDefinedNames'],
+            options
+          );
         });
-        it('Insert defined names', function() {
+        it('Insert defined names', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.insertDefinedNames'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.insertDefinedNames'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertDefinedNames'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.insertDefinedNames'],
+            options
+          );
         });
-        it('Replace defined names', function() {
+        it('Replace defined names', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.rows.replaceDefinedNames'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.rows.replaceDefinedNames'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.replaceDefinedNames'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.replaceDefinedNames'],
+            options
+          );
         });
       });
-      describe('Columns', function() {
-        it('splices columns', function() {
+      describe('Columns', () => {
+        it('splices columns', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.removeOnly'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.removeOnly'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.removeOnly'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.removeOnly'],
+            options
+          );
         });
-        it('Remove and insert fewer', function() {
+        it('Remove and insert fewer', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertFewer'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertFewer'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertFewer'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertFewer'],
+            options
+          );
         });
-        it('Remove and insert same', function() {
+        it('Remove and insert same', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertSame'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertSame'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertSame'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertSame'],
+            options
+          );
         });
-        it('Remove and insert more', function() {
+        it('Remove and insert more', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertMore'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertMore'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertMore'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertMore'],
+            options
+          );
         });
-        it('handles column keys', function() {
+        it('handles column keys', () => {
           const wb = new Excel.Workbook();
           const ws = wb.addWorksheet('splice-column-insert-fewer');
           ws.columns = [
             { key: 'id', width: 10 },
             { key: 'dob', width: 20 },
             { key: 'name', width: 30 },
-            { key: 'age', width: 40 }
+            { key: 'age', width: 40 },
           ];
 
           const values = [
-            {id: '123', name: 'Jack', dob: new Date(), age: 0},
-            {id: '124', name: 'Jill', dob: new Date(), age: 0},
+            { id: '123', name: 'Jack', dob: new Date(), age: 0 },
+            { id: '124', name: 'Jill', dob: new Date(), age: 0 },
           ];
-          values.forEach(function(value) {
+          values.forEach(value => {
             ws.addRow(value);
           });
 
           ws.spliceColumns(2, 1, ['B1', 'B2'], ['C1', 'C2']);
 
-          values.forEach(function(rowValues, index) {
+          values.forEach((rowValues, index) => {
             const row = ws.getRow(index + 1);
-            _.each(rowValues, function(value, key) {
+            _.each(rowValues, (value, key) => {
               if (key !== 'dob') {
                 expect(row.getCell(key).value).to.equal(value);
               }
@@ -434,7 +595,7 @@ describe('Worksheet', function() {
           expect(ws.getColumn(5).width).to.equal(40);
         });
 
-        it('Splices to end', function() {
+        it('Splices to end', () => {
           const wb = new Excel.Workbook();
           const ws = wb.addWorksheet('splice-to-end');
           ws.columns = [
@@ -446,32 +607,32 @@ describe('Worksheet', function() {
             { header: 'Col-6', width: 10 },
           ];
 
-          ws.addRow([1,2,3,4,5,6]);
-          ws.addRow([1,2,3,4,5,6]);
+          ws.addRow([1, 2, 3, 4, 5, 6]);
+          ws.addRow([1, 2, 3, 4, 5, 6]);
 
           // splice last 3 columns
           ws.spliceColumns(4, 3);
-          expect(ws.getCell(1,1).value).to.equal('Col-1');
-          expect(ws.getCell(1,2).value).to.equal('Col-2');
-          expect(ws.getCell(1,3).value).to.equal('Col-3');
-          expect(ws.getCell(1,4).value).to.be.null();
-          expect(ws.getCell(1,5).value).to.be.null();
-          expect(ws.getCell(1,6).value).to.be.null();
-          expect(ws.getCell(1,7).value).to.be.null();
-          expect(ws.getCell(2,1).value).to.equal(1);
-          expect(ws.getCell(2,2).value).to.equal(2);
-          expect(ws.getCell(2,3).value).to.equal(3);
-          expect(ws.getCell(2,4).value).to.be.null();
-          expect(ws.getCell(2,5).value).to.be.null();
-          expect(ws.getCell(2,6).value).to.be.null();
-          expect(ws.getCell(2,7).value).to.be.null();
-          expect(ws.getCell(3,1).value).to.equal(1);
-          expect(ws.getCell(3,2).value).to.equal(2);
-          expect(ws.getCell(3,3).value).to.equal(3);
-          expect(ws.getCell(3,4).value).to.be.null();
-          expect(ws.getCell(3,5).value).to.be.null();
-          expect(ws.getCell(3,6).value).to.be.null();
-          expect(ws.getCell(3,7).value).to.be.null();
+          expect(ws.getCell(1, 1).value).to.equal('Col-1');
+          expect(ws.getCell(1, 2).value).to.equal('Col-2');
+          expect(ws.getCell(1, 3).value).to.equal('Col-3');
+          expect(ws.getCell(1, 4).value).to.be.null();
+          expect(ws.getCell(1, 5).value).to.be.null();
+          expect(ws.getCell(1, 6).value).to.be.null();
+          expect(ws.getCell(1, 7).value).to.be.null();
+          expect(ws.getCell(2, 1).value).to.equal(1);
+          expect(ws.getCell(2, 2).value).to.equal(2);
+          expect(ws.getCell(2, 3).value).to.equal(3);
+          expect(ws.getCell(2, 4).value).to.be.null();
+          expect(ws.getCell(2, 5).value).to.be.null();
+          expect(ws.getCell(2, 6).value).to.be.null();
+          expect(ws.getCell(2, 7).value).to.be.null();
+          expect(ws.getCell(3, 1).value).to.equal(1);
+          expect(ws.getCell(3, 2).value).to.equal(2);
+          expect(ws.getCell(3, 3).value).to.equal(3);
+          expect(ws.getCell(3, 4).value).to.be.null();
+          expect(ws.getCell(3, 5).value).to.be.null();
+          expect(ws.getCell(3, 6).value).to.be.null();
+          expect(ws.getCell(3, 7).value).to.be.null();
 
           expect(ws.getColumn(1).header).to.equal('Col-1');
           expect(ws.getColumn(2).header).to.equal('Col-2');
@@ -480,7 +641,7 @@ describe('Worksheet', function() {
           expect(ws.getColumn(5).header).to.be.undefined();
           expect(ws.getColumn(6).header).to.be.undefined();
         });
-        it('Splices past end', function() {
+        it('Splices past end', () => {
           const wb = new Excel.Workbook();
           const ws = wb.addWorksheet('splice-to-end');
           ws.columns = [
@@ -492,32 +653,32 @@ describe('Worksheet', function() {
             { header: 'Col-6', width: 10 },
           ];
 
-          ws.addRow([1,2,3,4,5,6]);
-          ws.addRow([1,2,3,4,5,6]);
+          ws.addRow([1, 2, 3, 4, 5, 6]);
+          ws.addRow([1, 2, 3, 4, 5, 6]);
 
           // splice last 3 columns
           ws.spliceColumns(4, 4);
-          expect(ws.getCell(1,1).value).to.equal('Col-1');
-          expect(ws.getCell(1,2).value).to.equal('Col-2');
-          expect(ws.getCell(1,3).value).to.equal('Col-3');
-          expect(ws.getCell(1,4).value).to.be.null();
-          expect(ws.getCell(1,5).value).to.be.null();
-          expect(ws.getCell(1,6).value).to.be.null();
-          expect(ws.getCell(1,7).value).to.be.null();
-          expect(ws.getCell(2,1).value).to.equal(1);
-          expect(ws.getCell(2,2).value).to.equal(2);
-          expect(ws.getCell(2,3).value).to.equal(3);
-          expect(ws.getCell(2,4).value).to.be.null();
-          expect(ws.getCell(2,5).value).to.be.null();
-          expect(ws.getCell(2,6).value).to.be.null();
-          expect(ws.getCell(2,7).value).to.be.null();
-          expect(ws.getCell(3,1).value).to.equal(1);
-          expect(ws.getCell(3,2).value).to.equal(2);
-          expect(ws.getCell(3,3).value).to.equal(3);
-          expect(ws.getCell(3,4).value).to.be.null();
-          expect(ws.getCell(3,5).value).to.be.null();
-          expect(ws.getCell(3,6).value).to.be.null();
-          expect(ws.getCell(3,7).value).to.be.null();
+          expect(ws.getCell(1, 1).value).to.equal('Col-1');
+          expect(ws.getCell(1, 2).value).to.equal('Col-2');
+          expect(ws.getCell(1, 3).value).to.equal('Col-3');
+          expect(ws.getCell(1, 4).value).to.be.null();
+          expect(ws.getCell(1, 5).value).to.be.null();
+          expect(ws.getCell(1, 6).value).to.be.null();
+          expect(ws.getCell(1, 7).value).to.be.null();
+          expect(ws.getCell(2, 1).value).to.equal(1);
+          expect(ws.getCell(2, 2).value).to.equal(2);
+          expect(ws.getCell(2, 3).value).to.equal(3);
+          expect(ws.getCell(2, 4).value).to.be.null();
+          expect(ws.getCell(2, 5).value).to.be.null();
+          expect(ws.getCell(2, 6).value).to.be.null();
+          expect(ws.getCell(2, 7).value).to.be.null();
+          expect(ws.getCell(3, 1).value).to.equal(1);
+          expect(ws.getCell(3, 2).value).to.equal(2);
+          expect(ws.getCell(3, 3).value).to.equal(3);
+          expect(ws.getCell(3, 4).value).to.be.null();
+          expect(ws.getCell(3, 5).value).to.be.null();
+          expect(ws.getCell(3, 6).value).to.be.null();
+          expect(ws.getCell(3, 7).value).to.be.null();
 
           expect(ws.getColumn(1).header).to.equal('Col-1');
           expect(ws.getColumn(2).header).to.equal('Col-2');
@@ -526,7 +687,7 @@ describe('Worksheet', function() {
           expect(ws.getColumn(5).header).to.be.undefined();
           expect(ws.getColumn(6).header).to.be.undefined();
         });
-        it('Splices almost to end', function() {
+        it('Splices almost to end', () => {
           const wb = new Excel.Workbook();
           const ws = wb.addWorksheet('splice-to-end');
           ws.columns = [
@@ -538,32 +699,32 @@ describe('Worksheet', function() {
             { header: 'Col-6', width: 10 },
           ];
 
-          ws.addRow([1,2,3,4,5,6]);
-          ws.addRow([1,2,3,4,5,6]);
+          ws.addRow([1, 2, 3, 4, 5, 6]);
+          ws.addRow([1, 2, 3, 4, 5, 6]);
 
           // splice last 3 columns
           ws.spliceColumns(4, 2);
-          expect(ws.getCell(1,1).value).to.equal('Col-1');
-          expect(ws.getCell(1,2).value).to.equal('Col-2');
-          expect(ws.getCell(1,3).value).to.equal('Col-3');
-          expect(ws.getCell(1,4).value).to.equal('Col-6');
-          expect(ws.getCell(1,5).value).to.be.null();
-          expect(ws.getCell(1,6).value).to.be.null();
-          expect(ws.getCell(1,7).value).to.be.null();
-          expect(ws.getCell(2,1).value).to.equal(1);
-          expect(ws.getCell(2,2).value).to.equal(2);
-          expect(ws.getCell(2,3).value).to.equal(3);
-          expect(ws.getCell(2,4).value).to.equal(6);
-          expect(ws.getCell(2,5).value).to.be.null();
-          expect(ws.getCell(2,6).value).to.be.null();
-          expect(ws.getCell(2,7).value).to.be.null();
-          expect(ws.getCell(3,1).value).to.equal(1);
-          expect(ws.getCell(3,2).value).to.equal(2);
-          expect(ws.getCell(3,3).value).to.equal(3);
-          expect(ws.getCell(3,4).value).to.equal(6);
-          expect(ws.getCell(3,5).value).to.be.null();
-          expect(ws.getCell(3,6).value).to.be.null();
-          expect(ws.getCell(3,7).value).to.be.null();
+          expect(ws.getCell(1, 1).value).to.equal('Col-1');
+          expect(ws.getCell(1, 2).value).to.equal('Col-2');
+          expect(ws.getCell(1, 3).value).to.equal('Col-3');
+          expect(ws.getCell(1, 4).value).to.equal('Col-6');
+          expect(ws.getCell(1, 5).value).to.be.null();
+          expect(ws.getCell(1, 6).value).to.be.null();
+          expect(ws.getCell(1, 7).value).to.be.null();
+          expect(ws.getCell(2, 1).value).to.equal(1);
+          expect(ws.getCell(2, 2).value).to.equal(2);
+          expect(ws.getCell(2, 3).value).to.equal(3);
+          expect(ws.getCell(2, 4).value).to.equal(6);
+          expect(ws.getCell(2, 5).value).to.be.null();
+          expect(ws.getCell(2, 6).value).to.be.null();
+          expect(ws.getCell(2, 7).value).to.be.null();
+          expect(ws.getCell(3, 1).value).to.equal(1);
+          expect(ws.getCell(3, 2).value).to.equal(2);
+          expect(ws.getCell(3, 3).value).to.equal(3);
+          expect(ws.getCell(3, 4).value).to.equal(6);
+          expect(ws.getCell(3, 5).value).to.be.null();
+          expect(ws.getCell(3, 6).value).to.be.null();
+          expect(ws.getCell(3, 7).value).to.be.null();
 
           expect(ws.getColumn(1).header).to.equal('Col-1');
           expect(ws.getColumn(2).header).to.equal('Col-2');
@@ -573,40 +734,100 @@ describe('Worksheet', function() {
           expect(ws.getColumn(6).header).to.be.undefined();
         });
 
-        it('Remove style', function() {
+        it('Remove style', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.removeStyle'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.removeStyle'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.removeStyle'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.removeStyle'],
+            options
+          );
         });
-        it('Insert style', function() {
+        it('Insert style', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertStyle'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertStyle'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertStyle'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertStyle'],
+            options
+          );
         });
-        it('Replace style', function() {
+        it('Replace style', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.replaceStyle'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.replaceStyle'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.replaceStyle'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.replaceStyle'],
+            options
+          );
         });
-        it('Remove defined names', function() {
+        it('Remove defined names', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.removeDefinedNames'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.removeDefinedNames'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.removeDefinedNames'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.removeDefinedNames'],
+            options
+          );
         });
-        it('Insert defined names', function() {
+        it('Insert defined names', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.insertDefinedNames'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.insertDefinedNames'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertDefinedNames'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.insertDefinedNames'],
+            options
+          );
         });
-        it('Replace defined names', function() {
+        it('Replace defined names', () => {
           const wb = new Excel.Workbook();
-          testUtils.createTestBook(wb, 'xlsx', ['splice.columns.replaceDefinedNames'], options);
-          testUtils.checkTestBook(wb, 'xlsx', ['splice.columns.replaceDefinedNames'], options);
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.replaceDefinedNames'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.columns.replaceDefinedNames'],
+            options
+          );
         });
       });
     });
 
-    it('iterates over rows', function() {
+    it('iterates over rows', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -614,18 +835,18 @@ describe('Worksheet', function() {
       ws.getCell('B2').value = 2;
       ws.getCell('D4').value = 4;
       ws.getCell('F6').value = 6;
-      ws.eachRow(function(row, rowNumber) {
+      ws.eachRow((row, rowNumber) => {
         expect(rowNumber).not.to.equal(3);
         expect(rowNumber).not.to.equal(5);
       });
 
       let count = 1;
-      ws.eachRow({includeEmpty: true}, function(row, rowNumber) {
+      ws.eachRow({ includeEmpty: true }, (row, rowNumber) => {
         expect(rowNumber).to.equal(count++);
       });
     });
 
-    it('iterates over collumn cells', function() {
+    it('iterates over collumn cells', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -634,20 +855,20 @@ describe('Worksheet', function() {
       ws.getCell('A4').value = 4;
       ws.getCell('A6').value = 6;
       const colA = ws.getColumn('A');
-      colA.eachCell(function(cell, rowNumber) {
+      colA.eachCell((cell, rowNumber) => {
         expect(rowNumber).not.to.equal(3);
         expect(rowNumber).not.to.equal(5);
         expect(cell.value).to.equal(rowNumber);
       });
 
       let count = 1;
-      colA.eachCell({includeEmpty: true}, function(cell, rowNumber) {
+      colA.eachCell({ includeEmpty: true }, (cell, rowNumber) => {
         expect(rowNumber).to.equal(count++);
       });
       expect(count).to.equal(7);
     });
 
-    it('returns sheet values', function() {
+    it('returns sheet values', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet();
 
@@ -657,15 +878,16 @@ describe('Worksheet', function() {
       ws.getCell('B2').value = 'B2';
       ws.getCell('A4').value = 'end';
 
-      expect(ws.getSheetValues()).to.deep.equal([,
-        [, 11,, 'C1'],
-        [, 21, 'B2'],
-        , // eslint-disable-line comma-style
-        [, 'end']
+      expect(ws.getSheetValues()).to.deep.equal([
+        ,
+        [, 11, , 'C1'],
+        [, 21, 'B2'], // eslint-disable-line comma-style
+        ,
+        [, 'end'],
       ]);
     });
 
-    it('calculates rowCount and actualRowCount', function() {
+    it('calculates rowCount and actualRowCount', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet();
 
@@ -680,7 +902,7 @@ describe('Worksheet', function() {
       expect(ws.actualRowCount).to.equal(3);
     });
 
-    it('calculates columnCount and actualColumnCount', function() {
+    it('calculates columnCount and actualColumnCount', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet();
 

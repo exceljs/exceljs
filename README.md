@@ -25,6 +25,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/799">Add support for repeated columns on every page when printing. #799</a>.
     Many thanks to <a href="https://github.com/FreakenK">Jasmin Auger</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/815">Do not use a promise polyfill on modern setups #815</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
@@ -139,8 +143,20 @@ To be clear, all contributions added to this library will be included in the lib
 
 # Interface
 
+## Importing
+
+The default export is a transpiled ES5 version with a Promise polyfill - this offers the highest level of compatibility.
+
 ```javascript
 var Excel = require('exceljs');
+import Excel from 'exceljs';
+```
+
+However, if you use this library on a modern node.js version (>=8) or on the frontend using a bundler (or can focus on just evergreen browsers), we recommend to use these imports:
+
+```javascript
+const Excel = require('exceljs/modern.nodejs');
+import Excel from 'exceljs/modern.browser';
 ```
 
 ## Create a Workbook
@@ -893,6 +909,7 @@ font.size = 20; // Cell A3 now has font size 20!
 | family        | Font family for fallback. An integer value. | 1 - Serif, 2 - Sans Serif, 3 - Mono, Others - unknown |
 | scheme        | Font scheme. | 'minor', 'major', 'none' |
 | charset       | Font charset. An integer value. | 1, 2, etc. |
+| size          | Font size. An integer value. | 9, 10, 12, 16, etc. |
 | color         | Colour description, an object containing an ARGB value. | { argb: 'FFFF0000'} |
 | bold          | Font **weight** | true, false |
 | italic        | Font *slope* | true, false |
@@ -1030,7 +1047,6 @@ ws.getCell('A2').fill = {
 
 * none
 * solid
-* darkVertical
 * darkGray
 * mediumGray
 * lightGray
@@ -1048,7 +1064,6 @@ ws.getCell('A2').fill = {
 * lightUp
 * lightGrid
 * lightTrellis
-* lightGrid
 
 #### Gradient Fills
 
@@ -1067,7 +1082,7 @@ For example, Excel only supports angle gradients of 0, 45, 90 and 135.
 Similarly the sequence of stops may also be limited by the UI with positions [0,1] or [0,0.5,1] as the only options.
 Take care with this fill to be sure it is supported by the target XLSX viewers.
 
-#### Rich Text
+### Rich Text
 
 Individual cells now support rich text or in-cell formatting.
  Rich text values can control the font properties of any number of sub-strings within the text value.

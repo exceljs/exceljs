@@ -1,14 +1,14 @@
-var expect = require('chai').expect;
+const {expect} = require('chai');
 
-var Excel = require('../../../excel');
-var Dimensions = require('../../../lib/doc/range');
-var testUtils = require('../../utils/index');
+const Excel = require('../../../lib/exceljs.nodejs');
+const Dimensions = require('../../../lib/doc/range');
+const testUtils = require('../../utils/index');
 
-describe('Worksheet', function() {
-  describe('Merge Cells', function() {
-    it('references the same top-left value', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+describe('Worksheet', () => {
+  describe('Merge Cells', () => {
+    it('references the same top-left value', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // initial values
       ws.getCell('A1').value = 'A1';
@@ -29,32 +29,42 @@ describe('Worksheet', function() {
       expect(ws.getCell('B2').type).to.equal(Excel.ValueType.Merge);
     });
 
-    it('does not allow overlapping merges', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('does not allow overlapping merges', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.mergeCells('B2:C3');
 
       // intersect four corners
-      expect(function() { ws.mergeCells('A1:B2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C1:D2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C3:D4'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('A3:B4'); }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A1:B2');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('C1:D2');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('C3:D4');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A3:B4');
+      }).to.throw(Error);
 
       // enclosing
-      expect(function() { ws.mergeCells('A1:D4'); }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A1:D4');
+      }).to.throw(Error);
     });
 
-    it('merges and unmerges', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('merges and unmerges', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
-      var expectMaster = function(range, master) {
-        var d = new Dimensions(range);
-        for (var i = d.top; i <= d.bottom; i++) {
-          for (var j = d.left; j <= d.right; j++) {
-            var cell = ws.getCell(i, j);
-            var masterCell = master ? ws.getCell(master) : cell;
+      const expectMaster = function(range, master) {
+        const d = new Dimensions(range);
+        for (let i = d.top; i <= d.bottom; i++) {
+          for (let j = d.left; j <= d.right; j++) {
+            const cell = ws.getCell(i, j);
+            const masterCell = master ? ws.getCell(master) : cell;
             expect(cell.master.address).to.equal(masterCell.address);
           }
         }
@@ -97,28 +107,38 @@ describe('Worksheet', function() {
       expectMaster('D4:E5', null);
     });
 
-    it('does not allow overlapping merges', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('does not allow overlapping merges', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       ws.mergeCells('B2:C3');
 
       // intersect four corners
-      expect(function() { ws.mergeCells('A1:B2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C1:D2'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('C3:D4'); }).to.throw(Error);
-      expect(function() { ws.mergeCells('A3:B4'); }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A1:B2');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('C1:D2');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('C3:D4');
+      }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A3:B4');
+      }).to.throw(Error);
 
       // enclosing
-      expect(function() { ws.mergeCells('A1:D4'); }).to.throw(Error);
+      expect(() => {
+        ws.mergeCells('A1:D4');
+      }).to.throw(Error);
     });
 
-    it('merges styles', function() {
-      var wb = new Excel.Workbook();
-      var ws = wb.addWorksheet('blort');
+    it('merges styles', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
 
       // initial value
-      var B2 = ws.getCell('B2');
+      const B2 = ws.getCell('B2');
       B2.value = 5;
       B2.style.font = testUtils.styles.fonts.broadwayRedOutline20;
       B2.style.border = testUtils.styles.borders.doubleRed;
@@ -129,29 +149,69 @@ describe('Worksheet', function() {
       // expecting styles to be copied (see worksheet spec)
       ws.mergeCells('B2:C3');
 
-      expect(ws.getCell('B2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('B2').border).to.deep.equal(testUtils.styles.borders.doubleRed);
-      expect(ws.getCell('B2').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('B2').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('B2').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt1);
+      expect(ws.getCell('B2').font).to.deep.equal(
+        testUtils.styles.fonts.broadwayRedOutline20
+      );
+      expect(ws.getCell('B2').border).to.deep.equal(
+        testUtils.styles.borders.doubleRed
+      );
+      expect(ws.getCell('B2').fill).to.deep.equal(
+        testUtils.styles.fills.blueWhiteHGrad
+      );
+      expect(ws.getCell('B2').alignment).to.deep.equal(
+        testUtils.styles.namedAlignments.middleCentre
+      );
+      expect(ws.getCell('B2').numFmt).to.deep.equal(
+        testUtils.styles.numFmts.numFmt1
+      );
 
-      expect(ws.getCell('B3').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('B3').border).to.deep.equal(testUtils.styles.borders.doubleRed);
-      expect(ws.getCell('B3').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('B3').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('B3').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt1);
+      expect(ws.getCell('B3').font).to.deep.equal(
+        testUtils.styles.fonts.broadwayRedOutline20
+      );
+      expect(ws.getCell('B3').border).to.deep.equal(
+        testUtils.styles.borders.doubleRed
+      );
+      expect(ws.getCell('B3').fill).to.deep.equal(
+        testUtils.styles.fills.blueWhiteHGrad
+      );
+      expect(ws.getCell('B3').alignment).to.deep.equal(
+        testUtils.styles.namedAlignments.middleCentre
+      );
+      expect(ws.getCell('B3').numFmt).to.deep.equal(
+        testUtils.styles.numFmts.numFmt1
+      );
 
-      expect(ws.getCell('C2').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('C2').border).to.deep.equal(testUtils.styles.borders.doubleRed);
-      expect(ws.getCell('C2').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('C2').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('C2').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt1);
+      expect(ws.getCell('C2').font).to.deep.equal(
+        testUtils.styles.fonts.broadwayRedOutline20
+      );
+      expect(ws.getCell('C2').border).to.deep.equal(
+        testUtils.styles.borders.doubleRed
+      );
+      expect(ws.getCell('C2').fill).to.deep.equal(
+        testUtils.styles.fills.blueWhiteHGrad
+      );
+      expect(ws.getCell('C2').alignment).to.deep.equal(
+        testUtils.styles.namedAlignments.middleCentre
+      );
+      expect(ws.getCell('C2').numFmt).to.deep.equal(
+        testUtils.styles.numFmts.numFmt1
+      );
 
-      expect(ws.getCell('C3').font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
-      expect(ws.getCell('C3').border).to.deep.equal(testUtils.styles.borders.doubleRed);
-      expect(ws.getCell('C3').fill).to.deep.equal(testUtils.styles.fills.blueWhiteHGrad);
-      expect(ws.getCell('C3').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('C3').numFmt).to.deep.equal(testUtils.styles.numFmts.numFmt1);
+      expect(ws.getCell('C3').font).to.deep.equal(
+        testUtils.styles.fonts.broadwayRedOutline20
+      );
+      expect(ws.getCell('C3').border).to.deep.equal(
+        testUtils.styles.borders.doubleRed
+      );
+      expect(ws.getCell('C3').fill).to.deep.equal(
+        testUtils.styles.fills.blueWhiteHGrad
+      );
+      expect(ws.getCell('C3').alignment).to.deep.equal(
+        testUtils.styles.namedAlignments.middleCentre
+      );
+      expect(ws.getCell('C3').numFmt).to.deep.equal(
+        testUtils.styles.numFmts.numFmt1
+      );
     });
   });
 });

@@ -15,6 +15,33 @@
   "engines": {
     "node": ">=6.0.0"
   },
+  "main": "./dist/es5/index.js",
+  "browser": "./dist/es5/exceljs.browser.js",
+  "types": "./index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "pretest": "npm run build",
+    "test": "npm run test:full",
+    "test:full": "npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
+    "test:unit": "mocha --require spec/config/setup spec/unit --require spec/config/setup-unit --recursive",
+    "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
+    "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
+    "test:browser": "if [ ! -f .disable-test-browser ]; then ./node_modules/.bin/grunt jasmine; fi ",
+    "test:native-integration": "export EXCEL_NATIVE=yes && mocha --require spec/config/setup spec/integration --recursive",
+    "test:manual": "node spec/manual/app.js",
+    "clean-build": "npm run clean && npm run build",
+    "lint": "eslint --format node_modules/eslint-friendly-formatter .",
+    "lint:fix": "prettier-eslint --write \"**/*.js\"",
+    "clean": "rm -rf build/ && rm -rf dist",
+    "build": "./node_modules/.bin/grunt build",
+    "preversion": "npm run clean && npm run build && npm run test:full",
+    "postversion": "git push --no-verify && git push --tags --no-verify"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -25,24 +52,6 @@
       "eslint --format node_modules/eslint-friendly-formatter",
       "git add"
     ]
-  },
-  "scripts": {
-    "pretest": "npm run build",
-    "test": "npm run test:full",
-    "test:full": "npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
-    "test:unit": "mocha --require spec/config/setup spec/unit --require spec/config/setup-unit --recursive",
-    "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
-    "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
-    "test:browser": "./node_modules/.bin/grunt jasmine",
-    "test:native-integration": "export EXCEL_NATIVE=yes && mocha --require spec/config/setup spec/integration --recursive",
-    "test:manual": "node spec/manual/app.js",
-    "clean-build": "npm run clean && npm run build",
-    "lint": "eslint --format node_modules/eslint-friendly-formatter .",
-    "lint:fix": "prettier-eslint --write \"**/*.js\"",
-    "clean": "rm -rf build/ && rm -rf dist",
-    "build": "./node_modules/.bin/grunt build",
-    "preversion": "npm run clean && npm run build && npm run test:full",
-    "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "keywords": [
     "xlsx",
@@ -93,6 +102,8 @@
     "dirty-chai": "^2.0.1",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-friendly-formatter": "^4.0.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
@@ -101,7 +112,7 @@
     "grunt-babel": "^8.0.0",
     "grunt-browserify": "^5.3.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jasmine": "^2.0.2",
+    "grunt-contrib-jasmine": "^2.0.3",
     "grunt-contrib-uglify": "^4.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-lib-phantomjs": "^1.1.0",
@@ -114,14 +125,5 @@
     "request": "^2.88.0",
     "semver": "^5.6.0",
     "uglify-js": "^3.4.9"
-  },
-  "main": "./dist/es5/index.js",
-  "browser": "./dist/es5/exceljs.browser.js",
-  "types": "./index.d.ts",
-  "files": [
-    "dist",
-    "LICENSE",
-    "README.md",
-    "index.d.ts"
-  ]
+  }
 }

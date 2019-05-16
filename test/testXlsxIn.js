@@ -1,25 +1,26 @@
 'use strict';
 
-var HrStopwatch = require('./utils/hr-stopwatch');
-var Excel = require('../excel');
+const HrStopwatch = require('./utils/hr-stopwatch');
+const Excel = require('../excel');
 
-var filename = process.argv[2];
-var wb = new Excel.Workbook();
+const filename = process.argv[2];
+const wb = new Excel.Workbook();
 
-var stopwatch = new HrStopwatch();
+const stopwatch = new HrStopwatch();
 stopwatch.start();
 
-wb.xlsx.readFile(filename)
-  .then(function() {
-    var micros = stopwatch.microseconds;
+wb.xlsx
+  .readFile(filename)
+  .then(() => {
+    const micros = stopwatch.microseconds;
 
     console.log('Loaded', filename);
     console.log('Time taken:', micros / 1000000);
 
-    wb.eachSheet(function(sheet, id) {
+    wb.eachSheet((sheet, id) => {
       console.log(id, sheet.name);
     });
   })
-  .catch(function(error) {
+  .catch(error => {
     console.error('something went wrong', error.stack);
   });

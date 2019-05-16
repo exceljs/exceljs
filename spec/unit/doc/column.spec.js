@@ -1,31 +1,31 @@
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
-var Column = require('../../../lib/doc/column');
-var createSheetMock = require('../../utils/index').createSheetMock;
+const Column = require('../../../lib/doc/column');
+const createSheetMock = require('../../utils/index').createSheetMock;
 
-describe('Column', function() {
-  it('creates by defn', function() {
-    var sheet = createSheetMock();
+describe('Column', () => {
+  it('creates by defn', () => {
+    const sheet = createSheetMock();
 
     sheet.addColumn(1, {
       header: 'Col 1',
       key: 'id1',
-      width: 10
+      width: 10,
     });
 
     expect(sheet.getColumn(1).header).to.equal('Col 1');
     expect(sheet.getColumn(1).headers).to.deep.equal(['Col 1']);
     expect(sheet.getCell(1, 1).value).to.equal('Col 1');
     expect(sheet.getColumn('id1')).to.equal(sheet.getColumn(1));
-    
+
     sheet.getRow(2).values = { id1: 'Hello, World!' };
     expect(sheet.getCell(2, 1).value).to.equal('Hello, World!');
   });
 
-  it('maintains properties', function() {
-    var sheet = createSheetMock();
+  it('maintains properties', () => {
+    const sheet = createSheetMock();
 
-    var column = sheet.addColumn(1);
+    const column = sheet.addColumn(1);
 
     column.key = 'id1';
     expect(sheet._keys.id1).to.equal(column);
@@ -48,27 +48,27 @@ describe('Column', function() {
     expect(sheet.getCell(3, 1).value).to.equal('Hello, World!');
   });
 
-  it('creates model', function() {
-    var sheet = createSheetMock();
+  it('creates model', () => {
+    const sheet = createSheetMock();
 
     sheet.addColumn(1, {
       header: 'Col 1',
       key: 'id1',
-      width: 10
+      width: 10,
     });
     sheet.addColumn(2, {
       header: 'Col 2',
       key: 'name',
-      width: 10
+      width: 10,
     });
     sheet.addColumn(3, {
       header: 'Col 2',
       key: 'dob',
       width: 10,
-      outlineLevel: 1
+      outlineLevel: 1,
     });
 
-    var model = Column.toModel(sheet.columns);
+    const model = Column.toModel(sheet.columns);
     expect(model.length).to.equal(2);
 
     expect(model[0].width).to.equal(10);
@@ -80,63 +80,63 @@ describe('Column', function() {
     expect(model[1].collapsed).to.equal(true);
   });
 
-  it('gets column values', function() {
-    var sheet = createSheetMock();
-    sheet.getCell(1,1).value = 'a';
-    sheet.getCell(2,1).value = 'b';
-    sheet.getCell(4,1).value = 'd';
+  it('gets column values', () => {
+    const sheet = createSheetMock();
+    sheet.getCell(1, 1).value = 'a';
+    sheet.getCell(2, 1).value = 'b';
+    sheet.getCell(4, 1).value = 'd';
 
-    expect(sheet.getColumn(1).values).to.deep.equal([,'a', 'b', , 'd']);
+    expect(sheet.getColumn(1).values).to.deep.equal([, 'a', 'b', , 'd']);
   });
-  it('sets column values', function() {
-    var sheet = createSheetMock();
+  it('sets column values', () => {
+    const sheet = createSheetMock();
 
-    sheet.getColumn(1).values = [2,3,5,7,11];
+    sheet.getColumn(1).values = [2, 3, 5, 7, 11];
 
-    expect(sheet.getCell(1,1).value).to.equal(2);
-    expect(sheet.getCell(2,1).value).to.equal(3);
-    expect(sheet.getCell(3,1).value).to.equal(5);
-    expect(sheet.getCell(4,1).value).to.equal(7);
-    expect(sheet.getCell(5,1).value).to.equal(11);
-    expect(sheet.getCell(6,1).value).to.equal(null);
+    expect(sheet.getCell(1, 1).value).to.equal(2);
+    expect(sheet.getCell(2, 1).value).to.equal(3);
+    expect(sheet.getCell(3, 1).value).to.equal(5);
+    expect(sheet.getCell(4, 1).value).to.equal(7);
+    expect(sheet.getCell(5, 1).value).to.equal(11);
+    expect(sheet.getCell(6, 1).value).to.equal(null);
   });
-  it('sets sparse column values', function() {
-    var sheet = createSheetMock();
-    var values = [];
+  it('sets sparse column values', () => {
+    const sheet = createSheetMock();
+    const values = [];
     values[2] = 2;
     values[3] = 3;
     values[5] = 5;
     values[11] = 11;
     sheet.getColumn(1).values = values;
 
-    expect(sheet.getCell(1,1).value).to.equal(null);
-    expect(sheet.getCell(2,1).value).to.equal(2);
-    expect(sheet.getCell(3,1).value).to.equal(3);
-    expect(sheet.getCell(4,1).value).to.equal(null);
-    expect(sheet.getCell(5,1).value).to.equal(5);
-    expect(sheet.getCell(6,1).value).to.equal(null);
-    expect(sheet.getCell(7,1).value).to.equal(null);
-    expect(sheet.getCell(8,1).value).to.equal(null);
-    expect(sheet.getCell(9,1).value).to.equal(null);
-    expect(sheet.getCell(10,1).value).to.equal(null);
-    expect(sheet.getCell(11,1).value).to.equal(11);
-    expect(sheet.getCell(12,1).value).to.equal(null);
+    expect(sheet.getCell(1, 1).value).to.equal(null);
+    expect(sheet.getCell(2, 1).value).to.equal(2);
+    expect(sheet.getCell(3, 1).value).to.equal(3);
+    expect(sheet.getCell(4, 1).value).to.equal(null);
+    expect(sheet.getCell(5, 1).value).to.equal(5);
+    expect(sheet.getCell(6, 1).value).to.equal(null);
+    expect(sheet.getCell(7, 1).value).to.equal(null);
+    expect(sheet.getCell(8, 1).value).to.equal(null);
+    expect(sheet.getCell(9, 1).value).to.equal(null);
+    expect(sheet.getCell(10, 1).value).to.equal(null);
+    expect(sheet.getCell(11, 1).value).to.equal(11);
+    expect(sheet.getCell(12, 1).value).to.equal(null);
   });
-  it('sets sparse column values', function() {
-    var sheet = createSheetMock();
-    sheet.getColumn(1).values = [,,2,3,,5,,7,,,,11];
+  it('sets sparse column values', () => {
+    const sheet = createSheetMock();
+    sheet.getColumn(1).values = [, , 2, 3, , 5, , 7, , , , 11];
 
-    expect(sheet.getCell(1,1).value).to.equal(null);
-    expect(sheet.getCell(2,1).value).to.equal(2);
-    expect(sheet.getCell(3,1).value).to.equal(3);
-    expect(sheet.getCell(4,1).value).to.equal(null);
-    expect(sheet.getCell(5,1).value).to.equal(5);
-    expect(sheet.getCell(6,1).value).to.equal(null);
-    expect(sheet.getCell(7,1).value).to.equal(7);
-    expect(sheet.getCell(8,1).value).to.equal(null);
-    expect(sheet.getCell(9,1).value).to.equal(null);
-    expect(sheet.getCell(10,1).value).to.equal(null);
-    expect(sheet.getCell(11,1).value).to.equal(11);
-    expect(sheet.getCell(12,1).value).to.equal(null);
+    expect(sheet.getCell(1, 1).value).to.equal(null);
+    expect(sheet.getCell(2, 1).value).to.equal(2);
+    expect(sheet.getCell(3, 1).value).to.equal(3);
+    expect(sheet.getCell(4, 1).value).to.equal(null);
+    expect(sheet.getCell(5, 1).value).to.equal(5);
+    expect(sheet.getCell(6, 1).value).to.equal(null);
+    expect(sheet.getCell(7, 1).value).to.equal(7);
+    expect(sheet.getCell(8, 1).value).to.equal(null);
+    expect(sheet.getCell(9, 1).value).to.equal(null);
+    expect(sheet.getCell(10, 1).value).to.equal(null);
+    expect(sheet.getCell(11, 1).value).to.equal(11);
+    expect(sheet.getCell(12, 1).value).to.equal(null);
   });
 });

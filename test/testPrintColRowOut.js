@@ -2,9 +2,9 @@ const HrStopwatch = require('./utils/hr-stopwatch');
 
 const Excel = require('../excel');
 
-const {Workbook} = Excel;
+const { Workbook } = Excel;
 
-const [,,filename] = process.argv;
+const [, , filename] = process.argv;
 
 const stopwatch = new HrStopwatch();
 stopwatch.start();
@@ -34,12 +34,13 @@ for (let row = 1; row <= 100; row++) {
 ws.pageSetup.printTitlesColumn = 'A:A';
 ws.pageSetup.printTitlesRow = '1:1';
 
-wb.xlsx.writeFile(filename)
+wb.xlsx
+  .writeFile(filename)
   .then(() => {
     const micros = stopwatch.microseconds;
     console.log('Done.');
     console.log('Time taken:', micros);
   })
   .catch(error => {
-     console.log(error.message);
+    console.log(error.message);
   });
