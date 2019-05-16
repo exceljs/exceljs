@@ -1,5 +1,4 @@
-// must configure PromishLib for unit tests
-const Promish = require('promish');
-const PromishLib = require('../../lib/utils/promish');
+// must configure PromiseLib for unit tests
+const PromiseLib = require('../../lib/utils/promise');
 
-PromishLib.Promish = Promish;
+PromiseLib.Promise = Promise;

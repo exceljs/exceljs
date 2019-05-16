@@ -1,6 +1,6 @@
-const expect = require('chai').expect;
+const {expect} = require('chai');
 
-const Excel = require('../../../excel');
+const Excel = require('../../../lib/exceljs.nodejs');
 const Dimensions = require('../../../lib/doc/range');
 const testUtils = require('../../utils/index');
 

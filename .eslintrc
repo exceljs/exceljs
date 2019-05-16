@@ -33,6 +33,7 @@
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "space-before-function-paren": ["error", "never"],
-    "strict": ["off"]
+    "strict": ["off"],
+    "class-methods-use-this": ["off"]
   }
 }
