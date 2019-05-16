@@ -29,6 +29,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/815">Do not use a promise polyfill on modern setups #815</a>.
     Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/807">copy LICENSE to the dist folder #807</a>.
+    Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
@@ -1779,13 +1783,26 @@ ExcelJS.config.setValue('promise', require('bluebird'));
 Please note: I have tested ExcelJS with bluebird specifically (since up until recently this was the library it used).
  From the tests I have done it will not work with Q.
 
+# Caveats
+
+## Dist Folder
+
+Before publishing this module, the source code is transpiled and otherwise processed
+before being placed in a dist/ folder.
+This README identifies two files - a browserified bundle and minified version.
+No other contents of the dist/ folder are guaranteed in any way other than the file
+specified as "main" in the package.json
+
+
 # Known Issues
 
-## Testing with PhantomJS
+## Testing with Puppeteer
 
-You may need to install phantomjs globally before running the browser-test script.
+The test suite included in this lib includes a small script executed in a headless browser
+to validate the bundled packages. At the time of this writing, it appears that
+this test does not play nicely in the Windows Linux subsystem.
 
-It's also possible that phantomjs will not run (or can't be found). If this happens, try the following:
+For this reason, the browser test can be disabled by the existence of a file named .disable-test-browser
 
 ```bash
 sudo apt-get install libfontconfig
