@@ -33,6 +33,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/807">copy LICENSE to the dist folder #807</a>.
     Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/813">Avoid unhandled rejection on XML parse error #813</a>.
+    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
