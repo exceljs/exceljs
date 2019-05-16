@@ -1296,6 +1296,11 @@ workbook.xlsx.write(stream)
     .then(function() {
         // done
     });
+// write to a new buffer
+workbook.xlsx.writeBuffer()
+    .then(function(buffer) {
+        // done
+    });
 ```
 
 ### CSV
@@ -1355,37 +1360,6 @@ workbook.csv.readFile(filename, options)
     .then(function(worksheet) {
         // use workbook or worksheet
     });
-```
-
-The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
- The options passed into the read functions above is also passed to fast-csv for parsing of the csv data.
- Please refer to the fast-csv README.md for details.
-
-Dates are parsed using the npm module [moment](https://www.npmjs.com/package/moment).
- If no dateFormats are supplied, the following are used:
-
-* moment.ISO_8601
-* 'MM-DD-YYYY'
-* 'YYYY-MM-DD'
-
-#### Writing CSV
-
-```javascript
-
-// write to a file
-var workbook = createAndFillWorkbook();
-workbook.csv.writeFile(filename)
-    .then(function() {
-        // done
-    });
-
-// write to a stream
-// Be careful that you need to provide sheetName or
-// sheetId for correct import to csv.
-workbook.csv.write(stream, { sheetName: 'Page name' })
-    .then(function() {
-        // done
-    });
 
 // read from a file with European Date-Times
 var workbook = new Excel.Workbook();
@@ -1422,6 +1396,43 @@ var options = {
 workbook.csv.readFile(filename, options)
     .then(function(worksheet) {
         // use workbook or worksheet
+    });
+```
+
+The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
+ The options passed into the read functions above is also passed to fast-csv for parsing of the csv data.
+ Please refer to the fast-csv README.md for details.
+
+Dates are parsed using the npm module [moment](https://www.npmjs.com/package/moment).
+ If no dateFormats are supplied, the following are used:
+
+* moment.ISO_8601
+* 'MM-DD-YYYY'
+* 'YYYY-MM-DD'
+
+#### Writing CSV
+
+```javascript
+
+// write to a file
+var workbook = createAndFillWorkbook();
+workbook.csv.writeFile(filename)
+    .then(function() {
+        // done
+    });
+
+// write to a stream
+// Be careful that you need to provide sheetName or
+// sheetId for correct import to csv.
+workbook.csv.write(stream, { sheetName: 'Page name' })
+    .then(function() {
+        // done
+    });
+
+// write to a new buffer
+workbook.csv.writeBuffer()
+    .then(function(buffer) {
+        // done
     });
 ```
 
