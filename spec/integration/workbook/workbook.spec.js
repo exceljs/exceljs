@@ -97,7 +97,7 @@ describe('Workbook', () => {
         })
         .then(wb2 => {
           const ws2 = wb2.getWorksheet('printHeader');
-          expect(ws2.pageSetup.printTitlesRow).to.equal('$1:$2');
+          expect(ws2.pageSetup.printTitlesRow).to.equal('1:2');
           expect(ws2.pageSetup.printTitlesColumn).to.be.undefined;
         });
     });
@@ -128,7 +128,7 @@ describe('Workbook', () => {
         .then(wb2 => {
           const ws2 = wb2.getWorksheet('printColumn');
           expect(ws2.pageSetup.printTitlesRow).to.be.undefined;
-          expect(ws2.pageSetup.printTitlesColumn).to.equal('$A:$B');
+          expect(ws2.pageSetup.printTitlesColumn).to.equal('A:B');
         });
     });
     it('printTitlesRowAndColumn', () => {
@@ -172,8 +172,8 @@ describe('Workbook', () => {
         })
         .then(wb2 => {
           const ws2 = wb2.getWorksheet('printHeaderAndColumn');
-          expect(ws2.pageSetup.printTitlesRow).to.equal('$1:$2');
-          expect(ws2.pageSetup.printTitlesColumn).to.equal('$A:$B');
+          expect(ws2.pageSetup.printTitlesRow).to.equal('1:2');
+          expect(ws2.pageSetup.printTitlesColumn).to.equal('A:B');
         });
     });
 

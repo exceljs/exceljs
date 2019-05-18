@@ -7,7 +7,8 @@
     "array-bracket-spacing": ["off"],
     "no-sparse-arrays": ["off"],
     "object-property-newline": ["off"],
-    "no-underscore-dangle": ["off"]
+    "no-underscore-dangle": ["off"],
+    "no-unused-expressions": ["off"]
   },
   "globals": {
     "describe": true,
