@@ -1288,6 +1288,12 @@ workbook.xlsx.write(stream)
   .then(function() {
     // done
   });
+
+// write to a new buffer
+workbook.xlsx.writeBuffer()
+  .then(function(buffer) {
+    // done
+  });
 ```
 
 ### CSV
@@ -1413,6 +1419,12 @@ var options = {
 };
 workbook.csv.writeFile(filename, options)
   .then(() => {
+    // done
+  });
+
+// write to a new buffer
+workbook.csv.writeBuffer()
+  .then(function(buffer) {
     // done
   });
 ```
