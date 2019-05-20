@@ -18,24 +18,8 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/776">Add the ability to bail out of parsing if the number of columns exceeds a given limit #776</a>.
-    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/799">Add support for repeated columns on every page when printing. #799</a>.
-    Many thanks to <a href="https://github.com/FreakenK">Jasmin Auger</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/815">Do not use a promise polyfill on modern setups #815</a>.
-    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/807">copy LICENSE to the dist folder #807</a>.
-    Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/813">Avoid unhandled rejection on XML parse error #813</a>.
-    Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/819">(chore) increment unzipper to 0.9.12 to address npm advisory 886 #819</a>.
+    Many thanks to <a href="https://github.com/kreig303">Kreig Zimmerman</a> for this contribution.
   </li>
 </ul>
 
@@ -1934,4 +1918,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.9.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/702">Improvements for images (correct reading/writing possitions) #702</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/650">Image location don't respect Column width #650</a> and <a href="https://github.com/exceljs/exceljs/issues/467">Image position - stretching image #467</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> </li> </ul> |
 | 1.9.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/619">Add Typescript support for formulas without results #619</a>. Many thanks to <a href="https://github.com/Wolfchin">Loursin</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/737">Fix existing row styles when using spliceRows #737</a>. Many thanks to <a href="https://github.com/cxam">cxam</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/774">Consistent code quality #774</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> </li> </ul> |
 | 1.10.0  | <ul> <li> Fixed effect of splicing rows and columns on defined names </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/746">Add support for adding images anchored to one cell #746</a>. Many thanks to <a href="https://github.com/karlvr">Karl von Randow</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/758">Add vertical align property #758</a>. Many thanks to <a href="https://github.com/MikeZyatkov">MikeZyatkov</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/775">Replace the temp lib to tmp #775</a>. Many thanks to <a href="https://github.com/coldhiber">Ivan Sotnikov</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/780">Replace the temp lib to tmp #775</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/793">Update Worksheet.dimensions return type #793</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/795">One more types fix #795</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> </ul> |
+| 1.11.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/776">Add the ability to bail out of parsing if the number of columns exceeds a given limit #776</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/799">Add support for repeated columns on every page when printing. #799</a>. Many thanks to <a href="https://github.com/FreakenK">Jasmin Auger</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/815">Do not use a promise polyfill on modern setups #815</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/807">copy LICENSE to the dist folder #807</a>. Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/813">Avoid unhandled rejection on XML parse error #813</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
 
