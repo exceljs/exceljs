@@ -21,6 +21,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/819">(chore) increment unzipper to 0.9.12 to address npm advisory 886 #819</a>.
     Many thanks to <a href="https://github.com/kreig303">Kreig Zimmerman</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/817">docs(README): improve docs #817</a>.
+    Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
@@ -225,7 +229,7 @@ workbook.removeWorksheet(sheet.id)
 // Iterate over all sheets
 // Note: workbook.worksheets.forEach will still work but this is better
 workbook.eachSheet(function(worksheet, sheetId) {
-    // ...
+  // ...
 });
 
 // fetch sheet by name
@@ -393,7 +397,7 @@ Frozen views support the following extra properties:
 
 ```javascript
 worksheet.views = [
-    {state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'G10', activeCell: 'A1'}
+  {state: 'frozen', xSplit: 2, ySplit: 3, topLeftCell: 'G10', activeCell: 'A1'}
 ];
 ```
 
@@ -410,7 +414,7 @@ Split views support the following extra properties:
 
 ```javascript
 worksheet.views = [
-    {state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'G10', activeCell: 'A1'}
+  {state: 'split', xSplit: 2000, ySplit: 3000, topLeftCell: 'G10', activeCell: 'A1'}
 ];
 ```
 
@@ -428,31 +432,31 @@ following values:
 ```javascript
 // Set an auto filter from A1 to C1
 worksheet.autoFilter = {
-    from: 'A1',
-    to: 'C1',
+  from: 'A1',
+  to: 'C1',
 }
 
 // Set an auto filter from the cell in row 3 and column 1
 // to the cell in row 5 and column 12
 worksheet.autoFilter = {
-    from: {
-        row: 3,
-        column: 1
-    },
-    to: {
-        row: 5,
-        column: 12
-    }
+  from: {
+    row: 3,
+    column: 1
+  },
+  to: {
+    row: 5,
+    column: 12
+  }
 }
 
 // Set an auto filter from D3 to the
 // cell in row 7 and column 5
 worksheet.autoFilter = {
-    from: 'D3',
-    to: {
-        row: 7,
-        column: 5
-    }
+  from: 'D3',
+  to: {
+    row: 7,
+    column: 5
+  }
 }
 ```
 
@@ -463,9 +467,9 @@ worksheet.autoFilter = {
 // Note: these column structures are a workbook-building convenience only,
 // apart from the column width, they will not be fully persisted.
 worksheet.columns = [
-    { header: 'Id', key: 'id', width: 10 },
-    { header: 'Name', key: 'name', width: 32 },
-    { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
+  { header: 'Id', key: 'id', width: 10 },
+  { header: 'Name', key: 'name', width: 32 },
+  { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
 ];
 
 // Access an individual columns by key, letter and 1-based column number
@@ -499,12 +503,12 @@ expect(worksheet.getColumn(5).collapsed).to.equal(true);
 
 // iterate over all current cells in this column
 dobCol.eachCell(function(cell, rowNumber) {
-    // ...
+  // ...
 });
 
 // iterate over all current cells in this column including empty cells
 dobCol.eachCell({ includeEmpty: true }, function(cell, rowNumber) {
-    // ...
+  // ...
 });
 
 // add a column of new values
@@ -547,8 +551,8 @@ worksheet.addRow(rowValues);
 
 // Add an array of rows
 var rows = [
-    [5,'Bob',new Date()], // row by array
-    {id:6, name: 'Barbara', dob: new Date()}
+  [5,'Bob',new Date()], // row by array
+  {id:6, name: 'Barbara', dob: new Date()}
 ];
 worksheet.addRows(rows);
 
@@ -599,9 +603,9 @@ expect(row.getCell(10).value).toEqual('Hello, World!');
 
 // assign row values by object, using column keys
 row.values = {
-    id: 13,
-    name: 'Thing 1',
-    dob: new Date()
+  id: 13,
+  name: 'Thing 1',
+  dob: new Date()
 };
 
 // Insert a page break below the row
@@ -609,22 +613,22 @@ row.addPageBreak();
 
 // Iterate over all rows that have values in a worksheet
 worksheet.eachRow(function(row, rowNumber) {
-    console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
+  console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
 });
 
 // Iterate over all rows (including empty rows) in a worksheet
 worksheet.eachRow({ includeEmpty: true }, function(row, rowNumber) {
-    console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
+  console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
 });
 
 // Iterate over all non-null cells in a row
 row.eachCell(function(cell, colNumber) {
-    console.log('Cell ' + colNumber + ' = ' + cell.value);
+  console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
 // Iterate over all cells in a row (including empty cells)
 row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
-    console.log('Cell ' + colNumber + ' = ' + cell.value);
+  console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
 // Cut one or more rows (rows below are shifted up)
@@ -747,59 +751,59 @@ For types other than list or custom, the following operators affect the validati
 // Specify list of valid values (One, Two, Three, Four).
 // Excel will provide a dropdown with these values.
 worksheet.getCell('A1').dataValidation = {
-    type: 'list',
-    allowBlank: true,
-    formulae: ['"One,Two,Three,Four"']
+  type: 'list',
+  allowBlank: true,
+  formulae: ['"One,Two,Three,Four"']
 };
 
 // Specify list of valid values from a range.
 // Excel will provide a dropdown with these values.
-    worksheet.getCell('A1').dataValidation = {
-        type: 'list',
-        allowBlank: true,
-        formulae: ['$D$5:$F$5']
+worksheet.getCell('A1').dataValidation = {
+  type: 'list',
+  allowBlank: true,
+  formulae: ['$D$5:$F$5']
 };
 
 // Specify Cell must be a whole number that is not 5.
 // Show the user an appropriate error message if they get it wrong
 worksheet.getCell('A1').dataValidation = {
-    type: 'whole',
-    operator: 'notEqual',
-    showErrorMessage: true,
-    formulae: [5],
-    errorStyle: 'error',
-    errorTitle: 'Five',
-    error: 'The value must not be Five'
+  type: 'whole',
+  operator: 'notEqual',
+  showErrorMessage: true,
+  formulae: [5],
+  errorStyle: 'error',
+  errorTitle: 'Five',
+  error: 'The value must not be Five'
 };
 
 // Specify Cell must be a decomal number between 1.5 and 7.
 // Add 'tooltip' to help guid the user
 worksheet.getCell('A1').dataValidation = {
-    type: 'decimal',
-    operator: 'between',
-    allowBlank: true,
-    showInputMessage: true,
-    formulae: [1.5, 7],
-    promptTitle: 'Decimal',
-    prompt: 'The value must between 1.5 and 7'
+  type: 'decimal',
+  operator: 'between',
+  allowBlank: true,
+  showInputMessage: true,
+  formulae: [1.5, 7],
+  promptTitle: 'Decimal',
+  prompt: 'The value must between 1.5 and 7'
 };
 
 // Specify Cell must be have a text length less than 15
 worksheet.getCell('A1').dataValidation = {
-    type: 'textLength',
-    operator: 'lessThan',
-    showErrorMessage: true,
-    allowBlank: true,
-    formulae: [15]
+  type: 'textLength',
+  operator: 'lessThan',
+  showErrorMessage: true,
+  allowBlank: true,
+  formulae: [15]
 };
 
 // Specify Cell must be have be a date before 1st Jan 2016
 worksheet.getCell('A1').dataValidation = {
-    type: 'date',
-    operator: 'lessThan',
-    showErrorMessage: true,
-    allowBlank: true,
-    formulae: [new Date(2016,0,1)]
+  type: 'date',
+  operator: 'lessThan',
+  showErrorMessage: true,
+  allowBlank: true,
+  formulae: [new Date(2016,0,1)]
 };
 ```
 
@@ -821,9 +825,9 @@ ws.getCell('A1').numFmt = '0.00%';
 
 // Apply styles to worksheet columns
 ws.columns = [
-    { header: 'Id', key: 'id', width: 10 },
-    { header: 'Name', key: 'name', width: 32, style: { font: { name: 'Arial Black' } } },
-    { header: 'D.O.B.', key: 'DOB', width: 10, style: { numFmt: 'dd/mm/yyyy' } }
+  { header: 'Id', key: 'id', width: 10 },
+  { header: 'Name', key: 'name', width: 32, style: { font: { name: 'Arial Black' } } },
+  { header: 'D.O.B.', key: 'DOB', width: 10, style: { numFmt: 'dd/mm/yyyy' } }
 ];
 
 // Set Column 3 to Currency Format
@@ -864,20 +868,20 @@ ws.getCell('B1').numFmt = '0.00%';
 
 // for the wannabe graphic designers out there
 ws.getCell('A1').font = {
-    name: 'Comic Sans MS',
-    family: 4,
-    size: 16,
-    underline: true,
-    bold: true
+  name: 'Comic Sans MS',
+  family: 4,
+  size: 16,
+  underline: true,
+  bold: true
 };
 
 // for the graduate graphic designers...
 ws.getCell('A2').font = {
-    name: 'Arial Black',
-    color: { argb: 'FF00FF00' },
-    family: 2,
-    size: 14,
-    italic: true
+  name: 'Arial Black',
+  color: { argb: 'FF00FF00' },
+  family: 2,
+  size: 14,
+  italic: true
 };
 
 // for the vertical align
@@ -948,23 +952,23 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 ```javascript
 // set single thin border around A1
 ws.getCell('A1').border = {
-    top: {style:'thin'},
-    left: {style:'thin'},
-    bottom: {style:'thin'},
-    right: {style:'thin'}
+  top: {style:'thin'},
+  left: {style:'thin'},
+  bottom: {style:'thin'},
+  right: {style:'thin'}
 };
 
 // set double thin green border around A3
 ws.getCell('A3').border = {
-    top: {style:'double', color: {argb:'FF00FF00'}},
-    left: {style:'double', color: {argb:'FF00FF00'}},
-    bottom: {style:'double', color: {argb:'FF00FF00'}},
-    right: {style:'double', color: {argb:'FF00FF00'}}
+  top: {style:'double', color: {argb:'FF00FF00'}},
+  left: {style:'double', color: {argb:'FF00FF00'}},
+  bottom: {style:'double', color: {argb:'FF00FF00'}},
+  right: {style:'double', color: {argb:'FF00FF00'}}
 };
 
 // set thick red cross in A5
 ws.getCell('A5').border = {
-    diagonal: {up: true, down: true, style:'thick', color: {argb:'FFFF0000'}}
+  diagonal: {up: true, down: true, style:'thick', color: {argb:'FFFF0000'}}
 };
 ```
 
@@ -988,41 +992,41 @@ ws.getCell('A5').border = {
 ```javascript
 // fill A1 with red darkVertical stripes
 ws.getCell('A1').fill = {
-    type: 'pattern',
-    pattern:'darkVertical',
-    fgColor:{argb:'FFFF0000'}
+  type: 'pattern',
+  pattern:'darkVertical',
+  fgColor:{argb:'FFFF0000'}
 };
 
 // fill A2 with yellow dark trellis and blue behind
 ws.getCell('A2').fill = {
-    type: 'pattern',
-    pattern:'darkTrellis',
-    fgColor:{argb:'FFFFFF00'},
-    bgColor:{argb:'FF0000FF'}
+  type: 'pattern',
+  pattern:'darkTrellis',
+  fgColor:{argb:'FFFFFF00'},
+  bgColor:{argb:'FF0000FF'}
 };
 
 // fill A3 with blue-white-blue gradient from left to right
 ws.getCell('A3').fill = {
-    type: 'gradient',
-    gradient: 'angle',
-    degree: 0,
-    stops: [
-        {position:0, color:{argb:'FF0000FF'}},
-        {position:0.5, color:{argb:'FFFFFFFF'}},
-        {position:1, color:{argb:'FF0000FF'}}
-    ]
+  type: 'gradient',
+  gradient: 'angle',
+  degree: 0,
+  stops: [
+    {position:0, color:{argb:'FF0000FF'}},
+    {position:0.5, color:{argb:'FFFFFFFF'}},
+    {position:1, color:{argb:'FF0000FF'}}
+  ]
 };
 
 
 // fill A4 with red-green gradient from center
 ws.getCell('A2').fill = {
-    type: 'gradient',
-    gradient: 'path',
-    center:{left:0.5,top:0.5},
-    stops: [
-        {position:0, color:{argb:'FFFF0000'}},
-        {position:1, color:{argb:'FF00FF00'}}
-    ]
+  type: 'gradient',
+  gradient: 'path',
+  center:{left:0.5,top:0.5},
+  stops: [
+    {position:0, color:{argb:'FFFF0000'}},
+    {position:1, color:{argb:'FF00FF00'}}
+  ]
 };
 ```
 
@@ -1107,9 +1111,9 @@ Excel supports outlining; where rows or columns can be expanded or collapsed dep
 Outline levels can be defined in column setup:
 ```javascript
 worksheet.columns = [
-    { header: 'Id', key: 'id', width: 10 },
-    { header: 'Name', key: 'name', width: 32 },
-    { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
+  { header: 'Id', key: 'id', width: 10 },
+  { header: 'Name', key: 'name', width: 32 },
+  { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
 ];
 ```
 
@@ -1253,9 +1257,9 @@ worksheet.addImage(imageId2, {
 // read from a file
 var workbook = new Excel.Workbook();
 workbook.xlsx.readFile(filename)
-    .then(function() {
-        // use workbook
-    });
+  .then(function() {
+    // use workbook
+  });
 
 // pipe from stream
 var workbook = new Excel.Workbook();
@@ -1264,9 +1268,9 @@ stream.pipe(workbook.xlsx.createInputStream());
 // load from buffer
 var workbook = new Excel.Workbook();
 workbook.xlsx.load(data)
-    .then(function() {
-        // use workbook
-    });
+  .then(function() {
+    // use workbook
+  });
 ```
 
 #### Writing XLSX
@@ -1275,15 +1279,15 @@ workbook.xlsx.load(data)
 // write to a file
 var workbook = createAndFillWorkbook();
 workbook.xlsx.writeFile(filename)
-    .then(function() {
-        // done
-    });
+  .then(function() {
+    // done
+  });
 
 // write to a stream
 workbook.xlsx.write(stream)
-    .then(function() {
-        // done
-    });
+  .then(function() {
+    // done
+  });
 ```
 
 ### CSV
@@ -1294,16 +1298,16 @@ workbook.xlsx.write(stream)
 // read from a file
 var workbook = new Excel.Workbook();
 workbook.csv.readFile(filename)
-    .then(function(worksheet) {
-        // use workbook or worksheet
-    });
+  .then(worksheet => {
+    // use workbook or worksheet
+  });
 
 // read from a stream
 var workbook = new Excel.Workbook();
 workbook.csv.read(stream)
-    .then(function(worksheet) {
-        // use workbook or worksheet
-    });
+  .then(worksheet => {
+    // use workbook or worksheet
+  });
 
 // pipe from stream
 var workbook = new Excel.Workbook();
@@ -1312,37 +1316,37 @@ stream.pipe(workbook.csv.createInputStream());
 // read from a file with European Dates
 var workbook = new Excel.Workbook();
 var options = {
-    dateFormats: ['DD/MM/YYYY']
+  dateFormats: ['DD/MM/YYYY']
 };
 workbook.csv.readFile(filename, options)
-    .then(function(worksheet) {
-        // use workbook or worksheet
-    });
+  .then(worksheet => {
+    // use workbook or worksheet
+  });
 
 // read from a file with custom value parsing
 var workbook = new Excel.Workbook();
 var options = {
-    map: function(value, index) {
-        switch(index) {
-            case 0:
-                // column 1 is string
-                return value;
-            case 1:
-                // column 2 is a date
-                return new Date(value);
-            case 2:
-                // column 3 is JSON of a formula value
-                return JSON.parse(value);
-            default:
-                // the rest are numbers
-                return parseFloat(value);
-        }
+  map(value, index) {
+    switch(index) {
+      case 0:
+        // column 1 is string
+        return value;
+      case 1:
+        // column 2 is a date
+        return new Date(value);
+      case 2:
+        // column 3 is JSON of a formula value
+        return JSON.parse(value);
+      default:
+        // the rest are numbers
+        return parseFloat(value);
     }
+  }
 };
 workbook.csv.readFile(filename, options)
-    .then(function(worksheet) {
-        // use workbook or worksheet
-    });
+  .then(function(worksheet) {
+    // use workbook or worksheet
+  });
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
@@ -1363,54 +1367,54 @@ Dates are parsed using the npm module [moment](https://www.npmjs.com/package/mom
 // write to a file
 var workbook = createAndFillWorkbook();
 workbook.csv.writeFile(filename)
-    .then(function() {
-        // done
-    });
+  .then(() => {
+    // done
+  });
 
 // write to a stream
 // Be careful that you need to provide sheetName or
 // sheetId for correct import to csv.
 workbook.csv.write(stream, { sheetName: 'Page name' })
-    .then(function() {
-        // done
-    });
+  .then(() => {
+    // done
+  });
 
-// read from a file with European Date-Times
+// write to a file with European Date-Times
 var workbook = new Excel.Workbook();
 var options = {
-    dateFormat: 'DD/MM/YYYY HH:mm:ss',
-    dateUTC: true, // use utc when rendering dates
+  dateFormat: 'DD/MM/YYYY HH:mm:ss',
+  dateUTC: true, // use utc when rendering dates
 };
-workbook.csv.readFile(filename, options)
-    .then(function(worksheet) {
-        // use workbook or worksheet
-    });
+workbook.csv.writeFile(filename, options)
+  .then(() => {
+    // done
+  });
 
 
-// read from a file with custom value formatting
+// write to a file with custom value formatting
 var workbook = new Excel.Workbook();
 var options = {
-    map: function(value, index) {
-        switch(index) {
-            case 0:
-                // column 1 is string
-                return value;
-            case 1:
-                // column 2 is a date
-                return moment(value).format('YYYY-MM-DD');
-            case 2:
-                // column 3 is a formula, write just the result
-                return value.result;
-            default:
-                // the rest are numbers
-                return value;
-        }
+  map(value, index) {
+    switch(index) {
+      case 0:
+        // column 1 is string
+        return value;
+      case 1:
+        // column 2 is a date
+        return moment(value).format('YYYY-MM-DD');
+      case 2:
+        // column 3 is a formula, write just the result
+        return value.result;
+      default:
+        // the rest are numbers
+        return value;
     }
+  }
 };
-workbook.csv.readFile(filename, options)
-    .then(function(worksheet) {
-        // use workbook or worksheet
-    });
+workbook.csv.writeFile(filename, options)
+  .then(() => {
+    // done
+  });
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write the CSV file.
@@ -1465,9 +1469,9 @@ If neither stream nor filename is specified in the options, the workbook writer 
 ```javascript
 // construct a streaming XLSX workbook writer with styles and shared strings
 var options = {
-    filename: './streamed-workbook.xlsx',
-    useStyles: true,
-    useSharedStrings: true
+  filename: './streamed-workbook.xlsx',
+  useStyles: true,
+  useSharedStrings: true
 };
 var workbook = new Excel.stream.xlsx.WorkbookWriter(options);
 ```
@@ -1919,4 +1923,3 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.9.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/619">Add Typescript support for formulas without results #619</a>. Many thanks to <a href="https://github.com/Wolfchin">Loursin</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/737">Fix existing row styles when using spliceRows #737</a>. Many thanks to <a href="https://github.com/cxam">cxam</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/774">Consistent code quality #774</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> </li> </ul> |
 | 1.10.0  | <ul> <li> Fixed effect of splicing rows and columns on defined names </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/746">Add support for adding images anchored to one cell #746</a>. Many thanks to <a href="https://github.com/karlvr">Karl von Randow</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/758">Add vertical align property #758</a>. Many thanks to <a href="https://github.com/MikeZyatkov">MikeZyatkov</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/775">Replace the temp lib to tmp #775</a>. Many thanks to <a href="https://github.com/coldhiber">Ivan Sotnikov</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/780">Replace the temp lib to tmp #775</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/793">Update Worksheet.dimensions return type #793</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/795">One more types fix #795</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> </ul> |
 | 1.11.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/776">Add the ability to bail out of parsing if the number of columns exceeds a given limit #776</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/799">Add support for repeated columns on every page when printing. #799</a>. Many thanks to <a href="https://github.com/FreakenK">Jasmin Auger</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/815">Do not use a promise polyfill on modern setups #815</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/807">copy LICENSE to the dist folder #807</a>. Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/813">Avoid unhandled rejection on XML parse error #813</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
-
