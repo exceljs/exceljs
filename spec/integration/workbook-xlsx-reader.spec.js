@@ -289,6 +289,14 @@ describe("WorkbookReader", () => {
     });
   });
 
+  describe("with a spreadsheet that is missing some files in the zip container", function() {
+    it("should not break", function() {
+      const workbook = new Excel.Workbook();
+      return workbook.xlsx
+        .readFile("./spec/integration/data/missing-bits.xlsx");
+    });
+  });
+
   describe("with a spreadsheet that contains images", () => {
     before(function() {
       const testContext = this;
