@@ -6,7 +6,7 @@ const testUtils = require('../../utils/index');
 
 const Excel = verquire('excel');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 const TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
@@ -98,7 +98,7 @@ describe('Workbook', () => {
         .then(wb2 => {
           const ws2 = wb2.getWorksheet('printHeader');
           expect(ws2.pageSetup.printTitlesRow).to.equal('1:2');
-          expect(ws2.pageSetup.printTitlesColumn).to.be.undefined;
+          expect(ws2.pageSetup.printTitlesColumn).to.be.undefined();
         });
     });
     it('printTitlesColumn', () => {
@@ -127,7 +127,7 @@ describe('Workbook', () => {
         })
         .then(wb2 => {
           const ws2 = wb2.getWorksheet('printColumn');
-          expect(ws2.pageSetup.printTitlesRow).to.be.undefined;
+          expect(ws2.pageSetup.printTitlesRow).to.be.undefined();
           expect(ws2.pageSetup.printTitlesColumn).to.equal('A:B');
         });
     });
