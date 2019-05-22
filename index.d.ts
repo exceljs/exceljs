@@ -371,6 +371,10 @@ export type CellValue =
 	| CellRichTextValue | CellHyperlinkValue
 	| CellFormulaValue | CellSharedFormulaValue;
 
+export interface Comment {
+	texts: RichText[];
+}
+
 export interface CellModel {
 	address: Address;
 	style: Style;
@@ -382,6 +386,7 @@ export interface CellModel {
 	formula?: string;
 	sharedFormula?: string;
 	result?: string | number | any;
+	comment: Comment;
 }
 
 export interface Cell extends Style, Address {
@@ -421,6 +426,11 @@ export interface Cell extends Style, Address {
 	 * Value of the cell
 	 */
 	value: CellValue;
+
+	/**
+	 * comment of the cell
+	 */
+	comment: Comment;
 
 	/**
 	 * convenience getter to access the formula
