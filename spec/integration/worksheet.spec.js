@@ -1,6 +1,6 @@
 'use strict';
 
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const path = require('path');
 const verquire = require('../utils/verquire');
 const testutils = require('./../utils/index');

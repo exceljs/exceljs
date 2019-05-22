@@ -5,7 +5,7 @@ const verquire = require('../../utils/verquire');
 
 const Excel = verquire('excel');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 describe('github issues', () => {
   it('issue 257 - worksheet order is not respected', () => {

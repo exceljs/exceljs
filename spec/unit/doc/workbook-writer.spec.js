@@ -2,7 +2,7 @@
 
 const Stream = require('stream');
 
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const Excel = require('../../../lib/exceljs.nodejs');
 

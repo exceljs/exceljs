@@ -1,7 +1,7 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const Enums = require('../../../lib/doc/enums');
-const createSheetMock = require('../../utils/index').createSheetMock;
+const { createSheetMock } = require('../../utils/index');
 
 describe('Row', () => {
   it('stores cells', () => {

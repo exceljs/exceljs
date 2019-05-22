@@ -1,8 +1,8 @@
 'use strict';
 
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
-const slideFormula = require('../../../lib/utils/shared-formula').slideFormula;
+const { slideFormula } = require('../../../lib/utils/shared-formula');
 
 describe('shared-formula', () => {
   describe('slideFormula', () => {

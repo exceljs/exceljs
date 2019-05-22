@@ -8,7 +8,7 @@ const verquire = require('../../utils/verquire');
 const PromiseLib = verquire('utils/promise');
 const Excel = verquire('excel');
 
-const {expect} = chai;
+const { expect } = chai;
 
 // this file to contain integration tests created from github issues
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';

@@ -7,7 +7,7 @@ const verquire = require('../../utils/verquire');
 const Enums = verquire('doc/enums');
 const Excel = verquire('excel');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 describe('github issues', () => {
   describe('Shared Formulas', () => {

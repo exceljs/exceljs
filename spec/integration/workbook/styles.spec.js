@@ -8,7 +8,7 @@ const testUtils = require('../../utils/index');
 
 const Excel = verquire('excel');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 

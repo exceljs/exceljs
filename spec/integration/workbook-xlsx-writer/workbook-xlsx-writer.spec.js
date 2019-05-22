@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const verquire = require('../../utils/verquire');
 const testUtils = require('../../utils/index');
 

@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 const ExcelJS = require('exceljs');
 
-const Workbook = ExcelJS.Workbook;
+const { Workbook } = ExcelJS;
 const HrStopwatch = require('./utils/hr-stopwatch');
 
 const filename = process.argv[2];
