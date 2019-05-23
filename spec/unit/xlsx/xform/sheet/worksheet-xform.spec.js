@@ -13,7 +13,7 @@ const WorksheetXform = require('../../../../../lib/xlsx/xform/sheet/worksheet-xf
 const SharedStringsXform = require('../../../../../lib/xlsx/xform/strings/shared-strings-xform');
 const StylesXform = require('../../../../../lib/xlsx/xform/style/styles-xform');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 const fakeStyles = {
   addStyleModel(style, cellType) {
@@ -168,7 +168,7 @@ describe('WorksheetXform', () => {
     xform.prepare(model, options);
     xform.render(xmlStream, model);
 
-    const xml = xmlStream.xml;
+    const { xml } = xmlStream;
     const iHyperlinks = xml.indexOf('hyperlinks');
     const iDataValidations = xml.indexOf('dataValidations');
     expect(iHyperlinks).not.to.equal(-1);

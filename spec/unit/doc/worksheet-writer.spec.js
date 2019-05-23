@@ -1,6 +1,6 @@
 'use strict';
 
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const WorksheetWriter = require('../../../lib/stream/xlsx/worksheet-writer');
 const StreamBuf = require('../../../lib/utils/stream-buf');

@@ -1,6 +1,6 @@
 const ExcelJS = require('../excel');
 
-const Workbook = ExcelJS.Workbook;
+const { Workbook } = ExcelJS;
 
 const filename = process.argv[2];
 

@@ -33,7 +33,7 @@ const tools = {
     };
   },
   cloneByModel(thing1, Type) {
-    const model = thing1.model;
+    const { model } = thing1;
     const thing2 = new Type();
     thing2.model = model;
     return Promise.resolve(thing2);

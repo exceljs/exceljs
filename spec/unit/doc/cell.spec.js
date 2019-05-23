@@ -342,10 +342,19 @@ describe('Cell', () => {
   it('can set comment', () => {
     const a1 = sheetMock.getCell('A1');
 
-    const comment =  {
+    const comment = {
       texts: [
-        { 'font': { 'size': 12, 'color': { 'theme': 0 }, 'name': 'Calibri', 'family': 2, 'scheme': 'minor' }, 'text': 'This is ' },
-      ]
+        {
+          font: {
+            size: 12,
+            color: { theme: 0 },
+            name: 'Calibri',
+            family: 2,
+            scheme: 'minor',
+          },
+          text: 'This is ',
+        },
+      ],
     };
 
     a1.comment = comment;

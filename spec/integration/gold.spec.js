@@ -5,7 +5,7 @@ const verquire = require('../utils/verquire');
 
 const Excel = verquire('excel');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 // =============================================================================
 // This spec is based around a gold standard Excel workbook 'gold.xlsx'

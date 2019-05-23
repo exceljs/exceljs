@@ -8,7 +8,7 @@ const XmlStream = require('../../../../lib/utils/xml-stream');
 const CompositeXform = require('../../../../lib/xlsx/xform/composite-xform');
 const BooleanXform = require('../../../../lib/xlsx/xform/simple/boolean-xform');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 function getExpectation(expectation, name) {
   if (!expectation.hasOwnProperty(name)) {

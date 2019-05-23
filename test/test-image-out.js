@@ -3,7 +3,7 @@ const path = require('path');
 
 const HrStopwatch = require('./utils/hr-stopwatch');
 
-const Workbook = require('../excel').Workbook;
+const { Workbook } = require('../excel');
 
 const filename = process.argv[2];
 
