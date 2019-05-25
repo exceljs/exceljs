@@ -4,103 +4,101 @@
 [![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/context:javascript)
 [![Total Alerts](https://img.shields.io/lgtm/alerts/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/alerts)
 
-Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
+读取，操作和编写电子表格数据和样式到XLSX和JSON。
 
-Reverse engineered from Excel spreadsheet files as a project.
+从Excel电子表格文件逆向工程设计的项目。
 
-[中文文档](README_zh.md)
-
-# Installation
+# 安装
 
 ```shell
 npm install exceljs
 ```
 
-# New Features!
+# 新功能！
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/819">(chore) increment unzipper to 0.9.12 to address npm advisory 886 #819</a>.
-    Many thanks to <a href="https://github.com/kreig303">Kreig Zimmerman</a> for this contribution.
+    合并 <a href="https://github.com/exceljs/exceljs/pull/819">(chore) 将unzipper增加到0.9.12以解决npm咨询886 #819</a>.
+    非常感谢 <a href="https://github.com/kreig303">Kreig Zimmerman</a> 为此贡献。
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/817">docs(README): improve docs #817</a>.
-    Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution.
+    合并 <a href="https://github.com/exceljs/exceljs/pull/817">docs(README): 改进文档 #817</a>.
+    非常感谢 <a href="https://github.com/zypA13510">Yuping Zuo</a> 为此贡献。
   </li>
 </ul>
 
-# Contributions
+# 贡献
 
-Contributions are very welcome! It helps me know what features are desired or what bugs are causing the most pain.
+非常欢迎贡献！它帮助我了解所需的功能或哪些错误导致最大的痛点。
 
-I have just one request; If you submit a pull request for a bugfix, please add a unit-test or integration-test (in the spec folder) that catches the problem.
- Even a PR that just has a failing test is fine - I can analyse what the test is doing and fix the code from that.
+我只有一个请求;如果您提交了错误修正的拉取请求，请在spec文件夹中添加捕获问题的单元测试或集成测试。
+即使只有失败测试的公关也很好 - 我可以分析测试的内容并从中修复代码。
 
-To be clear, all contributions added to this library will be included in the library's MIT licence.
+需要明确的是，添加到此库中的所有贡献都将包含在库的MIT许可证中。
 
-# Backlog
+# 代办列表
 
 <ul>
-  <li>ESLint - slowly turn on (justifyable) rules which should, I hope, help make contributions easier.</li>
-  <li>Conditional Formatting.</li>
-  <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
-  <li>XLSX Streaming Reader.</li>
-  <li>Parsing CSV with Headers</li>
+  <li>ESLint  - 慢慢开启（合理的）规则，我希望这些规则应该有助于提高贡献。</li>
+  <li>条件格式。</li>
+  <li>还有更多的打印设置要添加;固定行/列等</li>
+  <li>XLSX流式读。</li>
+  <li>用标题解析CSV</li>
 </ul>
 
-# Contents
+# 目录
 
 <ul>
   <li>
-    <a href="#interface">Interface</a>
+    <a href="#interface">接口</a>
     <ul>
-      <li><a href="#create-a-workbook">Create a Workbook</a></li>
-      <li><a href="#set-workbook-properties">Set Workbook Properties</a></li>
-      <li><a href="#workbook-views">Workbook Views</a></li>
-      <li><a href="#add-a-worksheet">Add a Worksheet</a></li>
-      <li><a href="#remove-a-worksheet">Remove a Worksheet</a></li>
-      <li><a href="#access-worksheets">Access Worksheets</a></li>
-      <li><a href="#worksheet-state">Worksheet State</a></li>
-      <li><a href="#worksheet-properties">Worksheet Properties</a></li>
-      <li><a href="#page-setup">Page Setup</a></li>
+      <li><a href="#create-a-workbook">创建工作簿</a></li>
+      <li><a href="#set-workbook-properties">设置工作簿属性</a></li>
+      <li><a href="#workbook-views">工作簿视图</a></li>
+      <li><a href="#add-a-worksheet">添加工作表</a></li>
+      <li><a href="#remove-a-worksheet">删除工作表</a></li>
+      <li><a href="#access-worksheets">访问工作表</a></li>
+      <li><a href="#worksheet-state">工作表状态</a></li>
+      <li><a href="#worksheet-properties">工作表属性</a></li>
+      <li><a href="#page-setup">页面设置</a></li>
       <li>
-        <a href="#worksheet-views">Worksheet Views</a>
+        <a href="#worksheet-views">工作表视图</a>
         <ul>
-          <li><a href="#frozen-views">Frozen Views</a></li>
-          <li><a href="#split-views">Split Views</a></li>
+          <li><a href="#frozen-views">冻结视图</a></li>
+          <li><a href="#split-views">拆分视图</a></li>
         </ul>
       </li>
       <li><a href="#auto-filters">Auto Filters</a></li>
-      <li><a href="#columns">Columns</a></li>
-      <li><a href="#rows">Rows</a></li>
-      <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
-      <li><a href="#merged-cells">Merged Cells</a></li>
-      <li><a href="#defined-names">Defined Names</a></li>
-      <li><a href="#data-validations">Data Validations</a></li>
-      <li><a href="#styles">Styles</a>
+      <li><a href="#columns">列</a></li>
+      <li><a href="#rows">行</a></li>
+      <li><a href="#handling-individual-cells">处理单个单元格</a></li>
+      <li><a href="#merged-cells">合并单元格</a></li>
+      <li><a href="#defined-names">定义名称</a></li>
+      <li><a href="#data-validations">数据验证</a></li>
+      <li><a href="#styles">样式</a>
         <ul>
-          <li><a href="#number-formats">Number Formats</a></li>
-          <li><a href="#fonts">Fonts</a></li>
-          <li><a href="#alignment">Alignment</a></li>
-          <li><a href="#borders">Borders</a></li>
-          <li><a href="#fills">Fills</a></li>
-          <li><a href="#rich-text">Rich Text</a></li>
+          <li><a href="#number-formats">数字格式</a></li>
+          <li><a href="#fonts">字体</a></li>
+          <li><a href="#alignment">对准</a></li>
+          <li><a href="#borders">边框</a></li>
+          <li><a href="#fills">填充</a></li>
+          <li><a href="#rich-text">富文本</a></li>
         </ul>
       </li>
-      <li><a href="#outline-levels">Outline Levels</a></li>
-      <li><a href="#images">Images</a></li>
-      <li><a href="#file-io">File I/O</a>
+      <li><a href="#outline-levels">大纲级别</a></li>
+      <li><a href="#images">图片</a></li>
+      <li><a href="#file-io">文件 I/O</a>
         <ul>
           <li><a href="#xlsx">XLSX</a>
             <ul>
-              <li><a href="#reading-xlsx">Reading XLSX</a></li>
-              <li><a href="#writing-xlsx">Writing XLSX</a></li>
+              <li><a href="#reading-xlsx">读 XLSX</a></li>
+              <li><a href="#writing-xlsx">写 XLSX</a></li>
             </ul>
           </li>
           <li><a href="#csv">CSV</a>
             <ul>
-              <li><a href="#reading-csv">Reading CSV</a></li>
-              <li><a href="#writing-csv">Writing CSV</a></li>
+              <li><a href="#reading-csv">读 CSV</a></li>
+              <li><a href="#writing-csv">写 CSV</a></li>
             </ul>
           </li>
           <li><a href="#streaming-io">Streaming I/O</a>
@@ -112,58 +110,58 @@ To be clear, all contributions added to this library will be included in the lib
       </li>
     </ul>
   </li>
-  <li><a href="#browser">Browser</a></li>
+  <li><a href="#browser">浏览器</a></li>
   <li>
-    <a href="#value-types">Value Types</a>
+    <a href="#value-types">价类型</a>
     <ul>
-      <li><a href="#null-value">Null Value</a></li>
-      <li><a href="#merge-cell">Merge Cell</a></li>
-      <li><a href="#number-value">Number Value</a></li>
-      <li><a href="#string-value">String Value</a></li>
-      <li><a href="#date-value">Date Value</a></li>
-      <li><a href="#hyperlink-value">Hyperlink Value</a></li>
+      <li><a href="#null-value">空值</a></li>
+      <li><a href="#merge-cell">合并单元格</a></li>
+      <li><a href="#number-value">数值</a></li>
+      <li><a href="#string-value">字符串值</a></li>
+      <li><a href="#date-value">日期值</a></li>
+      <li><a href="#hyperlink-value">超链接值</a></li>
       <li>
-        <a href="#formula-value">Formula Value</a>
+        <a href="#formula-value">公式值</a>
         <ul>
-          <li><a href="#shared-formula">Shared Formula</a></li>
-          <li><a href="#formula-type">Formula Type</a></li>
+          <li><a href="#shared-formula">共享公式</a></li>
+          <li><a href="#formula-type">公式类型</a></li>
         </ul>
       </li>
-      <li><a href="#rich-text-value">Rich Text Value</a></li>
-      <li><a href="#boolean-value">Boolean Value</a></li>
-      <li><a href="#error-value">Error Value</a></li>
+      <li><a href="#rich-text-value">丰富的文本值</a></li>
+      <li><a href="#boolean-value">布尔值</a></li>
+      <li><a href="#error-value">错误值</a></li>
     </ul>
   </li>
-  <li><a href="#config">Config</a></li>
-  <li><a href="#known-issues">Known Issues</a></li>
-  <li><a href="#release-history">Release History</a></li>
+  <li><a href="#config">配置</a></li>
+  <li><a href="#known-issues">已知的问题</a></li>
+  <li><a href="#release-history">发布历史</a></li>
 </ul>
 
-# Interface
+# 接口{#interface}
 
-## Importing
+## 导入{#importing}
 
-The default export is a transpiled ES5 version with a Promise polyfill - this offers the highest level of compatibility.
+默认导出是带有 Promise polyfill 的转换 ES5 版本 - 因为这会提供最高的兼容性。
 
 ```javascript
 var Excel = require('exceljs');
 import Excel from 'exceljs';
 ```
 
-However, if you use this library on a modern node.js version (>=8) or on the frontend using a bundler (or can focus on just evergreen browsers), we recommend to use these imports:
+但是，如果您在现代node.js版本（>=8）上使用此库，或者在使用bundler的前端（或者只关注常绿浏览器）上使用此库，我们建议使用这些导入：
 
 ```javascript
 const Excel = require('exceljs/modern.nodejs');
 import Excel from 'exceljs/modern.browser';
 ```
 
-## Create a Workbook
+## 创建工作簿{#create-a-workbook}
 
 ```javascript
 var workbook = new Excel.Workbook();
 ```
 
-## Set Workbook Properties
+## 设置工作簿属性{#set-workbook-properties}
 
 ```javascript
 workbook.creator = 'Me';
@@ -174,13 +172,13 @@ workbook.lastPrinted = new Date(2016, 9, 27);
 ```
 
 ```javascript
-// Set workbook dates to 1904 date system
+// 将工作簿日期设置为1904日期系统
 workbook.properties.date1904 = true;
 ```
 
-## Workbook Views
+## 工作簿视图{#workbook-views}
 
-The Workbook views controls how many separate windows Excel will open when viewing the workbook.
+“工作簿”视图控制Excel在查看工作簿时将打开多少个单独的窗口。
 
 ```javascript
 workbook.views = [
@@ -191,211 +189,211 @@ workbook.views = [
 ]
 ```
 
-## Add a Worksheet
+## 添加工作表{#add-a-worksheet}
 
 ```javascript
 var sheet = workbook.addWorksheet('My Sheet');
 ```
 
-Use the second parameter of the addWorksheet function to specify options for the worksheet.
+使用addWorksheet函数的第二个参数指定工作表的选项。
 
-For Example:
+例如
 
 ```javascript
-// create a sheet with red tab colour
+// 创建一个红色标签颜色的工作表
 var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
-// create a sheet where the grid lines are hidden
+// 创建一个隐藏网格线的工作表
 var sheet = workbook.addWorksheet('My Sheet', {properties: {showGridLines: false}});
 
-// create a sheet with the first row and column frozen
+// 创建一个第一行和列冻结的工作表
 var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
 ```
 
-## Remove a Worksheet
+## 删除工作表{#remove-a-worksheet}
 
-Use the worksheet `id` to remove the sheet from workbook.
+使用工作表`id`从工作簿中删除工作表。
 
-For Example:
+例如
 
 ```javascript
-// Create a worksheet
+// 创建工作表
 var sheet = workbook.addWorksheet('My Sheet');
 
-// Remove the worksheet using worksheet id
+// 使用工作表ID删除工作表
 workbook.removeWorksheet(sheet.id)
 ```
 
-## Access Worksheets
+## 访问工作表{#access-worksheets}
 ```javascript
-// Iterate over all sheets
-// Note: workbook.worksheets.forEach will still work but this is better
+// 迭代所有sheet
+// 注意：workbook.worksheets.forEach仍然可以工作，但这个方式更好
 workbook.eachSheet(function(worksheet, sheetId) {
   // ...
 });
 
-// fetch sheet by name
+// 按名称获取表格
 var worksheet = workbook.getWorksheet('My Sheet');
 
-// fetch sheet by id
+// 按ID获取表格
 var worksheet = workbook.getWorksheet(1);
 ```
 
-## Worksheet State
+## 工作表状态{#worksheet-state}
 
 ```javascript
-// make worksheet visible
+// 使工作表可见
 worksheet.state = 'visible';
 
-// make worksheet hidden
+// 使工作表隐藏
 worksheet.state = 'hidden';
 
-// make worksheet hidden from 'hide/unhide' dialog
+// 使工作表隐藏在“隐藏/取消隐藏”对话框中
 worksheet.state = 'veryHidden';
 ```
 
-## Worksheet Properties
+## 工作表属性{#worksheet-properties}
 
-Worksheets support a property bucket to allow control over some features of the worksheet.
+工作表支持属性桶，以允许控制工作表的某些功能。
 
 ```javascript
-// create new sheet with properties
+// 创建具有属性的新工作表
 var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
-// create a new sheet writer with properties
+// 创建一个具有属性的新工作表编写器
 var worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
 
-// adjust properties afterwards (not supported by worksheet-writer)
+// 之后调整属性（不受工作表 - 编写者支持）
 worksheet.properties.outlineLevelCol = 2;
 worksheet.properties.defaultRowHeight = 15;
 ```
 
-**Supported Properties**
+**支持的属性**
 
-| Name             | Default    | Description |
+| 名称             | 默认值    | 描述 |
 | ---------------- | ---------- | ----------- |
-| tabColor         | undefined  | Color of the tabs |
-| outlineLevelCol  | 0          | The worksheet column outline level |
-| outlineLevelRow  | 0          | The worksheet row outline level |
-| defaultRowHeight | 15         | Default row height |
+| tabColor         | undefined  | 标签的颜色 |
+| outlineLevelCol  | 0          | 工作表列大纲级别 |
+| outlineLevelRow  | 0          | 工作表行大纲级别 |
+| defaultRowHeight | 15         | 默认行高 |
 | dyDescent        | 55         | TBD |
 
-### Worksheet Metrics
+### 工作表指标
 
-Some new metrics have been added to Worksheet...
+一些新的指标已添加到工作表...
 
-| Name              | Description |
+| 名称              | 描述 |
 | ----------------- | ----------- |
-| rowCount          | The total row size of the document. Equal to the row number of the last row that has values. |
-| actualRowCount    | A count of the number of rows that have values. If a mid-document row is empty, it will not be included in the count. |
-| columnCount       | The total column size of the document. Equal to the maximum cell count from all of the rows |
-| actualColumnCount | A count of the number of columns that have values. |
+| rowCount          | 文档的总行大小。等于有值的最后一行的行号。 |
+| actualRowCount    | 具有值的行数的计数。如果中间文档行为空，则它不会包含在计数中。 |
+| columnCount       | 文档的总列大小。等于所有行的最大单元格计数 |
+| actualColumnCount | 具有值的列数的计数。 |
 
 
-## Page Setup
+## 页面设置{#page-setup}
 
-All properties that can affect the printing of a sheet are held in a pageSetup object on the sheet.
+所有可能影响工作表打印的属性都保存在工作表的pageSetup对象中。
 
 ```javascript
-// create new sheet with pageSetup settings for A4 - landscape
+// 使用A4设置的页面设置设置创建新工作表 - 横向
 var worksheet =  workbook.addWorksheet('sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
 
-// create a new sheet writer with pageSetup settings for fit-to-page
+// 使用适合页面的pageSetup设置创建一个新的工作表编写器
 var worksheetWriter = workbookWriter.addSheet('sheet', {
   pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
 });
 
-// adjust pageSetup settings afterwards
+// 之后调整pageSetup设置
 worksheet.pageSetup.margins = {
   left: 0.7, right: 0.7,
   top: 0.75, bottom: 0.75,
   header: 0.3, footer: 0.3
 };
 
-// Set Print Area for a sheet
+// 设置工作表的打印区域
 worksheet.pageSetup.printArea = 'A1:G20';
 
-// Repeat specific rows on every printed page
+// 在每个打印页面上重复特定行
 worksheet.pageSetup.printTitlesRow = '1:3';
 
-// Repeat specific columns on every printed page
+// 在每个打印页面上重复特定列
 worksheet.pageSetup.printTitlesColumn = 'A:C';
 ```
 
-**Supported pageSetup settings**
+**支持的页面设置设置**
 
-| Name                  | Default       | Description |
+| 属性名                  | 默认值       | 描述 |
 | --------------------- | ------------- | ----------- |
-| margins               |               | Whitespace on the borders of the page. Units are inches. |
-| orientation           | 'portrait'    | Orientation of the page - i.e. taller (portrait) or wider (landscape) |
-| horizontalDpi         | 4294967295    | Horizontal Dots per Inch. Default value is -1 |
-| verticalDpi           | 4294967295    | Vertical Dots per Inch. Default value is -1 |
-| fitToPage             |               | Whether to use fitToWidth and fitToHeight or scale settings. Default is based on presence of these settings in the pageSetup object - if both are present, scale wins (i.e. default will be false) |
-| pageOrder             | 'downThenOver'| Which order to print the pages - one of ['downThenOver', 'overThenDown'] |
-| blackAndWhite         | false         | Print without colour |
-| draft                 | false         | Print with less quality (and ink) |
-| cellComments          | 'None'        | Where to place comments - one of ['atEnd', 'asDisplayed', 'None'] |
-| errors                | 'displayed'   | Where to show errors - one of ['dash', 'blank', 'NA', 'displayed'] |
-| scale                 | 100           | Percentage value to increase or reduce the size of the print. Active when fitToPage is false |
-| fitToWidth            | 1             | How many pages wide the sheet should print on to. Active when fitToPage is true  |
-| fitToHeight           | 1             | How many pages high the sheet should print on to. Active when fitToPage is true  |
-| paperSize             |               | What paper size to use (see below) |
-| showRowColHeaders     | false         | Whether to show the row numbers and column letters |
-| showGridLines         | false         | Whether to show grid lines |
-| firstPageNumber       |               | Which number to use for the first page |
-| horizontalCentered    | false         | Whether to center the sheet data horizontally |
-| verticalCentered      | false         | Whether to center the sheet data vertically |
+| margins               |               | 页面边框上的空格。单位是英寸。 |
+| orientation           | 'portrait'    | 页面的方向 - 即更高（纵向）或更宽（横向） |
+| horizontalDpi         | 4294967295    | 每英寸水平点。默认值为-1 |
+| verticalDpi           | 4294967295    | 每英寸垂直点。默认值为-1 |
+| fitToPage             |               | 是否使用fitToWidth和fitToHeight或缩放设置。默认值基于pageSetup对象中是否存在这些设置 - 如果两者都存在，则缩放获胜（即默认值为false） |
+| pageOrder             | 'downThenOver'| 打印页面的顺序 - 其中之一 ['downThenOver', 'overThenDown'] |
+| blackAndWhite         | false         | 打印没有颜色 |
+| draft                 | false         | 打印质量较差（和墨水） |
+| cellComments          | 'None'        | 在哪里发表评论 - 其中之一 ['atEnd', 'asDisplayed', 'None'] |
+| errors                | 'displayed'   | 在哪里显示错误 - 其中之一 ['dash', 'blank', 'NA', 'displayed'] |
+| scale                 | 100           | 增加或减小打印尺寸的百分比值。当fitToPage为false时激活 |
+| fitToWidth            | 1             | 页面应打印多少页宽。当fitToPage为true时激活  |
+| fitToHeight           | 1             | 页面应打印多少页。当fitToPage为true时激活  |
+| paperSize             |               | 使用什么纸张尺寸（见下文） |
+| showRowColHeaders     | false         | 是否显示行号和列字母 |
+| showGridLines         | false         | 是否显示网格线 |
+| firstPageNumber       |               | 第一页使用哪个号码 |
+| horizontalCentered    | false         | 是否水平居中工作表数据 |
+| verticalCentered      | false         | 是否垂直居中表格数据 |
 
-**Example Paper Sizes**
+**示例纸张尺寸**
 
-| Name                          | Value     |
+| 名称                          | 值     |
 | ----------------------------- | --------- |
-| Letter                        | undefined |
+| 信                        | undefined |
 | Legal                         |  5        |
 | Executive                     |  7        |
 | A4                            |  9        |
 | A5                            |  11       |
 | B5 (JIS)                      |  13       |
-| Envelope #10                  |  20       |
-| Envelope DL                   |  27       |
-| Envelope C5                   |  28       |
-| Envelope B5                   |  34       |
-| Envelope Monarch              |  37       |
-| Double Japan Postcard Rotated |  82       |
+| 信封 #10                       |  20       |
+| 信封 DL                        |  27       |
+| 信封 C5                        |  28       |
+| 信封 B5                        |  34       |
+| 信封君主                       |  37       |
+| 日本双明信片旋转 |  82       |
 | 16K 197x273 mm                |  119      |
 
-## Worksheet Views
+## 工作表视图{#worksheet-views}
 
-Worksheets now support a list of views, that control how Excel presents the sheet:
+工作表现在支持一个视图列表，用于控制Excel如何显示工作表：
 
-* frozen - where a number of rows and columns to the top and left are frozen in place. Only the bottom left section will scroll
-* split - where the view is split into 4 sections, each semi-independently scrollable.
+* 冻结 - 顶部和左侧的多个行和列被冻结到位。只有左下部分会滚动
+* split - 视图分为4个部分，每个部分半独立可滚动。
 
-Each view also supports various properties:
+每个视图还支持各种属性：
 
-| Name              | Default   | Description |
+| 名称              | 默认值   | 描述 |
 | ----------------- | --------- | ----------- |
-| state             | 'normal'  | Controls the view state - one of normal, frozen or split |
-| rightToLeft       | false     | Sets the worksheet view's orientation to right-to-left |
-| activeCell        | undefined | The currently selected cell |
-| showRuler         | true      | Shows or hides the ruler in Page Layout |
-| showRowColHeaders | true      | Shows or hides the row and column headers (e.g. A1, B1 at the top and 1,2,3 on the left |
-| showGridLines     | true      | Shows or hides the gridlines (shown for cells where borders have not been defined) |
-| zoomScale         | 100       | Percentage zoom to use for the view |
-| zoomScaleNormal   | 100       | Normal zoom for the view |
-| style             | undefined | Presentation style - one of pageBreakPreview or pageLayout. Note pageLayout is not compatable with frozen views |
+| state             | 'normal'  | 控制视图状态，其中任意一个 normal, frozen or split |
+| rightToLeft       | false     | 将工作表视图的方向设置为 right-to-left |
+| activeCell        | undefined | 当前选择的单元格 |
+| showRuler         | true      | 在页面布局中显示或隐藏标尺 |
+| showRowColHeaders | true      | 显示或隐藏行和列标题（例如顶部的A1，B1和左侧的1,2,3 |
+| showGridLines     | true      | 显示或隐藏网格线（显示未定义边框的单元格） |
+| zoomScale         | 100       | 用于视图的缩放百分比 |
+| zoomScaleNormal   | 100       | 正常缩放视图 |
+| style             | undefined | 演示文稿样式 -  pageBreakPreview或pageLayout之一。注意pageLayout与冻结视图不兼容 |
 
-### Frozen Views
+### 冰冻视图{#frozen-views}
 
-Frozen views support the following extra properties:
+冻结视图支持以下扩展属性：
 
-| Name              | Default   | Description |
+| 名称              | 默认值   | 描述 |
 | ----------------- | --------- | ----------- |
-| xSplit            | 0         | How many columns to freeze. To freeze rows only, set this to 0 or undefined |
-| ySplit            | 0         | How many rows to freeze. To freeze columns only, set this to 0 or undefined |
-| topLeftCell       | special   | Which cell will be top-left in the bottom-right pane. Note: cannot be a frozen cell. Defaults to first unfrozen cell |
+| xSplit            | 0         | 要冻结的列数。要仅冻结行，请将其设置为0或未定义 |
+| ySplit            | 0         | 要冻结的行数。要仅冻结列，请将其设置为0或未定义 |
+| topLeftCell       | special   | 哪个单元格将位于右下方窗格的左上角。注意：不能是冻结单元格。默认为首先解冻单元格 |
 
 ```javascript
 worksheet.views = [
@@ -403,16 +401,16 @@ worksheet.views = [
 ];
 ```
 
-### Split Views
+### 拆分视图{#split-views}
 
-Split views support the following extra properties:
+拆分视图支持以下扩展属性：
 
-| Name              | Default   | Description |
+| 名称              | 默认值   | 描述 |
 | ----------------- | --------- | ----------- |
-| xSplit            | 0         | How many points from the left to place the splitter. To split vertically, set this to 0 or undefined |
-| ySplit            | 0         | How many points from the top to place the splitter. To split horizontally, set this to 0 or undefined  |
-| topLeftCell       | undefined | Which cell will be top-left in the bottom-right pane. |
-| activePane        | undefined | Which pane will be active - one of topLeft, topRight, bottomLeft and bottomRight |
+| xSplit            | 0         | 从左边多少个点设置拆分点。要垂直拆分，请将其设置为0或未定义 |
+| ySplit            | 0         | 从顶部多少个点设置拆分点。要水平拆分，请将其设置为0或未定义  |
+| topLeftCell       | undefined | 哪个单元格将位于右下方窗格的左上角。 |
+| activePane        | undefined | 哪个窗格将处于活动状态 -  topLeft，topRight，bottomLeft和bottomRight之一 |
 
 ```javascript
 worksheet.views = [
@@ -420,26 +418,25 @@ worksheet.views = [
 ];
 ```
 
-## Auto filters
+## 自动过滤器{#auto-filters}
 
-It is possible to apply an auto filter to your worksheet.
+可以将自动过滤器应用于工作表。
 
 ```javascript
 worksheet.autoFilter = 'A1:C1';
 ```
 
-While the range string is the standard form of the autoFilter, the worksheet will also support the
-following values:
+虽然范围字符串是autoFilter的标准形式，但工作表也将支持
+以下值：
 
 ```javascript
-// Set an auto filter from A1 to C1
+// 设置从A1到C1的自动过滤器
 worksheet.autoFilter = {
   from: 'A1',
   to: 'C1',
 }
 
-// Set an auto filter from the cell in row 3 and column 1
-// to the cell in row 5 and column 12
+// 设置从第3行的第1列中的单元格到第5行的第12列中的单元格的自动过滤器
 worksheet.autoFilter = {
   from: {
     row: 3,
@@ -451,8 +448,7 @@ worksheet.autoFilter = {
   }
 }
 
-// Set an auto filter from D3 to the
-// cell in row 7 and column 5
+// 将自动过滤器从D3设置为第7行和第5列中的单元格
 worksheet.autoFilter = {
   from: 'D3',
   to: {
@@ -462,139 +458,138 @@ worksheet.autoFilter = {
 }
 ```
 
-## Columns
+## 列{#columns}
 
 ```javascript
-// Add column headers and define column keys and widths
-// Note: these column structures are a workbook-building convenience only,
-// apart from the column width, they will not be fully persisted.
+// 添加列标题并定义列键和宽度
+// 注意：这些列结构只是工作簿构建方便，
+// 除了列宽之外，它们不会完全持久化。
 worksheet.columns = [
   { header: 'Id', key: 'id', width: 10 },
   { header: 'Name', key: 'name', width: 32 },
   { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 }
 ];
 
-// Access an individual columns by key, letter and 1-based column number
+// 按键，字母和从1开始的列号访问各列
 var idCol = worksheet.getColumn('id');
 var nameCol = worksheet.getColumn('B');
 var dobCol = worksheet.getColumn(3);
 
-// set column properties
+// 设置列属性
 
-// Note: will overwrite cell value C1
+// 注意：将覆盖单元格值C1
 dobCol.header = 'Date of Birth';
 
-// Note: this will overwrite cell values C1:C2
+// 注意：这将覆盖单元格值C1:C2
 dobCol.header = ['Date of Birth', 'A.K.A. D.O.B.'];
 
-// from this point on, this column will be indexed by 'dob' and not 'DOB'
+// 从这一点开始，此列将被'dob'索引而不是'DOB'
 dobCol.key = 'dob';
 
 dobCol.width = 15;
 
-// Hide the column if you'd like
+// 如果您愿意，请隐藏该列
 dobCol.hidden = true;
 
-// set an outline level for columns
+// 设置列的大纲级别
 worksheet.getColumn(4).outlineLevel = 0;
 worksheet.getColumn(5).outlineLevel = 1;
 
-// columns support a readonly field to indicate the collapsed state based on outlineLevel
+// columns支持只读字段，以指示基于outlineLevel的折叠状态
 expect(worksheet.getColumn(4).collapsed).to.equal(false);
 expect(worksheet.getColumn(5).collapsed).to.equal(true);
 
-// iterate over all current cells in this column
+// 迭代此列中的所有当前单元格
 dobCol.eachCell(function(cell, rowNumber) {
   // ...
 });
 
-// iterate over all current cells in this column including empty cells
+// 迭代此列中的所有当前单元格，包括空单元格
 dobCol.eachCell({ includeEmpty: true }, function(cell, rowNumber) {
   // ...
 });
 
-// add a column of new values
+// 添加一列新值
 worksheet.getColumn(6).values = [1,2,3,4,5];
 
-// add a sparse column of values
+// 添加稀疏的值列
 worksheet.getColumn(7).values = [,,2,3,,5,,7,,,,11];
 
-// cut one or more columns (columns to the right are shifted left)
-// If column properties have been definde, they will be cut or moved accordingly
-// Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
+// 剪切一列或多列（右侧列向左移动）
+// 如果已定义列属性，则会相应地剪切或移动它们
+//已知问题：如果拼接导致任何合并的单元格移动，则结果可能无法预测
 worksheet.spliceColumns(3,2);
 
-// remove one column and insert two more.
-// Note: columns 4 and above will be shifted right by 1 column.
-// Also: If the worksheet has more rows than values in the colulmn inserts,
-//  the rows will still be shifted as if the values existed
+// 删除一列并再插入两列。
+// 注意：第4列及以上将向右移动1列。
+// 另外：如果工作表的行数多于colulmn插入中的值，则行仍将被移位，就像存在的值一样
 var newCol3Values = [1,2,3,4,5];
 var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
 
-## Rows
+## 行{#rows}
 
 ```javascript
-// Add a couple of Rows by key-value, after the last current row, using the column keys
+// 使用列键在最后一行之后按键值添加几行
 worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
 worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
 
-// Add a row by contiguous Array (assign to columns A, B & C)
+// 按连续数组添加一行（分配给A，B和C列）
 worksheet.addRow([3, 'Sam', new Date()]);
 
-// Add a row by sparse Array (assign to columns A, E & I)
+// 通过稀疏数组添加一行（分配给A，E和I列）
 var rowValues = [];
 rowValues[1] = 4;
 rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
 worksheet.addRow(rowValues);
 
-// Add an array of rows
+// 添加行数组
 var rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
 worksheet.addRows(rows);
 
-// Get a row object. If it doesn't already exist, a new empty one will be returned
+// 获取行对象。如果它尚不存在，将返回一个新的空的
 var row = worksheet.getRow(5);
 
-// Get the last editable row in a worksheet (or undefined if there are none)
+// 获取工作表中的最后一个可编辑行（如果没有，则为undefined）
 var row = worksheet.lastRow;
 
-// Set a specific row height
+// 设置特定的行高
 row.height = 42.5;
 
-// make row hidden
+// 使行隐藏
 row.hidden = true;
 
-// set an outline level for rows
+// 设置行的大纲级别
 worksheet.getRow(4).outlineLevel = 0;
 worksheet.getRow(5).outlineLevel = 1;
 
-// rows support a readonly field to indicate the collapsed state based on outlineLevel
+// rows支持readonly字段以指示基于outlineLevel的折叠状态
 expect(worksheet.getRow(4).collapsed).to.equal(false);
 expect(worksheet.getRow(5).collapsed).to.equal(true);
 
 
-row.getCell(1).value = 5; // A5's value set to 5
-row.getCell('name').value = 'Zeb'; // B5's value set to 'Zeb' - assuming column 2 is still keyed by name
-row.getCell('C').value = new Date(); // C5's value set to now
+row.getCell(1).value = 5; // A5的值设为5
+row.getCell('name').value = 'Zeb'; // B5的值设置为'Zeb' - 假设第2列仍然按名称键入
+row.getCell('C').value = new Date(); // C5的值设定为当前日期
 
-// Get a row as a sparse array
-// Note: interface change: worksheet.getRow(4) ==> worksheet.getRow(4).values
+// 获取一行作为稀疏数组
+// 注意：接口变更：worksheet.getRow(4)==> worksheet.getRow(4).values
 row = worksheet.getRow(4).values;
 expect(row[5]).toEqual('Kyle');
 
-// assign row values by contiguous array (where array element 0 has a value)
+// 通过连续数组分配行值（其中数组元素0具有值）
 row.values = [1,2,3];
 expect(row.getCell(1).value).toEqual(1);
 expect(row.getCell(2).value).toEqual(2);
 expect(row.getCell(3).value).toEqual(3);
 
-// assign row values by sparse array  (where array element 0 is undefined)
+// 通过稀疏数组分配行值（其中数组元素0未定义）
 var values = []
 values[5] = 7;
 values[10] = 'Hello, World!';
@@ -603,171 +598,171 @@ expect(row.getCell(1).value).toBeNull();
 expect(row.getCell(5).value).toEqual(7);
 expect(row.getCell(10).value).toEqual('Hello, World!');
 
-// assign row values by object, using column keys
+// 使用列键按对象分配行值
 row.values = {
   id: 13,
   name: 'Thing 1',
   dob: new Date()
 };
 
-// Insert a page break below the row
+// 在行下方插入分页符
 row.addPageBreak();
 
-// Iterate over all rows that have values in a worksheet
+// 迭代工作表中具有值的所有行
 worksheet.eachRow(function(row, rowNumber) {
   console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
 });
 
-// Iterate over all rows (including empty rows) in a worksheet
+// 迭代工作表中的所有行（包括空行）
 worksheet.eachRow({ includeEmpty: true }, function(row, rowNumber) {
   console.log('Row ' + rowNumber + ' = ' + JSON.stringify(row.values));
 });
 
-// Iterate over all non-null cells in a row
+// 迭代连续的所有非空单元格
 row.eachCell(function(cell, colNumber) {
   console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
-// Iterate over all cells in a row (including empty cells)
+// 迭代连续的所有单元格（包括空单元格）
 row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
   console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
-// Cut one or more rows (rows below are shifted up)
-// Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
+// 剪切一行或多行（下面的行向上移动）
+// 已知问题：如果拼接导致任何合并的单元格移动，则结果可能无法预测
 worksheet.spliceRows(4,3);
 
-// remove one row and insert two more.
-// Note: rows 4 and below will be shifted down by 1 row.
+// 删除一行并再插入两行。
+//注意：第4行和第4行将向下移动1行。
 var newRow3Values = [1,2,3,4,5];
 var newRow4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
 
-// Cut one or more cells (cells to the right are shifted left)
-// Note: this operation will not affect other rows
+// 切一个或多个单元格（右边的单元格向左移动）
+// 注意：此操作不会影响其他行
 row.splice(3,2);
 
-// remove one cell and insert two more (cells to the right of the cut cell will be shifted right)
+// 移除一个单元格并再插入两个单元格（切割单元格右侧的单元格将向右移动）
 row.splice(4,1,'new value 1', 'new value 2');
 
-// Commit a completed row to stream
+// 提交已完成的行进行流式处理
 row.commit();
 
-// row metrics
+// 行指标
 var rowSize = row.cellCount;
 var numValues = row.actualCellCount;
 ```
 
-## Handling Individual Cells
+## 处理单个单元格{#handling-individual-cells}
 
 ```javascript
 var cell = worksheet.getCell('C3');
 
-// Modify/Add individual cell
+// 修改/添加单个单元格
 cell.value = new Date(1968, 5, 1);
 
-// query a cell's type
+// 查询单元格的类型
 expect(cell.type).toEqual(Excel.ValueType.Date);
 
-// use string value of cell
+// 使用单元格的字符串值
 myInput.value = cell.text;
 
-// use html-safe string for rendering...
+// 使用html-safe字符串进行渲染...
 var html = '<div>' + cell.html + '</div>';
 
 ```
 
-## Merged Cells
+## 合并单元格{#merged-cells}
 
 ```javascript
-// merge a range of cells
+// 合并一系列单元格
 worksheet.mergeCells('A4:B5');
 
-// ... merged cells are linked
+// ... 合并的单元格是链接的
 worksheet.getCell('B5').value = 'Hello, World!';
 expect(worksheet.getCell('B5').value).toBe(worksheet.getCell('A4').value);
 expect(worksheet.getCell('B5').master).toBe(worksheet.getCell('A4'));
 
-// ... merged cells share the same style object
+// ... 合并的单元格共享相同的样式对象
 expect(worksheet.getCell('B5').style).toBe(worksheet.getCell('A4').style);
 worksheet.getCell('B5').style.font = myFonts.arial;
 expect(worksheet.getCell('A4').style.font).toBe(myFonts.arial);
 
-// unmerging the cells breaks the style links
+// 取消单元格破坏风格链接
 worksheet.unMergeCells('A4');
 expect(worksheet.getCell('B5').style).not.toBe(worksheet.getCell('A4').style);
 expect(worksheet.getCell('B5').style.font).not.toBe(myFonts.arial);
 
-// merge by top-left, bottom-right
+// 由左上角，右下角合并
 worksheet.mergeCells('G10', 'H11');
-worksheet.mergeCells(10,11,12,13); // top,left,bottom,right
+worksheet.mergeCells(10,11,12,13); // 上，左，下，右
 ```
 
-## Defined Names
+## 定义的名称{#defined-names}
 
-Individual cells (or multiple groups of cells) can have names assigned to them.
- The names can be used in formulas and data validation (and probably more).
+单个单元格（或多组单元格）可以为其分配名称。
+ 名称可用于公式和数据验证（可能更多）。
 
 ```javascript
-// assign (or get) a name for a cell (will overwrite any other names that cell had)
+// 为单元格分配（或获取）名称（将覆盖单元格具有的任何其他名称）
 worksheet.getCell('A1').name = 'PI';
 expect(worksheet.getCell('A1').name).to.equal('PI');
 
-// assign (or get) an array of names for a cell (cells can have more than one name)
+// 为单元格分配（或获取）一组名称（单元格可以有多个名称）
 worksheet.getCell('A1').names = ['thing1', 'thing2'];
 expect(worksheet.getCell('A1').names).to.have.members(['thing1', 'thing2']);
 
-// remove a name from a cell
+// 从单元格中删除名称
 worksheet.getCell('A1').removeName('thing1');
 expect(worksheet.getCell('A1').names).to.have.members(['thing2']);
 ```
 
-## Data Validations
+## 数据验证{#data-validations}
 
-Cells can define what values are valid or not and provide prompting to the user to help guide them.
+单元格可以定义哪些值有效，并向用户提供提示以帮助指导它们。
 
-Validation types can be one of the following:
+验证类型可以是以下之一：
 
-| Type       | Description |
+| Type       | 描述 |
 | ---------- | ----------- |
-| list       | Define a discrete set of valid values. Excel will offer these in a dropdown for easy entry |
-| whole      | The value must be a whole number |
-| decimal    | The value must be a decimal number |
-| textLength | The value may be text but the length is controlled |
-| custom     | A custom formula controls the valid values |
+| list       | 定义一组离散的有效值。 Excel将在下拉列表中提供这些内容以便于输入 |
+| whole      | 值必须是整数 |
+| decimal    | 该值必须是十进制数 |
+| textLength | 值可以是文本，但长度是受控的 |
+| custom     | 自定义公式控制有效值 |
 
-For types other than list or custom, the following operators affect the validation:
+对于list或custom以外的类型，以下运算符会影响验证：
 
-| Operator              | Description |
+| Operator              | 描述 |
 | --------------------  | ----------- |
-| between               | Values must lie between formula results |
-| notBetween            | Values must not lie between formula results |
-| equal                 | Value must equal formula result |
-| notEqual              | Value must not equal formula result |
-| greaterThan           | Value must be greater than formula result |
-| lessThan              | Value must be less than formula result |
-| greaterThanOrEqual    | Value must be greater than or equal to formula result |
-| lessThanOrEqual       | Value must be less than or equal to formula result |
+| between               | 值必须位于公式结果之间 |
+| notBetween            | 值不能介于公式结果之间 |
+| equal                 | 值必须等于公式结果 |
+| notEqual              | 值必须不等于公式结果 |
+| greaterThan           | 值必须大于公式结果 |
+| lessThan              | 值必须小于公式结果 |
+| greaterThanOrEqual    | 值必须大于或等于公式结果 |
+| lessThanOrEqual       | 值必须小于或等于公式结果 |
 
 ```javascript
-// Specify list of valid values (One, Two, Three, Four).
-// Excel will provide a dropdown with these values.
+//指定有效值列表（一，二，三，四）。
+// Excel将提供包含这些值的下拉列表。
 worksheet.getCell('A1').dataValidation = {
   type: 'list',
   allowBlank: true,
   formulae: ['"One,Two,Three,Four"']
 };
 
-// Specify list of valid values from a range.
-// Excel will provide a dropdown with these values.
+// 指定范围中的有效值列表。
+// Excel将提供包含这些值的下拉列表。
 worksheet.getCell('A1').dataValidation = {
   type: 'list',
   allowBlank: true,
   formulae: ['$D$5:$F$5']
 };
 
-// Specify Cell must be a whole number that is not 5.
-// Show the user an appropriate error message if they get it wrong
+// 指定单元格必须是不是5的整数。
+// 如果用户输入错误，请向用户显示相应的错误消息
 worksheet.getCell('A1').dataValidation = {
   type: 'whole',
   operator: 'notEqual',
@@ -809,17 +804,17 @@ worksheet.getCell('A1').dataValidation = {
 };
 ```
 
-## Styles
+## 样式{#styles}
 
-Cells, Rows and Columns each support a rich set of styles and formats that affect how the cells are displayed.
+单元格，行和列各自支持一组丰富的样式和格式，这些样式和格式会影响单元格的显示方式。
 
-Styles are set by assigning the following properties:
+通过分配以下属性来设置样式：
 
-* <a href="#number-formats">numFmt</a>
-* <a href="#fonts">font</a>
-* <a href="#alignment">alignment</a>
-* <a href="#borders">border</a>
-* <a href="#fills">fill</a>
+* <a href="#number-formats">数字格式</a>
+* <a href="#fonts">字体</a>
+* <a href="#alignment">对齐方式</a>
+* <a href="#borders">边框</a>
+* <a href="#fills">填充</a>
 
 ```javascript
 // assign a style to a cell
@@ -839,20 +834,19 @@ ws.getColumn(3).numFmt = '"£"#,##0.00;[Red]\-"£"#,##0.00';
 ws.getRow(2).font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
 ```
 
-When a style is applied to a row or column, it will be applied to all currently existing cells in that row or column.
- Also, any new cell that is created will inherit its initial styles from the row and column it belongs to.
+将样式应用于行或列时，它将应用于该行或列中的所有当前现有单元格。
+ 此外，创建的任何新单元格都将从其所属的行和列继承其初始样式。
 
-If a cell's row and column both define a specific style (e.g. font), the cell will use the row style over the column style.
- However if the row and column define different styles (e.g. column.numFmt and row.font), the cell will inherit the font from the row and the numFmt from the column.
+如果单元格的行和列都定义了特定样式（例如字体），则单元格将使用行样式而不是列样式。
+ 但是，如果行和列定义了不同的样式（例如column.numFmt和row.font），则单元格将继承行中的字体和列中的numFmt。
 
-Caveat: All the above properties (with the exception of numFmt, which is a string), are JS object structures.
- If the same style object is assigned to more than one spreadsheet entity, then each entity will share the same style object.
- If the style object is later modified before the spreadsheet is serialized, then all entities referencing that style object will be modified too.
- This behaviour is intended to prioritize performance by reducing the number of JS objects created.
- If you want the style objects to be independent, you will need to clone them before assigning them.
- Also, by default, when a document is read from file (or stream) if spreadsheet entities share similar styles, then they will reference the same style object too.
-
-### Number Formats
+警告：所有上述属性（numFmt除外，它是一个字符串）都是JS对象结构。
+ 如果将同一样式对象分配给多个电子表格实体，则每个实体将共享相同的样式对象。
+ 如果在序列化电子表格之前稍后修改了样式对象，则也将修改引用该样式对象的所有实体。
+ 此行为旨在通过减少创建的JS对象的数量来确定性能的优先级。
+ 如果希望样式对象是独立的，则需要在分配它们之前克隆它们。
+ 此外，默认情况下，如果从文件（或流）读取文档（如果电子表格实体共享相似的样式），则它们也将引用相同的样式对象。
+### 数字格式{#number-formats}
 
 ```javascript
 // display value as '1 3/5'
@@ -864,7 +858,7 @@ ws.getCell('B1').value = 0.016;
 ws.getCell('B1').numFmt = '0.00%';
 ```
 
-### Fonts
+### 字体{#fonts}
 
 ```javascript
 
@@ -901,9 +895,9 @@ font.size = 20; // Cell A3 now has font size 20!
 // the workbook is read from file or stream
 ```
 
-| Font Property | Description       | Example Value(s) |
+| Font Property | 描述       | Example Value(s) |
 | ------------- | ----------------- | ---------------- |
-| name          | Font name. | 'Arial', 'Calibri', etc. |
+| name          | 字体名称。 | 'Arial', 'Calibri', etc. |
 | family        | Font family for fallback. An integer value. | 1 - Serif, 2 - Sans Serif, 3 - Mono, Others - unknown |
 | scheme        | Font scheme. | 'minor', 'major', 'none' |
 | charset       | Font charset. An integer value. | 1, 2, etc. |
@@ -916,7 +910,7 @@ font.size = 20; // Cell A3 now has font size 20!
 | outline       | Font outline | true, false |
 | vertAlign     | Vertical align | 'superscript', 'subscript'
 
-### Alignment
+### 对齐方式{#alignment}
 
 ```javascript
 // set cell alignment to top-left, middle-center, bottom-right
@@ -936,7 +930,7 @@ ws.getCell('G1').alignment = { textRotation: -45 };
 ws.getCell('H1').alignment = { textRotation: 'vertical' };
 ```
 
-**Valid Alignment Property Values**
+**有效的对齐属性值**
 
 | horizontal       | vertical    | wrapText | indent  | readingOrder | textRotation |
 | ---------------- | ----------- | -------- | ------- | ------------ | ------------ |
@@ -949,7 +943,7 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 | distributed      |             |          |         |              |              |
 
 
-### Borders
+### 边框{#borders}
 
 ```javascript
 // set single thin border around A1
@@ -989,7 +983,7 @@ ws.getCell('A5').border = {
 * double
 * thick
 
-### Fills
+### 填充{#fills}
 
 ```javascript
 // fill A1 with red darkVertical stripes
@@ -1032,9 +1026,9 @@ ws.getCell('A2').fill = {
 };
 ```
 
-#### Pattern Fills
+#### 图案填充{#pattern-fills}
 
-| Property | Required | Description |
+| Property | Required | 描述 |
 | -------- | -------- | ----------- |
 | type     | Y        | Value: 'pattern'<br/>Specifies this fill uses patterns |
 | pattern  | Y        | Specifies type of pattern (see <a href="#valid-pattern-types">Valid Pattern Types</a> below) |
@@ -1063,9 +1057,9 @@ ws.getCell('A2').fill = {
 * lightGrid
 * lightTrellis
 
-#### Gradient Fills
+#### 渐变填充{#gradient-fills}
 
-| Property | Required | Description |
+| Property | Required | 描述 |
 | -------- | -------- | ----------- |
 | type     | Y        | Value: 'gradient'<br/>Specifies this fill uses gradients |
 | gradient | Y        | Specifies gradient type. One of ['angle', 'path'] |
@@ -1073,18 +1067,18 @@ ws.getCell('A2').fill = {
 | center   | path     | For 'path' gradient. Specifies the relative coordinates for the start of the path. 'left' and 'top' values range from 0 to 1 |
 | stops    | Y        | Specifies the gradient colour sequence. Is an array of objects containing position and color starting with position 0 and ending with position 1. Intermediary positions may be used to specify other colours on the path. |
 
-**Caveats**
+**注意事项**
 
-Using the interface above it may be possible to create gradient fill effects not possible using the XLSX editor program.
-For example, Excel only supports angle gradients of 0, 45, 90 and 135.
-Similarly the sequence of stops may also be limited by the UI with positions [0,1] or [0,0.5,1] as the only options.
-Take care with this fill to be sure it is supported by the target XLSX viewers.
+使用上面的界面可以创建使用XLSX编辑器程序无法实现的渐变填充效果。
+例如，Excel仅支持0度，45度，90度和135度的角度渐变。
+类似地，停止序列也可以由具有位置[0,1]或[0,0.5,1]作为唯一选项的UI限制。
+注意此填充以确保目标XLSX查看器支持它。
 
 ### Rich Text
 
-Individual cells now support rich text or in-cell formatting.
- Rich text values can control the font properties of any number of sub-strings within the text value.
- See <a href="font">Fonts</a> for a complete list of details on what font properties are supported.
+单个单元格现在支持富文本或单元格格式。
+ 富文本值可以控制文本值中任意数量子字符串的字体属性。
+ 有关支持哪些字体属性的详细信息的完整列表，请参见<a href="font">字体</a>。
 
 ```javascript
 
@@ -1106,11 +1100,11 @@ expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 
 ```
 
-## Outline Levels
+## 大纲级别{#outline-levels}
 
-Excel supports outlining; where rows or columns can be expanded or collapsed depending on what level of detail the user wishes to view.
+Excel支持概述;其中可以展开或折叠行或列，具体取决于用户希望查看的详细程度。
 
-Outline levels can be defined in column setup:
+可以在列设置中定义大纲级别：
 ```javascript
 worksheet.columns = [
   { header: 'Id', key: 'id', width: 10 },
@@ -1119,22 +1113,22 @@ worksheet.columns = [
 ];
 ```
 
-Or directly on the row or column
+或直接在行或列上
 ```javascript
 worksheet.getColumn(3).outlineLevel = 1;
 worksheet.getRow(3).outlineLevel = 1;
 ```
 
-The sheet outline levels can be set on the worksheet
+可以在工作表上设置工作表大纲级别
 ```javascript
-// set column outline level
+// 设置列大纲级别
 worksheet.properties.outlineLevelCol = 1;
 
 // set row outline level
 worksheet.properties.outlineLevelRow = 1;
 ```
 
-Note: adjusting outline levels on rows or columns or the outline levels on the worksheet will incur a side effect of also modifying the collapsed property of all rows or columns affected by the property change. E.g.:
+注意：调整行或列上的大纲级别或工作表上的大纲级别将产生副作用，即还修改受属性更改影响的所有行或列的折叠属性。例如。：
 ```javascript
 worksheet.properties.outlineLevelCol = 1;
 
@@ -1145,7 +1139,7 @@ worksheet.properties.outlineLevelCol = 2;
 expect(worksheet.getColumn(3).collapsed).to.be.false;
 ```
 
-The outline properties can be set on the worksheet
+可以在工作表上设置轮廓属性
 
 ```javascript
 worksheet.properties.outlineProperties = {
@@ -1154,19 +1148,19 @@ worksheet.properties.outlineProperties = {
 };
 ```
 
-## Images
+## 图片{#images}
 
-Adding images to a worksheet is a two-step process.
-First, the image is added to the workbook via the addImage() function which will also return an imageId value.
-Then, using the imageId, the image can be added to the worksheet either as a tiled background or covering a cell range.
+将图像添加到工作表需要两个步骤。
+首先，通过addImage（）函数将图像添加到工作簿，该函数也将返回imageId值。
+然后，使用imageId，可以将图像作为平铺背景或覆盖单元格范围添加到工作表中。
 
-Note: As of this version, adjusting or transforming the image is not supported.
+注意：从此版本开始，不支持调整或转换图像。
 
-### Add Image to Workbook
+### 将图像添加到工作簿{#add-image-to-workbook}
 
-The Workbook.addImage function supports adding images by filename or by Buffer.
-Note that in both cases, the extension must be specified.
-Valid extension values include 'jpeg', 'png', 'gif'.
+Workbook.addImage函数支持按文件名或缓冲区添加图像。
+请注意，在这两种情况下，都必须指定扩展名。
+有效的扩展值包括'jpeg'，'png'，'gif'。
 
 ```javascript
 // add image to workbook by filename
@@ -1189,29 +1183,29 @@ var imageId2 = workbook.addImage({
 });
 ```
 
-### Add image background to worksheet
+### 将图像背景添加到工作表{#add-image-background-to-worksheet}
 
-Using the image id from Workbook.addImage, the background to a worksheet can be set using the addBackgroundImage function
+使用Workbook.addImage中的图像ID，可以使用addBackgroundImage函数设置工作表的背景
 
 ```javascript
 // set background
 worksheet.addBackgroundImage(imageId1);
 ```
 
-### Add image over a range
+### 在范围内添加图像{#add-image-over-a-range}
 
-Using the image id from Workbook.addImage, an image can be embedded within the worksheet to cover a range.
-The coordinates calculated from the range will cover from the top-left of the first cell to the bottom right of the second.
+使用Workbook.addImage中的图像ID，可以在工作表中嵌入图像以覆盖范围。
+从该范围计算的坐标将覆盖从第一个单元格的左上角到第二个单元格的右下角。
 
 ```javascript
 // insert an image over B2:D6
 worksheet.addImage(imageId2, 'B2:D6');
 ```
 
-Using a structure instead of a range string, it is possible to partially cover cells.
+使用结构而不是范围字符串，可以部分覆盖单元格。
 
-Note that the coordinate system used for this is zero based, so the top-left of A1 will be { col: 0, row: 0 }.
-Fractions of cells can be specified by using floating point numbers, e.g. the midpoint of A1 is { col: 0.5, row: 0.5 }.
+请注意，用于此的坐标系统为零，因此A1的左上角将为{col：0，row：0}。
+可以通过使用浮点数来指定单元的分数，例如， A1的中点是{col：0.5，row：0.5}。
 
 ```javascript
 // insert an image over part of B2:D6
@@ -1221,14 +1215,14 @@ worksheet.addImage(imageId2, {
 });
 ```
 
-The cell range can also have the eproperty 'editAs' which will control how the image is anchored to the cell(s)
-It can have one of the following values:
+单元格范围也可以具有epâperty“editAs”，它将控制图像如何锚定到单元格
+它可以具有以下值之一：
 
-| Value     | Description |
+| Value     | 描述 |
 | --------- | ----------- |
-| undefined | This is the default. It specifies the image will be moved and sized with cells |
-| oneCell   | Image will be moved with cells but not sized |
-| absolute  | Image will not be moved or sized with cells |
+| undefined | 这是默认值。它指定将使用单元格移动和调整图像大小 |
+| oneCell   | 图像将与单元格一起移动但不是大小 |
+| absolute  | 图像不会随单元格移动或调整大小 |
 
 ```javascript
 ws.addImage(imageId, {
@@ -1238,7 +1232,7 @@ ws.addImage(imageId, {
 });
 ```
 
-### Add image to a cell
+### 将图像添加到单元格{#add-image-to-a-cell}
 
 You can add an image to a cell and then define its width and height in pixels at 96dpi.
 
@@ -1357,16 +1351,16 @@ workbook.csv.readFile(filename, options)
   });
 ```
 
-The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
- The options passed into the read functions above is also passed to fast-csv for parsing of the csv data.
- Please refer to the fast-csv README.md for details.
+CSV解析器使用[fast-csv](https://www.npmjs.com/package/fast-csv)来读取CSV文件。
+ 传递给上述读取函数的选项也传递给fast-csv以解析csv数据。
+ 有关详细信息，请参阅fast-csv README.md。
 
-Dates are parsed using the npm module [moment](https://www.npmjs.com/package/moment).
- If no dateFormats are supplied, the following are used:
+使用npm模块[moment](https://www.npmjs.com/package/moment)解析日期。
+ 如果未提供dateFormats，则使用以下内容：
 
 * moment.ISO_8601
-* 'MM-DD-YYYY'
-* 'YYYY-MM-DD'
+*'MM-DD-YYYY'
+*'YYYY-MM-DD'
 
 #### Writing CSV
 
@@ -1431,55 +1425,53 @@ workbook.csv.writeBuffer()
   });
 ```
 
-The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write the CSV file.
- The options passed into the write functions above is also passed to fast-csv for writing the csv data.
- Please refer to the fast-csv README.md for details.
+CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CSV文件。
+ 传递给上述写入函数的选项也传递给fast-csv以写入csv数据。
+ 有关详细信息，请参阅fast-csv README.md。
 
-Dates are formatted using the npm module [moment](https://www.npmjs.com/package/moment).
- If no dateFormat is supplied, moment.ISO_8601 is used.
- When writing a CSV you can supply the boolean dateUTC as true to have ExcelJS parse the date without automatically
- converting the timezone using `moment.utc()`.
+使用npm模块格式化日期[时刻]（https://www.npmjs.com/package/moment）。
+ 如果未提供dateFormat，则使用moment.ISO_8601。
+ 编写CSV时，您可以将布尔值dateUTC设置为true，以使ExcelJS自动解析日期
+ 使用`moment.utc（）`转换时区。
 
 ### Streaming I/O
 
-The File I/O documented above requires that an entire workbook is built up in memory before the file can be written.
- While convenient, it can limit the size of the document due to the amount of memory required.
+上面记录的文件I / O要求在写入文件之前在内存中构建整个工作簿。
+ 虽然方便，但由于所需的内存量，它可能会限制文档的大小。
 
-A streaming writer (or reader) processes the workbook or worksheet data as it is generated,
- converting it into file form as it goes. Typically this is much more efficient on memory as the final
- memory footprint and even intermediate memory footprints are much more compact than with the document version,
- especially when you consider that the row and cell objects are disposed once they are committed.
+流编写器（或读取器）在生成时处理工作簿或工作表数据，
+ 将其转换为文件格式。通常情况下，这在内存上的效率要高得多
+ 内存占用，甚至中间内存占用比文档版本更紧凑，
+ 特别是当您认为行和单元格对象在提交后处理时。
 
-The interface to the streaming workbook and worksheet is almost the same as the document versions with a few minor practical differences:
+流工作簿和工作表的界面几乎与文档版本相同，但有一些细微的实际差异：
 
-* Once a worksheet is added to a workbook, it cannot be removed.
-* Once a row is committed, it is no longer accessible since it will have been dropped from the worksheet.
-* unMergeCells() is not supported.
+*将工作表添加到工作簿后，无法将其删除。
+*一旦提交了一行，它将不再可访问，因为它将从工作表中删除。
+*不支持unMergeCells（）。
 
-Note that it is possible to build the entire workbook without committing any rows.
- When the workbook is committed, all added worksheets (including all uncommitted rows) will be automatically committed.
- However in this case, little will have been gained over the Document version.
-
+请注意，可以在不提交任何行的情况下构建整个工作簿。
+ 提交工作簿时，将自动提交所有添加的工作表（包括所有未提交的行）。
+ 但是，在这种情况下，文档版本的收益很少。
 #### Streaming XLSX
 
 ##### Streaming XLSX Writer
 
-The streaming XLSX writer is available in the ExcelJS.stream.xlsx namespace.
+流式XLSX编写器在ExcelJS.stream.xlsx命名空间中可用。
 
-The constructor takes an optional options object with the following fields:
+构造函数使用带有以下字段的可选选项对象：
 
-| Field            | Description |
+| Field            | 描述 |
 | ---------------- | ----------- |
 | stream           | Specifies a writable stream to write the XLSX workbook to. |
 | filename         | If stream not specified, this field specifies the path to a file to write the XLSX workbook to. |
 | useSharedStrings | Specifies whether to use shared strings in the workbook. Default is false |
 | useStyles        | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
 
-If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object
- that will store the contents of the XLSX workbook in memory.
- This StreamBuf object, which can be accessed via the property workbook.stream, can be used to either
- access the bytes directly by stream.read() or to pipe the contents to another stream.
-
+如果选项中既未指定流也未指定文件名，则工作簿编写器将创建StreamBuf对象
+ 这将把XLSX工作簿的内容存储在内存中。
+ 这个StreamBuf对象可以通过属性workbook.stream访问，也可以用于
+ 通过stream.read（）直接访问字节或将内容传递给另一个流。
 ```javascript
 // construct a streaming XLSX workbook writer with styles and shared strings
 var options = {
@@ -1490,19 +1482,19 @@ var options = {
 var workbook = new Excel.stream.xlsx.WorkbookWriter(options);
 ```
 
-In general, the interface to the streaming XLSX writer is the same as the Document workbook (and worksheets)
- described above, in fact the row, cell and style objects are the same.
+通常，流式XLSX编写器的接口与文档工作簿（和工作表）相同
+ 如上所述，实际上行，单元格和样式对象是相同的。
 
-However there are some differences...
+然而，有一些差异......
 
-**Construction**
+**施工**
 
-As seen above, the WorkbookWriter will typically require the output stream or file to be specified in the constructor.
+如上所示，WorkbookWriter通常需要在构造函数中指定输出流或文件。
 
-**Committing Data**
+**提交数据**
 
-When a worksheet row is ready, it should be committed so that the row object and contents can be freed.
- Typically this would be done as each row is added...
+当工作表行准备就绪时，应该提交它以便可以释放行对象和内容。
+ 通常，这将在添加每一行时完成...
 
 ```javascript
 worksheet.addRow({
@@ -1512,7 +1504,7 @@ worksheet.addRow({
 }).commit();
 ```
 
-The reason the WorksheetWriter does not commit rows as they are added is to allow cells to be merged across rows:
+WorksheetWriter在添加行时不提交行的原因是允许跨行合并单元格：
 ```javascript
 worksheet.mergeCells('A1:B2');
 worksheet.getCell('A1').value = 'I am merged';
@@ -1521,16 +1513,15 @@ worksheet.getCell('C2').value = 'Neither am I';
 worksheet.getRow(2).commit(); // now rows 1 and two are committed.
 ```
 
-As each worksheet is completed, it must also be committed:
+每个工作表完成后，还必须提交：
 
 ```javascript
 // Finished adding data. Commit the worksheet
 worksheet.commit();
 ```
 
-To complete the XLSX document, the workbook must be committed. If any worksheet in a workbook are uncommitted,
- they will be committed automatically as part of the workbook commit.
-
+要完成XLSX文档，必须提交工作簿。如果未提交工作簿中的任何工作表，
+ 它们将作为工作簿提交的一部分自动提交。
 ```javascript
 // Finished the workbook.
 workbook.commit()
@@ -1539,45 +1530,44 @@ workbook.commit()
   });
 ```
 
-# Browser
+# 浏览器
 
-A portion of this library has been isolated and tested for use within a browser environment.
+该库的一部分已经过隔离测试，可在浏览器环境中使用。
 
-Due to the streaming nature of the workbook reader and workbook writer, these have not been included.
-Only the document based workbook may be used (see <a href="#create-a-workbook">Create a Worbook</a> for details).
+由于工作簿阅读器和工作簿编写器的流媒体特性，因此未包含这些内容。
+只能使用基于文档的工作簿（有关详细信息，请参阅<a href="#create-a-workbook">创建Worbook </a>）。
 
-For example code using ExcelJS in the browser take a look at the <a href="https://github.com/exceljs/exceljs/tree/master/spec/browser">spec/browser</a> folder in the github repo.
+例如，在浏览器中使用ExcelJS的代码，请查看github中的<a href="https://github.com/exceljs/exceljs/tree/master/spec/browser"> spec / browser </a>文件夹回购。
+## 预先捆绑
 
-## Prebundled
-
-The following files are pre-bundled and included inside the dist folder.
+以下文件已预先捆绑并包含在dist文件夹中。
 
 * exceljs.js
 * exceljs.min.js
 
-# Value Types
+# 价类型
 
-The following value types are supported.
+支持以下值类型。
 
-## Null Value
+## 空值
 
 Enum: Excel.ValueType.Null
 
-A null value indicates an absence of value and will typically not be stored when written to file (except for merged cells).
-  It can be used to remove the value from a cell.
+空值表示缺少值，并且在写入文件时通常不会存储（合并单元格除外）。
+  它可用于从单元格中删除值。
 
-E.g.
+例如
 
 ```javascript
 worksheet.getCell('A1').value = null;
 ```
 
-## Merge Cell
+## 合并单元格
 
 Enum: Excel.ValueType.Merge
 
-A merge cell is one that has its value bound to another 'master' cell.
-  Assigning to a merge cell will cause the master's cell to be modified.
+合并单元格的值与另一个“主”单元格绑定。
+  分配给合并单元将导致修改主单元。
 
 ## Number Value
 
@@ -1695,13 +1685,13 @@ Formula type has the following values:
 | Enums.FormulaType.Master   |   1     |
 | Enums.FormulaType.Shared   |   2     |
 
-## Rich Text Value
+## 富文本值
 
-Enum: Excel.ValueType.RichText
+枚举： Excel.ValueType.RichText
 
-Rich, styled text.
+富文本格式。
 
-E.g.
+例如
 ```javascript
 worksheet.getCell('A1').value = {
   richText: [
@@ -1711,29 +1701,29 @@ worksheet.getCell('A1').value = {
 };
 ```
 
-## Boolean Value
+## 布尔值
 
-Enum: Excel.ValueType.Boolean
+枚举：Excel.ValueType.Boolean
 
-E.g.
+例如
 
 ```javascript
 worksheet.getCell('A1').value = true;
 worksheet.getCell('A2').value = false;
 ```
 
-## Error Value
+## 错误值
 
-Enum: Excel.ValueType.Error
+枚举：Excel.ValueType.Error
 
-E.g.
+例如
 
 ```javascript
 worksheet.getCell('A1').value = { error: '#N/A' };
 worksheet.getCell('A2').value = { error: '#VALUE!' };
 ```
 
-The current valid Error text values are:
+当前有效的错误文本值为：
 
 | Name                           | Value       |
 | ------------------------------ | ----------- |
@@ -1745,70 +1735,65 @@ The current valid Error text values are:
 | Excel.ErrorValue.Value         | #VALUE!     |
 | Excel.ErrorValue.Num           | #NUM!       |
 
-# Interface Changes
+# 接口变化
 
-Every effort is made to make a good consistent interface that doesn't break through the versions but regrettably, now and then some things have to change for the greater good.
+我们尽一切努力建立一个良好的一致界面，不会突破版本，但令人遗憾的是，现在有些事情必须改变以获得更大的利益。
 
 ## 0.1.0
 
 ### Worksheet.eachRow
 
-The arguments in the callback function to Worksheet.eachRow have been swapped and changed; it was function(rowNumber,rowValues), now it is function(row, rowNumber) which gives it a look and feel more like the underscore (_.each) function and prioritises the row object over the row number.
+Worksheet.eachRow的回调函数中的参数已被交换和更改;它是函数（rowNumber，rowValues），现在它是函数（row，rowNumber），它使它看起来更像是下划线（_.each）函数，并将行对象优先于行号。
 
 ### Worksheet.getRow
 
-This function has changed from returning a sparse array of cell values to returning a Row object. This enables accessing row properties and will facilitate managing row styles and so on.
+此函数已从返回稀疏的单元格值数组更改为返回Row对象。这样可以访问行属性，并有助于管理行样式等。
 
-The sparse array of cell values is still available via Worksheet.getRow(rowNumber).values;
+通过Worksheet.getRow（rowNumber）.values仍然可以获得稀疏的单元格值数组;
 
 ## 0.1.1
 
 ### cell.model
 
-cell.styles renamed to cell.style
+cell.styles重命名为cell.style
 
 ## 0.2.44
 
-Promises returned from functions switched from Bluebird to native node Promise which can break calling code
- if they rely on Bluebird's extra features.
+从Bluebird切换到本机节点Promise的函数返回Promise，如果它们依赖Bluebird的额外功能，它可以破坏调用代码。
 
-To mitigate this the following two changes were added to 0.3.0:
+为了缓解这种情况，将以下两个更改添加到0.3.0：
 
-* A more fully featured and still browser compatable promise lib is used by default. This lib supports many of the features of Bluebird but with a much lower footprint.
-* An option to inject a different Promise implementation. See <a href="#config">Config</a> section for more details.
+* 默认情况下使用功能更全面且仍然与浏览器兼容的promise lib。这个lib支持Bluebird的许多功能，但占用空间要小得多。
+* 注入不同Promise实现的选项。有关详细信息，请参阅<a href="#config">配置</a>部分。
 
-# Config
+# 配置{#config}
 
-ExcelJS now supports dependency injection for the promise library.
- You can restore Bluebird promises by including the following code in your module...
+ExcelJS现在支持promise库的依赖注入。
+您可以通过在模块中包含以下代码来恢复Bluebird承诺...
 
 ```javascript
 ExcelJS.config.setValue('promise', require('bluebird'));
 ```
 
-Please note: I have tested ExcelJS with bluebird specifically (since up until recently this was the library it used).
- From the tests I have done it will not work with Q.
+请注意：我已经专门用蓝鸟测试了ExcelJS（因为直到最近这是它使用的库）。
+从我所做的测试来看，它不适用于Q.
 
-# Caveats
+# 注意事项
 
-## Dist Folder
+## Dist文件夹
 
-Before publishing this module, the source code is transpiled and otherwise processed
-before being placed in a dist/ folder.
-This README identifies two files - a browserified bundle and minified version.
-No other contents of the dist/ folder are guaranteed in any way other than the file
-specified as "main" in the package.json
+在发布此模块之前，源代码将被转换并以其他方式处理，然后再放入dist/文件夹中。
+本自述文件识别两个文件 - 浏览器化的捆绑包和缩小版本。
+除了package.json中指定为“main”的文件之外，不保证dist/文件夹的其他任何内容
 
 
-# Known Issues
+# 已知的问题{#known-issues}
 
-## Testing with Puppeteer
+## 使用Puppeteer进行测试
 
-The test suite included in this lib includes a small script executed in a headless browser
-to validate the bundled packages. At the time of this writing, it appears that
-this test does not play nicely in the Windows Linux subsystem.
+此lib中包含的测试套件包括在无头浏览器中执行的小脚本，以验证捆绑的包。在撰写本文时，似乎该测试在Windows Linux子系统中不能很好地发挥作用。
 
-For this reason, the browser test can be disabled by the existence of a file named .disable-test-browser
+因此，可以通过名为.disable-test-browser的文件来禁用浏览器测试
 
 ```bash
 sudo apt-get install libfontconfig
@@ -1816,7 +1801,7 @@ sudo apt-get install libfontconfig
 
 ## Splice vs Merge
 
-If any splice operation affects a merged cell, the merge group will not be moved correctly
+如果任何拼接操作影响合并的单元格，则不会正确移动合并组
 
 # Release History
 
