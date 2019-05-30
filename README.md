@@ -25,6 +25,11 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/817">docs(README): improve docs #817</a>.
     Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/823">add comment support #529 #823</a>.
+    This fixes issue <a href="https://github.com/exceljs/exceljs/issues/529">How to add Cell comment #529</a>.
+    Many thanks to <a href="https://github.com/ilimei">ilimei</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
@@ -805,6 +810,14 @@ worksheet.getCell('A1').dataValidation = {
   allowBlank: true,
   formulae: [new Date(2016,0,1)]
 };
+```
+
+## Cell Comments
+
+Add a comment to a cell
+
+```javascript
+worksheet.getCell('A1').comment = 'Hello, ExcelJS!';
 ```
 
 ## Styles

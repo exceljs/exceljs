@@ -345,12 +345,13 @@ describe('Cell', () => {
     const comment =  {
       texts: [
         { 'font': { 'size': 12, 'color': { 'theme': 0 }, 'name': 'Calibri', 'family': 2, 'scheme': 'minor' }, 'text': 'This is ' },
-      ]
+      ],
     };
 
-    a1.comment = comment;
+    a1.note = comment;
     a1.value = 'test set value';
 
-    expect(a1.model.comment).to.equal(comment);
+    expect(a1.model.comment.type).to.equal('note');
+    expect(a1.model.comment.note).to.equal(comment);
   });
 });

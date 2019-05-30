@@ -18,6 +18,11 @@ wb.xlsx
           { 'font': { 'bold': true, 'size': 12, 'color': { 'theme': 1 }, 'name': 'Calibri', 'family': 2, 'scheme': 'minor' }, 'text': 'format' },
         ],
       };
+
+      // sheet.getCell('D2').value = 'Zoo';
+      // sheet.getCell('D2').comment = 'Plain Text Comment';
     });
+
+
     return wb.xlsx.writeFile(`${__dirname}/data/test.xlsx`);
   }).catch(console.error);
