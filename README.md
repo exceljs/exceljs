@@ -814,10 +814,10 @@ worksheet.getCell('A1').dataValidation = {
 
 ## Cell Comments
 
-Add a comment to a cell
+Add old style comment to a cell
 
 ```javascript
-worksheet.getCell('A1').comment = 'Hello, ExcelJS!';
+worksheet.getCell('A1').note = 'Hello, ExcelJS!';
 ```
 
 ## Styles
