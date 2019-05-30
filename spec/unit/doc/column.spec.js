@@ -1,7 +1,7 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const Column = require('../../../lib/doc/column');
-const createSheetMock = require('../../utils/index').createSheetMock;
+const { createSheetMock } = require('../../utils/index');
 
 describe('Column', () => {
   it('creates by defn', () => {

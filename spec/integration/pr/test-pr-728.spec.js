@@ -6,7 +6,7 @@ const verquire = require('../../utils/verquire');
 
 const Excel = verquire('excel');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 describe('github issues', () => {
   it('pull request 728 - Read worksheet hidden state', () => {

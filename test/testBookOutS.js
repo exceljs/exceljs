@@ -1,8 +1,8 @@
 const _ = require('../lib/utils/under-dash.js');
 const Excel = require('../excel');
 
-const Workbook = Excel.Workbook;
-const WorkbookWriter = Excel.stream.xlsx.WorkbookWriter;
+// const { Workbook } = Excel;
+const {WorkbookWriter} = Excel.stream.xlsx;
 
 const filename = process.argv[2];
 
@@ -100,12 +100,12 @@ const alignments = [
     },
   },
 ];
-const badAlignments = [
-  { text: 'Rotate -91', alignment: { textRotation: -91 } },
-  { text: 'Rotate 91', alignment: { textRotation: 91 } },
-  { text: 'Indent -1', alignment: { indent: -1 } },
-  { text: 'Blank', alignment: {} },
-];
+// const badAlignments = [
+//   { text: 'Rotate -91', alignment: { textRotation: -91 } },
+//   { text: 'Rotate 91', alignment: { textRotation: 91 } },
+//   { text: 'Indent -1', alignment: { indent: -1 } },
+//   { text: 'Blank', alignment: {} },
+// ];
 
 const borders = {
   thin: {

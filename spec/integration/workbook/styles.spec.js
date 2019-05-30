@@ -8,7 +8,7 @@ const testUtils = require('../../utils/index');
 
 const Excel = verquire('excel');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
@@ -98,7 +98,7 @@ describe('Workbook', () => {
 
     it('in-cell formats properly in xlsx file', () => {
       // Stream from input string
-      const testData = new Buffer(richTextSample, 'base64');
+      const testData = Buffer.from(richTextSample, 'base64');
 
       // Initiate the source
       const bufferStream = new stream.PassThrough();

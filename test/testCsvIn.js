@@ -1,5 +1,3 @@
-const _ = require('../lib/utils/under-dash.js');
-
 const Excel = require('../excel');
 
 const filename = process.argv[2];
@@ -18,14 +16,14 @@ const assert = function(value, failMessage, passMessage) {
   }
 };
 
-const assertEqual = function(address, name, value, expected) {
-  assert(
-    _.isEqual(value, expected),
-    `Expected Cell[${address}] ${name} to be ${JSON.stringify(
-      expected
-    )}, was ${JSON.stringify(value)}`
-  );
-};
+// const assertEqual = function(address, name, value, expected) {
+//   assert(
+//     _.isEqual(value, expected),
+//     `Expected Cell[${address}] ${name} to be ${JSON.stringify(
+//       expected
+//     )}, was ${JSON.stringify(value)}`
+//   );
+// };
 
 const assertDate = function(address, cell, expected) {
   assert(
@@ -36,7 +34,7 @@ const assertDate = function(address, cell, expected) {
     cell.value instanceof Date,
     `expected  value ${address} to be a Date, was ${cell.value}`
   );
-  const value = cell.value;
+  const { value } = cell;
   assert(
     value.getYear() === expected.getYear(),
     `expected ${address} Year to be ${expected.getYear()}, was ${value.getYear()}`

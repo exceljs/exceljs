@@ -1,8 +1,6 @@
-const fs = require('fs');
-
 const HrStopwatch = require('./utils/hr-stopwatch');
 
-const Workbook = require('../excel').Workbook;
+const {Workbook} = require('../excel');
 
 const filenameIn = process.argv[2];
 const filenameOut = process.argv[3];
