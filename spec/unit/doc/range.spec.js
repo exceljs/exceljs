@@ -1,6 +1,6 @@
 'use strict';
 
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const Range = require('../../../lib/doc/range');
 
 describe('Range', () => {

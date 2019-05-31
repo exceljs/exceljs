@@ -1,6 +1,6 @@
 'use strict';
 
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const verquire = require('./verquire');
 const tools = require('./tools');
 const testValues = tools.fix(require('./data/sheet-values.json'));

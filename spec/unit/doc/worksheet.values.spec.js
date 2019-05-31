@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const _ = require('../../../lib/utils/under-dash');
 const Excel = require('../../../lib/exceljs.nodejs');

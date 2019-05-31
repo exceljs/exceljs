@@ -4,10 +4,10 @@ const ColumnSum = require('./utils/column-sum');
 
 const Excel = require('../excel');
 
-const Workbook = Excel.Workbook;
-const WorkbookWriter = Excel.stream.xlsx.WorkbookWriter;
+const {Workbook} = Excel;
+const {WorkbookWriter} = Excel.stream.xlsx;
 
-if (process.argv[2] == 'help') {
+if (process.argv[2] === 'help') {
   console.log('Usage:');
   console.log('    node testBigBookOut filename count writer strings styles');
   console.log('Where:');
@@ -94,7 +94,7 @@ function addRow() {
     num1: utils.randomNum(10000),
     num2: utils.randomNum(100000),
     num3: utils.randomNum(1000000),
-    date: new Date(today + iCount * 86400000),
+    date: new Date(today + (iCount * 86400000)),
     num4: utils.randomNum(1000),
   });
   const lap = sw.span;
