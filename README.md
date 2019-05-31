@@ -27,8 +27,15 @@ npm install exceljs
   </li>
   <li>
     Merged <a href="https://github.com/exceljs/exceljs/pull/823">add comment support #529 #823</a>.
-    This fixes issue <a href="https://github.com/exceljs/exceljs/issues/529">How to add Cell comment #529</a>.
     Many thanks to <a href="https://github.com/ilimei">ilimei</a> for this contribution.
+    This fixes the following issues:
+    <ul>
+     <li><a href="https://github.com/exceljs/exceljs/issues/202">Is it possible to add comment on a cell? #202</a></li>
+     <li><a href="https://github.com/exceljs/exceljs/issues/451">Add comment to cell #451</a></li>
+     <li><a href="https://github.com/exceljs/exceljs/issues/503">Excel add comment on cell #503</a></li>
+     <li><a href="https://github.com/exceljs/exceljs/issues/529">How to add Cell comment #529</a></li>
+     <li><a href="https://github.com/exceljs/exceljs/issues/707">Please add example to how I can insert comments for a cell #707</a></li>
+   </ul>
   </li>
 </ul>
 
