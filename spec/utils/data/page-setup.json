@@ -17,5 +17,7 @@
   "cellComments": "atEnd",
   "draft": true,
   "errors": "dash",
-  "printArea": "A2:D10"
+  "printArea": "A2:D10",
+  "printTitlesRow": "2:2",
+  "printTitlesColumn": "A:A"
 }
