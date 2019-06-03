@@ -20,6 +20,7 @@ npm install exceljs
   <li>
     Merged <a href="https://github.com/exceljs/exceljs/pull/822">fix issue with print area defined name corrupting file #822</a>.
     Many thanks to <a href="https://github.com/donaldsonjulia">Julia Donaldson</a> for this contribution.
+    This fixes issue <a href="https://github.com/exceljs/exceljs/issues/664">Defined Names Break/Corrupt Excel File into Repair Mode #664</a>.
   </li>
 </ul>
 
