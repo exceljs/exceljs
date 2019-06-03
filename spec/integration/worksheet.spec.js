@@ -384,6 +384,41 @@ describe('Worksheet', () => {
       });
       expect(count).to.equal(7);
     });
+
+    context('when worksheet name is less than or equal 31', () => {
+      it('save the original name', () => {
+        const wb = new Excel.Workbook();
+        let ws = wb.addWorksheet('ThisIsAWorksheetName');
+        expect(ws.name).to.equal('ThisIsAWorksheetName');
+
+        ws = wb.addWorksheet('ThisIsAWorksheetNameWith31Chars');
+        expect(ws.name).to.equal('ThisIsAWorksheetNameWith31Chars');
+      });
+    });
+
+    context('when worksheet name is longer than 31', () => {
+      it('keep first 31 characters', () => {
+        const wb = new Excel.Workbook();
+        const ws = wb.addWorksheet('ThisIsAWorksheetNameThatIsLongerThan31');
+
+        expect(ws.name).to.equal('ThisIsAWorksheetNameThatIsLonge');
+      });
+    });
+
+    context('when worksheet name already exists', () => {
+      it('throws an error', () => {
+        const wb = new Excel.Workbook();
+
+        const validName = 'ThisIsAWorksheetNameThatIsLonge';
+        const invalideName = 'ThisIsAWorksheetNameThatIsLongerThan31';
+        const expectedError = `Worksheet name already exists: ${validName}`;
+
+        wb.addWorksheet(validName);
+
+        expect(() => wb.addWorksheet(validName)).to.throw(expectedError);
+        expect(() => wb.addWorksheet(invalideName)).to.throw(expectedError);
+      });
+    });
   });
 
   it('returns sheet values', () => {
