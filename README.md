@@ -22,6 +22,11 @@ npm install exceljs
     Many thanks to <a href="https://github.com/donaldsonjulia">Julia Donaldson</a> for this contribution.
     This fixes issue <a href="https://github.com/exceljs/exceljs/issues/664">Defined Names Break/Corrupt Excel File into Repair Mode #664</a>.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/831">Only keep at most 31 characters for sheetname #831</a>.
+    Many thanks to <a href="https://github.com/kaleo211">Xuebin He</a> for this contribution.
+    This fixes issue <a href="https://github.com/exceljs/exceljs/issues/398">Limit worksheet name length to 31 characters #398</a>.
+  </li>
 </ul>
 
 # Contributions
