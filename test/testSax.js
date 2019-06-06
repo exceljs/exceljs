@@ -1,6 +1,6 @@
 const fs = require('fs');
 const events = require('events');
-const Sax = require('sax');
+const saxes = require('saxes');
 const unzip = require('node-unzip-2');
 
 const filename = process.argv[2];
@@ -36,11 +36,11 @@ zip.on('entry', entry => {
 });
 
 function parseSheet(entry, emitter) {
-  const parser = Sax.createStream(true, {});
+  const parser = new saxes.SaxesParser();
   let row = null;
   let cell = null;
   let current = null;
-  parser.on('opentag', node => {
+  parser.onopentag = node => {
     switch (node.name) {
       case 'row': {
         const r = parseInt(node.attributes.r, 10);
@@ -62,13 +62,13 @@ function parseSheet(entry, emitter) {
         break;
       default:
     }
-  });
-  parser.on('text', text => {
+  };
+  parser.ontext = text => {
     if (current) {
       current.text += text;
     }
-  });
-  parser.on('closetag', name => {
+  };
+  parser.onclosetag = name => {
     switch (name) {
       case 'row':
         emitter.emit('row', row);
@@ -79,10 +79,10 @@ function parseSheet(entry, emitter) {
         break;
       default:
     }
-  });
-  parser.on('end', () => {
+  };
+  parser.onend = () => {
     e.emit('finished');
-  });
+  };
   entry.pipe(parser);
 }
 

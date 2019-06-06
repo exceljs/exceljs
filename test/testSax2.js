@@ -1,5 +1,5 @@
 const events = require('events');
-const Sax = require('sax');
+const saxes = require('saxes');
 const utils = require('./utils/utils');
 
 const Row = function(r) {
@@ -12,7 +12,7 @@ Row.prototype = {
   },
 };
 
-const parser = Sax.createStream(true, {});
+const parser = new saxes.SaxesParser();
 
 let target = 0;
 let count = 0;
@@ -45,7 +45,7 @@ e.on('finished', () => {
 
 let row = null;
 let cell = null;
-parser.on('opentag', node => {
+parser.onopentag = node => {
   // console.log('opentag ' + node.name);
   switch (node.name) {
     case 'row': {
@@ -63,14 +63,14 @@ parser.on('opentag', node => {
     }
     default:
   }
-});
-parser.on('text', text => {
+};
+parser.ontext = text => {
   // console.log('text ' + text);
   if (cell) {
     cell.value += text;
   }
-});
-parser.on('closetag', name => {
+};
+parser.onclosetag = name => {
   // console.log('closetag ' + name);
   switch (name) {
     case 'row':
@@ -82,10 +82,10 @@ parser.on('closetag', name => {
       break;
     default:
   }
-});
-parser.on('end', () => {
+};
+parser.onend = () => {
   e.emit('finished');
-});
+};
 
 parser.write('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><root>');
 e.emit('drain');

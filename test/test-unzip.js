@@ -1,6 +1,6 @@
 const fs = require('fs');
 const unzip = require('unzip2');
-const Sax = require('sax');
+const Sax = require('saxes');
 
 const filename = process.argv[2];
 

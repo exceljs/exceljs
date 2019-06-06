@@ -1,6 +1,6 @@
 'use strict';
+const saxes = require('saxes');
 
-const Sax = require('sax');
 const chai = require('chai');
 const _ = require('../../../utils/under-dash');
 
@@ -132,7 +132,7 @@ const its = {
             },
           ],
         });
-        const parser = Sax.createStream(true);
+        const parser = new saxes.SaxesParser();
 
         xform
           .parse(parser)
@@ -159,7 +159,7 @@ const its = {
         const xml = getExpectation(expectation, 'xml');
         const result = getExpectation(expectation, 'parsedModel');
 
-        const parser = Sax.createStream(true);
+        const parser = new saxes.SaxesParser();
         const xform = expectation.create();
 
         xform
