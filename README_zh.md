@@ -18,12 +18,8 @@ npm install exceljs
 
 <ul>
   <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/819">(chore) 将unzipper增加到0.9.12以解决npm咨询886 #819</a>.
-    非常感谢 <a href="https://github.com/kreig303">Kreig Zimmerman</a> 为此贡献。
-  </li>
-  <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/817">docs(README): 改进文档 #817</a>.
-    非常感谢 <a href="https://github.com/zypA13510">Yuping Zuo</a> 为此贡献。
+    合并的 <a href="https://github.com/exceljs/exceljs/pull/834">添加中文文档 #834</a>.
+    非常感谢 <a href="https://github.com/loverto">flydragon</a> 为此贡献。
   </li>
 </ul>
 
@@ -141,7 +137,7 @@ npm install exceljs
 
 ## 导入{#importing}
 
-默认导出是带有 Promise polyfill 的转换 ES5 版本 - 因为这会提供最高的兼容性。
+默认导出是带有 Promise polyfill 转换的 ES5 版本 - 因为这会提供最高的兼容性。
 
 ```javascript
 var Excel = require('exceljs');
@@ -178,7 +174,7 @@ workbook.properties.date1904 = true;
 
 ## 工作簿视图{#workbook-views}
 
-“工作簿”视图控制Excel在查看工作簿时将打开多少个单独的窗口。
+“工作簿”视图控制Excel在查看工作簿时打开多少个单独的窗口。
 
 ```javascript
 workbook.views = [
@@ -195,7 +191,7 @@ workbook.views = [
 var sheet = workbook.addWorksheet('My Sheet');
 ```
 
-使用addWorksheet函数的第二个参数指定工作表的选项。
+用addWorksheet函数的第二个参数设置工作表的选项。
 
 例如
 
@@ -260,7 +256,7 @@ worksheet.state = 'veryHidden';
 // 创建具有属性的新工作表
 var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
-// 创建一个具有属性的新工作表编写器
+// 创建一个具有属性的可写的新工作表
 var worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
 
 // 之后调整属性（不受工作表 - 编写者支持）
@@ -804,6 +800,29 @@ worksheet.getCell('A1').dataValidation = {
 };
 ```
 
+## 单元格评论{#cell-comments}
+
+将旧样式评论添加到单元格
+
+```javascript
+// 纯文本评论
+worksheet.getCell('A1').note = 'Hello, ExcelJS!';
+
+// 彩色格式的评论
+ws.getCell('B1').note = {
+  texts: [
+    {'font': {'size': 12, 'color': {'theme': 0}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': 'This is '},
+    {'font': {'italic': true, 'size': 12, 'color': {'theme': 0}, 'name': 'Calibri', 'scheme': 'minor'}, 'text': 'a'},
+    {'font': {'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': ' '},
+    {'font': {'size': 12, 'color': {'argb': 'FFFF6600'}, 'name': 'Calibri', 'scheme': 'minor'}, 'text': 'colorful'},
+    {'font': {'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': ' text '},
+    {'font': {'size': 12, 'color': {'argb': 'FFCCFFCC'}, 'name': 'Calibri', 'scheme': 'minor'}, 'text': 'with'},
+    {'font': {'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': ' in-cell '},
+    {'font': {'bold': true, 'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': 'format'},
+  ],
+};
+```
+
 ## 样式{#styles}
 
 单元格，行和列各自支持一组丰富的样式和格式，这些样式和格式会影响单元格的显示方式。
@@ -846,14 +865,15 @@ ws.getRow(2).font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'do
  此行为旨在通过减少创建的JS对象的数量来确定性能的优先级。
  如果希望样式对象是独立的，则需要在分配它们之前克隆它们。
  此外，默认情况下，如果从文件（或流）读取文档（如果电子表格实体共享相似的样式），则它们也将引用相同的样式对象。
+ 
 ### 数字格式{#number-formats}
 
 ```javascript
-// display value as '1 3/5'
+// 显示值为 '1 3/5'
 ws.getCell('A1').value = 1.6;
 ws.getCell('A1').numFmt = '# ?/?';
 
-// display value as '1.60%'
+// 显示值为 '1.60%'
 ws.getCell('B1').value = 0.016;
 ws.getCell('B1').numFmt = '0.00%';
 ```
@@ -862,7 +882,7 @@ ws.getCell('B1').numFmt = '0.00%';
 
 ```javascript
 
-// for the wannabe graphic designers out there
+// 对于想要那些想要的平面设计师
 ws.getCell('A1').font = {
   name: 'Comic Sans MS',
   family: 4,
@@ -871,7 +891,7 @@ ws.getCell('A1').font = {
   bold: true
 };
 
-// for the graduate graphic designers...
+// 为毕业生平面设计师...
 ws.getCell('A2').font = {
   name: 'Arial Black',
   color: { argb: 'FF00FF00' },
@@ -880,19 +900,18 @@ ws.getCell('A2').font = {
   italic: true
 };
 
-// for the vertical align
+// 用于垂直对齐
 ws.getCell('A3').font = {
   vertAlign: 'superscript'
 };
 
-// note: the cell will store a reference to the font object assigned.
-// If the font object is changed afterwards, the cell font will change also...
+// 注意：单元格将存储对指定的字体对象的引用。
+// 如果之后更改了字体对象，则单元格字体也将更改...
 var font = { name: 'Arial', size: 12 };
 ws.getCell('A3').font = font;
-font.size = 20; // Cell A3 now has font size 20!
+font.size = 20; // Cell A3现在的字体大小为20！
 
-// Cells that share similar fonts may reference the same font object after
-// the workbook is read from file or stream
+// 从文件或流中读取工作簿后，共享相似字体的单元格可能会引用相同的字体对象
 ```
 
 | Font Property | 描述       | Example Value(s) |
@@ -946,7 +965,7 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 ### 边框{#borders}
 
 ```javascript
-// set single thin border around A1
+// 在A1周围设置单个细边框
 ws.getCell('A1').border = {
   top: {style:'thin'},
   left: {style:'thin'},
@@ -954,7 +973,7 @@ ws.getCell('A1').border = {
   right: {style:'thin'}
 };
 
-// set double thin green border around A3
+// 在A3附近设置双细绿边框
 ws.getCell('A3').border = {
   top: {style:'double', color: {argb:'FF00FF00'}},
   left: {style:'double', color: {argb:'FF00FF00'}},
@@ -962,13 +981,13 @@ ws.getCell('A3').border = {
   right: {style:'double', color: {argb:'FF00FF00'}}
 };
 
-// set thick red cross in A5
+// 在A5设置厚红十字
 ws.getCell('A5').border = {
   diagonal: {up: true, down: true, style:'thick', color: {argb:'FFFF0000'}}
 };
 ```
 
-**Valid Border Styles**
+**有效的边框样式**
 
 * thin
 * dotted
@@ -1472,6 +1491,7 @@ CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CS
  这将把XLSX工作簿的内容存储在内存中。
  这个StreamBuf对象可以通过属性workbook.stream访问，也可以用于
  通过stream.read（）直接访问字节或将内容传递给另一个流。
+ 
 ```javascript
 // construct a streaming XLSX workbook writer with styles and shared strings
 var options = {
@@ -1522,6 +1542,7 @@ worksheet.commit();
 
 要完成XLSX文档，必须提交工作簿。如果未提交工作簿中的任何工作表，
  它们将作为工作簿提交的一部分自动提交。
+ 
 ```javascript
 // Finished the workbook.
 workbook.commit()
@@ -1538,6 +1559,7 @@ workbook.commit()
 只能使用基于文档的工作簿（有关详细信息，请参阅<a href="#create-a-workbook">创建Worbook </a>）。
 
 例如，在浏览器中使用ExcelJS的代码，请查看github中的<a href="https://github.com/exceljs/exceljs/tree/master/spec/browser"> spec / browser </a>文件夹回购。
+
 ## 预先捆绑
 
 以下文件已预先捆绑并包含在dist文件夹中。
@@ -1545,7 +1567,7 @@ workbook.commit()
 * exceljs.js
 * exceljs.min.js
 
-# 价类型
+# 值类型
 
 支持以下值类型。
 
@@ -1922,3 +1944,6 @@ sudo apt-get install libfontconfig
 | 1.9.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/619">Add Typescript support for formulas without results #619</a>. Many thanks to <a href="https://github.com/Wolfchin">Loursin</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/737">Fix existing row styles when using spliceRows #737</a>. Many thanks to <a href="https://github.com/cxam">cxam</a> for this contribution. </li> </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/774">Consistent code quality #774</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> </li> </ul> |
 | 1.10.0  | <ul> <li> Fixed effect of splicing rows and columns on defined names </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/746">Add support for adding images anchored to one cell #746</a>. Many thanks to <a href="https://github.com/karlvr">Karl von Randow</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/758">Add vertical align property #758</a>. Many thanks to <a href="https://github.com/MikeZyatkov">MikeZyatkov</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/775">Replace the temp lib to tmp #775</a>. Many thanks to <a href="https://github.com/coldhiber">Ivan Sotnikov</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/780">Replace the temp lib to tmp #775</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/793">Update Worksheet.dimensions return type #793</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/795">One more types fix #795</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> </ul> |
 | 1.11.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/776">Add the ability to bail out of parsing if the number of columns exceeds a given limit #776</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/799">Add support for repeated columns on every page when printing. #799</a>. Many thanks to <a href="https://github.com/FreakenK">Jasmin Auger</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/815">Do not use a promise polyfill on modern setups #815</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/807">copy LICENSE to the dist folder #807</a>. Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/813">Avoid unhandled rejection on XML parse error #813</a>. Many thanks to <a href="https://github.com/papandreou">Andreas Lind</a> for this contribution. </li> </ul> |
+| 1.12.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/819">(chore) increment unzipper to 0.9.12 to address npm advisory 886 #819</a>. Many thanks to <a href="https://github.com/kreig303">Kreig Zimmerman</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/817">docs(README): improve docs #817</a>. Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution. </li> <li> <p> Merged <a href="https://github.com/exceljs/exceljs/pull/823">add comment support #529 #823</a>. Many thanks to <a href="https://github.com/ilimei">ilimei</a> for this contribution. </p> <p>This fixes the following issues:</p> <ul> <li><a href="https://github.com/exceljs/exceljs/issues/202">Is it possible to add comment on a cell? #202</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/451">Add comment to cell #451</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/503">Excel add comment on cell #503</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/529">How to add Cell comment #529</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/707">Please add example to how I can insert comments for a cell #707</a></li> </ul> </li> </ul> |
+| 1.12.1  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/822">fix issue with print area defined name corrupting file #822</a>. Many thanks to <a href="https://github.com/donaldsonjulia">Julia Donaldson</a> for this contribution. This fixes issue <a href="https://github.com/exceljs/exceljs/issues/664">Defined Names Break/Corrupt Excel File into Repair Mode #664</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/831">Only keep at most 31 characters for sheetname #831</a>. Many thanks to <a href="https://github.com/kaleo211">Xuebin He</a> for this contribution. This fixes issue <a href="https://github.com/exceljs/exceljs/issues/398">Limit worksheet name length to 31 characters #398</a>. </li> </ul> |
+
