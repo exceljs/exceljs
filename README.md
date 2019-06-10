@@ -20,7 +20,8 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/834">add cn doc #834</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/834">add cn doc #834</a> and
+    <a href="https://github.com/exceljs/exceljs/pull/852">update cn doc #852</a>.
     Many thanks to <a href="https://github.com/loverto">flydragon</a> for this contribution.
   </li>
 </ul>
