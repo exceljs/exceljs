@@ -1556,7 +1556,7 @@ workbook.commit()
 该库的一部分已经过隔离测试，可在浏览器环境中使用。
 
 由于工作簿阅读器和工作簿编写器的流媒体特性，因此未包含这些内容。
-只能使用基于文档的工作簿（有关详细信息，请参阅<a href="#create-a-workbook">创建Worbook </a>）。
+只能使用基于文档的工作簿（有关详细信息，请参阅<a href="#create-a-workbook">创建Workbook </a>）。
 
 例如，在浏览器中使用ExcelJS的代码，请查看github中的<a href="https://github.com/exceljs/exceljs/tree/master/spec/browser"> spec / browser </a>文件夹回购。
 

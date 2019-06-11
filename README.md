@@ -1564,7 +1564,7 @@ workbook.commit()
 A portion of this library has been isolated and tested for use within a browser environment.
 
 Due to the streaming nature of the workbook reader and workbook writer, these have not been included.
-Only the document based workbook may be used (see <a href="#create-a-workbook">Create a Worbook</a> for details).
+Only the document based workbook may be used (see <a href="#create-a-workbook">Create a Workbook</a> for details).
 
 For example code using ExcelJS in the browser take a look at the <a href="https://github.com/exceljs/exceljs/tree/master/spec/browser">spec/browser</a> folder in the github repo.
 
