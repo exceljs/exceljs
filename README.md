@@ -24,6 +24,10 @@ npm install exceljs
     <a href="https://github.com/exceljs/exceljs/pull/852">update cn doc #852</a>.
     Many thanks to <a href="https://github.com/loverto">flydragon</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/853">fix minor spelling mistake in readme #853</a>.
+    Many thanks to <a href="https://github.com/ridespirals">John Varga</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
