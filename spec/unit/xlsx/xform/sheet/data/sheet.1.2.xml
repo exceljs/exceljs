@@ -4,7 +4,7 @@
     <sheetViews>
         <sheetView workbookViewId="0"/>
     </sheetViews>
-    <sheetFormatPr defaultRowHeight="15" x14ac:dyDescent="0.25"/>
+    <sheetFormatPr defaultRowHeight="15" customHeight="1" x14ac:dyDescent="0.25"/>
     <sheetPr>
         <tabColor rgb="FF00FF00"/>
         <pageSetUpPr fitToPage="1"/>
