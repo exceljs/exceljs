@@ -28,6 +28,13 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/853">fix minor spelling mistake in readme #853</a>.
     Many thanks to <a href="https://github.com/ridespirals">John Varga</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/855">Fix defaultRowHeight not working #855</a>.
+    Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution.
+    This should fix <a href="https://github.com/exceljs/exceljs/issues/422">row height doesn't apply to row #422</a>,
+    <a href="https://github.com/exceljs/exceljs/issues/634">The worksheet.properties.defaultRowHeight can't work!! How to set the rows height, help!! #634</a> and
+    <a href="https://github.com/exceljs/exceljs/issues/696">Default row height doesn't work ? #696</a>.
+  </li>
 </ul>
 
 # Contributions
