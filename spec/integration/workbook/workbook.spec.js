@@ -29,7 +29,86 @@ describe('Workbook', () => {
           testUtils.checkTestBook(wb2, 'xlsx');
         });
     });
+    describe('Xlsx Zip Compression', () => {
+      it('xlsx file with best compression', () => {
+        const wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');
 
+        return wb.xlsx
+          .writeFile(TEST_XLSX_FILE_NAME, {
+            zip: {
+              compression: 'DEFLATE',
+              compressionOptions: {
+                level: 9,
+              },
+            },
+          })
+          .then(() => {
+            const wb2 = new Excel.Workbook();
+            return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+          })
+          .then(wb2 => {
+            testUtils.checkTestBook(wb2, 'xlsx');
+          });
+      });
+
+      it('xlsx file with default compression', () => {
+        const wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');
+
+        return wb.xlsx
+          .writeFile(TEST_XLSX_FILE_NAME, {
+            zip: {
+              compression: 'DEFLATE',
+            },
+          })
+          .then(() => {
+            const wb2 = new Excel.Workbook();
+            return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+          })
+          .then(wb2 => {
+            testUtils.checkTestBook(wb2, 'xlsx');
+          });
+      });
+
+
+      it('xlsx file with fast compression', () => {
+        const wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');
+
+        return wb.xlsx
+          .writeFile(TEST_XLSX_FILE_NAME, {
+            zip: {
+              compression: 'DEFLATE',
+              compressionOptions: {
+                level: 1,
+              },
+            },
+          })
+          .then(() => {
+            const wb2 = new Excel.Workbook();
+            return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+          })
+          .then(wb2 => {
+            testUtils.checkTestBook(wb2, 'xlsx');
+          });
+      });
+
+      it('xlsx file with no compression', () => {
+        const wb = testUtils.createTestBook(new Excel.Workbook(), 'xlsx');
+
+        return wb.xlsx
+          .writeFile(TEST_XLSX_FILE_NAME, {
+            zip: {
+              compression: 'STORE',
+            },
+          })
+          .then(() => {
+            const wb2 = new Excel.Workbook();
+            return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+          })
+          .then(wb2 => {
+            testUtils.checkTestBook(wb2, 'xlsx');
+          });
+      });
+    });
     it('sheets with correct names', () => {
       const wb = new Excel.Workbook();
       const ws1 = wb.addWorksheet('Hello, World!');
