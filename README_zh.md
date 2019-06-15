@@ -57,6 +57,7 @@ npm install exceljs
       <li><a href="#worksheet-state">工作表状态</a></li>
       <li><a href="#worksheet-properties">工作表属性</a></li>
       <li><a href="#page-setup">页面设置</a></li>
+      <li><a href="#header-footer">页眉和页脚</a></li>
       <li>
         <a href="#worksheet-views">工作表视图</a>
         <ul>
@@ -359,6 +360,65 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | 信封君主                       |  37       |
 | 日本双明信片旋转 |  82       |
 | 16K 197x273 mm                |  119      |
+
+## 页眉和页脚{#header-footer}
+这里将介绍如何添加页眉和页脚，添加的内容主要是文本，比如时间，简介，文件信息等，并且可以设置文本的风格。此外，也可以针对首页，奇偶页设置不同的文本。
+
+警告：不支持添加图片
+
+```javascript
+// 代码中出现的&开头字符对应变量，相关信息可查阅下文的变量表
+// 设置页脚(默认居中),结果：“第 2 页，共 16 页”
+worksheet.headerFooter.oddFooter = "第 &N 页，共 &P 页";
+
+// 设置页脚(默认居中)加粗,结果：“第 2 页，共 16 页”
+worksheet.headerFooter.oddFooter = "&B第 &N 页，共 &P 页";
+
+// 设置左边页脚为18px大小并倾斜,结果：“第 2 页，共 16 页”
+worksheet.headerFooter.oddFooter = "&L&18&I第 &N 页，共 &P 页";
+
+// 设置中间页眉为灰色微软雅黑,结果：“52 exceljs”
+worksheet.headerFooter.oddHeader = "&C&KCCCCCC&\"微软雅黑\"52 exceljs";
+
+// 设置页脚的左中右文本，结果：页脚左“exceljs” 页脚中“demo.xlsx” 页脚右“第 2 页”
+worksheet.headerFooter.oddFooter = "&Lexceljs&C&F&R第 &N 页";
+
+// 为首页设置独特的内容
+worksheet.headerFooter.differentFirst = true;
+worksheet.headerFooter.firstHeader = "Hello Exceljs";
+worksheet.headerFooter.firstFooter = "Hello World"
+```
+**属性表**
+| 名称              | 默认值   | 描述 |
+| ----------------- | --------- | ----------- |
+|differentFirst|false|开启或关闭首页使用独特的文本内容|
+|differentOddEven|false|开启或关闭奇数页和偶数页使用不同的文本内容|
+|oddHeader|null|奇数页的页眉内容，如果 differentOddEven = false ，那么该项作为页面默认的页眉内容|
+|oddFooter|null|奇数页的页脚内容，如果 differentOddEven = false ，那么该项作为页面默认的页脚内容|
+|evenHeader|null|偶数页的页眉内容，differentOddEven = true 后有效|
+|evenFooter|null|偶数页的页脚内容，differentOddEven = true 后有效|
+|firstHeader|null|首页的页眉内容，differentFirst = true 后有效|
+|firstFooter|null|首页的页脚内容，differentFirst = true 后有效|
+
+**变量表**
+| 名称                | 描述 |
+| -----------------  | ----------- |
+|&L|设置位置为左边|
+|&C|设置位置为中间|
+|&R|设置位置为右边|
+|&P|当前页数|
+|&N|总页数|
+|&D|当前日期|
+|&T|当前时间|
+|&G|图片|
+|&A|工作表名|
+|&F|文件名|
+|&B|文本加粗|
+|&I|文本倾斜|
+|&U|文本下划线|
+|&"字体名称"|字体名称，比如：&“微软雅黑”|
+|&数字|字体大小，比如12px大的文本：&12 |
+|&KHEXCode|字体颜色，比如灰色：&KCCCCCC|
 
 ## 工作表视图{#worksheet-views}
 
@@ -865,7 +925,7 @@ ws.getRow(2).font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'do
  此行为旨在通过减少创建的JS对象的数量来确定性能的优先级。
  如果希望样式对象是独立的，则需要在分配它们之前克隆它们。
  此外，默认情况下，如果从文件（或流）读取文档（如果电子表格实体共享相似的样式），则它们也将引用相同的样式对象。
- 
+
 ### 数字格式{#number-formats}
 
 ```javascript
@@ -1491,7 +1551,7 @@ CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CS
  这将把XLSX工作簿的内容存储在内存中。
  这个StreamBuf对象可以通过属性workbook.stream访问，也可以用于
  通过stream.read（）直接访问字节或将内容传递给另一个流。
- 
+
 ```javascript
 // construct a streaming XLSX workbook writer with styles and shared strings
 var options = {
@@ -1542,7 +1602,7 @@ worksheet.commit();
 
 要完成XLSX文档，必须提交工作簿。如果未提交工作簿中的任何工作表，
  它们将作为工作簿提交的一部分自动提交。
- 
+
 ```javascript
 // Finished the workbook.
 workbook.commit()

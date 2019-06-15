@@ -71,6 +71,7 @@ To be clear, all contributions added to this library will be included in the lib
       <li><a href="#worksheet-state">Worksheet State</a></li>
       <li><a href="#worksheet-properties">Worksheet Properties</a></li>
       <li><a href="#page-setup">Page Setup</a></li>
+      <li><a href="#header-footer">Header Footer</a></li>
       <li>
         <a href="#worksheet-views">Worksheet Views</a>
         <ul>
@@ -373,6 +374,64 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | Envelope Monarch              |  37       |
 | Double Japan Postcard Rotated |  82       |
 | 16K 197x273 mm                |  119      |
+
+## Header Footer
+Here's how to add headers and footers. The added content is mainly text, such as time, introduction, file information, etc., and you can set the style of the text. In addition, you can set different texts for the first page and even page.
+
+Warring: Not support add image
+
+```javascript
+// Set footer (default centered), result: "Page 2 of 16"
+worksheet.headerFooter.oddFooter = "Page &N of &P";
+
+// Set the footer (default centered) to bold, resulting in: "Page 2 of 16"
+worksheet.headerFooter.oddFooter = "Page &N of &P";
+
+// Set the left footer to 18px and italicize. Result: "Page 2 of 16"
+worksheet.headerFooter.oddFooter = "&LPage &N of &P";
+
+// Set the middle header to gray Aril, the result: "52 exceljs"
+worksheet.headerFooter.oddHeader = "&C&KCCCCCC&\"Aril\"52 exceljs";
+
+// Set the left, center, and right text of the footer. Result: “Exceljs” in the footer left. “demo.xlsx” in the footer center. “Page 2” in the footer right
+worksheet.headerFooter.oddFooter = "&Lexceljs&C&F&RPage &N";
+
+// Add different header & footer for the first page
+worksheet.headerFooter.differentFirst = true;
+worksheet.headerFooter.firstHeader = "Hello Exceljs";
+worksheet.headerFooter.firstFooter = "Hello World"
+```
+**Supported headerFooter settings**
+| Name              | Default   | Description |
+| ----------------- | --------- | ----------- |
+|differentFirst|false| Set the value of differentFirst as true, which indicates that headers/footers for first page are different from the other pages|
+|differentOddEven|false|Set the value of differentOddEven as true, which indicates that headers/footers for odd and even pages are different|
+|oddHeader|null|Set header string for odd(default) pages, could format the string|
+|oddFooter|null|Set footer string for odd(default) pages, could format the string|
+|evenHeader|null|Set header string for even pages, could format the string|
+|evenFooter|null|Set footer string for even pages, could format the string|
+|firstHeader|null|Set header string for the first page, could format the string|
+|firstFooter|null|Set footer string for the first page, could format the string|
+
+**Script Commands**
+| Commands                | Description |
+| -----------------  | ----------- |
+|&L|Set position to the left|
+|&C|Set position to the center|
+|&R|Set position to the right|
+|&P|The current page number|
+|&N|The total number of pages|
+|&D|The current date|
+|&T|The current time|
+|&G|A picture|
+|&A|The worksheet name|
+|&F|The file name|
+|&B|Make text bold|
+|&I|Italicize text|
+|&U|Underline text|
+|&"font name"|font name, for example &"Aril"|
+|&font size|font size, for example 12|
+|&KHEXCode|font color, for example &KCCCCCC|
 
 ## Worksheet Views
 

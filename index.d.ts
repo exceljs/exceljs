@@ -773,7 +773,7 @@ export interface PageSetup {
 
 export interface HeaderFooter {
 	/**
-	 * Set the value of differentFirst as true, which 1ndicates that headers/footers for first page are different from the other pages, `false` by default
+	 * Set the value of differentFirst as true, which indicates that headers/footers for first page are different from the other pages, `false` by default
 	 */
 	differentFirst: boolean,
 	/**
