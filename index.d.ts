@@ -226,7 +226,7 @@ export interface Font {
 	bold: boolean;
 	italic: boolean;
 	underline: boolean | 'none' | 'single' | 'double' | 'singleAccounting' | 'doubleAccounting';
-  vertAlign: 'superscript' | 'subscript';
+	vertAlign: 'superscript' | 'subscript';
 	strike: boolean;
 	outline: boolean;
 }
@@ -341,7 +341,7 @@ export interface CellFormulaValue {
 export interface CellSharedFormulaValue {
 	sharedFormula: string;
 	readonly formula?: string;
-	result?: number | string | Date| { error: CellErrorValue };
+	result?: number | string | Date | { error: CellErrorValue };
 	date1904: boolean;
 }
 
@@ -771,6 +771,41 @@ export interface PageSetup {
 	printTitlesColumn: string;
 }
 
+export interface HeaderFooter {
+	/**
+	 * Set the value of differentFirst as true, which 1ndicates that headers/footers for first page are different from the other pages, `false` by default
+	 */
+	differentFirst: boolean,
+	/**
+	 * Set the value of differentOddEven as true, which indicates that headers/footers for odd and even pages are different, `false` by default
+	 */
+	differentOddEven: boolean,
+	/**
+	 * Set header string for odd pages, could format the string and `null` by default
+	 */
+	oddHeader: string,
+	/**
+	 * Set footer string for odd pages, could format the string and `null` by default
+	 */
+	oddFooter: string,
+	/**
+	 * Set header string for even pages, could format the string and `null` by default
+	 */
+	evenHeader: string,
+	/**
+	 * Set footer string for even pages, could format the string and `null` by default
+	 */
+	evenFooter: string,
+	/**
+	 * Set header string for the first page, could format the string and `null` by default
+	 */
+	firstHeader: string,
+	/**
+	 * Set footer string for the first page, could format the string and `null` by default
+	 */
+	firstFooter: string
+}
+
 export type AutoFilter = string | {
 	from: string | { row: number; column: number };
 	to: string | { row: number; column: number };
@@ -783,26 +818,26 @@ export interface Image {
 	buffer?: Buffer;
 }
 export interface IAnchor {
-    col: number;
-    row: number;
-    nativeCol: number;
-    nativeRow: number;
-    nativeColOff: number;
-    nativeRowOff: number;
+	col: number;
+	row: number;
+	nativeCol: number;
+	nativeRow: number;
+	nativeColOff: number;
+	nativeRowOff: number;
 }
-export class Anchor implements IAnchor{
-    col: number;
-    nativeCol: number;
-    nativeColOff: number;
-    nativeRow: number;
-    nativeRowOff: number;
-    row: number;
+export class Anchor implements IAnchor {
+	col: number;
+	nativeCol: number;
+	nativeColOff: number;
+	nativeRow: number;
+	nativeRowOff: number;
+	row: number;
 
-    private readonly colWidth: number;
-    private readonly rowHeight: number;
-    worksheet: Worksheet;
+	private readonly colWidth: number;
+	private readonly rowHeight: number;
+	worksheet: Worksheet;
 
-    constructor(model?: IAnchor|object);
+	constructor(model?: IAnchor | object);
 }
 export interface ImageRange {
 	tl: { col: number; row: number } | Anchor;
@@ -874,6 +909,7 @@ export interface WorksheetModel {
 	// dataValidations: this.dataValidations.model,
 	properties: WorksheetProperties;
 	pageSetup: Partial<PageSetup>;
+	headerFooter: HeaderFooter;
 	rowBreaks: RowBreak[];
 	views: WorksheetView[];
 	autoFilter: AutoFilter;
@@ -892,6 +928,11 @@ export interface Worksheet {
 	 * Contains information related to how a worksheet is printed
 	 */
 	pageSetup: Partial<PageSetup>;
+
+	/**
+	 * Worksheet Header and Footer
+	 */
+	headerFooter: HeaderFooter;
 
 	/**
 	 * Worksheet State
