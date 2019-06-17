@@ -227,30 +227,24 @@ module.exports = {
         expect(ws.getRow(2).values).to.deep.equal([, 'one', 'two', 'three']);
         expect(ws.getRow(3).values).to.deep.equal([, '2,1', '2,2', '2,3']);
 
-        expect(ws.getRow(3).style).to.deep.equal({
-          alignment: {
-            horizontal: 'left',
-            vertical: 'middle',
-          },
+        expect(ws.getRow(3).style.alignment).to.deep.equal({
+          horizontal: 'left',
+          vertical: 'middle',
         });
-        expect(ws.getCell('A2').style).to.deep.equal({
-          border: {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' },
-          },
+        expect(ws.getCell('A2').style.border).to.deep.equal({
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' },
         });
-        expect(ws.getCell('A3').style).to.deep.equal({
-          alignment: {
-            horizontal: 'left',
-            vertical: 'middle',
-          },
-          fill: {
-            type: 'pattern',
-            pattern: 'darkVertical',
-            fgColor: { argb: 'FFFF0000' },
-          },
+        expect(ws.getCell('A3').style.alignment).to.deep.equal({
+          horizontal: 'left',
+          vertical: 'middle',
+        });
+        expect(ws.getCell('A3').style.fill).to.deep.equal({
+          type: 'pattern',
+          pattern: 'darkVertical',
+          fgColor: { argb: 'FFFF0000' },
         });
       },
     },

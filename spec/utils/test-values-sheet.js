@@ -238,9 +238,6 @@ const self = {
       // test fonts and formats
       expect(ws.getCell('A5').value).to.equal(self.testValues.str);
       expect(ws.getCell('A5').type).to.equal(Excel.ValueType.String);
-      expect(ws.getCell('A5').font).to.deep.equal(
-        self.styles.fonts.arialBlackUI14
-      );
       expect(ws.getCell('B5').value).to.equal(self.testValues.str);
       expect(ws.getCell('B5').type).to.equal(Excel.ValueType.String);
       expect(ws.getCell('B5').font).to.deep.equal(
