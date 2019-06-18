@@ -369,19 +369,19 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 ```javascript
 // 代码中出现的&开头字符对应变量，相关信息可查阅下文的变量表
 // 设置页脚(默认居中),结果：“第 2 页，共 16 页”
-worksheet.headerFooter.oddFooter = "第 &N 页，共 &P 页";
+worksheet.headerFooter.oddFooter = "第 &P 页，共 &N 页";
 
 // 设置页脚(默认居中)加粗,结果：“第 2 页，共 16 页”
-worksheet.headerFooter.oddFooter = "&B第 &N 页，共 &P 页";
+worksheet.headerFooter.oddFooter = "&B第 &P 页，共 &N 页";
 
 // 设置左边页脚为18px大小并倾斜,结果：“第 2 页，共 16 页”
-worksheet.headerFooter.oddFooter = "&L&18&I第 &N 页，共 &P 页";
+worksheet.headerFooter.oddFooter = "&L&18&I第 &P 页，共 &N 页";
 
 // 设置中间页眉为灰色微软雅黑,结果：“52 exceljs”
 worksheet.headerFooter.oddHeader = "&C&KCCCCCC&\"微软雅黑\"52 exceljs";
 
 // 设置页脚的左中右文本，结果：页脚左“exceljs” 页脚中“demo.xlsx” 页脚右“第 2 页”
-worksheet.headerFooter.oddFooter = "&Lexceljs&C&F&R第 &N 页";
+worksheet.headerFooter.oddFooter = "&Lexceljs&C&F&R第 &P 页";
 
 // 为首页设置独特的内容
 worksheet.headerFooter.differentFirst = true;

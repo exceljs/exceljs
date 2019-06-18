@@ -382,19 +382,19 @@ Warring: Not support add image
 
 ```javascript
 // Set footer (default centered), result: "Page 2 of 16"
-worksheet.headerFooter.oddFooter = "Page &N of &P";
+worksheet.headerFooter.oddFooter = "Page &P of &N";
 
 // Set the footer (default centered) to bold, resulting in: "Page 2 of 16"
-worksheet.headerFooter.oddFooter = "Page &N of &P";
+worksheet.headerFooter.oddFooter = "Page &P of &N";
 
 // Set the left footer to 18px and italicize. Result: "Page 2 of 16"
-worksheet.headerFooter.oddFooter = "&LPage &N of &P";
+worksheet.headerFooter.oddFooter = "&LPage &P of &N";
 
 // Set the middle header to gray Aril, the result: "52 exceljs"
 worksheet.headerFooter.oddHeader = "&C&KCCCCCC&\"Aril\"52 exceljs";
 
 // Set the left, center, and right text of the footer. Result: “Exceljs” in the footer left. “demo.xlsx” in the footer center. “Page 2” in the footer right
-worksheet.headerFooter.oddFooter = "&Lexceljs&C&F&RPage &N";
+worksheet.headerFooter.oddFooter = "&Lexceljs&C&F&RPage &P";
 
 // Add different header & footer for the first page
 worksheet.headerFooter.differentFirst = true;
