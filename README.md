@@ -35,6 +35,13 @@ npm install exceljs
     <a href="https://github.com/exceljs/exceljs/issues/634">The worksheet.properties.defaultRowHeight can't work!! How to set the rows height, help!! #634</a> and
     <a href="https://github.com/exceljs/exceljs/issues/696">Default row height doesn't work ? #696</a>.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/854">Always keep first font #854</a>.
+    Many thanks to <a href="https://github.com/dogusev">Dmitriy Gusev</a> for this contribution.
+    This should fix <a href="https://github.com/exceljs/exceljs/issues/816">document scale (width only) is different after read & write #816</a>,
+    <a href="https://github.com/exceljs/exceljs/issues/833">Default font from source document can not be parsed. #833</a> and
+    <a href="https://github.com/exceljs/exceljs/issues/849">Wrong base font: hardcoded Calibri instead of font from the document #849</a>.
+  </li>
 </ul>
 
 # Contributions
