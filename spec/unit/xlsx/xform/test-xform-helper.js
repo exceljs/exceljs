@@ -1,14 +1,12 @@
 'use strict';
 
 const Sax = require('sax');
-const chai = require('chai');
+const {expect} = require('chai');
 const _ = require('../../../utils/under-dash');
 
 const XmlStream = require('../../../../lib/utils/xml-stream');
 const CompositeXform = require('../../../../lib/xlsx/xform/composite-xform');
 const BooleanXform = require('../../../../lib/xlsx/xform/simple/boolean-xform');
-
-const { expect } = chai;
 
 function getExpectation(expectation, name) {
   if (!expectation.hasOwnProperty(name)) {
@@ -88,12 +86,12 @@ const its = {
           children: [
             {
               name: 'pre',
-              xform: new BooleanXform({ tag: 'pre', attr: 'val' }),
+              xform: new BooleanXform({tag: 'pre', attr: 'val'}),
             },
-            { name: 'child', xform: expectation.create() },
+            {name: 'child', xform: expectation.create()},
             {
               name: 'post',
-              xform: new BooleanXform({ tag: 'post', attr: 'val' }),
+              xform: new BooleanXform({tag: 'post', attr: 'val'}),
             },
           ],
         });
@@ -115,7 +113,7 @@ const its = {
           'xml'
         )}<post/></compy>`;
         const childXform = expectation.create();
-        const result = { pre: true };
+        const result = {pre: true};
         result[childXform.tag] = getExpectation(expectation, 'parsedModel');
         result.post = true;
         const xform = new CompositeXform({
@@ -123,12 +121,12 @@ const its = {
           children: [
             {
               name: 'pre',
-              xform: new BooleanXform({ tag: 'pre', attr: 'val' }),
+              xform: new BooleanXform({tag: 'pre', attr: 'val'}),
             },
-            { name: childXform.tag, xform: childXform },
+            {name: childXform.tag, xform: childXform},
             {
               name: 'post',
-              xform: new BooleanXform({ tag: 'post', attr: 'val' }),
+              xform: new BooleanXform({tag: 'post', attr: 'val'}),
             },
           ],
         });

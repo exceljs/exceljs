@@ -7,7 +7,7 @@
     {"id": 167, "formatCode": "# ?/?%"}
   ],
   "fonts": [
-    {"size": 11, "color": {"theme":1}, "name": "Calibri", "family": 2, "scheme": "minor"},
+    {"size": 18, "color": {"theme":1}, "name": "Bauhaus 93", "family": 5, "scheme": "minor"},
     {"bold": true, "underline": "double", "size": 16, "name": "Comic Sans MS", "family": 4},
     {"italic": true, "underline":  true, "size": 14, "name": "Arial Black", "family": 2}
   ],

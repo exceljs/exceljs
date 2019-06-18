@@ -12,10 +12,10 @@
     </numFmts>
     <fonts count="3" x14ac:knownFonts="1">
         <font>
-            <sz val="11"/>
             <color theme="1"/>
-            <name val="Calibri"/>
-            <family val="2"/>
+            <family val="5"/>
+            <sz val="18"/>
+            <name val="Bauhaus 93"/>
             <scheme val="minor"/>
         </font>
         <font>
