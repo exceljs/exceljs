@@ -1127,6 +1127,26 @@ export interface WorkbookProperties {
 	date1904: boolean;
 }
 
+export interface JSZipGeneratorOptions {
+	/**
+	 * @default DEFLATE
+	 */
+	compression: 'STORE' | 'DEFLATE';
+	compressionOptions: null | {
+		/**
+		 * @default 6
+		 */
+		level: number;
+	};
+}
+
+export interface XlsxWriteOptions extends stream.xlsx.WorkbookWriterOptions {
+	/**
+	 * The option passed to JsZip#generateAsync(options)
+	 */
+	zip: Partial<JSZipGeneratorOptions>;
+}
+
 export interface Xlsx {
 	/**
 	 * read from a file
@@ -1153,17 +1173,17 @@ export interface Xlsx {
 	/**
 	 * write to a buffer
 	 */
-	writeBuffer(): Promise<Buffer>;
+	writeBuffer(options?: Partial<XlsxWriteOptions>): Promise<Buffer>;
 
 	/**
 	 * write to a file
 	 */
-	writeFile(path: string): Promise<void>;
+	writeFile(path: string, options?: Partial<XlsxWriteOptions>): Promise<void>;
 
 	/**
 	 * write to a stream
 	 */
-	write(stream: Stream): Promise<void>;
+	write(stream: Stream, options?: Partial<XlsxWriteOptions>): Promise<void>;
 }
 
 export interface CsvReadOptions {
