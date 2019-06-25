@@ -362,6 +362,7 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | 16K 197x273 mm                |  119      |
 
 ## 页眉和页脚{#header-footer}
+
 这里将介绍如何添加页眉和页脚，添加的内容主要是文本，比如时间，简介，文件信息等，并且可以设置文本的风格。此外，也可以针对首页，奇偶页设置不同的文本。
 
 警告：不支持添加图片
@@ -388,7 +389,9 @@ worksheet.headerFooter.differentFirst = true;
 worksheet.headerFooter.firstHeader = "Hello Exceljs";
 worksheet.headerFooter.firstFooter = "Hello World"
 ```
+
 **属性表**
+
 | 名称              | 默认值   | 描述 |
 | ----------------- | --------- | ----------- |
 |differentFirst|false|开启或关闭首页使用独特的文本内容|
@@ -401,6 +404,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 |firstFooter|null|首页的页脚内容，differentFirst = true 后有效|
 
 **变量表**
+
 | 名称                | 描述 |
 | -----------------  | ----------- |
 |&L|设置位置为左边|
