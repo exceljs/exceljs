@@ -27,6 +27,9 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/863">Feat configure headers and footers #863</a>.
     Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution.
   </li>
+  <li>
+    Fixed an issue with defaultRowHeight where the default value resulted in 'customHeight' property being set.
+  </li>
 </ul>
 
 # Contributions
