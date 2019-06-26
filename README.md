@@ -23,6 +23,13 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/862">zip: allow tuning compression for performance or size #862</a>.
     Many thanks to <a href="https://github.com/myfreeer">myfreeer</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/863">Feat configure headers and footers #863</a>.
+    Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution.
+  </li>
+  <li>
+    Fixed an issue with defaultRowHeight where the default value resulted in 'customHeight' property being set.
+  </li>
 </ul>
 
 # Contributions
@@ -59,7 +66,7 @@ To be clear, all contributions added to this library will be included in the lib
       <li><a href="#worksheet-state">Worksheet State</a></li>
       <li><a href="#worksheet-properties">Worksheet Properties</a></li>
       <li><a href="#page-setup">Page Setup</a></li>
-      <li><a href="#header-footer">Header Footer</a></li>
+      <li><a href="#headers-and-footers">Headers and Footers</a></li>
       <li>
         <a href="#worksheet-views">Worksheet Views</a>
         <ul>
@@ -367,7 +374,8 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 
 Here's how to add headers and footers. The added content is mainly text, such as time, introduction, file information, etc., and you can set the style of the text. In addition, you can set different texts for the first page and even page.
 
-Warring: Not support add image
+
+Note: Images are not currently supported.
 
 ```javascript
 // Set footer (default centered), result: "Page 2 of 16"
@@ -395,35 +403,35 @@ worksheet.headerFooter.firstFooter = "Hello World"
 
 | Name              | Default   | Description |
 | ----------------- | --------- | ----------- |
-|differentFirst|false| Set the value of differentFirst as true, which indicates that headers/footers for first page are different from the other pages|
-|differentOddEven|false|Set the value of differentOddEven as true, which indicates that headers/footers for odd and even pages are different|
-|oddHeader|null|Set header string for odd(default) pages, could format the string|
-|oddFooter|null|Set footer string for odd(default) pages, could format the string|
-|evenHeader|null|Set header string for even pages, could format the string|
-|evenFooter|null|Set footer string for even pages, could format the string|
-|firstHeader|null|Set header string for the first page, could format the string|
-|firstFooter|null|Set footer string for the first page, could format the string|
+| differentFirst    | false     | Set the value of differentFirst as true, which indicates that headers/footers for first page are different from the other pages |
+| differentOddEven  | false     | Set the value of differentOddEven as true, which indicates that headers/footers for odd and even pages are different |
+| oddHeader         | null      | Set header string for odd(default) pages, could format the string |
+| oddFooter         | null      | Set footer string for odd(default) pages, could format the string |
+| evenHeader        | null      | Set header string for even pages, could format the string |
+| evenFooter        | null      | Set footer string for even pages, could format the string |
+| firstHeader       | null      | Set header string for the first page, could format the string |
+| firstFooter       | null      | Set footer string for the first page, could format the string |
 
 **Script Commands**
 
-| Commands                | Description |
-| -----------------  | ----------- |
-|&L|Set position to the left|
-|&C|Set position to the center|
-|&R|Set position to the right|
-|&P|The current page number|
-|&N|The total number of pages|
-|&D|The current date|
-|&T|The current time|
-|&G|A picture|
-|&A|The worksheet name|
-|&F|The file name|
-|&B|Make text bold|
-|&I|Italicize text|
-|&U|Underline text|
-|&"font name"|font name, for example &"Aril"|
-|&font size|font size, for example 12|
-|&KHEXCode|font color, for example &KCCCCCC|
+| Commands     | Description |
+| ------------ | ----------- |
+| &L           | Set position to the left |
+| &C           | Set position to the center |
+| &R           | Set position to the right |
+| &P           | The current page number |
+| &N           | The total number of pages |
+| &D           | The current date |
+| &T           | The current time |
+| &G           | A picture |
+| &A           | The worksheet name |
+| &F           | The file name |
+| &B           | Make text bold |
+| &I           | Italicize text |
+| &U           | Underline text |
+| &"font name" | font name, for example &"Aril" |
+| &font size   | font size, for example 12 |
+| &KHEXCode    | font color, for example &KCCCCCC |
 
 ## Worksheet Views
 
