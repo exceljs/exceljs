@@ -370,12 +370,10 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | Double Japan Postcard Rotated |  82       |
 | 16K 197x273 mm                |  119      |
 
-## Headers and Footers
+## Header Footer
 
-Here's how to add headers and footers.
- The added content is mainly text, such as time, introduction, file information, etc.,
- and you can set the style of the text.
- In addition, you can set different texts for the first page and even page.
+Here's how to add headers and footers. The added content is mainly text, such as time, introduction, file information, etc., and you can set the style of the text. In addition, you can set different texts for the first page and even page.
+
 
 Note: Images are not currently supported.
 
@@ -400,7 +398,9 @@ worksheet.headerFooter.differentFirst = true;
 worksheet.headerFooter.firstHeader = "Hello Exceljs";
 worksheet.headerFooter.firstFooter = "Hello World"
 ```
+
 **Supported headerFooter settings**
+
 | Name              | Default   | Description |
 | ----------------- | --------- | ----------- |
 | differentFirst    | false     | Set the value of differentFirst as true, which indicates that headers/footers for first page are different from the other pages |
