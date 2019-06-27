@@ -20,7 +20,7 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/863">Feat configure headers and footers #863</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/874">Fix header and footer text format error in README.md #874</a>.
     Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution.
   </li>
 </ul>
