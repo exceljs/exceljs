@@ -1454,8 +1454,45 @@ export namespace stream {
 			useStyles: boolean;
 		}
 
+        interface ArchiverZipOptions {
+            comment: string;
+            forceLocalTime: boolean;
+            forceZip64: boolean;
+            store: boolean;
+            zlib: Partial<ZlibOptions>;
+        }
+
+        interface ZlibOptions {
+            /**
+             * @default constants.Z_NO_FLUSH
+             */
+            flush: number;
+            /**
+             * @default constants.Z_FINISH
+             */
+            finishFlush: number;
+            /**
+             * @default 16*1024
+             */
+            chunkSize: number;
+            windowBits: number;
+            level: number; // compression only
+            memLevel: number; // compression only
+            strategy: number; // compression only
+            dictionary: Buffer | NodeJS.TypedArray | DataView | ArrayBuffer; // deflate/inflate only, empty dictionary by default
+        }
+
+		interface WorkbookStreamWriterOptions extends WorkbookWriterOptions {
+
+            /**
+             * Specifies whether to add style information to the workbook.
+             * Styles can add some performance overhead. Default is false
+             */
+            zip: Partial<ArchiverZipOptions>;
+        }
+
 		class WorkbookWriter extends Workbook {
-			constructor(options: Partial<WorkbookWriterOptions>);
+			constructor(options: Partial<WorkbookStreamWriterOptions>);
 			// commit all worksheets, then add suplimentary files
 			commit(): Promise<void>;
 			addStyles(): Promise<void>;
