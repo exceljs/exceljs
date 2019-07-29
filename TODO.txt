@@ -3,6 +3,54 @@ TODO:
 
 On the way to the impossible we might find something eminently doable
 
+========================================================================================================================
+Tables
+sheet
+* add <tableParts>
+sheet.rels
+* add ref to ../../tables/table1.xml
+table1.xml
+* define the table
+Content_Types
+* add table1
+
+Notes:
+* in table1.xml, the tableColumns can define a dataDxfId (rel to styles.xml)
+  that specifies default format of new data
+* in table1.xml, the tableColumn name property must match the value in the
+  cell where the column header goes
+
+Table Properties:
+* ref: Top Left of table
+* name table.name
+* displayName: table.displayName
+* range - range of data cells (not including headers/footers)
+  => table.ref includes headers/footers
+  => autoFilter.ref includes headers only
+* headerRow - table.headerRowCount
+  * default: true, show/hide the headers
+* totalsRow - table.totalsRowShown="0" or table.totalsRowCount="1"
+  * default: false show/hide totals rows
+* columns - tableColumns[n]
+  * id - sequential number
+  * name - must correspond to top cell's value
+  * style -> dataDxfId
+    * inserts inline style into dxfs in styles.xml
+  * filterButton - autoFilter[n].hiddenButton="1"
+    * shows or hides the filter (default: true)
+  * totalsRowLabel - for column1
+  * totalsRowFunction - name of function, one of [none, count, etc]
+  * totalsRowFormula - if function is 'custom', a formula
+  * totalsRowResult - the value to show
+* style
+  * name - tableStyleInfo.name
+  * showFirstColumn - tableStyleInfo.showFirstColumn
+  * showLastColumn - tableStyleInfo.showLastColumn
+  * showRowStripes - tableStyleInfo.showRowStripes
+  * showColumnStripes - tableStyleInfo.showColumnStripes
+
+========================================================================================================================
+
 Page Setup
 
 Themes:

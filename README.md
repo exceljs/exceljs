@@ -23,6 +23,9 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/874">Fix header and footer text format error in README.md #874</a>.
     Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution.
   </li>
+  <li>
+    Added Tables. See <a href="#tables">Tables</a> for details.
+  </li>
 </ul>
 
 # Contributions
@@ -74,6 +77,8 @@ To be clear, all contributions added to this library will be included in the lib
       <li><a href="#merged-cells">Merged Cells</a></li>
       <li><a href="#defined-names">Defined Names</a></li>
       <li><a href="#data-validations">Data Validations</a></li>
+      <li><a href="#cell-comments">Cell Comments</a></li>
+      <li><a href="#tables">Tables</a></li>
       <li><a href="#styles">Styles</a>
         <ul>
           <li><a href="#number-formats">Number Formats</a></li>
@@ -892,6 +897,116 @@ ws.getCell('B1').note = {
   ],
 };
 ```
+
+## Tables
+
+Tables allow for in-sheet manipulation of tabular data.
+
+To add a table to a worksheet, define a table model and call addTable:
+
+```javascript
+// add a table to a sheet
+ws.addTable({
+  name: 'MyTable',
+  ref: 'A1',
+  headerRow: true,
+  totalsRow: true,
+  style: {
+    theme: 'TableStyleDark3',
+    showRowStripes: true,
+  },
+  columns: [
+    {name: 'Date', totalsRowLabel: 'Totals:', filterButton: true},
+    {name: 'Amount', totalsRowFunction: 'sum', filterButton: false},
+  ],
+  rows: [
+    [new Date('2019-07-20', 70.10],
+    [new Date('2019-07-21', 70.60],
+    [new Date('2019-07-22', 70.10],
+  ],
+});
+```
+
+Note: Adding a table to a worksheet will modify the sheet by placing
+headers and row data to the sheet.
+Any data on the sheet covered by the resulting table (including headers and
+totals) will be overwritten.
+
+### Table Properties
+
+The following table defines the properties supported by tables.
+
+| Table Property | Description       | Required | Default Value |
+| -------------- | ----------------- | -------- | ------------- |
+| name           | The name of the table | Y |    |
+| displayName    | The display name of the table | N | name |
+| ref            | Top left cell of the table | Y |   |
+| headerRow      | Show headers at top of table | N | true |
+| totalsRow      | Show totals at bottom of table | N | false |
+| style          | Extra style properties | N | {} |
+| columns        | Column definitions | Y |   |
+| rows           | Rows of data | Y |   |
+
+### Table Style Properties
+
+The following table defines the properties supported within the table
+style property.
+
+| Style Property     | Description       | Required | Default Value |
+| ------------------ | ----------------- | -------- | ------------- |
+| theme              | The colour theme of the table | N |  'TableStyleMedium2'  |
+| showFirstColumn    | Highlight the first column (bold) | N |  false  |
+| showLastColumn     | Highlight the last column (bold) | N |  false  |
+| showRowStripes     | Alternate rows shown with background colour | N |  false  |
+| showColumnStripes  | Alternate rows shown with background colour | N |  false  |
+
+### Table Column Properties
+
+The following table defines the properties supported within each table
+column.
+
+| Column Property    | Description       | Required | Default Value |
+| ------------------ | ----------------- | -------- | ------------- |
+| name               | The name of the column, also used in the header | Y |    |
+| filterButton       | Switches the filter control in the header | N |  false  |
+| totalsRowLabel     | Label to describe the totals row (first column) | N | 'Total' |
+| totalsRowFunction  | Name of the totals function | N | 'none' |
+| totalsRowFormula   | Optional formula for custom functions | N |   |
+
+### Totals Functions
+
+The following table list the valid values for the totalsRowFunction property
+defined by columns. If any value other than 'custom' is used, it is not
+necessary to include the associated formula as this will be inserted
+by the table.
+
+| Totals Functions   | Description       |
+| ------------------ | ----------------- |
+| none               | No totals function for this column |
+| average            | Compute average for the column |
+| countNums          | Count the entries that are numbers |
+| count              | Count of entries |
+| max                | The maximum value in this column |
+| min                | The minimum value in this column |
+| stdDev             | The standard deviation for this column |
+| var                | The variance for this column |
+| custom             | A custom formula. Requires an associated totalsRowFormula value. |
+
+### Table Style Themes
+
+Valid theme names follow the following pattern:
+
+* "TableStyle[Shade][Number]"
+
+Shades, Numbers can be one of:
+
+* Light, 1-21
+* Medium, 1-28
+* Dark, 1-11
+
+For no theme, use the value null.
+
+Note: custom table themes are not supported by exceljs yet.
 
 ## Styles
 

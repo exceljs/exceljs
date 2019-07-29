@@ -73,5 +73,6 @@
   "background": {},
   "mergeCells": {},
   "dataValidations": {},
-  "drawing": {}
+  "drawing": {},
+  "tables": {}
 }
