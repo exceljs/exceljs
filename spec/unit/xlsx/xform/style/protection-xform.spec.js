@@ -17,11 +17,11 @@ const expectations = [
     preparedModel: {
       locked: true,
     },
-    xml: '<protection locked="1"/>',
+    xml: '',
     get parsedModel() {
       return this.preparedModel;
     },
-    tests: ['render', 'renderIn', 'parse'],
+    tests: ['render', 'renderIn'],
   },
   {
     title: 'Unlocked',
