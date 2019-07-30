@@ -70,9 +70,9 @@
   "hyperlinks": [
     {"address": "B6", "rId": "rId1"}
   ],
-  "background": {},
-  "mergeCells": {},
-  "dataValidations": {},
-  "drawing": {},
-  "tables": {}
+  "background": null,
+  "mergeCells": null,
+  "dataValidations": null,
+  "drawing": null,
+  "tables": null
 }

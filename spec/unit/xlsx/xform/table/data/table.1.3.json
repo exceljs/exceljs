@@ -23,7 +23,7 @@
     }
   ],
   "style": {
-    "name": "TableStyleDark3",
+    "theme": "TableStyleDark3",
     "showFirstColumn": false,
     "showLastColumn": false,
     "showRowStripes": true,

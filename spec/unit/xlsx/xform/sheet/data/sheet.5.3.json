@@ -3,7 +3,7 @@
   "properties": {"defaultRowHeight": 14.4, "dyDescent": 0.55, "outlineLevelRow": 2, "outlineLevelCol": 0},
   "pageSetup": {
     "fitToPage": false,
-    "margins": {}
+    "margins": null
   },
   "rows": [
     {
@@ -14,12 +14,12 @@
       ]
     }
   ],
-  "background": {},
-  "mergeCells": {},
-  "dataValidations": {},
-  "drawing": {},
-  "cols": {},
-  "hyperlinks": {},
-  "views": {},
-  "tables": {}
+  "background": null,
+  "mergeCells": null,
+  "dataValidations": null,
+  "drawing": null,
+  "cols": null,
+  "hyperlinks": null,
+  "views": null,
+  "tables": null
 }
