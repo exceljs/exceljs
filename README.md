@@ -26,6 +26,12 @@ npm install exceljs
   <li>
     Added Tables. See <a href="#tables">Tables</a> for details.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/887">fix: #877 and #880</a>.
+    Many thanks to <a href="https://github.com/aexei">Alexander Heinrich</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/pull/877">bug: Hyperlink without text crashes write #877</a>
+    and <a href="https://github.com/exceljs/exceljs/pull/880">bug: malformed comment crashes on write #880</a>
+  </li>
 </ul>
 
 # Contributions
