@@ -20,15 +20,17 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/862">zip: allow tuning compression for performance or size #862</a>.
-    Many thanks to <a href="https://github.com/myfreeer">myfreeer</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/863">Feat configure headers and footers #863</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/874">Fix header and footer text format error in README.md #874</a>.
     Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution.
   </li>
   <li>
-    Fixed an issue with defaultRowHeight where the default value resulted in 'customHeight' property being set.
+    Added Tables. See <a href="#tables">Tables</a> for details.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/887">fix: #877 and #880</a>.
+    Many thanks to <a href="https://github.com/aexei">Alexander Heinrich</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/pull/877">bug: Hyperlink without text crashes write #877</a>
+    and <a href="https://github.com/exceljs/exceljs/pull/880">bug: malformed comment crashes on write #880</a>
   </li>
 </ul>
 
@@ -81,6 +83,8 @@ To be clear, all contributions added to this library will be included in the lib
       <li><a href="#merged-cells">Merged Cells</a></li>
       <li><a href="#defined-names">Defined Names</a></li>
       <li><a href="#data-validations">Data Validations</a></li>
+      <li><a href="#cell-comments">Cell Comments</a></li>
+      <li><a href="#tables">Tables</a></li>
       <li><a href="#styles">Styles</a>
         <ul>
           <li><a href="#number-formats">Number Formats</a></li>
@@ -370,10 +374,11 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | Double Japan Postcard Rotated |  82       |
 | 16K 197x273 mm                |  119      |
 
-## Header Footer
+## Headers and Footers
 
-Here's how to add headers and footers. The added content is mainly text, such as time, introduction, file information, etc., and you can set the style of the text. In addition, you can set different texts for the first page and even page.
-
+Here's how to add headers and footers.
+The added content is mainly text, such as time, introduction, file information, etc., and you can set the style of the text.
+In addition, you can set different texts for the first page and even page.
 
 Note: Images are not currently supported.
 
@@ -898,6 +903,116 @@ ws.getCell('B1').note = {
   ],
 };
 ```
+
+## Tables
+
+Tables allow for in-sheet manipulation of tabular data.
+
+To add a table to a worksheet, define a table model and call addTable:
+
+```javascript
+// add a table to a sheet
+ws.addTable({
+  name: 'MyTable',
+  ref: 'A1',
+  headerRow: true,
+  totalsRow: true,
+  style: {
+    theme: 'TableStyleDark3',
+    showRowStripes: true,
+  },
+  columns: [
+    {name: 'Date', totalsRowLabel: 'Totals:', filterButton: true},
+    {name: 'Amount', totalsRowFunction: 'sum', filterButton: false},
+  ],
+  rows: [
+    [new Date('2019-07-20', 70.10],
+    [new Date('2019-07-21', 70.60],
+    [new Date('2019-07-22', 70.10],
+  ],
+});
+```
+
+Note: Adding a table to a worksheet will modify the sheet by placing
+headers and row data to the sheet.
+Any data on the sheet covered by the resulting table (including headers and
+totals) will be overwritten.
+
+### Table Properties
+
+The following table defines the properties supported by tables.
+
+| Table Property | Description       | Required | Default Value |
+| -------------- | ----------------- | -------- | ------------- |
+| name           | The name of the table | Y |    |
+| displayName    | The display name of the table | N | name |
+| ref            | Top left cell of the table | Y |   |
+| headerRow      | Show headers at top of table | N | true |
+| totalsRow      | Show totals at bottom of table | N | false |
+| style          | Extra style properties | N | {} |
+| columns        | Column definitions | Y |   |
+| rows           | Rows of data | Y |   |
+
+### Table Style Properties
+
+The following table defines the properties supported within the table
+style property.
+
+| Style Property     | Description       | Required | Default Value |
+| ------------------ | ----------------- | -------- | ------------- |
+| theme              | The colour theme of the table | N |  'TableStyleMedium2'  |
+| showFirstColumn    | Highlight the first column (bold) | N |  false  |
+| showLastColumn     | Highlight the last column (bold) | N |  false  |
+| showRowStripes     | Alternate rows shown with background colour | N |  false  |
+| showColumnStripes  | Alternate rows shown with background colour | N |  false  |
+
+### Table Column Properties
+
+The following table defines the properties supported within each table
+column.
+
+| Column Property    | Description       | Required | Default Value |
+| ------------------ | ----------------- | -------- | ------------- |
+| name               | The name of the column, also used in the header | Y |    |
+| filterButton       | Switches the filter control in the header | N |  false  |
+| totalsRowLabel     | Label to describe the totals row (first column) | N | 'Total' |
+| totalsRowFunction  | Name of the totals function | N | 'none' |
+| totalsRowFormula   | Optional formula for custom functions | N |   |
+
+### Totals Functions
+
+The following table list the valid values for the totalsRowFunction property
+defined by columns. If any value other than 'custom' is used, it is not
+necessary to include the associated formula as this will be inserted
+by the table.
+
+| Totals Functions   | Description       |
+| ------------------ | ----------------- |
+| none               | No totals function for this column |
+| average            | Compute average for the column |
+| countNums          | Count the entries that are numbers |
+| count              | Count of entries |
+| max                | The maximum value in this column |
+| min                | The minimum value in this column |
+| stdDev             | The standard deviation for this column |
+| var                | The variance for this column |
+| custom             | A custom formula. Requires an associated totalsRowFormula value. |
+
+### Table Style Themes
+
+Valid theme names follow the following pattern:
+
+* "TableStyle[Shade][Number]"
+
+Shades, Numbers can be one of:
+
+* Light, 1-21
+* Medium, 1-28
+* Dark, 1-11
+
+For no theme, use the value null.
+
+Note: custom table themes are not supported by exceljs yet.
 
 ## Styles
 
@@ -2030,4 +2145,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.12.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/819">(chore) increment unzipper to 0.9.12 to address npm advisory 886 #819</a>. Many thanks to <a href="https://github.com/kreig303">Kreig Zimmerman</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/817">docs(README): improve docs #817</a>. Many thanks to <a href="https://github.com/zypA13510">Yuping Zuo</a> for this contribution. </li> <li> <p> Merged <a href="https://github.com/exceljs/exceljs/pull/823">add comment support #529 #823</a>. Many thanks to <a href="https://github.com/ilimei">ilimei</a> for this contribution. </p> <p>This fixes the following issues:</p> <ul> <li><a href="https://github.com/exceljs/exceljs/issues/202">Is it possible to add comment on a cell? #202</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/451">Add comment to cell #451</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/503">Excel add comment on cell #503</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/529">How to add Cell comment #529</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/707">Please add example to how I can insert comments for a cell #707</a></li> </ul> </li> </ul> |
 | 1.12.1  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/822">fix issue with print area defined name corrupting file #822</a>. Many thanks to <a href="https://github.com/donaldsonjulia">Julia Donaldson</a> for this contribution. This fixes issue <a href="https://github.com/exceljs/exceljs/issues/664">Defined Names Break/Corrupt Excel File into Repair Mode #664</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/831">Only keep at most 31 characters for sheetname #831</a>. Many thanks to <a href="https://github.com/kaleo211">Xuebin He</a> for this contribution. This fixes issue <a href="https://github.com/exceljs/exceljs/issues/398">Limit worksheet name length to 31 characters #398</a>. </li> </ul> |
 | 1.12.2  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/834">add cn doc #834</a> and <a href="https://github.com/exceljs/exceljs/pull/852">update cn doc #852</a>. Many thanks to <a href="https://github.com/loverto">flydragon</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/853">fix minor spelling mistake in readme #853</a>. Many thanks to <a href="https://github.com/ridespirals">John Varga</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/855">Fix defaultRowHeight not working #855</a>. Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution. This should fix <a href="https://github.com/exceljs/exceljs/issues/422">row height doesn't apply to row #422</a>, <a href="https://github.com/exceljs/exceljs/issues/634">The worksheet.properties.defaultRowHeight can't work!! How to set the rows height, help!! #634</a> and <a href="https://github.com/exceljs/exceljs/issues/696">Default row height doesn't work ? #696</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/854">Always keep first font #854</a>. Many thanks to <a href="https://github.com/dogusev">Dmitriy Gusev</a> for this contribution. This should fix <a href="https://github.com/exceljs/exceljs/issues/816">document scale (width only) is different after read & write #816</a>, <a href="https://github.com/exceljs/exceljs/issues/833">Default font from source document can not be parsed. #833</a> and <a href="https://github.com/exceljs/exceljs/issues/849">Wrong base font: hardcoded Calibri instead of font from the document #849</a>. </li> </ul> |
+| 1.13.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/862">zip: allow tuning compression for performance or size #862</a>. Many thanks to <a href="https://github.com/myfreeer">myfreeer</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/863">Feat configure headers and footers #863</a>. Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution. </li> <li> Fixed an issue with defaultRowHeight where the default value resulted in 'customHeight' property being set. </li> </ul> |
 

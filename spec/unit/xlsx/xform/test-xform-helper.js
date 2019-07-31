@@ -44,8 +44,9 @@ const its = {
 
         const xform = expectation.create();
         const xmlStream = new XmlStream();
-        xform.render(xmlStream, model);
+        xform.render(xmlStream, model, 0);
         // console.log(xmlStream.xml);
+        // console.log(result);
 
         expect(xmlStream.xml).xml.to.equal(result);
         resolve();

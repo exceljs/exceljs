@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -86,10 +86,10 @@
     "fast-csv": "^2.4.1",
     "jszip": "^3.1.5",
     "moment": "^2.22.2",
-    "unzipper": "^0.9.12",
     "promish": "^5.1.1",
     "sax": "^1.2.4",
-    "tmp": "^0.1.0"
+    "tmp": "^0.1.0",
+    "unzipper": "^0.9.12"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
