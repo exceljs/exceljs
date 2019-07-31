@@ -47,5 +47,6 @@
     {"id": 5, "max": 2, "min": 0, "man": 1}
   ],
   "comments": [],
-  "media": []
+  "media": [],
+  "tables": []
 }
