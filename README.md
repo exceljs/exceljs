@@ -20,17 +20,8 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/874">Fix header and footer text format error in README.md #874</a>.
-    Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution.
-  </li>
-  <li>
-    Added Tables. See <a href="#tables">Tables</a> for details.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/887">fix: #877 and #880</a>.
-    Many thanks to <a href="https://github.com/aexei">Alexander Heinrich</a> for this contribution.
-    This fixes <a href="https://github.com/exceljs/exceljs/pull/877">bug: Hyperlink without text crashes write #877</a>
-    and <a href="https://github.com/exceljs/exceljs/pull/880">bug: malformed comment crashes on write #880</a>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/889">Add Compression level option to WorkbookWriterOptions for streaming #889</a>.
+    Many thanks to <a href="https://github.com/ABenassi87">Alfredo Benassi</a> for this contribution.
   </li>
 </ul>
 
@@ -2146,4 +2137,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.12.1  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/822">fix issue with print area defined name corrupting file #822</a>. Many thanks to <a href="https://github.com/donaldsonjulia">Julia Donaldson</a> for this contribution. This fixes issue <a href="https://github.com/exceljs/exceljs/issues/664">Defined Names Break/Corrupt Excel File into Repair Mode #664</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/831">Only keep at most 31 characters for sheetname #831</a>. Many thanks to <a href="https://github.com/kaleo211">Xuebin He</a> for this contribution. This fixes issue <a href="https://github.com/exceljs/exceljs/issues/398">Limit worksheet name length to 31 characters #398</a>. </li> </ul> |
 | 1.12.2  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/834">add cn doc #834</a> and <a href="https://github.com/exceljs/exceljs/pull/852">update cn doc #852</a>. Many thanks to <a href="https://github.com/loverto">flydragon</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/853">fix minor spelling mistake in readme #853</a>. Many thanks to <a href="https://github.com/ridespirals">John Varga</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/855">Fix defaultRowHeight not working #855</a>. Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution. This should fix <a href="https://github.com/exceljs/exceljs/issues/422">row height doesn't apply to row #422</a>, <a href="https://github.com/exceljs/exceljs/issues/634">The worksheet.properties.defaultRowHeight can't work!! How to set the rows height, help!! #634</a> and <a href="https://github.com/exceljs/exceljs/issues/696">Default row height doesn't work ? #696</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/854">Always keep first font #854</a>. Many thanks to <a href="https://github.com/dogusev">Dmitriy Gusev</a> for this contribution. This should fix <a href="https://github.com/exceljs/exceljs/issues/816">document scale (width only) is different after read & write #816</a>, <a href="https://github.com/exceljs/exceljs/issues/833">Default font from source document can not be parsed. #833</a> and <a href="https://github.com/exceljs/exceljs/issues/849">Wrong base font: hardcoded Calibri instead of font from the document #849</a>. </li> </ul> |
 | 1.13.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/862">zip: allow tuning compression for performance or size #862</a>. Many thanks to <a href="https://github.com/myfreeer">myfreeer</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/863">Feat configure headers and footers #863</a>. Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution. </li> <li> Fixed an issue with defaultRowHeight where the default value resulted in 'customHeight' property being set. </li> </ul> |
+| 1.14.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/874">Fix header and footer text format error in README.md #874</a>. Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution. </li> <li> Added Tables. See <a href="#tables">Tables</a> for details. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/887">fix: #877 and #880</a>. Many thanks to <a href="https://github.com/aexei">Alexander Heinrich</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/pull/877">bug: Hyperlink without text crashes write #877</a> and <a href="https://github.com/exceljs/exceljs/pull/880">bug: malformed comment crashes on write #880</a> </li> </ul> |
 
