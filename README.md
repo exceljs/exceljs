@@ -1005,6 +1005,102 @@ For no theme, use the value null.
 
 Note: custom table themes are not supported by exceljs yet.
 
+### Modifying Tables
+
+Tables support a set of manipulation functions that allow data to be
+added or removed and some properties to be changed. Since many of these
+operations may have on-sheet effects, the changes must be committed
+once complete.
+
+All index values in the table are zero based, so the first row number
+and first column number is 0.
+
+**Adding or Removing Headers and Totals**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// turn header row on
+table.headerRow = true;
+
+// turn totals row off
+table.totalsRow = false;
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+**Relocating a Table**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// table top-left move to D4
+table.ref = 'D4';
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+**Adding and Removing Rows**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// remove first two rows
+table.removeRows(0, 2);
+
+// insert new rows at index 5
+table.addRow([new Date('2019-08-05'), 5, 'Mid'], 5);
+
+// append new row to bottom of table
+table.addRow([new Date('2019-08-10'), 10, 'End']);
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+**Adding and Removing Columns**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// remove second column
+table.removeColumnss(1, 1);
+
+// insert new column (with data) at index 1
+table.addColumn(
+  {name: 'Letter', totalsRowFunction: 'custom', totalsRowFormula: 'ROW()', totalsRowResult: 6, filterButton: true},
+  ['a', 'b', 'c', 'd'],
+  2
+);
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+**Change Column Properties**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// Get Column Wrapper for second column
+const column = table.getColumn(1);
+
+// set some properties
+column.name = 'Code';
+column.filterButton = true;
+column.style = {font:{bold: true, name: 'Comic Sans MS'}};
+column.totalsRowLabel = 'Totals';
+column.totalsRowFunction = 'custom';
+column.totalsRowFormula = 'ROW()';
+column.totalsRowResult = 10;
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+
 ## Styles
 
 Cells, Rows and Columns each support a rich set of styles and formats that affect how the cells are displayed.
