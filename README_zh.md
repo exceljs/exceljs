@@ -1098,7 +1098,7 @@ ws.getCell('A3').fill = {
 
 
 // fill A4 with red-green gradient from center
-ws.getCell('A2').fill = {
+ws.getCell('A4').fill = {
   type: 'gradient',
   gradient: 'path',
   center:{left:0.5,top:0.5},
