@@ -112,6 +112,7 @@ const expectations = [
       borderId: 0,
       xfId: 0,
       alignment: { horizontal: 'center', vertical: 'middle' },
+      protection: { locked: false },
     },
     xml:
       '<xf borderId="1" fillId="10" fontId="3" numFmtId="0" xfId="0" applyProtection="1" applyAlignment="1" applyFill="1" applyBorder="1" applyFont="1"><protection locked="0"/><alignment horizontal="center" vertical="center"/></xf>',

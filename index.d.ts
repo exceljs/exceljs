@@ -288,10 +288,15 @@ export interface Alignment {
 	textRotation: number | 'vertical';
 }
 
+export interface Protection {
+	locked: boolean;
+}
+
 export interface Style {
 	numFmt: string;
 	font: Partial<Font>;
 	alignment: Partial<Alignment>;
+	protection: Partial<Protection>;
 	border: Partial<Borders>;
 	fill: Fill;
 }
