@@ -36,6 +36,7 @@
     "strict": ["off"],
     "class-methods-use-this": ["off"],
     "no-return-assign": ["off"],
+    "no-continue": ["off"],
     "default-case": ["off"],
     "object-curly-spacing": ["error", "never"]
   }
