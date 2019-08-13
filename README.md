@@ -23,6 +23,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/889">Add Compression level option to WorkbookWriterOptions for streaming #889</a>.
     Many thanks to <a href="https://github.com/ABenassi87">Alfredo Benassi</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/903">Feature/Cell Protection #903</a>.
+    Many thanks to <a href="https://github.com/karabaesh">karabaesh</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
@@ -1397,6 +1401,21 @@ expect(ws.getCell('A1').text).to.equal('This is a colorful text with in-cell for
 expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 
 ```
+
+### Cell Protection
+
+Cell level protection can be modified using the protection property.
+
+```javascript
+ws.getCell('A1').protection = {locked: false}
+```
+
+**Supported Protection Properties**
+
+| Property | Default | Description |
+| -------- | ------- | ----------- |
+| locked   | true    | Specifies whether a cell will be locked if the sheet it protected. |
+
 
 ## Outline Levels
 
