@@ -24,8 +24,9 @@ npm install exceljs
     Many thanks to <a href="https://github.com/ABenassi87">Alfredo Benassi</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/903">Feature/Cell Protection #903</a>.
-    Many thanks to <a href="https://github.com/karabaesh">karabaesh</a> for this contribution.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/903">Feature/Cell Protection #903</a> and
+    <a href="https://github.com/exceljs/exceljs/pull/907">Feature/Sheet Protection #907</a>.
+    Many thanks to <a href="https://github.com/karabaesh">karabaesh</a> for these contributions.
   </li>
 </ul>
 
@@ -92,6 +93,7 @@ To be clear, all contributions added to this library will be included in the lib
       </li>
       <li><a href="#outline-levels">Outline Levels</a></li>
       <li><a href="#images">Images</a></li>
+      <li><a href="#sheet-protection">Sheet Protection</a></li>
       <li><a href="#file-io">File I/O</a>
         <ul>
           <li><a href="#xlsx">XLSX</a>
@@ -1559,6 +1561,37 @@ worksheet.addImage(imageId2, {
   ext: { width: 500, height: 200 }
 });
 ```
+
+## Sheet Protection
+
+Worksheets can be protected from modification by adding a password.
+
+```javascript
+await worksheet.protect('the-password', options);
+```
+
+See <a href="#cell-protection">Cell Protection</a> for details on how
+to modify individual cell protection.
+
+**Sheet Protection Options**
+
+| Field               | Default | Description |
+| ------------------- | ------- | ----------- |
+| selectLockedCells   | true    | Lets the user select locked cells |
+| selectUnlockedCells | true    | Lets the user select unlocked cells |
+| formatCells         | false   | Lets the user format cells |
+| formatColumns       | false   | Lets the user format columns |
+| formatRows          | false   | Lets the user format rows |
+| insertRows          | false   | Lets the user insert rows |
+| insertColumns       | false   | Lets the user insert columns |
+| insertHyperlinks    | false   | Lets the user insert hyperlinks |
+| deleteRows          | false   | Lets the user delete rows |
+| deleteColumns       | false   | Lets the user delete columns |
+| sort                | false   | Lets the user sort data |
+| autoFilter          | false   | Lets the user filter data in tables |
+| pivotTables         | false   | Lets the user use pivot tables |
+
+
 
 ## File I/O
 
