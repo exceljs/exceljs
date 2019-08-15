@@ -816,6 +816,24 @@ export type AutoFilter = string | {
 	to: string | { row: number; column: number };
 };
 
+export interface WorksheetProtection {
+	objects: boolean;
+	scenarios: boolean;
+	selectLockedCells: boolean;
+	selectUnlockedCells: boolean;
+	formatCells: boolean;
+	formatColumns: boolean;
+	formatRows: boolean;
+	insertColumns: boolean;
+	insertRows: boolean;
+	insertHyperlinks: boolean;
+	deleteColumns: boolean;
+	deleteRows: boolean;
+	sort: boolean;
+	autoFilter: boolean;
+	pivotTables: boolean;
+}
+
 export interface Image {
 	extension: 'jpeg' | 'png' | 'gif';
 	base64?: string;
@@ -1129,6 +1147,12 @@ export interface Worksheet {
 	commit(): void;
 
 	model: WorksheetModel;
+
+	/**
+	 * Worksheet protection
+	 */
+	protect(password: string, options: Partial<WorksheetProtection>);
+	unprotect();
 }
 
 export interface WorksheetProperties {
