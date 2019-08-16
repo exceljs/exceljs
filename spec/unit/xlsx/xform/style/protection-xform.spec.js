@@ -14,25 +14,33 @@ const expectations = [
   {
     title: 'Locked',
     create: () => new ProtectionXform(),
-    preparedModel: {
-      locked: true,
-    },
+    preparedModel: {locked: true, hidden: false},
     xml: '',
-    get parsedModel() {
-      return this.preparedModel;
-    },
+    parsedModel: {},
     tests: ['render', 'renderIn'],
   },
   {
     title: 'Unlocked',
     create: () => new ProtectionXform(),
-    preparedModel: {
-      locked: false,
-    },
+    preparedModel: {locked: false, hidden: false},
     xml: '<protection locked="0"/>',
-    get parsedModel() {
-      return this.preparedModel;
-    },
+    get parsedModel() {return this.preparedModel;},
+    tests: ['render', 'renderIn', 'parse'],
+  },
+  {
+    title: 'Hidden',
+    create: () => new ProtectionXform(),
+    preparedModel: {locked: true, hidden: true},
+    xml: '<protection hidden="1"/>',
+    get parsedModel() {return this.preparedModel;},
+    tests: ['render', 'renderIn', 'parse'],
+  },
+  {
+    title: 'Unlocked and Hidden',
+    create: () => new ProtectionXform(),
+    preparedModel: {locked: false, hidden: true},
+    xml: '<protection locked="0" hidden="1"/>',
+    get parsedModel() {return this.preparedModel;},
     tests: ['render', 'renderIn', 'parse'],
   },
 ];
