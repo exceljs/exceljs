@@ -1574,10 +1574,21 @@ Worksheets can be protected from modification by adding a password.
 await worksheet.protect('the-password', options);
 ```
 
+Worksheet protection can also be removed:
+
+```javascript
+worksheet.unprotect();
+```
+
+
 See <a href="#cell-protection">Cell Protection</a> for details on how
 to modify individual cell protection.
 
-**Sheet Protection Options**
+**Note:** While the protect() function returns a Promise indicating
+that it is async, the current implementation runs on the main
+thread and will use approx 600ms on an average CPU.
+
+### Sheet Protection Options
 
 | Field               | Default | Description |
 | ------------------- | ------- | ----------- |
