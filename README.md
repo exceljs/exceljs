@@ -1409,14 +1409,18 @@ expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 Cell level protection can be modified using the protection property.
 
 ```javascript
-ws.getCell('A1').protection = {locked: false}
+ws.getCell('A1').protection = {
+  locked: false,
+  hidden: true,
+};
 ```
 
 **Supported Protection Properties**
 
 | Property | Default | Description |
 | -------- | ------- | ----------- |
-| locked   | true    | Specifies whether a cell will be locked if the sheet it protected. |
+| locked   | true    | Specifies whether a cell will be locked if the sheet is protected. |
+| hidden   | false   | Specifies whether a cell's formula will be visible if the sheet is protected. |
 
 
 ## Outline Levels
