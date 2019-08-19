@@ -23,6 +23,11 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/889">Add Compression level option to WorkbookWriterOptions for streaming #889</a>.
     Many thanks to <a href="https://github.com/ABenassi87">Alfredo Benassi</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/903">Feature/Cell Protection #903</a> and
+    <a href="https://github.com/exceljs/exceljs/pull/907">Feature/Sheet Protection #907</a>.
+    Many thanks to <a href="https://github.com/karabaesh">karabaesh</a> for these contributions.
+  </li>
 </ul>
 
 # Contributions
@@ -88,6 +93,7 @@ To be clear, all contributions added to this library will be included in the lib
       </li>
       <li><a href="#outline-levels">Outline Levels</a></li>
       <li><a href="#images">Images</a></li>
+      <li><a href="#sheet-protection">Sheet Protection</a></li>
       <li><a href="#file-io">File I/O</a>
         <ul>
           <li><a href="#xlsx">XLSX</a>
@@ -1005,6 +1011,102 @@ For no theme, use the value null.
 
 Note: custom table themes are not supported by exceljs yet.
 
+### Modifying Tables
+
+Tables support a set of manipulation functions that allow data to be
+added or removed and some properties to be changed. Since many of these
+operations may have on-sheet effects, the changes must be committed
+once complete.
+
+All index values in the table are zero based, so the first row number
+and first column number is 0.
+
+**Adding or Removing Headers and Totals**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// turn header row on
+table.headerRow = true;
+
+// turn totals row off
+table.totalsRow = false;
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+**Relocating a Table**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// table top-left move to D4
+table.ref = 'D4';
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+**Adding and Removing Rows**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// remove first two rows
+table.removeRows(0, 2);
+
+// insert new rows at index 5
+table.addRow([new Date('2019-08-05'), 5, 'Mid'], 5);
+
+// append new row to bottom of table
+table.addRow([new Date('2019-08-10'), 10, 'End']);
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+**Adding and Removing Columns**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// remove second column
+table.removeColumnss(1, 1);
+
+// insert new column (with data) at index 1
+table.addColumn(
+  {name: 'Letter', totalsRowFunction: 'custom', totalsRowFormula: 'ROW()', totalsRowResult: 6, filterButton: true},
+  ['a', 'b', 'c', 'd'],
+  2
+);
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+**Change Column Properties**
+
+```javascript
+const table = ws.getTable('MyTable');
+
+// Get Column Wrapper for second column
+const column = table.getColumn(1);
+
+// set some properties
+column.name = 'Code';
+column.filterButton = true;
+column.style = {font:{bold: true, name: 'Comic Sans MS'}};
+column.totalsRowLabel = 'Totals';
+column.totalsRowFunction = 'custom';
+column.totalsRowFormula = 'ROW()';
+column.totalsRowResult = 10;
+
+// commit the table changes into the sheet
+table.commit();
+```
+
+
 ## Styles
 
 Cells, Rows and Columns each support a rich set of styles and formats that affect how the cells are displayed.
@@ -1217,7 +1319,7 @@ ws.getCell('A3').fill = {
 
 
 // fill A4 with red-green gradient from center
-ws.getCell('A2').fill = {
+ws.getCell('A4').fill = {
   type: 'gradient',
   gradient: 'path',
   center:{left:0.5,top:0.5},
@@ -1301,6 +1403,25 @@ expect(ws.getCell('A1').text).to.equal('This is a colorful text with in-cell for
 expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 
 ```
+
+### Cell Protection
+
+Cell level protection can be modified using the protection property.
+
+```javascript
+ws.getCell('A1').protection = {
+  locked: false,
+  hidden: true,
+};
+```
+
+**Supported Protection Properties**
+
+| Property | Default | Description |
+| -------- | ------- | ----------- |
+| locked   | true    | Specifies whether a cell will be locked if the sheet is protected. |
+| hidden   | false   | Specifies whether a cell's formula will be visible if the sheet is protected. |
+
 
 ## Outline Levels
 
@@ -1444,6 +1565,48 @@ worksheet.addImage(imageId2, {
   ext: { width: 500, height: 200 }
 });
 ```
+
+## Sheet Protection
+
+Worksheets can be protected from modification by adding a password.
+
+```javascript
+await worksheet.protect('the-password', options);
+```
+
+Worksheet protection can also be removed:
+
+```javascript
+worksheet.unprotect();
+```
+
+
+See <a href="#cell-protection">Cell Protection</a> for details on how
+to modify individual cell protection.
+
+**Note:** While the protect() function returns a Promise indicating
+that it is async, the current implementation runs on the main
+thread and will use approx 600ms on an average CPU.
+
+### Sheet Protection Options
+
+| Field               | Default | Description |
+| ------------------- | ------- | ----------- |
+| selectLockedCells   | true    | Lets the user select locked cells |
+| selectUnlockedCells | true    | Lets the user select unlocked cells |
+| formatCells         | false   | Lets the user format cells |
+| formatColumns       | false   | Lets the user format columns |
+| formatRows          | false   | Lets the user format rows |
+| insertRows          | false   | Lets the user insert rows |
+| insertColumns       | false   | Lets the user insert columns |
+| insertHyperlinks    | false   | Lets the user insert hyperlinks |
+| deleteRows          | false   | Lets the user delete rows |
+| deleteColumns       | false   | Lets the user delete columns |
+| sort                | false   | Lets the user sort data |
+| autoFilter          | false   | Lets the user filter data in tables |
+| pivotTables         | false   | Lets the user use pivot tables |
+
+
 
 ## File I/O
 
