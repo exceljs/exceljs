@@ -1151,8 +1151,8 @@ export interface Worksheet {
 	/**
 	 * Worksheet protection
 	 */
-	protect(password: string, options: Partial<WorksheetProtection>);
-	unprotect();
+	protect(password: string, options: Partial<WorksheetProtection>): Promise<void>;
+	unprotect(): void;
 }
 
 export interface WorksheetProperties {
