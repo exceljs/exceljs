@@ -84,8 +84,8 @@
     "pageSetup"
   ],
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
     "archiver": "^3.0.0",
+    "babel-polyfill": "^6.26.0",
     "fast-csv": "^2.4.1",
     "jszip": "^3.1.5",
     "moment": "^2.22.2",
