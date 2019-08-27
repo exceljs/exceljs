@@ -923,9 +923,9 @@ ws.addTable({
     {name: 'Amount', totalsRowFunction: 'sum', filterButton: false},
   ],
   rows: [
-    [new Date('2019-07-20', 70.10],
-    [new Date('2019-07-21', 70.60],
-    [new Date('2019-07-22', 70.10],
+    [new Date('2019-07-20'), 70.10],
+    [new Date('2019-07-21'), 70.60],
+    [new Date('2019-07-22'), 70.10],
   ],
 });
 ```
