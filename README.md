@@ -993,6 +993,7 @@ by the table.
 | min                | The minimum value in this column |
 | stdDev             | The standard deviation for this column |
 | var                | The variance for this column |
+| sum                | The sum of entries for this column |
 | custom             | A custom formula. Requires an associated totalsRowFormula value. |
 
 ### Table Style Themes
