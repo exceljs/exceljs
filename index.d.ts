@@ -608,6 +608,11 @@ export interface Column {
 	 * The cell values in the column
 	 */
 	values: ReadonlyArray<CellValue>;
+
+	/**
+	 * Column letter key
+	 */
+	readonly letter: string;
 }
 
 export interface ColumnExtension extends Partial<Style> {
