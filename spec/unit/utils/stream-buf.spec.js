@@ -1,9 +1,8 @@
 'use strict';
 
-const { expect } = require('chai');
+const {expect} = require('chai');
 const fs = require('fs');
 const path = require('path');
-const { Promise } = require('../../../lib/utils/promise');
 
 const StreamBuf = require('../../../lib/utils/stream-buf');
 const StringBuf = require('../../../lib/utils/string-buf');
@@ -23,7 +22,7 @@ describe('StreamBuf', () => {
 
   it('writes StringBuf chunks', () => {
     const stream = new StreamBuf();
-    const strBuf = new StringBuf({ size: 64 });
+    const strBuf = new StringBuf({size: 64});
     strBuf.addText('Hello, World!');
     stream.write(strBuf);
     const chunk = stream.read();

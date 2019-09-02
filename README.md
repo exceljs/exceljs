@@ -18,6 +18,16 @@ npm install exceljs
 
 # New Features!
 
+**Major Version Change**
+
+Introducing async/await to ExcelJS!
+The new async and await features of JavaScript can help a lot to make code more readable and maintainable.
+To avoid confusion, particularly with returned promises from async functions, we have had to remove the
+Promise class configuration option and from v2 onwards ExcelJS will use native Promises.
+Since this is potentially a breaking change we're bumping the major version for this release.
+
+**Changes**
+
 <ul>
   <li>
     Merged <a href="https://github.com/exceljs/exceljs/pull/829">Introduce async/await #829</a>.
