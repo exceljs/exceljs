@@ -1156,8 +1156,8 @@ export interface Worksheet {
 	/**
 	 * Worksheet protection
 	 */
-	protect(password: string, options: Partial<WorksheetProtection>);
-	unprotect();
+	protect(password: string, options: Partial<WorksheetProtection>): Promise<void>;
+	unprotect(): void;
 
 	/**
 	 * Add a new table and return a reference to it
