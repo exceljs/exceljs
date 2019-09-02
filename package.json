@@ -40,6 +40,7 @@
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
     "lint:fix": "prettier-eslint --write \"**/*.js\"",
+    "lint:staged": "lint-staged",
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
     "preversion": "npm run clean && npm run build && npm run test:full",
@@ -52,6 +53,7 @@
   },
   "lint-staged": {
     "*.js": [
+      "prettier-eslint --write",
       "eslint --format node_modules/eslint-friendly-formatter",
       "git add"
     ]
