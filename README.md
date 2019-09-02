@@ -923,9 +923,9 @@ ws.addTable({
     {name: 'Amount', totalsRowFunction: 'sum', filterButton: false},
   ],
   rows: [
-    [new Date('2019-07-20', 70.10],
-    [new Date('2019-07-21', 70.60],
-    [new Date('2019-07-22', 70.10],
+    [new Date('2019-07-20'), 70.10],
+    [new Date('2019-07-21'), 70.60],
+    [new Date('2019-07-22'), 70.10],
   ],
 });
 ```
@@ -993,6 +993,7 @@ by the table.
 | min                | The minimum value in this column |
 | stdDev             | The standard deviation for this column |
 | var                | The variance for this column |
+| sum                | The sum of entries for this column |
 | custom             | A custom formula. Requires an associated totalsRowFormula value. |
 
 ### Table Style Themes
