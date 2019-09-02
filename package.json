@@ -84,10 +84,10 @@
   ],
   "dependencies": {
     "archiver": "^3.0.0",
+    "babel-polyfill": "^6.26.0",
     "fast-csv": "^2.4.1",
     "jszip": "^3.1.5",
     "dayjs": "^1.8.15",
-    "promish": "^5.1.1",
     "sax": "^1.2.4",
     "tmp": "^0.1.0",
     "unzipper": "^0.9.12"
@@ -97,8 +97,6 @@
     "@babel/preset-env": "^7.1.0",
     "@types/node": "^10.12.0",
     "babel-eslint": "^10.0.1",
-    "babel-polyfill": "^6.26.0",
-    "bluebird": "^3.5.2",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
     "chai-datetime": "^1.5.0",
