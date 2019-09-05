@@ -45,6 +45,9 @@ Since this is potentially a breaking change we're bumping the major version for 
     Merged <a href="https://github.com/exceljs/exceljs/pull/926">added explicit return types to the type definitions of Worksheet.protect() and Worksheet.unprotect() #926</a>.
     Many thanks to <a href="https://github.com/drjokepu">Tamas Czinege</a> for this contributions.
   </li>
+  <li>
+    Dropped dependencies on Promise libraries.
+  </li>
 </ul>
 
 # Contributions
