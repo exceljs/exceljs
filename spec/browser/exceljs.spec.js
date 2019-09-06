@@ -1,7 +1,7 @@
-'use strict';
+/* global ExcelJS */
+// ExcelJS is a global injected by `./dist/exceljs.js` during jasmine's setup
 
-require('babel-polyfill');
-const ExcelJS = require('../../lib/exceljs.browser');
+'use strict';
 
 function unexpectedError(done) {
   return function(error) {

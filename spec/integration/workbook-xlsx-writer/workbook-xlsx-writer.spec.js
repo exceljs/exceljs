@@ -384,5 +384,30 @@ describe('WorkbookWriter', () => {
           testUtils.checkTestBook(wb2, 'xlsx', ['dataValidations']);
         });
     });
+
+    it('with zip compression option', () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+        useStyles: true,
+        zip: {
+          zlib: { level: 9 },// Sets the compression level.
+        },
+      };
+      const wb = testUtils.createTestBook(
+        new Excel.stream.xlsx.WorkbookWriter(options),
+        'xlsx',
+        ['dataValidations']
+      );
+
+      return wb
+        .commit()
+        .then(() => {
+          const wb2 = new Excel.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          testUtils.checkTestBook(wb2, 'xlsx', ['dataValidations']);
+        });
+    });
   });
 });

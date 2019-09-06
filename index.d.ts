@@ -226,7 +226,7 @@ export interface Font {
 	bold: boolean;
 	italic: boolean;
 	underline: boolean | 'none' | 'single' | 'double' | 'singleAccounting' | 'doubleAccounting';
-  vertAlign: 'superscript' | 'subscript';
+	vertAlign: 'superscript' | 'subscript';
 	strike: boolean;
 	outline: boolean;
 }
@@ -288,10 +288,15 @@ export interface Alignment {
 	textRotation: number | 'vertical';
 }
 
+export interface Protection {
+	locked: boolean;
+}
+
 export interface Style {
 	numFmt: string;
 	font: Partial<Font>;
 	alignment: Partial<Alignment>;
+	protection: Partial<Protection>;
 	border: Partial<Borders>;
 	fill: Fill;
 }
@@ -341,7 +346,7 @@ export interface CellFormulaValue {
 export interface CellSharedFormulaValue {
 	sharedFormula: string;
 	readonly formula?: string;
-	result?: number | string | Date| { error: CellErrorValue };
+	result?: number | string | Date | { error: CellErrorValue };
 	date1904: boolean;
 }
 
@@ -603,6 +608,11 @@ export interface Column {
 	 * The cell values in the column
 	 */
 	values: ReadonlyArray<CellValue>;
+
+	/**
+	 * Column letter key
+	 */
+	readonly letter: string;
 }
 
 export interface ColumnExtension extends Partial<Style> {
@@ -771,10 +781,63 @@ export interface PageSetup {
 	printTitlesColumn: string;
 }
 
+export interface HeaderFooter {
+	/**
+	 * Set the value of differentFirst as true, which indicates that headers/footers for first page are different from the other pages, `false` by default
+	 */
+	differentFirst: boolean,
+	/**
+	 * Set the value of differentOddEven as true, which indicates that headers/footers for odd and even pages are different, `false` by default
+	 */
+	differentOddEven: boolean,
+	/**
+	 * Set header string for odd pages, could format the string and `null` by default
+	 */
+	oddHeader: string,
+	/**
+	 * Set footer string for odd pages, could format the string and `null` by default
+	 */
+	oddFooter: string,
+	/**
+	 * Set header string for even pages, could format the string and `null` by default
+	 */
+	evenHeader: string,
+	/**
+	 * Set footer string for even pages, could format the string and `null` by default
+	 */
+	evenFooter: string,
+	/**
+	 * Set header string for the first page, could format the string and `null` by default
+	 */
+	firstHeader: string,
+	/**
+	 * Set footer string for the first page, could format the string and `null` by default
+	 */
+	firstFooter: string
+}
+
 export type AutoFilter = string | {
 	from: string | { row: number; column: number };
 	to: string | { row: number; column: number };
 };
+
+export interface WorksheetProtection {
+	objects: boolean;
+	scenarios: boolean;
+	selectLockedCells: boolean;
+	selectUnlockedCells: boolean;
+	formatCells: boolean;
+	formatColumns: boolean;
+	formatRows: boolean;
+	insertColumns: boolean;
+	insertRows: boolean;
+	insertHyperlinks: boolean;
+	deleteColumns: boolean;
+	deleteRows: boolean;
+	sort: boolean;
+	autoFilter: boolean;
+	pivotTables: boolean;
+}
 
 export interface Image {
 	extension: 'jpeg' | 'png' | 'gif';
@@ -783,26 +846,26 @@ export interface Image {
 	buffer?: Buffer;
 }
 export interface IAnchor {
-    col: number;
-    row: number;
-    nativeCol: number;
-    nativeRow: number;
-    nativeColOff: number;
-    nativeRowOff: number;
+	col: number;
+	row: number;
+	nativeCol: number;
+	nativeRow: number;
+	nativeColOff: number;
+	nativeRowOff: number;
 }
-export class Anchor implements IAnchor{
-    col: number;
-    nativeCol: number;
-    nativeColOff: number;
-    nativeRow: number;
-    nativeRowOff: number;
-    row: number;
+export class Anchor implements IAnchor {
+	col: number;
+	nativeCol: number;
+	nativeColOff: number;
+	nativeRow: number;
+	nativeRowOff: number;
+	row: number;
 
-    private readonly colWidth: number;
-    private readonly rowHeight: number;
-    worksheet: Worksheet;
+	private readonly colWidth: number;
+	private readonly rowHeight: number;
+	worksheet: Worksheet;
 
-    constructor(model?: IAnchor|object);
+	constructor(model?: IAnchor | object);
 }
 export interface ImageRange {
 	tl: { col: number; row: number } | Anchor;
@@ -874,6 +937,7 @@ export interface WorksheetModel {
 	// dataValidations: this.dataValidations.model,
 	properties: WorksheetProperties;
 	pageSetup: Partial<PageSetup>;
+	headerFooter: HeaderFooter;
 	rowBreaks: RowBreak[];
 	views: WorksheetView[];
 	autoFilter: AutoFilter;
@@ -892,6 +956,11 @@ export interface Worksheet {
 	 * Contains information related to how a worksheet is printed
 	 */
 	pageSetup: Partial<PageSetup>;
+
+	/**
+	 * Worksheet Header and Footer
+	 */
+	headerFooter: HeaderFooter;
 
 	/**
 	 * Worksheet State
@@ -1083,6 +1152,21 @@ export interface Worksheet {
 	commit(): void;
 
 	model: WorksheetModel;
+
+	/**
+	 * Worksheet protection
+	 */
+	protect(password: string, options: Partial<WorksheetProtection>): Promise<void>;
+	unprotect(): void;
+
+	/**
+	 * Add a new table and return a reference to it
+	 */
+	addTable(tableProperties: TableProperties): Table;
+	/**
+	 * fetch table by name or id
+	 */
+	getTable(name: string): Table;
 }
 
 export interface WorksheetProperties {
@@ -1384,6 +1468,129 @@ export class Workbook {
 	getImage(id: number): Image;
 }
 
+export interface TableStyleProperties {
+	/**
+	 * The colour theme of the table
+	 * @default 'TableStyleMedium2'
+	 */
+	theme?: 'TableStyleDark1' | 'TableStyleDark10' | 'TableStyleDark11' | 'TableStyleDark2' | 'TableStyleDark3' | 'TableStyleDark4' | 'TableStyleDark5' | 'TableStyleDark6' | 'TableStyleDark7' | 'TableStyleDark8' | 'TableStyleDark9' | 'TableStyleLight1' | 'TableStyleLight10' | 'TableStyleLight11' | 'TableStyleLight12' | 'TableStyleLight13' | 'TableStyleLight14' | 'TableStyleLight15' | 'TableStyleLight16' | 'TableStyleLight17' | 'TableStyleLight18' | 'TableStyleLight19' | 'TableStyleLight2' | 'TableStyleLight20' | 'TableStyleLight21' | 'TableStyleLight3' | 'TableStyleLight4' | 'TableStyleLight5' | 'TableStyleLight6' | 'TableStyleLight7' | 'TableStyleLight8' | 'TableStyleLight9' | 'TableStyleMedium1' | 'TableStyleMedium10' | 'TableStyleMedium11' | 'TableStyleMedium12' | 'TableStyleMedium13' | 'TableStyleMedium14' | 'TableStyleMedium15' | 'TableStyleMedium16' | 'TableStyleMedium17' | 'TableStyleMedium18' | 'TableStyleMedium19' | 'TableStyleMedium2' | 'TableStyleMedium20' | 'TableStyleMedium21' | 'TableStyleMedium22' | 'TableStyleMedium23' | 'TableStyleMedium24' | 'TableStyleMedium25' | 'TableStyleMedium26' | 'TableStyleMedium27' | 'TableStyleMedium28' | 'TableStyleMedium3' | 'TableStyleMedium4' | 'TableStyleMedium5' | 'TableStyleMedium6' | 'TableStyleMedium7' | 'TableStyleMedium8' | 'TableStyleMedium9';
+	/**
+	  * Highlight the first column (bold)
+	  * @default false
+	  */
+	showFirstColumn?: boolean;
+	/**
+	  * Highlight the last column (bold)
+	  * @default false
+	  */
+	showLastColumn?: boolean;
+	/**
+	  * Alternate rows shown with background colour
+	  * @default false
+	  */
+	showRowStripes?: boolean;
+	/**
+	  * Alternate rows shown with background colour
+	  * @default false
+	  */
+	showColumnStripes?: boolean;
+}
+
+export interface TableColumnProperties {
+	/**
+	  * The name of the column, also used in the header
+	  */
+	name: string;
+	/**
+	  * Switches the filter control in the header
+	  * @default false
+	  */
+	filterButton?: boolean;
+	/**
+	  * Label to describe the totals row (first column)
+	  * @default 'Total'
+	  */
+	totalsRowLabel?: string;
+	/**
+	  * Name of the totals function
+	  * @default 'none'
+	  */
+	totalsRowFunction?: 'none' | 'average' | 'countNums' | 'count' | 'max' | 'min' | 'stdDev' | 'var' | 'sum' | 'custom';
+	/**
+	  * Optional formula for custom functions
+	  */
+	totalsRowFormula?: string;
+}
+
+
+export interface TableProperties {
+	/**
+	 * The name of the table
+	 */
+	name: string;
+	/**
+	 * The display name of the table
+	 */
+	displayName?: string;
+	/**
+	 * Top left cell of the table
+	 */
+	ref: string;
+	/**
+	 * Show headers at top of table
+	 * @default true
+	 */
+	headerRow?: boolean;
+	/**
+	 * Show totals at bottom of table
+	 * @default false
+	 */
+	totalsRow?: boolean;
+	/**
+	 * Extra style properties
+	 * @default {}
+	 */
+	style?: TableStyleProperties;
+	/**
+	 * Column definitions
+	 */
+	columns: TableColumnProperties[]
+	/**
+	 * Rows of data
+	 */
+	rows: any[][]
+}
+
+export type TableColumn = Required<TableColumnProperties>
+
+export interface Table extends Required<TableProperties> {
+	/**
+	 * Commit changes
+	 */
+	commit: () => void
+	/**
+	 * Remove a rows of data
+	 */
+	removeRows: (rowIndex: number, count: number) => void
+	/**
+	 * Add a row of data, either insert at rowNumber or append
+	 */
+	addRow: (values: any[], rowNumber: number) => void
+	/**
+	 * Get column
+	 */
+	getColumn: (colIndex: number) => TableColumn
+	/**
+	 * Add a new column, including column defn and values
+	 * inserts at colNumber or adds to the right
+	 */
+	addColumn: (column: TableColumnProperties, values: any[], colIndex: number) => void
+	/**
+	 * Remove a column with data
+	 */
+	removeColumns: (colIndex: number, count: number) => void
+}
+
 export namespace config {
 	function setValue(key: 'promise', promise: any): void;
 }
@@ -1413,8 +1620,45 @@ export namespace stream {
 			useStyles: boolean;
 		}
 
+        interface ArchiverZipOptions {
+            comment: string;
+            forceLocalTime: boolean;
+            forceZip64: boolean;
+            store: boolean;
+            zlib: Partial<ZlibOptions>;
+        }
+
+        interface ZlibOptions {
+            /**
+             * @default constants.Z_NO_FLUSH
+             */
+            flush: number;
+            /**
+             * @default constants.Z_FINISH
+             */
+            finishFlush: number;
+            /**
+             * @default 16*1024
+             */
+            chunkSize: number;
+            windowBits: number;
+            level: number; // compression only
+            memLevel: number; // compression only
+            strategy: number; // compression only
+            dictionary: Buffer | NodeJS.TypedArray | DataView | ArrayBuffer; // deflate/inflate only, empty dictionary by default
+        }
+
+		interface WorkbookStreamWriterOptions extends WorkbookWriterOptions {
+
+            /**
+             * Specifies whether to add style information to the workbook.
+             * Styles can add some performance overhead. Default is false
+             */
+            zip: Partial<ArchiverZipOptions>;
+        }
+
 		class WorkbookWriter extends Workbook {
-			constructor(options: Partial<WorkbookWriterOptions>);
+			constructor(options: Partial<WorkbookStreamWriterOptions>);
 			// commit all worksheets, then add suplimentary files
 			commit(): Promise<void>;
 			addStyles(): Promise<void>;

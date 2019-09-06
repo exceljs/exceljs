@@ -32,10 +32,11 @@
     "prefer-rest-params": ["off"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "space-before-function-paren": ["error", "never"],
+    "space-before-function-paren": ["error", {"anonymous": "never", "named": "never", "asyncArrow": "always"}],
     "strict": ["off"],
     "class-methods-use-this": ["off"],
     "no-return-assign": ["off"],
+    "no-continue": ["off"],
     "default-case": ["off"],
     "object-curly-spacing": ["error", "never"]
   }

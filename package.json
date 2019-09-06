@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "1.12.2",
+  "version": "2.0.1",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -40,6 +40,7 @@
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
     "lint:fix": "prettier-eslint --write \"**/*.js\"",
+    "lint:staged": "lint-staged",
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
     "preversion": "npm run clean && npm run build && npm run test:full",
@@ -83,21 +84,19 @@
   ],
   "dependencies": {
     "archiver": "^3.0.0",
+    "babel-polyfill": "^6.26.0",
     "fast-csv": "^3.0.1",
     "jszip": "^3.1.5",
-    "moment": "^2.22.2",
-    "unzipper": "^0.9.12",
-    "promish": "^5.1.1",
+    "dayjs": "^1.8.15",
     "sax": "^1.2.4",
-    "tmp": "^0.1.0"
+    "tmp": "^0.1.0",
+    "unzipper": "^0.9.12"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
     "@types/node": "^10.12.0",
     "babel-eslint": "^10.0.1",
-    "babel-polyfill": "^6.26.0",
-    "bluebird": "^3.5.2",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
     "chai-datetime": "^1.5.0",

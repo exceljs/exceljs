@@ -1,8 +1,6 @@
-'use strict';
-
 const fs = require('fs');
 
-const chai = require('chai');
+const {expect} = require('chai');
 
 const Enums = require('../../../../../lib/doc/enums');
 const XmlStream = require('../../../../../lib/utils/xml-stream');
@@ -12,8 +10,6 @@ const WorksheetXform = require('../../../../../lib/xlsx/xform/sheet/worksheet-xf
 
 const SharedStringsXform = require('../../../../../lib/xlsx/xform/strings/shared-strings-xform');
 const StylesXform = require('../../../../../lib/xlsx/xform/style/styles-xform');
-
-const { expect } = chai;
 
 const fakeStyles = {
   addStyleModel(style, cellType) {
@@ -28,13 +24,13 @@ const fakeStyles = {
   getStyleModel(id) {
     switch (id) {
       case 1:
-        return { numFmt: 'mm-dd-yy' };
+        return {numFmt: 'mm-dd-yy'};
       case 2:
         return {
           font: {
             underline: true,
             size: 11,
-            color: { theme: 10 },
+            color: {theme: 10},
             name: 'Calibri',
             family: 2,
             scheme: 'minor',
@@ -168,7 +164,7 @@ describe('WorksheetXform', () => {
     xform.prepare(model, options);
     xform.render(xmlStream, model);
 
-    const { xml } = xmlStream;
+    const {xml} = xmlStream;
     const iHyperlinks = xml.indexOf('hyperlinks');
     const iDataValidations = xml.indexOf('dataValidations');
     expect(iHyperlinks).not.to.equal(-1);
