@@ -256,14 +256,18 @@ describe('WorkbookReader', () => {
   });
 
   describe('with a spreadsheet that has an XML parse error in a worksheet', () => {
-    it('should reject the promise with the sax error', () => {
-      let unhandledRejection;
-
-      function unhandledRejectionHandler(err) {
-        unhandledRejection = err;
-      }
-
+    let unhandledRejection;
+    function unhandledRejectionHandler(err) {
+      unhandledRejection = err;
+    }
+    beforeEach(() => {
       process.on('unhandledRejection', unhandledRejectionHandler);
+    });
+    afterEach(() => {
+      process.removeListener('unhandledRejection', unhandledRejectionHandler);
+    });
+
+    it('should reject the promise with the sax error', () => {
       const workbook = new ExcelJS.Workbook();
       return workbook.xlsx
         .readFile('./spec/integration/data/invalid-xml.xlsx')
@@ -281,12 +285,6 @@ describe('WorkbookReader', () => {
         )
         .then(() => {
           expect(unhandledRejection).to.be.undefined();
-        })
-        .finally(() => {
-          process.removeListener(
-            'unhandledRejection',
-            unhandledRejectionHandler
-          );
         });
     });
   });

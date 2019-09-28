@@ -743,7 +743,7 @@ describe('Workbook', () => {
         success = 2;
         // expect the right kind of error
       })
-      .finally(() => {
+      .then(() => {
         expect(success).to.equal(2);
       });
   });
@@ -760,7 +760,7 @@ describe('Workbook', () => {
         success = 2;
         // expect the right kind of error
       })
-      .finally(() => {
+      .then(() => {
         expect(success).to.equal(2);
       });
   });
