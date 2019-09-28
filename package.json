@@ -28,7 +28,6 @@
     "index.d.ts"
   ],
   "scripts": {
-    "pretest": "npm run build",
     "test": "npm run test:full",
     "test:full": "npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
     "test:all": "npm run test:native && npm run test:es5",
@@ -48,7 +47,7 @@
     "lint:staged": "lint-staged",
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
-    "preversion": "npm run clean && npm run build && npm run test:full",
+    "preversion": "npm run clean && npm run build && npm run test:all",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "husky": {
