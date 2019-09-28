@@ -18,24 +18,24 @@ npm install exceljs
 
 # New Features!
 
-** Another Major Version Change**
+**Another Major Version Change**
 
 Javascript has changed a lot over the years, and so have the modules and technologies surrounding it.
 To this end, this major version of ExcelJS changes the structure of the publish artefacts:
 
-** Main Export is now the Original Javascript Source **
+**Main Export is now the Original Javascript Source**
 
 Prior to this release, the transpiled ES5 code was exported as the package main.
 From now on, the package main comes directly from the lib/ folder
 
-** ES5 and Browserify are Still Included **
+**ES5 and Browserify are Still Included**
 
 In order to support those that still require ES5 ready code (e.g. as dependencies in web apps)
 the source code will still be transpiled and available  in dist/es5.
 
 The ES5 code is also browserified and available as dist/exceljs.js or dist/exceljs.min.js
 
-* See the section <a href="#importing">Importing</a> for details *
+*See the section <a href="#importing">Importing</a> for details*
 
 # Contributions
 
