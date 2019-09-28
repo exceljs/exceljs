@@ -1,6 +1,6 @@
-const { expect } = require('chai');
+const {expect} = require('chai');
 
-const Excel = require('../../../lib/exceljs.nodejs');
+const Excel = verquire('exceljs');
 
 describe('Worksheet', () => {
   describe('Shared Formulae', () => {

@@ -1,8 +1,6 @@
-'use strict';
+const {expect} = require('chai');
 
-const { expect } = require('chai');
-
-const utils = require('../../../lib/utils/utils');
+const utils = verquire('utils/utils');
 
 describe('utils', () => {
   describe('xmlEncode', () => {

@@ -1,7 +1,6 @@
-'use strict';
-
-const BlipXform = require('../../../../../lib/xlsx/xform/drawing/blip-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const BlipXform = verquire('xlsx/xform/drawing/blip-xform');
 
 const expectations = [
   {
@@ -9,10 +8,10 @@ const expectations = [
     create() {
       return new BlipXform();
     },
-    preparedModel: { rId: 'rId1' },
+    preparedModel: {rId: 'rId1'},
     xml:
       '<a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="rId1" cstate="print" />',
-    parsedModel: { rId: 'rId1' },
+    parsedModel: {rId: 'rId1'},
     tests: ['render', 'renderIn', 'parse'],
   },
 ];

@@ -1,7 +1,6 @@
-'use strict';
-
-const ProtectionXform = require('../../../../../lib/xlsx/xform/style/protection-xform');
 const testXformHelper = require('../test-xform-helper');
+
+const ProtectionXform = verquire('xlsx/xform/style/protection-xform');
 
 const expectations = [
   {
@@ -24,7 +23,9 @@ const expectations = [
     create: () => new ProtectionXform(),
     preparedModel: {locked: false, hidden: false},
     xml: '<protection locked="0"/>',
-    get parsedModel() {return this.preparedModel;},
+    get parsedModel() {
+      return this.preparedModel;
+    },
     tests: ['render', 'renderIn', 'parse'],
   },
   {
@@ -32,7 +33,9 @@ const expectations = [
     create: () => new ProtectionXform(),
     preparedModel: {locked: true, hidden: true},
     xml: '<protection hidden="1"/>',
-    get parsedModel() {return this.preparedModel;},
+    get parsedModel() {
+      return this.preparedModel;
+    },
     tests: ['render', 'renderIn', 'parse'],
   },
   {
@@ -40,7 +43,9 @@ const expectations = [
     create: () => new ProtectionXform(),
     preparedModel: {locked: false, hidden: true},
     xml: '<protection locked="0" hidden="1"/>',
-    get parsedModel() {return this.preparedModel;},
+    get parsedModel() {
+      return this.preparedModel;
+    },
     tests: ['render', 'renderIn', 'parse'],
   },
 ];

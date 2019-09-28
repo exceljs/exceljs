@@ -1,9 +1,8 @@
-'use strict';
-
 const fs = require('fs');
 
-const AppXform = require('../../../../../lib/xlsx/xform/core/app-xform');
 const testXformHelper = require('../test-xform-helper');
+
+const AppXform = verquire('xlsx/xform/core/app-xform');
 
 const expectations = [
   {
@@ -11,7 +10,7 @@ const expectations = [
     create() {
       return new AppXform();
     },
-    preparedModel: { worksheets: [{ name: 'Sheet1' }] },
+    preparedModel: {worksheets: [{name: 'Sheet1'}]},
     xml: fs
       .readFileSync(`${__dirname}/data/app.01.xml`)
       .toString()
@@ -24,7 +23,7 @@ const expectations = [
       return new AppXform();
     },
     preparedModel: {
-      worksheets: [{ name: 'Sheet1' }, { name: 'Sheet2' }],
+      worksheets: [{name: 'Sheet1'}, {name: 'Sheet2'}],
       company: 'Cyber Sapiens, Ltd.',
       manager: 'Guyon Roche',
     },

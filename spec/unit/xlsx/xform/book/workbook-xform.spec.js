@@ -1,9 +1,8 @@
-'use strict';
-
 const fs = require('fs');
 
-const WorkbookXform = require('../../../../../lib/xlsx/xform/book/workbook-xform');
 const testXformHelper = require('../test-xform-helper');
+
+const WorkbookXform = verquire('xlsx/xform/book/workbook-xform');
 
 const expectations = [
   {

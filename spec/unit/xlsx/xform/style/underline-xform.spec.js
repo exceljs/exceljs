@@ -1,7 +1,6 @@
-'use strict';
-
-const UnderlineXform = require('../../../../../lib/xlsx/xform/style/underline-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const UnderlineXform = verquire('xlsx/xform/style/underline-xform');
 
 const expectations = [
   {

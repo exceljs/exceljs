@@ -1,8 +1,7 @@
-'use strict';
-
-const ListXform = require('../../../../lib/xlsx/xform/list-xform');
-const IntegerXform = require('../../../../lib/xlsx/xform/simple/integer-xform');
 const testXformHelper = require('./test-xform-helper');
+
+const ListXform = verquire('xlsx/xform/list-xform');
+const IntegerXform = verquire('xlsx/xform/simple/integer-xform');
 
 const expectations = [
   {
@@ -10,7 +9,7 @@ const expectations = [
     create() {
       return new ListXform({
         tag: 'ints',
-        childXform: new IntegerXform({ tag: 'int', attr: 'val' }),
+        childXform: new IntegerXform({tag: 'int', attr: 'val'}),
       });
     },
     preparedModel: [1, 2, 3],
@@ -26,7 +25,7 @@ const expectations = [
       return new ListXform({
         tag: 'ints',
         count: true,
-        childXform: new IntegerXform({ tag: 'int', attr: 'val' }),
+        childXform: new IntegerXform({tag: 'int', attr: 'val'}),
       });
     },
     preparedModel: [1, 2, 3],

@@ -1,5 +1,6 @@
 const {expect} = require('chai');
-const Range = require('../../../lib/doc/range');
+
+const Range = verquire('doc/range');
 
 describe('Range', () => {
   function check(d, range, $range, tl, $t$l, br, $b$r, top, left, bottom, right, sheetName) {
@@ -45,7 +46,8 @@ describe('Range', () => {
     check(new Range([16, 7, 7, 3]), 'C7:G16', '$C$7:$G$16', 'C7', '$C$7', 'G16', '$G$16', 7, 3, 16, 7);
 
     check(new Range('$B$5:$D$10'), 'B5:D10', '$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4);
-    check(new Range('blort!$B$5:$D$10'), 'blort!B5:D10', 'blort!$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4, 'blort');});
+    check(new Range('blort!$B$5:$D$10'), 'blort!B5:D10', 'blort!$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4, 'blort');
+  });
 
   it('expands properly', () => {
     const d = new Range();

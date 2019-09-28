@@ -1,5 +1,6 @@
-const AutoFilterXform = require('../../../../../lib/xlsx/xform/table/auto-filter-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const AutoFilterXform = verquire('xlsx/xform/table/auto-filter-xform');
 
 const expectations = [
   {
@@ -20,12 +21,14 @@ const expectations = [
       ],
     },
     xml:
-      '<autoFilter ref="A1:B10">' +
-        '<filterColumn colId="0" hiddenButton="1" />' +
-        '<filterColumn colId="1" hiddenButton="0" />' +
-        '<filterColumn colId="2" hiddenButton="0" />' +
-      '</autoFilter>',
-    get parsedModel() { return this.initialModel; },
+    '<autoFilter ref="A1:B10">' +
+    '<filterColumn colId="0" hiddenButton="1" />' +
+    '<filterColumn colId="1" hiddenButton="0" />' +
+    '<filterColumn colId="2" hiddenButton="0" />' +
+    '</autoFilter>',
+    get parsedModel() {
+      return this.initialModel;
+    },
     tests: ['prepare', 'render', 'renderIn', 'parse'],
   },
 ];

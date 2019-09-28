@@ -1,6 +1,7 @@
 const {expect} = require('chai');
-const colCache = require('../../../lib/utils/col-cache');
-const Excel = require('../../../lib/exceljs.nodejs');
+
+const colCache = verquire('utils/col-cache');
+const Excel = verquire('exceljs');
 
 const spliceArray = (a, index, count, ...rest) => {
   const clone = [...a];
@@ -30,7 +31,7 @@ function addTable(ref, ws) {
     columns: [
       {name: 'Date', totalsRowLabel: 'Totals', filterButton: true},
       {name: 'Id', totalsRowFunction: 'max', filterButton: true, totalsRowResult: 4},
-      {name: 'Word', filterButton: false, style: {font:{bold: true, name: 'Comic Sans MS'}}},
+      {name: 'Word', filterButton: false, style: {font: {bold: true, name: 'Comic Sans MS'}}},
     ],
     rows: [
       [new Date('2019-08-01'), 1, 'Bird'],
@@ -133,7 +134,7 @@ describe('Worksheet', () => {
       table.addRow([new Date('2019-08-05'), 5, 'Bird']);
       table.commit();
 
-      const newValues = spliceArray(values, 5,0, [new Date('2019-08-05'), 5, 'Bird']);
+      const newValues = spliceArray(values, 5, 0, [new Date('2019-08-05'), 5, 'Bird']);
       checkTable('A1', ws, newValues);
     });
 
@@ -155,12 +156,18 @@ describe('Worksheet', () => {
       const table = addTable('A1', ws);
 
       table.addColumn(
-        {name: 'Letter', totalsRowFunction: 'custom', totalsRowFormula: 'ROW()', totalsRowResult: 6, filterButton: true},
+        {
+          name: 'Letter',
+          totalsRowFunction: 'custom',
+          totalsRowFormula: 'ROW()',
+          totalsRowResult: 6,
+          filterButton: true,
+        },
         ['a', 'b', 'c', 'd'],
         2);
       table.commit();
 
-      const colValues = ['Letter', 'a','b','c','d', {formula: 'ROW()', result: 6}];
+      const colValues = ['Letter', 'a', 'b', 'c', 'd', {formula: 'ROW()', result: 6}];
       const newValues = values.map((rVals, i) => spliceArray(rVals, 2, 0, colValues[i]));
       checkTable('A1', ws, newValues);
     });

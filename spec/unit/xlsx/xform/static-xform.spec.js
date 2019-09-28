@@ -1,22 +1,12 @@
-'use strict';
-
-const StaticXform = require('../../../../lib/xlsx/xform/static-xform');
 const testXformHelper = require('./test-xform-helper');
 
-// const model = {
-//   tag: 'name',
-//   $: {attr: 'value'},
-//   c: [
-//     { tag: 'child' }
-//   ],
-//   t: 'some text'
-// };
+const StaticXform = verquire('xlsx/xform/static-xform');
 
 const expectations = [
   {
     title: 'Leaf',
     create() {
-      return new StaticXform({ tag: 'root', $: { attr: 'val' } });
+      return new StaticXform({tag: 'root', $: {attr: 'val'}});
     },
     preparedModel: undefined,
     get parsedModel() {
@@ -30,10 +20,10 @@ const expectations = [
     create() {
       return new StaticXform({
         tag: 'root',
-        $: { attr: 'val' },
+        $: {attr: 'val'},
         c: [
-          { tag: 'child1', $: { attr: 5 } },
-          { tag: 'child2', $: { attr: true } },
+          {tag: 'child1', $: {attr: 5}},
+          {tag: 'child2', $: {attr: true}},
         ],
       });
     },
@@ -49,8 +39,8 @@ const expectations = [
     create() {
       return new StaticXform({
         tag: 'root',
-        $: { attr: 'val' },
-        c: [{ tag: 'child1', $: { attr: 5 }, t: 'Hello, World!' }],
+        $: {attr: 'val'},
+        c: [{tag: 'child1', $: {attr: 5}, t: 'Hello, World!'}],
       });
     },
     preparedModel: undefined,

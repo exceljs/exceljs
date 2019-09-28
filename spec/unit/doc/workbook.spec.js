@@ -1,10 +1,8 @@
-'use strict';
-
-const { expect } = require('chai');
-
-const Excel = require('../../../lib/exceljs.nodejs');
+const {expect} = require('chai');
 
 const simpleWorkbookModel = require('./../data/simpleWorkbook.json');
+
+const Excel = verquire('exceljs');
 
 // =============================================================================
 // Helpers
@@ -40,7 +38,7 @@ function createSimpleWorkbook() {
   };
 
   // number formula
-  ws.getCell('A2').value = { formula: 'A1', result: 7 };
+  ws.getCell('A2').value = {formula: 'A1', result: 7};
   ws.getCell('A2').name = 'TheFormula';
 
   // string formula
@@ -51,8 +49,8 @@ function createSimpleWorkbook() {
   ws.getCell('B2').name = 'TheFormula';
 
   // date formula
-  ws.getCell('C2').value = { formula: 'D1', result: new Date() };
-  ws.getCell('C3').value = { formula: 'D1' };
+  ws.getCell('C2').value = {formula: 'D1', result: new Date()};
+  ws.getCell('C3').value = {formula: 'D1'};
 
   return wb;
 }
@@ -106,7 +104,7 @@ describe('Workbook', () => {
         {
           font: {
             size: 12,
-            color: { theme: 0 },
+            color: {theme: 0},
             name: 'Calibri',
             family: 2,
             scheme: 'minor',
@@ -117,7 +115,7 @@ describe('Workbook', () => {
           font: {
             italic: true,
             size: 12,
-            color: { theme: 0 },
+            color: {theme: 0},
             name: 'Calibri',
             scheme: 'minor',
           },
@@ -126,7 +124,7 @@ describe('Workbook', () => {
         {
           font: {
             size: 12,
-            color: { theme: 1 },
+            color: {theme: 1},
             name: 'Calibri',
             family: 2,
             scheme: 'minor',
@@ -136,7 +134,7 @@ describe('Workbook', () => {
         {
           font: {
             size: 12,
-            color: { argb: 'FFFF6600' },
+            color: {argb: 'FFFF6600'},
             name: 'Calibri',
             scheme: 'minor',
           },
@@ -145,7 +143,7 @@ describe('Workbook', () => {
         {
           font: {
             size: 12,
-            color: { theme: 1 },
+            color: {theme: 1},
             name: 'Calibri',
             family: 2,
             scheme: 'minor',
@@ -155,7 +153,7 @@ describe('Workbook', () => {
         {
           font: {
             size: 12,
-            color: { argb: 'FFCCFFCC' },
+            color: {argb: 'FFCCFFCC'},
             name: 'Calibri',
             scheme: 'minor',
           },
@@ -164,7 +162,7 @@ describe('Workbook', () => {
         {
           font: {
             size: 12,
-            color: { theme: 1 },
+            color: {theme: 1},
             name: 'Calibri',
             family: 2,
             scheme: 'minor',
@@ -175,7 +173,7 @@ describe('Workbook', () => {
           font: {
             bold: true,
             size: 12,
-            color: { theme: 1 },
+            color: {theme: 1},
             name: 'Calibri',
             family: 2,
             scheme: 'minor',
@@ -212,7 +210,8 @@ describe('Workbook', () => {
     const wb = new Excel.Workbook();
     const sheet = wb.addWorksheet('first');
 
-    wb.eachSheet(() => {});
+    wb.eachSheet(() => {
+    });
     const numSheets = wb.worksheets.length;
 
     expect(numSheets).to.equal(1);

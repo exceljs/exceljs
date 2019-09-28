@@ -1,7 +1,6 @@
-'use strict';
-
-const HyperlinkXform = require('../../../../../lib/xlsx/xform/sheet/hyperlink-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const HyperlinkXform = verquire('xlsx/xform/sheet/hyperlink-xform');
 
 const expectations = [
   {
@@ -9,7 +8,7 @@ const expectations = [
     create() {
       return new HyperlinkXform();
     },
-    preparedModel: { address: 'B6', rId: 'rId1' },
+    preparedModel: {address: 'B6', rId: 'rId1'},
     get parsedModel() {
       return this.preparedModel;
     },
