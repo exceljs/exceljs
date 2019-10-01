@@ -26,7 +26,9 @@ To this end, this major version of ExcelJS changes the structure of the publish 
 **Main Export is now the Original Javascript Source**
 
 Prior to this release, the transpiled ES5 code was exported as the package main.
-From now on, the package main comes directly from the lib/ folder
+ From now on, the package main comes directly from the lib/ folder.
+ This means a number of dependencies have been removed, including the polyfills.
+
 
 **ES5 and Browserify are Still Included**
 
@@ -166,8 +168,10 @@ To use the ES5 transpiled code, use the dist/es5 path.
 const ExcelJS = require('exceljs/dist/es5');
 ```
 
-**Note:** The ES5 build has an implicit dependency on a number of polyfills.
- You will need to include the following requires in your code before the exceljs import:
+**Note:** The ES5 build has an implicit dependency on a number of polyfills which are no longer
+ explicitly added by exceljs.
+ You will need to add "core-js" and "regenerator-runtime" to your dependencies and
+ include the following requires in your code before the exceljs import:
 
 ```javascript
 // polyfills required by exceljs
@@ -175,6 +179,10 @@ require('core-js/modules/es.promise');
 require('core-js/modules/es.object.assign');
 require('core-js/modules/es.object.keys');
 require('regenerator-runtime/runtime');
+
+// ...
+
+const ExcelJS = require('exceljs/dist/es5');
 ```
 
 ## Browserify
