@@ -18,26 +18,12 @@ npm install exceljs
 
 # New Features!
 
-**Another Major Version Change**
-
-Javascript has changed a lot over the years, and so have the modules and technologies surrounding it.
-To this end, this major version of ExcelJS changes the structure of the publish artefacts:
-
-**Main Export is now the Original Javascript Source**
-
-Prior to this release, the transpiled ES5 code was exported as the package main.
- From now on, the package main comes directly from the lib/ folder.
- This means a number of dependencies have been removed, including the polyfills.
-
-
-**ES5 and Browserify are Still Included**
-
-In order to support those that still require ES5 ready code (e.g. as dependencies in web apps)
-the source code will still be transpiled and available  in dist/es5.
-
-The ES5 code is also browserified and available as dist/exceljs.js or dist/exceljs.min.js
-
-*See the section <a href="#importing">Importing</a> for details*
+<ul>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/889">Add Compression level option to WorkbookWriterOptions for streaming #889</a>.
+    Many thanks to <a href="https://github.com/sophiedophie">Sophie Kwon</a> for this contribution.
+  </li>
+</ul>
 
 # Contributions
 
@@ -51,7 +37,6 @@ To be clear, all contributions added to this library will be included in the lib
 # Backlog
 
 <ul>
-  <li>ESLint - slowly turn on (justifyable) rules which should, I hope, help make contributions easier.</li>
   <li>Conditional Formatting.</li>
   <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
   <li>XLSX Streaming Reader.</li>
@@ -2352,3 +2337,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.14.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/874">Fix header and footer text format error in README.md #874</a>. Many thanks to <a href="https://github.com/autukill">autukill</a> for this contribution. </li> <li> Added Tables. See <a href="#tables">Tables</a> for details. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/887">fix: #877 and #880</a>. Many thanks to <a href="https://github.com/aexei">Alexander Heinrich</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/pull/877">bug: Hyperlink without text crashes write #877</a> and <a href="https://github.com/exceljs/exceljs/pull/880">bug: malformed comment crashes on write #880</a> </li> </ul> |
 | 1.15.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/889">Add Compression level option to WorkbookWriterOptions for streaming #889</a>. Many thanks to <a href="https://github.com/ABenassi87">Alfredo Benassi</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/903">Feature/Cell Protection #903</a> and <a href="https://github.com/exceljs/exceljs/pull/907">Feature/Sheet Protection #907</a>. Many thanks to <a href="https://github.com/karabaesh">karabaesh</a> for these contributions. </li> </ul> |
 | 2.0.1   | <h2>Major Version Change</h2> <p>Introducing async/await to ExcelJS!</p> <p>The new async and await features of JavaScript can help a lot to make code more readable and maintainable. To avoid confusion, particularly with returned promises from async functions, we have had to remove the Promise class configuration option and from v2 onwards ExcelJS will use native Promises. Since this is potentially a breaking change we're bumping the major version for this release.</p> <h2>Changes</h2> <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/829">Introduce async/await #829</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/930">Update index.d.ts #930</a>. Many thanks to <a href="https://github.com/cosmonovallc">cosmonovallc</a> for this contributions. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/940">TS: Add types for addTable function #940</a>. Many thanks to <a href="https://github.com/egmen">egmen</a> for this contributions. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/926">added explicit return types to the type definitions of Worksheet.protect() and Worksheet.unprotect() #926</a>. Many thanks to <a href="https://github.com/drjokepu">Tamas Czinege</a> for this contributions. </li> <li> Dropped dependencies on Promise libraries. </li> </ul> |
+| 3.0.0   | <h2>Another Major Version Change</h2> <p>Javascript has changed a lot over the years, and so have the modules and technologies surrounding it. To this end, this major version of ExcelJS changes the structure of the publish artefacts:</p> <h3>Main Export is now the Original Javascript Source</h3> <p>Prior to this release, the transpiled ES5 code was exported as the package main. From now on, the package main comes directly from the lib/ folder. This means a number of dependencies have been removed, including the polyfills.</p> <h3>ES5 and Browserify are Still Included</h3> <p>In order to support those that still require ES5 ready code (e.g. as dependencies in web apps) the source code will still be transpiled and available  in dist/es5.</p> <p>The ES5 code is also browserified and available as dist/exceljs.js or dist/exceljs.min.js</p> <p><i>See the section <a href="#importing">Importing</a> for details</i></p> |
