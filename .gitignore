@@ -54,3 +54,6 @@ package-lock.json
 
 # optional switch off tests
 .disable-test-*
+
+# jasmine
+_SpecRunner.html

@@ -1,10 +1,8 @@
-'use strict';
-
-const CellXform = require('../../../../../lib/xlsx/xform/sheet/cell-xform');
 const testXformHelper = require('./../test-xform-helper');
 
-const SharedStringsXform = require('../../../../../lib/xlsx/xform/strings/shared-strings-xform');
-const Enums = require('../../../../../lib/doc/enums');
+const CellXform = verquire('xlsx/xform/sheet/cell-xform');
+const SharedStringsXform = verquire('xlsx/xform/strings/shared-strings-xform');
+const Enums = verquire('doc/enums');
 
 const fakeStyles = {
   addStyleModel(style, effectiveType) {

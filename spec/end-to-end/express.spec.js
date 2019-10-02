@@ -1,11 +1,8 @@
-'use strict';
-
 const express = require('express');
 const request = require('request');
-const verquire = require('../utils/verquire');
 const testutils = require('../utils/index');
 
-const Excel = verquire('excel');
+const Excel = verquire('exceljs');
 
 // =============================================================================
 // Tests

@@ -1,8 +1,6 @@
-'use strict';
+const {expect} = require('chai');
 
-const { expect } = require('chai');
-
-const CellMatrix = require('../../../lib/utils/cell-matrix');
+const CellMatrix = verquire('utils/cell-matrix');
 
 describe('CellMatrix', () => {
   it('getCell always returns a cell', () => {

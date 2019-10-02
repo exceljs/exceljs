@@ -1,8 +1,7 @@
-'use strict';
-
-const DefinedNameXform = require('../../../../../lib/xlsx/xform/book/defined-name-xform');
-
 const testXformHelper = require('./../test-xform-helper');
+
+const DefinedNameXform = verquire('xlsx/xform/book/defined-name-xform');
+
 
 const expectations = [
   {
@@ -10,9 +9,9 @@ const expectations = [
     create() {
       return new DefinedNameXform();
     },
-    preparedModel: { name: 'foo', ranges: ['bar!$A$1:$C$1'] },
+    preparedModel: {name: 'foo', ranges: ['bar!$A$1:$C$1']},
     xml: '<definedName name="foo">bar!$A$1:$C$1</definedName>',
-    parsedModel: { name: 'foo', ranges: ['bar!$A$1:$C$1'] },
+    parsedModel: {name: 'foo', ranges: ['bar!$A$1:$C$1']},
     tests: ['render', 'renderIn', 'parse'],
   },
   {
@@ -39,9 +38,9 @@ const expectations = [
     create() {
       return new DefinedNameXform();
     },
-    preparedModel: { name: 'foo', ranges: [] },
+    preparedModel: {name: 'foo', ranges: []},
     xml: '<definedName name="foo">"OFFSET($A$10;0;0;0;1)"</definedName>',
-    parsedModel: { name: 'foo', ranges: [] },
+    parsedModel: {name: 'foo', ranges: []},
     tests: ['parse'],
   },
 ];

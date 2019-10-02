@@ -5,7 +5,7 @@
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
-const ExcelJS = require('../../excel');
+const ExcelJS = require('../../lib/exceljs.nodejs.js');
 const StreamBuf = require('../../lib/utils/stream-buf');
 
 console.log('Copying bundle.js to public folder');
@@ -27,7 +27,7 @@ app.post('/api/upload', (req, res) => {
   stream.on('finish', () => {
     const base64 = stream.read();
 
-    wb.xlsx.load(base64, { base64: true }).then(() => {
+    wb.xlsx.load(base64, {base64: true}).then(() => {
       const ws = wb.getWorksheet('blort');
 
       console.log('XLSX uploaded:');

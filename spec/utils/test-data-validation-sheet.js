@@ -1,6 +1,4 @@
-'use strict';
-
-const { expect } = require('chai');
+const {expect} = require('chai');
 
 const tools = require('./tools');
 

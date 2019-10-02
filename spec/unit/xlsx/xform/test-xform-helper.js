@@ -1,12 +1,10 @@
-'use strict';
-
 const Sax = require('sax');
 const {expect} = require('chai');
 const _ = require('../../../utils/under-dash');
 
-const XmlStream = require('../../../../lib/utils/xml-stream');
-const CompositeXform = require('../../../../lib/xlsx/xform/composite-xform');
-const BooleanXform = require('../../../../lib/xlsx/xform/simple/boolean-xform');
+const XmlStream = verquire('utils/xml-stream');
+const CompositeXform = verquire('xlsx/xform/composite-xform');
+const BooleanXform = verquire('xlsx/xform/simple/boolean-xform');
 
 function getExpectation(expectation, name) {
   if (!expectation.hasOwnProperty(name)) {

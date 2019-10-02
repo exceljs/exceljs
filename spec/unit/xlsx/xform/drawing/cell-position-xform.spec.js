@@ -1,13 +1,12 @@
-'use strict';
-
-const CellPositionXform = require('../../../../../lib/xlsx/xform/drawing/cell-position-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const CellPositionXform = verquire('xlsx/xform/drawing/cell-position-xform');
 
 const expectations = [
   {
     title: 'integers',
     create() {
-      return new CellPositionXform({ tag: 'xdr:from' });
+      return new CellPositionXform({tag: 'xdr:from'});
     },
     preparedModel: {
       nativeRow: 5,
@@ -28,7 +27,7 @@ const expectations = [
   {
     title: 'halves',
     create() {
-      return new CellPositionXform({ tag: 'xdr:to' });
+      return new CellPositionXform({tag: 'xdr:to'});
     },
     preparedModel: {
       nativeRow: 5,

@@ -1,15 +1,10 @@
-'use strict';
+const {expect} = require('chai');
 
-const chai = require('chai');
-const verquire = require('../../utils/verquire');
-
-const Excel = verquire('excel');
-
-const { expect } = chai;
+const ExcelJS = verquire('exceljs');
 
 describe('github issues', () => {
   it('issue 257 - worksheet order is not respected', () => {
-    const wb = new Excel.Workbook();
+    const wb = new ExcelJS.Workbook();
     return wb.xlsx
       .readFile('./spec/integration/data/test-issue-257.xlsx')
       .then(() => {

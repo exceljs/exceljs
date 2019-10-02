@@ -1,7 +1,6 @@
-'use strict';
-
-const SharedStringXform = require('../../../../../lib/xlsx/xform/strings/shared-string-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const SharedStringXform = verquire('xlsx/xform/strings/shared-string-xform');
 
 const expectations = [
   {
@@ -25,7 +24,7 @@ const expectations = [
           font: {
             size: 11,
             bold: true,
-            color: { theme: 1 },
+            color: {theme: 1},
             name: 'Calibri',
             family: 2,
             scheme: 'minor',
@@ -42,7 +41,7 @@ const expectations = [
           font: {
             size: 11,
             bold: true,
-            color: { theme: 1 },
+            color: {theme: 1},
             name: 'Calibri',
             family: 2,
             scheme: 'minor',
@@ -60,7 +59,7 @@ const expectations = [
     },
     preparedModel: {
       text: 'Hello, World!',
-      phoneticText: { text: 'Helow woruld' },
+      phoneticText: {text: 'Helow woruld'},
     },
     xml:
       '<si><t>Hello, World!</t><rPh eb="0" sb="0"><t>Helow woruld</t></rPh></si>',
@@ -78,7 +77,7 @@ const expectations = [
         sb: 0,
         eb: 2,
         text: 'ヤクワリ',
-        properties: { fontId: 1 },
+        properties: {fontId: 1},
       },
     },
     xml:

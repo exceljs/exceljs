@@ -1,18 +1,17 @@
-'use strict';
-
-const SheetViewXform = require('../../../../../lib/xlsx/xform/sheet/sheet-view-xform');
-const ListXform = require('../../../../../lib/xlsx/xform/list-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const SheetViewXform = verquire('xlsx/xform/sheet/sheet-view-xform');
+const ListXform = verquire('xlsx/xform/list-xform');
 
 const expectations = [
   {
     title: 'Normal',
     create: () => new SheetViewXform(),
-    preparedModel: { workbookViewId: 0, state: 'normal', activeCell: 'G4' },
+    preparedModel: {workbookViewId: 0, state: 'normal', activeCell: 'G4'},
     xml:
-      '<sheetView workbookViewId="0">' +
-      '<selection activeCell="G4" sqref="G4"/>' +
-      '</sheetView>',
+    '<sheetView workbookViewId="0">' +
+    '<selection activeCell="G4" sqref="G4"/>' +
+    '</sheetView>',
     parsedModel: {
       workbookViewId: 0,
       rightToLeft: false,
@@ -37,9 +36,9 @@ const expectations = [
       zoomScaleNormal: 80,
     },
     xml:
-      '<sheetView workbookViewId="0" zoomScale="60" zoomScaleNormal="80">' +
-      '<selection activeCell="G4" sqref="G4"/>' +
-      '</sheetView>',
+    '<sheetView workbookViewId="0" zoomScale="60" zoomScaleNormal="80">' +
+    '<selection activeCell="G4" sqref="G4"/>' +
+    '</sheetView>',
     parsedModel: {
       workbookViewId: 0,
       rightToLeft: false,
@@ -65,9 +64,9 @@ const expectations = [
       showRowColHeaders: false,
     },
     xml:
-      '<sheetView workbookViewId="0" showRuler="0" showGridLines="0" showRowColHeaders="0">' +
-      '<selection activeCell="G4" sqref="G4"/>' +
-      '</sheetView>',
+    '<sheetView workbookViewId="0" showRuler="0" showGridLines="0" showRowColHeaders="0">' +
+    '<selection activeCell="G4" sqref="G4"/>' +
+    '</sheetView>',
     parsedModel: {
       workbookViewId: 0,
       rightToLeft: false,
@@ -91,9 +90,9 @@ const expectations = [
       style: 'pageBreakPreview',
     },
     xml:
-      '<sheetView workbookViewId="0" view="pageBreakPreview">' +
-      '<selection activeCell="G4" sqref="G4"/>' +
-      '</sheetView>',
+    '<sheetView workbookViewId="0" view="pageBreakPreview">' +
+    '<selection activeCell="G4" sqref="G4"/>' +
+    '</sheetView>',
     parsedModel: {
       workbookViewId: 0,
       rightToLeft: false,
@@ -121,10 +120,10 @@ const expectations = [
       activePane: 'bottomRight',
     },
     xml:
-      '<sheetView workbookViewId="0">' +
-      '<pane xSplit="1234" ySplit="3456" topLeftCell="C3" activePane="bottomRight"/>' +
-      '<selection pane="bottomRight" activeCell="B1" sqref="B1"/>' +
-      '</sheetView>',
+    '<sheetView workbookViewId="0">' +
+    '<pane xSplit="1234" ySplit="3456" topLeftCell="C3" activePane="bottomRight"/>' +
+    '<selection pane="bottomRight" activeCell="B1" sqref="B1"/>' +
+    '</sheetView>',
     parsedModel: {
       workbookViewId: 0,
       rightToLeft: false,
@@ -155,10 +154,10 @@ const expectations = [
       activePane: 'topLeft',
     },
     xml:
-      '<sheetView workbookViewId="0">' +
-      '<pane xSplit="1234" ySplit="3456" topLeftCell="C3"/>' +
-      '<selection activeCell="A1" sqref="A1"/>' +
-      '</sheetView>',
+    '<sheetView workbookViewId="0">' +
+    '<pane xSplit="1234" ySplit="3456" topLeftCell="C3"/>' +
+    '<selection activeCell="A1" sqref="A1"/>' +
+    '</sheetView>',
     parsedModel: {
       workbookViewId: 0,
       rightToLeft: false,
@@ -188,10 +187,10 @@ const expectations = [
       activeCell: 'D5',
     },
     xml:
-      '<sheetView workbookViewId="0">' +
-      '<pane xSplit="2" ySplit="3" topLeftCell="C4" activePane="bottomRight" state="frozen"/>' +
-      '<selection pane="bottomRight" activeCell="D5" sqref="D5"/>' +
-      '</sheetView>',
+    '<sheetView workbookViewId="0">' +
+    '<pane xSplit="2" ySplit="3" topLeftCell="C4" activePane="bottomRight" state="frozen"/>' +
+    '<selection pane="bottomRight" activeCell="D5" sqref="D5"/>' +
+    '</sheetView>',
     parsedModel: {
       workbookViewId: 0,
       rightToLeft: false,
@@ -217,7 +216,7 @@ const expectations = [
         childXform: new SheetViewXform(),
       }),
     preparedModel: [
-      { workbookViewId: 0, state: 'normal', activeCell: 'G4' },
+      {workbookViewId: 0, state: 'normal', activeCell: 'G4'},
       {
         workbookViewId: 1,
         state: 'frozen',
@@ -228,15 +227,15 @@ const expectations = [
       },
     ],
     xml:
-      '<sheetViews>' +
-      '<sheetView workbookViewId="0">' +
-      '<selection activeCell="G4" sqref="G4"/>' +
-      '</sheetView>' +
-      '<sheetView workbookViewId="1">' +
-      '<pane xSplit="2" ySplit="3" topLeftCell="C4" activePane="bottomRight" state="frozen"/>' +
-      '<selection pane="bottomRight" activeCell="D5" sqref="D5"/>' +
-      '</sheetView>' +
-      '</sheetViews>',
+    '<sheetViews>' +
+    '<sheetView workbookViewId="0">' +
+    '<selection activeCell="G4" sqref="G4"/>' +
+    '</sheetView>' +
+    '<sheetView workbookViewId="1">' +
+    '<pane xSplit="2" ySplit="3" topLeftCell="C4" activePane="bottomRight" state="frozen"/>' +
+    '<selection pane="bottomRight" activeCell="D5" sqref="D5"/>' +
+    '</sheetView>' +
+    '</sheetViews>',
     parsedModel: [
       {
         workbookViewId: 0,
@@ -269,7 +268,7 @@ const expectations = [
   {
     title: 'Right To Left',
     create: () => new SheetViewXform(),
-    preparedModel: { rightToLeft: true },
+    preparedModel: {rightToLeft: true},
     xml: '<sheetView workbookViewId="0" rightToLeft="1"></sheetView>',
     parsedModel: {
       workbookViewId: 0,
