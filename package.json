@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -15,8 +15,8 @@
   "engines": {
     "node": ">=6.0.0"
   },
-  "main": "./dist/es5/index.js",
-  "browser": "./dist/es5/exceljs.browser.js",
+  "main": "./lib/exceljs.nodejs.js",
+  "browser": "./dist/exceljs.min.js",
   "types": "./index.d.ts",
   "files": [
     "dist",
@@ -28,14 +28,19 @@
     "index.d.ts"
   ],
   "scripts": {
-    "pretest": "npm run build",
     "test": "npm run test:full",
     "test:full": "npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
-    "test:unit": "mocha --require spec/config/setup spec/unit --require spec/config/setup-unit --recursive",
+    "test:all": "npm run test:native && npm run test:es5",
+    "test:native": "npm run test:full",
+    "test:es5": "export EXCEL_BUILD=es5 && npm run test:full",
+    "test:unit": "mocha --require spec/config/setup --require spec/config/setup-unit spec/unit --recursive",
     "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
     "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
-    "test:browser": "if [ ! -f .disable-test-browser ]; then ./node_modules/.bin/grunt jasmine; fi ",
-    "test:native-integration": "export EXCEL_NATIVE=yes && mocha --require spec/config/setup spec/integration --recursive",
+    "test:browser": "if [ ! -f .disable-test-browser ]; then npm run test:jasmine; fi",
+    "test:jasmine": "npm run build && grunt jasmine",
+    "test:unit:es5": "export EXCEL_BUILD=es5 && npm run test:unit",
+    "test:integration:es5": "export EXCEL_BUILD=es5 && npm run test:integration",
+    "test:end-to-end:es5": "export EXCEL_BUILD=es5 && npm run test:end-to-end",
     "test:manual": "node spec/manual/app.js",
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
@@ -43,7 +48,7 @@
     "lint:staged": "lint-staged",
     "clean": "rm -rf build/ && rm -rf dist",
     "build": "./node_modules/.bin/grunt build",
-    "preversion": "npm run clean && npm run build && npm run test:full",
+    "preversion": "npm run clean && npm run build && npm run test:all",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "husky": {
@@ -84,7 +89,6 @@
   ],
   "dependencies": {
     "archiver": "^3.0.0",
-    "babel-polyfill": "^6.26.0",
     "fast-csv": "^3.0.1",
     "jszip": "^3.1.5",
     "dayjs": "^1.8.15",
@@ -101,6 +105,7 @@
     "chai": "^4.2.0",
     "chai-datetime": "^1.5.0",
     "chai-xml": "^0.3.2",
+    "core-js": "^3.2.1",
     "dirty-chai": "^2.0.1",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -124,6 +129,7 @@
     "mocha": "^5.2.0",
     "prettier-eslint": "^8.8.1",
     "prettier-eslint-cli": "^4.6.1",
+    "regenerator-runtime": "^0.13.3",
     "request": "^2.88.0",
     "semver": "^5.6.0",
     "uglify-js": "^3.4.9"

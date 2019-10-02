@@ -1,11 +1,9 @@
-'use strict';
-
 const {expect} = require('chai');
 const fs = require('fs');
 const path = require('path');
 
-const StreamBuf = require('../../../lib/utils/stream-buf');
-const StringBuf = require('../../../lib/utils/string-buf');
+const StreamBuf = verquire('utils/stream-buf');
+const StringBuf = verquire('utils/string-buf');
 
 describe('StreamBuf', () => {
   // StreamBuf is designed as a general-purpose writable-readable stream

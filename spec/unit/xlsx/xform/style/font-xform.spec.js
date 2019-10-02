@@ -1,7 +1,6 @@
-'use strict';
-
-const FontXform = require('../../../../../lib/xlsx/xform/style/font-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const FontXform = verquire('xlsx/xform/style/font-xform');
 
 const expectations = [
   {
@@ -12,7 +11,7 @@ const expectations = [
     preparedModel: {
       bold: true,
       size: 14,
-      color: { argb: 'FF00FF00' },
+      color: {argb: 'FF00FF00'},
       name: 'Calibri',
       family: 2,
       scheme: 'minor',
@@ -27,12 +26,12 @@ const expectations = [
   {
     title: 'rPr tag',
     create() {
-      return new FontXform({ tagName: 'rPr', fontNameTag: 'rFont' });
+      return new FontXform({tagName: 'rPr', fontNameTag: 'rFont'});
     },
     preparedModel: {
       italic: true,
       size: 14,
-      color: { argb: 'FF00FF00' },
+      color: {argb: 'FF00FF00'},
       name: 'Calibri',
       family: 2,
       scheme: 'minor',

@@ -1,8 +1,6 @@
-'use strict';
+const {expect} = require('chai');
 
-const { expect } = require('chai');
-
-const colCache = require('../../../lib/utils/col-cache');
+const colCache = verquire('utils/col-cache');
 
 describe('colCache', () => {
   it('caches values', () => {
@@ -12,32 +10,9 @@ describe('colCache', () => {
 
     // also, because of the fill heuristic A-Z will be there too
     const dic = [
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'J',
-      'K',
-      'L',
-      'M',
-      'N',
-      'O',
-      'P',
-      'Q',
-      'R',
-      'S',
-      'T',
-      'U',
-      'V',
-      'W',
-      'X',
-      'Y',
-      'Z',
+      'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+      'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+      'U', 'V', 'W', 'X', 'Y', 'Z',
     ];
     dic.forEach((letter, index) => {
       expect(colCache._l2n[letter]).to.equal(index + 1);

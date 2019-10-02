@@ -1,9 +1,8 @@
-'use strict';
-
 const fs = require('fs');
 
-const ContentTypesXform = require('../../../../../lib/xlsx/xform/core/content-types-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const ContentTypesXform = verquire('xlsx/xform/core/content-types-xform');
 
 const expectations = [
   {
@@ -12,10 +11,10 @@ const expectations = [
       return new ContentTypesXform();
     },
     preparedModel: {
-      worksheets: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      worksheets: [{id: 1}, {id: 2}, {id: 3}],
       media: [],
       drawings: [],
-      sharedStrings: { count: 1 },
+      sharedStrings: {count: 1},
     },
     xml: fs
       .readFileSync(`${__dirname}/data/content-types.01.xml`)
@@ -29,13 +28,13 @@ const expectations = [
       return new ContentTypesXform();
     },
     preparedModel: {
-      worksheets: [{ id: 1 }, { id: 2 }],
+      worksheets: [{id: 1}, {id: 2}],
       media: [
-        { type: 'image', extension: 'png' },
-        { type: 'image', extension: 'jpg' },
+        {type: 'image', extension: 'png'},
+        {type: 'image', extension: 'jpg'},
       ],
       drawings: [],
-      sharedStrings: { count: 1 },
+      sharedStrings: {count: 1},
     },
     xml: fs
       .readFileSync(`${__dirname}/data/content-types.02.xml`)
@@ -49,7 +48,7 @@ const expectations = [
       return new ContentTypesXform();
     },
     preparedModel: {
-      worksheets: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      worksheets: [{id: 1}, {id: 2}, {id: 3}],
       media: [],
       drawings: [],
     },
@@ -65,10 +64,10 @@ const expectations = [
       return new ContentTypesXform();
     },
     preparedModel: {
-      worksheets: [{ id: 1 }, { id: 2, useSharedStrings: false }],
+      worksheets: [{id: 1}, {id: 2, useSharedStrings: false}],
       media: [
-        { type: 'image', extension: 'png' },
-        { type: 'image', extension: 'jpg' },
+        {type: 'image', extension: 'png'},
+        {type: 'image', extension: 'jpg'},
       ],
       drawings: [],
     },

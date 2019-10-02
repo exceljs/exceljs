@@ -1,7 +1,6 @@
-'use strict';
-
-const WorkbookViewXform = require('../../../../../lib/xlsx/xform/book/workbook-view-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const WorkbookViewXform = verquire('xlsx/xform/book/workbook-view-xform');
 
 const expectations = [
   {
@@ -26,7 +25,7 @@ const expectations = [
     create() {
       return new WorkbookViewXform();
     },
-    preparedModel: { visibility: 'hidden' },
+    preparedModel: {visibility: 'hidden'},
     xml:
       '<workbookView visibility="hidden" xWindow="0" yWindow="0" windowWidth="12000" windowHeight="24000"/>',
     parsedModel: {
@@ -43,7 +42,7 @@ const expectations = [
     create() {
       return new WorkbookViewXform();
     },
-    preparedModel: { activeTab: 2, firstSheet: 3 },
+    preparedModel: {activeTab: 2, firstSheet: 3},
     xml:
       '<workbookView xWindow="0" yWindow="0" windowWidth="12000" windowHeight="24000" activeTab="2" firstSheet="3"/>',
     parsedModel: {

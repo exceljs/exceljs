@@ -1,7 +1,3 @@
-'use strict';
-
-const verquire = require('./verquire');
-
 const _ = Object.assign(
   {
     get: function get(obj, path, dflt) {

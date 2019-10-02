@@ -10,6 +10,7 @@
     "no-underscore-dangle": ["off"]
   },
   "globals": {
+    "verquire": true,
     "describe": true,
     "expect": true,
     "before": true,
