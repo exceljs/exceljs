@@ -20,8 +20,12 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/889">Add Compression level option to WorkbookWriterOptions for streaming #889</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/906">Exclude Infinity on createInputStream #906</a>.
     Many thanks to <a href="https://github.com/sophiedophie">Sophie Kwon</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/911">Add Compression level option to WorkbookWriterOptions for streaming #889</a>.
+    Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution.
   </li>
 </ul>
 
