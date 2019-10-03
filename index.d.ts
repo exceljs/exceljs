@@ -973,6 +973,11 @@ export interface Worksheet {
 	properties: WorksheetProperties;
 
 	/**
+	 * Workbook calculation Properties
+	 */
+	calcProperties: CalculationProperties;
+
+	/**
 	 * Open panes representing the sheet
 	 */
 	views: Array<Partial<WorksheetView>>;
@@ -1167,6 +1172,13 @@ export interface Worksheet {
 	 * fetch table by name or id
 	 */
 	getTable(name: string): Table;
+}
+
+export interface CalculationProperties {
+	/**
+	 * Whether the application shall perform a full recalculation when the workbook is opened
+	 */
+	fullCalcOnLoad: boolean
 }
 
 export interface WorksheetProperties {

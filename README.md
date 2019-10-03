@@ -220,6 +220,13 @@ workbook.lastPrinted = new Date(2016, 9, 27);
 workbook.properties.date1904 = true;
 ```
 
+## Set Calculation Properties
+
+```javascript
+// Force workbook calculation on load
+workbook.calcProperties.fullCalcOnLoad = true;
+```
+
 ## Workbook Views
 
 The Workbook views controls how many separate windows Excel will open when viewing the workbook.
