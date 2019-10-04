@@ -973,11 +973,6 @@ export interface Worksheet {
 	properties: WorksheetProperties;
 
 	/**
-	 * Workbook calculation Properties
-	 */
-	calcProperties: CalculationProperties;
-
-	/**
 	 * Open panes representing the sheet
 	 */
 	views: Array<Partial<WorksheetView>>;
@@ -1423,6 +1418,11 @@ export class Workbook {
 	modified: Date;
 	lastPrinted: Date;
 	properties: WorkbookProperties;
+
+	/**
+	 * Workbook calculation Properties
+	 */
+	calcProperties: CalculationProperties;
 
 	/**
 	 * xlsx file format operations
