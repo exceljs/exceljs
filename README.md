@@ -20,6 +20,10 @@ npm install exceljs
 
 <ul>
   <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/873">Uprev fast-csv to latest version which does not use unsafe eval #873</a>.
+    Many thanks to <a href="https://github.com/miketownsend">Mike Townsend</a> for this contribution.
+  </li>
+  <li>
     Merged <a href="https://github.com/exceljs/exceljs/pull/906">Exclude Infinity on createInputStream #906</a>.
     Many thanks to <a href="https://github.com/sophiedophie">Sophie Kwon</a> for this contribution.
   </li>
