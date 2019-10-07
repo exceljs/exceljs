@@ -24,8 +24,17 @@ npm install exceljs
     Many thanks to <a href="https://github.com/sophiedophie">Sophie Kwon</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/911">Add Compression level option to WorkbookWriterOptions for streaming #889</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/911">Feature/Add comments/notes to stream writer #911</a>.
     Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/868">Can't add cell comment using streaming WorkbookWriter #868</a>
+  </li>
+  <li>
+    Fixed an issue with reading .xlsx files containing notes.
+    This should resolve the following issues:
+    <ul>
+      <li><a href="https://github.com/exceljs/exceljs/issues/941">Reading comment/note from xlsx #941</a></li>
+      <li><a href="https://github.com/exceljs/exceljs/issues/944">Excel.js doesn't parse comments/notes. #944</a></li>
+    </ul>
   </li>
 </ul>
 
