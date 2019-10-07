@@ -100,6 +100,38 @@ const expectations = [
     options: {hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles},
   },
   {
+    title: 'String with Invalid Number',
+    create() {
+      return new CellXform();
+    },
+    initialModel: {
+      address: 'A1',
+      type: Enums.ValueType.String,
+      value: '6E1000',
+    },
+    preparedModel: {
+      address: 'A1',
+      type: Enums.ValueType.String,
+      value: '6E1000',
+    },
+    xml: '<c r="A1" t="str"><v>6E1000</v></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.String,
+      value: '6E1000',
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.String,
+      value: '6E1000',
+    },
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
+    options: {
+      hyperlinkMap: fakeHyperlinkMap,
+      styles: fakeStyles,
+    },
+  },
+  {
     title: 'Inline String with plain text',
     create() {
       return new CellXform();
