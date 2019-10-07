@@ -89,9 +89,9 @@
   ],
   "dependencies": {
     "archiver": "^3.0.0",
-    "fast-csv": "^2.4.1",
-    "jszip": "^3.1.5",
     "dayjs": "^1.8.15",
+    "fast-csv": "^3.4.0",
+    "jszip": "^3.1.5",
     "sax": "^1.2.4",
     "tmp": "^0.1.0",
     "unzipper": "^0.9.12"
@@ -120,7 +120,7 @@
     "grunt-browserify": "^5.3.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jasmine": "^2.0.3",
-    "grunt-contrib-uglify": "^4.0.0",
+    "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-lib-phantomjs": "^1.1.0",
     "husky": "^2.2.0",
