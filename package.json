@@ -21,8 +21,6 @@
   "files": [
     "dist",
     "lib",
-    "modern.browser.js",
-    "modern.nodejs.js",
     "LICENSE",
     "README.md",
     "index.d.ts"
