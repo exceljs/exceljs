@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const simpleWorkbookModel = require('./../data/simpleWorkbook.json');
 
 const Excel = verquire('exceljs');

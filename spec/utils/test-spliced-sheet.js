@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const Enums = verquire('doc/enums');
 
 module.exports = {

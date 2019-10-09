@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const WorksheetWriter = verquire('stream/xlsx/worksheet-writer');
 const StreamBuf = verquire('utils/stream-buf');
 

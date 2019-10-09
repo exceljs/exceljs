@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const utils = verquire('utils/utils');
 
 describe('utils', () => {

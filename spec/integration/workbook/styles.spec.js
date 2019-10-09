@@ -1,4 +1,3 @@
-const {expect} = require('chai');
 const stream = require('stream');
 const testUtils = require('../../utils/index');
 

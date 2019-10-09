@@ -1,4 +1,3 @@
-const {expect} = require('chai');
 const verquire = require('./verquire');
 
 const _ = require('./under-dash');

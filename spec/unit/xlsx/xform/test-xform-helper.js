@@ -1,5 +1,4 @@
 const Sax = require('sax');
-const {expect} = require('chai');
 const _ = require('../../../utils/under-dash');
 
 const XmlStream = verquire('utils/xml-stream');

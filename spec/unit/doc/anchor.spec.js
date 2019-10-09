@@ -1,4 +1,3 @@
-const {expect} = require('chai');
 const {createSheetMock} = require('../../utils/index');
 
 const Anchor = verquire('doc/anchor');

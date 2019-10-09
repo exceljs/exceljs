@@ -1,5 +1,4 @@
 const fs = require('fs');
-const {expect} = require('chai');
 const testUtils = require('../../utils/index');
 
 const ExcelJS = verquire('exceljs');

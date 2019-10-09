@@ -1,4 +1,3 @@
-const {expect} = require('chai');
 const tools = require('./tools');
 const testValues = tools.fix(require('./data/sheet-values.json'));
 

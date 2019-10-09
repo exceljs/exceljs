@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const DefinedNames = verquire('doc/defined-names');
 
 describe('DefinedNames', () => {

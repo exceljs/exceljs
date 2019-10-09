@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const {slideFormula} = verquire('utils/shared-formula');
 
 describe('shared-formula', () => {

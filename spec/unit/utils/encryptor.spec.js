@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const Encryptor = verquire('utils/encryptor');
 
 describe('Encryptor', () => {

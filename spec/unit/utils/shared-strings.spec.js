@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const SharedStrings = verquire('utils/shared-strings');
 
 describe('SharedStrings', () => {

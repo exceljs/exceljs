@@ -1,4 +1,3 @@
-const {expect} = require('chai');
 const path = require('path');
 
 const testutils = require('./../utils/index');
