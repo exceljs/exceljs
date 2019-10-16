@@ -8,7 +8,7 @@ const verquire = require('../../../utils/verquire');
 
 const tools = require('../../../utils/tools');
 
-const Excel = verquire('excel');
+const Excel = verquire('exceljs');
 
 const {expect} = chai;
 
