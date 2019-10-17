@@ -22,6 +22,19 @@ ws.getCell('F2').value = {sharedFormula: 'F1', result: 2};
 ws.getCell('F3').value = {sharedFormula: 'F1', result: 3};
 ws.getCell('F4').value = {sharedFormula: 'F1', result: 4};
 
+// function fill
+ws.getCell('H1').value = 1;
+ws.fillFormula('H2:H20', 'H1+1', row => row);
+
+// array formula
+
+ws.getCell('I1').value = 1;
+ws.getCell('J1').value = {
+  shareType: 'array',
+  ref: 'J1:K2',
+  formula: 'I1',
+  result: 1,
+};
 
 const stopwatch = new HrStopwatch();
 stopwatch.start();

@@ -44,7 +44,7 @@ describe('WorkbookWriter', () => {
       };
       const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
       const ws = wb.addWorksheet('Hello');
-      ws.getCell('A1').value = {formula: 'ROW()+COLUMN()', result: 2};
+      ws.getCell('A1').value = {formula: 'ROW()+COLUMN()', ref: 'A1:B2', result: 2};
       ws.getCell('B1').value = {sharedFormula: 'A1', result: 3};
       ws.getCell('A2').value = {sharedFormula: 'A1', result: 3};
       ws.getCell('B2').value = {sharedFormula: 'A1', result: 4};
@@ -60,6 +60,8 @@ describe('WorkbookWriter', () => {
           const ws2 = wb2.getWorksheet('Hello');
           expect(ws2.getCell('A1').value).to.deep.equal({
             formula: 'ROW()+COLUMN()',
+            shareType: 'shared',
+            ref: 'A1:B2',
             result: 2,
           });
           expect(ws2.getCell('B1').value).to.deep.equal({

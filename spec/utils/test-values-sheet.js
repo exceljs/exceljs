@@ -344,6 +344,7 @@ const self = {
               sharedFormula: 'A10',
               result: index + 2,
             });
+            expect(ws.getCell(address).formula).to.equal(`${address[0]}9`);
           });
 
           // Array Formula
