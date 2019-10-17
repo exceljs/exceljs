@@ -8,7 +8,9 @@ Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
 Reverse engineered from Excel spreadsheet files as a project.
 
-[中文文档](README_zh.md)
+# Translations
+
+* [中文文档](README_zh.md)
 
 # Installation
 
@@ -22,6 +24,10 @@ npm install exceljs
   <li>
     Merged <a href="https://github.com/exceljs/exceljs/pull/923">Add document for zip options of streaming WorkbookWriter #923</a>.
     Many thanks to <a href="https://github.com/piglovesyou">Soichi Takamura</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/933">array formula #933</a>.
+    Many thanks to <a href="https://github.com/yoann-antoviaque">yoann-antoviaque</a> for this contribution.
   </li>
 </ul>
 
