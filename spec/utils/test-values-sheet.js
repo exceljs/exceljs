@@ -106,12 +106,20 @@ const self = {
     row8.getCell(4).fill = self.styles.fills.rgbPathGrad;
     row8.commit();
 
-    // Shared Formula
+    // Old Shared Formula
     ws.getCell('A9').value = 1;
     ws.getCell('B9').value = {formula: 'A9+1', result: 2};
     ws.getCell('C9').value = {sharedFormula: 'B9', result: 3};
     ws.getCell('D9').value = {sharedFormula: 'B9', result: 4};
     ws.getCell('E9').value = {sharedFormula: 'B9', result: 5};
+
+    if (ws.fillFormula) {
+      // Fill Formula Shared
+      ws.fillFormula('A10:E10', 'A9', [1, 2, 3, 4, 5]);
+
+      // Array Formula
+      ws.fillFormula('A11:E11', 'A9', [1, 1, 1, 1, 1], 'array');
+    }
   },
 
   checkSheet(wb, options) {
@@ -308,6 +316,8 @@ const self = {
         expect(ws.getCell('A9').type).to.equal(ExcelJS.ValueType.Number);
 
         expect(ws.getCell('B9').value).to.deep.equal({
+          shareType: 'shared',
+          ref: 'B9:E9',
           formula: 'A9+1',
           result: 2,
         });
@@ -320,6 +330,34 @@ const self = {
           });
           expect(ws.getCell(address).type).to.equal(ExcelJS.ValueType.Formula);
         });
+
+        if (ws.getCell('A10').value) {
+          // Fill Formula Shared
+          expect(ws.getCell('A10').value).to.deep.equal({
+            shareType: 'shared',
+            ref: 'A10:E10',
+            formula: 'A9',
+            result: 1,
+          });
+          ['B10', 'C10', 'D10', 'E10'].forEach((address, index) => {
+            expect(ws.getCell(address).value).to.deep.equal({
+              sharedFormula: 'A10',
+              result: index + 2,
+            });
+          });
+
+          // Array Formula
+          // ws.fillFormula('A11:E11', 'A9', [1,1,1,1,1], 'array');
+          expect(ws.getCell('A11').value).to.deep.equal({
+            shareType: 'array',
+            ref: 'A11:E11',
+            formula: 'A9',
+            result: 1,
+          });
+          ['B11', 'C11', 'D11', 'E11'].forEach(address => {
+            expect(ws.getCell(address).value).to.equal(1);
+          });
+        }
       } else {
         ['A9', 'B9', 'C9', 'D9', 'E9'].forEach((address, index) => {
           expect(ws.getCell(address).value).to.equal(index + 1);

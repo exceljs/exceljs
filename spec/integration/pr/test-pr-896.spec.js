@@ -3,7 +3,7 @@ const ExcelJS = verquire('exceljs');
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 describe('pr related issues', () => {
-  describe.only('pr 896 leading and trailing whitespace', () => {
+  describe('pr 896 leading and trailing whitespace', () => {
     it('Should preserve leading and trailing whitespace', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('foo');
