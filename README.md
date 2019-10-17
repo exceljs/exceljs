@@ -179,22 +179,6 @@ const ExcelJS = require('exceljs/dist/es5');
 
 # Interface
 
-## Importing
-
-The default export is a transpiled ES5 version with a Promise polyfill - this offers the highest level of compatibility.
-
-```javascript
-var Excel = require('exceljs');
-import Excel from 'exceljs';
-```
-
-However, if you use this library on a modern node.js version (>=8) or on the frontend using a bundler (or can focus on just evergreen browsers), we recommend to use these imports:
-
-```javascript
-const Excel = require('exceljs/modern.nodejs');
-import Excel from 'exceljs/modern.browser';
-```
-
 ## Create a Workbook
 
 ```javascript
