@@ -1261,15 +1261,15 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 
 **Valid Alignment Property Values**
 
-| horizontal       | vertical    | wrapText | indent  | readingOrder | textRotation |
-| ---------------- | ----------- | -------- | ------- | ------------ | ------------ |
-| left             | top         | true     | integer | rtl          | 0 to 90      |
-| center           | middle      | false    |         | ltr          | -1 to -90    |
-| right            | bottom      |          |         |              | vertical     |
-| fill             | distributed |          |         |              |              |
-| justify          | justify     |          |         |              |              |
-| centerContinuous |             |          |         |              |              |
-| distributed      |             |          |         |              |              |
+| horizontal       | vertical    | wrapText | shrinkToFit | indent  | readingOrder | textRotation |
+| ---------------- | ----------- | -------- | ----------- | ------- | ------------ | ------------ |
+| left             | top         | true     | true        | integer | rtl          | 0 to 90      |
+| center           | middle      | false    | false       |         | ltr          | -1 to -90    |
+| right            | bottom      |          |             |         |              | vertical     |
+| fill             | distributed |          |             |         |              |              |
+| justify          | justify     |          |             |         |              |              |
+| centerContinuous |             |          |             |         |              |              |
+| distributed      |             |          |             |         |              |              |
 
 
 ### Borders
