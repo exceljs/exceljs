@@ -28,7 +28,8 @@ npm install exceljs
   <li>
     Merged <a href="https://github.com/exceljs/exceljs/pull/933">array formula #933</a>.
     Many thanks to <a href="https://github.com/yoann-antoviaque">yoann-antoviaque</a> for this contribution.
-    This fixes <a href="https://github.com/exceljs/exceljs/issues/932">broken array formula #932</a>.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/932">broken array formula #932</a>
+    and adds <a href="#array-formula">Array Formulae</a> to ExcelJS.
   </li>
 </ul>
 
@@ -134,6 +135,7 @@ To be clear, all contributions added to this library will be included in the lib
         <ul>
           <li><a href="#shared-formula">Shared Formula</a></li>
           <li><a href="#formula-type">Formula Type</a></li>
+          <li><a href="#array-formula">Array Formula</a></li>
         </ul>
       </li>
       <li><a href="#rich-text-value">Rich Text Value</a></li>
@@ -2099,7 +2101,6 @@ fillFormula can also use a callback function to calculate the value at each cell
 // fill A2 to A100 with ascending count starting from A1
 worksheet.fillFormula('A2:A100', 'A1+1', (row, col) => row);
 ```
-
 
 ### Formula Type
 
