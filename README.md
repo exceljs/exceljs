@@ -28,6 +28,7 @@ npm install exceljs
   <li>
     Merged <a href="https://github.com/exceljs/exceljs/pull/933">array formula #933</a>.
     Many thanks to <a href="https://github.com/yoann-antoviaque">yoann-antoviaque</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/932">broken array formula #932</a>.
   </li>
 </ul>
 
