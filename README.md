@@ -29,6 +29,11 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/896">add xml:space="preserve" for all whitespaces #896</a>.
     Many thanks to <a href="https://github.com/sebikeller">Sebastian Keller</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/959">Add `shrinkToFit` to document and typing #959</a>.
+    Many thanks to <a href="https://github.com/mozisan">('3')</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/943">shrinkToFit property not on documentation #943</a>.
+  </li>
 </ul>
 
 # Contributions
