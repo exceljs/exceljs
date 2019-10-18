@@ -85,6 +85,16 @@ const expectations = [
     parsedModel: '役割',
     tests: ['parse'],
   },
+  {
+    title: 'text with newline',
+    create() {
+      return new SharedStringXform();
+    },
+    preparedModel: 'Hello,\nWorld!',
+    xml: '<si><t xml:space="preserve">Hello,\nWorld!</t></si>',
+    parsedModel: 'Hello,\nWorld!',
+    tests: ['render', 'renderIn', 'parse'],
+  },
 ];
 
 describe('SharedStringXform', () => {
