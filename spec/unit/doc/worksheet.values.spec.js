@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const testUtils = require('../../utils/index');
 
 const _ = verquire('utils/under-dash');

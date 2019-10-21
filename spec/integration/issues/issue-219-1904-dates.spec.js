@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const ExcelJS = verquire('exceljs');
 
 // this file to contain integration tests created from github issues

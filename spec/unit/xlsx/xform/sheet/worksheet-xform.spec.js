@@ -1,5 +1,4 @@
 const fs = require('fs');
-const {expect} = require('chai');
 
 const testXformHelper = require('../test-xform-helper');
 

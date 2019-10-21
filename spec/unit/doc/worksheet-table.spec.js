@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const colCache = verquire('utils/col-cache');
 const Excel = verquire('exceljs');
 

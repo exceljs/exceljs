@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const XmlStream = verquire('utils/xml-stream');
 
 describe('XmlStream', () => {

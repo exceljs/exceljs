@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const CellMatrix = verquire('utils/cell-matrix');
 
 describe('CellMatrix', () => {

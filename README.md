@@ -8,7 +8,9 @@ Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
 Reverse engineered from Excel spreadsheet files as a project.
 
-[中文文档](README_zh.md)
+# Translations
+
+* [中文文档](README_zh.md)
 
 # Installation
 
@@ -20,12 +22,17 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/906">Exclude Infinity on createInputStream #906</a>.
-    Many thanks to <a href="https://github.com/sophiedophie">Sophie Kwon</a> for this contribution.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/892">Fix anchor.js #892</a>.
+    Many thanks to <a href="https://github.com/wwojtkowski">Wojciech Wojtkowski</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/911">Add Compression level option to WorkbookWriterOptions for streaming #889</a>.
-    Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/896">add xml:space="preserve" for all whitespaces #896</a>.
+    Many thanks to <a href="https://github.com/sebikeller">Sebastian Keller</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/959">Add `shrinkToFit` to document and typing #959</a>.
+    Many thanks to <a href="https://github.com/mozisan">('3')</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/943">shrinkToFit property not on documentation #943</a>.
   </li>
 </ul>
 
@@ -131,6 +138,7 @@ To be clear, all contributions added to this library will be included in the lib
         <ul>
           <li><a href="#shared-formula">Shared Formula</a></li>
           <li><a href="#formula-type">Formula Type</a></li>
+          <li><a href="#array-formula">Array Formula</a></li>
         </ul>
       </li>
       <li><a href="#rich-text-value">Rich Text Value</a></li>
@@ -182,22 +190,6 @@ const ExcelJS = require('exceljs/dist/es5');
 ```
 
 # Interface
-
-## Importing
-
-The default export is a transpiled ES5 version with a Promise polyfill - this offers the highest level of compatibility.
-
-```javascript
-var Excel = require('exceljs');
-import Excel from 'exceljs';
-```
-
-However, if you use this library on a modern node.js version (>=8) or on the frontend using a bundler (or can focus on just evergreen browsers), we recommend to use these imports:
-
-```javascript
-const Excel = require('exceljs/modern.nodejs');
-import Excel from 'exceljs/modern.browser';
-```
 
 ## Create a Workbook
 
@@ -1281,15 +1273,15 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 
 **Valid Alignment Property Values**
 
-| horizontal       | vertical    | wrapText | indent  | readingOrder | textRotation |
-| ---------------- | ----------- | -------- | ------- | ------------ | ------------ |
-| left             | top         | true     | integer | rtl          | 0 to 90      |
-| center           | middle      | false    |         | ltr          | -1 to -90    |
-| right            | bottom      |          |         |              | vertical     |
-| fill             | distributed |          |         |              |              |
-| justify          | justify     |          |         |              |              |
-| centerContinuous |             |          |         |              |              |
-| distributed      |             |          |         |              |              |
+| horizontal       | vertical    | wrapText | shrinkToFit | indent  | readingOrder | textRotation |
+| ---------------- | ----------- | -------- | ----------- | ------- | ------------ | ------------ |
+| left             | top         | true     | true        | integer | rtl          | 0 to 90      |
+| center           | middle      | false    | false       |         | ltr          | -1 to -90    |
+| right            | bottom      |          |             |         |              | vertical     |
+| fill             | distributed |          |             |         |              |              |
+| justify          | justify     |          |             |         |              |              |
+| centerContinuous |             |          |             |         |              |              |
+| distributed      |             |          |             |         |              |              |
 
 
 ### Borders
@@ -1878,6 +1870,7 @@ The constructor takes an optional options object with the following fields:
 | filename         | If stream not specified, this field specifies the path to a file to write the XLSX workbook to. |
 | useSharedStrings | Specifies whether to use shared strings in the workbook. Default is false |
 | useStyles        | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
+| zip              | [Zip optons](https://www.archiverjs.com/global.html#ZipOptions) that ExcelJS internally passes to [Archiver](https://github.com/archiverjs/node-archiver). Default is undefined |
 
 If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object
  that will store the contents of the XLSX workbook in memory.
@@ -2064,22 +2057,59 @@ worksheet.getCell('A3').result === 7;
 
 ### Shared Formula
 
-Shared formulae enhance the compression of the xlsx document by increasing the repetition
+Shared formulae enhance the compression of the xlsx document by decreasing the repetition
 of text within the worksheet xml.
+The top-left cell in a range is the designated master and will hold the
+formula that all the other cells in the range will derive from.
+The other 'slave' cells can then refer to this master cell instead of redefining the
+whole formula again.
+Note that the master formula will be translated to the slave cells in the usual
+Excel fashion so that references to other cells will be shifted down and
+to the right depending on the slave's offset to the master.
+For example: if the master cell A2 has a formula referencing A1 then
+if cell B2 shares A2's formula, then it will reference B1.
+
+A master formula can be assigned to a cell along with the slave cells in its range
+
+```javascript
+worksheet.getCell('A2').value = {
+  formula: 'A1',
+  result: 10,
+  shareType: 'shared',
+  ref: 'A2:B3'
+};
+```
 
 A shared formula can be assigned to a cell using a new value form:
 
 ```javascript
-worksheet.getCell('B3').value = { sharedFormula: 'A3', result: 10 };
+worksheet.getCell('B2').value = { sharedFormula: 'A2', result: 10 };
 ```
 
-This specifies that the cell B3 is a formula that will be derived from the formula in
-A3 and its result is 10.
+This specifies that the cell B2 is a formula that will be derived from the formula in
+A2 and its result is 10.
 
-The formula convenience getter will translate the formula in A3 to what it should be in B3:
+The formula convenience getter will translate the formula in A2 to what it should be in B2:
 
 ```javascript
-worksheet.getCell('B3').formula === 'B1+B2';
+expect(worksheet.getCell('B2').formula).to.equal('B1');
+```
+
+Shared formulae can be assigned into a sheet using the 'fillFormula' function:
+
+```javascript
+// set A1 to starting number
+worksheet.getCell('A1').value = 1;
+
+// fill A2 to A10 with ascending count starting from A1
+worksheet.fillFormula('A2:A10', 'A1+1', [2,3,4,5,6,7,8,9,10]);
+```
+
+fillFormula can also use a callback function to calculate the value at each cell
+
+```javascript
+// fill A2 to A100 with ascending count starting from A1
+worksheet.fillFormula('A2:A100', 'A1+1', (row, col) => row);
 ```
 
 ### Formula Type
@@ -2098,6 +2128,37 @@ Formula type has the following values:
 | Enums.FormulaType.None     |   0     |
 | Enums.FormulaType.Master   |   1     |
 | Enums.FormulaType.Shared   |   2     |
+
+### Array Formula
+
+A new way of expressing shared formulae in Excel is the array formula.
+In this form, the master cell is the only cell that contains any information relating to a formula.
+It contains the shareType 'array' along with the range of cells it applies to and the formula that will be copied.
+The rest of the cells are regular cells with regular values.
+
+Note: array formulae are not translated in the way shared formulae are.
+So if master cell A2 refers to A1, then slave cell B2 will also refer to A1.
+
+E.g.
+```javascript
+// assign array formula to A2:B3
+worksheet.getCell('A2').value = {
+  formula: 'A1',
+  result: 10,
+  shareType: 'array',
+  ref: 'A2:B3'
+};
+
+// it may not be necessary to fill the rest of the values in the sheet
+```
+
+The fillFormula function can also be used to fill an array formula
+
+```javascript
+// fill A2:B3 with array formula "A1"
+worksheet.fillFormula('A2:B3', 'A1', [1,1,1,1], 'array');
+```
+
 
 ## Rich Text Value
 
@@ -2349,3 +2410,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 1.15.0  | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/889">Add Compression level option to WorkbookWriterOptions for streaming #889</a>. Many thanks to <a href="https://github.com/ABenassi87">Alfredo Benassi</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/903">Feature/Cell Protection #903</a> and <a href="https://github.com/exceljs/exceljs/pull/907">Feature/Sheet Protection #907</a>. Many thanks to <a href="https://github.com/karabaesh">karabaesh</a> for these contributions. </li> </ul> |
 | 2.0.1   | <h2>Major Version Change</h2> <p>Introducing async/await to ExcelJS!</p> <p>The new async and await features of JavaScript can help a lot to make code more readable and maintainable. To avoid confusion, particularly with returned promises from async functions, we have had to remove the Promise class configuration option and from v2 onwards ExcelJS will use native Promises. Since this is potentially a breaking change we're bumping the major version for this release.</p> <h2>Changes</h2> <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/829">Introduce async/await #829</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/930">Update index.d.ts #930</a>. Many thanks to <a href="https://github.com/cosmonovallc">cosmonovallc</a> for this contributions. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/940">TS: Add types for addTable function #940</a>. Many thanks to <a href="https://github.com/egmen">egmen</a> for this contributions. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/926">added explicit return types to the type definitions of Worksheet.protect() and Worksheet.unprotect() #926</a>. Many thanks to <a href="https://github.com/drjokepu">Tamas Czinege</a> for this contributions. </li> <li> Dropped dependencies on Promise libraries. </li> </ul> |
 | 3.0.0   | <h2>Another Major Version Change</h2> <p>Javascript has changed a lot over the years, and so have the modules and technologies surrounding it. To this end, this major version of ExcelJS changes the structure of the publish artefacts:</p> <h3>Main Export is now the Original Javascript Source</h3> <p>Prior to this release, the transpiled ES5 code was exported as the package main. From now on, the package main comes directly from the lib/ folder. This means a number of dependencies have been removed, including the polyfills.</p> <h3>ES5 and Browserify are Still Included</h3> <p>In order to support those that still require ES5 ready code (e.g. as dependencies in web apps) the source code will still be transpiled and available  in dist/es5.</p> <p>The ES5 code is also browserified and available as dist/exceljs.js or dist/exceljs.min.js</p> <p><i>See the section <a href="#importing">Importing</a> for details</i></p> |
+| 3.1.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/873">Uprev fast-csv to latest version which does not use unsafe eval #873</a>. Many thanks to <a href="https://github.com/miketownsend">Mike Townsend</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/906">Exclude Infinity on createInputStream #906</a>. Many thanks to <a href="https://github.com/sophiedophie">Sophie Kwon</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/911">Feature/Add comments/notes to stream writer #911</a>. Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/868">Can't add cell comment using streaming WorkbookWriter #868</a> </li> <li> Fixed an issue with reading .xlsx files containing notes. This should resolve the following issues: <ul> <li><a href="https://github.com/exceljs/exceljs/issues/941">Reading comment/note from xlsx #941</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/944">Excel.js doesn't parse comments/notes. #944</a></li> </ul> </li> </ul> |
+| 3.2.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/923">Add document for zip options of streaming WorkbookWriter #923</a>. Many thanks to <a href="https://github.com/piglovesyou">Soichi Takamura</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/933">array formula #933</a>. Many thanks to <a href="https://github.com/yoann-antoviaque">yoann-antoviaque</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/932">broken array formula #932</a> and adds <a href="#array-formula">Array Formulae</a> to ExcelJS. </li> </ul> |

@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const Enums = verquire('doc/enums');
 const ExcelJS = verquire('exceljs');
 
@@ -16,6 +14,8 @@ describe('github issues', () => {
             const ws = wb.getWorksheet('fib');
             expect(ws.getCell('A4').value).to.deep.equal({
               formula: 'A3+1',
+              shareType: 'shared',
+              ref: 'A4:A19',
               result: 4,
             });
             expect(ws.getCell('A5').value).to.deep.equal(

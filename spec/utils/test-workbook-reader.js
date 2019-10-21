@@ -1,4 +1,3 @@
-const {expect} = require('chai');
 const tools = require('./tools');
 const testValues = tools.fix(require('./data/sheet-values.json'));
 
@@ -6,7 +5,7 @@ const utils = verquire('utils/utils');
 const ExcelJS = verquire('exceljs');
 
 function fillFormula(f) {
-  return Object.assign({formula: undefined, result: undefined}, f);
+  return Object.assign({formula: undefined}, f);
 }
 
 const streamedValues = {
@@ -141,7 +140,7 @@ module.exports = {
       });
       wb.on('end', () => {
         try {
-          expect(rowCount).to.equal(10);
+          expect(rowCount).to.equal(11);
           resolve();
         } catch (error) {
           reject(error);

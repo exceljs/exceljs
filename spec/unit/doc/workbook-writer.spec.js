@@ -1,5 +1,4 @@
 const Stream = require('stream');
-const {expect} = require('chai');
 
 const Excel = verquire('exceljs');
 

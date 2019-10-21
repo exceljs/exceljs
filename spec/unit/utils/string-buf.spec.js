@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const StringBuf = verquire('utils/string-buf');
 
 describe('StringBuf', () => {

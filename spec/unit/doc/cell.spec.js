@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const colCache = verquire('utils/col-cache');
 const Cell = verquire('doc/cell');
 const Enums = verquire('doc/enums');
@@ -121,7 +119,7 @@ describe('Cell', () => {
     // no result
     formulaValue = {formula: 'A3'};
     expect((a1.value = formulaValue)).to.deep.equal(formulaValue);
-    expect(a1.value).to.deep.equal({formula: 'A3', result: undefined});
+    expect(a1.value).to.deep.equal({formula: 'A3'});
     expect(a1.type).to.equal(Enums.ValueType.Formula);
 
     const hyperlinkValue = {

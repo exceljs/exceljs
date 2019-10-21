@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const ExcelJS = verquire('exceljs');
 
 // =============================================================================

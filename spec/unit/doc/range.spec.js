@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const Range = verquire('doc/range');
 
 describe('Range', () => {
