@@ -1170,6 +1170,13 @@ export interface Worksheet {
 	getTable(name: string): Table;
 }
 
+export interface CalculationProperties {
+	/**
+	 * Whether the application shall perform a full recalculation when the workbook is opened
+	 */
+	fullCalcOnLoad: boolean
+}
+
 export interface WorksheetProperties {
 	/**
 	 * Color of the tab
@@ -1412,6 +1419,11 @@ export class Workbook {
 	modified: Date;
 	lastPrinted: Date;
 	properties: WorkbookProperties;
+
+	/**
+	 * Workbook calculation Properties
+	 */
+	calcProperties: CalculationProperties;
 
 	/**
 	 * xlsx file format operations
