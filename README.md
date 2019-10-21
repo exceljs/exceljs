@@ -34,6 +34,11 @@ npm install exceljs
     Many thanks to <a href="https://github.com/mozisan">('3')</a> for this contribution.
     This fixes <a href="https://github.com/exceljs/exceljs/issues/943">shrinkToFit property not on documentation #943</a>.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/980">#951: Force formula re-calculation on file open from Excel #980</a>.
+    Many thanks to <a href="https://github.com/zymon">zymon</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/951">Force formula re-calculation on file open from Excel #951</a>.
+  </li>
 </ul>
 
 # Contributions
@@ -42,6 +47,9 @@ Contributions are very welcome! It helps me know what features are desired or wh
 
 I have just one request; If you submit a pull request for a bugfix, please add a unit-test or integration-test (in the spec folder) that catches the problem.
  Even a PR that just has a failing test is fine - I can analyse what the test is doing and fix the code from that.
+
+Note: Please try to avoid modifying the package version in a PR.
+Versions are updated on release and any change will most likely result in merge collisions.
 
 To be clear, all contributions added to this library will be included in the library's MIT licence.
 
