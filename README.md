@@ -39,6 +39,9 @@ npm install exceljs
     Many thanks to <a href="https://github.com/zymon">zymon</a> for this contribution.
     This fixes <a href="https://github.com/exceljs/exceljs/issues/951">Force formula re-calculation on file open from Excel #951</a>.
   </li>
+  <li>
+    Fixed <a href="https://github.com/exceljs/exceljs/issues/989">Lib contains class syntax, not compatible with IE11 #989</a>.
+  </li>
 </ul>
 
 # Contributions
