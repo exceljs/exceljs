@@ -343,3 +343,21 @@ Is it me you're looking for</t>
 		</comment>
 	</commentList>
 </comments>
+
+========================================================================================================================
+Charts
+
+New contents: Chart as sheet
+
+[Content_Types].xml
+  chartsheets, charts, drawings, etc
+
+app.xml
+  HeadingPairs
+    Charts: 1
+  TitleOfParts
+    Chart sheet
+
+/xl/charts/*
+/xl/chartsheets/*
+/xl/drawings/
