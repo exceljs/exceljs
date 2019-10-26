@@ -410,4 +410,22 @@ describe('WorkbookReader', () => {
       );
     });
   });
+  describe('with a spreadsheet that contains dates', () => {
+    before(function() {
+      const testContext = this;
+      const workbook = new ExcelJS.Workbook();
+      return workbook.xlsx
+        .read(fs.createReadStream('./spec/integration/data/datetest.xlsx'))
+        .then(() => {
+          testContext.worksheet = workbook.getWorksheet();
+        });
+    });
+
+    describe('with a cell that contains a date value early in the year', () => {
+      it('should decode the date properly', function() {
+        const cell = this.worksheet.getCell('A1');
+        expect(cell.value.toString()).to.equal('Thu Mar 01 2017 16:00:00 GMT-0800 (Pacific Standard Time)');
+      });
+    });
+  });
 });
