@@ -22,25 +22,8 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/892">Fix anchor.js #892</a>.
-    Many thanks to <a href="https://github.com/wwojtkowski">Wojciech Wojtkowski</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/896">add xml:space="preserve" for all whitespaces #896</a>.
-    Many thanks to <a href="https://github.com/sebikeller">Sebastian Keller</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/959">Add `shrinkToFit` to document and typing #959</a>.
-    Many thanks to <a href="https://github.com/mozisan">('3')</a> for this contribution.
-    This fixes <a href="https://github.com/exceljs/exceljs/issues/943">shrinkToFit property not on documentation #943</a>.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/980">#951: Force formula re-calculation on file open from Excel #980</a>.
-    Many thanks to <a href="https://github.com/zymon">zymon</a> for this contribution.
-    This fixes <a href="https://github.com/exceljs/exceljs/issues/951">Force formula re-calculation on file open from Excel #951</a>.
-  </li>
-  <li>
-    Fixed <a href="https://github.com/exceljs/exceljs/issues/989">Lib contains class syntax, not compatible with IE11 #989</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1000">Add headerFooter to worksheet model when importing from file #1000</a>.
+    Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution.
   </li>
 </ul>
 
@@ -2423,3 +2406,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 3.0.0   | <h2>Another Major Version Change</h2> <p>Javascript has changed a lot over the years, and so have the modules and technologies surrounding it. To this end, this major version of ExcelJS changes the structure of the publish artefacts:</p> <h3>Main Export is now the Original Javascript Source</h3> <p>Prior to this release, the transpiled ES5 code was exported as the package main. From now on, the package main comes directly from the lib/ folder. This means a number of dependencies have been removed, including the polyfills.</p> <h3>ES5 and Browserify are Still Included</h3> <p>In order to support those that still require ES5 ready code (e.g. as dependencies in web apps) the source code will still be transpiled and available  in dist/es5.</p> <p>The ES5 code is also browserified and available as dist/exceljs.js or dist/exceljs.min.js</p> <p><i>See the section <a href="#importing">Importing</a> for details</i></p> |
 | 3.1.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/873">Uprev fast-csv to latest version which does not use unsafe eval #873</a>. Many thanks to <a href="https://github.com/miketownsend">Mike Townsend</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/906">Exclude Infinity on createInputStream #906</a>. Many thanks to <a href="https://github.com/sophiedophie">Sophie Kwon</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/911">Feature/Add comments/notes to stream writer #911</a>. Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/868">Can't add cell comment using streaming WorkbookWriter #868</a> </li> <li> Fixed an issue with reading .xlsx files containing notes. This should resolve the following issues: <ul> <li><a href="https://github.com/exceljs/exceljs/issues/941">Reading comment/note from xlsx #941</a></li> <li><a href="https://github.com/exceljs/exceljs/issues/944">Excel.js doesn't parse comments/notes. #944</a></li> </ul> </li> </ul> |
 | 3.2.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/923">Add document for zip options of streaming WorkbookWriter #923</a>. Many thanks to <a href="https://github.com/piglovesyou">Soichi Takamura</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/933">array formula #933</a>. Many thanks to <a href="https://github.com/yoann-antoviaque">yoann-antoviaque</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/932">broken array formula #932</a> and adds <a href="#array-formula">Array Formulae</a> to ExcelJS. </li> </ul> |
+| 3.3.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/892">Fix anchor.js #892</a>. Many thanks to <a href="https://github.com/wwojtkowski">Wojciech Wojtkowski</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/896">add xml:space="preserve" for all whitespaces #896</a>. Many thanks to <a href="https://github.com/sebikeller">Sebastian Keller</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/959">Add `shrinkToFit` to document and typing #959</a>. Many thanks to <a href="https://github.com/mozisan">('3')</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/943">shrinkToFit property not on documentation #943</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/980">#951: Force formula re-calculation on file open from Excel #980</a>. Many thanks to <a href="https://github.com/zymon">zymon</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/951">Force formula re-calculation on file open from Excel #951</a>. </li> <li> Fixed <a href="https://github.com/exceljs/exceljs/issues/989">Lib contains class syntax, not compatible with IE11 #989</a>. </li> </ul> |
+
