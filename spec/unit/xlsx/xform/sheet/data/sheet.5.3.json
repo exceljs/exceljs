@@ -18,6 +18,7 @@
   "mergeCells": null,
   "dataValidations": null,
   "drawing": null,
+  "headerFooter": null,
   "cols": null,
   "hyperlinks": null,
   "views": null,
