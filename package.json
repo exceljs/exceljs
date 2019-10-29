@@ -13,7 +13,7 @@
     "url": "https://github.com/exceljs/exceljs.git"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "main": "./lib/exceljs.nodejs.js",
   "browser": "./dist/exceljs.min.js",
@@ -113,6 +113,7 @@
     "eslint-config-prettier": "^6.4.0",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
     "express": "^4.16.4",
     "grunt": "^1.0.3",
     "grunt-babel": "^8.0.0",

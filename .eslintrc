@@ -5,7 +5,8 @@
   },
   "extends": [
     "airbnb-base",
-    "prettier"
+    "prettier",
+    "plugin:node/recommended"
   ],
   "parser": "babel-eslint",
   "env": {
@@ -38,6 +39,7 @@
     "no-return-assign": ["off"],
     "no-continue": ["off"],
     "default-case": ["off"],
-    "object-curly-spacing": ["error", "never"]
+    "object-curly-spacing": ["error", "never"],
+    "node/process-exit-as-throw": ["off"]
   }
 }
