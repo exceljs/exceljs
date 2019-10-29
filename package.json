@@ -123,7 +123,6 @@
     "grunt-contrib-jasmine": "^2.1.0",
     "grunt-contrib-uglify": "^4.0.1",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-lib-phantomjs": "^1.1.0",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.5",
     "memorystream": "^0.3.1",
