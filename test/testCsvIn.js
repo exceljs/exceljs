@@ -34,7 +34,7 @@ const assertDate = function(address, cell, expected) {
     cell.value instanceof Date,
     `expected  value ${address} to be a Date, was ${cell.value}`
   );
-  const { value } = cell;
+  const {value} = cell;
   assert(
     value.getYear() === expected.getYear(),
     `expected ${address} Year to be ${expected.getYear()}, was ${value.getYear()}`

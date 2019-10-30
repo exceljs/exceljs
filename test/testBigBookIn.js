@@ -6,8 +6,8 @@ const ColumnSum = require('./utils/column-sum');
 
 const Excel = require('../excel');
 
-const { Workbook } = Excel;
-const { WorkbookReader } = Excel.stream.xlsx;
+const {Workbook} = Excel;
+const {WorkbookReader} = Excel.stream.xlsx;
 
 if (process.argv[2] === 'help') {
   console.log('Usage:');
@@ -15,6 +15,7 @@ if (process.argv[2] === 'help') {
   console.log('Where:');
   console.log('    reader is one of [stream, document]');
   console.log('    plan is one of [zero, one, two, hyperlinks]');
+  // eslint-disable-next-line no-process-exit
   process.exit(0);
 }
 
@@ -61,6 +62,7 @@ function logProgress(count) {
 
 const colCount = new ColumnSum([3, 6, 7, 8]);
 let hyperlinkCount = 0;
+
 function checkRow(row) {
   if (row.number > 1) {
     colCount.add(row);
@@ -71,6 +73,7 @@ function checkRow(row) {
   }
   row.destroy();
 }
+
 function report() {
   console.log(`Count: ${colCount.count}`);
   console.log(`Sums: ${colCount}`);

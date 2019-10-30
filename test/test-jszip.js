@@ -1,10 +1,8 @@
-'use strict';
-
-const JSZip = require('jszip');
-const Bluebird = require('bluebird');
 const fs = require('fs');
+const JSZip = require('jszip');
 
-const fsp = Bluebird.promisifyAll(fs);
+// eslint-disable-next-line node/no-unsupported-features/node-builtins
+const fsp = fs.promises;
 
 const filename = process.argv[2];
 

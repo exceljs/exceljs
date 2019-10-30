@@ -38,6 +38,7 @@
     "no-continue": ["off"],
     "default-case": ["off"],
     "object-curly-spacing": ["error", "never"],
-    "node/process-exit-as-throw": ["off"]
+    "node/process-exit-as-throw": ["off"],
+    "prefer-object-spread": ["off"]
   }
 }
