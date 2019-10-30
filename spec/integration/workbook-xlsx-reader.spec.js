@@ -413,18 +413,24 @@ describe('WorkbookReader', () => {
   describe('with a spreadsheet that contains dates', () => {
     before(function() {
       const testContext = this;
+      // March 1, 2017
+      testContext.marchFirstTwoThousandSeventeen = new Date(2017, 2, 1);
       const workbook = new ExcelJS.Workbook();
       return workbook.xlsx
         .read(fs.createReadStream('./spec/integration/data/datetest.xlsx'))
         .then(() => {
-          testContext.worksheet = workbook.getWorksheet();
+          testContext.testCell = workbook.getWorksheet().getCell('A1');
         });
     });
-
     describe('with a cell that contains a date value early in the year', () => {
-      it('should decode the date properly', function() {
-        const cell = this.worksheet.getCell('A1');
-        expect(cell.value.toString()).to.equal('Thu Mar 01 2017 16:00:00 GMT-0800 (Pacific Standard Time)');
+      it('should decode the year properly as 2017', function() {
+        expect(this.testCell.value.getFullYear()).to.equal(this.marchFirstTwoThousandSeventeen.getFullYear());
+      });
+      it('should decode the month properly as 2', function() {
+        expect(this.testCell.value.getMonth()).to.equal(this.marchFirstTwoThousandSeventeen.getMonth());
+      });
+      it('should decode the day of the month properly as 1', function() {
+        expect(this.testCell.value.getDate()).to.equal(this.marchFirstTwoThousandSeventeen.getDate());
       });
     });
   });
