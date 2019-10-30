@@ -15,7 +15,7 @@ Reverse engineered from Excel spreadsheet files as a project.
 # Installation
 
 ```shell
-npm install
+npm install exceljs
 ```
 
 # New Features!
