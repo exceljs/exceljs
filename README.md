@@ -31,6 +31,11 @@ npm install exceljs
     <a href="https://github.com/exceljs/exceljs/pull/1007">Rename .browserslintrc.txt to .browserslistrc #1007</a>.
     Many thanks to <a href="https://github.com/takenspc">Takeshi Kurosawa</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1012">Fix issue #988 #1012</a>.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/988">Can not read excel file #988</a>.
+    Many thanks to <a href="https://github.com/thambley">Todd Hambley</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
