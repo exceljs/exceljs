@@ -26,8 +26,9 @@ npm install exceljs
     Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1005">Update eslint plugins and configs #1005</a>
-    and <a href="https://github.com/exceljs/exceljs/pull/1006">Drop grunt-lib-phantomjs #1006</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1005">Update eslint plugins and configs #1005</a>,
+    <a href="https://github.com/exceljs/exceljs/pull/1006">Drop grunt-lib-phantomjs #1006</a> and
+    <a href="https://github.com/exceljs/exceljs/pull/1007">Rename .browserslintrc.txt to .browserslistrc #1007</a>.
     Many thanks to <a href="https://github.com/takenspc">Takeshi Kurosawa</a> for this contribution.
   </li>
 </ul>
