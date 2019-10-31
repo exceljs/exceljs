@@ -1,5 +1,4 @@
 const fs = require('fs');
-const Promise = require('bluebird');
 const _ = require('../../lib/utils/under-dash.js');
 
 const main = {
@@ -47,8 +46,8 @@ const main = {
           .then(() => {
             deferred.resolve();
           })
-          .catch(err => {
-            deferred.reject(err);
+          .catch(error => {
+            deferred.reject(error);
           });
       }
     });

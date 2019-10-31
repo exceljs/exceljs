@@ -27,11 +27,11 @@ e.on('drain', () => {
       }
       a.push('</row>');
     }
-    const buf = new Buffer(a.join(''));
+    const buf = Buffer.from(a.join(''));
     parser.write(buf);
   });
 });
-e.on('row', row => {
+e.on('row', (/*row*/) => {
   if (++count % 1000 === 0) {
     process.stdout.write(`Count:${count}, ${target}\u001b[0G`); // "\033[0G"
   }

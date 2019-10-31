@@ -15,7 +15,7 @@ ws.columns = [
   {key: 'word'},
 ];
 
-const words = ['Twas', 'brillig', 'and', 'the', 'slithy', 'toves', 'did', 'gyre', 'and', 'gimble', 'in', 'the', 'wabe' ];
+const words = ['Twas', 'brillig', 'and', 'the', 'slithy', 'toves', 'did', 'gyre', 'and', 'gimble', 'in', 'the', 'wabe'];
 
 ws.addTable({
   name: 'TestTable',
@@ -29,7 +29,7 @@ ws.addTable({
   columns: [
     {name: 'Date', totalsRowLabel: 'Totally', filterButton: true},
     {name: 'Id', totalsRowFunction: 'max', filterButton: true, totalsRowResult: 8},
-    {name: 'Word', filterButton: false, style: {font:{bold: true, name: 'Comic Sans MS'}}},
+    {name: 'Word', filterButton: false, style: {font: {bold: true, name: 'Comic Sans MS'}}},
   ],
   rows: words.map((word, i) => ([new Date(+today + (86400 * i)), i, word])),
 });

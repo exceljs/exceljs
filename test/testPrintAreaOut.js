@@ -1,6 +1,6 @@
 const Excel = require('../excel');
 
-const { Workbook } = Excel;
+const {Workbook} = Excel;
 
 const [, , filename] = process.argv;
 

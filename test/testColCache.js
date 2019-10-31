@@ -1,4 +1,4 @@
-const colCache = require('../lib/colcache');
+const colCache = require('../lib/utils/col-cache');
 
 const arg = process.argv[2];
 

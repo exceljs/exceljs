@@ -1,21 +1,4 @@
-'use strict';
-
 const Excel = require('../excel');
-
-const inputFile = process.argv[2];
-const outputFile = process.argv[3];
-
-let passed = true;
-const assert = function(value, failMessage, passMessage) {
-  if (!value) {
-    if (failMessage) {
-      console.error(failMessage);
-    }
-    passed = false;
-  } else if (passMessage) {
-    console.log(passMessage);
-  }
-};
 
 const workbook = new Excel.Workbook();
 workbook.xlsx

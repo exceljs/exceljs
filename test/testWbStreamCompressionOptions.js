@@ -7,7 +7,7 @@ const optionsBestCompression = {
   filename,
   useStyles: true,
   zip: {
-    zlib: { level: 9 },// Sets the compression level.
+    zlib: {level: 9},// Sets the compression level.
   },
 };
 const wb = new Excel.stream.xlsx.WorkbookWriter(optionsBestCompression);
@@ -18,9 +18,9 @@ const style = {
   alignment: utils.styles.alignments[1].alignment,
 };
 ws.columns = [
-  { header: 'A1', width: 10 },
-  { header: 'B1', width: 20, style },
-  { header: 'C1', width: 30 },
+  {header: 'A1', width: 10},
+  {header: 'B1', width: 20, style},
+  {header: 'C1', width: 30},
 ];
 
 ws.getRow(2).font = utils.styles.fonts.broadwayRedOutline20;
@@ -44,16 +44,16 @@ const optionsBestSpeed = {
   filename: filename2,
   useStyles: true,
   zip: {
-    zlib: { level: 1 },// Sets the compression level.
+    zlib: {level: 1},// Sets the compression level.
   },
 };
 const wb2 = new Excel.stream.xlsx.WorkbookWriter(optionsBestSpeed);
 const ws2 = wb2.addWorksheet('blort');
 
 ws2.columns = [
-  { header: 'A1', width: 10 },
-  { header: 'B1', width: 20, style },
-  { header: 'C1', width: 30 },
+  {header: 'A1', width: 10},
+  {header: 'B1', width: 20, style},
+  {header: 'C1', width: 30},
 ];
 
 ws2.getRow(2).font = utils.styles.fonts.broadwayRedOutline20;
@@ -81,9 +81,9 @@ const wb3 = new Excel.stream.xlsx.WorkbookWriter(options);
 const ws3 = wb3.addWorksheet('blort');
 
 ws3.columns = [
-  { header: 'A1', width: 10 },
-  { header: 'B1', width: 20, style },
-  { header: 'C1', width: 30 },
+  {header: 'A1', width: 10},
+  {header: 'B1', width: 20, style},
+  {header: 'C1', width: 30},
 ];
 
 ws3.getRow(2).font = utils.styles.fonts.broadwayRedOutline20;

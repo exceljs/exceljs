@@ -14,7 +14,7 @@ for (let i = 1; i <= 4; i++) {
   ws.getCell(`D${i}`).value = {formula: 'ROW()', result: i};
 }
 
-ws.fillFormula('E1:E4', 'D1', [1,1,1,1], 'array');
+ws.fillFormula('E1:E4', 'D1', [1, 1, 1, 1], 'array');
 
 // manual fill formula
 ws.getCell('F1').value = {formula: 'ROW()', result: 1};

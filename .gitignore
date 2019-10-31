@@ -57,3 +57,6 @@ package-lock.json
 
 # jasmine
 _SpecRunner.html
+
+# Mac files
+.DS_Store

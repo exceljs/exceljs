@@ -1,10 +1,11 @@
 const HrStopwatch = require('./utils/hr-stopwatch');
 const {Workbook} = require('../lib/exceljs.nodejs');
 
-const [,,filename] = process.argv;
+const [, , filename] = process.argv;
 
 if (!filename) {
   console.error('Must specify a filename');
+  // eslint-disable-next-line no-process-exit
   process.exit(1);
 }
 
