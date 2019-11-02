@@ -12,7 +12,7 @@ wb.xlsx
           {
             font: {
               size: 12,
-              color: { theme: 0 },
+              color: {theme: 0},
               name: 'Calibri',
               family: 2,
               scheme: 'minor',
@@ -23,7 +23,7 @@ wb.xlsx
             font: {
               italic: true,
               size: 12,
-              color: { theme: 0 },
+              color: {theme: 0},
               name: 'Calibri',
               scheme: 'minor',
             },
@@ -32,7 +32,7 @@ wb.xlsx
           {
             font: {
               size: 12,
-              color: { theme: 1 },
+              color: {theme: 1},
               name: 'Calibri',
               family: 2,
               scheme: 'minor',
@@ -42,7 +42,7 @@ wb.xlsx
           {
             font: {
               size: 12,
-              color: { argb: 'FFFF6600' },
+              color: {argb: 'FFFF6600'},
               name: 'Calibri',
               scheme: 'minor',
             },
@@ -51,7 +51,7 @@ wb.xlsx
           {
             font: {
               size: 12,
-              color: { theme: 1 },
+              color: {theme: 1},
               name: 'Calibri',
               family: 2,
               scheme: 'minor',
@@ -61,7 +61,7 @@ wb.xlsx
           {
             font: {
               size: 12,
-              color: { argb: 'FFCCFFCC' },
+              color: {argb: 'FFCCFFCC'},
               name: 'Calibri',
               scheme: 'minor',
             },
@@ -70,7 +70,7 @@ wb.xlsx
           {
             font: {
               size: 12,
-              color: { theme: 1 },
+              color: {theme: 1},
               name: 'Calibri',
               family: 2,
               scheme: 'minor',
@@ -81,7 +81,7 @@ wb.xlsx
             font: {
               bold: true,
               size: 12,
-              color: { theme: 1 },
+              color: {theme: 1},
               name: 'Calibri',
               family: 2,
               scheme: 'minor',

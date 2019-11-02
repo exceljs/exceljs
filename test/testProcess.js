@@ -1,9 +1,6 @@
-'use strict';
-
 const Excel = require('../excel');
 
-const inputFile = process.argv[2];
-const outputFile = process.argv[3];
+const [,, inputFile, outputFile] = process.argv;
 
 const wb = new Excel.Workbook();
 

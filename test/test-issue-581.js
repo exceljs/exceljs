@@ -2,7 +2,7 @@ const Excel = require('../excel');
 
 const filename = process.argv[2];
 
-(async() => {
+(async () => {
   const workbook = new Excel.stream.xlsx.WorkbookWriter({
     filename,
     useSharedStrings: true,

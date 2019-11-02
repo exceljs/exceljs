@@ -1,15 +1,13 @@
 const fs = require('fs');
 
-const {expect} = require('chai');
-
-const Enums = require('../../../../../lib/doc/enums');
-const XmlStream = require('../../../../../lib/utils/xml-stream');
-
 const testXformHelper = require('../test-xform-helper');
-const WorksheetXform = require('../../../../../lib/xlsx/xform/sheet/worksheet-xform');
 
-const SharedStringsXform = require('../../../../../lib/xlsx/xform/strings/shared-strings-xform');
-const StylesXform = require('../../../../../lib/xlsx/xform/style/styles-xform');
+const Enums = verquire('doc/enums');
+const XmlStream = verquire('utils/xml-stream');
+const WorksheetXform = verquire('xlsx/xform/sheet/worksheet-xform');
+
+const SharedStringsXform = verquire('xlsx/xform/strings/shared-strings-xform');
+const StylesXform = verquire('xlsx/xform/style/styles-xform');
 
 const fakeStyles = {
   addStyleModel(style, cellType) {

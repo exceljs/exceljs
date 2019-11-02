@@ -1,8 +1,4 @@
-'use strict';
-
-const { expect } = require('chai');
-
-const DefinedNames = require('../../../lib/doc/defined-names');
+const DefinedNames = verquire('doc/defined-names');
 
 describe('DefinedNames', () => {
   it('adds names for cells', () => {
@@ -142,15 +138,15 @@ describe('DefinedNames', () => {
   it('skips values with invalid range', () => {
     const dn = new DefinedNames();
     dn.model = [
-      { name: 'eq', ranges: ['"="'] },
-      { name: 'ref', ranges: ['#REF!'] },
-      { name: 'single', ranges: ['Sheet3!$A$1'] },
-      { name: 'range', ranges: ['Sheet3!$A$2:$F$2228'] },
+      {name: 'eq', ranges: ['"="']},
+      {name: 'ref', ranges: ['#REF!']},
+      {name: 'single', ranges: ['Sheet3!$A$1']},
+      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']},
     ];
 
     expect(dn.model).to.deep.equal([
-      { name: 'single', ranges: ['Sheet3!$A$1'] },
-      { name: 'range', ranges: ['Sheet3!$A$2:$F$2228'] },
+      {name: 'single', ranges: ['Sheet3!$A$1']},
+      {name: 'range', ranges: ['Sheet3!$A$2:$F$2228']},
     ]);
   });
 });

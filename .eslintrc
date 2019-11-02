@@ -1,13 +1,12 @@
 {
   "parserOptions": {
-    "ecmaVersion": 7,
     "sourceType": "script"
   },
   "extends": [
-    "airbnb",
-    "prettier"
+    "airbnb-base",
+    "prettier",
+    "plugin:node/recommended"
   ],
-  "parser": "babel-eslint",
   "env": {
     "es6": true,
     "mocha": true,
@@ -32,11 +31,14 @@
     "prefer-rest-params": ["off"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "space-before-function-paren": ["error", "never"],
+    "space-before-function-paren": ["error", {"anonymous": "never", "named": "never", "asyncArrow": "always"}],
     "strict": ["off"],
     "class-methods-use-this": ["off"],
     "no-return-assign": ["off"],
+    "no-continue": ["off"],
     "default-case": ["off"],
-    "object-curly-spacing": ["error", "never"]
+    "object-curly-spacing": ["error", "never"],
+    "node/process-exit-as-throw": ["off"],
+    "prefer-object-spread": ["off"]
   }
 }

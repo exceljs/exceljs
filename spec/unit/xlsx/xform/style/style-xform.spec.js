@@ -1,7 +1,6 @@
-'use strict';
-
-const StyleXform = require('../../../../../lib/xlsx/xform/style/style-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const StyleXform = verquire('xlsx/xform/style/style-xform');
 
 const expectations = [
   {
@@ -9,7 +8,7 @@ const expectations = [
     create() {
       return new StyleXform();
     },
-    preparedModel: { numFmtId: 0, fontId: 0, fillId: 0, borderId: 0 },
+    preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 0},
     xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>',
     get parsedModel() {
       return this.preparedModel;
@@ -19,9 +18,9 @@ const expectations = [
   {
     title: 'Default with xfId',
     create() {
-      return new StyleXform({ xfId: true });
+      return new StyleXform({xfId: true});
     },
-    preparedModel: { numFmtId: 0, fontId: 0, fillId: 0, borderId: 0, xfId: 0 },
+    preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 0, xfId: 0},
     xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>',
     get parsedModel() {
       return this.preparedModel;
@@ -31,7 +30,7 @@ const expectations = [
   {
     title: 'Aligned',
     create() {
-      return new StyleXform({ xfId: true });
+      return new StyleXform({xfId: true});
     },
     preparedModel: {
       numFmtId: 0,
@@ -39,7 +38,7 @@ const expectations = [
       fillId: 0,
       borderId: 0,
       xfId: 0,
-      alignment: { horizontal: 'center', vertical: 'middle' },
+      alignment: {horizontal: 'center', vertical: 'middle'},
     },
     xml:
       '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>',
@@ -51,9 +50,9 @@ const expectations = [
   {
     title: 'Font',
     create() {
-      return new StyleXform({ xfId: true });
+      return new StyleXform({xfId: true});
     },
-    preparedModel: { numFmtId: 0, fontId: 5, fillId: 0, borderId: 0, xfId: 0 },
+    preparedModel: {numFmtId: 0, fontId: 5, fillId: 0, borderId: 0, xfId: 0},
     xml:
       '<xf numFmtId="0" fontId="5" fillId="0" borderId="0" xfId="0" applyFont="1"/>',
     get parsedModel() {
@@ -64,9 +63,9 @@ const expectations = [
   {
     title: 'Border',
     create() {
-      return new StyleXform({ xfId: true });
+      return new StyleXform({xfId: true});
     },
-    preparedModel: { numFmtId: 0, fontId: 0, fillId: 0, borderId: 7, xfId: 0 },
+    preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 7, xfId: 0},
     xml:
       '<xf numFmtId="0" fontId="0" fillId="0" borderId="7" xfId="0" applyBorder="1"/>',
     get parsedModel() {
@@ -77,9 +76,9 @@ const expectations = [
   {
     title: 'NumFmt',
     create() {
-      return new StyleXform({ xfId: true });
+      return new StyleXform({xfId: true});
     },
-    preparedModel: { numFmtId: 1, fontId: 0, fillId: 0, borderId: 0, xfId: 0 },
+    preparedModel: {numFmtId: 1, fontId: 0, fillId: 0, borderId: 0, xfId: 0},
     xml:
       '<xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>',
     get parsedModel() {
@@ -90,9 +89,9 @@ const expectations = [
   {
     title: 'Fill',
     create() {
-      return new StyleXform({ xfId: true });
+      return new StyleXform({xfId: true});
     },
-    preparedModel: { numFmtId: 0, fontId: 0, fillId: 2, borderId: 0, xfId: 0 },
+    preparedModel: {numFmtId: 0, fontId: 0, fillId: 2, borderId: 0, xfId: 0},
     xml:
       '<xf numFmtId="0" fontId="0" fillId="2" borderId="0" xfId="0" applyFill="1"/>',
     get parsedModel() {
@@ -103,7 +102,7 @@ const expectations = [
   {
     title: 'Protected',
     create() {
-      return new StyleXform({ xfId: true });
+      return new StyleXform({xfId: true});
     },
     preparedModel: {
       numFmtId: 0,
@@ -111,7 +110,8 @@ const expectations = [
       fillId: 0,
       borderId: 0,
       xfId: 0,
-      alignment: { horizontal: 'center', vertical: 'middle' },
+      alignment: {horizontal: 'center', vertical: 'middle'},
+      protection: {locked: false},
     },
     xml:
       '<xf borderId="1" fillId="10" fontId="3" numFmtId="0" xfId="0" applyProtection="1" applyAlignment="1" applyFill="1" applyBorder="1" applyFont="1"><protection locked="0"/><alignment horizontal="center" vertical="center"/></xf>',
@@ -121,7 +121,7 @@ const expectations = [
       fontId: 3,
       numFmtId: 0,
       xfId: 0,
-      alignment: { horizontal: 'center', vertical: 'middle' },
+      alignment: {horizontal: 'center', vertical: 'middle'},
     },
     tests: ['parse', 'parseIn'],
   },

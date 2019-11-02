@@ -16,7 +16,7 @@ wb.xlsx
 
     const ws = wb.getWorksheet('blort');
 
-    const { image } = ws.background;
+    const {image} = ws.background;
     console.log('Media', image.name, image.type, image.buffer.length);
   })
   .catch(error => {

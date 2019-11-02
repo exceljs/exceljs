@@ -14,9 +14,9 @@ const style = {
   alignment: utils.styles.alignments[1].alignment,
 };
 ws.columns = [
-  { header: 'A1', width: 10 },
-  { header: 'B1', width: 20, style },
-  { header: 'C1', width: 30 },
+  {header: 'A1', width: 10},
+  {header: 'B1', width: 20, style},
+  {header: 'C1', width: 30},
 ];
 
 ws.getRow(2).font = utils.styles.fonts.broadwayRedOutline20;

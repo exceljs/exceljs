@@ -1,7 +1,3 @@
-'use strict';
-
-const { expect } = require('chai');
-
 const tools = require('./tools');
 
 const self = {

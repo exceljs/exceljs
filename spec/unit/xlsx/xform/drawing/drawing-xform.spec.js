@@ -1,16 +1,15 @@
-'use strict';
-
 const fs = require('fs');
 
-const DrawingXform = require('../../../../../lib/xlsx/xform/drawing/drawing-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const DrawingXform = verquire('xlsx/xform/drawing/drawing-xform');
 
 const options = {
   rels: {
-    rId1: { Target: '../media/image1.jpg' },
-    rId2: { Target: '../media/image2.jpg' },
+    rId1: {Target: '../media/image1.jpg'},
+    rId2: {Target: '../media/image2.jpg'},
   },
-  mediaIndex: { image1: 0, image2: 1 },
+  mediaIndex: {image1: 0, image2: 1},
   media: [{}, {}],
 };
 
@@ -18,7 +17,7 @@ const expectations = [
   {
     title: 'Drawing 1',
     create() {
-      return new DrawingXform({ tag: 'xdr:from' });
+      return new DrawingXform({tag: 'xdr:from'});
     },
     initialModel: require('./data/drawing.1.0.js'),
     preparedModel: require('./data/drawing.1.1.js'),

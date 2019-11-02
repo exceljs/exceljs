@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Browserify</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
   <script src="exceljs.js"></script>
   <script>
     function go() {
       var wb = new ExcelJS.Workbook();
       var ws = wb.addWorksheet('blort');
 
-      ws.getCell('A1').value = 'Hello, World!';
-      ws.getCell('A2').value = 7;
+      ws.getCell('A1').value = document.getElementById('A1').value;
+      ws.getCell('A2').value = document.getElementById('A2').value;
 
       wb.xlsx.writeBuffer()
         .then(function(buffer) {

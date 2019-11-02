@@ -1,17 +1,13 @@
-'use strict';
-
-const { expect } = require('chai');
-const verquire = require('../utils/verquire');
 const testutils = require('./../utils/index');
 
-const Excel = verquire('excel');
+const ExcelJS = verquire('exceljs');
 
 const CONCATENATE_HELLO_WORLD = 'CONCATENATE("Hello", ", ", "World!")';
 
 describe('WorksheetWriter', () => {
   describe('Values', () => {
     it('stores values properly', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       const now = new Date();
@@ -39,7 +35,7 @@ describe('WorksheetWriter', () => {
       };
 
       // number formula
-      ws.getCell('A2').value = { formula: 'A1', result: 7 };
+      ws.getCell('A2').value = {formula: 'A1', result: 7};
 
       // string formula
       ws.getCell('B2').value = {
@@ -48,7 +44,7 @@ describe('WorksheetWriter', () => {
       };
 
       // date formula
-      ws.getCell('C2').value = { formula: 'D1', result: now };
+      ws.getCell('C2').value = {formula: 'D1', result: now};
 
       expect(ws.getCell('A1').value).to.equal(7);
       expect(ws.getCell('B1').value).to.equal('Hello, World!');
@@ -71,7 +67,7 @@ describe('WorksheetWriter', () => {
     });
 
     it('stores shared string values properly', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter({
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter({
         useSharedStrings: true,
       });
       const ws = wb.addWorksheet('blort');
@@ -95,7 +91,7 @@ describe('WorksheetWriter', () => {
     });
 
     it('assigns cell types properly', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       // plain number
@@ -117,7 +113,7 @@ describe('WorksheetWriter', () => {
       };
 
       // number formula
-      ws.getCell('A2').value = { formula: 'A1', result: 7 };
+      ws.getCell('A2').value = {formula: 'A1', result: 7};
 
       // string formula
       ws.getCell('B2').value = {
@@ -126,27 +122,27 @@ describe('WorksheetWriter', () => {
       };
 
       // date formula
-      ws.getCell('C2').value = { formula: 'D1', result: new Date() };
+      ws.getCell('C2').value = {formula: 'D1', result: new Date()};
 
-      expect(ws.getCell('A1').type).to.equal(Excel.ValueType.Number);
-      expect(ws.getCell('B1').type).to.equal(Excel.ValueType.String);
-      expect(ws.getCell('C1').type).to.equal(Excel.ValueType.Number);
-      expect(ws.getCell('D1').type).to.equal(Excel.ValueType.Date);
-      expect(ws.getCell('E1').type).to.equal(Excel.ValueType.Hyperlink);
+      expect(ws.getCell('A1').type).to.equal(ExcelJS.ValueType.Number);
+      expect(ws.getCell('B1').type).to.equal(ExcelJS.ValueType.String);
+      expect(ws.getCell('C1').type).to.equal(ExcelJS.ValueType.Number);
+      expect(ws.getCell('D1').type).to.equal(ExcelJS.ValueType.Date);
+      expect(ws.getCell('E1').type).to.equal(ExcelJS.ValueType.Hyperlink);
 
-      expect(ws.getCell('A2').type).to.equal(Excel.ValueType.Formula);
-      expect(ws.getCell('B2').type).to.equal(Excel.ValueType.Formula);
-      expect(ws.getCell('C2').type).to.equal(Excel.ValueType.Formula);
+      expect(ws.getCell('A2').type).to.equal(ExcelJS.ValueType.Formula);
+      expect(ws.getCell('B2').type).to.equal(ExcelJS.ValueType.Formula);
+      expect(ws.getCell('C2').type).to.equal(ExcelJS.ValueType.Formula);
     });
 
     it('adds columns', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       ws.columns = [
-        { key: 'id', width: 10 },
-        { key: 'name', width: 32 },
-        { key: 'dob', width: 10 },
+        {key: 'id', width: 10},
+        {key: 'name', width: 32},
+        {key: 'dob', width: 10},
       ];
 
       expect(ws.getColumn('id').number).to.equal(1);
@@ -166,13 +162,13 @@ describe('WorksheetWriter', () => {
     });
 
     it('adds column headers', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       ws.columns = [
-        { header: 'Id', width: 10 },
-        { header: 'Name', width: 32 },
-        { header: 'D.O.B.', width: 10 },
+        {header: 'Id', width: 10},
+        {header: 'Name', width: 32},
+        {header: 'D.O.B.', width: 10},
       ];
 
       expect(ws.getCell('A1').value).to.equal('Id');
@@ -181,11 +177,11 @@ describe('WorksheetWriter', () => {
     });
 
     it('adds column headers by number', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       // by defn
-      ws.getColumn(1).defn = { key: 'id', header: 'Id', width: 10 };
+      ws.getColumn(1).defn = {key: 'id', header: 'Id', width: 10};
 
       // by property
       ws.getColumn(2).key = 'name';
@@ -208,11 +204,11 @@ describe('WorksheetWriter', () => {
     });
 
     it('adds column headers by letter', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       // by defn
-      ws.getColumn('A').defn = { key: 'id', header: 'Id', width: 10 };
+      ws.getColumn('A').defn = {key: 'id', header: 'Id', width: 10};
 
       // by property
       ws.getColumn('B').key = 'name';
@@ -235,21 +231,21 @@ describe('WorksheetWriter', () => {
     });
 
     it('adds rows by object', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       // add columns to define column keys
       ws.columns = [
-        { header: 'Id', key: 'id', width: 10 },
-        { header: 'Name', key: 'name', width: 32 },
-        { header: 'D.O.B.', key: 'dob', width: 10 },
+        {header: 'Id', key: 'id', width: 10},
+        {header: 'Name', key: 'name', width: 32},
+        {header: 'D.O.B.', key: 'dob', width: 10},
       ];
 
       const dateValue1 = new Date(1970, 1, 1);
       const dateValue2 = new Date(1965, 1, 7);
 
-      ws.addRow({ id: 1, name: 'John Doe', dob: dateValue1 });
-      ws.addRow({ id: 2, name: 'Jane Doe', dob: dateValue2 });
+      ws.addRow({id: 1, name: 'John Doe', dob: dateValue1});
+      ws.addRow({id: 2, name: 'Jane Doe', dob: dateValue2});
 
       expect(ws.getCell('A2').value).to.equal(1);
       expect(ws.getCell('B2').value).to.equal('John Doe');
@@ -264,7 +260,7 @@ describe('WorksheetWriter', () => {
     });
 
     it('adds rows by contiguous array', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       const dateValue1 = new Date(1970, 1, 1);
@@ -286,7 +282,7 @@ describe('WorksheetWriter', () => {
     });
 
     it('adds rows by sparse array', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       const dateValue1 = new Date(1970, 1, 1);
@@ -325,7 +321,7 @@ describe('WorksheetWriter', () => {
     });
 
     it('sets row styles', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('basket');
 
       ws.getCell('A1').value = 5;
@@ -396,7 +392,7 @@ describe('WorksheetWriter', () => {
     });
 
     it('sets col styles', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('basket');
 
       ws.getCell('A1').value = 5;
@@ -470,7 +466,7 @@ describe('WorksheetWriter', () => {
 
   describe('Merge Cells', () => {
     it('references the same top-left value', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       // initial values
@@ -486,14 +482,14 @@ describe('WorksheetWriter', () => {
       expect(ws.getCell('A2').value).to.equal('A1');
       expect(ws.getCell('B2').value).to.equal('A1');
 
-      expect(ws.getCell('A1').type).to.equal(Excel.ValueType.String);
-      expect(ws.getCell('B1').type).to.equal(Excel.ValueType.Merge);
-      expect(ws.getCell('A2').type).to.equal(Excel.ValueType.Merge);
-      expect(ws.getCell('B2').type).to.equal(Excel.ValueType.Merge);
+      expect(ws.getCell('A1').type).to.equal(ExcelJS.ValueType.String);
+      expect(ws.getCell('B1').type).to.equal(ExcelJS.ValueType.Merge);
+      expect(ws.getCell('A2').type).to.equal(ExcelJS.ValueType.Merge);
+      expect(ws.getCell('B2').type).to.equal(ExcelJS.ValueType.Merge);
     });
 
     it('does not allow overlapping merges', () => {
-      const wb = new Excel.stream.xlsx.WorkbookWriter();
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
 
       ws.mergeCells('B2:C3');

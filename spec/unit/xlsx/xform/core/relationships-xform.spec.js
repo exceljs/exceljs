@@ -1,9 +1,8 @@
-'use strict';
-
 const fs = require('fs');
 
-const RelationshipsXform = require('../../../../../lib/xlsx/xform/core/relationships-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const RelationshipsXform = verquire('xlsx/xform/core/relationships-xform');
 
 const expectations = [
   {

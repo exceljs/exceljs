@@ -6,11 +6,11 @@ const wb = new Workbook();
 const ws = wb.addWorksheet('blort');
 
 ws.columns = [
-  { header: 'Col 1', key: 'key', width: 25 },
-  { header: 'Col 2', key: 'name', width: 25 },
-  { header: 'Col 3', key: 'age', width: 21 },
-  { header: 'Col 4', key: 'addr1', width: 18 },
-  { header: 'Col 5', key: 'addr2', width: 8 },
+  {header: 'Col 1', key: 'key', width: 25},
+  {header: 'Col 2', key: 'name', width: 25},
+  {header: 'Col 3', key: 'age', width: 21},
+  {header: 'Col 4', key: 'addr1', width: 18},
+  {header: 'Col 5', key: 'addr2', width: 8},
 ];
 
 ws.getCell('A2').value = 7;
@@ -32,7 +32,7 @@ ws.getCell('C4').value = 'Hoo!';
 
 ws.getCell('A5').value = 1;
 ws.getCell('B5').value = 2;
-ws.getCell('C5').value = { formula: 'A5+B5', result: 3 };
+ws.getCell('C5').value = {formula: 'A5+B5', result: 3};
 
 ws.getCell('A6').value = 'Hello';
 ws.getCell('B6').value = 'World';

@@ -1,11 +1,4 @@
-'use strict';
-
-const chai = require('chai');
-const verquire = require('../utils/verquire');
-
-const Excel = verquire('excel');
-
-const { expect } = chai;
+const ExcelJS = verquire('exceljs');
 
 // =============================================================================
 // This spec is based around a gold standard Excel workbook 'gold.xlsx'
@@ -14,7 +7,7 @@ describe('Gold Book', () => {
   describe('Read', () => {
     let wb;
     before(() => {
-      wb = new Excel.Workbook();
+      wb = new ExcelJS.Workbook();
       return wb.xlsx.readFile(`${__dirname}/data/gold.xlsx`);
     });
 
@@ -40,6 +33,7 @@ describe('Gold Book', () => {
       });
     });
 
-    it('Styles', () => {});
+    it('Styles', () => {
+    });
   });
 });

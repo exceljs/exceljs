@@ -1,11 +1,9 @@
-'use strict';
-
 const fs = require('fs');
-const {expect} = require('chai');
 
-const StylesXform = require('../../../../../lib/xlsx/xform/style/styles-xform');
 const testXformHelper = require('./../test-xform-helper');
-const XmlStream = require('../../../../../lib/utils/xml-stream');
+
+const StylesXform = verquire('xlsx/xform/style/styles-xform');
+const XmlStream = verquire('utils/xml-stream');
 
 const expectations = [
   {

@@ -74,5 +74,6 @@
   "mergeCells": null,
   "dataValidations": null,
   "drawing": null,
+  "headerFooter": null,
   "tables": null
 }

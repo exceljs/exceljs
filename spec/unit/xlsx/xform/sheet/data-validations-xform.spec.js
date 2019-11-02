@@ -1,7 +1,6 @@
-'use strict';
-
-const DataValidationsXform = require('../../../../../lib/xlsx/xform/sheet/data-validations-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const DataValidationsXform = verquire('xlsx/xform/sheet/data-validations-xform');
 
 const expectations = [
   {
