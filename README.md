@@ -1762,12 +1762,14 @@ The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read t
  The options passed into the read functions above is also passed to fast-csv for parsing of the csv data.
  Please refer to the fast-csv README.md for details.
 
-Dates are parsed using the npm module [moment](https://www.npmjs.com/package/moment).
- If no dateFormats are supplied, the following are used:
+Dates are parsed using the npm module [dayjs](https://www.npmjs.com/package/dayjs).
+ If a dateFormats array is not supplied, the following dateFormats are used:
 
-* moment.ISO_8601
+* 'YYYY-MM-DD\[T\]HH:mm:ss'
 * 'MM-DD-YYYY'
 * 'YYYY-MM-DD'
+
+Please refer to the [dayjs CustomParseFormat plugin](https://github.com/iamkun/dayjs/blob/HEAD/docs/en/Plugin.md#customparseformat) for details on how to structure a dateFormat.
 
 #### Writing CSV
 
