@@ -21,6 +21,9 @@ tmp/*
 # WebStorm
 .idea
 
+# VS Code
+.vscode
+
 # Intellij IDEA
 exceljs.iml
 
