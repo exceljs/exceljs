@@ -1,9 +1,13 @@
 const fs = require('fs');
+const {promisify} = require('util');
+
 const testUtils = require('../../utils/index');
 
 const ExcelJS = verquire('exceljs');
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
+const IMAGE_FILENAME = `${__dirname}/../data/image.png`;
+const fsReadFileAsync = promisify(fs.readFile);
 
 describe('WorkbookWriter', () => {
   it('creates sheets with correct names', () => {
@@ -439,6 +443,32 @@ describe('WorkbookWriter', () => {
 
       expect(ws2.getCell('D2').value).to.equal(7);
       expect(ws2.getCell('D2').note).to.deep.equal(note);
+    });
+
+    it('with background image', async () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws = wb.addWorksheet('Hello');
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'jpeg',
+      });
+      ws.getCell('A1').value = 'Hello, World!';
+      ws.addBackgroundImage(imageId);
+
+      await wb.commit();
+
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      const ws2 = wb2.getWorksheet('Hello');
+
+      const backgroundId2 = ws2.getBackgroundImageId();
+      const image = wb2.getImage(backgroundId2);
+      const imageData = await fsReadFileAsync(IMAGE_FILENAME);
+      expect(Buffer.compare(imageData, image.buffer)).to.equal(0);
     });
   });
 });
