@@ -25,6 +25,11 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/1016">Feature/stream writer add background images #1016</a>.
     Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1019">Fix issue # 991 #1019</a>.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/991">read csv file issue #991</a>.
+    Many thanks to <a href="https://github.com/LibertyNJ">Nathaniel J. Liberty</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
