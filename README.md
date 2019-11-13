@@ -30,6 +30,10 @@ npm install exceljs
     This fixes <a href="https://github.com/exceljs/exceljs/issues/991">read csv file issue #991</a>.
     Many thanks to <a href="https://github.com/LibertyNJ">Nathaniel J. Liberty</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1018">Large excels - optimize performance of writing file by excelJS + optimize generated file (MS excel opens it much faster) #1018</a>.
+    Many thanks to <a href="https://github.com/pzawadzki82">Piotr</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
