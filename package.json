@@ -16,7 +16,7 @@
     "node": ">=8.3.0"
   },
   "main": "./lib/exceljs.nodejs.js",
-  "browser": "./dist/exceljs.min.js",
+  "browser": "./dist/exceljs.js",
   "types": "./index.d.ts",
   "files": [
     "dist",
