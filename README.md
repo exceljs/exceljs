@@ -361,6 +361,9 @@ worksheet.pageSetup.margins = {
 // Set Print Area for a sheet
 worksheet.pageSetup.printArea = 'A1:G20';
 
+// Set multiple Print Areas by separating print areas with '&&'
+worksheet.pageSetup.printArea = 'A1:G10&&A11:G20';
+
 // Repeat specific rows on every printed page
 worksheet.pageSetup.printTitlesRow = '1:3';
 
