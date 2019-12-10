@@ -93,7 +93,8 @@
     "jszip": "^3.1.5",
     "sax": "^1.2.4",
     "tmp": "^0.1.0",
-    "unzipper": "^0.9.12"
+    "unzipper": "^0.9.12",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",

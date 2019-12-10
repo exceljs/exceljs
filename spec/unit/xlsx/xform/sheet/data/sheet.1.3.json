@@ -75,5 +75,6 @@
   "dataValidations": null,
   "drawing": null,
   "headerFooter": null,
-  "tables": null
+  "tables": null,
+  "conditionalFormattings": []
 }
