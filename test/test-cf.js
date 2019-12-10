@@ -53,8 +53,28 @@ expressionWS.addConditionalFormatting({
   rules: [
     {
       type: 'expression',
+      priority: 3,
       formulae: ['MOD(ROW()+COLUMN(),2)=0'],
       style: {font: {bold: true}},
+    },
+  ],
+});
+
+// testing priority
+expressionWS.addConditionalFormatting({
+  ref: 'A2',
+  rules: [
+    {
+      type: 'expression',
+      priority: 1,
+      formulae: ['TRUE'],
+      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}}},
+    },
+    {
+      type: 'expression',
+      priority: 2,
+      formulae: ['TRUE'],
+      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFF0000'}}},
     },
   ],
 });

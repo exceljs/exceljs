@@ -22,17 +22,12 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1016">Feature/stream writer add background images #1016</a>.
-    Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1019">Fix issue # 991 #1019</a>.
-    This fixes <a href="https://github.com/exceljs/exceljs/issues/991">read csv file issue #991</a>.
-    Many thanks to <a href="https://github.com/LibertyNJ">Nathaniel J. Liberty</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1018">Large excels - optimize performance of writing file by excelJS + optimize generated file (MS excel opens it much faster) #1018</a>.
-    Many thanks to <a href="https://github.com/pzawadzki82">Piotr</a> for this contribution.
+    <a href="#conditional-formatting">Conditional Formatting</a>
+    A subset of Excel Conditional formatting has been implemented!
+    Specifically the formatting rules that do not require XML to be rendered
+    inside an &lt;extLst&gt; node, or in other words everything except
+    databar and three icon sets (3Triangles, 3Stars, 5Boxes).
+    These will be implemented in due course
   </li>
 </ul>
 
@@ -47,15 +42,6 @@ Note: Please try to avoid modifying the package version in a PR.
 Versions are updated on release and any change will most likely result in merge collisions.
 
 To be clear, all contributions added to this library will be included in the library's MIT licence.
-
-# Backlog
-
-<ul>
-  <li>Conditional Formatting.</li>
-  <li>There are still more print-settings to add; Fixed rows/cols, etc.</li>
-  <li>XLSX Streaming Reader.</li>
-  <li>Parsing CSV with Headers</li>
-</ul>
 
 # Contents
 
@@ -100,6 +86,7 @@ To be clear, all contributions added to this library will be included in the lib
           <li><a href="#rich-text">Rich Text</a></li>
         </ul>
       </li>
+      <li><a href="#conditional-formatting">Conditional Formatting</a></li>
       <li><a href="#outline-levels">Outline Levels</a></li>
       <li><a href="#images">Images</a></li>
       <li><a href="#sheet-protection">Sheet Protection</a></li>
@@ -1462,6 +1449,168 @@ ws.getCell('A1').protection = {
 | locked   | true    | Specifies whether a cell will be locked if the sheet is protected. |
 | hidden   | false   | Specifies whether a cell's formula will be visible if the sheet is protected. |
 
+## Conditional Formatting
+
+Conditional formatting allows a sheet to show specific styles, icons, etc
+depending on cell values or any arbitrary formula.
+
+Conditional formatting rules are added at the sheet level and will typically
+cover a range of cells.
+
+Multiple rules can be applied to a given cell range and each rule will apply
+its own style.
+
+If multiple rules affect a given cell, the rule priority value will determine
+which rule wins out if competing styles collide.
+The rule with the lower priority value wins.
+If priority values are not specified for a given rule, ExcelJS will assign them
+in ascending order.
+
+Note: at present, only a subset of conditional formatting rules are supported.
+Specifically, only the formatting rules that do not require XML rendering
+inside an &lt;extLst&gt; element. This means that datasets and three specific
+icon sets (3Triangles, 3Stars, 5Boxes) are not supported. 
+
+```javascript
+// add a checkerboard pattern to A1:E7 based on row + col being even or odd
+worksheet.addConditionalFormatting({
+  ref: 'A1:E7',
+  rules: [
+    {
+      type: 'expression',
+      formulae: ['MOD(ROW()+COLUMN(),2)=0'],
+      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}}},
+    }
+  ]
+})
+```
+
+**Supported Conditional Formatting Rule Types**
+
+| Type         | Description |
+| ------------ | ----------- |
+| expression   | Any custom function may be used to activate the rule. |
+| cellIs       | Compares cell value with supplied formula using specified operator |
+| top10        | Applies formatting to cells with values in top (or bottom) ranges |
+| aboveAverage | Applies formatting to cells with values above (or below) average |
+| colorScale   | Applies a coloured background to cells based on where their values lie in the range |
+| iconSet      | Adds one of a range of icons to cells based on value |
+| containsText | Applies formatting based on whether cell a specific text |
+| timePeriod   | Applies formatting based on whether cell datetime value lies within a specified range |
+
+### Expression
+
+| Field    | Optional | Default | Description |
+| -------- | -------- | ------- | ----------- |
+| type     |          |         | 'expression' |
+| priority | Y        | <auto>  | determines priority ordering of styles |
+| formulae |          |         | array of 1 formula string that returns a true/false value. To reference the cell value, use the top-left cell address |
+| style    |          |         | style structure to apply if the formula returns true |
+
+### Cell Is
+
+| Field    | Optional | Default | Description |
+| -------- | -------- | ------- | ----------- |
+| type     |          |         | 'cellIs' |
+| priority | Y        | <auto>  | determines priority ordering of styles |
+| operator |          |         | how to compare cell value with formula result |
+| formulae |          |         | array of 1 formula string that returns the value to compare against each cell |
+| style    |          |         | style structure to apply if the comparison returns true |
+
+**Cell Is Operators**
+
+| Operator    | Description |
+| ----------- | ----------- |
+| equal       | Apply format if cell value equals formula value |
+| greaterThan | Apply format if cell value is greater than formula value |
+| lessThan    | Apply format if cell value is less than formula value |
+| between     | Apply format if cell value is between two formula values (inclusive) |
+
+
+### Top 10
+
+| Field    | Optional | Default | Description |
+| -------- | -------- | ------- | ----------- |
+| type     |          |         | 'top10' |
+| priority | Y        | <auto>  | determines priority ordering of styles |
+| rank     | Y        | 10      | specifies how many top (or bottom) values are included in the formatting |
+| percent  | Y        | false   | if true, the rank field is a percentage, not an absolute |
+| bottom   | Y        | false   | if true, the bottom values are included instead of the top |
+| style    |          |         | style structure to apply if the comparison returns true |
+
+### Above Average
+
+| Field         | Optional | Default | Description |
+| ------------- | -------- | ------- | ----------- |
+| type          |          |         | 'aboveAverage' |
+| priority      | Y        | <auto>  | determines priority ordering of styles |
+| aboveAverage  | Y        | false   | if true, the rank field is a percentage, not an absolute |
+| style         |          |         | style structure to apply if the comparison returns true |
+
+### Colour Scale
+
+| Field         | Optional | Default | Description |
+| ------------- | -------- | ------- | ----------- |
+| type          |          |         | 'colorScale' |
+| priority      | Y        | <auto>  | determines priority ordering of styles |
+| cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
+| color         |          |         | corresponding array of colours to use at given way points |
+| style         |          |         | style structure to apply if the comparison returns true |
+
+### Icon Set
+
+| Field         | Optional | Default | Description |
+| ------------- | -------- | ------- | ----------- |
+| type          |          |         | 'iconSet' |
+| priority      | Y        | <auto>  | determines priority ordering of styles |
+| iconSet       | Y        | 3TrafficLights | name of icon set to use |
+| cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
+| style         |          |         | style structure to apply if the comparison returns true |
+
+### Contains Text
+
+| Field    | Optional | Default | Description |
+| -------- | -------- | ------- | ----------- |
+| type     |          |         | 'containsText' |
+| priority | Y        | <auto>  | determines priority ordering of styles |
+| operator |          |         | type of text comparison |
+| text     |          |         | text to search for |
+| style    |          |         | style structure to apply if the comparison returns true |
+
+**Contains Text Operators**
+
+| Operator          | Description |
+| ----------------- | ----------- |
+| containsText      | Apply format if cell value contains the value specified in the 'text' field |
+| containsBlanks    | Apply format if cell value contains blanks |
+| notContainsBlanks | Apply format if cell value does not contain blanks |
+| containsErrors    | Apply format if cell value contains errors |
+| notContainsErrors | Apply format if cell value does not contain errors |
+
+### Time Period
+
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'timePeriod' |
+| priority   | Y        | <auto>  | determines priority ordering of styles |
+| timePeriod |          |         | what time period to compare cell value to |
+| style      |          |         | style structure to apply if the comparison returns true |
+
+**Time Periods**
+
+| Time Period       | Description |
+| ----------------- | ----------- |
+| lastWeek          | Apply format if cell value falls within the last week |
+| thisWeek          | Apply format if cell value falls in this week |
+| nextWeek          | Apply format if cell value falls in the next week |
+| yesterday         | Apply format if cell value is equal to yesterday |
+| today             | Apply format if cell value is equal to today |
+| tomorrow          | Apply format if cell value is equal to tomorrow |
+| last7Days         | Apply format if cell value falls within the last 7 days |
+| lastMonth         | Apply format if cell value falls in last month |
+| thisMonth         | Apply format if cell value falls in this month |
+| nextMonth         | Apply format if cell value falls in next month |
+
 
 ## Outline Levels
 
@@ -2419,4 +2568,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 3.2.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/923">Add document for zip options of streaming WorkbookWriter #923</a>. Many thanks to <a href="https://github.com/piglovesyou">Soichi Takamura</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/933">array formula #933</a>. Many thanks to <a href="https://github.com/yoann-antoviaque">yoann-antoviaque</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/932">broken array formula #932</a> and adds <a href="#array-formula">Array Formulae</a> to ExcelJS. </li> </ul> |
 | 3.3.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/892">Fix anchor.js #892</a>. Many thanks to <a href="https://github.com/wwojtkowski">Wojciech Wojtkowski</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/896">add xml:space="preserve" for all whitespaces #896</a>. Many thanks to <a href="https://github.com/sebikeller">Sebastian Keller</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/959">Add `shrinkToFit` to document and typing #959</a>. Many thanks to <a href="https://github.com/mozisan">('3')</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/943">shrinkToFit property not on documentation #943</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/980">#951: Force formula re-calculation on file open from Excel #980</a>. Many thanks to <a href="https://github.com/zymon">zymon</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/951">Force formula re-calculation on file open from Excel #951</a>. </li> <li> Fixed <a href="https://github.com/exceljs/exceljs/issues/989">Lib contains class syntax, not compatible with IE11 #989</a>. </li> </ul> |
 | 3.3.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1000">Add headerFooter to worksheet model when importing from file #1000</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1005">Update eslint plugins and configs #1005</a>, <a href="https://github.com/exceljs/exceljs/pull/1006">Drop grunt-lib-phantomjs #1006</a> and <a href="https://github.com/exceljs/exceljs/pull/1007">Rename .browserslintrc.txt to .browserslistrc #1007</a>. Many thanks to <a href="https://github.com/takenspc">Takeshi Kurosawa</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1012">Fix issue #988 #1012</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/988">Can not read excel file #988</a>. Many thanks to <a href="https://github.com/thambley">Todd Hambley</a> for this contribution. </li> </ul> |
+| 3.4.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1016">Feature/stream writer add background images #1016</a>. Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1019">Fix issue # 991 #1019</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/991">read csv file issue #991</a>. Many thanks to <a href="https://github.com/LibertyNJ">Nathaniel J. Liberty</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1018">Large excels - optimize performance of writing file by excelJS + optimize generated file (MS excel opens it much faster) #1018</a>. Many thanks to <a href="https://github.com/pzawadzki82">Piotr</a> for this contribution. </li> </ul> |
 
