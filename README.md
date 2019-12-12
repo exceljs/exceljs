@@ -191,6 +191,7 @@ One with implicit dependencies on core-js polyfills...
 
 And one without...
 ```html
+<script src="--your-project's-pollyfills-here--"></script>
 <script src="exceljs.bare.js"></script>
 ```
 
