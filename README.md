@@ -29,6 +29,13 @@ npm install exceljs
     databar and three icon sets (3Triangles, 3Stars, 5Boxes).
     These will be implemented in due course
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1030">remove core-js/ import #1030</a>.
+    Many thanks to <a href="https://github.com/bleuscyther">jeffrey n. carre</a> for this contribution.
+    This change is used to create a new browserified bundle artefact that does not include
+    any polyfills.
+    See <a href="#browserify">Browserify</a> for details.
+  </li>
 </ul>
 
 # Contributions
@@ -174,10 +181,19 @@ const ExcelJS = require('exceljs/dist/es5');
 
 ## Browserify
 
+ExcelJS publishes two browserified bundles inside the dist/ folder:
+ 
+One with implicit dependencies on core-js polyfills...
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
 <script src="exceljs.js"></script>
 ```
+
+And one without...
+```html
+<script src="exceljs.bare.js"></script>
+```
+
 
 # Interface
 

@@ -23,6 +23,15 @@ module.exports = function(grunt) {
       },
     },
     browserify: {
+      bare: {
+        src: ['./build/lib/exceljs.bare.js'],
+        dest: './dist/exceljs.bare.js',
+        options: {
+          browserifyOptions: {
+            standalone: 'ExcelJS',
+          },
+        },
+      },
       bundle: {
         src: ['./build/lib/exceljs.browser.js'],
         dest: './dist/exceljs.js',
@@ -44,6 +53,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           './dist/exceljs.min.js': ['./dist/exceljs.js'],
+          './dist/exceljs.bare.min.js': ['./dist/exceljs.bare.js'],
         },
       },
       // es3: {
