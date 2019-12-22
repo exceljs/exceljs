@@ -567,12 +567,14 @@ class Worksheet {
   // Style fill
   fillCells(range, fill) {
     const dimensions = new Range(range); // convert arguments into Array
+    console.log('Dimensions', dimensions);
     // apply style
     for (let i = dimensions.top; i <= dimensions.bottom; i++) {
+      console.log('top', dimensions.top,'Bottom',dimensions.bottom);
       for (let j = dimensions.left; j <= dimensions.right; j++) {
         if (i >= dimensions.top || j > dimensions.left) {
-          const cell =this.getCell(i, j);
-          cell.fill = fill;
+          console.log('SET FILL TO ', i, j);
+          this.getCell(i, j).fill = fill;
         }
       }
     }

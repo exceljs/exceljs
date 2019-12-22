@@ -1130,7 +1130,7 @@ export interface Worksheet {
 	unMergeCells(v: [number, number, number, number, string]): void;
 
 	fillFormula(range: Range | string | Location, formula: string, results?: ((r: number, c: number) => string | number) | number[] | number[][]): void;
-	fillCells(v: Range, fillStyle): void;
+	fillCells(v: Range, style): void;
 	/**
 	 * Using the image id from `Workbook.addImage`, set the background to the worksheet
 	 */

@@ -567,19 +567,18 @@ class Worksheet {
   // Style fill
   fillCells(range, fill) {
     const dimensions = new Range(range); // convert arguments into Array
+    console.log('Dimensions', dimensions);
     // apply style
     for (let i = dimensions.top; i <= dimensions.bottom; i++) {
       for (let j = dimensions.left; j <= dimensions.right; j++) {
-        if (i >= dimensions.top || j > dimensions.left) {
-          const cell =this.getCell(i, j);
-          cell.fill = fill;
+        if (i > dimensions.top || j > dimensions.left) {
+          this.getCell(i, j).fill = fill;
         }
       }
     }
   }
 
   // =========================================================================
-
   // Images
   addImage(imageId, range) {
     const model = {

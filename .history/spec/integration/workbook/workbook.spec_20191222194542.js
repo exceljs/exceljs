@@ -607,7 +607,7 @@ describe('Workbook', () => {
           });
       });
 
-      it('styles', () => {
+      it.only('styles', () => {
         const wb = new ExcelJS.Workbook();
         const ws = wb.addWorksheet('blort');
 
@@ -619,11 +619,23 @@ describe('Workbook', () => {
         B2.style.fill = testUtils.styles.fills.blueWhiteHGrad;
         B2.style.alignment = testUtils.styles.namedAlignments.middleCentre;
         B2.style.numFmt = testUtils.styles.numFmts.numFmt1;
+        console.log('V2 FILL', B2.style.fill);
+        console.log('V2 FILL', B2.fill);
+        console.log(testUtils.styles.fills.blueWhiteHGrad);
+
         
         // expecting styles to be copied (see worksheet spec)
         ws.mergeCells('B2:C3');
         // expecting styles to be applied to the argument range
-        ws.fillCells('E3:F4', testUtils.styles.fills.blueWhiteHGrad);
+        ws.fillCells('E3:F4', {
+          type: 'gradient',
+          gradient: 'path',
+          center: {left: 0.5, top: 0.5},
+          stops: [
+            {position: 0, color: {argb: 'FF32a852'}},
+            {position: 1, color: {argb: 'FF32a852'}},
+          ],
+        });
         return wb.xlsx
           .writeFile(TEST_XLSX_FILE_NAME)
           .then(() => {
@@ -641,18 +653,48 @@ describe('Workbook', () => {
             expect(ws2.getCell('B2').fill).to.deep.equal(
               testUtils.styles.fills.blueWhiteHGrad
             );
+            console.log('ez itt a fos ',ws2.getCell('E3').fill);
             expect(ws2.getCell('E3').fill).to.deep.equal(
-              testUtils.styles.fills.blueWhiteHGrad
+              {
+                type: 'gradient',
+                gradient: 'path',
+                center: {left: 0.5, top: 0.5},
+                stops: [
+                  {position: 0, color: {argb: 'FF32a852'}},
+                  {position: 1, color: {argb: 'FF32a852'}},
+                ],
+              }
             );
             expect(ws2.getCell('E4').fill).to.deep.equal(
-              testUtils.styles.fills.blueWhiteHGrad
-            );
+              {
+                type: 'gradient',
+                gradient: 'path',
+                center: {left: 0.5, top: 0.5},
+                stops: [
+                  {position: 0, color: {argb: 'FF32a852'}},
+                  {position: 1, color: {argb: 'FF32a852'}},
+                ],
+              }            );
             expect(ws2.getCell('F3').fill).to.deep.equal(
-              testUtils.styles.fills.blueWhiteHGrad
-            );
+              {
+                type: 'gradient',
+                gradient: 'path',
+                center: {left: 0.5, top: 0.5},
+                stops: [
+                  {position: 0, color: {argb: 'FF32a852'}},
+                  {position: 1, color: {argb: 'FF32a852'}},
+                ],
+              }            );
             expect(ws2.getCell('F4').fill).to.deep.equal(
-              testUtils.styles.fills.blueWhiteHGrad
-            );
+              {
+                type: 'gradient',
+                gradient: 'path',
+                center: {left: 0.5, top: 0.5},
+                stops: [
+                  {position: 0, color: {argb: 'FF32a852'}},
+                  {position: 1, color: {argb: 'FF32a852'}},
+                ],
+              }            );
             expect(ws2.getCell('B2').alignment).to.deep.equal(
               testUtils.styles.namedAlignments.middleCentre
             );

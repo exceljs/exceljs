@@ -565,21 +565,32 @@ class Worksheet {
   // =========================================================================
 
   // Style fill
-  fillCells(range, fill) {
-    const dimensions = new Range(range); // convert arguments into Array
-    // apply style
+  fillCells() {
+    const dimensions = new Range(Array.prototype.slice.call(arguments, 0)); // convert arguments into Array
+
+    // check cells aren't already merged
+    _.each(this._merges, merge => {
+      if (merge.intersects(dimensions)) {
+        throw new Error('Cannot merge already merged cells');
+      }
+    });
+
+    // apply merge
+    const master = this.getCell(dimensions.top, dimensions.left);
     for (let i = dimensions.top; i <= dimensions.bottom; i++) {
       for (let j = dimensions.left; j <= dimensions.right; j++) {
-        if (i >= dimensions.top || j > dimensions.left) {
-          const cell =this.getCell(i, j);
-          cell.fill = fill;
+        // merge all but the master cell
+        if (i > dimensions.top || j > dimensions.left) {
+          this.getCell(i, j).merge(master);
         }
       }
     }
+
+    // index merge
+    this._merges[master.address] = dimensions;
   }
 
   // =========================================================================
-
   // Images
   addImage(imageId, range) {
     const model = {

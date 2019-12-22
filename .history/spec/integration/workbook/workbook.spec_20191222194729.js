@@ -607,7 +607,7 @@ describe('Workbook', () => {
           });
       });
 
-      it('styles', () => {
+      it.only('styles', () => {
         const wb = new ExcelJS.Workbook();
         const ws = wb.addWorksheet('blort');
 
@@ -645,14 +645,11 @@ describe('Workbook', () => {
               testUtils.styles.fills.blueWhiteHGrad
             );
             expect(ws2.getCell('E4').fill).to.deep.equal(
-              testUtils.styles.fills.blueWhiteHGrad
-            );
+              testUtils.styles.fills.blueWhiteHGrad          );
             expect(ws2.getCell('F3').fill).to.deep.equal(
-              testUtils.styles.fills.blueWhiteHGrad
-            );
+              testUtils.styles.fills.blueWhiteHGrad           );
             expect(ws2.getCell('F4').fill).to.deep.equal(
-              testUtils.styles.fills.blueWhiteHGrad
-            );
+              testUtils.styles.fills.blueWhiteHGrad           );
             expect(ws2.getCell('B2').alignment).to.deep.equal(
               testUtils.styles.namedAlignments.middleCentre
             );

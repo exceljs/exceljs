@@ -563,23 +563,6 @@ class Worksheet {
   }
 
   // =========================================================================
-
-  // Style fill
-  fillCells(range, fill) {
-    const dimensions = new Range(range); // convert arguments into Array
-    // apply style
-    for (let i = dimensions.top; i <= dimensions.bottom; i++) {
-      for (let j = dimensions.left; j <= dimensions.right; j++) {
-        if (i >= dimensions.top || j > dimensions.left) {
-          const cell =this.getCell(i, j);
-          cell.fill = fill;
-        }
-      }
-    }
-  }
-
-  // =========================================================================
-
   // Images
   addImage(imageId, range) {
     const model = {

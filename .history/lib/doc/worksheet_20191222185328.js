@@ -566,20 +566,22 @@ class Worksheet {
 
   // Style fill
   fillCells(range, fill) {
+    console.log('HERE IS THE RANGE', range);
+    console.log('here is the fill', fill);
     const dimensions = new Range(range); // convert arguments into Array
+
     // apply style
     for (let i = dimensions.top; i <= dimensions.bottom; i++) {
       for (let j = dimensions.left; j <= dimensions.right; j++) {
-        if (i >= dimensions.top || j > dimensions.left) {
-          const cell =this.getCell(i, j);
-          cell.fill = fill;
+        // merge all but the master cell
+        if (i > dimensions.top || j > dimensions.left) {
+          this.getCell(i, j).fill = fill;
         }
       }
     }
   }
 
   // =========================================================================
-
   // Images
   addImage(imageId, range) {
     const model = {
