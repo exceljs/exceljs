@@ -406,7 +406,7 @@ describe('Worksheet', () => {
       it('throws an error', () => {
         const wb = new ExcelJS.Workbook();
 
-        const validName = 'thisisaworksheetnameiuppercase';
+        const validName = 'thisisaworksheetnameinuppercase';
         const invalideName = 'THISISAWORKSHEETNAMEINUPPERCASE';
         const expectedError = `Worksheet name already exists: ${invalideName}`;
 
