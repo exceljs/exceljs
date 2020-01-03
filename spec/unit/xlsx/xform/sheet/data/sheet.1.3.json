@@ -70,11 +70,8 @@
   "hyperlinks": [
     {"address": "B6", "rId": "rId1"}
   ],
-  "background": null,
-  "mergeCells": null,
-  "dataValidations": null,
-  "drawing": null,
-  "headerFooter": null,
-  "tables": null,
-  "conditionalFormattings": []
+  "background": {},
+  "mergeCells": {},
+  "dataValidations": {},
+  "drawing": {}
 }

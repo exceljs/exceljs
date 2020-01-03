@@ -1,13 +1,18 @@
 'use strict';
 
-const utils = require('./utils/utils');
-const HrStopwatch = require('./utils/hr-stopwatch');
-const ColumnSum = require('./utils/column-sum');
+var fs = require('fs');
+var util = require('util');
+var _ = require('underscore');
+var Promise = require('bluebird');
 
-const Excel = require('../excel');
+var utils = require('./utils/utils');
+var HrStopwatch = require('./utils/hr-stopwatch');
+var ColumnSum = require('./utils/column-sum');
 
-const {Workbook} = Excel;
-const {WorkbookReader} = Excel.stream.xlsx;
+var Excel = require('../excel');
+
+var Workbook = Excel.Workbook;
+var WorkbookReader = Excel.stream.xlsx.WorkbookReader;
 
 if (process.argv[2] === 'help') {
   console.log('Usage:');
@@ -15,19 +20,18 @@ if (process.argv[2] === 'help') {
   console.log('Where:');
   console.log('    reader is one of [stream, document]');
   console.log('    plan is one of [zero, one, two, hyperlinks]');
-  // eslint-disable-next-line no-process-exit
   process.exit(0);
 }
 
-const filename = process.argv[2];
-const reader = process.argv.length > 3 ? process.argv[3] : 'stream';
-const plan = process.argv.length > 4 ? process.argv[4] : 'one';
+var filename = process.argv[2];
+var reader = process.argv.length > 3 ? process.argv[3] : 'stream';
+var plan = process.argv.length > 4 ? process.argv[4] : 'one';
 
-const useStream = reader === 'stream';
+var useStream = (reader === 'stream');
 
 function getTimeout() {
-  const memory = process.memoryUsage();
-  const heapSize = memory.heapTotal;
+  var memory = process.memoryUsage();
+  var heapSize = memory.heapTotal;
   if (heapSize < 300000000) {
     return 0;
   }
@@ -40,29 +44,28 @@ function getTimeout() {
   return heapSize / 1000000;
 }
 
-const options = {
-  reader: useStream ? 'stream' : 'document',
-  filename,
-  plan,
+var options = {
+  reader: (useStream ? 'stream' : 'document'),
+  filename: filename,
+  plan: plan,
   gc: {
-    getTimeout,
-  },
+    getTimeout: getTimeout
+  }
 };
 console.log(JSON.stringify(options, null, '  '));
 
-const stopwatch = new HrStopwatch();
+var stopwatch = new HrStopwatch();
 stopwatch.start();
 
 function logProgress(count) {
-  const memory = process.memoryUsage();
-  const txtCount = utils.fmt.number(count);
-  const txtHeap = utils.fmt.number(memory.heapTotal);
-  process.stdout.write(`Count: ${txtCount}, Heap Size: ${txtHeap}\u001b[0G`);
+  var memory = process.memoryUsage();
+  var txtCount = utils.fmt.number(count);
+  var txtHeap = utils.fmt.number(memory.heapTotal);
+  process.stdout.write('Count: ' + txtCount + ', Heap Size: ' + txtHeap + '\u001b[0G');
 }
 
-const colCount = new ColumnSum([3, 6, 7, 8]);
-let hyperlinkCount = 0;
-
+var colCount = new ColumnSum([3,6,7,8]);
+var hyperlinkCount = 0;
 function checkRow(row) {
   if (row.number > 1) {
     colCount.add(row);
@@ -73,61 +76,57 @@ function checkRow(row) {
   }
   row.destroy();
 }
-
 function report() {
-  console.log(`Count: ${colCount.count}`);
-  console.log(`Sums: ${colCount}`);
-  console.log(`Hyperlinks: ${hyperlinkCount}`);
+  console.log('Count: ' + colCount.count);
+  console.log('Sums: ' + colCount);
+  console.log('Hyperlinks: ' + hyperlinkCount);
 
   stopwatch.stop();
-  console.log(`Time: ${stopwatch}`);
+  console.log('Time: ' + stopwatch);
 }
 
 if (useStream) {
-  const wb = new WorkbookReader(options);
-  wb.on('end', () => {
-    console.log('reached end of stream');
-  });
+  var wb = new WorkbookReader(options);
+  wb.on('end', function() { console.log('reached end of stream');});
   wb.on('finished', report);
-  wb.on('worksheet', worksheet => {
+  wb.on('worksheet', function(worksheet) {
     worksheet.on('row', checkRow);
   });
-  wb.on('hyperlinks', hyperlinks => {
-    hyperlinks.on('hyperlink', () => {
+  wb.on('hyperlinks', function(hyperlinks) {
+    hyperlinks.on('hyperlink', function(hyperlink) {
       hyperlinkCount++;
     });
   });
-  wb.on('entry', entry => {
+  wb.on('entry', function(entry) {
     console.log(JSON.stringify(entry));
   });
   switch (options.plan) {
     case 'zero':
       wb.read(filename, {
-        entries: 'emit',
+        entries: 'emit'
       });
       break;
     case 'one':
       wb.read(filename, {
         entries: 'emit',
-        worksheets: 'emit',
+        worksheets: 'emit'
       });
       break;
     case 'two':
       break;
     case 'hyperlinks':
       wb.read(filename, {
-        hyperlinks: 'emit',
+        hyperlinks: 'emit'
       });
       break;
     default:
       break;
   }
 } else {
-  const wb = new Workbook();
-  wb.xlsx
-    .readFile(filename)
-    .then(() => {
-      const ws = wb.getWorksheet('blort');
+  var wb = new Workbook();
+  wb.xlsx.readFile(filename)
+    .then(function() {
+      var ws = wb.getWorksheet('blort');
       ws.eachRow(checkRow);
     })
     .then(report);

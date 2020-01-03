@@ -1,32 +1,27 @@
-const testXformHelper = require('./../test-xform-helper');
+'use strict';
 
-const WorkbookPropertiesXform = verquire('xlsx/xform/book/workbook-properties-xform');
+var WorkbookPropertiesXform = require('../../../../../lib/xlsx/xform/book/workbook-properties-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'default',
-    create() {
-      return new WorkbookPropertiesXform();
-    },
+    create: function() { return new WorkbookPropertiesXform(); },
     preparedModel: {},
-    xml:
-      '<workbookPr defaultThemeVersion="164011" filterPrivacy="1"></workbookPr>',
+    xml: '<workbookPr defaultThemeVersion="164011" filterPrivacy="1"></workbookPr>',
     parsedModel: {},
-    tests: ['render', 'renderIn'],
+    tests: ['render', 'renderIn']
   },
   {
     title: 'date1904',
-    create() {
-      return new WorkbookPropertiesXform();
-    },
-    preparedModel: {date1904: true},
-    xml:
-      '<workbookPr date1904="1" defaultThemeVersion="164011" filterPrivacy="1"></workbookPr>',
-    parsedModel: {date1904: true},
-    tests: ['render', 'renderIn', 'parse'],
-  },
+    create: function() { return new WorkbookPropertiesXform(); },
+    preparedModel: { date1904: true},
+    xml: '<workbookPr date1904="1" defaultThemeVersion="164011" filterPrivacy="1"></workbookPr>',
+    parsedModel: { date1904: true},
+    tests: ['render', 'renderIn', 'parse']
+  }
 ];
 
-describe('WorkbookPropertiesXform', () => {
+describe('WorkbookPropertiesXform', function() {
   testXformHelper(expectations);
 });

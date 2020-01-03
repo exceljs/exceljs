@@ -1,21 +1,19 @@
-const testXformHelper = require('./../test-xform-helper');
+'use strict';
 
-const BlipXform = verquire('xlsx/xform/drawing/blip-xform');
+var BlipXform = require('../../../../../lib/xlsx/xform/drawing/blip-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'full',
-    create() {
-      return new BlipXform();
-    },
-    preparedModel: {rId: 'rId1'},
-    xml:
-      '<a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="rId1" cstate="print" />',
-    parsedModel: {rId: 'rId1'},
-    tests: ['render', 'renderIn', 'parse'],
-  },
+    create: function() { return new BlipXform(); },
+    preparedModel: { rId: 'rId1' },
+    xml: '<a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="rId1" cstate="print" />',
+    parsedModel: { rId: 'rId1' },
+    tests: ['render', 'renderIn', 'parse']
+  }
 ];
 
-describe('BlipXform', () => {
+describe('BlipXform', function() {
   testXformHelper(expectations);
 });

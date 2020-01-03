@@ -1,0 +1,19 @@
+{
+  "anchors":[
+    {
+      "range": "A1:C7",
+      "picture": {
+        "rId": "rId1"
+      }
+    },
+    {
+      "range": {
+        "tl": {"row": 2.5, "col": 5.5},
+        "br": {"row": 10.5, "col": 8.5}
+      },
+      "picture": {
+        "rId": "rId2"
+      }
+    }
+  ]
+}

@@ -1,11 +1,18 @@
-const Excel = require('../excel');
+'use strict';
 
-const [,, inputFile, outputFile] = process.argv;
+var fs = require('fs');
+var _ = require('underscore');
+var HrStopwatch = require('./utils/hr-stopwatch');
 
-const wb = new Excel.Workbook();
+var Excel = require('../excel');
 
-let passed = true;
-const assert = function(value, failMessage, passMessage) {
+var inputFile = process.argv[2];
+var outputFile = process.argv[3];
+
+var wb = new Excel.Workbook();
+
+var passed = true;
+var assert = function(value, failMessage, passMessage) {
   if (!value) {
     if (failMessage) {
       console.error(failMessage);
@@ -17,16 +24,15 @@ const assert = function(value, failMessage, passMessage) {
 };
 
 // assuming file created by testBookOut
-wb.xlsx
-  .readFile(inputFile)
-  .then(() => {
+wb.xlsx.readFile(inputFile)
+  .then(function() {
     console.log('Loaded', inputFile);
 
-    wb.eachSheet(sheet => {
+    wb.eachSheet(function(sheet) {
       console.log(sheet.name);
     });
 
-    const ws = wb.getWorksheet('Sheet1');
+    var ws = wb.getWorksheet('Sheet1');
 
     assert(ws, 'Expected to find a worksheet called sheet1');
 
@@ -36,10 +42,10 @@ wb.xlsx
     ws.addRow([1, 'hello']);
     return wb.xlsx.writeFile(outputFile);
   })
-  .then(() => {
+  .then(function() {
     assert(passed, 'Something went wrong', 'All tests passed!');
   })
-  .catch(error => {
+  .catch(function(error) {
     console.error(error.message);
     console.error(error.stack);
   });

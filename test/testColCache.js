@@ -1,16 +1,15 @@
-const colCache = require('../lib/utils/col-cache');
+var colCache = require('../lib/colcache');
 
-const arg = process.argv[2];
+var arg = process.argv[2];
 
-const match = arg.match(/^[A-Z]+$/);
-let n;
-let l;
+var match = arg.match(/^[A-Z]+$/);
+var n,l;
 if (match) {
   n = colCache.l2n(match[0]);
   l = colCache.n2l(n);
-  console.log(`${arg} --> ${n} --> ${l}`);
+  console.log(arg + ' --> ' + n + ' --> ' + l);
 } else {
   l = colCache.n2l(parseInt(arg, 10));
   n = colCache.l2n(l);
-  console.log(`${arg} --> ${l} --> ${n}`);
+  console.log(arg + ' --> ' + l + ' --> ' + n);
 }

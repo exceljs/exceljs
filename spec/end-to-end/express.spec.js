@@ -1,34 +1,36 @@
-const express = require('express');
-const request = require('request');
-const testutils = require('../utils/index');
+'use strict';
 
-const Excel = verquire('exceljs');
+var verquire = require('../utils/verquire');
+var testutils = require('../utils/index');
+
+var express = require('express');
+var request = require('request');
+
+var Excel = verquire('excel');
 
 // =============================================================================
 // Tests
 
-describe('Express', () => {
-  it('downloads a workbook', () => {
-    const app = express();
-    app.get('/workbook', (req, res) => {
-      const wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
-      res.setHeader(
-        'Content-Type',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      );
+describe('Express', function() {
+  it('downloads a workbook', function() {
+    var app = express();
+    app.get('/workbook', function(req, res) {
+      var wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
       res.setHeader('Content-Disposition', 'attachment; filename=Report.xlsx');
-      wb.xlsx.write(res).then(() => {
-        res.end();
-      });
+      wb.xlsx.write(res)
+        .then(function() {
+          res.end();
+        });
     });
-    const server = app.listen(3003);
+    var server = app.listen(3003);
 
-    return new Promise((resolve, reject) => {
-      const r = request('http://127.0.0.1:3003/workbook');
-      r.on('response', res => {
-        const wb2 = new Excel.Workbook();
-        const stream = wb2.xlsx.createInputStream();
-        stream.on('done', () => {
+    return new Promise(function(resolve, reject) {
+      var r = request('http://127.0.0.1:3003/workbook');
+      r.on('response', function(res) {
+        var wb2 = new Excel.Workbook();
+        var stream = wb2.xlsx.createInputStream();
+        stream.on('done', function() {
           try {
             testutils.checkTestBook(wb2, 'xlsx');
             server.close();

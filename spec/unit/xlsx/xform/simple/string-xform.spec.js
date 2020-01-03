@@ -1,39 +1,34 @@
-const testXformHelper = require('./../test-xform-helper');
+'use strict';
 
-const StringXform = verquire('xlsx/xform/simple/string-xform');
+var StringXform = require('../../../../../lib/xlsx/xform/simple/string-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'hello',
-    create() {
-      return new StringXform({tag: 'string', attr: 'val'});
-    },
+    create: function() { return new StringXform({tag: 'string', attr: 'val'}); },
     preparedModel: 'Hello, World!',
     xml: '<string val="Hello, World!"/>',
     parsedModel: 'Hello, World!',
-    tests: ['render', 'renderIn', 'parse'],
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'empty',
-    create() {
-      return new StringXform({tag: 'string', attr: 'val'});
-    },
+    create: function() { return new StringXform({tag: 'string', attr: 'val'}); },
     preparedModel: '',
     xml: '<string val=""/>',
     parsedModel: '',
-    tests: ['render', 'renderIn', 'parse'],
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'undefined',
-    create() {
-      return new StringXform({tag: 'string', attr: 'val'});
-    },
+    create: function() { return new StringXform({tag: 'string', attr: 'val'}); },
     preparedModel: undefined,
     xml: '',
-    tests: ['render', 'renderIn'],
-  },
+    tests: ['render', 'renderIn']
+  }
 ];
 
-describe('StringXform', () => {
+describe('StringXform', function() {
   testXformHelper(expectations);
 });

@@ -1,19 +1,18 @@
-const Workbook = require('../lib/doc/workbook');
+var fs = require('fs');
+var _ = require('underscore');
+var Promise = require('bluebird');
 
-const filename = process.argv[2];
+var Workbook = require('../lib/doc/workbook');
 
-const workbook = new Workbook();
-workbook.xlsx
-  .readFile(filename)
-  .then(() => {
-    workbook.eachSheet(worksheet => {
-      console.log(
-        `Sheet ${worksheet.id} - ${worksheet.name}, Dims=${JSON.stringify(
-          worksheet.dimensions
-        )}`
-      );
+var filename = process.argv[2];
+
+var workbook = new Workbook();
+workbook.xlsx.readFile(filename)
+  .then(function() {
+    workbook.eachSheet(function(worksheet) {
+      console.log('Sheet ' + worksheet.id + ' - ' + worksheet.name + ', Dims=' + JSON.stringify(worksheet.dimensions));
     });
   })
-  .catch(error => {
+  .catch(function(error) {
     console.log(error.message);
   });

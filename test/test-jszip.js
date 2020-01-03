@@ -1,29 +1,25 @@
-const fs = require('fs');
-const JSZip = require('jszip');
+'use strict';
 
-// eslint-disable-next-line node/no-unsupported-features/node-builtins
-const fsp = fs.promises;
+var JSZip = require('jszip');
+var Bluebird = require('bluebird');
+var fs = require('fs');
 
-const filename = process.argv[2];
+var fsp = Bluebird.promisifyAll(fs);
 
-const jsZip = new JSZip();
+var filename = process.argv[2];
 
-fsp
-  .readFileAsync(filename)
-  .then(data => {
-    console.log('data', data);
+var jsZip = new JSZip();
+
+fsp.readFileAsync(filename)
+  .then(function(data) {
+    console.log('data', data)
     return jsZip.loadAsync(data);
   })
-  .then(zip => {
-    zip.forEach((path, entry) => {
+  .then(function(zip) {
+    zip.forEach(function(path, entry) {
       if (!entry.dir) {
         // console.log(path, entry)
-        console.log(
-          path,
-          entry.name,
-          entry._data.compressedSize,
-          entry._data.uncompressedSize
-        );
+        console.log(path, entry.name, entry._data.compressedSize, entry._data.uncompressedSize)
       }
     });
   });

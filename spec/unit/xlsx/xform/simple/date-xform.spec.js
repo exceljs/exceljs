@@ -1,57 +1,41 @@
-const testXformHelper = require('./../test-xform-helper');
+'use strict';
 
-const DateXform = verquire('xlsx/xform/simple/date-xform');
+var DateXform = require('../../../../../lib/xlsx/xform/simple/date-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'date',
-    create() {
-      return new DateXform({tag: 'date', attr: 'val'});
-    },
+    create: function() { return new DateXform({tag: 'date', attr: 'val'}); },
     preparedModel: new Date('2016-07-13T00:00:00Z'),
     xml: '<date val="2016-07-13T00:00:00.000Z"/>',
     parsedModel: new Date('2016-07-13T00:00:00Z'),
-    tests: ['render', 'renderIn', 'parse'],
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'iso-date',
-    create() {
+    create: function() {
       return new DateXform({
         tag: 'date',
         attr: 'val',
-        format(dt) {
-          return dt.toISOString().split('T')[0];
-        },
-        parse(value) {
-          return new Date(value.replace('13', '14'));
-        },
+        format: function(dt) { return dt.toISOString().split('T')[0]; },
+        parse: function(value) { return new Date(value.replace('13', '14')); }
       });
     },
     preparedModel: new Date('2016-07-13T00:00:00Z'),
     xml: '<date val="2016-07-13"/>',
     parsedModel: new Date('2016-07-14T00:00:00Z'),
-    tests: ['render', 'renderIn', 'parse'],
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'undefined',
-    create() {
-      return new DateXform({tag: 'date', attr: 'val'});
-    },
+    create: function() { return new DateXform({tag: 'date', attr: 'val'}); },
     preparedModel: undefined,
     xml: '',
-    tests: ['render', 'renderIn'],
-  },
-  {
-    title: 'invalid date',
-    create() {
-      return new DateXform({tag: 'date', attr: undefined});
-    },
-    preparedModel: new Date(undefined),
-    xml: '<date />',
-    tests: ['render'],
-  },
+    tests: ['render', 'renderIn']
+  }
 ];
 
-describe('DateXform', () => {
+describe('DateXform', function() {
   testXformHelper(expectations);
 });

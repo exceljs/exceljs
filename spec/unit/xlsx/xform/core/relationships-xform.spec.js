@@ -1,27 +1,21 @@
-const fs = require('fs');
+'use strict';
 
-const testXformHelper = require('./../test-xform-helper');
+var fs = require('fs');
 
-const RelationshipsXform = verquire('xlsx/xform/core/relationships-xform');
+var RelationshipsXform = require('../../../../../lib/xlsx/xform/core/relationships-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'worksheet.rels',
-    create() {
-      return new RelationshipsXform();
-    },
+    create: function() { return new RelationshipsXform(); },
     preparedModel: require('./data/worksheet.rels.1.json'),
-    xml: fs
-      .readFileSync(`${__dirname}/data/worksheet.rels.xml`)
-      .toString()
-      .replace(/\r\n/g, '\n'),
-    get parsedModel() {
-      return this.preparedModel;
-    },
-    tests: ['render', 'renderIn', 'parse'],
-  },
+    xml: fs.readFileSync(__dirname + '/data/worksheet.rels.xml').toString().replace(/\r\n/g, '\n'),
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  }
 ];
 
-describe('RelationshipsXform', () => {
+describe('RelationshipsXform', function() {
   testXformHelper(expectations);
 });

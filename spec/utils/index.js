@@ -1,21 +1,24 @@
-const verquire = require('./verquire');
+'use strict';
 
-const _ = require('./under-dash');
-const tools = require('./tools');
+var expect = require('chai').expect;
+var verquire = require('./verquire');
 
-const testWorkbookReader = require('./test-workbook-reader');
+var _ = require('./under-dash');
+var tools = require('./tools');
 
-const Row = verquire('doc/row');
-const Column = verquire('doc/column');
+var testWorkbookReader = require('./test-workbook-reader');
 
-const testSheets = {
+var Row = verquire('doc/row');
+var Column = verquire('doc/column');
+
+var testSheets = {
   dataValidations: require('./test-data-validation-sheet'),
   values: require('./test-values-sheet'),
-  splice: require('./test-spliced-sheet'),
+  splice: require('./test-spliced-sheet')
 };
 
 function getOptions(docType, options) {
-  let result;
+  var result;
   switch (docType) {
     case 'xlsx':
       result = {
@@ -26,7 +29,7 @@ function getOptions(docType, options) {
         checkBadAlignments: true,
         checkSheetProperties: true,
         dateAccuracy: 3,
-        checkViews: true,
+        checkViews: true
       };
       break;
     case 'csv':
@@ -38,14 +41,15 @@ function getOptions(docType, options) {
         checkBadAlignments: false,
         checkSheetProperties: false,
         dateAccuracy: 1000,
-        checkViews: false,
+        checkViews: false
       };
       break;
     default:
-      throw new Error(`Bad doc-type: ${docType}`);
+      throw new Error('Bad doc-type: ' + docType);
   }
   return Object.assign(result, options);
 }
+
 
 module.exports = {
   views: tools.fix(require('./data/views.json')),
@@ -54,51 +58,41 @@ module.exports = {
   properties: tools.fix(require('./data/sheet-properties.json')),
   pageSetup: tools.fix(require('./data/page-setup.json')),
 
-  createTestBook(workbook, docType, sheets) {
-    const options = getOptions(docType);
+  createTestBook: function(workbook, docType, sheets) {
+    var options = getOptions(docType);
     sheets = sheets || ['values'];
-
+    
     workbook.views = [
-      {x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0},
+      {x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0}
     ];
-
-    sheets.forEach(sheet => {
-      const testSheet = _.get(testSheets, sheet);
+    
+    sheets.forEach(function(sheet) {
+      var testSheet = _.get(testSheets, sheet);
       testSheet.addSheet(workbook, options);
     });
 
     return workbook;
   },
 
-  checkTestBook(workbook, docType, sheets, options) {
+  checkTestBook: function(workbook, docType, sheets, options) {
     options = getOptions(docType, options);
     sheets = sheets || ['values'];
 
     expect(workbook).to.not.be.undefined();
 
     if (options.checkViews) {
-      expect(workbook.views).to.deep.equal([
-        {
-          x: 1,
-          y: 2,
-          width: 10000,
-          height: 20000,
-          firstSheet: 0,
-          activeTab: 0,
-          visibility: 'visible',
-        },
-      ]);
+      expect(workbook.views).to.deep.equal([{x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0, visibility: 'visible'}]);
     }
 
-    sheets.forEach(sheet => {
-      const testSheet = _.get(testSheets, sheet);
+    sheets.forEach(function(sheet) {
+      var testSheet = _.get(testSheets, sheet);
       testSheet.checkSheet(workbook, options);
     });
   },
 
   checkTestBookReader: testWorkbookReader.checkBook,
 
-  createSheetMock() {
+  createSheetMock: function() {
     return {
       _keys: {},
       _cells: {},
@@ -106,29 +100,27 @@ module.exports = {
       columns: [],
       properties: {
         outlineLevelCol: 0,
-        outlineLevelRow: 0,
+        outlineLevelRow: 0
       },
-
-      addColumn(colNumber, defn) {
-        const newColumn = new Column(this, colNumber, defn);
-        this.columns[colNumber - 1] = newColumn;
-        return newColumn;
+      
+      addColumn: function(colNumber, defn) {
+        return (this.columns[colNumber - 1] = new Column(this, colNumber, defn));
       },
-      getColumn(colNumber) {
-        let column = this.columns[colNumber - 1] || this._keys[colNumber];
+      getColumn: function(colNumber) {
+        var column = this.columns[colNumber - 1] || this._keys[colNumber];
         if (!column) {
           column = this.columns[colNumber - 1] = new Column(this, colNumber);
         }
         return column;
       },
-      getRow(rowNumber) {
-        let row = this.rows[rowNumber - 1];
+      getRow: function(rowNumber) {
+        var row = this.rows[rowNumber - 1];
         if (!row) {
           row = this.rows[rowNumber - 1] = new Row(this, rowNumber);
         }
         return row;
       },
-      getCell(rowNumber, colNumber) {
+      getCell: function(rowNumber, colNumber) {
         return this.getRow(rowNumber).getCell(colNumber);
       },
       getColumnKey(key) {
@@ -149,18 +141,18 @@ module.exports = {
           opt = {};
         }
         if (opt && opt.includeEmpty) {
-          const n = this.rows.length;
-          for (let i = 1; i <= n; i++) {
+          var n = this.rows.length;
+          for (var i = 1; i <= n; i++) {
             f(this.getRow(i), i);
           }
         } else {
-          this.rows.forEach((r, i) => {
-            if (r) {
+          this.rows.forEach(function (r, i) {
+            if (r || includeEmpty) {
               f(r, i + 1);
             }
           });
         }
       },
     };
-  },
+  }
 };

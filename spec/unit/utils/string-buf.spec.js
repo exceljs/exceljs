@@ -1,17 +1,21 @@
-const StringBuf = verquire('utils/string-buf');
+'use strict';
 
-describe('StringBuf', () => {
+var expect = require('chai').expect;
+
+var StringBuf = require('../../../lib/utils/string-buf');
+
+describe('StringBuf', function() {
   // StringBuf is a lightweight string-builder used by the streaming writers to build
   // strings (e.g. for row data) without too many memory operations
-  it('writes strings as UTF8', () => {
-    const sb = new StringBuf({size: 64});
+  it('writes strings as UTF8', function() {
+    var sb = new StringBuf({size: 64});
     sb.addText('Hello, World!');
-    const chunk = sb.toBuffer();
+    var chunk = sb.toBuffer();
     expect(chunk.toString('UTF8')).to.equal('Hello, World!');
   });
 
-  it('grows properly', () => {
-    const sb = new StringBuf({size: 8});
+  it('grows properly', function() {
+    var sb = new StringBuf({size: 8});
     expect(sb.length).to.equal(0);
     expect(sb.capacity).to.equal(8);
 
@@ -32,12 +36,12 @@ describe('StringBuf', () => {
     expect(sb.capacity).to.equal(32);
 
     // after all that - the string should be intact
-    const chunk = sb.toBuffer();
+    var chunk = sb.toBuffer();
     expect(chunk.toString('UTF8')).to.equal('Hello, World! Hello.');
   });
 
-  it('resets', () => {
-    const sb = new StringBuf({size: 64});
+  it('resets', function() {
+    var sb = new StringBuf({size: 64});
     sb.addText('Hello, ');
     expect(sb.length).to.equal(7);
 
@@ -47,7 +51,7 @@ describe('StringBuf', () => {
     sb.addText('World!');
     expect(sb.length).to.equal(6);
 
-    const chunk = sb.toBuffer();
+    var chunk = sb.toBuffer();
     expect(chunk.toString('UTF8')).to.equal('World!');
   });
 });

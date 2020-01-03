@@ -1,40 +1,33 @@
-const testXformHelper = require('./../test-xform-helper');
+'use strict';
 
-const BooleanXform = verquire('xlsx/xform/simple/boolean-xform');
+var BooleanXform = require('../../../../../lib/xlsx/xform/simple/boolean-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'true',
-    create() {
-      return new BooleanXform({tag: 'boolean', attr: 'val'});
-    },
+    create: function() { return new BooleanXform({tag: 'boolean', attr: 'val'}); },
     preparedModel: true,
-    get parsedModel() {
-      return this.preparedModel;
-    },
+    get parsedModel() { return this.preparedModel; },
     xml: '<boolean/>',
-    tests: ['render', 'renderIn', 'parse'],
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'false',
-    create() {
-      return new BooleanXform({tag: 'boolean', attr: 'val'});
-    },
+    create: function() { return new BooleanXform({tag: 'boolean', attr: 'val'}); },
     preparedModel: false,
     xml: '',
-    tests: ['render', 'renderIn'],
+    tests: ['render', 'renderIn']
   },
   {
     title: 'undefined',
-    create() {
-      return new BooleanXform({tag: 'boolean', attr: 'val'});
-    },
+    create: function() { return new BooleanXform({tag: 'boolean', attr: 'val'}); },
     preparedModel: undefined,
     xml: '',
-    tests: ['render', 'renderIn'],
-  },
+    tests: ['render', 'renderIn']
+  }
 ];
 
-describe('BooleanXform', () => {
+describe('BooleanXform', function() {
   testXformHelper(expectations);
 });

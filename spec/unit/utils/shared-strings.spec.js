@@ -1,12 +1,14 @@
-const SharedStrings = verquire('utils/shared-strings');
+var expect = require('chai').expect;
 
-describe('SharedStrings', () => {
-  it('Stores and shares string values', () => {
-    const ss = new SharedStrings();
+var SharedStrings = require('../../../lib/utils/shared-strings');
 
-    const iHello = ss.add('Hello');
-    const iHelloV2 = ss.add('Hello');
-    const iGoodbye = ss.add('Goodbye');
+describe('SharedStrings', function() {
+  it('Stores and shares string values', function() {
+    var ss = new SharedStrings();
+
+    var iHello = ss.add('Hello');
+    var iHelloV2 = ss.add('Hello');
+    var iGoodbye = ss.add('Goodbye');
 
     expect(iHello).to.equal(iHelloV2);
     expect(iGoodbye).to.not.equal(iHelloV2);
@@ -15,12 +17,12 @@ describe('SharedStrings', () => {
     expect(ss.totalRefs).to.equal(3);
   });
 
-  it('Does not escape values', () => {
+  it('Does not escape values', function() {
     // that's the job of the xml utils
-    const ss = new SharedStrings();
+    var ss = new SharedStrings();
 
-    const iXml = ss.add('<tag>value</tag>');
-    const iAmpersand = ss.add('&');
+    var iXml = ss.add('<tag>value</tag>');
+    var iAmpersand = ss.add('&');
 
     expect(ss.getString(iXml)).to.equal('<tag>value</tag>');
     expect(ss.getString(iAmpersand)).to.equal('&');

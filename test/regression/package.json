@@ -18,7 +18,7 @@
     "defined names", "data validations", "rich text", "in-cell format"
   ],
   "dependencies": {
-    "exceljs": "^3.3.0"
+    "exceljs": "0.2.7"
   },
   "devDependencies": {
     "jshint": "*",

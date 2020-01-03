@@ -1,20 +1,24 @@
-const WorksheetWriter = verquire('stream/xlsx/worksheet-writer');
-const StreamBuf = verquire('utils/stream-buf');
+'use strict';
 
-describe('Workbook Writer', () => {
-  it('generates valid xml even when there is no data', () =>
+var expect = require('chai').expect;
+
+var WorksheetWriter = require('../../../lib/stream/xlsx/worksheet-writer');
+var StreamBuf = require('../../../lib/utils/stream-buf');
+
+describe('Workbook Writer', function() {
+  it('generates valid xml even when there is no data', function() {
     // issue: https://github.com/guyonroche/exceljs/issues/99
     // PR: https://github.com/guyonroche/exceljs/pull/255
-    new Promise((resolve, reject) => {
-      const mockWorkbook = {
-        _openStream() {
+    return new Promise(function(resolve, reject) {
+      var mockWorkbook = {
+        _openStream: function() {
           return this.stream;
         },
-        stream: new StreamBuf(),
+        stream: new StreamBuf()
       };
-      mockWorkbook.stream.on('finish', () => {
+      mockWorkbook.stream.on('finish', function() {
         try {
-          const xml = mockWorkbook.stream.read().toString();
+          var xml = mockWorkbook.stream.read().toString();
           expect(xml).xml.to.be.valid();
           resolve();
         } catch (error) {
@@ -22,11 +26,12 @@ describe('Workbook Writer', () => {
         }
       });
 
-      const writer = new WorksheetWriter({
+      var writer = new WorksheetWriter({
         id: 1,
-        workbook: mockWorkbook,
+        workbook: mockWorkbook
       });
 
       writer.commit();
-    }));
+    });
+  });
 });

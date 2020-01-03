@@ -1,4 +1,5 @@
 build
 dist
 out
+test
 spec/manual/public/

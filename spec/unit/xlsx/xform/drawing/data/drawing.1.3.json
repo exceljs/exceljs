@@ -1,0 +1,18 @@
+{
+  "anchors":[
+    {
+      "tl": {"row": 0, "col": 0},
+      "br": {"row": 7, "col": 3},
+      "picture": {
+        "rId": "rId1"
+      }
+    },
+    {
+      "tl": {"row": 2.5, "col": 5.5},
+      "br": {"row": 10.5, "col": 8.5},
+      "picture": {
+        "rId": "rId2"
+      }
+    }
+  ]
+}

@@ -1,46 +1,27 @@
-const testXformHelper = require('./../test-xform-helper');
+'use strict';
 
-const SheetFormatPropertiesXform = verquire('xlsx/xform/sheet/sheet-format-properties-xform');
+var SheetFormatPropertiesXform = require('../../../../../lib/xlsx/xform/sheet/sheet-format-properties-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'full',
-    create() {
-      return new SheetFormatPropertiesXform();
-    },
-    preparedModel: {
-      defaultRowHeight: 14.4,
-      dyDescent: 0.55,
-      outlineLevelRow: 5,
-      outlineLevelCol: 2,
-    },
-    xml:
-      '<sheetFormatPr defaultRowHeight="14.4" customHeight="1" outlineLevelRow="5" outlineLevelCol="2" x14ac:dyDescent="0.55"/>',
-    parsedModel: {
-      defaultRowHeight: 14.4,
-      dyDescent: 0.55,
-      outlineLevelRow: 5,
-      outlineLevelCol: 2,
-    },
-    tests: ['render', 'renderIn', 'parse'],
+    create: function() { return new SheetFormatPropertiesXform(); },
+    preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 5, outlineLevelCol: 2},
+    xml: '<sheetFormatPr defaultRowHeight="14.4" outlineLevelRow="5" outlineLevelCol="2" x14ac:dyDescent="0.55"/>',
+    parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 5, outlineLevelCol: 2},
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'default',
-    create() {
-      return new SheetFormatPropertiesXform();
-    },
+    create: function() { return new SheetFormatPropertiesXform(); },
     preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55},
-    xml: '<sheetFormatPr defaultRowHeight="14.4" customHeight="1" x14ac:dyDescent="0.55"/>',
-    parsedModel: {
-      defaultRowHeight: 14.4,
-      dyDescent: 0.55,
-      outlineLevelRow: 0,
-      outlineLevelCol: 0,
-    },
-    tests: ['render', 'renderIn', 'parse'],
-  },
+    xml: '<sheetFormatPr defaultRowHeight="14.4" x14ac:dyDescent="0.55"/>',
+    parsedModel: {defaultRowHeight: 14.4, dyDescent: 0.55, outlineLevelRow: 0, outlineLevelCol: 0},
+    tests: ['render', 'renderIn', 'parse']
+  }
 ];
 
-describe('SheetFormatPropertiesXform', () => {
+describe('SheetFormatPropertiesXform', function() {
   testXformHelper(expectations);
 });

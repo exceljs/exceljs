@@ -1,22 +1,19 @@
-const testXformHelper = require('./../test-xform-helper');
+'use strict';
 
-const DimensionXform = verquire('xlsx/xform/sheet/dimension-xform');
+var DimensionXform = require('../../../../../lib/xlsx/xform/sheet/dimension-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'Dimension',
-    create() {
-      return new DimensionXform();
-    },
+    create: function() { return new DimensionXform(); },
     preparedModel: 'A1:F5',
-    get parsedModel() {
-      return this.preparedModel;
-    },
+    get parsedModel() { return this.preparedModel; },
     xml: '<dimension ref="A1:F5"/>',
-    tests: ['render', 'renderIn', 'parse'],
-  },
+    tests: ['render', 'renderIn', 'parse']
+  }
 ];
 
-describe('DimensionXform', () => {
+describe('DimensionXform', function() {
   testXformHelper(expectations);
 });

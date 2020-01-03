@@ -1,24 +1,21 @@
-const fs = require('fs');
+'use strict';
 
-const testXformHelper = require('../test-xform-helper');
+var fs = require('fs');
 
-const SharedStringsXform = verquire('xlsx/xform/strings/shared-strings-xform');
+var SharedStringsXform = require('../../../../../lib/xlsx/xform/strings/shared-strings-xform');
+var testXformHelper = require('../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'Shared Strings',
-    create() {
-      return new SharedStringsXform();
-    },
+    create: function() { return new SharedStringsXform(); },
     preparedModel: require('./data/sharedStrings.json'),
-    xml: fs.readFileSync(`${__dirname}/data/sharedStrings.xml`).toString(),
-    get parsedModel() {
-      return this.preparedModel;
-    },
-    tests: ['render', 'renderIn', 'parse'],
-  },
+    xml: fs.readFileSync(__dirname + '/data/sharedStrings.xml').toString(),
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  }
 ];
 
-describe('SharedStringsXform', () => {
+describe('SharedStringsXform', function() {
   testXformHelper(expectations);
 });

@@ -1,37 +1,28 @@
-const fs = require('fs');
+'use strict';
 
-const testXformHelper = require('../test-xform-helper');
+var fs = require('fs');
 
-const WorkbookXform = verquire('xlsx/xform/book/workbook-xform');
+var WorkbookXform = require('../../../../../lib/xlsx/xform/book/workbook-xform');
+var testXformHelper = require('../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'book.1',
-    create() {
-      return new WorkbookXform();
-    },
+    create: function() { return new WorkbookXform(); },
     preparedModel: require('./data/book.1.1.json'),
-    xml: fs
-      .readFileSync(`${__dirname}/data/book.1.2.xml`)
-      .toString()
-      .replace(/\r\n/g, '\n'),
+    xml: fs.readFileSync(__dirname + '/data/book.1.2.xml').toString().replace(/\r\n/g, '\n'),
     parsedModel: require('./data/book.1.3.json'),
-    tests: ['render', 'renderIn', 'parse'],
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'book.2 - no properties',
-    create() {
-      return new WorkbookXform();
-    },
-    xml: fs
-      .readFileSync(`${__dirname}/data/book.2.2.xml`)
-      .toString()
-      .replace(/\r\n/g, '\n'),
+    create: function() { return new WorkbookXform(); },
+    xml: fs.readFileSync(__dirname + '/data/book.2.2.xml').toString().replace(/\r\n/g, '\n'),
     parsedModel: require('./data/book.2.3.json'),
-    tests: ['parse'],
+    tests: ['parse']
   },
 ];
 
-describe('WorkbookXform', () => {
+describe('WorkbookXform', function() {
   testXformHelper(expectations);
 });

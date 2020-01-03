@@ -1,37 +1,21 @@
-const fs = require('fs');
+'use strict';
 
-const testXformHelper = require('./../test-xform-helper');
+var fs = require('fs');
 
-const StylesXform = verquire('xlsx/xform/style/styles-xform');
-const XmlStream = verquire('utils/xml-stream');
+var StylesXform = require('../../../../../lib/xlsx/xform/style/styles-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
-    title: 'Styles with fonts',
-    create() {
-      return new StylesXform();
-    },
-    preparedModel: require('./data/styles.1.1.json'),
-    xml: fs.readFileSync(`${__dirname}/data/styles.1.2.xml`).toString(),
-    get parsedModel() {
-      return this.preparedModel;
-    },
-    tests: ['render', 'renderIn', 'parse'],
-  },
+    title: 'Styles',
+    create: function() { return new StylesXform(); },
+    preparedModel: require('./data/styles.1.json'),
+    xml: fs.readFileSync(__dirname + '/data/styles.1.xml').toString(),
+    get parsedModel() { return this.preparedModel; },
+    tests: ['render', 'renderIn', 'parse']
+  }
 ];
 
-describe('StylesXform', () => {
+describe('StylesXform', function() {
   testXformHelper(expectations);
-
-  describe('As StyleManager', () => {
-    it('Renders empty model', () => {
-      const stylesXform = new StylesXform(true);
-      const expectedXml = fs.readFileSync(`${__dirname}/data/styles.2.2.xml`).toString();
-
-      const xmlStream = new XmlStream();
-      stylesXform.render(xmlStream);
-
-      expect(xmlStream.xml).xml.to.equal(expectedXml);
-    });
-  });
 });

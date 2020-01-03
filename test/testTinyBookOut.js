@@ -1,21 +1,24 @@
-const HrStopwatch = require('./utils/hr-stopwatch');
-const Workbook = require('../lib/doc/workbook');
+var fs = require('fs');
 
-const filename = process.argv[2];
+var HrStopwatch = require('./utils/hr-stopwatch');
+var Workbook = require('../lib/doc/workbook');
 
-const wb = new Workbook();
-const ws = wb.addWorksheet('blort');
+var filename = process.argv[2];
+
+var wb = new Workbook();
+var ws = wb.addWorksheet('blort');
 
 ws.getCell('A1').value = 7;
 ws.getCell('B1').value = 'Hello, World!';
 
-const stopwatch = new HrStopwatch();
+var stopwatch = new HrStopwatch();
 stopwatch.start();
-wb.xlsx.writeFile(filename).then(() => {
-  const micros = stopwatch.microseconds;
-  console.log('Done.');
-  console.log('Time taken:', micros);
-});
+wb.xlsx.writeFile(filename)
+  .then(function() {
+    var micros = stopwatch.microseconds;
+    console.log('Done.');
+    console.log('Time taken:', micros)
+  });
 // .catch(function(error) {
 //    console.log(error.message);
 // })

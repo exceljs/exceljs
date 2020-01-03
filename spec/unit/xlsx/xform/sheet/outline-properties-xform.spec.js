@@ -1,50 +1,43 @@
-const testXformHelper = require('./../test-xform-helper');
+'use strict';
 
-const OutlinePropertiesXform = verquire('xlsx/xform/sheet/outline-properties-xform');
+var OutlinePropertiesXform = require('../../../../../lib/xlsx/xform/sheet/outline-properties-xform');
+var testXformHelper = require('./../test-xform-helper');
 
-const expectations = [
+var expectations = [
   {
     title: 'empty',
-    create() {
-      return new OutlinePropertiesXform();
-    },
+    create: function() { return new OutlinePropertiesXform(); },
     preparedModel: {},
     xml: '',
     parsedModel: {},
-    tests: ['render', 'renderIn'],
+    tests: ['render', 'renderIn']
   },
   {
     title: 'summaryBelow',
-    create() {
-      return new OutlinePropertiesXform();
-    },
-    preparedModel: {summaryBelow: false},
+    create: function() { return new OutlinePropertiesXform(); },
+    preparedModel: { summaryBelow: false },
     xml: '<outlinePr summaryBelow="0"/>',
-    parsedModel: {summaryBelow: false},
-    tests: ['render', 'renderIn', 'parse'],
+    parsedModel: { summaryBelow: false },
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'summaryRight',
-    create() {
-      return new OutlinePropertiesXform();
-    },
-    preparedModel: {summaryRight: false},
+    create: function() { return new OutlinePropertiesXform(); },
+    preparedModel: { summaryRight: false },
     xml: '<outlinePr summaryRight="0"/>',
-    parsedModel: {summaryRight: false},
-    tests: ['render', 'renderIn', 'parse'],
+    parsedModel: { summaryRight: false },
+    tests: ['render', 'renderIn', 'parse']
   },
   {
     title: 'summaryRight',
-    create() {
-      return new OutlinePropertiesXform();
-    },
-    preparedModel: {summaryBelow: true, summaryRight: false},
+    create: function() { return new OutlinePropertiesXform(); },
+    preparedModel: { summaryBelow: true, summaryRight: false },
     xml: '<outlinePr summaryBelow="1" summaryRight="0"/>',
-    parsedModel: {summaryBelow: true, summaryRight: false},
-    tests: ['render', 'renderIn', 'parse'],
+    parsedModel: { summaryBelow: true, summaryRight: false },
+    tests: ['render', 'renderIn', 'parse']
   },
 ];
 
-describe('OutlinePropertiesXform', () => {
+describe('OutlinePropertiesXform', function() {
   testXformHelper(expectations);
 });

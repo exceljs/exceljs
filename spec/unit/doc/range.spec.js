@@ -1,6 +1,9 @@
-const Range = verquire('doc/range');
+'use strict';
 
-describe('Range', () => {
+var expect = require('chai').expect;
+var Range = require('../../../lib/doc/range');
+
+describe('Range', function() {
   function check(d, range, $range, tl, $t$l, br, $b$r, top, left, bottom, right, sheetName) {
     expect(d.range).to.equal(range);
     expect(d.$range).to.equal($range);
@@ -16,12 +19,12 @@ describe('Range', () => {
     expect(d.sheetName).to.equal(sheetName);
   }
 
-  it('has a valid default value', () => {
-    const d = new Range();
+  it('has a valid default value', function() {
+    var d = new Range();
     check(d, 'A1:A1', '$A$1:$A$1', 'A1', '$A$1', 'A1', '$A$1', 1, 1, 1, 1);
   });
 
-  it('constructs as expected', () => {
+  it('constructs as expected', function() {
     // check range + rotations
     check(new Range('B5:D10'), 'B5:D10', '$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4);
     check(new Range('B10:D5'), 'B5:D10', '$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4);
@@ -47,8 +50,9 @@ describe('Range', () => {
     check(new Range('blort!$B$5:$D$10'), 'blort!B5:D10', 'blort!$B$5:$D$10', 'B5', '$B$5', 'D10', '$D$10', 5, 2, 10, 4, 'blort');
   });
 
-  it('expands properly', () => {
-    const d = new Range();
+
+  it('expands properly', function() {
+    var d = new Range();
 
     d.expand(1, 1, 1, 3);
     expect(d.tl).to.equal('A1');
@@ -61,8 +65,8 @@ describe('Range', () => {
     expect(d.toString()).to.equal('A1:C3');
   });
 
-  it('doesn\'t always include the default row/col', () => {
-    const d = new Range();
+  it('doesn\'t always include the default row/col', function() {
+    var d = new Range();
 
     d.expand(2, 2, 4, 4);
     expect(d.tl).to.equal('B2');
@@ -70,8 +74,8 @@ describe('Range', () => {
     expect(d.toString()).to.equal('B2:D4');
   });
 
-  it('detects intersections', () => {
-    const C3F6 = new Range('C3:F6');
+  it('detects intersections', function() {
+    var C3F6 = new Range('C3:F6');
 
     // touching at corners
     expect(C3F6.intersects(new Range('A1:B2'))).to.be.false();
@@ -124,8 +128,8 @@ describe('Range', () => {
     expect(C3F6.intersects(new Range('A1:H8'))).to.be.true();
   });
 
-  it('detects containment', () => {
-    const C3F6 = new Range('C3:F6');
+  it('detects containment', function() {
+    var C3F6 = new Range('C3:F6');
 
     expect(C3F6.contains('A1')).to.be.false();
     expect(C3F6.contains('B2')).to.be.false();
@@ -175,7 +179,7 @@ describe('Range', () => {
     expect(C3F6.contains('other!$A$1')).to.be.false();
     expect(C3F6.contains('other!$D$5')).to.be.true();
 
-    const otherC3F6 = new Range('other!C3:F6');
+    var otherC3F6 = new Range('other!C3:F6');
     expect(otherC3F6.contains('$A$1')).to.be.false();
     expect(otherC3F6.contains('$D$5')).to.be.true();
     expect(otherC3F6.contains('other!$A$1')).to.be.false();
