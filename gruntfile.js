@@ -10,41 +10,51 @@ module.exports = function(grunt) {
   grunt.initConfig({
     babel: {
       options: {
-        sourceMap: true
+        sourceMap: true,
       },
       dist: {
         files: [
           {
             expand: true,
             src: ['./lib/**/*.js', './spec/browser/*.js'],
-            dest: './build/'
-          }
-        ]
-      }
+            dest: './build/',
+          },
+        ],
+      },
     },
     browserify: {
+      bare: {
+        src: ['./build/lib/exceljs.bare.js'],
+        dest: './dist/exceljs.bare.js',
+        options: {
+          browserifyOptions: {
+            standalone: 'ExcelJS',
+          },
+        },
+      },
       bundle: {
         src: ['./build/lib/exceljs.browser.js'],
         dest: './dist/exceljs.js',
         options: {
           browserifyOptions: {
-            standalone: 'ExcelJS'
-          }
-        }
+            standalone: 'ExcelJS',
+          },
+        },
       },
       spec: {
         src: ['./build/spec/browser/exceljs.spec.js'],
-        dest: './build/web/exceljs.spec.js'
+        dest: './build/web/exceljs.spec.js',
       },
     },
     uglify: {
       options: {
-        banner: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+        banner: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n',
       },
       dist: {
         files: {
-          './dist/exceljs.min.js': ['./dist/exceljs.js']
-        }
+          './dist/exceljs.min.js': ['./dist/exceljs.js'],
+          './dist/exceljs.bare.min.js': ['./dist/exceljs.bare.js'],
+        },
       },
       // es3: {
       //   files: [
@@ -65,19 +75,20 @@ module.exports = function(grunt) {
     copy: {
       dist: {
         files: [
-          { expand: true, src: ['**'], cwd: './build/lib', dest: './dist/es5' },
-          { src: './build/lib/exceljs.nodejs.js', dest: './dist/es5/index.js'},
-        ]
-      }
+          {expand: true, src: ['**'], cwd: './build/lib', dest: './dist/es5'},
+          {src: './build/lib/exceljs.nodejs.js', dest: './dist/es5/index.js'},
+          {src: './LICENSE', dest: './dist/LICENSE'},
+        ],
+      },
     },
 
     jasmine: {
       dev: {
         src: ['./dist/exceljs.js'],
         options: {
-          specs: './build/web/exceljs.spec.js'
-        }
-      }
+          specs: './build/web/exceljs.spec.js',
+        },
+      },
     },
   });
 

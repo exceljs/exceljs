@@ -1,24 +1,24 @@
-var fs = require('fs');
+const HrStopwatch = require('./utils/hr-stopwatch');
 
-var HrStopwatch = require('./utils/hr-stopwatch');
+const {Workbook} = require('../lib/exceljs.nodejs');
 
-var Workbook = require('../excel').Workbook;
+const filenameIn = process.argv[2];
+const filenameOut = process.argv[3];
 
-var filenameIn = process.argv[2];
-var filenameOut = process.argv[3];
+// all this script does is read a file and write to another
+// useful for testing for lost properties
 
-var stopwatch = new HrStopwatch();
-var wb = new Workbook();
+const stopwatch = new HrStopwatch();
+const wb = new Workbook();
 stopwatch.start();
-wb.xlsx.readFile(filenameIn)
-  .then(function() {
-    return wb.xlsx.writeFile(filenameOut);
-  })
-  .then(function() {
-    var micros = stopwatch.microseconds;
+wb.xlsx
+  .readFile(filenameIn)
+  .then(() => wb.xlsx.writeFile(filenameOut))
+  .then(() => {
+    const micros = stopwatch.microseconds;
     console.log('Done.');
-    console.log('Time taken:', micros)
+    console.log('Time taken:', micros);
   })
-  .catch(function(error) {
+  .catch(error => {
     console.error('Error', error.stack);
   });

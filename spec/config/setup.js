@@ -1,9 +1,13 @@
-var chai = require('chai');
+const chai = require('chai');
 
-var chaiXml = require('chai-xml');
-var chaiDatetime = require('chai-datetime');
-var dirtyChai = require('dirty-chai');
+const chaiXml = require('chai-xml');
+const chaiDatetime = require('chai-datetime');
+const dirtyChai = require('dirty-chai');
+global.verquire = require('../utils/verquire');
+
+global.expect = chai.expect;
 
 chai.use(chaiXml);
 chai.use(chaiDatetime);
 chai.use(dirtyChai);
+

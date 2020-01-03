@@ -1,20 +1,21 @@
-'use strict';
+const testXformHelper = require('./../test-xform-helper');
 
-var PageBreaksXform = require('../../../../../lib/xlsx/xform/sheet/page-breaks-xform');
-var testXformHelper = require('./../test-xform-helper');
+const PageBreaksXform = verquire('xlsx/xform/sheet/page-breaks-xform');
 
-var expectations = [
+const expectations = [
   {
     title: 'one page break',
-    create: function() { return new PageBreaksXform(); },
+    create() {
+      return new PageBreaksXform();
+    },
     initialModel: {id: 2, max: 3, min: 1, man: 1},
     preparedModel: {id: 2, max: 3, min: 1, man: 1},
     xml: '<brk id="2" max="3" min="1" man="1"/>',
     parsedModel: {id: 2, max: 3, min: 1, man: 1},
-    tests: ['prepare', 'render', 'renderIn']
-  }
+    tests: ['prepare', 'render', 'renderIn'],
+  },
 ];
 
-describe('PageBreaksXform', function() {
+describe('PageBreaksXform', () => {
   testXformHelper(expectations);
 });

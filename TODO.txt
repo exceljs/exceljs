@@ -3,6 +3,54 @@ TODO:
 
 On the way to the impossible we might find something eminently doable
 
+========================================================================================================================
+Tables
+sheet
+* add <tableParts>
+sheet.rels
+* add ref to ../../tables/table1.xml
+table1.xml
+* define the table
+Content_Types
+* add table1
+
+Notes:
+* in table1.xml, the tableColumns can define a dataDxfId (rel to styles.xml)
+  that specifies default format of new data
+* in table1.xml, the tableColumn name property must match the value in the
+  cell where the column header goes
+
+Table Properties:
+* ref: Top Left of table
+* name table.name
+* displayName: table.displayName
+* range - range of data cells (not including headers/footers)
+  => table.ref includes headers/footers
+  => autoFilter.ref includes headers only
+* headerRow - table.headerRowCount
+  * default: true, show/hide the headers
+* totalsRow - table.totalsRowShown="0" or table.totalsRowCount="1"
+  * default: false show/hide totals rows
+* columns - tableColumns[n]
+  * id - sequential number
+  * name - must correspond to top cell's value
+  * style -> dataDxfId
+    * inserts inline style into dxfs in styles.xml
+  * filterButton - autoFilter[n].hiddenButton="1"
+    * shows or hides the filter (default: true)
+  * totalsRowLabel - for column1
+  * totalsRowFunction - name of function, one of [none, count, etc]
+  * totalsRowFormula - if function is 'custom', a formula
+  * totalsRowResult - the value to show
+* style
+  * name - tableStyleInfo.name
+  * showFirstColumn - tableStyleInfo.showFirstColumn
+  * showLastColumn - tableStyleInfo.showLastColumn
+  * showRowStripes - tableStyleInfo.showRowStripes
+  * showColumnStripes - tableStyleInfo.showColumnStripes
+
+========================================================================================================================
+
 Page Setup
 
 Themes:
@@ -295,3 +343,151 @@ Is it me you're looking for</t>
 		</comment>
 	</commentList>
 </comments>
+
+========================================================================================================================
+Charts
+
+New contents: Chart as sheet
+
+[Content_Types].xml
+  chartsheets, charts, drawings, etc
+
+app.xml
+  HeadingPairs
+    Charts: 1
+  TitleOfParts
+    Chart sheet
+
+/xl/charts/*
+/xl/chartsheets/*
+/xl/drawings/
+
+========================================================================================================================
+Conditional Formatting
+
+cell.conditionalFormatting: {
+  ref: cell-range
+  rules: [
+    {
+      type: expression | cellIs | top10 | aboveAverage | dataBar | colorScale | iconSet | containsText | timePeriod | etc
+      dxfId: styleId
+      priority: a number - typically last first (and unique within sheet)
+
+      // expression
+      formula: 'the-formula'
+
+      // cellIs
+      operator: ''
+      formulae: [formula, ...]
+
+      // top10
+      percent: true | false(*)
+      bottom: true | false(*)
+      rank: 10 (or other number)
+
+      // aboveAverage (why is this not top10 50% ?)
+      aboveAverage: true(*) | false
+
+      // dataBar
+      cfvo: [CFVO, ...]
+      color: Colour
+      showValue: true(*) | false
+      gradient: true(*) | false
+      border: true | false(*)
+      borderColour: Colour
+      axisColor: Colour
+      negativeFillColor: Colour
+      negativeBorderColor: Colour
+      negativeBarColorSameAsPositive: true | false(*)
+      negativeBarBorderColorSameAsPositive: true | false(*)
+      minLength: 0(*)..maxLength
+      maxLength: minLength..100(*)
+      axisPosition: middle | none | undefined (auto)
+      direction: rightToLeft | undefined (lToR)
+
+      // colorScale
+      cfvo: [CFVO, ...] # 2 or 3
+      color: [Colour]
+
+      // iconSet
+      iconSet: IconSetEnum
+      cfvo: [CFVO, ...] # 2..5
+      reverse: true | false(*)
+      showValue: true(*) | false
+      custom: true | false(*)
+      cfIcon: [{iconSet: IconSetEnum, iconId: 0..N}, ...]
+
+      // containsText
+      operator: 'containsText'
+      text: 'the text'
+      formulae: [<an actual formula>]
+    }
+  ]
+}
+
+Notes:
+* Formulae based on cell values use the top-left addr as this gets translated
+* Some iconSet types are 'natively' supported: (assumed)
+* Some iconSet types require extLst:
+  * 3Triangles | 3Stars | 5Boxes
+* extLst XML appears similar to native except that attributes are often shifted to element texts
+
+// Conditional Formatting Value Object
+type CFVO {
+  type: min | max | percentile | num | percent | formula | autoMin | autoMax
+  val: N
+}
+
+Types:
+  expression: the formula returns true or false
+  cellIs:
+    operator: greaterThan | lessThan | equal | between
+    formulae: [compare value(s)]
+  top10:
+    percent: 1 | undefined (false)
+    bottom: 1 | undefined (false)
+    rank: N
+  aboveAverage:
+    aboveAverage: 0 | undefined (true)
+  dataBar:
+    dataBar:
+      cfvo: [CFVO]
+      color: rgb="argb" | theme="n"
+      showValue: 0 | undefined (true)
+      borderColor: Colour
+      negativeFillColor: Colour
+      negativeBorderColor?: Colour
+      negativeBarColorSameAsPositive: 0 | undefined (true)
+      negativeBarBorderColorSameAsPositive: 0 | undefined (true)
+      axisColor: Colour
+      gradient: 0 | undefined (true)
+      border: 1 | undefined (false)
+      minLength: 0
+      maxLength: 100
+      axisPosition: middle | none | undefined (auto)
+      direction: rightToLeft | undefined (lToR)
+      # solid fill requires the exeLst bit
+  colorScale:
+    cfvo: [CFVO] # 2 or 3
+    color: [rgb="argb"]
+  iconSet:
+    iconSet
+      iconSet:
+        3Arrows | 4Arrows | 5Arrows | 3ArrowsGray | 4ArrowsGray | 5ArrowsGray | 3Triangles |
+        3TrafficLights (*) | 3Signs | 4RedToBlack | 3TrafficLights2 | 4TrafficLights
+        3Symbols3 | 3Flags | Symbols2 |
+        5Quarters | 4Rating | 5Rating | 3Stars | 5Boxes
+      cfvo: [CFVO] # 2, 3, 4, 5 cfvo points
+      reverse: 1 | undefined (false)
+      showValue: 0 | undefined (true)
+      custom: 1 | undefined (false) # meaning mixed icons
+      cfIcon: [{iconSet: "name", iconId: 0..N}]
+    # 3Stars is only in extLst because the stars are proportionately filled?
+  containsText:
+    type: containsText | containsBlanks | notContainsBlanks | containsErrors | notContainsErrors
+    operator: containsText
+    text: "the text"
+    formulae: An actual true/false formula
+  timePeriod:
+    timePeriod: thisWeek | lastWeek | nextWeek | yesterday | today | tomorrow | last7Days | lastMonth | nextMonth
+    formulae: An actual true/false formula
