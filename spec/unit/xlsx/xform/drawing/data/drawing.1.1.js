@@ -9,6 +9,10 @@ module.exports = {
       picture: {
         index: 1,
         rId: 'rId1',
+        hyperlinks: {
+          tooltip: 'exceljs',
+          rId: 'rId3',
+        },
       },
     },
     {
