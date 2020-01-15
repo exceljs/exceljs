@@ -347,9 +347,9 @@ shapesWS.addConditionalFormatting({
   ],
 });
 
-addTable(shapesWS, 'A9:e15');
+addTable(shapesWS, 'A9:E15');
 shapesWS.addConditionalFormatting({
-  ref: 'A9:e15',
+  ref: 'A9:E15',
   rules: [
     {
       type: 'iconSet',
@@ -363,6 +363,98 @@ shapesWS.addConditionalFormatting({
     },
   ],
 });
+
+// ============================================================================
+// Shapes
+const extSshapesWS = wb.addWorksheet('Ext Shapes');
+
+addTable(extSshapesWS, 'A1:E7');
+extSshapesWS.addConditionalFormatting({
+  ref: 'A1:E7',
+  rules: [
+    {
+      type: 'iconSet',
+      iconSet: '3Stars',
+      cfvo: [
+        {type: 'percent', value: 0},
+        {type: 'percent', value: 33},
+        {type: 'percent', value: 67},
+      ],
+    },
+  ],
+});
+
+addTable(extSshapesWS, 'G1:K7');
+extSshapesWS.addConditionalFormatting({
+  ref: 'G1:K7',
+  rules: [
+    {
+      type: 'iconSet',
+      iconSet: '3Triangles',
+      cfvo: [
+        {type: 'percent', value: 0},
+        {type: 'percent', value: 33},
+        {type: 'percent', value: 67},
+      ],
+    },
+  ],
+});
+
+addTable(extSshapesWS, 'M1:Q7');
+extSshapesWS.addConditionalFormatting({
+  ref: 'M1:Q7',
+  rules: [
+    {
+      type: 'iconSet',
+      iconSet: '5Boxes',
+      cfvo: [
+        {type: 'percent', value: 0},
+        {type: 'percent', value: 20},
+        {type: 'percent', value: 40},
+        {type: 'percent', value: 60},
+        {type: 'percent', value: 80},
+      ],
+    },
+  ],
+});
+
+
+// ============================================================================
+// Databar
+const databarWS = wb.addWorksheet('Databar');
+
+addTable(databarWS, 'A1:E7');
+databarWS.addConditionalFormatting({
+  ref: 'A1:E7',
+  rules: [
+    {
+      type: 'dataBar',
+      color: {argb: 'FFFF0000'},
+      gradient: true,
+      cfvo: [
+        {type: 'num', value: 5},
+        {type: 'num', value: 20},
+      ],
+    },
+  ],
+});
+
+addTable(databarWS, 'G1:K7');
+databarWS.addConditionalFormatting({
+  ref: 'G1:K7',
+  rules: [
+    {
+      type: 'dataBar',
+      color: {argb: 'FF00FF00'},
+      gradient: false,
+      cfvo: [
+        {type: 'num', value: 5},
+        {type: 'num', value: 20},
+      ],
+    },
+  ],
+});
+
 
 // ============================================================================
 // Cell Is
@@ -533,7 +625,6 @@ dateWS.addConditionalFormatting({
     },
   ],
 });
-
 
 
 // ============================================================================
