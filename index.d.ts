@@ -436,7 +436,7 @@ export interface Cell extends Style, Address {
 	/**
 	 * comment of the cell
 	 */
-	comment: Comment;
+	note: Comment;
 
 	/**
 	 * convenience getter to access the formula
