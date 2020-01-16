@@ -39,6 +39,7 @@
     "test:unit:es5": "export EXCEL_BUILD=es5 && npm run test:unit",
     "test:integration:es5": "export EXCEL_BUILD=es5 && npm run test:integration",
     "test:end-to-end:es5": "export EXCEL_BUILD=es5 && npm run test:end-to-end",
+    "test:dist": "mocha --require spec/config/setup spec/dist --recursive",
     "test:manual": "node spec/manual/app.js",
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
@@ -47,7 +48,7 @@
     "clean": "rm -rf build/ && rm -rf dist",
     "patch:fast-csv": "node _patch-fast-csv.js",
     "build": "npm run patch:fast-csv && grunt build",
-    "preversion": "npm run clean && npm run build && npm run test:all",
+    "preversion": "npm run clean && npm run build && npm run test:all && npm run test:dist",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "husky": {
