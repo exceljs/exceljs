@@ -812,8 +812,9 @@ expect(worksheet.getCell('B5').style).not.toBe(worksheet.getCell('A4').style);
 expect(worksheet.getCell('B5').style.font).not.toBe(myFonts.arial);
 
 // merge by top-left, bottom-right
-worksheet.mergeCells('G10', 'H11');
-worksheet.mergeCells(10,11,12,13); // top,left,bottom,right
+worksheet.mergeCells('K10', 'M12');
+// merge by start row, start column, end row, end column
+worksheet.mergeCells(10,11,12,13);
 ```
 
 ## Defined Names
