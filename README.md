@@ -25,6 +25,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/1047">Clarify merging cells by row/column numbers #1047</a>.
     Many thanks to <a href="https://github.com/kendallroth">Kendall Roth</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1048">Fix README mistakes concerning freezing views #1048</a>.
+    Many thanks to <a href="https://github.com/overlookmotel">overlookmotel</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
