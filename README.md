@@ -246,7 +246,7 @@ var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC00
 var sheet = workbook.addWorksheet('My Sheet', {properties: {showGridLines: false}});
 
 // create a sheet with the first row and column frozen
-var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
+var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
 ```
 
 ## Remove a Worksheet
@@ -474,7 +474,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 
 Worksheets now support a list of views, that control how Excel presents the sheet:
 
-* frozen - where a number of rows and columns to the top and left are frozen in place. Only the bottom left section will scroll
+* frozen - where a number of rows and columns to the top and left are frozen in place. Only the bottom right section will scroll
 * split - where the view is split into 4 sections, each semi-independently scrollable.
 
 Each view also supports various properties:
