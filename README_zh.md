@@ -274,7 +274,7 @@ worksheet.properties.defaultRowHeight = 15;
 | outlineLevelCol  | 0          | 工作表列大纲级别 |
 | outlineLevelRow  | 0          | 工作表行大纲级别 |
 | defaultRowHeight | 15         | 默认行高 |
-| defaultColWidth  | (optional) | TBD |
+| defaultColWidth  | (可选) | 默认列宽 |
 | dyDescent        | 55         | TBD |
 
 ### 工作表指标
