@@ -22,17 +22,24 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1042">1041 multiple print areas #1042</a>.
-    Many thanks to <a href="https://github.com/AlexanderPruss">Alexander Pruss</a> for this contribution.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1047">Clarify merging cells by row/column numbers #1047</a>.
+    Many thanks to <a href="https://github.com/kendallroth">Kendall Roth</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1058">fix typings for cell.note #1058</a>.
-    Many thanks to <a href="https://github.com/xydens">xydens</a> for this contribution.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1048">Fix README mistakes concerning freezing views #1048</a>.
+    Many thanks to <a href="https://github.com/overlookmotel">overlookmotel</a> for this contribution.
   </li>
   <li>
-    <a href="#conditional-formatting">Conditional Formatting</a> has been completed.
-    The &lt;extLst&gt; conditional formattings including dataBar and the
-    three iconSet types (3Triangles, 3Stars, 5Boxes) are now available.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1073">fix issue #1045 horizontalCentered & verticalCentered in page not working #1073</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1082">Fix the problem of anchor failure of readme_zh.md file #1082</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1065">Fix problems caused by case of worksheet names #1065</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
   </li>
 </ul>
 
@@ -255,7 +262,7 @@ var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC00
 var sheet = workbook.addWorksheet('My Sheet', {properties: {showGridLines: false}});
 
 // create a sheet with the first row and column frozen
-var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
+var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
 ```
 
 ## Remove a Worksheet
@@ -483,7 +490,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 
 Worksheets now support a list of views, that control how Excel presents the sheet:
 
-* frozen - where a number of rows and columns to the top and left are frozen in place. Only the bottom left section will scroll
+* frozen - where a number of rows and columns to the top and left are frozen in place. Only the bottom right section will scroll
 * split - where the view is split into 4 sections, each semi-independently scrollable.
 
 Each view also supports various properties:
@@ -812,8 +819,10 @@ expect(worksheet.getCell('B5').style).not.toBe(worksheet.getCell('A4').style);
 expect(worksheet.getCell('B5').style.font).not.toBe(myFonts.arial);
 
 // merge by top-left, bottom-right
-worksheet.mergeCells('G10', 'H11');
-worksheet.mergeCells(10,11,12,13); // top,left,bottom,right
+worksheet.mergeCells('K10', 'M12');
+
+// merge by start row, start column, end row, end column (equivalent to K10:M12)
+worksheet.mergeCells(10,11,12,13);
 ```
 
 ## Defined Names
@@ -2588,4 +2597,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 3.3.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1000">Add headerFooter to worksheet model when importing from file #1000</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1005">Update eslint plugins and configs #1005</a>, <a href="https://github.com/exceljs/exceljs/pull/1006">Drop grunt-lib-phantomjs #1006</a> and <a href="https://github.com/exceljs/exceljs/pull/1007">Rename .browserslintrc.txt to .browserslistrc #1007</a>. Many thanks to <a href="https://github.com/takenspc">Takeshi Kurosawa</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1012">Fix issue #988 #1012</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/988">Can not read excel file #988</a>. Many thanks to <a href="https://github.com/thambley">Todd Hambley</a> for this contribution. </li> </ul> |
 | 3.4.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1016">Feature/stream writer add background images #1016</a>. Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1019">Fix issue # 991 #1019</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/991">read csv file issue #991</a>. Many thanks to <a href="https://github.com/LibertyNJ">Nathaniel J. Liberty</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1018">Large excels - optimize performance of writing file by excelJS + optimize generated file (MS excel opens it much faster) #1018</a>. Many thanks to <a href="https://github.com/pzawadzki82">Piotr</a> for this contribution. </li> </ul> |
 | 3.5.0   | <ul> <li> <a href="#conditional-formatting">Conditional Formatting</a> A subset of Excel Conditional formatting has been implemented! Specifically the formatting rules that do not require XML to be rendered inside an &lt;extLst&gt; node, or in other words everything except databar and three icon sets (3Triangles, 3Stars, 5Boxes). These will be implemented in due course </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1030">remove core-js/ import #1030</a>. Many thanks to <a href="https://github.com/bleuscyther">jeffrey n. carre</a> for this contribution. This change is used to create a new browserified bundle artefact that does not include any polyfills. See <a href="#browserify">Browserify</a> for details. </li> </ul> |
+| 3.6.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1042">1041 multiple print areas #1042</a>. Many thanks to <a href="https://github.com/AlexanderPruss">Alexander Pruss</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1058">fix typings for cell.note #1058</a>. Many thanks to <a href="https://github.com/xydens">xydens</a> for this contribution. </li> <li> <a href="#conditional-formatting">Conditional Formatting</a> has been completed. The &lt;extLst&gt; conditional formattings including dataBar and the three iconSet types (3Triangles, 3Stars, 5Boxes) are now available. </li> </ul> |
 
