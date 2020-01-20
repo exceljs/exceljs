@@ -21,6 +21,6 @@ const expectations = [
   },
 ];
 
-describe('FormulaXform', () => {
+describe('CfvoXform', () => {
   testXformHelper(expectations);
 });

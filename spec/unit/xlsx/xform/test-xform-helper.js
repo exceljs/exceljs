@@ -1,8 +1,8 @@
 const Sax = require('sax');
 const {cloneDeep, each} = require('../../../utils/under-dash');
+const CompyXform = require('./compy-xform');
 
 const XmlStream = verquire('utils/xml-stream');
-const CompositeXform = verquire('xlsx/xform/composite-xform');
 const BooleanXform = verquire('xlsx/xform/simple/boolean-xform');
 
 function getExpectation(expectation, name) {
@@ -79,7 +79,7 @@ const its = {
         const result =
           `<compy><pre/>${getExpectation(expectation, 'xml')}<post/></compy>`;
 
-        const xform = new CompositeXform({
+        const xform = new CompyXform({
           tag: 'compy',
           children: [
             {
@@ -114,7 +114,7 @@ const its = {
         const result = {pre: true};
         result[childXform.tag] = getExpectation(expectation, 'parsedModel');
         result.post = true;
-        const xform = new CompositeXform({
+        const xform = new CompyXform({
           tag: 'compy',
           children: [
             {

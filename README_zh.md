@@ -45,6 +45,7 @@ npm install exceljs
 # 目录
 
 <ul>
+  <li><a href="#importing">导入</a></li>
   <li>
     <a href="#interface">接口</a>
     <ul>
@@ -65,7 +66,7 @@ npm install exceljs
           <li><a href="#split-views">拆分视图</a></li>
         </ul>
       </li>
-      <li><a href="#auto-filters">Auto Filters</a></li>
+      <li><a href="#auto-filters">自动过滤器</a></li>
       <li><a href="#columns">列</a></li>
       <li><a href="#rows">行</a></li>
       <li><a href="#handling-individual-cells">处理单个单元格</a></li>
@@ -76,7 +77,7 @@ npm install exceljs
         <ul>
           <li><a href="#number-formats">数字格式</a></li>
           <li><a href="#fonts">字体</a></li>
-          <li><a href="#alignment">对准</a></li>
+          <li><a href="#alignment">对齐方式</a></li>
           <li><a href="#borders">边框</a></li>
           <li><a href="#fills">填充</a></li>
           <li><a href="#rich-text">富文本</a></li>
@@ -98,9 +99,9 @@ npm install exceljs
               <li><a href="#writing-csv">写 CSV</a></li>
             </ul>
           </li>
-          <li><a href="#streaming-io">Streaming I/O</a>
+          <li><a href="#streaming-io">流 I/O</a>
             <ul>
-              <li><a href="#reading-csv">Streaming XLSX</a></li>
+              <li><a href="#streaming-xlsx">流 XLSX</a></li>
             </ul>
           </li>
         </ul>
@@ -109,7 +110,7 @@ npm install exceljs
   </li>
   <li><a href="#browser">浏览器</a></li>
   <li>
-    <a href="#value-types">价类型</a>
+    <a href="#value-types">值类型</a>
     <ul>
       <li><a href="#null-value">空值</a></li>
       <li><a href="#merge-cell">合并单元格</a></li>
@@ -124,7 +125,7 @@ npm install exceljs
           <li><a href="#formula-type">公式类型</a></li>
         </ul>
       </li>
-      <li><a href="#rich-text-value">丰富的文本值</a></li>
+      <li><a href="#rich-text-value">富文本值</a></li>
       <li><a href="#boolean-value">布尔值</a></li>
       <li><a href="#error-value">错误值</a></li>
     </ul>
@@ -134,9 +135,7 @@ npm install exceljs
   <li><a href="#release-history">发布历史</a></li>
 </ul>
 
-# 接口{#interface}
-
-## 导入{#importing}
+## <a id="importing">导入</a>
 
 默认导出是带有 Promise polyfill 转换的 ES5 版本 - 因为这会提供最高的兼容性。
 
@@ -152,13 +151,15 @@ const Excel = require('exceljs/modern.nodejs');
 import Excel from 'exceljs/modern.browser';
 ```
 
-## 创建工作簿{#create-a-workbook}
+# <a id="interface">接口</a>
+
+## <a id="create-a-workbook">创建工作簿</a>
 
 ```javascript
 var workbook = new Excel.Workbook();
 ```
 
-## 设置工作簿属性{#set-workbook-properties}
+## <a id="set-workbook-properties">设置工作簿属性</a>
 
 ```javascript
 workbook.creator = 'Me';
@@ -173,7 +174,7 @@ workbook.lastPrinted = new Date(2016, 9, 27);
 workbook.properties.date1904 = true;
 ```
 
-## 工作簿视图{#workbook-views}
+## <a id="workbook-views">工作簿视图</a>
 
 “工作簿”视图控制Excel在查看工作簿时打开多少个单独的窗口。
 
@@ -186,7 +187,7 @@ workbook.views = [
 ]
 ```
 
-## 添加工作表{#add-a-worksheet}
+## <a id="add-a-worksheet">添加工作表</a>
 
 ```javascript
 var sheet = workbook.addWorksheet('My Sheet');
@@ -207,7 +208,7 @@ var sheet = workbook.addWorksheet('My Sheet', {properties: {showGridLines: false
 var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
 ```
 
-## 删除工作表{#remove-a-worksheet}
+## <a id="remove-a-worksheet">删除工作表</a>
 
 使用工作表`id`从工作簿中删除工作表。
 
@@ -221,7 +222,7 @@ var sheet = workbook.addWorksheet('My Sheet');
 workbook.removeWorksheet(sheet.id)
 ```
 
-## 访问工作表{#access-worksheets}
+## <a id="access-worksheets">访问工作表</a>
 ```javascript
 // 迭代所有sheet
 // 注意：workbook.worksheets.forEach仍然可以工作，但这个方式更好
@@ -236,7 +237,7 @@ var worksheet = workbook.getWorksheet('My Sheet');
 var worksheet = workbook.getWorksheet(1);
 ```
 
-## 工作表状态{#worksheet-state}
+## <a id="worksheet-state">工作表状态</a>
 
 ```javascript
 // 使工作表可见
@@ -249,7 +250,7 @@ worksheet.state = 'hidden';
 worksheet.state = 'veryHidden';
 ```
 
-## 工作表属性{#worksheet-properties}
+## <a id="worksheet-properties">工作表属性</a>
 
 工作表支持属性桶，以允许控制工作表的某些功能。
 
@@ -287,7 +288,7 @@ worksheet.properties.defaultRowHeight = 15;
 | actualColumnCount | 具有值的列数的计数。 |
 
 
-## 页面设置{#page-setup}
+## <a id="page-setup">页面设置</a>
 
 所有可能影响工作表打印的属性都保存在工作表的pageSetup对象中。
 
@@ -361,7 +362,7 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | 日本双明信片旋转 |  82       |
 | 16K 197x273 mm                |  119      |
 
-## 页眉和页脚{#header-footer}
+## <a id="header-footer">页眉和页脚</a>
 
 这里将介绍如何添加页眉和页脚，添加的内容主要是文本，比如时间，简介，文件信息等，并且可以设置文本的风格。此外，也可以针对首页，奇偶页设置不同的文本。
 
@@ -424,7 +425,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 |&数字|字体大小，比如12px大的文本：&12 |
 |&KHEXCode|字体颜色，比如灰色：&KCCCCCC|
 
-## 工作表视图{#worksheet-views}
+## <a id="worksheet-views">工作表视图</a>
 
 工作表现在支持一个视图列表，用于控制Excel如何显示工作表：
 
@@ -445,7 +446,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 | zoomScaleNormal   | 100       | 正常缩放视图 |
 | style             | undefined | 演示文稿样式 -  pageBreakPreview或pageLayout之一。注意pageLayout与冻结视图不兼容 |
 
-### 冰冻视图{#frozen-views}
+### <a id="frozen-views">冰冻视图</a>
 
 冻结视图支持以下扩展属性：
 
@@ -461,7 +462,7 @@ worksheet.views = [
 ];
 ```
 
-### 拆分视图{#split-views}
+### <a id="split-views">拆分视图</a>
 
 拆分视图支持以下扩展属性：
 
@@ -478,7 +479,7 @@ worksheet.views = [
 ];
 ```
 
-## 自动过滤器{#auto-filters}
+## <a id="auto-filters">自动过滤器</a>
 
 可以将自动过滤器应用于工作表。
 
@@ -518,7 +519,7 @@ worksheet.autoFilter = {
 }
 ```
 
-## 列{#columns}
+## <a id="columns">列</a>
 
 ```javascript
 // 添加列标题并定义列键和宽度
@@ -589,7 +590,7 @@ worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
 
-## 行{#rows}
+## <a id="rows">行</a>
 
 ```javascript
 // 使用列键在最后一行之后按键值添加几行
@@ -713,7 +714,7 @@ var rowSize = row.cellCount;
 var numValues = row.actualCellCount;
 ```
 
-## 处理单个单元格{#handling-individual-cells}
+## <a id="handling-individual-cells">处理单个单元格</a>
 
 ```javascript
 var cell = worksheet.getCell('C3');
@@ -732,7 +733,7 @@ var html = '<div>' + cell.html + '</div>';
 
 ```
 
-## 合并单元格{#merged-cells}
+## <a id="merged-cells">合并单元格</a>
 
 ```javascript
 // 合并一系列单元格
@@ -758,7 +759,7 @@ worksheet.mergeCells('G10', 'H11');
 worksheet.mergeCells(10,11,12,13); // 上，左，下，右
 ```
 
-## 定义的名称{#defined-names}
+## <a id="defined-names">定义的名称</a>
 
 单个单元格（或多组单元格）可以为其分配名称。
  名称可用于公式和数据验证（可能更多）。
@@ -777,7 +778,7 @@ worksheet.getCell('A1').removeName('thing1');
 expect(worksheet.getCell('A1').names).to.have.members(['thing2']);
 ```
 
-## 数据验证{#data-validations}
+## <a id="data-validations">数据验证</a>
 
 单元格可以定义哪些值有效，并向用户提供提示以帮助指导它们。
 
@@ -864,7 +865,7 @@ worksheet.getCell('A1').dataValidation = {
 };
 ```
 
-## 单元格评论{#cell-comments}
+## <a id="cell-comments">单元格评论</a>
 
 将旧样式评论添加到单元格
 
@@ -887,7 +888,7 @@ ws.getCell('B1').note = {
 };
 ```
 
-## 样式{#styles}
+## <a id="styles">样式</a>
 
 单元格，行和列各自支持一组丰富的样式和格式，这些样式和格式会影响单元格的显示方式。
 
@@ -930,7 +931,7 @@ ws.getRow(2).font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'do
  如果希望样式对象是独立的，则需要在分配它们之前克隆它们。
  此外，默认情况下，如果从文件（或流）读取文档（如果电子表格实体共享相似的样式），则它们也将引用相同的样式对象。
 
-### 数字格式{#number-formats}
+### <a id="number-formats">数字格式</a>
 
 ```javascript
 // 显示值为 '1 3/5'
@@ -942,7 +943,7 @@ ws.getCell('B1').value = 0.016;
 ws.getCell('B1').numFmt = '0.00%';
 ```
 
-### 字体{#fonts}
+### <a id="fonts">字体</a>
 
 ```javascript
 
@@ -993,7 +994,7 @@ font.size = 20; // Cell A3现在的字体大小为20！
 | outline       | Font outline | true, false |
 | vertAlign     | Vertical align | 'superscript', 'subscript'
 
-### 对齐方式{#alignment}
+### <a id="alignment">对齐方式</a>
 
 ```javascript
 // set cell alignment to top-left, middle-center, bottom-right
@@ -1026,7 +1027,7 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 | distributed      |             |          |         |              |              |
 
 
-### 边框{#borders}
+### <a id="borders">边框</a>
 
 ```javascript
 // 在A1周围设置单个细边框
@@ -1066,7 +1067,7 @@ ws.getCell('A5').border = {
 * double
 * thick
 
-### 填充{#fills}
+### <a id="fills">填充</a>
 
 ```javascript
 // fill A1 with red darkVertical stripes
@@ -1109,7 +1110,7 @@ ws.getCell('A4').fill = {
 };
 ```
 
-#### 图案填充{#pattern-fills}
+#### <a id="pattern-fills">图案填充</a>
 
 | Property | Required | 描述 |
 | -------- | -------- | ----------- |
@@ -1140,7 +1141,7 @@ ws.getCell('A4').fill = {
 * lightGrid
 * lightTrellis
 
-#### 渐变填充{#gradient-fills}
+#### <a id="gradient-fills">渐变填充</a>
 
 | Property | Required | 描述 |
 | -------- | -------- | ----------- |
@@ -1157,7 +1158,7 @@ ws.getCell('A4').fill = {
 类似地，停止序列也可以由具有位置[0,1]或[0,0.5,1]作为唯一选项的UI限制。
 注意此填充以确保目标XLSX查看器支持它。
 
-### Rich Text
+### <a id="rich-text">富文本</a>
 
 单个单元格现在支持富文本或单元格格式。
  富文本值可以控制文本值中任意数量子字符串的字体属性。
@@ -1183,7 +1184,7 @@ expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 
 ```
 
-## 大纲级别{#outline-levels}
+## <a id="outline-levels">大纲级别</a>
 
 Excel支持概述;其中可以展开或折叠行或列，具体取决于用户希望查看的详细程度。
 
@@ -1231,7 +1232,7 @@ worksheet.properties.outlineProperties = {
 };
 ```
 
-## 图片{#images}
+## <a id="images">图片</a>
 
 将图像添加到工作表需要两个步骤。
 首先，通过addImage（）函数将图像添加到工作簿，该函数也将返回imageId值。
@@ -1239,7 +1240,7 @@ worksheet.properties.outlineProperties = {
 
 注意：从此版本开始，不支持调整或转换图像。
 
-### 将图像添加到工作簿{#add-image-to-workbook}
+### <a id="add-image-to-workbook">将图像添加到工作簿</a>
 
 Workbook.addImage函数支持按文件名或缓冲区添加图像。
 请注意，在这两种情况下，都必须指定扩展名。
@@ -1266,7 +1267,7 @@ var imageId2 = workbook.addImage({
 });
 ```
 
-### 将图像背景添加到工作表{#add-image-background-to-worksheet}
+### <a id="add-image-background-to-worksheet">将图像背景添加到工作表</a>
 
 使用Workbook.addImage中的图像ID，可以使用addBackgroundImage函数设置工作表的背景
 
@@ -1275,7 +1276,7 @@ var imageId2 = workbook.addImage({
 worksheet.addBackgroundImage(imageId1);
 ```
 
-### 在范围内添加图像{#add-image-over-a-range}
+### <a id="add-image-over-a-range">在范围内添加图像</a>
 
 使用Workbook.addImage中的图像ID，可以在工作表中嵌入图像以覆盖范围。
 从该范围计算的坐标将覆盖从第一个单元格的左上角到第二个单元格的右下角。
@@ -1315,7 +1316,7 @@ ws.addImage(imageId, {
 });
 ```
 
-### 将图像添加到单元格{#add-image-to-a-cell}
+### <a id="add-image-to-a-cell">将图像添加到单元格</a>
 
 You can add an image to a cell and then define its width and height in pixels at 96dpi.
 
@@ -1326,11 +1327,11 @@ worksheet.addImage(imageId2, {
 });
 ```
 
-## File I/O
+## <a id="file-io">文件 I/O</a>
 
-### XLSX
+### <a id="xlsx">XLSX</a>
 
-#### Reading XLSX
+#### <a id="reading-xlsx">读 XLSX</a>
 
 ```javascript
 // read from a file
@@ -1352,7 +1353,7 @@ workbook.xlsx.load(data)
   });
 ```
 
-#### Writing XLSX
+#### <a id="writing-xlsx">写 XLSX</a>
 
 ```javascript
 // write to a file
@@ -1375,9 +1376,9 @@ workbook.xlsx.writeBuffer()
   });
 ```
 
-### CSV
+### CSV <a id="csv">CSV</a>
 
-#### Reading CSV
+#### <a id="reading-csv">读 CSV</a>
 
 ```javascript
 // read from a file
@@ -1445,7 +1446,7 @@ CSV解析器使用[fast-csv](https://www.npmjs.com/package/fast-csv)来读取CSV
 *'MM-DD-YYYY'
 *'YYYY-MM-DD'
 
-#### Writing CSV
+#### <a id="writing-csv">写 CSV</a>
 
 ```javascript
 
@@ -1517,7 +1518,7 @@ CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CS
  编写CSV时，您可以将布尔值dateUTC设置为true，以使ExcelJS自动解析日期
  使用`moment.utc（）`转换时区。
 
-### Streaming I/O
+### <a id="streaming-io">流 I/O</a>
 
 上面记录的文件I / O要求在写入文件之前在内存中构建整个工作簿。
  虽然方便，但由于所需的内存量，它可能会限制文档的大小。
@@ -1536,7 +1537,8 @@ CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CS
 请注意，可以在不提交任何行的情况下构建整个工作簿。
  提交工作簿时，将自动提交所有添加的工作表（包括所有未提交的行）。
  但是，在这种情况下，文档版本的收益很少。
-#### Streaming XLSX
+ 
+#### <a id="streaming-xlsx">流 XLSX</a>
 
 ##### Streaming XLSX Writer
 
@@ -1615,7 +1617,7 @@ workbook.commit()
   });
 ```
 
-# 浏览器
+# <a id="browser">浏览器</a>
 
 该库的一部分已经过隔离测试，可在浏览器环境中使用。
 
@@ -1631,11 +1633,11 @@ workbook.commit()
 * exceljs.js
 * exceljs.min.js
 
-# 值类型
+# <a id="value-types">值类型</a>
 
 支持以下值类型。
 
-## 空值
+## <a id="null-value">空值</a>
 
 Enum: Excel.ValueType.Null
 
@@ -1648,14 +1650,14 @@ Enum: Excel.ValueType.Null
 worksheet.getCell('A1').value = null;
 ```
 
-## 合并单元格
+## <a id="merge-cell">合并单元格</a>
 
 Enum: Excel.ValueType.Merge
 
 合并单元格的值与另一个“主”单元格绑定。
   分配给合并单元将导致修改主单元。
 
-## Number Value
+## <a id="number-value">数值</a>
 
 Enum: Excel.ValueType.Number
 
@@ -1668,7 +1670,7 @@ worksheet.getCell('A1').value = 5;
 worksheet.getCell('A2').value = 3.14159;
 ```
 
-## String Value
+## <a id="string-value">字符串值</a>
 
 Enum: Excel.ValueType.String
 
@@ -1680,7 +1682,7 @@ E.g.
 worksheet.getCell('A1').value = 'Hello, World!';
 ```
 
-## Date Value
+## <a id="date-value">日期值</a>
 
 Enum: Excel.ValueType.Date
 
@@ -1692,7 +1694,7 @@ E.g.
 worksheet.getCell('A1').value = new Date(2017, 2, 15);
 ```
 
-## Hyperlink Value
+## <a id="hyperlink-value">超链接值</a>
 
 Enum: Excel.ValueType.Hyperlink
 
@@ -1711,7 +1713,7 @@ worksheet.getCell('A1').value = {
 worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\"Sheet2\\"!A1' };
 ```
 
-## Formula Value
+## <a id="formula-value">公式值</a>
 
 Enum: Excel.ValueType.Formula
 
@@ -1734,7 +1736,7 @@ worksheet.getCell('A3').formula === 'A1+A2';
 worksheet.getCell('A3').result === 7;
 ```
 
-### Shared Formula
+### <a id="shared-formula">共享公式</a>
 
 Shared formulae enhance the compression of the xlsx document by increasing the repetition
 of text within the worksheet xml.
@@ -1754,7 +1756,7 @@ The formula convenience getter will translate the formula in A3 to what it shoul
 worksheet.getCell('B3').formula === 'B1+B2';
 ```
 
-### Formula Type
+### <a id="formula-type">公式类型</a>
 
 To distinguish between real and translated formula cells, use the formulaType getter:
 
@@ -1771,7 +1773,7 @@ Formula type has the following values:
 | Enums.FormulaType.Master   |   1     |
 | Enums.FormulaType.Shared   |   2     |
 
-## 富文本值
+## <a id="rich-text-value">富文本值</a>
 
 枚举： Excel.ValueType.RichText
 
@@ -1787,7 +1789,7 @@ worksheet.getCell('A1').value = {
 };
 ```
 
-## 布尔值
+## <a id="boolean-value">布尔值</a>
 
 枚举：Excel.ValueType.Boolean
 
@@ -1798,7 +1800,7 @@ worksheet.getCell('A1').value = true;
 worksheet.getCell('A2').value = false;
 ```
 
-## 错误值
+## <a id="error-value">错误值</a>
 
 枚举：Excel.ValueType.Error
 
@@ -1852,7 +1854,7 @@ cell.styles重命名为cell.style
 * 默认情况下使用功能更全面且仍然与浏览器兼容的promise lib。这个lib支持Bluebird的许多功能，但占用空间要小得多。
 * 注入不同Promise实现的选项。有关详细信息，请参阅<a href="#config">配置</a>部分。
 
-# 配置{#config}
+# <a id="config">配置</a>
 
 ExcelJS现在支持promise库的依赖注入。
 您可以通过在模块中包含以下代码来恢复Bluebird承诺...
@@ -1873,7 +1875,7 @@ ExcelJS.config.setValue('promise', require('bluebird'));
 除了package.json中指定为“main”的文件之外，不保证dist/文件夹的其他任何内容
 
 
-# 已知的问题{#known-issues}
+# <a id="known-issues">已知的问题</a>
 
 ## 使用Puppeteer进行测试
 
@@ -1889,7 +1891,7 @@ sudo apt-get install libfontconfig
 
 如果任何拼接操作影响合并的单元格，则不会正确移动合并组
 
-# Release History
+# <a id="release-history">发布历史</a>
 
 | Version | Changes |
 | ------- | ------- |
