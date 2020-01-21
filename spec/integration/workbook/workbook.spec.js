@@ -577,11 +577,43 @@ describe('Workbook', () => {
     });
 
     describe('Duplicate Rows', () => {
-      it('Duplicate rows properly', () => {
+      it('Duplicate rows with styles properly', () => {
+        const fileDuplicateRowTestFile = './spec/integration/data/duplicateRowTest.xlsx';
+        const wb = new ExcelJS.Workbook();
+        return wb.xlsx
+          .readFile(fileDuplicateRowTestFile).then(() => {
+            const ws = wb.getWorksheet('duplicateTest');
+            
+            ws.getCell('A1').value = 'OneInfo';
+            ws.getCell('A2').value = 'TwoInfo';
+            ws.duplicateRow(1,2);
+
+            return wb.xlsx
+              .writeFile(TEST_XLSX_FILE_NAME)
+              .then(() => {
+                const wb2 = new ExcelJS.Workbook();
+                return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+              })
+              .then(wb2 => {
+                const ws2 = wb2.getWorksheet('duplicateTest');
+
+                expect(ws2.getCell('A2').style).to.equal(ws2.getCell('A1').style);
+                expect(ws2.getCell('A3').style).to.equal(ws2.getCell('A1').style);
+                expect(ws2.getCell('A2').value).to.equal('OneInfo');
+                expect(ws2.getCell('A3').value).to.equal('OneInfo');
+                expect(ws2.getCell('A4').value).to.equal('TwoInfo');
+              });
+          });
+      });
+
+      it('Duplicate rows shifting properly', () => {
         const wb = new ExcelJS.Workbook();
         const ws = wb.addWorksheet('duplicateTest');
         ws.getCell('A1').value = 'OneInfo';
-        ws.duplicateRow(1,2);
+        ws.getCell('A2').value = 'TwoInfo';
+        ws.getCell('A3').value = 'ThreeInfo';
+        ws.getCell('A4').value = 'FourInfo';
+        ws.duplicateRow(1,2,false);
         
         return wb.xlsx
           .writeFile(TEST_XLSX_FILE_NAME)
@@ -592,8 +624,10 @@ describe('Workbook', () => {
           .then(wb2 => {
             const ws2 = wb2.getWorksheet('duplicateTest');
 
+            expect(ws2.getCell('A1').value).to.equal('OneInfo');
             expect(ws2.getCell('A2').value).to.equal('OneInfo');
             expect(ws2.getCell('A3').value).to.equal('OneInfo');
+            expect(ws2.getCell('A4').value).to.equal('FourInfo');
           });
       });
     });
