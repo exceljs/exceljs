@@ -788,6 +788,17 @@ describe('Workbook', () => {
         expect(success).to.equal(2);
       });
   });
+  it('throw an error for wrong data type', async () => {
+    const wb = new ExcelJS.Workbook();
+    try {
+      await wb.xlsx.load({});
+      expect.fail('should fail for given argument');
+    } catch(e) {
+      expect(e.message).to.equal(
+        'Chunk must be one of type String, Buffer or StringBuf.'
+      );
+    }
+  });
 
   describe('Sheet Views', () => {
     it('frozen panes', () => {
