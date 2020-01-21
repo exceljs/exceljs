@@ -817,6 +817,30 @@ worksheet.mergeCells('K10', 'M12');
 // merge by start row, start column, end row, end column (equivalent to K10:M12)
 worksheet.mergeCells(10,11,12,13);
 ```
+## Duplicate a Row
+
+```javascript
+duplicateRow(start, amount = 1, insert = true)
+
+const wb = new ExcelJS.Workbook();
+const ws = wb.addWorksheet('duplicateTest');
+ws.getCell('A1').value = 'One';
+ws.getCell('A2').value = 'Two';
+ws.getCell('A3').value = 'Three';
+ws.getCell('A4').value = 'Four';
+
+// This line will duplicate the row 'One' twice but it will replace rows 'Two' and 'Three'
+// if third param was true so it would insert 2 new rows with the values and styles of row 'One'
+ws.duplicateRow(1,2,false);
+```
+
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- | ------------- |
+| start          | Row number you want to duplicate (first in excel is 1) |  |
+| amount    | The times you want to duplicate the row | 1 |
+| insert            | *true* if you want to insert new rows for the duplicates, or *false* if you want to replace them | *true* |
+
+
 
 ## Defined Names
 
