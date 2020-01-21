@@ -48,4 +48,15 @@ describe('StreamBuf', () => {
       sb.on('error', reject);
       s.pipe(sb);
     }));
+  it('handle unsupported type of chunk', async () => {
+    const stream = new StreamBuf();
+    try {
+      await stream.write({});
+      expect.fail('should fail for given argument');
+    } catch (e) {
+      expect(e.message).to.equal(
+        'Chunk must be one of type String, Buffer or StringBuf.'
+      );
+    }
+  });
 });
