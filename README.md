@@ -76,6 +76,7 @@ To be clear, all contributions added to this library will be included in the lib
       <li><a href="#rows">Rows</a></li>
       <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
       <li><a href="#merged-cells">Merged Cells</a></li>
+      <li><a href="#duplicate-a-row">Duplicate Row</a></li>
       <li><a href="#defined-names">Defined Names</a></li>
       <li><a href="#data-validations">Data Validations</a></li>
       <li><a href="#cell-comments">Cell Comments</a></li>
@@ -835,7 +836,7 @@ ws.duplicateRow(1,2,false);
 ```
 
 | Parameter | Description | Default Value |
-| -------------- | ----------------- | -------- | ------------- |
+| -------------- | ----------------- | -------- |
 | start          | Row number you want to duplicate (first in excel is 1) |  |
 | amount    | The times you want to duplicate the row | 1 |
 | insert            | *true* if you want to insert new rows for the duplicates, or *false* if you want to replace them | *true* |
