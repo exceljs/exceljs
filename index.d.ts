@@ -1199,6 +1199,11 @@ export interface WorksheetProperties {
 	defaultRowHeight: number;
 
 	/**
+	 * Default column width (optional)
+	 */
+	defaultColWidth?: number;
+
+	/**
 	 * default: 55
 	 */
 	dyDescent: number;

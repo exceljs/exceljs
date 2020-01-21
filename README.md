@@ -328,6 +328,7 @@ worksheet.properties.defaultRowHeight = 15;
 | outlineLevelCol  | 0          | The worksheet column outline level |
 | outlineLevelRow  | 0          | The worksheet row outline level |
 | defaultRowHeight | 15         | Default row height |
+| defaultColWidth  | (optional) | Default column width |
 | dyDescent        | 55         | TBD |
 
 ### Worksheet Metrics
