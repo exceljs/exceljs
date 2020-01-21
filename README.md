@@ -25,6 +25,14 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/1076">Fix Issue #1075: Unable to read/write defaultColWidth attribute in &lt;sheetFormatPr&gt; node #1076</a>.
     Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1078">function duplicateRows added #1078</a>.
+    Many thanks to <a href="https://github.com/cbeltrangomez84">cbeltrangomez84</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1087">Prevent from unhandled promise rejection durning workbook load #1087</a>.
+    Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
