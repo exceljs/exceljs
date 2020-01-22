@@ -1326,6 +1326,21 @@ worksheet.addImage(imageId2, {
 });
 ```
 
+### <a id="add-image-with-hyperlinks">添加带超链接的图片</a>
+
+You can add an image with hyperlinks to a cell.
+
+```javascript
+worksheet.addImage(imageId2, {
+  tl: { col: 0, row: 0 },
+  ext: { width: 500, height: 200 },
+  hyperlinks: {
+    hyperlink: 'http://www.somewhere.com',
+    tooltip: 'http://www.somewhere.com'
+  }
+});
+```
+
 ## File I/O
 
 ### XLSX

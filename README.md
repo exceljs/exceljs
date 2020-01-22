@@ -1775,6 +1775,21 @@ worksheet.addImage(imageId2, {
 });
 ```
 
+### Add image with hyperlinks
+
+You can add an image with hyperlinks to a cell, and defines the hyperlinks in image range.
+
+```javascript
+worksheet.addImage(imageId2, {
+  tl: { col: 0, row: 0 },
+  ext: { width: 500, height: 200 },
+  hyperlinks: {
+    hyperlink: 'http://www.somewhere.com',
+    tooltip: 'http://www.somewhere.com'
+  }
+});
+```
+
 ## Sheet Protection
 
 Worksheets can be protected from modification by adding a password.
