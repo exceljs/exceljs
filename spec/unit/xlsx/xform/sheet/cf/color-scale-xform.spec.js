@@ -25,6 +25,6 @@ const expectations = [
   },
 ];
 
-describe('CfRuleXform', () => {
+describe('ColorScaleXform', () => {
   testXformHelper(expectations);
 });

@@ -53,6 +53,6 @@ const expectations = [
   },
 ];
 
-describe('CfRuleXform', () => {
+describe('IconSetXform', () => {
   testXformHelper(expectations);
 });

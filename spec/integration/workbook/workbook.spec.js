@@ -576,6 +576,29 @@ describe('Workbook', () => {
         });
     });
 
+    describe('Duplicate Rows', () => {
+      it('Duplicate rows properly', () => {
+        const wb = new ExcelJS.Workbook();
+        const ws = wb.addWorksheet('duplicateTest');
+        ws.getCell('A1').value = 'OneInfo';
+        ws.duplicateRow(1,2);
+        
+        return wb.xlsx
+          .writeFile(TEST_XLSX_FILE_NAME)
+          .then(() => {
+            const wb2 = new ExcelJS.Workbook();
+            return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+          })
+          .then(wb2 => {
+            const ws2 = wb2.getWorksheet('duplicateTest');
+
+            expect(ws2.getCell('A2').value).to.equal('OneInfo');
+            expect(ws2.getCell('A3').value).to.equal('OneInfo');
+          });
+      });
+    });
+
+
     describe('Merge Cells', () => {
       it('serialises and deserialises properly', () => {
         const wb = new ExcelJS.Workbook();
@@ -764,6 +787,17 @@ describe('Workbook', () => {
       .then(() => {
         expect(success).to.equal(2);
       });
+  });
+  it('throw an error for wrong data type', async () => {
+    const wb = new ExcelJS.Workbook();
+    try {
+      await wb.xlsx.load({});
+      expect.fail('should fail for given argument');
+    } catch(e) {
+      expect(e.message).to.equal(
+        'Chunk must be one of type String, Buffer or StringBuf.'
+      );
+    }
   });
 
   describe('Sheet Views', () => {
