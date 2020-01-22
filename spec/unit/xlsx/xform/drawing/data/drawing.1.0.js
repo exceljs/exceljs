@@ -7,6 +7,10 @@ module.exports = {
       },
       picture: {
         rId: 'rId1',
+        hyperlinks: {
+          tooltip: 'exceljs',
+          rId: 'rId3',
+        },
       },
     },
     {
