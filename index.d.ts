@@ -1,6 +1,4 @@
 declare interface Buffer extends ArrayBuffer { }
-declare interface Stream { }
-declare interface Writable { }
 
 export const enum RelationshipType {
 	None = 0,
@@ -1254,7 +1252,7 @@ export interface Xlsx {
 	 * read from a stream
 	 * @param stream
 	 */
-	read(stream: Stream): Promise<Workbook>;
+	read(stream: import('stream').Stream): Promise<Workbook>;
 
 	/**
 	 * load from an array buffer
@@ -1265,7 +1263,7 @@ export interface Xlsx {
 	/**
 	 * Create input stream for reading
 	 */
-	createInputStream(): Writable;
+	createInputStream(): import('events').EventEmitter;
 
 	/**
 	 * write to a buffer
@@ -1280,7 +1278,7 @@ export interface Xlsx {
 	/**
 	 * write to a stream
 	 */
-	write(stream: Stream, options?: Partial<XlsxWriteOptions>): Promise<void>;
+	write(stream: import('stream').Stream, options?: Partial<XlsxWriteOptions>): Promise<void>;
 }
 
 export interface CsvReadOptions {
@@ -1302,12 +1300,12 @@ export interface Csv {
 	/**
 	 * read from a stream
 	 */
-	read(stream: Stream, options?: Partial<CsvReadOptions>): Promise<Worksheet>;
+	read(stream: import('stream').Stream, options?: Partial<CsvReadOptions>): Promise<Worksheet>;
 
 	/**
 	 * Create input stream for reading
 	 */
-	createInputStream(): Writable;
+	createInputStream(): import('events').EventEmitter;
 
 	/**
 	 * write to a buffer
@@ -1322,7 +1320,7 @@ export interface Csv {
 	/**
 	 * write to a stream
 	 */
-	write(stream: Stream, options?: Partial<CsvWriteOptions>): Promise<void>;
+	write(stream: import('stream').Stream, options?: Partial<CsvWriteOptions>): Promise<void>;
 }
 
 export interface Media {
@@ -1619,7 +1617,7 @@ export namespace stream {
 			/**
 			 * Specifies a writable stream to write the XLSX workbook to.
 			 */
-			stream: Stream;
+			stream: import('stream').Stream;
 
 			/**
 			 * 	If stream not specified, this field specifies the path to a file to write the XLSX workbook to.
