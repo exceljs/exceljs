@@ -33,6 +33,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/1087">Prevent from unhandled promise rejection durning workbook load #1087</a>.
     Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1071">fix issue #899 Support for inserting pictures with hyperlinks #1071</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
@@ -1797,6 +1801,21 @@ You can add an image to a cell and then define its width and height in pixels at
 worksheet.addImage(imageId2, {
   tl: { col: 0, row: 0 },
   ext: { width: 500, height: 200 }
+});
+```
+
+### Add image with hyperlinks
+
+You can add an image with hyperlinks to a cell, and defines the hyperlinks in image range.
+
+```javascript
+worksheet.addImage(imageId2, {
+  tl: { col: 0, row: 0 },
+  ext: { width: 500, height: 200 },
+  hyperlinks: {
+    hyperlink: 'http://www.somewhere.com',
+    tooltip: 'http://www.somewhere.com'
+  }
 });
 ```
 

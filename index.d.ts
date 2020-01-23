@@ -878,6 +878,11 @@ export interface ImagePosition {
 	ext: { width: number; height: number };
 }
 
+export interface ImageHyperlinkValue {
+	hyperlink: string;
+	tooltip?: string;
+}
+
 export interface Range extends Location {
 	sheetName: string;
 
@@ -1142,7 +1147,7 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange | { editAs?: string; } & ImagePosition): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & {hyperlinks?: ImageHyperlinkValue} | { editAs?: string; } & ImagePosition & {hyperlinks?: ImageHyperlinkValue}): void;
 
 	getImages(): Array<{
 		type: 'image',
