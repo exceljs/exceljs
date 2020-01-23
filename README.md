@@ -26,7 +26,8 @@ npm install exceljs
     Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1078">function duplicateRows added #1078</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1078">function duplicateRows added #1078</a>
+    and <a href="https://github.com/exceljs/exceljs/pull/1088">Duplicate rows #1088</a>.
     Many thanks to <a href="https://github.com/cbeltrangomez84">cbeltrangomez84</a> for this contribution.
   </li>
   <li>
