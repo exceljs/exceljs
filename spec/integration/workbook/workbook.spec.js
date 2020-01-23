@@ -583,7 +583,7 @@ describe('Workbook', () => {
         return wb.xlsx
           .readFile(fileDuplicateRowTestFile).then(() => {
             const ws = wb.getWorksheet('duplicateTest');
-            
+
             ws.getCell('A1').value = 'OneInfo';
             ws.getCell('A2').value = 'TwoInfo';
             ws.duplicateRow(1,2);
@@ -597,11 +597,11 @@ describe('Workbook', () => {
               .then(wb2 => {
                 const ws2 = wb2.getWorksheet('duplicateTest');
 
-                expect(ws2.getCell('A2').style).to.equal(ws2.getCell('A1').style);
-                expect(ws2.getCell('A3').style).to.equal(ws2.getCell('A1').style);
                 expect(ws2.getCell('A2').value).to.equal('OneInfo');
+                expect(ws2.getCell('A2').style).to.equal(ws2.getCell('A1').style);
                 expect(ws2.getCell('A3').value).to.equal('OneInfo');
-                expect(ws2.getCell('A4').value).to.equal('TwoInfo');
+                expect(ws2.getCell('A3').style).to.equal(ws2.getCell('A1').style);
+                expect(ws2.getCell('A4').value).to.be.null();
               });
           });
       });
@@ -614,7 +614,7 @@ describe('Workbook', () => {
         ws.getCell('A3').value = 'ThreeInfo';
         ws.getCell('A4').value = 'FourInfo';
         ws.duplicateRow(1,2,false);
-        
+
         return wb.xlsx
           .writeFile(TEST_XLSX_FILE_NAME)
           .then(() => {
