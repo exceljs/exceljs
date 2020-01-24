@@ -1,12 +1,8 @@
-'use strict';
-
-const { expect } = require('chai');
 const fs = require('fs');
 const path = require('path');
-const { Promise } = require('../../../lib/utils/promise');
 
-const StreamBuf = require('../../../lib/utils/stream-buf');
-const StringBuf = require('../../../lib/utils/string-buf');
+const StreamBuf = verquire('utils/stream-buf');
+const StringBuf = verquire('utils/string-buf');
 
 describe('StreamBuf', () => {
   // StreamBuf is designed as a general-purpose writable-readable stream
@@ -23,7 +19,7 @@ describe('StreamBuf', () => {
 
   it('writes StringBuf chunks', () => {
     const stream = new StreamBuf();
-    const strBuf = new StringBuf({ size: 64 });
+    const strBuf = new StringBuf({size: 64});
     strBuf.addText('Hello, World!');
     stream.write(strBuf);
     const chunk = stream.read();
@@ -52,4 +48,15 @@ describe('StreamBuf', () => {
       sb.on('error', reject);
       s.pipe(sb);
     }));
+  it('handle unsupported type of chunk', async () => {
+    const stream = new StreamBuf();
+    try {
+      await stream.write({});
+      expect.fail('should fail for given argument');
+    } catch (e) {
+      expect(e.message).to.equal(
+        'Chunk must be one of type String, Buffer or StringBuf.'
+      );
+    }
+  });
 });

@@ -1,6 +1,6 @@
-const { expect } = require('chai');
-const Anchor = require('../../../lib/doc/anchor');
-const { createSheetMock } = require('../../utils/index');
+const {createSheetMock} = require('../../utils/index');
+
+const Anchor = verquire('doc/anchor');
 
 describe('Anchor', () => {
   describe('colWidth', () => {
@@ -47,7 +47,7 @@ describe('Anchor', () => {
       context.worksheet.getColumn(1).width = 20;
       context.worksheet.getRow(1).height = 20;
 
-      context.anchor = new Anchor(context.worksheet, { col: 0.6, row: 0.6 });
+      context.anchor = new Anchor(context.worksheet, {col: 0.6, row: 0.6});
     });
 
     it('should update colWidth', () => {

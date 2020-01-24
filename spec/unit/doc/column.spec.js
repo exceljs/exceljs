@@ -1,7 +1,6 @@
-const { expect } = require('chai');
+const {createSheetMock} = require('../../utils/index');
 
-const Column = require('../../../lib/doc/column');
-const { createSheetMock } = require('../../utils/index');
+const Column = verquire('doc/column');
 
 describe('Column', () => {
   it('creates by defn', () => {
@@ -18,7 +17,7 @@ describe('Column', () => {
     expect(sheet.getCell(1, 1).value).to.equal('Col 1');
     expect(sheet.getColumn('id1')).to.equal(sheet.getColumn(1));
 
-    sheet.getRow(2).values = { id1: 'Hello, World!' };
+    sheet.getRow(2).values = {id1: 'Hello, World!'};
     expect(sheet.getCell(2, 1).value).to.equal('Hello, World!');
   });
 
@@ -44,7 +43,7 @@ describe('Column', () => {
     expect(sheet.getCell(1, 1).value).to.equal('Col A1');
     expect(sheet.getCell(2, 1).value).to.equal('Col A2');
 
-    sheet.getRow(3).values = { id1: 'Hello, World!' };
+    sheet.getRow(3).values = {id1: 'Hello, World!'};
     expect(sheet.getCell(3, 1).value).to.equal('Hello, World!');
   });
 

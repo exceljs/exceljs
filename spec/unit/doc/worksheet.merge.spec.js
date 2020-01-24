@@ -1,8 +1,7 @@
-const { expect } = require('chai');
-
-const Excel = require('../../../lib/exceljs.nodejs');
-const Dimensions = require('../../../lib/doc/range');
 const testUtils = require('../../utils/index');
+
+const Excel = verquire('exceljs');
+const Dimensions = verquire('doc/range');
 
 describe('Worksheet', () => {
   describe('Merge Cells', () => {

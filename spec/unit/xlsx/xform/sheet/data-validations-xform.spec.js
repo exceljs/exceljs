@@ -1,7 +1,6 @@
-'use strict';
-
-const DataValidationsXform = require('../../../../../lib/xlsx/xform/sheet/data-validations-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const DataValidationsXform = verquire('xlsx/xform/sheet/data-validations-xform');
 
 const expectations = [
   {
@@ -19,8 +18,13 @@ const expectations = [
     get parsedModel() {
       return this.preparedModel;
     },
-    xml:
-      '<dataValidations count="1"><dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="E1"><formula1>Ducks</formula1></dataValidation></dataValidations>',
+    xml: `
+      <dataValidations count="1">
+        <dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="E1">
+          <formula1>Ducks</formula1>
+        </dataValidation>
+      </dataValidations>
+    `,
     tests: ['render', 'renderIn', 'parse'],
   },
   {
@@ -39,8 +43,14 @@ const expectations = [
     get parsedModel() {
       return this.preparedModel;
     },
-    xml:
-      '<dataValidations count="1"><dataValidation type="whole" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="A1"><formula1>5</formula1><formula2>10</formula2></dataValidation></dataValidations>',
+    xml: `
+      <dataValidations count="1">
+        <dataValidation type="whole" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="A1">
+          <formula1>5</formula1>
+          <formula2>10</formula2>
+        </dataValidation>
+      </dataValidations>
+    `,
     tests: ['render', 'renderIn', 'parse'],
   },
   {
@@ -59,8 +69,14 @@ const expectations = [
     get parsedModel() {
       return this.preparedModel;
     },
-    xml:
-      '<dataValidations count="1"><dataValidation type="decimal" operator="notBetween" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="A1"><formula1>5</formula1><formula2>10</formula2></dataValidation></dataValidations>',
+    xml: `
+      <dataValidations count="1">
+        <dataValidation type="decimal" operator="notBetween" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="A1">
+          <formula1>5</formula1>
+          <formula2>10</formula2>
+        </dataValidation>
+      </dataValidations>
+    `,
     tests: ['render', 'renderIn', 'parse'],
   },
   {
@@ -78,15 +94,26 @@ const expectations = [
     get parsedModel() {
       return this.preparedModel;
     },
-    xml:
-      '<dataValidations count="1"><dataValidation type="custom" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="A1"><formula1>OR(C21=5,C21=7)</formula1></dataValidation></dataValidations>',
+    xml: `
+      <dataValidations count="1">
+        <dataValidation type="custom" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="A1">
+          <formula1>OR(C21=5,C21=7)</formula1>
+        </dataValidation>
+      </dataValidations>
+    `,
     tests: ['render', 'renderIn', 'parse'],
   },
   {
     title: 'parse open office',
     create: () => new DataValidationsXform(),
-    xml:
-      '<dataValidations count="1"><dataValidation type="whole" allowBlank="true" showInputMessage="false" sqref="A1"><formula1>5</formula1><formula2>10</formula2></dataValidation></dataValidations>',
+    xml: `
+      <dataValidations count="1">
+        <dataValidation type="whole" allowBlank="true" showInputMessage="false" sqref="A1">
+          <formula1>5</formula1>
+          <formula2>10</formula2>
+        </dataValidation>
+      </dataValidations>
+    `,
     parsedModel: {
       A1: {
         type: 'whole',
@@ -97,6 +124,28 @@ const expectations = [
       },
     },
     tests: ['parse'],
+  },
+  {
+    title: 'optimised',
+    create: () => new DataValidationsXform(),
+    preparedModel: {
+      A1: {type: 'whole', operator: 'between', formulae: [5, 10]},
+      A2: {type: 'whole', operator: 'between', formulae: [5, 10]},
+      B1: {type: 'whole', operator: 'between', formulae: [5, 10]},
+      B2: {type: 'whole', operator: 'between', formulae: [5, 10]},
+    },
+    get parsedModel() {
+      return this.preparedModel;
+    },
+    xml: `
+      <dataValidations count="1">
+        <dataValidation type="whole" sqref="A1:B2">
+          <formula1>5</formula1>
+          <formula2>10</formula2>
+        </dataValidation>
+      </dataValidations>
+    `,
+    tests: ['render', 'parse'],
   },
 ];
 

@@ -2,7 +2,7 @@ const path = require('path');
 
 const HrStopwatch = require('./utils/hr-stopwatch');
 
-const { Workbook } = require('../lib/exceljs.nodejs');
+const {Workbook} = require('../lib/exceljs.nodejs');
 
 const filename = process.argv[2];
 
@@ -14,8 +14,8 @@ const imageId = wb.addImage({
   extension: 'png',
 });
 ws.addImage(imageId, {
-  tl: { col: 0.1125, row: 0.4 },
-  br: { col: 2.101046875, row: 3.4 },
+  tl: {col: 0.1125, row: 0.4},
+  br: {col: 2.101046875, row: 3.4},
   editAs: 'oneCell',
 });
 

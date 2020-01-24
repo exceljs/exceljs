@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 const HrStopwatch = require('./utils/hr-stopwatch');
 const Workbook = require('../lib/doc/workbook');
 

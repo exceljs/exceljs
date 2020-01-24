@@ -3,7 +3,7 @@ const path = require('path');
 
 const HrStopwatch = require('./utils/hr-stopwatch');
 
-const { Workbook } = require('../excel');
+const {Workbook} = require('../excel');
 
 const filename = process.argv[2];
 
@@ -21,8 +21,8 @@ const backgroundId = wb.addImage({
   extension: 'jpeg',
 });
 ws.addImage(imageId, {
-  tl: { col: 1, row: 1 },
-  br: { col: 3.5, row: 5.5 },
+  tl: {col: 1, row: 1},
+  br: {col: 3.5, row: 5.5},
 });
 ws.addImage(imageId, 'B7:E12');
 

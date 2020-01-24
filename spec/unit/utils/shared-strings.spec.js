@@ -1,6 +1,4 @@
-const { expect } = require('chai');
-
-const SharedStrings = require('../../../lib/utils/shared-strings');
+const SharedStrings = verquire('utils/shared-strings');
 
 describe('SharedStrings', () => {
   it('Stores and shares string values', () => {

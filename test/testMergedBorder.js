@@ -7,50 +7,17 @@ const ws = wb.addWorksheet('blort');
 
 const borders = {
   thin: {
-    top: { style: 'thin' },
-    left: { style: 'thin' },
-    bottom: { style: 'thin' },
-    right: { style: 'thin' },
+    top: {style: 'thin'},
+    left: {style: 'thin'},
+    bottom: {style: 'thin'},
+    right: {style: 'thin'},
   },
   doubleRed: {
-    color: { argb: 'FFFF0000' },
-    top: { style: 'double' },
-    left: { style: 'double' },
-    bottom: { style: 'double' },
-    right: { style: 'double' },
-  },
-};
-
-const fills = {
-  redDarkVertical: {
-    type: 'pattern',
-    pattern: 'darkVertical',
-    fgColor: { argb: 'FFFF0000' },
-  },
-  redGreenDarkTrellis: {
-    type: 'pattern',
-    pattern: 'darkTrellis',
-    fgColor: { argb: 'FFFF0000' },
-    bgColor: { argb: 'FF00FF00' },
-  },
-  blueWhiteHGrad: {
-    type: 'gradient',
-    gradient: 'angle',
-    degree: 0,
-    stops: [
-      { position: 0, color: { argb: 'FF0000FF' } },
-      { position: 1, color: { argb: 'FFFFFFFF' } },
-    ],
-  },
-  rgbPathGrad: {
-    type: 'gradient',
-    gradient: 'path',
-    center: { left: 0.5, top: 0.5 },
-    stops: [
-      { position: 0, color: { argb: 'FFFF0000' } },
-      { position: 0.5, color: { argb: 'FF00FF00' } },
-      { position: 1, color: { argb: 'FF0000FF' } },
-    ],
+    color: {argb: 'FFFF0000'},
+    top: {style: 'double'},
+    left: {style: 'double'},
+    bottom: {style: 'double'},
+    right: {style: 'double'},
   },
 };
 

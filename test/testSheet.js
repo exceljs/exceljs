@@ -1,5 +1,4 @@
 const fs = require('fs');
-const Promise = require('bluebird');
 
 const Worksheet = require('../lib/doc/worksheet');
 
@@ -10,11 +9,11 @@ const relname = process.argv[4];
 const ws = new Worksheet();
 
 ws.columns = [
-  { header: 'Col 1', key: 'key', width: 25 },
-  { header: 'Col 2', key: 'name', width: 25 },
-  { header: 'Col 3', key: 'age' },
-  { header: 'Col 4', key: 'addr1', width: 8 },
-  { header: 'Col 5', key: 'addr2', width: 10 },
+  {header: 'Col 1', key: 'key', width: 25},
+  {header: 'Col 2', key: 'name', width: 25},
+  {header: 'Col 3', key: 'age'},
+  {header: 'Col 4', key: 'addr1', width: 8},
+  {header: 'Col 5', key: 'addr2', width: 10},
 ];
 
 ws.getCell('A2').value = 'Hello, World!';

@@ -1,6 +1,8 @@
 const fs = require('fs');
-const TableXform = require('../../../../../lib/xlsx/xform/table/table-xform');
+
 const testXformHelper = require('./../test-xform-helper');
+
+const TableXform = verquire('xlsx/xform/table/table-xform');
 
 const expectations = [
   {

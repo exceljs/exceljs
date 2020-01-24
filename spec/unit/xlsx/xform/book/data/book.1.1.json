@@ -9,5 +9,8 @@
   ],
   "properties": {
   	"date1904": true
+  },
+  "calcProperties": {
+    "fullCalcOnLoad": true
   }
 }

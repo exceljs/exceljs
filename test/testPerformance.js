@@ -1,17 +1,17 @@
 const fs = require('fs');
-const Promise = require('bluebird');
 const _ = require('../lib/utils/under-dash.js');
 
 const HrStopwatch = require('./utils/hr-stopwatch');
 
 const Excel = require('../excel');
 
-const { Workbook } = Excel;
-const { WorkbookWriter } = Excel.stream.xlsx;
+const {Workbook} = Excel;
+const {WorkbookWriter} = Excel.stream.xlsx;
 
 if (process.argv[2] === 'help') {
   console.log('Usage:');
   console.log('    node testPerformance resultFilename testFilename');
+  // eslint-disable-next-line no-process-exit
   process.exit(0);
 }
 
@@ -19,18 +19,18 @@ const resultFilename = process.argv[2];
 const testFilename = process.argv[3];
 const sleepTime = 10000;
 
-const resultBook = new WorkbookWriter({ filename: resultFilename });
+const resultBook = new WorkbookWriter({filename: resultFilename});
 const resultSheet = resultBook.addWorksheet('results');
 resultSheet.columns = [
-  { header: 'Count', key: 'count' },
-  { header: 'DocSS', key: 'dss' },
-  { header: 'DocSO', key: 'dso' },
-  { header: 'DocPS', key: 'dps' },
-  { header: 'DocPO', key: 'dpo' },
-  { header: 'StmSS', key: 'sss' },
-  { header: 'StmSO', key: 'sso' },
-  { header: 'StmPS', key: 'sps' },
-  { header: 'StmPO', key: 'spo' },
+  {header: 'Count', key: 'count'},
+  {header: 'DocSS', key: 'dss'},
+  {header: 'DocSO', key: 'dso'},
+  {header: 'DocPS', key: 'dps'},
+  {header: 'DocPO', key: 'dpo'},
+  {header: 'StmSS', key: 'sss'},
+  {header: 'StmSO', key: 'sso'},
+  {header: 'StmPS', key: 'sps'},
+  {header: 'StmPO', key: 'spo'},
 ];
 
 // =========================================================================
@@ -46,6 +46,7 @@ function randomName(length) {
 
   return text.join('');
 }
+
 function randomNum(d) {
   return Math.round(Math.random() * d);
 }
@@ -78,6 +79,7 @@ const styles = ['styled', 'plain'];
 const strings = ['shared', 'own'];
 
 const passes = 3;
+
 function reduceResults(times) {
   // 3 results, sort numerically and return the median
   times.sort((a, b) => a < b);
@@ -102,18 +104,18 @@ function execute(options) {
       : new WorkbookWriter(wbOptions);
   const ws = wb.addWorksheet('data');
   ws.columns = [
-    { header: 'Col 1', key: 'key', width: 25 },
-    { header: 'Col 2', key: 'name', width: 32 },
-    { header: 'Col 3', key: 'age', width: 21 },
-    { header: 'Col 4', key: 'addr1', width: 18 },
-    { header: 'Col 5', key: 'addr2', width: 8 },
-    { header: 'Col 6', key: 'num1', width: 8 },
-    { header: 'Col 7', key: 'num2', width: 8 },
+    {header: 'Col 1', key: 'key', width: 25},
+    {header: 'Col 2', key: 'name', width: 32},
+    {header: 'Col 3', key: 'age', width: 21},
+    {header: 'Col 4', key: 'addr1', width: 18},
+    {header: 'Col 5', key: 'addr2', width: 8},
+    {header: 'Col 6', key: 'num1', width: 8},
+    {header: 'Col 7', key: 'num2', width: 8},
     {
       header: 'Col 8',
       key: 'num3',
       width: 32,
-      style: { font: fonts.comicSansUdB16 },
+      style: {font: fonts.comicSansUdB16},
     },
   ];
   for (let i = 0; i < options.count; i++) {

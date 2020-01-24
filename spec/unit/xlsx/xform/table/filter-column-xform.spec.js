@@ -1,5 +1,6 @@
-const FilterColumnXform = require('../../../../../lib/xlsx/xform/table/filter-column-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const FilterColumnXform = verquire('xlsx/xform/table/filter-column-xform');
 
 const expectations = [
   {
@@ -10,7 +11,9 @@ const expectations = [
     initialModel: {filterButton: true},
     preparedModel: {colId: '0', filterButton: true},
     xml: '<filterColumn colId="0" hiddenButton="0" />',
-    get parsedModel() { return this.initialModel; },
+    get parsedModel() {
+      return this.initialModel;
+    },
     tests: ['prepare', 'render', 'renderIn', 'parse'],
     options: {index: 0},
   },
@@ -22,7 +25,9 @@ const expectations = [
     initialModel: {filterButton: false},
     preparedModel: {colId: '1', filterButton: false},
     xml: '<filterColumn colId="1" hiddenButton="1" />',
-    get parsedModel() { return this.initialModel; },
+    get parsedModel() {
+      return this.initialModel;
+    },
     tests: ['prepare', 'render', 'renderIn', 'parse'],
     options: {index: 1},
   },

@@ -1,7 +1,3 @@
-'use strict';
-
-const { expect } = require('chai');
-
 const tools = require('./tools');
 
 const self = {
@@ -87,6 +83,14 @@ const self = {
       allowBlank: true,
       formulae: [new Date(2016, 0, 1)],
     };
+
+    // two rows of the same validation to test dataValidation optimisation
+    ['A22', 'A23'].forEach(address => {
+      ws.getCell(address).value = tools.concatenateFormula('Five Numbers');
+    });
+    ['B22', 'C22', 'D22', 'E22', 'F22', 'B23', 'C23', 'D23', 'E23', 'F23'].forEach(address => {
+      ws.getCell(address).dataValidation = JSON.parse(JSON.stringify(self.dataValidations.shared));
+    });
   },
 
   checkSheet(wb) {
@@ -129,6 +133,13 @@ const self = {
     expect(ws.getCell('B19').dataValidation).to.deep.equal(
       self.dataValidations.B19
     );
+
+    // two rows of the same validation to test dataValidation optimisation
+    ['B22', 'C22', 'D22', 'E22', 'F22', 'B23', 'C23', 'D23', 'E23', 'F23'].forEach(address =>{
+      expect(ws.getCell(address).dataValidation).to.deep.equal(
+        self.dataValidations.shared
+      );
+    });
   },
 };
 

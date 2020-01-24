@@ -10,5 +10,5 @@
         <sheet name="Hidden" sheetId="2" r:id="rId2" state="hidden"/>
         <sheet name="VeryHidden" sheetId="3" r:id="rId3" state="veryHidden"/>
     </sheets>
-    <calcPr calcId="171027"/>
+    <calcPr calcId="171027" fullCalcOnLoad="1"/>
 </workbook>

@@ -1,14 +1,7 @@
-'use strict';
-
-const chai = require('chai');
-
 const stream = require('stream');
-const verquire = require('../../utils/verquire');
 const testUtils = require('../../utils/index');
 
-const Excel = verquire('excel');
-
-const { expect } = chai;
+const ExcelJS = verquire('exceljs');
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
@@ -23,11 +16,11 @@ const richTextSampleA1 = require('../data/rich-text-sample-a1.json');
 describe('Workbook', () => {
   describe('Styles', () => {
     it('row styles and columns properly', () => {
-      const wb = new Excel.Workbook();
+      const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
       ws.columns = [
-        { header: 'A1', width: 10 },
+        {header: 'A1', width: 10},
         {
           header: 'B1',
           width: 20,
@@ -36,7 +29,7 @@ describe('Workbook', () => {
             alignment: testUtils.styles.alignments[1].alignment,
           },
         },
-        { header: 'C1', width: 30 },
+        {header: 'C1', width: 30},
       ];
 
       ws.getRow(2).font = testUtils.styles.fonts.broadwayRedOutline20;
@@ -51,7 +44,7 @@ describe('Workbook', () => {
       return wb.xlsx
         .writeFile(TEST_XLSX_FILE_NAME)
         .then(() => {
-          const wb2 = new Excel.Workbook();
+          const wb2 = new ExcelJS.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(wb2 => {
@@ -107,7 +100,7 @@ describe('Workbook', () => {
       bufferStream.write(testData);
       bufferStream.end();
 
-      const wb = new Excel.Workbook();
+      const wb = new ExcelJS.Workbook();
       return wb.xlsx.read(bufferStream).then(() => {
         const ws = wb.worksheets[0];
         expect(ws.getCell('A1').value).to.deep.equal(richTextSampleA1);
@@ -116,7 +109,7 @@ describe('Workbook', () => {
     });
 
     it('null cells retain style', () => {
-      const wb = new Excel.Workbook();
+      const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
       // one value here
@@ -129,7 +122,7 @@ describe('Workbook', () => {
       return wb.xlsx
         .writeFile(TEST_XLSX_FILE_NAME)
         .then(() => {
-          const wb2 = new Excel.Workbook();
+          const wb2 = new ExcelJS.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(wb2 => {
@@ -145,7 +138,7 @@ describe('Workbook', () => {
     });
 
     it('sets row styles', () => {
-      const wb = new Excel.Workbook();
+      const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('basket');
 
       ws.getCell('A1').value = 5;
@@ -216,7 +209,7 @@ describe('Workbook', () => {
     });
 
     it('sets col styles', () => {
-      const wb = new Excel.Workbook();
+      const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('basket');
 
       ws.getCell('A1').value = 5;

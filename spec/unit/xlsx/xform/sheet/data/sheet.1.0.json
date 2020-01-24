@@ -10,7 +10,8 @@
     "firstPageNumber": 5, "useFirstPageNumber": true, "usePrinterDefaults": true, "copies": 3,
     "paperSize": 9, "orientation":"landscape", "horizontalDpi": 300, "verticalDpi": 300,
     "fitToPage": true, "fitToHeight": 5, "fitToWidth": 7, "pageOrder": "overThenDown", "scale": 90,
-    "blackAndWhite": true, "cellComments": "atEnd", "draft": true, "errors": "dash"
+    "blackAndWhite": true, "cellComments": "atEnd", "draft": true, "errors": "dash",
+    "horizontalCentered": true, "verticalCentered": true, "showGridLines": true, "showRowColHeaders": true
   },
   "cols": [{"min": 2, "max": 2, "width": 10.15625, "bestFit": true}],
   "rows": [
@@ -62,5 +63,6 @@
   ],
   "media": [],
   "rowBreaks": [],
-  "tables": []
+  "tables": [],
+  "conditionalFormattings": []
 }

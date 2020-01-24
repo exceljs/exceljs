@@ -8,3 +8,4 @@ script:
   - npm test
 notifications:
   email: false
+  _webhooks: _

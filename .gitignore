@@ -21,6 +21,9 @@ tmp/*
 # WebStorm
 .idea
 
+# VS Code
+.vscode
+
 # Intellij IDEA
 exceljs.iml
 
@@ -54,3 +57,9 @@ package-lock.json
 
 # optional switch off tests
 .disable-test-*
+
+# jasmine
+_SpecRunner.html
+
+# Mac files
+.DS_Store

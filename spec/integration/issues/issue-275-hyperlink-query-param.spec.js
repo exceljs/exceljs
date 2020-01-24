@@ -1,12 +1,4 @@
-'use strict';
-
-const chai = require('chai');
-
-const verquire = require('../../utils/verquire');
-
-const Excel = verquire('excel');
-
-const { expect } = chai;
+const ExcelJS = verquire('exceljs');
 
 // this file to contain integration tests created from github issues
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
@@ -17,7 +9,7 @@ describe('github issues', () => {
       filename: TEST_XLSX_FILE_NAME,
       useStyles: true,
     };
-    const wb = new Excel.stream.xlsx.WorkbookWriter(options);
+    const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
     const ws = wb.addWorksheet('Sheet1');
 
     const hyperlink = {
@@ -32,7 +24,7 @@ describe('github issues', () => {
     return wb
       .commit()
       .then(() => {
-        const wb2 = new Excel.Workbook();
+        const wb2 = new ExcelJS.Workbook();
         return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
       })
       .then(wb2 => {

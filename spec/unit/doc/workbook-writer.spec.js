@@ -1,14 +1,12 @@
-'use strict';
-
 const Stream = require('stream');
 
-const { expect } = require('chai');
-
-const Excel = require('../../../lib/exceljs.nodejs');
+const Excel = verquire('exceljs');
 
 describe('Workbook Writer', () => {
   it('returns undefined for non-existant sheet', () => {
-    const stream = new Stream.Writable({ write: function noop() {} });
+    const stream = new Stream.Writable({
+      write: function noop() {},
+    });
     const wb = new Excel.stream.xlsx.WorkbookWriter({
       stream,
     });

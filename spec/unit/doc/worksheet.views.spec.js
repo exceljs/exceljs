@@ -1,6 +1,4 @@
-const { expect } = require('chai');
-
-const Excel = require('../../../lib/exceljs.nodejs');
+const Excel = verquire('exceljs');
 
 describe('Worksheet', () => {
   describe('Views', () => {
@@ -67,9 +65,9 @@ describe('Worksheet', () => {
       const ws = wb.addWorksheet('sheet1');
 
       ws.columns = [
-        { key: 'id', width: 10, outlineLevel: 1 },
-        { key: 'name', width: 32, outlineLevel: 2 },
-        { key: 'dob', width: 10, outlineLevel: 3 },
+        {key: 'id', width: 10, outlineLevel: 1},
+        {key: 'name', width: 32, outlineLevel: 2},
+        {key: 'dob', width: 10, outlineLevel: 3},
       ];
 
       expect(ws.getColumn(1).outlineLevel).to.equal(1);

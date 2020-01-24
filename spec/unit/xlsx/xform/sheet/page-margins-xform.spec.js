@@ -1,7 +1,6 @@
-'use strict';
-
-const PageMarginsXform = require('../../../../../lib/xlsx/xform/sheet/page-margins-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const PageMarginsXform = verquire('xlsx/xform/sheet/page-margins-xform');
 
 const expectations = [
   {

@@ -1,9 +1,5 @@
-'use strict';
-
-const { expect } = require('chai');
-
-const WorksheetWriter = require('../../../lib/stream/xlsx/worksheet-writer');
-const StreamBuf = require('../../../lib/utils/stream-buf');
+const WorksheetWriter = verquire('stream/xlsx/worksheet-writer');
+const StreamBuf = verquire('utils/stream-buf');
 
 describe('Workbook Writer', () => {
   it('generates valid xml even when there is no data', () =>

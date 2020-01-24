@@ -1,8 +1,4 @@
-'use strict';
-
-const { expect } = require('chai');
-
-const XmlStream = require('../../../lib/utils/xml-stream');
+const XmlStream = verquire('utils/xml-stream');
 
 describe('XmlStream', () => {
   it('Writes simple XML doc', () => {
@@ -62,9 +58,9 @@ describe('XmlStream', () => {
     xmlStream.openNode('root');
     xmlStream.openNode('l1');
     xmlStream.addAttribute('stuff', 'this & that');
-    xmlStream.openNode('l2', { foo: '<bar>' });
+    xmlStream.openNode('l2', {foo: '<bar>'});
     xmlStream.closeNode();
-    xmlStream.leafNode('l2', { quote: '"this"' });
+    xmlStream.leafNode('l2', {quote: '"this"'});
     xmlStream.closeNode();
     xmlStream.closeNode();
     expect(xmlStream.xml).to.equal(

@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 const HrStopwatch = require('./utils/hr-stopwatch');
 
 const Workbook = require('../lib/doc/workbook');
@@ -15,7 +13,7 @@ ws.addRow(['une', 'deux', 'trois', 'quatre']);
 ws.addRow(['uno', 'due', 'tre', 'quatro']);
 
 ws.mergeCells('B2:C3');
-ws.getCell('B2').alignment = { horizontal: 'center', vertical: 'middle' };
+ws.getCell('B2').alignment = {horizontal: 'center', vertical: 'middle'};
 
 const stopwatch = new HrStopwatch();
 stopwatch.start();

@@ -1,7 +1,6 @@
-'use strict';
-
-const WorkbookPropertiesXform = require('../../../../../lib/xlsx/xform/book/workbook-properties-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const WorkbookPropertiesXform = verquire('xlsx/xform/book/workbook-properties-xform');
 
 const expectations = [
   {
@@ -20,10 +19,10 @@ const expectations = [
     create() {
       return new WorkbookPropertiesXform();
     },
-    preparedModel: { date1904: true },
+    preparedModel: {date1904: true},
     xml:
       '<workbookPr date1904="1" defaultThemeVersion="164011" filterPrivacy="1"></workbookPr>',
-    parsedModel: { date1904: true },
+    parsedModel: {date1904: true},
     tests: ['render', 'renderIn', 'parse'],
   },
 ];

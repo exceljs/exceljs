@@ -1,11 +1,7 @@
-'use strict';
-
 const fs = require('fs');
-const { promisify } = require('util');
-const { expect } = require('chai');
-const verquire = require('../../utils/verquire');
+const {promisify} = require('util');
 
-const Excel = verquire('excel');
+const ExcelJS = verquire('exceljs');
 
 const IMAGE_FILENAME = `${__dirname}/../data/image.png`;
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
@@ -17,7 +13,7 @@ const fsReadFileAsync = promisify(fs.readFile);
 describe('Workbook', () => {
   describe('Images', () => {
     it('stores background image', () => {
-      const wb = new Excel.Workbook();
+      const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
       let wb2;
       let ws2;
@@ -32,7 +28,7 @@ describe('Workbook', () => {
       return wb.xlsx
         .writeFile(TEST_XLSX_FILE_NAME)
         .then(() => {
-          wb2 = new Excel.Workbook();
+          wb2 = new ExcelJS.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(() => {
@@ -50,7 +46,7 @@ describe('Workbook', () => {
     });
 
     it('stores embedded image and hyperlink', () => {
-      const wb = new Excel.Workbook();
+      const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
       let wb2;
       let ws2;
@@ -70,7 +66,7 @@ describe('Workbook', () => {
       return wb.xlsx
         .writeFile(TEST_XLSX_FILE_NAME)
         .then(() => {
-          wb2 = new Excel.Workbook();
+          wb2 = new ExcelJS.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(() => {
@@ -101,7 +97,7 @@ describe('Workbook', () => {
     });
 
     it('stores embedded image with oneCell', () => {
-      const wb = new Excel.Workbook();
+      const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
       let wb2;
       let ws2;
@@ -112,15 +108,15 @@ describe('Workbook', () => {
       });
 
       ws.addImage(imageId, {
-        tl: { col: 0.1125, row: 0.4 },
-        br: { col: 2.101046875, row: 3.4 },
+        tl: {col: 0.1125, row: 0.4},
+        br: {col: 2.101046875, row: 3.4},
         editAs: 'oneCell',
       });
 
       return wb.xlsx
         .writeFile(TEST_XLSX_FILE_NAME)
         .then(() => {
-          wb2 = new Excel.Workbook();
+          wb2 = new ExcelJS.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(() => {
@@ -142,7 +138,7 @@ describe('Workbook', () => {
     });
 
     it('stores embedded image with one-cell-anchor', () => {
-      const wb = new Excel.Workbook();
+      const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
       let wb2;
       let ws2;
@@ -153,15 +149,15 @@ describe('Workbook', () => {
       });
 
       ws.addImage(imageId, {
-        tl: { col: 0.1125, row: 0.4 },
-        ext: { width: 100, height: 100 },
+        tl: {col: 0.1125, row: 0.4},
+        ext: {width: 100, height: 100},
         editAs: 'oneCell',
       });
 
       return wb.xlsx
         .writeFile(TEST_XLSX_FILE_NAME)
         .then(() => {
-          wb2 = new Excel.Workbook();
+          wb2 = new ExcelJS.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
         .then(() => {
@@ -178,6 +174,58 @@ describe('Workbook', () => {
           expect(imageDesc.range.editAs).to.equal('oneCell');
           expect(imageDesc.range.ext.width).to.equal(100);
           expect(imageDesc.range.ext.height).to.equal(100);
+
+          const image = wb2.getImage(imageDesc.imageId);
+          expect(Buffer.compare(imageData, image.buffer)).to.equal(0);
+        });
+    });
+
+    it('stores embedded image with hyperlinks', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+      let wb2;
+      let ws2;
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'jpeg',
+      });
+
+      ws.addImage(imageId, {
+        tl: {col: 0.1125, row: 0.4},
+        ext: {width: 100, height: 100},
+        editAs: 'oneCell',
+        hyperlinks: {
+          hyperlink: 'http://www.somewhere.com',
+          tooltip: 'www.somewhere.com',
+        },
+      });
+
+      return wb.xlsx
+        .writeFile(TEST_XLSX_FILE_NAME)
+        .then(() => {
+          wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(() => {
+          ws2 = wb2.getWorksheet('blort');
+          expect(ws2).to.not.be.undefined();
+
+          return fsReadFileAsync(IMAGE_FILENAME);
+        })
+        .then(imageData => {
+          const images = ws2.getImages();
+          expect(images.length).to.equal(1);
+
+          const imageDesc = images[0];
+          expect(imageDesc.range.editAs).to.equal('oneCell');
+          expect(imageDesc.range.ext.width).to.equal(100);
+          expect(imageDesc.range.ext.height).to.equal(100);
+
+          expect(imageDesc.range.hyperlinks).to.deep.equal({
+            hyperlink: 'http://www.somewhere.com',
+            tooltip: 'www.somewhere.com',
+          });
 
           const image = wb2.getImage(imageDesc.imageId);
           expect(Buffer.compare(imageData, image.buffer)).to.equal(0);

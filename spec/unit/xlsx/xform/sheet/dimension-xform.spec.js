@@ -1,7 +1,6 @@
-'use strict';
-
-const DimensionXform = require('../../../../../lib/xlsx/xform/sheet/dimension-xform');
 const testXformHelper = require('./../test-xform-helper');
+
+const DimensionXform = verquire('xlsx/xform/sheet/dimension-xform');
 
 const expectations = [
   {

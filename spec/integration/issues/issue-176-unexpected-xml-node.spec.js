@@ -1,16 +1,8 @@
-'use strict';
-
-const chai = require('chai');
-
-const verquire = require('../../utils/verquire');
-
-const Excel = verquire('excel');
-
-const { expect } = chai;
+const ExcelJS = verquire('exceljs');
 
 describe('github issues', () => {
   it('issue 176 - Unexpected xml node in parseOpen', () => {
-    const wb = new Excel.Workbook();
+    const wb = new ExcelJS.Workbook();
     return wb.xlsx
       .readFile('./spec/integration/data/test-issue-176.xlsx')
       .then(() => {

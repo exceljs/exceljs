@@ -1,18 +1,27 @@
-// const semver = require('semver');
-//
-// const useSource = semver.gte(process.version, 'v6.0.0');
+// this module allows the specs to switch between source code and
+// transpiled code depending on the environment variable EXCEL_BUILD
 
-const useSource = process.env.EXCEL_NATIVE === 'yes';
+/* eslint-disable import/no-dynamic-require */
 
-// this function allows the specs to switch between source code and
-// transpiled code depending on the environment variable EXCEL_NATIVE
-module.exports = function verquire(path) {
-  if (path === 'excel') {
-    return useSource
-      ? require('../../lib/exceljs.nodejs') // eslint-disable-line
-      : require('../../dist/es5'); // eslint-disable-line
+const libs = {};
+const basePath = (function() {
+  switch (process.env.EXCEL_BUILD) {
+    case 'es5':
+      require('core-js/modules/es.promise');
+      require('core-js/modules/es.object.assign');
+      require('core-js/modules/es.object.keys');
+      require('regenerator-runtime/runtime');
+      libs.exceljs = require('../../dist/es5');
+      return '../../dist/es5/';
+    default:
+      libs.exceljs = require('../../lib/exceljs.nodejs');
+      return '../../lib/';
   }
-  return useSource
-    ? require('../../lib/' + path) // eslint-disable-line
-    : require('../../dist/es5/' + path); // eslint-disable-line
+})();
+
+module.exports = function verquire(path) {
+  if (!libs[path]) {
+    libs[path] = require(basePath + path);
+  }
+  return libs[path];
 };

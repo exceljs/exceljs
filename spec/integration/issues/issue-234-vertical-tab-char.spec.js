@@ -1,19 +1,11 @@
-'use strict';
-
-const chai = require('chai');
-
-const verquire = require('../../utils/verquire');
-
-const Excel = verquire('excel');
-
-const { expect } = chai;
+const ExcelJS = verquire('exceljs');
 
 // this file to contain integration tests created from github issues
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 describe('github issues', () => {
   it('issue 234 - Broken XLSX because of "vertical tab" ascii character in a cell', () => {
-    const wb = new Excel.Workbook();
+    const wb = new ExcelJS.Workbook();
     const ws = wb.addWorksheet('Sheet1');
 
     // Start of Heading
@@ -25,7 +17,7 @@ describe('github issues', () => {
     return wb.xlsx
       .writeFile(TEST_XLSX_FILE_NAME)
       .then(() => {
-        const wb2 = new Excel.Workbook();
+        const wb2 = new ExcelJS.Workbook();
         return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
       })
       .then(wb2 => {
