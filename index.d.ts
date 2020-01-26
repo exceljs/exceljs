@@ -388,7 +388,7 @@ export interface CellModel {
 	text?: string;
 	hyperlink?: string;
 	value?: CellValue;
-	master: Cell|string;
+	master: string;
 	formula?: string;
 	sharedFormula?: string;
 	result?: string | number | any;
