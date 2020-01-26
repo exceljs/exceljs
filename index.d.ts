@@ -407,7 +407,7 @@ export interface Cell extends Style, Address {
 	readonly text: string;
 	readonly fullAddress: {
 		sheetName: string;
-		address: Address;
+		address: string;
 		row: Row;
 		col: Column;
 	};
