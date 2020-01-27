@@ -38,6 +38,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/1071">fix issue #899 Support for inserting pictures with hyperlinks #1071</a>.
     Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1089">Update TS definition to reference proper internal libraries #1089</a>.
+    Many thanks to <a href="https://github.com/jakawell">Jesse Kawell</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
