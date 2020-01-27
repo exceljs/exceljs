@@ -41,6 +41,7 @@
     "test:end-to-end:es5": "export EXCEL_BUILD=es5 && npm run test:end-to-end",
     "test:dist": "mocha --require spec/config/setup spec/dist --recursive",
     "test:manual": "node spec/manual/app.js",
+    "test:typescript": "mocha -r ts-node/register spec/typescript/**/*.spec.ts",
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
     "lint:fix": "prettier-eslint --write \"**/*.js\"",
@@ -101,6 +102,8 @@
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
+    "@types/chai": "^4.2.7",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^10.12.0",
     "babelify": "^10.0.0",
     "browserify": "^16.5.0",
@@ -132,6 +135,8 @@
     "regenerator-runtime": "^0.13.3",
     "request": "^2.88.0",
     "semver": "^5.6.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5",
     "uglify-js": "^3.4.9"
   }
 }
