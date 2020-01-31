@@ -474,7 +474,7 @@ export interface Cell extends Style, Address {
 	release(): void;
 	addMergeRef(): void;
 	releaseMergeRef(): void;
-	merge(master: Cell): void;
+	merge(master: Cell, ignoreStyle?: boolean): void;
 	unmerge(): void;
 	isMergedTo(master: Cell): boolean;
 	toString(): string;
@@ -1117,6 +1117,16 @@ export interface Worksheet {
 	mergeCells(v: [string, string, string]): void;
 	mergeCells(v: [number, number, number, number]): void;
 	mergeCells(v: [number, number, number, number, string]): void;
+	mergeCellsWithoutStyle(): void;
+	mergeCellsWithoutStyle(v: Range): void;
+	mergeCellsWithoutStyle(v: string): void;
+	mergeCellsWithoutStyle(v: Location): void;
+	mergeCellsWithoutStyle(top: number, left: number, bottom: number, right: number, sheetName?: string): void;
+	mergeCellsWithoutStyle(tl: string, br: string, sheetName?: string): void;
+	mergeCellsWithoutStyle(v: [string, string]): void;
+	mergeCellsWithoutStyle(v: [string, string, string]): void;
+	mergeCellsWithoutStyle(v: [number, number, number, number]): void;
+	mergeCellsWithoutStyle(v: [number, number, number, number, string]): void;
 
 	/**
 	 * unmerging the cells breaks the style links
