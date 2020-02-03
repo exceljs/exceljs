@@ -606,7 +606,7 @@ describe('Workbook', () => {
           });
       });
 
-      it('Duplicate rows shifting properly', () => {
+      it('Duplicate rows replacing properly', () => {
         const wb = new ExcelJS.Workbook();
         const ws = wb.addWorksheet('duplicateTest');
         ws.getCell('A1').value = 'OneInfo';
@@ -628,6 +628,56 @@ describe('Workbook', () => {
             expect(ws2.getCell('A2').value).to.equal('OneInfo');
             expect(ws2.getCell('A3').value).to.equal('OneInfo');
             expect(ws2.getCell('A4').value).to.equal('FourInfo');
+          });
+      });
+      
+      it('Duplicate rows shifting properly', () => {
+        const wb = new ExcelJS.Workbook();
+        const ws = wb.addWorksheet('duplicateTest');
+        ws.getCell('A1').value = 'OneInfo';
+        ws.getCell('A2').value = 'TwoInfo';
+        ws.getCell('A3').value = 'ThreeInfo';
+        ws.getCell('A4').value = 'FourInfo';
+        ws.duplicateRow(1,2,true);
+
+        return wb.xlsx
+          .writeFile(TEST_XLSX_FILE_NAME)
+          .then(() => {
+            const wb2 = new ExcelJS.Workbook();
+            return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+          })
+          .then(wb2 => {
+            const ws2 = wb2.getWorksheet('duplicateTest');
+
+            expect(ws2.getCell('A1').value).to.equal('OneInfo');
+            expect(ws2.getCell('A2').value).to.equal('OneInfo');
+            expect(ws2.getCell('A3').value).to.equal('OneInfo');
+            expect(ws2.getCell('A4').value).to.equal('TwoInfo');
+          });
+      });
+
+      it('Duplicate rows with height properly', () => {
+        const wb = new ExcelJS.Workbook();
+        const ws = wb.addWorksheet('duplicateTest');
+        ws.getCell('A1').value = 'OneInfo';
+        ws.getCell('A2').value = 'TwoInfo';
+        ws.getRow(1).height = 25;
+        ws.getRow(2).height = 15;
+        ws.duplicateRow(1,1,true);
+        
+        return wb.xlsx
+          .writeFile(TEST_XLSX_FILE_NAME)
+          .then(() => {
+            const wb2 = new ExcelJS.Workbook();
+            return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+          })
+          .then(wb2 => {
+            const ws2 = wb2.getWorksheet('duplicateTest');
+
+            expect(ws2.getCell('A1').value).to.equal('OneInfo');
+            expect(ws2.getCell('A2').value).to.equal('OneInfo');
+            expect(ws2.getRow(1).height).to.equal(ws2.getRow(2).height);
+            expect(ws2.getRow(1).height).to.not.equal(ws2.getRow(3).height);
           });
       });
     });
