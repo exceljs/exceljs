@@ -13,8 +13,8 @@ const ExcelJS = proxyquire('../../../lib/exceljs.nodejs.js', {
   },
 });
 
-describe('pr 1093 whole column defined names', () => {
-  it('Should be able to read this file', (done) => {
+describe('pr 1093', () => {
+  it('Should fail with error', (done) => {
     const stream = fs.createReadStream(
       path.join(__dirname, '../data/test-pr-1093.xlsx')
     );
