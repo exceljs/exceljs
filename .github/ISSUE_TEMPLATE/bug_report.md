@@ -55,8 +55,16 @@ describe('Bug issue test', () => {
 
 ```
 
+### possible soluion (optionally):
+
+```javascript
+
+```
+
 
 ## The current behaviour:
 
 
 ## The expected behaviour:
+
+(btw. want You to create a Pull Request and become to be a Contributor?)
