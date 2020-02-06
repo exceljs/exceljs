@@ -386,7 +386,7 @@ export interface CellModel {
 	text?: string;
 	hyperlink?: string;
 	value?: CellValue;
-	master: Cell;
+	master: string;
 	formula?: string;
 	sharedFormula?: string;
 	result?: string | number | any;
@@ -405,7 +405,7 @@ export interface Cell extends Style, Address {
 	readonly text: string;
 	readonly fullAddress: {
 		sheetName: string;
-		address: Address;
+		address: string;
 		row: Row;
 		col: Column;
 	};
@@ -612,9 +612,22 @@ export interface Column {
 	 * Column letter key
 	 */
 	readonly letter: string;
-}
+	readonly number: number;
+	readonly worksheet: Worksheet;
+	readonly isCustomWidth: boolean;
+	readonly headers: string[];
+	readonly isDefault: boolean;
+	readonly headerCount: number;
+	border: Partial<Borders>;
+	fill: Fill;
+	numFmt: string
+	font: Partial<Font>;
+	alignment: Partial<Alignment>;
+	protection: Partial<Protection>;
 
-export interface ColumnExtension extends Partial<Style> {
+	toString(): string
+	equivalentTo(other: Column): boolean
+
 	/**
 	 * indicate the collapsed state based on outlineLevel
 	 */
@@ -629,8 +642,9 @@ export interface ColumnExtension extends Partial<Style> {
 	 * Iterate over all current cells in this column including empty cells
 	 */
 	eachCell(opt: { includeEmpty: boolean }, callback: (cell: Cell, rowNumber: number) => void): void;
-}
 
+	defn: any; //todo
+}
 export interface PageSetup {
 	/**
 	 * Whitespace on the borders of the page. Units are inches.
@@ -1014,7 +1028,7 @@ export interface Worksheet {
 	/**
 	 * Access an individual columns by key, letter and 1-based column number
 	 */
-	getColumn(indexOrKey: number | string): Partial<Column> & ColumnExtension;
+	getColumn(indexOrKey: number | string): Partial<Column>;
 
 	/**
 	 * Cut one or more columns (columns to the right are shifted left)
