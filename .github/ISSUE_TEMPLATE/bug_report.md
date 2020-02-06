@@ -1,70 +1,35 @@
 ---
-name: Bug report
+name: 🐛 Bug report
 about: Create a report to help us improve
 title: "[BUG] XYZ"
 labels: bug
-assignees: ''
-
 ---
 
-<!--
-Bug description + screenshots
--->
+## 🐛 Bug Report
 
-Lib version:
+<!-- A clear and concise description of what the bug is. -->
+
+Lib version: X.Y.Z
 
 ## Steps To Reproduce
 
-1.
-2.
-3.
-
-### code example:
+<!-- The exact steps required to reproduce the issue, ideally with a code example -->
 
 ```javascript
-/* please paste code here */
+const wb = new ExcelJS.Workbook();
+const ws = wb.addWorksheet('XYZ');
 
+ws.getCell('A1').value = 7;
+expect(ws.getCell('A1').value).to.equal(7);
 ```
-
-### test code (optionally, helpful):
-
-```javascript
-/* if you have or could write one It should help us quickly a lot :) */ 
-
-/* example test code: */
-
-const path = require('path');
-const ExcelJS = require('exceljs');
-
-describe('Bug issue test', () => {
-    it('issue #xyz test - TOPIC', () => { /* it help us in future grab more information when test will faild again */
-
-      // prepare
-      const wb = new ExcelJS.Workbook();
-      const ws = wb.addWorksheet('XYZ');
-
-      // action
-      ws.getCell('A1').value = 7;
-       /* ... */      
-
-
-      // checks
-      expect(ws.getCell('A1').value).to.equal(7);
-    });
-});
-
-```
-
-### possible soluion (optionally):
-
-```javascript
-
-```
-
-
-## The current behaviour:
-
 
 ## The expected behaviour:
 
-(btw. want You to create a Pull Request and become to be a Contributor?)
+<!-- A clear and concise description of what you expected to happen. -->
+
+
+## Possible solution (optional, but very helpful):
+
+```javascript
+
+```
