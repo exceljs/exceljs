@@ -470,5 +470,32 @@ describe('WorkbookWriter', () => {
       const imageData = await fsReadFileAsync(IMAGE_FILENAME);
       expect(Buffer.compare(imageData, image.buffer)).to.equal(0);
     });
+
+    it('with background image where worksheet is commited in advance', async () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws = wb.addWorksheet('Hello');
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'jpeg',
+      });
+      ws.getCell('A1').value = 'Hello, World!';
+      ws.addBackgroundImage(imageId);
+
+      await ws.commit();
+      await wb.commit();
+
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      const ws2 = wb2.getWorksheet('Hello');
+
+      const backgroundId2 = ws2.getBackgroundImageId();
+      const image = wb2.getImage(backgroundId2);
+      const imageData = await fsReadFileAsync(IMAGE_FILENAME);
+      expect(Buffer.compare(imageData, image.buffer)).to.equal(0);
+    });
   });
 });
