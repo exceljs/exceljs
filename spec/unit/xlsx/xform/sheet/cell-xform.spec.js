@@ -174,6 +174,55 @@ const expectations = [
     },
   },
   {
+    title: 'Shared String with RichText',
+    create() {
+      return new CellXform();
+    },
+    initialModel: {
+      address: 'A1',
+      type: Enums.ValueType.RichText,
+      value: {
+        richText: [
+          {font: {color: {argb: 'FF0000'}}, text: 'red'},
+          {font: {color: {argb: '00FF00'}}, text: 'green'},
+        ],
+      },
+    },
+    preparedModel: {
+      address: 'A1',
+      type: Enums.ValueType.RichText,
+      value: {
+        richText: [
+          {font: {color: {argb: 'FF0000'}}, text: 'red'},
+          {font: {color: {argb: '00FF00'}}, text: 'green'},
+        ],
+      },
+      ssId: 0,
+    },
+    xml: '<c r="A1" t="s"><v>0</v></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.String,
+      value: 0,
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.RichText,
+      value: {
+        richText: [
+          {font: {color: {argb: 'FF0000'}}, text: 'red'},
+          {font: {color: {argb: '00FF00'}}, text: 'green'},
+        ],
+      },
+    },
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
+    options: {
+      sharedStrings: new SharedStringsXform(),
+      hyperlinkMap: fakeHyperlinkMap,
+      styles: fakeStyles,
+    },
+  },
+  {
     title: 'Date',
     create() {
       return new CellXform();
