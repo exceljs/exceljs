@@ -1797,8 +1797,8 @@ It can have one of the following values:
 
 | Value     | Description |
 | --------- | ----------- |
-| undefined | This is the default. It specifies the image will be moved and sized with cells |
-| oneCell   | Image will be moved with cells but not sized |
+| undefined | It specifies the image will be moved and sized with cells |
+| oneCell   | This is the default. Image will be moved with cells but not sized |
 | absolute  | Image will not be moved or sized with cells |
 
 ```javascript
