@@ -53,6 +53,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/1107">fix some errors and typos in readme #1107</a>.
     Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1112">Update issue templates #1112</a>.
+    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
+  </li>
 </ul>
 
 # Contributions
