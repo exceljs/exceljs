@@ -194,7 +194,7 @@ describe('Workbook', () => {
       ws.addImage(imageId, {
         tl: {col: 0.1125, row: 0.4},
         ext: {width: 100, height: 100},
-        editAs: 'oneCell',
+        editAs: 'absolute',
         hyperlinks: {
           hyperlink: 'http://www.somewhere.com',
           tooltip: 'www.somewhere.com',
@@ -218,7 +218,7 @@ describe('Workbook', () => {
           expect(images.length).to.equal(1);
 
           const imageDesc = images[0];
-          expect(imageDesc.range.editAs).to.equal('oneCell');
+          expect(imageDesc.range.editAs).to.equal('absolute');
           expect(imageDesc.range.ext.width).to.equal(100);
           expect(imageDesc.range.ext.height).to.equal(100);
 
