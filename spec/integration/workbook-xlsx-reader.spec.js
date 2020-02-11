@@ -276,7 +276,7 @@ describe('WorkbookReader', () => {
           },
           err => {
             expect(err.message).to.equal(
-              'Text data outside of root node.\nLine: 1\nColumn: 1\nChar: f'
+              '3:1: text data outside of root node.'
             );
             // Wait a tick before checking for an unhandled rejection
             return new Promise(setImmediate);
