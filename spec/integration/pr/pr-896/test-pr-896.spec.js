@@ -14,9 +14,9 @@ const {expect} = chai;
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 const RT_ARR = [
-  {text: 'First Line:\r\n', font: {bold: true}},
-  {text: 'Second Line\r\n'},
-  {text: 'Third Line\r\n'},
+  {text: 'First Line:\n', font: {bold: true}},
+  {text: 'Second Line\n'},
+  {text: 'Third Line\n'},
   {text: 'Last Line'},
 ];
 const TEST_VALUE = {
@@ -29,8 +29,12 @@ const TEST_NOTE = {
 describe('pr related issues', () => {
   describe('pr 896 add xml:space="preserve" for all whitespaces', () => {
     it('should store cell text and comment with leading new line', () => {
-      const properties = tools.fix(require('../../../utils/data/sheet-properties.json'));
-      const pageSetup = tools.fix(require('../../../utils/data/page-setup.json'));
+      const properties = tools.fix(
+        require('../../../utils/data/sheet-properties.json')
+      );
+      const pageSetup = tools.fix(
+        require('../../../utils/data/page-setup.json')
+      );
 
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('sheet1', {
