@@ -46,6 +46,10 @@ npm install exceljs
     Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution.
   </li>
   <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1104">Fix #1103: `editAs` not working #1104</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
     Merged <a href="https://github.com/exceljs/exceljs/pull/1105">Fix to issue #1101 #1105</a>.
     Many thanks to <a href="https://github.com/cbeltrangomez84">Carlos Andres Beltran Gomez</a> for this contribution.
   </li>
