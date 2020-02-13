@@ -126,7 +126,7 @@
     "grunt-browserify": "^5.3.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jasmine": "^2.1.0",
-    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-terser": "^1.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.5",
@@ -138,7 +138,6 @@
     "request": "^2.88.0",
     "semver": "^5.6.0",
     "ts-node": "^8.6.2",
-    "typescript": "^3.7.5",
-    "uglify-js": "^3.4.9"
+    "typescript": "^3.7.5"
   }
 }
