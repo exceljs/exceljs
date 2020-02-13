@@ -3,7 +3,7 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-terser');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
@@ -46,9 +46,11 @@ module.exports = function(grunt) {
         dest: './build/web/exceljs.spec.js',
       },
     },
-    uglify: {
+    terser: {
       options: {
-        banner: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+        output: {
+          preamble: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+        },
       },
       dist: {
         files: {
@@ -92,6 +94,6 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('build', ['babel', 'browserify', 'uglify', 'copy']);
-  grunt.registerTask('ug', ['uglify']);
+  grunt.registerTask('build', ['babel', 'browserify', 'terser', 'copy']);
+  grunt.registerTask('ug', ['terser']);
 };
