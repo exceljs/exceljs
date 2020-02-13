@@ -131,8 +131,6 @@ const its = {
           ],
         });
         const saxStream = new SAXStream();
-        saxStream.initialize();
-
         xform
           .parse(saxStream)
           .then(model => {
@@ -159,7 +157,6 @@ const its = {
         const result = getExpectation(expectation, 'parsedModel');
 
         const saxStream = new SAXStream();
-        saxStream.initialize();
         const xform = expectation.create();
 
         xform
