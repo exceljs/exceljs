@@ -6,7 +6,10 @@ describe('Worksheet', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet();
 
-      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [[2, 3], [3, 4]]);
+      ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [
+        [2, 3],
+        [3, 4],
+      ]);
       expect(ws.getCell('A1').value).to.deep.equal({
         formula: 'ROW()+COLUMN()',
         shareType: 'shared',
@@ -33,7 +36,10 @@ describe('Worksheet', () => {
 
       ws.getCell('A1').value = 1;
       ws.getCell('B1').value = 2;
-      ws.fillFormula('A2:B3', 'A1', [[1, 2], [1, 2]]);
+      ws.fillFormula('A2:B3', 'A1', [
+        [1, 2],
+        [1, 2],
+      ]);
       expect(ws.getCell('A2').value).to.deep.equal({
         formula: 'A1',
         shareType: 'shared',

@@ -209,8 +209,7 @@ describe('Workbook', () => {
     const wb = new Excel.Workbook();
     const sheet = wb.addWorksheet('first');
 
-    wb.eachSheet(() => {
-    });
+    wb.eachSheet(() => {});
     const numSheets = wb.worksheets.length;
 
     expect(numSheets).to.equal(1);
@@ -233,25 +232,38 @@ describe('Workbook', () => {
       ws.getCell('A2').value = '2.1';
       ws.getCell('A2').alignment = testUtils.styles.namedAlignments.topLeft;
       ws.getCell('B2').value = '2.2';
-      ws.getCell('B2').alignment = testUtils.styles.namedAlignments.middleCentre;
+      ws.getCell('B2').alignment =
+        testUtils.styles.namedAlignments.middleCentre;
       ws.getCell('C2').value = '2.3';
       ws.getCell('C2').alignment = testUtils.styles.namedAlignments.bottomRight;
       ws.getRow(2).numFmt = testUtils.styles.numFmts.numFmt2;
 
       ws.duplicateRow(1, 2, true);
-      expect(ws.getRow(1).values).to.deep.equal([,'1.1', '1.2', '1.3']);
-      expect(ws.getRow(2).values).to.deep.equal([,'1.1', '1.2', '1.3']);
-      expect(ws.getRow(3).values).to.deep.equal([,'1.1', '1.2', '1.3']);
-      expect(ws.getRow(4).values).to.deep.equal([,'2.1', '2.2', '2.3']);
+      expect(ws.getRow(1).values).to.deep.equal([, '1.1', '1.2', '1.3']);
+      expect(ws.getRow(2).values).to.deep.equal([, '1.1', '1.2', '1.3']);
+      expect(ws.getRow(3).values).to.deep.equal([, '1.1', '1.2', '1.3']);
+      expect(ws.getRow(4).values).to.deep.equal([, '2.1', '2.2', '2.3']);
 
       for (let i = 1; i <= 3; i++) {
-        expect(ws.getCell(`A${i}`).font).to.deep.equal(testUtils.styles.fonts.arialBlackUI14);
-        expect(ws.getCell(`B${i}`).font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
-        expect(ws.getCell(`C${i}`).fill).to.deep.equal(testUtils.styles.fills.redDarkVertical);
+        expect(ws.getCell(`A${i}`).font).to.deep.equal(
+          testUtils.styles.fonts.arialBlackUI14
+        );
+        expect(ws.getCell(`B${i}`).font).to.deep.equal(
+          testUtils.styles.fonts.comicSansUdB16
+        );
+        expect(ws.getCell(`C${i}`).fill).to.deep.equal(
+          testUtils.styles.fills.redDarkVertical
+        );
       }
-      expect(ws.getCell('A4').alignment).to.deep.equal(testUtils.styles.namedAlignments.topLeft);
-      expect(ws.getCell('B4').alignment).to.deep.equal(testUtils.styles.namedAlignments.middleCentre);
-      expect(ws.getCell('C4').alignment).to.deep.equal(testUtils.styles.namedAlignments.bottomRight);
+      expect(ws.getCell('A4').alignment).to.deep.equal(
+        testUtils.styles.namedAlignments.topLeft
+      );
+      expect(ws.getCell('B4').alignment).to.deep.equal(
+        testUtils.styles.namedAlignments.middleCentre
+      );
+      expect(ws.getCell('C4').alignment).to.deep.equal(
+        testUtils.styles.namedAlignments.bottomRight
+      );
 
       expect(ws.getRow(1).numFmt).to.equal(testUtils.styles.numFmts.numFmt1);
       expect(ws.getRow(2).numFmt).to.equal(testUtils.styles.numFmts.numFmt1);
@@ -273,7 +285,8 @@ describe('Workbook', () => {
       ws.getCell('A2').value = '2.1';
       ws.getCell('A2').alignment = testUtils.styles.namedAlignments.topLeft;
       ws.getCell('B2').value = '2.2';
-      ws.getCell('B2').alignment = testUtils.styles.namedAlignments.middleCentre;
+      ws.getCell('B2').alignment =
+        testUtils.styles.namedAlignments.middleCentre;
       ws.getCell('C2').value = '2.3';
       ws.getCell('C2').alignment = testUtils.styles.namedAlignments.bottomRight;
       ws.getRow(2).numFmt = testUtils.styles.numFmts.numFmt2;
@@ -287,23 +300,31 @@ describe('Workbook', () => {
       ws.getRow(3).font = testUtils.styles.fonts.broadwayRedOutline20;
 
       ws.duplicateRow(1, 1, false);
-      expect(ws.getRow(1).values).to.deep.equal([,'1.1', '1.2', '1.3']);
-      expect(ws.getRow(2).values).to.deep.equal([,'1.1', '1.2', '1.3']);
-      expect(ws.getRow(3).values).to.deep.equal([,'3.1', '3.2', '3.3']);
+      expect(ws.getRow(1).values).to.deep.equal([, '1.1', '1.2', '1.3']);
+      expect(ws.getRow(2).values).to.deep.equal([, '1.1', '1.2', '1.3']);
+      expect(ws.getRow(3).values).to.deep.equal([, '3.1', '3.2', '3.3']);
 
       for (let i = 1; i <= 2; i++) {
-        expect(ws.getCell(`A${i}`).font).to.deep.equal(testUtils.styles.fonts.arialBlackUI14);
+        expect(ws.getCell(`A${i}`).font).to.deep.equal(
+          testUtils.styles.fonts.arialBlackUI14
+        );
         expect(ws.getCell(`A${i}`).alignment).to.be.undefined();
-        expect(ws.getCell(`B${i}`).font).to.deep.equal(testUtils.styles.fonts.comicSansUdB16);
+        expect(ws.getCell(`B${i}`).font).to.deep.equal(
+          testUtils.styles.fonts.comicSansUdB16
+        );
         expect(ws.getCell(`B${i}`).alignment).to.undefined();
-        expect(ws.getCell(`C${i}`).fill).to.deep.equal(testUtils.styles.fills.redDarkVertical);
+        expect(ws.getCell(`C${i}`).fill).to.deep.equal(
+          testUtils.styles.fills.redDarkVertical
+        );
         expect(ws.getCell(`C${i}`).alignment).to.undefined();
       }
 
       expect(ws.getRow(1).numFmt).to.equal(testUtils.styles.numFmts.numFmt1);
       expect(ws.getRow(2).numFmt).to.equal(testUtils.styles.numFmts.numFmt1);
       expect(ws.getRow(3).numFmt).to.be.undefined();
-      expect(ws.getRow(3).font).to.deep.equal(testUtils.styles.fonts.broadwayRedOutline20);
+      expect(ws.getRow(3).font).to.deep.equal(
+        testUtils.styles.fonts.broadwayRedOutline20
+      );
     });
   });
 });

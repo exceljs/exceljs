@@ -76,8 +76,10 @@ const its = {
           child: getExpectation(expectation, 'preparedModel'),
           post: true,
         };
-        const result =
-          `<compy><pre/>${getExpectation(expectation, 'xml')}<post/></compy>`;
+        const result = `<compy><pre/>${getExpectation(
+          expectation,
+          'xml'
+        )}<post/></compy>`;
 
         const xform = new CompyXform({
           tag: 'compy',

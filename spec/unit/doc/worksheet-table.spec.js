@@ -28,8 +28,17 @@ function addTable(ref, ws) {
     },
     columns: [
       {name: 'Date', totalsRowLabel: 'Totals', filterButton: true},
-      {name: 'Id', totalsRowFunction: 'max', filterButton: true, totalsRowResult: 4},
-      {name: 'Word', filterButton: false, style: {font: {bold: true, name: 'Comic Sans MS'}}},
+      {
+        name: 'Id',
+        totalsRowFunction: 'max',
+        filterButton: true,
+        totalsRowResult: 4,
+      },
+      {
+        name: 'Word',
+        filterButton: false,
+        style: {font: {bold: true, name: 'Comic Sans MS'}},
+      },
     ],
     rows: [
       [new Date('2019-08-01'), 1, 'Bird'],
@@ -46,12 +55,12 @@ function checkTable(ref, ws, testValues) {
   for (let i = -1; i <= testValues.length + 1; i++) {
     const vRow = testValues[i];
     const nRow = i + a.row;
-    const row = (nRow >= 1) && ws.getRow(nRow);
+    const row = nRow >= 1 && ws.getRow(nRow);
     if (!row) continue;
     for (let j = -1; j <= testValues[0].length + 1; j++) {
       const value = (vRow && vRow[j]) || null;
       const nCol = j + a.col;
-      const cellValue = (nCol >= 1) && row.getCell(nCol).value;
+      const cellValue = nCol >= 1 && row.getCell(nCol).value;
       if (!cellValue) continue;
 
       if (value instanceof Date) {
@@ -132,7 +141,11 @@ describe('Worksheet', () => {
       table.addRow([new Date('2019-08-05'), 5, 'Bird']);
       table.commit();
 
-      const newValues = spliceArray(values, 5, 0, [new Date('2019-08-05'), 5, 'Bird']);
+      const newValues = spliceArray(values, 5, 0, [
+        new Date('2019-08-05'),
+        5,
+        'Bird',
+      ]);
       checkTable('A1', ws, newValues);
     });
 
@@ -162,11 +175,21 @@ describe('Worksheet', () => {
           filterButton: true,
         },
         ['a', 'b', 'c', 'd'],
-        2);
+        2
+      );
       table.commit();
 
-      const colValues = ['Letter', 'a', 'b', 'c', 'd', {formula: 'ROW()', result: 6}];
-      const newValues = values.map((rVals, i) => spliceArray(rVals, 2, 0, colValues[i]));
+      const colValues = [
+        'Letter',
+        'a',
+        'b',
+        'c',
+        'd',
+        {formula: 'ROW()', result: 6},
+      ];
+      const newValues = values.map((rVals, i) =>
+        spliceArray(rVals, 2, 0, colValues[i])
+      );
       checkTable('A1', ws, newValues);
     });
 
@@ -181,11 +204,13 @@ describe('Worksheet', () => {
 
       const newValues = [...values];
       newValues.splice(0, 1, ['Date', 'Code', 'Word']);
-      newValues.splice(5, 1, ['Totals', {formula: 'SUBTOTAL(104,TestTable[Code])', result: 4}, null]);
+      newValues.splice(5, 1, [
+        'Totals',
+        {formula: 'SUBTOTAL(104,TestTable[Code])', result: 4},
+        null,
+      ]);
 
       checkTable('A1', ws, newValues);
     });
-
-
   });
 });

@@ -9,9 +9,11 @@ const wb = new Excel.Workbook();
 
 function addTable(ws, ref) {
   const range = new Range(ref);
-  ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach((day, index) => {
-    ws.getCell(range.top, range.left + index).value = day;
-  });
+  ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach(
+    (day, index) => {
+      ws.getCell(range.top, range.left + index).value = day;
+    }
+  );
   let count = 1;
   for (let i = 1; i <= 6; i++) {
     for (let j = 0; j < 5; j++) {
@@ -22,15 +24,23 @@ function addTable(ws, ref) {
 
 function addDateTable(ws, ref) {
   const range = new Range(ref);
-  ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach((day, index) => {
+  [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ].forEach((day, index) => {
     ws.getCell(range.top, range.left + index).value = day;
   });
   const DAY = 86400000;
   const now = Date.now();
   const today = now - (now % DAY);
   let dt = new Date(today);
-  const sow = today - ((dt.getDay() - 1) * DAY);
-  const som = sow - (28 * DAY);
+  const sow = today - (dt.getDay() - 1) * DAY;
+  const som = sow - 28 * DAY;
   dt = new Date(som);
 
   for (let i = 1; i <= 9; i++) {
@@ -68,13 +78,17 @@ expressionWS.addConditionalFormatting({
       type: 'expression',
       priority: 1,
       formulae: ['TRUE'],
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}},
+      },
     },
     {
       type: 'expression',
       priority: 2,
       formulae: ['TRUE'],
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFF0000'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFF0000'}},
+      },
     },
   ],
 });
@@ -91,7 +105,9 @@ highlightWS.addConditionalFormatting({
       type: 'cellIs',
       operator: 'greaterThan',
       formulae: [13],
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}},
+      },
     },
   ],
 });
@@ -158,7 +174,6 @@ top10pcWS.addConditionalFormatting({
   ],
 });
 
-
 // ============================================================================
 // Colour Scales
 const colourScaleWS = wb.addWorksheet('Colour Scales');
@@ -169,16 +184,8 @@ colourScaleWS.addConditionalFormatting({
   rules: [
     {
       type: 'colorScale',
-      cfvo: [
-        {type: 'min'},
-        {type: 'percentile', value: 50},
-        {type: 'max'},
-      ],
-      color: [
-        {argb: 'FFF8696B'},
-        {argb: 'FFFFEB84'},
-        {argb: 'FF63BE7B'},
-      ],
+      cfvo: [{type: 'min'}, {type: 'percentile', value: 50}, {type: 'max'}],
+      color: [{argb: 'FFF8696B'}, {argb: 'FFFFEB84'}, {argb: 'FF63BE7B'}],
     },
   ],
 });
@@ -190,18 +197,11 @@ colourScaleWS.addConditionalFormatting({
   rules: [
     {
       type: 'colorScale',
-      cfvo: [
-        {type: 'min'},
-        {type: 'max'},
-      ],
-      color: [
-        {argb: 'FFF8696B'},
-        {argb: 'FFFCFCFF'},
-      ],
+      cfvo: [{type: 'min'}, {type: 'max'}],
+      color: [{argb: 'FFF8696B'}, {argb: 'FFFCFCFF'}],
     },
   ],
 });
-
 
 // ============================================================================
 // Arrows
@@ -290,7 +290,6 @@ arrowsWS.addConditionalFormatting({
     },
   ],
 });
-
 
 // ============================================================================
 // Shapes
@@ -418,7 +417,6 @@ extSshapesWS.addConditionalFormatting({
   ],
 });
 
-
 // ============================================================================
 // Databar
 const databarWS = wb.addWorksheet('Databar');
@@ -455,7 +453,6 @@ databarWS.addConditionalFormatting({
   ],
 });
 
-
 // ============================================================================
 // Cell Is
 const cellIsWS = wb.addWorksheet('Cell Is');
@@ -491,7 +488,6 @@ cellIsWS.addConditionalFormatting({
   ],
 });
 
-
 // ============================================================================
 // Contains
 const containsWS = wb.addWorksheet('Contains');
@@ -504,7 +500,9 @@ containsWS.addConditionalFormatting({
       type: 'containsText',
       operator: 'containsText',
       text: 'sday',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}},
+      },
     },
   ],
 });
@@ -516,7 +514,9 @@ containsWS.addConditionalFormatting({
     {
       type: 'containsText',
       operator: 'containsBlanks',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFF0000'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFF0000'}},
+      },
     },
   ],
 });
@@ -528,7 +528,9 @@ containsWS.addConditionalFormatting({
     {
       type: 'containsText',
       operator: 'notContainsBlanks',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF0000FF'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF0000FF'}},
+      },
     },
   ],
 });
@@ -540,7 +542,9 @@ containsWS.addConditionalFormatting({
     {
       type: 'containsText',
       operator: 'containsErrors',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}},
+      },
     },
   ],
 });
@@ -552,7 +556,9 @@ containsWS.addConditionalFormatting({
     {
       type: 'containsText',
       operator: 'notContainsErrors',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFF0000'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFF0000'}},
+      },
     },
   ],
 });
@@ -568,17 +574,23 @@ dateWS.addConditionalFormatting({
     {
       type: 'timePeriod',
       timePeriod: 'lastWeek',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFF0000'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFF0000'}},
+      },
     },
     {
       type: 'timePeriod',
       timePeriod: 'thisWeek',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FF00'}},
+      },
     },
     {
       type: 'timePeriod',
       timePeriod: 'nextWeek',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF0000FF'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF0000FF'}},
+      },
     },
     {
       type: 'timePeriod',
@@ -603,7 +615,9 @@ dateWS.addConditionalFormatting({
     {
       type: 'timePeriod',
       timePeriod: 'lastMonth',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFFFF00'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FFFFFF00'}},
+      },
     },
     {
       type: 'timePeriod',
@@ -621,11 +635,12 @@ dateWS.addConditionalFormatting({
     {
       type: 'timePeriod',
       timePeriod: 'nextMonth',
-      style: {fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FFFF'}}},
+      style: {
+        fill: {type: 'pattern', pattern: 'solid', bgColor: {argb: 'FF00FFFF'}},
+      },
     },
   ],
 });
-
 
 // ============================================================================
 // Save

@@ -1,6 +1,8 @@
 const testXformHelper = require('./../test-xform-helper');
 
-const SheetFormatPropertiesXform = verquire('xlsx/xform/sheet/sheet-format-properties-xform');
+const SheetFormatPropertiesXform = verquire(
+  'xlsx/xform/sheet/sheet-format-properties-xform'
+);
 
 const expectations = [
   {
@@ -32,7 +34,8 @@ const expectations = [
       return new SheetFormatPropertiesXform();
     },
     preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55},
-    xml: '<sheetFormatPr defaultRowHeight="14.4" customHeight="1" x14ac:dyDescent="0.55"/>',
+    xml:
+      '<sheetFormatPr defaultRowHeight="14.4" customHeight="1" x14ac:dyDescent="0.55"/>',
     parsedModel: {
       defaultRowHeight: 14.4,
       dyDescent: 0.55,

@@ -172,9 +172,7 @@ const assertFont = function(value, expected, address) {
   _.each(expected, (item, name) => {
     assert(
       value[name] === expected[name],
-      `Expected ${address}.font[${name}] to be ${expected[name]}, but was ${
-        value[name]
-      }`
+      `Expected ${address}.font[${name}] to be ${expected[name]}, but was ${value[name]}`
     );
   });
   _.each(value, (item, name) => {
@@ -312,9 +310,7 @@ wb.xlsx.readFile(filename).then(() => {
     const cell = ws.getCell(rowNumber, colNumber);
     assert(
       cell.value === alignment.text,
-      `Expected Cell[${rowNumber},${colNumber}] to be ${alignment.text}, was ${
-        cell.value
-      }`
+      `Expected Cell[${rowNumber},${colNumber}] to be ${alignment.text}, was ${cell.value}`
     );
     assert(
       _.isEqual(cell.alignment, alignment.alignment),

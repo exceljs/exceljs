@@ -96,7 +96,7 @@ function addRow() {
     num1: utils.randomNum(10000),
     num2: utils.randomNum(100000),
     num3: utils.randomNum(1000000),
-    date: new Date(today + (iCount * 86400000)),
+    date: new Date(today + iCount * 86400000),
     num4: utils.randomNum(1000),
   });
   const lap = sw.span;

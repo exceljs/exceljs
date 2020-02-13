@@ -5,7 +5,9 @@ const DatabarExtXform = verquire('xlsx/xform/sheet/cf-ext/databar-ext-xform');
 const expectations = [
   {
     title: 'Default Set',
-    create() { return new DatabarExtXform(); },
+    create() {
+      return new DatabarExtXform();
+    },
     preparedModel: {
       cfvo: [
         {type: 'num', value: 5},
@@ -36,7 +38,9 @@ const expectations = [
   },
   {
     title: 'Non Default Set',
-    create() { return new DatabarExtXform(); },
+    create() {
+      return new DatabarExtXform();
+    },
     preparedModel: {
       minLength: 5,
       maxLength: 95,
@@ -49,10 +53,7 @@ const expectations = [
       negativeFillColor: {argb: 'FF00FF00'},
       axisColor: {argb: 'FF0000FF'},
       direction: 'rightToLeft',
-      cfvo: [
-        {type: 'autoMin'},
-        {type: 'autoMax'},
-      ],
+      cfvo: [{type: 'autoMin'}, {type: 'autoMax'}],
     },
     xml: `
       <x14:dataBar
@@ -72,7 +73,9 @@ const expectations = [
         <x14:axisColor rgb="FF0000FF"/>
       </x14:dataBar>
     `,
-    get parsedModel() { return this.preparedModel; },
+    get parsedModel() {
+      return this.preparedModel;
+    },
     tests: ['render', 'parse'],
   },
 ];
