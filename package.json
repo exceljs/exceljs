@@ -98,7 +98,7 @@
     "readable-stream": "^3.6.0",
     "saxes": "5.0.0-rc.2",
     "tmp": "^0.1.0",
-    "unzipper": "^0.9.12",
+    "unzipper": "^0.10.8",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
