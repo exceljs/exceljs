@@ -28,8 +28,8 @@ HrStopwatch.prototype = {
 
   get _span() {
     const hrNow = process.hrtime();
-    const start = this.hrStart[0] + (this.hrStart[1] / 1e9);
-    const finish = hrNow[0] + (hrNow[1] / 1e9);
+    const start = this.hrStart[0] + this.hrStart[1] / 1e9;
+    const finish = hrNow[0] + hrNow[1] / 1e9;
     return finish - start;
   },
 

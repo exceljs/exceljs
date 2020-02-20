@@ -88,9 +88,7 @@ function reduceResults(times) {
 
 function execute(options) {
   console.log(
-    `Test Run ${options.workbook}, ${options.style}, ${options.str}, ${
-      options.count
-    }`
+    `Test Run ${options.workbook}, ${options.style}, ${options.str}, ${options.count}`
   );
 
   const wbOptions = {

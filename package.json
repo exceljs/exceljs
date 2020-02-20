@@ -44,7 +44,7 @@
     "test:typescript": "mocha -r ts-node/register spec/typescript/**/*.spec.ts",
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
-    "lint:fix": "prettier-eslint --write \"**/*.js\"",
+    "lint:fix": "prettier-eslint --write $(pwd)'/**/*.js'",
     "lint:staged": "lint-staged",
     "clean": "rm -rf build/ && rm -rf dist",
     "patch:fast-csv": "node _patch-fast-csv.js",
@@ -59,6 +59,7 @@
   },
   "lint-staged": {
     "*.js": [
+      "prettier-eslint --write",
       "eslint --format node_modules/eslint-friendly-formatter",
       "git add"
     ]

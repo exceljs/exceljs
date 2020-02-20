@@ -33,7 +33,6 @@ describe('Gold Book', () => {
       });
     });
 
-    it('Styles', () => {
-    });
+    it('Styles', () => {});
   });
 });

@@ -27,7 +27,6 @@ async function save() {
   console.log('Time taken:', stopwatch.microseconds);
 }
 
-save()
-  .catch(error => {
-    console.log(error.message);
-  });
+save().catch(error => {
+  console.log(error.message);
+});

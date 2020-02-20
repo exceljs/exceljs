@@ -5,7 +5,9 @@ const IconSetExtXform = verquire('xlsx/xform/sheet/cf-ext/icon-set-ext-xform');
 const expectations = [
   {
     title: 'Default Set',
-    create() { return new IconSetExtXform(); },
+    create() {
+      return new IconSetExtXform();
+    },
     preparedModel: {
       iconSet: '3Triangles',
       cfvo: [
@@ -35,7 +37,9 @@ const expectations = [
   },
   {
     title: 'Reversed & Hide Values',
-    create() { return new IconSetExtXform(); },
+    create() {
+      return new IconSetExtXform();
+    },
     preparedModel: {
       iconSet: '5Boxes',
       reverse: true,
@@ -57,7 +61,9 @@ const expectations = [
         <x14:cfvo type="percent"><xm:f>80</xm:f></x14:cfvo>
       </x14:iconSet>
     `,
-    get parsedModel() { return this.preparedModel; },
+    get parsedModel() {
+      return this.preparedModel;
+    },
     tests: ['render', 'parse'],
   },
 ];

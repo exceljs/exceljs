@@ -2,7 +2,6 @@ const testXformHelper = require('./../test-xform-helper');
 
 const DefinedNameXform = verquire('xlsx/xform/book/defined-name-xform');
 
-
 const expectations = [
   {
     title: 'Defined Names',
@@ -24,7 +23,8 @@ const expectations = [
       localSheetId: 0,
       ranges: ['bar!$A$1:$C$10'],
     },
-    xml: '<definedName name="_xlnm.Print_Area" localSheetId="0">bar!$A$1:$C$10</definedName>',
+    xml:
+      '<definedName name="_xlnm.Print_Area" localSheetId="0">bar!$A$1:$C$10</definedName>',
     parsedModel: {
       name: '_xlnm.Print_Area',
       localSheetId: 0,
