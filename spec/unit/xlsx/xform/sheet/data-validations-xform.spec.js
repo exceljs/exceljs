@@ -1,6 +1,8 @@
 const testXformHelper = require('./../test-xform-helper');
 
-const DataValidationsXform = verquire('xlsx/xform/sheet/data-validations-xform');
+const DataValidationsXform = verquire(
+  'xlsx/xform/sheet/data-validations-xform'
+);
 
 const expectations = [
   {

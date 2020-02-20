@@ -7,7 +7,7 @@ const optionsBestCompression = {
   filename,
   useStyles: true,
   zip: {
-    zlib: {level: 9},// Sets the compression level.
+    zlib: {level: 9}, // Sets the compression level.
   },
 };
 const wb = new Excel.stream.xlsx.WorkbookWriter(optionsBestCompression);
@@ -44,7 +44,7 @@ const optionsBestSpeed = {
   filename: filename2,
   useStyles: true,
   zip: {
-    zlib: {level: 1},// Sets the compression level.
+    zlib: {level: 1}, // Sets the compression level.
   },
 };
 const wb2 = new Excel.stream.xlsx.WorkbookWriter(optionsBestSpeed);

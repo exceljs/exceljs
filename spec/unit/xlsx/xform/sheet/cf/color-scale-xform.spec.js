@@ -5,10 +5,12 @@ const ColorScaleXform = verquire('xlsx/xform/sheet/cf/color-scale-xform');
 const expectations = [
   {
     title: 'Colour Scale',
-    create() { return new ColorScaleXform(); },
+    create() {
+      return new ColorScaleXform();
+    },
     preparedModel: {
       cfvo: [{type: 'min'}, {type: 'percentile', value: 50}, {type: 'max'}],
-      color: [{argb: 'FFFF0000'},{argb: 'FF00FF00'},{argb: 'FF0000FF'}],
+      color: [{argb: 'FFFF0000'}, {argb: 'FF00FF00'}, {argb: 'FF0000FF'}],
     },
     xml: `
       <colorScale>
@@ -20,7 +22,9 @@ const expectations = [
         <color rgb="FF0000FF" />
       </colorScale>
     `,
-    get parsedModel() { return this.preparedModel; },
+    get parsedModel() {
+      return this.preparedModel;
+    },
     tests: ['render', 'parse'],
   },
 ];

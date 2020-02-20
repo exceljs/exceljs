@@ -1,8 +1,8 @@
 ---
 name: 🐛 Bug report
 about: Create a report to help us improve
-title: "[BUG] XYZ"
-labels: bug
+title: '[BUG] XYZ'
+labels: ':bug: Bug'
 ---
 
 ## 🐛 Bug Report

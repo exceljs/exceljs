@@ -4,7 +4,7 @@ const path = require('path');
 
 const ExcelJS = proxyquire('../../../lib/exceljs.nodejs.js', {
   tmp: {
-    file: (cb) => {
+    file: cb => {
       setTimeout(() => {
         cb(new Error('the error'));
       }, 50);
@@ -14,7 +14,7 @@ const ExcelJS = proxyquire('../../../lib/exceljs.nodejs.js', {
 });
 
 describe('pr 1093', () => {
-  it('Should fail with error', (done) => {
+  it('Should fail with error', done => {
     const stream = fs.createReadStream(
       path.join(__dirname, '../data/test-pr-1093.xlsx')
     );
@@ -27,6 +27,6 @@ describe('pr 1093', () => {
     });
 
     wb.on('end', () => done.fail());
-    wb.on('error', (e) => e.message === 'the error' && done());
+    wb.on('error', e => e.message === 'the error' && done());
   });
 });
