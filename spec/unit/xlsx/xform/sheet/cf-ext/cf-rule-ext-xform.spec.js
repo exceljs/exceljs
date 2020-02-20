@@ -5,7 +5,9 @@ const CfRuleExtXform = verquire('xlsx/xform/sheet/cf-ext/cf-rule-ext-xform');
 const expectations = [
   {
     title: 'Icon Set',
-    create() { return new CfRuleExtXform(); },
+    create() {
+      return new CfRuleExtXform();
+    },
     preparedModel: {
       type: 'iconSet',
       priority: 1,
@@ -43,7 +45,9 @@ const expectations = [
   },
   {
     title: 'Databar',
-    create() { return new CfRuleExtXform(); },
+    create() {
+      return new CfRuleExtXform();
+    },
     preparedModel: {
       type: 'dataBar',
       x14Id: 'x14-id',

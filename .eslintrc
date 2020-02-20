@@ -17,7 +17,7 @@
     "func-names": ["off", "never"],
     "global-require": ["off"],
     "max-len": ["error", {"code": 160, "ignoreComments": true}],
-    "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
+    "no-mixed-operators": ["off"],
     "no-multi-assign": ["off"],
     "no-param-reassign": ["off"],
     "no-path-concat": ["off"],
