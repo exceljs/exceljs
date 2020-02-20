@@ -14,9 +14,9 @@ const {expect} = chai;
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 const RT_ARR = [
-  {text: 'First Line:\r\n', font: {bold: true}},
-  {text: 'Second Line\r\n'},
-  {text: 'Third Line\r\n'},
+  {text: 'First Line:\n', font: {bold: true}},
+  {text: 'Second Line\n'},
+  {text: 'Third Line\n'},
   {text: 'Last Line'},
 ];
 const TEST_VALUE = {

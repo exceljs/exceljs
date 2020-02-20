@@ -1,7 +1,7 @@
-const Sax = require('sax');
 const {cloneDeep, each} = require('../../../utils/under-dash');
 const CompyXform = require('./compy-xform');
 
+const SAXStream = verquire('utils/sax-stream');
 const XmlStream = verquire('utils/xml-stream');
 const BooleanXform = verquire('xlsx/xform/simple/boolean-xform');
 
@@ -130,10 +130,9 @@ const its = {
             },
           ],
         });
-        const parser = Sax.createStream(true);
-
+        const saxStream = new SAXStream();
         xform
-          .parse(parser)
+          .parse(saxStream)
           .then(model => {
             // console.log('parsed Model', JSON.stringify(model));
             // console.log('expected Model', JSON.stringify(result));
@@ -147,7 +146,7 @@ const its = {
             resolve();
           })
           .catch(reject);
-        parser.write(xml);
+        saxStream.write(xml);
       }));
   },
 
@@ -157,11 +156,11 @@ const its = {
         const xml = getExpectation(expectation, 'xml');
         const result = getExpectation(expectation, 'parsedModel');
 
-        const parser = Sax.createStream(true);
+        const saxStream = new SAXStream();
         const xform = expectation.create();
 
         xform
-          .parse(parser)
+          .parse(saxStream)
           .then(model => {
             // eliminate the undefined
             const clone = cloneDeep(model, false);
@@ -173,7 +172,7 @@ const its = {
           })
           .catch(reject);
 
-        parser.write(xml);
+        saxStream.write(xml);
       }));
   },
 
