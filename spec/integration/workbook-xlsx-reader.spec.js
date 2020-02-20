@@ -276,7 +276,7 @@ describe('WorkbookReader', () => {
           },
           err => {
             expect(err.message).to.equal(
-              '3:1: document must contain a root element.'
+              '3:1: text data outside of root node.'
             );
             // Wait a tick before checking for an unhandled rejection
             return new Promise(setImmediate);
