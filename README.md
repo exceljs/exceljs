@@ -2271,7 +2271,7 @@ worksheet.getCell('A1').value = {
 };
 
 // internal link
-worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\"Sheet2\\"!A1' };
+worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\'Sheet2\'!A1' };
 ```
 
 ## Formula Value
