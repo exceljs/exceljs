@@ -18,15 +18,15 @@ The workbook and its components define a simple JavaScript Object model which ca
 {
     // worksheet id (integer>=1)
     id: 1,
-    
+
     // worksheet name
     name: "blort",
-    
+
     // rows
     rows: [
         // array of row models
     ],
-    
+
     // merge ranges
     "merges": [
         "A2:B3"
@@ -43,12 +43,12 @@ The workbook and its components define a simple JavaScript Object model which ca
 
     // setting for page
     pageSetup: {
-        paperSize: 9, 
-        scale: 100, 
-        firstPageNumber: 0, 
-        fitToWidth: 1, 
-        fitToHeight: 1, 
-        pageOrder: "downThenOver", 
+        paperSize: 9,
+        scale: 100,
+        firstPageNumber: 0,
+        fitToWidth: 1,
+        fitToHeight: 1,
+        pageOrder: "downThenOver",
         orientation: "portrait", // (portrait | landscape)
         usePrinterDefaults: "false",
         blackAndWhite: "false",
@@ -81,10 +81,10 @@ The workbook and its components define a simple JavaScript Object model which ca
     cells: [
         // array of cell models
     ],
-    
+
     // min column number
     min: 1,
-    
+
     // maximum column number
     max: 6
 }

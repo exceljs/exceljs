@@ -208,7 +208,7 @@ const ExcelJS = require('exceljs/dist/es5');
 ## Browserify
 
 ExcelJS publishes two browserified bundles inside the dist/ folder:
- 
+
 One with implicit dependencies on core-js polyfills...
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
@@ -1542,7 +1542,7 @@ in ascending order.
 Note: at present, only a subset of conditional formatting rules are supported.
 Specifically, only the formatting rules that do not require XML rendering
 inside an &lt;extLst&gt; element. This means that datasets and three specific
-icon sets (3Triangles, 3Stars, 5Boxes) are not supported. 
+icon sets (3Triangles, 3Stars, 5Boxes) are not supported.
 
 ```javascript
 // add a checkerboard pattern to A1:E7 based on row + col being even or odd
