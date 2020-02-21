@@ -48,6 +48,7 @@
     "lint:staged": "lint-staged",
     "clean": "rm -rf build/ && rm -rf dist",
     "patch:fast-csv": "node _patch-fast-csv.js",
+    "benchmark": "node --expose-gc benchmark",
     "build": "npm run patch:fast-csv && grunt build",
     "preversion": "npm run clean && npm run build && npm run test:all && npm run test:dist",
     "postversion": "git push --no-verify && git push --tags --no-verify"
