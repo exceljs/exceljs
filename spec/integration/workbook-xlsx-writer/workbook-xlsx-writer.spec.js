@@ -506,5 +506,28 @@ describe('WorkbookWriter', () => {
       const imageData = await fsReadFileAsync(IMAGE_FILENAME);
       expect(Buffer.compare(imageData, image.buffer)).to.equal(0);
     });
+
+    it('with conditional formatting', async () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+        useStyles: true,
+        useSharedStrings: true,
+      };
+      const wb = testUtils.createTestBook(
+        new ExcelJS.stream.xlsx.WorkbookWriter(options),
+        'xlsx',
+        ['conditionalFormatting']
+      );
+
+      return wb
+        .commit()
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          testUtils.checkTestBook(wb2, 'xlsx', ['conditionalFormatting']);
+        });
+    });
   });
 });
