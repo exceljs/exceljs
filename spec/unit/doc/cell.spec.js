@@ -337,8 +337,9 @@ describe('Cell', () => {
   });
   it('can set comment', () => {
     const a1 = sheetMock.getCell('A1');
-
     const comment = {
+      insetmode: true,
+      margins: [0.13, 0.13, 0.25, 0.25],
       texts: [
         {
           font: {
@@ -357,6 +358,31 @@ describe('Cell', () => {
     a1.value = 'test set value';
 
     expect(a1.model.comment.type).to.equal('note');
-    expect(a1.model.comment.note).to.equal(comment);
+    expect(a1.model.comment.note).to.deep.equal(comment);
+  });
+  it('can set comments and its margins', () => {
+    const a1 = sheetMock.getCell('A1');
+    const comment = {
+      insetmode: false,
+      margins: [0.25, 0.25, 0.35, 0.35],
+      texts: [
+        {
+          font: {
+            size: 12,
+            color: {theme: 0},
+            name: 'Calibri',
+            family: 2,
+            scheme: 'minor',
+          },
+          text: 'This is ',
+        },
+      ],
+    };
+
+    a1.note = comment;
+    a1.value = 'test set value';
+
+    expect(a1.model.comment.type).to.equal('note');
+    expect(a1.model.comment.note).to.deep.equal(comment);
   });
 });

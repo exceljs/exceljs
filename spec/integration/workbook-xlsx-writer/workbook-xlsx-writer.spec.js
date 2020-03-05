@@ -437,6 +437,8 @@ describe('WorkbookWriter', () => {
             text: 'seven',
           },
         ],
+        insetmode: true,
+        margins: [0.25, 0.25, 0.35, 0.35],
       };
       ws.getCell('D2').value = 7;
       ws.getCell('D2').note = note;
@@ -446,12 +448,56 @@ describe('WorkbookWriter', () => {
       const wb2 = new ExcelJS.Workbook();
       await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
       const ws2 = wb2.getWorksheet('Hello');
-
       expect(ws2.getCell('B2').value).to.equal(5);
-      expect(ws2.getCell('B2').note).to.equal('five');
+      expect(ws2.getCell('B2').note.texts[0].text).to.equal('five');
 
       expect(ws2.getCell('D2').value).to.equal(7);
       expect(ws2.getCell('D2').note).to.deep.equal(note);
+    });
+
+    it('writes notes and its margins', async () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws = wb.addWorksheet('Hello');
+      ws.getCell('B2').value = 5;
+      ws.getCell('B2').note = 'five';
+      const noteDefault = {
+        insetmode: true,
+        margins: [0.13, 0.13, 0.25, 0.25],
+      };
+      const note = {
+        texts: [
+          {
+            font: {
+              size: 12,
+              color: {argb: 'FFFF6600'},
+              name: 'Calibri',
+              scheme: 'minor',
+            },
+            text: 'seven',
+          },
+        ],
+        margins: [0.25, 0.25, 0.35, 0.35],
+      };
+      ws.getCell('D2').value = 7;
+      ws.getCell('D2').note = note;
+
+      await wb.commit();
+
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      const ws2 = wb2.getWorksheet('Hello');
+      expect(ws2.getCell('B2').value).to.equal(5);
+      expect(ws2.getCell('B2').note.texts[0].text).to.equal('five');
+      expect(ws2.getCell('B2').note.insetmode).to.equal(noteDefault.insetmode);
+      expect(ws2.getCell('B2').note.margins).to.deep.equal(noteDefault.margins);
+
+      expect(ws2.getCell('D2').value).to.equal(7);
+      expect(ws2.getCell('D2').note.texts).to.deep.equal(note.texts);
+      expect(ws2.getCell('D2').note.insetmode).to.equal(noteDefault.insetmode);
+      expect(ws2.getCell('D2').note.margins).to.deep.equal(note.margins);
     });
 
     it('with background image', async () => {

@@ -866,9 +866,9 @@ worksheet.getCell('A1').dataValidation = {
 };
 ```
 
-## <a id="cell-comments">单元格评论</a>
+## <a id="cell-comments">单元格批注c</a>
 
-将旧样式评论添加到单元格
+将旧样式批注添加到单元格
 
 ```javascript
 // 纯文本评论
@@ -886,8 +886,23 @@ ws.getCell('B1').note = {
     {'font': {'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': ' in-cell '},
     {'font': {'bold': true, 'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': 'format'},
   ],
+  insetmode: false,
+  margins: [0.25, 0.25, 0.35, 0.35],
 };
 ```
+
+### 单元格批注的属性
+
+下面这张表定义了单元格批注支持支持的属性。
+
+| 字段       | 必填项    | 默认值        | 描述 |
+| --------  | -------- | ------------- | ----------- |
+| texts     | Y        |               | 批注的文本内容 |
+| insetmode | N        | true  | 决定批注页边距模式的优先级 |
+| margins   | N        | [0.13, 0.13, 0.25, 0.25] | 批注页边距的值，单位是厘米, 方向是左-上-右-下 |
+
+注意：只有当 ```insetmode``` 设置为false时，```margins```设置才生效.
+
 
 ## <a id="styles">样式</a>
 

@@ -985,8 +985,22 @@ ws.getCell('B1').note = {
     {'font': {'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': ' in-cell '},
     {'font': {'bold': true, 'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': 'format'},
   ],
+  insetmode: false,
+  margins: [0.25, 0.25, 0.35, 0.35],
 };
 ```
+
+### Cell Comments Properties
+
+The following table defines the properties supported by cell comments.
+
+| Field     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| texts     | Y        |               | The text of the comment |
+| insetmode | N        | true  | Determines whether comment margins are set automatically |
+| margins   | N        | [0.13, 0.13, 0.25, 0.25] | Whitespace on the borders of the comment. Units are centimeter. Direction is left, top, right, bottom |
+
+Note: This  ```margins``` setting takes effect only when the value of ```insetmode``` is false.
 
 ## Tables
 
