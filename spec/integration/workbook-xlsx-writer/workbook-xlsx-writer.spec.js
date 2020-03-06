@@ -437,8 +437,8 @@ describe('WorkbookWriter', () => {
             text: 'seven',
           },
         ],
-        insetmode: true,
-        margins: [0.25, 0.25, 0.35, 0.35],
+        insetmode: 'auto',
+        inset: [0.25, 0.25, 0.35, 0.35],
       };
       ws.getCell('D2').value = 7;
       ws.getCell('D2').note = note;
@@ -455,7 +455,7 @@ describe('WorkbookWriter', () => {
       expect(ws2.getCell('D2').note).to.deep.equal(note);
     });
 
-    it('writes notes and its margins', async () => {
+    it('writes notes and its inset', async () => {
       const options = {
         filename: TEST_XLSX_FILE_NAME,
       };
@@ -464,8 +464,8 @@ describe('WorkbookWriter', () => {
       ws.getCell('B2').value = 5;
       ws.getCell('B2').note = 'five';
       const noteDefault = {
-        insetmode: true,
-        margins: [0.13, 0.13, 0.25, 0.25],
+        insetmode: 'auto',
+        inset: [0.13, 0.13, 0.25, 0.25],
       };
       const note = {
         texts: [
@@ -479,7 +479,7 @@ describe('WorkbookWriter', () => {
             text: 'seven',
           },
         ],
-        margins: [0.25, 0.25, 0.35, 0.35],
+        inset: [0.25, 0.25, 0.35, 0.35],
       };
       ws.getCell('D2').value = 7;
       ws.getCell('D2').note = note;
@@ -492,12 +492,12 @@ describe('WorkbookWriter', () => {
       expect(ws2.getCell('B2').value).to.equal(5);
       expect(ws2.getCell('B2').note.texts[0].text).to.equal('five');
       expect(ws2.getCell('B2').note.insetmode).to.equal(noteDefault.insetmode);
-      expect(ws2.getCell('B2').note.margins).to.deep.equal(noteDefault.margins);
+      expect(ws2.getCell('B2').note.inset).to.deep.equal(noteDefault.inset);
 
       expect(ws2.getCell('D2').value).to.equal(7);
       expect(ws2.getCell('D2').note.texts).to.deep.equal(note.texts);
       expect(ws2.getCell('D2').note.insetmode).to.equal(noteDefault.insetmode);
-      expect(ws2.getCell('D2').note.margins).to.deep.equal(note.margins);
+      expect(ws2.getCell('D2').note.inset).to.deep.equal(note.inset);
     });
 
     it('with background image', async () => {

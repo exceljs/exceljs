@@ -377,8 +377,8 @@ export type CellValue =
 
 export interface Comment {
 	texts: RichText[];
-	insetmode?: boolean;
-	margins?: number[]; 
+	insetmode?: 'auto' | 'custom';
+	inset?: number[]; 
 }
 
 export interface CellModel {

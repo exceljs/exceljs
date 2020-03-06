@@ -338,8 +338,8 @@ describe('Cell', () => {
   it('can set comment', () => {
     const a1 = sheetMock.getCell('A1');
     const comment = {
-      insetmode: true,
-      margins: [0.13, 0.13, 0.25, 0.25],
+      insetmode: 'auto',
+      inset: [0.13, 0.13, 0.25, 0.25],
       texts: [
         {
           font: {
@@ -363,8 +363,8 @@ describe('Cell', () => {
   it('can set comments and its margins', () => {
     const a1 = sheetMock.getCell('A1');
     const comment = {
-      insetmode: false,
-      margins: [0.25, 0.25, 0.35, 0.35],
+      insetmode: 'false',
+      inset: [0.25, 0.25, 0.35, 0.35],
       texts: [
         {
           font: {
