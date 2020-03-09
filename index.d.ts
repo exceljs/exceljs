@@ -387,10 +387,13 @@ export interface CommentProtection {
 	lockText: 'True' | 'False'
 }
 
+export type CommentEditAs =
+	| 'twoCells' | 'oneCells' | 'absolute' 
 export interface Comment {
 	texts: RichText[];
 	margins: CommentMargins;
 	protection: CommentProtection;
+	editAs: CommentEditAs;
 }
 
 export interface CellModel {
