@@ -1,3 +1,4 @@
+import { Comment, Protection } from './index.d';
 declare interface Buffer extends ArrayBuffer { }
 
 export const enum RelationshipType {
@@ -375,8 +376,21 @@ export type CellValue =
 	| CellRichTextValue | CellHyperlinkValue
 	| CellFormulaValue | CellSharedFormulaValue;
 
+
+export interface CommentMargins {
+	insetmode: 'auto' | 'custom',
+	inset: Number[]
+}
+
+export interface CommentProtection {
+	locked: 'True' | 'False'
+	lockText: 'True' | 'False'
+}
+
 export interface Comment {
 	texts: RichText[];
+	margins: CommentMargins;
+	protection: CommentProtection;
 }
 
 export interface CellModel {
