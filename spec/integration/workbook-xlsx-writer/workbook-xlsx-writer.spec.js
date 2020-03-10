@@ -208,7 +208,7 @@ describe('WorkbookWriter', () => {
           expect(ws2.getColumn(2).alignment).to.deep.equal(
             testUtils.styles.namedAlignments.middleCentre
           );
-          expect(ws2.getColumn(2).width).to.equal(undefined);
+          expect(ws2.getColumn(2).width).to.equal(9);
 
           expect(ws2.getColumn(4).width).to.equal(undefined);
 
