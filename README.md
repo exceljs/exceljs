@@ -946,7 +946,7 @@ worksheet.getCell('A1').dataValidation = {
   prompt: 'The value must between 1.5 and 7'
 };
 
-// Specify Cell must be have a text length less than 15
+// Specify Cell must have a text length less than 15
 worksheet.getCell('A1').dataValidation = {
   type: 'textLength',
   operator: 'lessThan',
@@ -955,7 +955,7 @@ worksheet.getCell('A1').dataValidation = {
   formulae: [15]
 };
 
-// Specify Cell must be have be a date before 1st Jan 2016
+// Specify Cell must be a date before 1st Jan 2016
 worksheet.getCell('A1').dataValidation = {
   type: 'date',
   operator: 'lessThan',
