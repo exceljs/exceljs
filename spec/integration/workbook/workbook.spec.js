@@ -464,6 +464,42 @@ describe('Workbook', () => {
         });
     });
 
+    it('CSV file and its configuration', function() {
+      this.timeout(5000);
+      const writeOptions = {
+        dateFormat: 'DD/MM/YYYY HH:mm:ss',
+        dateUTC: false,
+        encoding: 'utf-8',
+        includeEmptyRows: false,
+        sheetName: 'sheet1',
+        formatterOptions: {
+          delimiter: '\t',
+          quote: false,
+        },
+      };
+      const readOptions = {
+        dateFormats: ['DD/MM/YYYY HH:mm:ss'],
+        sheetName: 'sheet1',
+        parserOptions: {
+          delimiter: '\t',
+          quote: false,
+        },
+      };
+      const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'csv');
+
+      return wb.csv
+        .writeFile(TEST_CSV_FILE_NAME, writeOptions)
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.csv
+            .readFile(TEST_CSV_FILE_NAME, readOptions)
+            .then(() => wb2);
+        })
+        .then(wb2 => {
+          testUtils.checkTestBook(wb2, 'csv', false, writeOptions);
+        });
+    });
+
     it('defined names', () => {
       const wb1 = new ExcelJS.Workbook();
       const ws1a = wb1.addWorksheet('blort');

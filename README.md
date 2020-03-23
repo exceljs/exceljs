@@ -1926,6 +1926,15 @@ workbook.xlsx.writeBuffer()
 
 #### Reading CSV
 
+Options supported when reading CSV files.
+
+| Field            |  Required   |    Type     |Description  |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormats      |     N       |  Array      | Specify the date encoding format of dayjs. |
+| map              |     N       |  Function   | Custom Array.prototype.map() callback function for processing data. |
+| sheetName        |     N       |  String     | Specify worksheet name. |
+| parserOptions    |     N       |  Object     | [parseOptions options](https://c2fo.io/fast-csv/docs/parsing/options)  @fast-csv/format module to write csv data. |
+
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
@@ -1973,7 +1982,12 @@ var options = {
         // the rest are numbers
         return parseFloat(value);
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/parsing/options
+  parserOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
 workbook.csv.readFile(filename, options)
   .then(function(worksheet) {
@@ -1982,7 +1996,7 @@ workbook.csv.readFile(filename, options)
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
- The options passed into the read functions above is also passed to fast-csv for parsing of the csv data.
+The formatterOptions in the options passed to the above write function will be passed to the @fast-csv/format module to write csv data.
  Please refer to the fast-csv README.md for details.
 
 Dates are parsed using the npm module [dayjs](https://www.npmjs.com/package/dayjs).
@@ -1995,6 +2009,19 @@ Dates are parsed using the npm module [dayjs](https://www.npmjs.com/package/dayj
 Please refer to the [dayjs CustomParseFormat plugin](https://github.com/iamkun/dayjs/blob/HEAD/docs/en/Plugin.md#customparseformat) for details on how to structure a dateFormat.
 
 #### Writing CSV
+
+Options supported when writing to a CSV file.
+
+| Field            |  Required   |    Type     | Description |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormat       |     N       |  String     | Specify the date encoding format of dayjs. |
+| dateUTC          |     N       |  Boolean    | Specify whether ExcelJS uses `dayjs.utc ()` to convert time zone for parsing dates. |
+| encoding         |     N       |  String     | Specify file encoding format. |
+| includeEmptyRows |     N       |  Boolean    | Specifies whether empty rows can be written. |
+| map              |     N       |  Function   | Custom Array.prototype.map() callback function for processing row values. |
+| sheetName        |     N       |  String     | Specify worksheet name. |
+| sheetId          |     N       |  Number     | Specify worksheet ID. |
+| formatterOptions |     N       |  Object     | [formatterOptions options](https://c2fo.io/fast-csv/docs/formatting/options/) @fast-csv/format module to write csv data. |
 
 ```javascript
 
@@ -2043,7 +2070,12 @@ var options = {
         // the rest are numbers
         return value;
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/formatting/options
+  formatterOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
 workbook.csv.writeFile(filename, options)
   .then(() => {
@@ -2058,7 +2090,7 @@ workbook.csv.writeBuffer()
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write the CSV file.
- The options passed into the write functions above is also passed to fast-csv for writing the csv data.
+ The formatterOptions in the options passed to the above write function will be passed to the @fast-csv/format module to write csv data.
  Please refer to the fast-csv README.md for details.
 
 Dates are formatted using the npm module [moment](https://www.npmjs.com/package/moment).
