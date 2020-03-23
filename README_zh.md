@@ -1396,6 +1396,15 @@ workbook.xlsx.writeBuffer()
 
 #### <a id="reading-csv">读 CSV</a>
 
+读取CSV文件时支持的选项。
+
+| Field            |  Required   |    Type     |Description  |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormats      |     N       |  Array      | 指定dayjs的日期编码格式 |
+| map              |     N       |  Function   | 自定义 Array.prototype.map() 的callback用于解析数据 |
+| sheetName        |     N       |  String     | 指定工作表名称 |
+| parserOptions    |     N       |  Object     | [parseOptions options](https://c2fo.io/fast-csv/docs/parsing/options) @fast-csv/parse模块以解析csv数据 |
+
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
@@ -1443,7 +1452,12 @@ var options = {
         // the rest are numbers
         return parseFloat(value);
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/parsing/options
+  parserOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
 workbook.csv.readFile(filename, options)
   .then(function(worksheet) {
@@ -1452,17 +1466,31 @@ workbook.csv.readFile(filename, options)
 ```
 
 CSV解析器使用[fast-csv](https://www.npmjs.com/package/fast-csv)来读取CSV文件。
- 传递给上述读取函数的选项也传递给fast-csv以解析csv数据。
+ 传递给上述读取函数的parserOptions选项将传递给@fast-csv/parse模块以解析csv数据。
  有关详细信息，请参阅fast-csv README.md。
 
 使用npm模块[moment](https://www.npmjs.com/package/moment)解析日期。
  如果未提供dateFormats，则使用以下内容：
 
-* moment.ISO_8601
-*'MM-DD-YYYY'
-*'YYYY-MM-DD'
+* 'YYYY-MM-DD\[T\]HH:mm:ss'
+* 'MM-DD-YYYY'
+* 'YYYY-MM-DD'
+
+请参阅 [dayjs CustomParseFormat plugin](https://github.com/iamkun/dayjs/blob/HEAD/docs/en/Plugin.md#customparseformat)，以获取有关如何构造dateFormat的详细信息。
 
 #### <a id="writing-csv">写 CSV</a>
+
+写入CSV文件时支持的选项。
+| Field            |  Required   |    Type     |Description  |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormat       |     N       |  String     | 指定dayjs的日期编码格式 |
+| dateUTC          |     N       |  Boolean    | 指定ExcelJS是否使用`dayjs.utc（）`转换时区以解析日期 |
+| encoding         |     N       |  String     | 指定文件编码格式 |
+| includeEmptyRows |     N       |  Boolean    | 指定是否可以写入空行 |
+| map              |     N       |  Function   | 自定义Array.prototype.map()的callback，用于处理行值 |
+| sheetName        |     N       |  String     | 指定工作表名称 |
+| sheetId          |     N       |  Number     | 指定工作表ID |
+| formatterOptions |     N       |  Object     | [formatterOptions options](https://c2fo.io/fast-csv/docs/formatting/options/) @fast-csv/format模块以写入csv数据 |
 
 ```javascript
 
@@ -1511,7 +1539,12 @@ var options = {
         // the rest are numbers
         return value;
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/formatting/options
+  formatterOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
 workbook.csv.writeFile(filename, options)
   .then(() => {
@@ -1526,10 +1559,10 @@ workbook.csv.writeBuffer()
 ```
 
 CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CSV文件。
- 传递给上述写入函数的选项也传递给fast-csv以写入csv数据。
- 有关详细信息，请参阅fast-csv README.md。
+ 传递给上述写入函数的选项中的formatterOptions将传递给@fast-csv/format模块以写入csv数据。
+ 有关详细信息，请参阅@fast-csv README.md。
 
-使用npm模块格式化日期[时刻]（https://www.npmjs.com/package/moment）。
+使用npm模块格式化日期[moment]（https://www.npmjs.com/package/moment）。
  如果未提供dateFormat，则使用moment.ISO_8601。
  编写CSV时，您可以将布尔值dateUTC设置为true，以使ExcelJS自动解析日期
  使用`moment.utc（）`转换时区。
