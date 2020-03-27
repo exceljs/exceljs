@@ -46,5 +46,14 @@
   },
   "media": [],
   "tables": [],
-  "conditionalFormattings": []
+  "conditionalFormattings": [{
+    "ref": "A1:E7",
+    "rules": [
+      {
+        "type": "expression",
+        "formulae": ["MOD(ROW()+COLUMN(),2)=0"],
+        "style": {"fill": {"type": "pattern", "pattern": "solid", "bgColor": {"argb": "FF00FF00"}}}
+      }
+    ]
+  }]
 }

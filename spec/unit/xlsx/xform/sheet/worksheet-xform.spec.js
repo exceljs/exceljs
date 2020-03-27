@@ -169,4 +169,23 @@ describe('WorksheetXform', () => {
     expect(iDataValidations).not.to.equal(-1);
     expect(iHyperlinks).to.be.greaterThan(iDataValidations);
   });
+
+  it('conditionalFormattings must be before dataValidations', () => {
+    const xform = new WorksheetXform();
+    const model = require('./data/sheet.4.0.json');
+    const xmlStream = new XmlStream();
+    const options = {
+      styles: new StylesXform(true),
+      hyperlinks: [],
+    };
+    xform.prepare(model, options);
+    xform.render(xmlStream, model);
+
+    const {xml} = xmlStream;
+    const iConditionalFormatting = xml.indexOf('conditionalFormatting');
+    const iDataValidations = xml.indexOf('dataValidations');
+    expect(iConditionalFormatting).not.to.equal(-1);
+    expect(iDataValidations).not.to.equal(-1);
+    expect(iConditionalFormatting).to.be.lessThan(iDataValidations);
+  });
 });

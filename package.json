@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "3.8.0",
+  "version": "3.8.2",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -15,7 +15,7 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "main": "./lib/exceljs.nodejs.js",
+  "main": "./excel.js",
   "browser": "./dist/exceljs.min.js",
   "types": "./index.d.ts",
   "files": [
@@ -30,7 +30,7 @@
     "test:full": "npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
     "test:all": "npm run test:native && npm run test:es5",
     "test:native": "npm run test:full",
-    "test:es5": "export EXCEL_BUILD=es5 && npm run test:full",
+    "test:es5": "export EXCEL_BUILD=es5 && npm run build && npm run test:full",
     "test:unit": "mocha --require spec/config/setup --require spec/config/setup-unit spec/unit --recursive",
     "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
     "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
@@ -108,7 +108,7 @@
     "@babel/preset-env": "^7.1.0",
     "@types/chai": "^4.2.7",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^10.12.0",
+    "@types/node": "~12.12.27",
     "babelify": "^10.0.0",
     "browserify": "^16.5.0",
     "chai": "^4.2.0",
