@@ -13,7 +13,7 @@ const ExcelJS = proxyquire('../../../lib/exceljs.nodejs.js', {
   },
 });
 
-// Disabled until we drop node 8, since proxyquire breaks readable-streams
+// todo Disabled until we drop node 8, since proxyquire breaks readable-streams
 describe.skip('pr 1093', () => {
   it('Should fail with error', done => {
     const stream = fs.createReadStream(
