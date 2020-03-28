@@ -4,36 +4,74 @@ const ExcelJS = require('./lib/exceljs.nodejs.js');
 
 const runs = 3;
 
-runProfiling('huge xlsx file', () => {
-  return new Promise((resolve, reject) => {
-    // Data taken from http://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
-    const stream = fs.createReadStream(path.join(__dirname, 'spec/integration/data/huge.xlsx'));
+(async () => {
+  try {
+    await runProfiling('huge xlsx file streams', () => {
+      return new Promise((resolve, reject) => {
+        // Data taken from http://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
+        const stream = fs.createReadStream(path.join(__dirname, 'spec/integration/data/huge.xlsx'));
 
-    const wb = new ExcelJS.stream.xlsx.WorkbookReader();
-    wb.read(stream, {
-      entries: 'emit',
-      sharedStrings: 'cache',
-      worksheets: 'emit',
-    });
+        const wb = new ExcelJS.stream.xlsx.WorkbookReader();
+        const options = {
+          entries: 'emit',
+          // sharedStrings: 'cache',
+          worksheets: 'emit',
+        };
+        wb.read(stream, options);
 
-    let worksheetCount = 0;
-    let rowCount = 0;
-    wb.on('worksheet', worksheet => {
-      worksheetCount += 1;
-      console.log(`Reading worksheet ${worksheetCount}`);
-      worksheet.on('row', () => {
-        rowCount += 1;
-        if (rowCount % 50000 === 0) console.log(`Reading row ${rowCount}`);
+        let worksheetCount = 0;
+        let rowCount = 0;
+        wb.on('worksheet', worksheet => {
+          worksheetCount += 1;
+          console.log(`Reading worksheet ${worksheetCount}`);
+          worksheet.on('row', () => {
+            rowCount += 1;
+            if (rowCount % 50000 === 0) console.log(`Reading row ${rowCount}`);
+          });
+        });
+
+        wb.on('end', () => {
+          console.log(`Processed ${worksheetCount} worksheets and ${rowCount} rows`);
+          resolve();
+        });
+        wb.on('error', reject);
       });
     });
 
-    wb.on('end', () => {
+    await runProfiling('huge xlsx file async iteration', async () => {
+      // Data taken from http://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
+      const stream = fs.createReadStream(path.join(__dirname, 'spec/integration/data/huge.xlsx'));
+      const wb = new ExcelJS.stream.xlsx.WorkbookReader();
+      const options = {
+        entries: 'emit',
+        // sharedStrings: 'cache',
+        worksheets: 'emit',
+      };
+
+      let worksheetCount = 0;
+      let rowCount = 0;
+      for await (const {eventType, value, entry} of wb.parse(stream, options)) {
+        if (eventType === 'worksheet') {
+          const worksheet = value;
+          worksheetCount += 1;
+          console.log(`Reading worksheet ${worksheetCount}`);
+          for await (const events of worksheet.parse(entry, options)) {
+            for (const event of events) {
+              if (event.eventType === 'row') {
+                rowCount += 1;
+                if (rowCount % 50000 === 0) console.log(`Reading row ${rowCount}`);
+              }
+            }
+          }
+        }
+      }
+
       console.log(`Processed ${worksheetCount} worksheets and ${rowCount} rows`);
-      resolve();
     });
-    wb.on('error', reject);
-  });
-});
+  } catch (err) {
+    console.error(err);
+  }
+})();
 
 async function runProfiling(name, run) {
   console.log('');
