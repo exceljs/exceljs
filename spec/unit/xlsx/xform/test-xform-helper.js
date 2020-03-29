@@ -1,4 +1,4 @@
-const {Readable} = require('readable-stream');
+const {PassThrough} = require('readable-stream');
 const {cloneDeep, each} = require('../../../utils/under-dash');
 const CompyXform = require('./compy-xform');
 
@@ -131,8 +131,11 @@ const its = {
             },
           ],
         });
+        const stream = new PassThrough();
+        stream.write(xml);
+        stream.end();
         xform
-          .parse(parseSax([xml]))
+          .parse(parseSax(stream))
           .then(model => {
             // console.log('parsed Model', JSON.stringify(model));
             // console.log('expected Model', JSON.stringify(result));
@@ -157,8 +160,11 @@ const its = {
 
         const xform = expectation.create();
 
+        const stream = new PassThrough();
+        stream.write(xml);
+        stream.end();
         xform
-          .parse(parseSax([xml]))
+          .parse(parseSax(stream))
           .then(model => {
             // eliminate the undefined
             const clone = cloneDeep(model, false);
