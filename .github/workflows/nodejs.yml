@@ -1,0 +1,31 @@
+name: d-ts-tester
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x, 13.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Testing typescript definitions file ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npm install typescript
+    - run: tsc index.d.ts
+      env:
+        CI: true
+        
+        
+        

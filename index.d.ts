@@ -1306,6 +1306,9 @@ export interface Xlsx {
 }
 
 // https://c2fo.io/fast-csv/docs/parsing/options
+
+type HeaderArray = (string | undefined | null)[];
+type HeaderTransformFunction = (headers: HeaderArray) => HeaderArray;
 export interface FastCsvParserOptionsArgs {
 	objectMode: boolean;
 	delimiter: string;
@@ -1324,6 +1327,23 @@ export interface FastCsvParserOptionsArgs {
 	maxRows: number;
 	skipLines: number;
 	skipRows: number;
+}
+
+interface QuoteColumnMap {
+	[s: string]: boolean;
+}
+declare type QuoteColumns = boolean | boolean[] | QuoteColumnMap;
+
+interface RowMap {
+	[key: string]: any;
+}
+declare type RowHashArray = [string, any][];
+declare type RowArray = string[];
+declare type Rows = RowArray | RowMap | RowHashArray;
+declare type RowTransformCallback = (error?: Error | null, row?: Rows) => void;
+interface RowTransformFunction {
+	(row: Rows, callback: RowTransformCallback): void;
+	(row: Rows): Rows;
 }
 
 // https://c2fo.io/fast-csv/docs/formatting/options/
