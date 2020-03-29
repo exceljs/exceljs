@@ -132,7 +132,7 @@ const its = {
           ],
         });
         xform
-          .parse(parseSax(Readable.from(xml)))
+          .parse(parseSax([xml]))
           .then(model => {
             // console.log('parsed Model', JSON.stringify(model));
             // console.log('expected Model', JSON.stringify(result));
@@ -158,7 +158,7 @@ const its = {
         const xform = expectation.create();
 
         xform
-          .parse(parseSax(Readable.from(xml)))
+          .parse(parseSax([xml]))
           .then(model => {
             // eliminate the undefined
             const clone = cloneDeep(model, false);
