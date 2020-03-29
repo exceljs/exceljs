@@ -1,4 +1,4 @@
-name: d-ts-tester
+name: ensure-green-tests
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,15 +16,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Testing typescript definitions file ${{ matrix.node-version }}
+    - name: Testing on node v${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
+    - run: |
+        # Test the es5 build if the node version is less than 10
+        if [ $(node -v | cut -d'.' -f1 | tr -d 'v') -lt 10 ]; then
+          npm run test:es5
+        else
+          npm test
+        fi
     - run: npm install typescript
     - run: tsc index.d.ts
       env:
         CI: true
-        
-        
-        
