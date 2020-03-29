@@ -1879,9 +1879,12 @@ workbook.xlsx.readFile(filename)
     // use workbook
   });
 
-// pipe from stream
+// read from stream
 var workbook = new Excel.Workbook();
-stream.pipe(workbook.xlsx.createInputStream());
+workbook.xlsx.read(stream)
+  .then(function() {
+    // use workbook
+  });
 
 // load from buffer
 var workbook = new Excel.Workbook();

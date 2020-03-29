@@ -1290,11 +1290,6 @@ export interface Xlsx {
 	load(buffer: Buffer): Promise<Workbook>;
 
 	/**
-	 * Create input stream for reading
-	 */
-	createInputStream(): import('events').EventEmitter;
-
-	/**
 	 * write to a buffer
 	 */
 	writeBuffer(options?: Partial<XlsxWriteOptions>): Promise<Buffer>;

@@ -25,19 +25,16 @@ describe('Express', () => {
 
     return new Promise((resolve, reject) => {
       const r = request('http://127.0.0.1:3003/workbook');
-      r.on('response', res => {
+      r.on('response', async res => {
         const wb2 = new Excel.Workbook();
-        const stream = wb2.xlsx.createInputStream();
-        stream.on('done', () => {
-          try {
-            testutils.checkTestBook(wb2, 'xlsx');
-            server.close();
-            resolve();
-          } catch (ex) {
-            reject(ex);
-          }
-        });
-        res.pipe(stream);
+        await wb2.xlsx.read(res);
+        try {
+          testutils.checkTestBook(wb2, 'xlsx');
+          server.close();
+          resolve();
+        } catch (ex) {
+          reject(ex);
+        }
       });
     });
   });

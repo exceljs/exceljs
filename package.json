@@ -132,7 +132,6 @@
     "grunt-contrib-watch": "^1.1.0",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.5",
-    "memorystream": "^0.3.1",
     "mocha": "^5.2.0",
     "prettier-eslint": "^9.0.0",
     "prettier-eslint-cli": "^5.0.0",
