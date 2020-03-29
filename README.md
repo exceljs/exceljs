@@ -2193,6 +2193,60 @@ workbook.commit()
   });
 ```
 
+##### Streaming XLSX Reader
+
+TODO:...
+
+Async iteration example:
+
+```js
+const stream = fs.createReadStream(...);
+const wb = new ExcelJS.stream.xlsx.WorkbookReader();
+const options = {
+  entries: 'emit',
+  sharedStrings: 'cache',
+  worksheets: 'emit',
+};
+
+for await (const {eventType, value, entry} of wb.parse(stream, options)) {
+  if (eventType === 'worksheet') {
+    worksheetCount += 1;
+    for await (const events of value.parse(entry, options)) {
+      for (const event of events) {
+        if (event.eventType === 'row') {
+          ...
+        }
+      }
+    }
+  }
+}
+```
+
+Streaming example:
+
+```js
+const stream = fs.createReadStream(path.join(__dirname, 'spec/integration/data/huge.xlsx'));
+const wb = new ExcelJS.stream.xlsx.WorkbookReader();
+const options = {
+  entries: 'emit',
+  sharedStrings: 'cache',
+  worksheets: 'emit',
+};
+wb.read(stream, options);
+
+wb.on('error', (err) => {
+  ...
+});
+wb.on('worksheet', worksheet => {
+  worksheet.on('row', () => {
+    ...
+  });
+});
+wb.on('end', () => {
+  ...
+});
+```
+
 # Browser
 
 A portion of this library has been isolated and tested for use within a browser environment.
