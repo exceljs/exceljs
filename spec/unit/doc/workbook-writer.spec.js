@@ -1,4 +1,4 @@
-const Stream = require('stream');
+const Stream = require('readable-stream');
 
 const Excel = verquire('exceljs');
 
