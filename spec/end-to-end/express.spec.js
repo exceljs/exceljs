@@ -1,5 +1,5 @@
 const express = require('express');
-const request = require('request');
+const got = require('got');
 const testutils = require('../utils/index');
 
 const Excel = verquire('exceljs');
@@ -8,7 +8,7 @@ const Excel = verquire('exceljs');
 // Tests
 
 describe('Express', () => {
-  it('downloads a workbook', () => {
+  it('downloads a workbook', async () => {
     const app = express();
     app.get('/workbook', (req, res) => {
       const wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
@@ -23,19 +23,10 @@ describe('Express', () => {
     });
     const server = app.listen(3003);
 
-    return new Promise((resolve, reject) => {
-      const r = request('http://127.0.0.1:3003/workbook');
-      r.on('response', async res => {
-        const wb2 = new Excel.Workbook();
-        await wb2.xlsx.read(res);
-        try {
-          testutils.checkTestBook(wb2, 'xlsx');
-          server.close();
-          resolve();
-        } catch (ex) {
-          reject(ex);
-        }
-      });
-    });
+    const res = got.stream('http://127.0.0.1:3003/workbook');
+    const wb2 = new Excel.Workbook();
+    await wb2.xlsx.read(res);
+    testutils.checkTestBook(wb2, 'xlsx');
+    server.close();
   });
 });
