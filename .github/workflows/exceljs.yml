@@ -1,0 +1,57 @@
+name: ExcelJS
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  test:
+    name: Node v${{ matrix.node-version }} on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # https://github.com/actions/setup-node/issues/27
+        node-version: [8.17.0, 10.x, 12.x, 13.x]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Set git config
+        shell: bash
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.symlinks true
+        if: runner.os == 'Windows'
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - name: Run tests
+        env:
+          CI: true
+        run: |
+          # Test the es5 build if the node version is less than 10
+          if [ $(node -v | cut -d'.' -f1 | tr -d 'v') -lt 10 ]; then
+            npm run test:es5
+          else
+            npm test
+          fi
+
+  typescript:
+    name: Ensure typescript compatibility
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - run: npm install
+    - run: npm install typescript
+    - run: tsc index.d.ts
+      env:
+        CI: true
