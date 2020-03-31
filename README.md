@@ -1383,7 +1383,8 @@ let fill = {
     {position:1, color:{argb:'FF00FF00'}}
   ]
 }
-ws.fillCells('A1:C5', fill)
+ws.fillCells('A1:C5', fill) // each cell will reference to clone of `fill`  
+ws.fillCells('A1:C5', fill, false) //each cell will reference to `fill` (changing in one of them will propagate changes to all other cells)
 ```
 
 #### Pattern Fills
