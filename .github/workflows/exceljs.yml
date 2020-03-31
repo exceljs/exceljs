@@ -30,16 +30,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-      - name: Run tests
+      - run: npm test
         env:
           CI: true
-        run: |
-          # Test the es5 build if the node version is less than 10
-          if [ $(node -v | cut -d'.' -f1 | tr -d 'v') -lt 10 ]; then
-            npm run test:es5
-          else
-            npm test
-          fi
 
   typescript:
     name: Ensure typescript compatibility
