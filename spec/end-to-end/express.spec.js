@@ -1,14 +1,13 @@
+const {PassThrough} = require('readable-stream');
 const express = require('express');
-const request = require('request');
+const got = require('got');
 const testutils = require('../utils/index');
 
 const Excel = verquire('exceljs');
 
-// =============================================================================
-// Tests
-
 describe('Express', () => {
-  it('downloads a workbook', () => {
+  let server;
+  before(() => {
     const app = express();
     app.get('/workbook', (req, res) => {
       const wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
@@ -21,24 +20,20 @@ describe('Express', () => {
         res.end();
       });
     });
-    const server = app.listen(3003);
+    server = app.listen(3003);
+  });
 
-    return new Promise((resolve, reject) => {
-      const r = request('http://127.0.0.1:3003/workbook');
-      r.on('response', res => {
-        const wb2 = new Excel.Workbook();
-        const stream = wb2.xlsx.createInputStream();
-        stream.on('done', () => {
-          try {
-            testutils.checkTestBook(wb2, 'xlsx');
-            server.close();
-            resolve();
-          } catch (ex) {
-            reject(ex);
-          }
-        });
-        res.pipe(stream);
-      });
+  after(() => {
+    server.close();
+  });
+
+  it('downloads a workbook', async () => {
+    const res = got.stream('http://127.0.0.1:3003/workbook', {
+      decompress: false,
     });
+    const wb2 = new Excel.Workbook();
+    // TODO: Remove passThrough with got 10+ (requires node v10+)
+    await wb2.xlsx.read(res.pipe(new PassThrough()));
+    testutils.checkTestBook(wb2, 'xlsx');
   });
 });
