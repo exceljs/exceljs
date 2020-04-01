@@ -138,4 +138,33 @@ describe('Column', () => {
     expect(sheet.getCell(11, 1).value).to.equal(11);
     expect(sheet.getCell(12, 1).value).to.equal(null);
   });
+  it('sets default column width', () => {
+    const sheet = createSheetMock();
+
+    sheet.addColumn(1, {
+      header: 'Col 1',
+      key: 'id1',
+      style: {
+        numFmt: '0.00%',
+      },
+    });
+    sheet.addColumn(2, {
+      header: 'Col 2',
+      key: 'id2',
+      style: {
+        numFmt: '0.00%',
+      },
+      width: 10,
+    });
+    sheet.getColumn(3).numFmt = '0.00%';
+
+    const model = Column.toModel(sheet.columns);
+    expect(model.length).to.equal(3);
+
+    expect(model[0].width).to.equal(9);
+
+    expect(model[1].width).to.equal(10);
+
+    expect(model[2].width).to.equal(9);
+  });
 });

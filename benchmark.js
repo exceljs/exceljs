@@ -1,5 +1,4 @@
-const fs = require('fs');
-const path = require('path');
+/* eslint-disable no-console */
 const ExcelJS = require('./lib/exceljs.nodejs.js');
 
 const runs = 3;
@@ -9,15 +8,13 @@ const runs = 3;
     await runProfiling('huge xlsx file streams', () => {
       return new Promise((resolve, reject) => {
         // Data taken from http://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
-        const stream = fs.createReadStream(path.join(__dirname, 'spec/integration/data/huge.xlsx'));
-
         const wb = new ExcelJS.stream.xlsx.WorkbookReader();
         const options = {
           entries: 'emit',
           sharedStrings: 'cache',
           worksheets: 'emit',
         };
-        wb.read(stream, options);
+        wb.read('./spec/integration/data/huge.xlsx', options);
 
         let worksheetCount = 0;
         let rowCount = 0;
@@ -40,7 +37,6 @@ const runs = 3;
 
     await runProfiling('huge xlsx file async iteration', async () => {
       // Data taken from http://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
-      const stream = fs.createReadStream(path.join(__dirname, 'spec/integration/data/huge.xlsx'));
       const wb = new ExcelJS.stream.xlsx.WorkbookReader();
       const options = {
         entries: 'emit',
@@ -50,7 +46,7 @@ const runs = 3;
 
       let worksheetCount = 0;
       let rowCount = 0;
-      for await (const {eventType, value, entry} of wb.parse(stream, options)) {
+      for await (const {eventType, value, entry} of wb.parse('spec/integration/data/huge.xlsx', options)) {
         if (eventType === 'worksheet') {
           worksheetCount += 1;
           console.log(`Reading worksheet ${worksheetCount}`);
