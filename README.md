@@ -1860,7 +1860,9 @@ to modify individual cell protection.
 
 **Note:** While the protect() function returns a Promise indicating
 that it is async, the current implementation runs on the main
-thread and will use approx 600ms on an average CPU.
+thread and will use approx 600ms on an average CPU. This can be adjusted
+by setting the spinCount, which can be used to make the process either
+faster or more resilient.
 
 ### Sheet Protection Options
 
@@ -1879,6 +1881,7 @@ thread and will use approx 600ms on an average CPU.
 | sort                | false   | Lets the user sort data |
 | autoFilter          | false   | Lets the user filter data in tables |
 | pivotTables         | false   | Lets the user use pivot tables |
+| spinCount           | 100000  | The number of hash iterations performed when protecting or unprotecting |
 
 
 
