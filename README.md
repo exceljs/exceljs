@@ -197,9 +197,27 @@ require('core-js/modules/es.object.assign');
 require('core-js/modules/es.object.keys');
 require('regenerator-runtime/runtime');
 
-// ...
-
 const ExcelJS = require('exceljs/dist/es5');
+```
+
+For IE 11, you'll also need a polyfill to support unicode regex patterns. For example,
+
+```js
+const rewritePattern = require('regexpu-core');
+const {generateRegexpuOptions} = require('@babel/helper-create-regexp-features-plugin/lib/util');
+
+const {RegExp} = global;
+try {
+  new RegExp('a', 'u');
+} catch (err) {
+  global.RegExp = function(pattern, flags) {
+    if (flags && flags.includes('u')) {
+      return new RegExp(rewritePattern(pattern, flags, generateRegexpuOptions({flags, pattern})));
+    }
+    return new RegExp(pattern, flags);
+  };
+  global.RegExp.prototype = RegExp;
+}
 ```
 
 ## Browserify
