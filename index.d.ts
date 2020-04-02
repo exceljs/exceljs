@@ -1169,7 +1169,7 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & {hyperlinks?: ImageHyperlinkValue} | { editAs?: string; } & ImagePosition & {hyperlinks?: ImageHyperlinkValue}): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): void;
 
 	getImages(): Array<{
 		type: 'image',
@@ -1725,42 +1725,42 @@ export namespace stream {
 			useStyles: boolean;
 		}
 
-        interface ArchiverZipOptions {
-            comment: string;
-            forceLocalTime: boolean;
-            forceZip64: boolean;
-            store: boolean;
-            zlib: Partial<ZlibOptions>;
-        }
+		interface ArchiverZipOptions {
+			comment: string;
+			forceLocalTime: boolean;
+			forceZip64: boolean;
+			store: boolean;
+			zlib: Partial<ZlibOptions>;
+		}
 
-        interface ZlibOptions {
-            /**
-             * @default constants.Z_NO_FLUSH
-             */
-            flush: number;
-            /**
-             * @default constants.Z_FINISH
-             */
-            finishFlush: number;
-            /**
-             * @default 16*1024
-             */
-            chunkSize: number;
-            windowBits: number;
-            level: number; // compression only
-            memLevel: number; // compression only
-            strategy: number; // compression only
-            dictionary: Buffer | NodeJS.TypedArray | DataView | ArrayBuffer; // deflate/inflate only, empty dictionary by default
-        }
+		interface ZlibOptions {
+			/**
+			 * @default constants.Z_NO_FLUSH
+			 */
+			flush: number;
+			/**
+			 * @default constants.Z_FINISH
+			 */
+			finishFlush: number;
+			/**
+			 * @default 16*1024
+			 */
+			chunkSize: number;
+			windowBits: number;
+			level: number; // compression only
+			memLevel: number; // compression only
+			strategy: number; // compression only
+			dictionary: Buffer | NodeJS.TypedArray | DataView | ArrayBuffer; // deflate/inflate only, empty dictionary by default
+		}
 
 		interface WorkbookStreamWriterOptions extends WorkbookWriterOptions {
 
-            /**
-             * Specifies whether to add style information to the workbook.
-             * Styles can add some performance overhead. Default is false
-             */
-            zip: Partial<ArchiverZipOptions>;
-        }
+			/**
+			 * Specifies whether to add style information to the workbook.
+			 * Styles can add some performance overhead. Default is false
+			 */
+			zip: Partial<ArchiverZipOptions>;
+		}
 
 		class WorkbookWriter extends Workbook {
 			constructor(options: Partial<WorkbookStreamWriterOptions>);
@@ -1775,6 +1775,54 @@ export namespace stream {
 			addSharedStrings(): Promise<void>;
 			addWorkbookRels(): Promise<void>;
 			addWorkbook(): Promise<void>;
+		}
+
+
+		interface WorkbookStreamReaderOptions {
+			/**
+			 * @default 'emit'
+			 */
+			entries: 'emit' | void;
+			/**
+			 * @default 'emit'
+			 */
+			worksheets: 'emit' | void;
+			/**
+			 * @default 'cache'
+			 */
+			sharedStrings: 'cache' | 'emit' | void;
+			/**
+			 * @default 'cache'
+			 */
+			hyperlinks: 'cache' | 'emit' | void;
+			/**
+			 * @default 'cache'
+			 */
+			styles: 'cache' | void;
+		}
+
+		class WorkbookReader extends Workbook {
+			constructor(input: string | import('stream').Stream, options: Partial<WorkbookStreamReaderOptions>);
+			read(): Promise<void>;
+			[Symbol.asyncIterator]: AsyncIterator<WorksheetReader>;
+			parse(): AsyncIterator<any>;
+		}
+
+		interface WorksheetReaderOptions {
+			workbook: Workbook;
+			id: number;
+			entry: import('stream').Stream;
+			options: WorkbookStreamReaderOptions;
+		}
+
+		class WorksheetReader {
+			constructor(options: WorksheetReaderOptions);
+			read(): Promise<void>;
+			[Symbol.asyncIterator]: AsyncIterator<Array<Row>>;
+			parse(): AsyncIterator<Array<any>>;
+			dimensions(): number;
+			columns(): number;
+			getColumn(c: number): Column;
 		}
 	}
 }
