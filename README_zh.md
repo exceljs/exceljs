@@ -1669,6 +1669,83 @@ workbook.commit()
   });
 ```
 
+##### Streaming XLSX Reader
+
+The streaming XLSX workbook reader is available in the ExcelJS.stream.xlsx namespace.
+
+The constructor takes a required input argument and an optional options argument:
+
+| Argument              | Description |
+| --------------------- | ----------- |
+| input (required)      | Specifies the name of the file or the readable stream from which to read the XLSX workbook. |
+| options (optional)    | Specifies how to handle the event types occuring during the read parsing. |
+| options.entries       | Specifies whether to emit entries (`'emit'`) or not (`undefined`). Default is `'emit'`. |
+| options.sharedStrings | Specifies whether to cache shared strings (`'cache'`), emit them (`'emit'`) or skip them (`undefined`). Default is `'cache'`. |
+| options.hyperlinks    | Specifies whether to cache hyperlinks (`'cache'`), emit them (`'emit'`) or skip them (`undefined`). Default is `'cache'`. |
+| options.styles        | Specifies whether to cache styles (`'cache'`) or skip them (`undefined`). Default is `'cache'`. |
+| options.worksheets    | Specifies whether to emit worksheets (`'emit'`) or not (`undefined`). Default is `'emit'`. |
+
+```js
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+for await (const worksheetReader of workbookReader) {
+  for await (const rows of worksheetReader) {
+    for (const row of rows) {
+      // ...
+    }
+  }
+}
+```
+
+Please note that `worksheetReader` returns an array of rows rather than each row individually for performance reasons: https://github.com/nodejs/node/issues/31979
+
+###### Iterating over all events
+
+Events on workbook are 'worksheet', 'shared-strings' and 'hyperlinks'. Events on worksheet are 'row' and 'hyperlinks'.
+
+```js
+const options = {
+  sharedStrings: 'emit',
+  hyperlinks: 'emit',
+  worksheets: 'emit',
+};
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
+for await (const {eventType, value} of workbook.parse()) {
+  switch (eventType) {
+    case 'shared-strings':
+      for (const event of value) {
+        // event.value is the shared string
+      }
+    case 'worksheet': {
+      // value is the worksheetReader
+    }
+    case 'hyperlinks': {
+      // value is the hyperlinksReader
+    }
+  }
+}
+```
+
+###### Readable stream
+
+While we strongly encourage to use async iteration, we also expose a streaming interface for backwards compatibility.
+
+```js
+const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+workbookReader.read();
+
+workbookReader.on('worksheet', worksheet => {
+  worksheet.on('row', row => {
+  });
+});
+
+workbookReader.on('end', () => {
+  // ...
+});
+workbookReader.on('error', (err) => {
+  // ...
+});
+```
+
 # <a id="browser">浏览器</a>
 
 该库的一部分已经过隔离测试，可在浏览器环境中使用。

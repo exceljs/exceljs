@@ -2136,7 +2136,7 @@ Note that it is possible to build the entire workbook without committing any row
 
 ##### Streaming XLSX Writer
 
-The streaming XLSX writer is available in the ExcelJS.stream.xlsx namespace.
+The streaming XLSX workbook writer is available in the ExcelJS.stream.xlsx namespace.
 
 The constructor takes an optional options object with the following fields:
 
@@ -2144,9 +2144,9 @@ The constructor takes an optional options object with the following fields:
 | ---------------- | ----------- |
 | stream           | Specifies a writable stream to write the XLSX workbook to. |
 | filename         | If stream not specified, this field specifies the path to a file to write the XLSX workbook to. |
-| useSharedStrings | Specifies whether to use shared strings in the workbook. Default is false |
-| useStyles        | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
-| zip              | [Zip options](https://www.archiverjs.com/global.html#ZipOptions) that ExcelJS internally passes to [Archiver](https://github.com/archiverjs/node-archiver). Default is undefined |
+| useSharedStrings | Specifies whether to use shared strings in the workbook. Default is `false`. |
+| useStyles        | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is `false`. |
+| zip              | [Zip options](https://www.archiverjs.com/global.html#ZipOptions) that ExcelJS internally passes to [Archiver](https://github.com/archiverjs/node-archiver). Default is `undefined`. |
 
 If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object
  that will store the contents of the XLSX workbook in memory.
@@ -2186,6 +2186,7 @@ worksheet.addRow({
 ```
 
 The reason the WorksheetWriter does not commit rows as they are added is to allow cells to be merged across rows:
+
 ```javascript
 worksheet.mergeCells('A1:B2');
 worksheet.getCell('A1').value = 'I am merged';
@@ -2214,55 +2215,78 @@ workbook.commit()
 
 ##### Streaming XLSX Reader
 
-TODO:...
+The streaming XLSX workbook reader is available in the ExcelJS.stream.xlsx namespace.
 
-Async iteration example:
+The constructor takes a required input argument and an optional options argument:
+
+| Argument              | Description |
+| --------------------- | ----------- |
+| input (required)      | Specifies the name of the file or the readable stream from which to read the XLSX workbook. |
+| options (optional)    | Specifies how to handle the event types occuring during the read parsing. |
+| options.entries       | Specifies whether to emit entries (`'emit'`) or not (`undefined`). Default is `'emit'`. |
+| options.sharedStrings | Specifies whether to cache shared strings (`'cache'`), emit them (`'emit'`) or skip them (`undefined`). Default is `'cache'`. |
+| options.hyperlinks    | Specifies whether to cache hyperlinks (`'cache'`), emit them (`'emit'`) or skip them (`undefined`). Default is `'cache'`. |
+| options.styles        | Specifies whether to cache styles (`'cache'`) or skip them (`undefined`). Default is `'cache'`. |
+| options.worksheets    | Specifies whether to emit worksheets (`'emit'`) or not (`undefined`). Default is `'emit'`. |
 
 ```js
-const stream = fs.createReadStream(...);
-const wb = new ExcelJS.stream.xlsx.WorkbookReader();
-const options = {
-  entries: 'emit',
-  sharedStrings: 'cache',
-  worksheets: 'emit',
-};
-
-for await (const {eventType, value, entry} of wb.parse(stream, options)) {
-  if (eventType === 'worksheet') {
-    worksheetCount += 1;
-    for await (const events of value.parse(entry, options)) {
-      for (const event of events) {
-        if (event.eventType === 'row') {
-          ...
-        }
-      }
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+for await (const worksheetReader of workbookReader) {
+  for await (const rows of worksheetReader) {
+    for (const row of rows) {
+      // ...
     }
   }
 }
 ```
 
-Streaming example:
+Please note that `worksheetReader` returns an array of rows rather than each row individually for performance reasons: https://github.com/nodejs/node/issues/31979
+
+###### Iterating over all events
+
+Events on workbook are 'worksheet', 'shared-strings' and 'hyperlinks'. Events on worksheet are 'row' and 'hyperlinks'.
 
 ```js
-const stream = fs.createReadStream(path.join(__dirname, 'spec/integration/data/huge.xlsx'));
-const wb = new ExcelJS.stream.xlsx.WorkbookReader();
 const options = {
-  entries: 'emit',
-  sharedStrings: 'cache',
+  sharedStrings: 'emit',
+  hyperlinks: 'emit',
   worksheets: 'emit',
 };
-wb.read(stream, options);
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
+for await (const {eventType, value} of workbook.parse()) {
+  switch (eventType) {
+    case 'shared-strings':
+      for (const event of value) {
+        // event.value is the shared string
+      }
+    case 'worksheet': {
+      // value is the worksheetReader
+    }
+    case 'hyperlinks': {
+      // value is the hyperlinksReader
+    }
+  }
+}
+```
 
-wb.on('error', (err) => {
-  ...
-});
-wb.on('worksheet', worksheet => {
-  worksheet.on('row', () => {
-    ...
+###### Readable stream
+
+While we strongly encourage to use async iteration, we also expose a streaming interface for backwards compatibility.
+
+```js
+const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+workbookReader.read();
+
+workbookReader.on('worksheet', worksheet => {
+  worksheet.on('row', row => {
   });
 });
-wb.on('end', () => {
-  ...
+
+workbookReader.on('end', () => {
+  // ...
+});
+workbookReader.on('error', (err) => {
+  // ...
 });
 ```
 
