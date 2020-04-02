@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-unused-vars */
 const ExcelJS = require('./lib/exceljs.nodejs.js');
 
 const runs = 3;
@@ -8,55 +8,40 @@ const runs = 3;
     await runProfiling('huge xlsx file streams', () => {
       return new Promise((resolve, reject) => {
         // Data taken from http://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
-        const wb = new ExcelJS.stream.xlsx.WorkbookReader();
-        const options = {
-          entries: 'emit',
-          sharedStrings: 'cache',
-          worksheets: 'emit',
-        };
-        wb.read('./spec/integration/data/huge.xlsx', options);
+        const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./spec/integration/data/huge.xlsx');
+        workbookReader.read();
 
         let worksheetCount = 0;
         let rowCount = 0;
-        wb.on('worksheet', worksheet => {
+        workbookReader.on('worksheet', worksheet => {
           worksheetCount += 1;
           console.log(`Reading worksheet ${worksheetCount}`);
-          worksheet.on('row', () => {
+          worksheet.on('row', row => {
             rowCount += 1;
             if (rowCount % 50000 === 0) console.log(`Reading row ${rowCount}`);
           });
         });
 
-        wb.on('end', () => {
+        workbookReader.on('end', () => {
           console.log(`Processed ${worksheetCount} worksheets and ${rowCount} rows`);
           resolve();
         });
-        wb.on('error', reject);
+        workbookReader.on('error', reject);
       });
     });
 
     await runProfiling('huge xlsx file async iteration', async () => {
       // Data taken from http://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
-      const wb = new ExcelJS.stream.xlsx.WorkbookReader();
-      const options = {
-        entries: 'emit',
-        sharedStrings: 'cache',
-        worksheets: 'emit',
-      };
-
+      const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('spec/integration/data/huge.xlsx');
       let worksheetCount = 0;
       let rowCount = 0;
-      for await (const {eventType, value, entry} of wb.parse('spec/integration/data/huge.xlsx', options)) {
-        if (eventType === 'worksheet') {
-          worksheetCount += 1;
-          console.log(`Reading worksheet ${worksheetCount}`);
-          for await (const events of value.parse(entry, options)) {
-            for (const event of events) {
-              if (event.eventType === 'row') {
-                rowCount += 1;
-                if (rowCount % 50000 === 0) console.log(`Reading row ${rowCount}`);
-              }
-            }
+      for await (const worksheetReader of workbookReader) {
+        worksheetCount += 1;
+        console.log(`Reading worksheet ${worksheetCount}`);
+        for await (const rows of worksheetReader) {
+          for (const row of rows) {
+            rowCount += 1;
+            if (rowCount % 50000 === 0) console.log(`Reading row ${rowCount}`);
           }
         }
       }
