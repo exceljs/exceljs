@@ -32,7 +32,7 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max row count exceeded');
+              expect(err.message).to.equal('Max row count (10) exceeded');
             }
           );
       });
@@ -47,7 +47,7 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max row count exceeded');
+              expect(err.message).to.equal('Max row count (100) exceeded');
             }
           );
       });
@@ -74,7 +74,7 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max column count exceeded');
+              expect(err.message).to.equal('Max column count (15) exceeded');
             }
           );
       });
@@ -89,7 +89,7 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max column count exceeded');
+              expect(err.message).to.equal('Max column count (10) exceeded');
             }
           );
       });
@@ -118,7 +118,7 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max row count exceeded');
+              expect(err.message).to.equal('Max row count (10) exceeded');
             }
           );
       });
