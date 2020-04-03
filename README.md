@@ -1617,7 +1617,7 @@ worksheet.addConditionalFormatting({
 | aboveAverage  | Y        | false   | if true, the rank field is a percentage, not an absolute |
 | style         |          |         | style structure to apply if the comparison returns true |
 
-### Colour Scale
+### Color Scale
 
 | Field         | Optional | Default | Description |
 | ------------- | -------- | ------- | ----------- |
@@ -1634,6 +1634,27 @@ worksheet.addConditionalFormatting({
 | type          |          |         | 'iconSet' |
 | priority      | Y        | &lt;auto&gt;  | determines priority ordering of styles |
 | iconSet       | Y        | 3TrafficLights | name of icon set to use |
+| showValue     |          | true    | Specifies whether the cells in the applied range display the icon and cell value, or the icon only |
+| reverse       |          | false   | Specifies whether the icons in the icon set specified in iconSet are show in reserve order. If custom equals "true" this value must be ignored |
+| custom        |          |  false  | Specifies whether a custom set of icons is used |
+| cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
+| style         |          |         | style structure to apply if the comparison returns true |
+
+### Data Bar
+
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'dataBar' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| minLength  |          | 0       | Specifies the length of the shortest data bar in this conditional formatting range |
+| maxLength  |          | 100     | Specifies the length of the longest data bar in this conditional formatting range |
+| showValue  |          | true    | Specifies whether the cells in the conditional formatting range display both the data bar and the numeric value or the data bar |
+| gradient   |          | true    | Specifies whether the data bar has a gradient fill |
+| border     |          | true    | Specifies whether the data bar has a border |
+| negativeBarColorSameAsPositive  |                | true        | Specifies whether the data bar has a negative bar color that is different from the positive bar color |
+| negativeBarBorderColorSameAsPositive  |          | true        | Specifies whether the data bar has a negative border color that is different from the positive border color |
+| axisPosition  |       | 'auto'             | Specifies the axis position for the data bar |
+| direction  |          | 'leftToRight'      | Specifies the direction of the data bar |
 | cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
 | style         |          |         | style structure to apply if the comparison returns true |
 
@@ -1680,7 +1701,6 @@ worksheet.addConditionalFormatting({
 | lastMonth         | Apply format if cell value falls in last month |
 | thisMonth         | Apply format if cell value falls in this month |
 | nextMonth         | Apply format if cell value falls in next month |
-
 
 ## Outline Levels
 

@@ -1017,6 +1017,7 @@ export interface IconSetRuleType extends ConditionalFormattingBaseRule {
 	type: 'iconSet';
 	showValue?: boolean;
 	reverse?: boolean;
+	custom?: boolean;
 	iconSet?: IconSetTypes;
 	cfvo?: Cvfo[];
 }
@@ -1033,10 +1034,17 @@ export interface TimePeriodRuleType extends ConditionalFormattingBaseRule {
 }
 
 export interface DataBarRuleType extends ConditionalFormattingBaseRule {
-	type: 'dataBar',
-	gradient?: boolean,
+	type: 'dataBar';
+	gradient?: boolean;
+	minLength?: number;
+	maxLength?: number;
+	showValue?: boolean;
+	border?: boolean;
+	negativeBarColorSameAsPositive?: boolean;
+	negativeBarBorderColorSameAsPositive?: boolean;
+	axisPosition?: 'auto' | 'middle' | 'none';
+	direction?: 'context' | 'leftToRight' | 'rightToLeft';
 	cfvo?: Cvfo[];
-	color?: Partial<Color>;
 }
 
 export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType 
