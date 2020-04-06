@@ -1782,23 +1782,23 @@ export namespace stream {
 			/**
 			 * @default 'emit'
 			 */
-			entries: 'emit' | void;
-			/**
-			 * @default 'emit'
-			 */
-			worksheets: 'emit' | void;
+			worksheets?: 'emit' | 'ignore';
 			/**
 			 * @default 'cache'
 			 */
-			sharedStrings: 'cache' | 'emit' | void;
+			sharedStrings?: 'cache' | 'emit' | 'ignore';
 			/**
-			 * @default 'cache'
+			 * @default 'ignore'
 			 */
-			hyperlinks: 'cache' | 'emit' | void;
+			hyperlinks?: 'cache' | 'emit' | 'ignore';
 			/**
-			 * @default 'cache'
+			 * @default 'ignore'
 			 */
-			styles: 'cache' | void;
+			styles?: 'cache' | 'ignore';
+			/**
+			 * @default 'ignore'
+			 */
+			entries?: 'emit' | 'ignore';
 		}
 
 		class WorkbookReader extends Workbook {

@@ -2274,12 +2274,25 @@ for await (const {eventType, value} of workbook.parse()) {
 While we strongly encourage to use async iteration, we also expose a streaming interface for backwards compatibility.
 
 ```js
-const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+const options = {
+  sharedStrings: 'emit',
+  hyperlinks: 'emit',
+  worksheets: 'emit',
+};
+const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
 workbookReader.read();
 
 workbookReader.on('worksheet', worksheet => {
   worksheet.on('row', row => {
   });
+});
+
+workbookReader.on('shared-strings', sharedString => {
+  // ...
+});
+
+workbookReader.on('hyperlinks', hyperlinksReader => {
+  // ...
 });
 
 workbookReader.on('end', () => {
