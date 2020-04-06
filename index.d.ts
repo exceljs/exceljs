@@ -1819,7 +1819,7 @@ export namespace stream {
 			constructor(options: WorksheetReaderOptions);
 			read(): Promise<void>;
 			[Symbol.asyncIterator]: AsyncIterator<Row>;
-			parse(): AsyncIterator<any>;
+			parse(): AsyncIterator<Array<any>>;
 			dimensions(): number;
 			columns(): number;
 			getColumn(c: number): Column;
