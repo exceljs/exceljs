@@ -1818,8 +1818,8 @@ export namespace stream {
 		class WorksheetReader {
 			constructor(options: WorksheetReaderOptions);
 			read(): Promise<void>;
-			[Symbol.asyncIterator]: AsyncIterator<Array<Row>>;
-			parse(): AsyncIterator<Array<any>>;
+			[Symbol.asyncIterator]: AsyncIterator<Row>;
+			parse(): AsyncIterator<any>;
 			dimensions(): number;
 			columns(): number;
 			getColumn(c: number): Column;

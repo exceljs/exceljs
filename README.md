@@ -2232,10 +2232,8 @@ The constructor takes a required input argument and an optional options argument
 ```js
 const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
 for await (const worksheetReader of workbookReader) {
-  for await (const rows of worksheetReader) {
-    for (const row of rows) {
-      // ...
-    }
+  for await (const row of worksheetReader) {
+    // ...
   }
 }
 ```
@@ -2256,15 +2254,11 @@ const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
 for await (const {eventType, value} of workbook.parse()) {
   switch (eventType) {
     case 'shared-strings':
-      for (const event of value) {
-        // event.value is the shared string
-      }
-    case 'worksheet': {
+      // value is the shared string
+    case 'worksheet':
       // value is the worksheetReader
-    }
-    case 'hyperlinks': {
+    case 'hyperlinks':
       // value is the hyperlinksReader
-    }
   }
 }
 ```

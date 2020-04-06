@@ -38,11 +38,9 @@ const runs = 3;
       for await (const worksheetReader of workbookReader) {
         worksheetCount += 1;
         console.log(`Reading worksheet ${worksheetCount}`);
-        for await (const rows of worksheetReader) {
-          for (const row of rows) {
-            rowCount += 1;
-            if (rowCount % 50000 === 0) console.log(`Reading row ${rowCount}`);
-          }
+        for await (const row of worksheetReader) {
+          rowCount += 1;
+          if (rowCount % 50000 === 0) console.log(`Reading row ${rowCount}`);
         }
       }
 
