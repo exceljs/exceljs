@@ -22,34 +22,43 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1112">Update issue templates #1112</a>.
-    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1124">Typo: Replace 'allways' with 'always' #1124</a>.
-    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1125">Replace uglify with terser #1125</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1140">Optimize SAXStream #1140</a>.
     Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1126">Apply codestyles on each commit and run lint:fix #1126</a>.
-    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1127">[WIP] Replace sax with saxes #1127</a>.
-    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1128">Add PR, Feature Request and Question github templates #1128</a>.
-    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1137">fix issue #749 Fix internal link example errors in readme #1137</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1143">fix issue #1057 Fix addConditionalFormatting is not a function error when using Streaming XLSX Writer #1143</a>.
     Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1160">fix issue #204 sets default column width #1160</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1164">Include cell address for Shared Formula master must exist.. error #1164</a>.
+    Many thanks to <a href="https://github.com/noisyscanner">Brad Reed</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1166">Typo in DataValidation examples #1166</a>.
+    Many thanks to <a href="https://github.com/mravey">Matthieu Ravey</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1176">fixes #1175 #1176</a>.
+    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1179">fix issue #1178 and update index.d.ts #1179</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1182">Simple test if typescript is able to compile #1182</a>.
+    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1190">More improvements #1190</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
 </ul>
+
 
 # Contributions
 
@@ -188,15 +197,33 @@ require('core-js/modules/es.object.assign');
 require('core-js/modules/es.object.keys');
 require('regenerator-runtime/runtime');
 
-// ...
-
 const ExcelJS = require('exceljs/dist/es5');
+```
+
+For IE 11, you'll also need a polyfill to support unicode regex patterns. For example,
+
+```js
+const rewritePattern = require('regexpu-core');
+const {generateRegexpuOptions} = require('@babel/helper-create-regexp-features-plugin/lib/util');
+
+const {RegExp} = global;
+try {
+  new RegExp('a', 'u');
+} catch (err) {
+  global.RegExp = function(pattern, flags) {
+    if (flags && flags.includes('u')) {
+      return new RegExp(rewritePattern(pattern, flags, generateRegexpuOptions({flags, pattern})));
+    }
+    return new RegExp(pattern, flags);
+  };
+  global.RegExp.prototype = RegExp;
+}
 ```
 
 ## Browserify
 
 ExcelJS publishes two browserified bundles inside the dist/ folder:
- 
+
 One with implicit dependencies on core-js polyfills...
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
@@ -1607,7 +1634,7 @@ in ascending order.
 Note: at present, only a subset of conditional formatting rules are supported.
 Specifically, only the formatting rules that do not require XML rendering
 inside an &lt;extLst&gt; element. This means that datasets and three specific
-icon sets (3Triangles, 3Stars, 5Boxes) are not supported. 
+icon sets (3Triangles, 3Stars, 5Boxes) are not supported.
 
 ```javascript
 // add a checkerboard pattern to A1:E7 based on row + col being even or odd
@@ -1685,7 +1712,7 @@ worksheet.addConditionalFormatting({
 | aboveAverage  | Y        | false   | if true, the rank field is a percentage, not an absolute |
 | style         |          |         | style structure to apply if the comparison returns true |
 
-### Colour Scale
+### Color Scale
 
 | Field         | Optional | Default | Description |
 | ------------- | -------- | ------- | ----------- |
@@ -1702,6 +1729,27 @@ worksheet.addConditionalFormatting({
 | type          |          |         | 'iconSet' |
 | priority      | Y        | &lt;auto&gt;  | determines priority ordering of styles |
 | iconSet       | Y        | 3TrafficLights | name of icon set to use |
+| showValue     |          | true    | Specifies whether the cells in the applied range display the icon and cell value, or the icon only |
+| reverse       |          | false   | Specifies whether the icons in the icon set specified in iconSet are show in reserve order. If custom equals "true" this value must be ignored |
+| custom        |          |  false  | Specifies whether a custom set of icons is used |
+| cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
+| style         |          |         | style structure to apply if the comparison returns true |
+
+### Data Bar
+
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'dataBar' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| minLength  |          | 0       | Specifies the length of the shortest data bar in this conditional formatting range |
+| maxLength  |          | 100     | Specifies the length of the longest data bar in this conditional formatting range |
+| showValue  |          | true    | Specifies whether the cells in the conditional formatting range display both the data bar and the numeric value or the data bar |
+| gradient   |          | true    | Specifies whether the data bar has a gradient fill |
+| border     |          | true    | Specifies whether the data bar has a border |
+| negativeBarColorSameAsPositive  |                | true        | Specifies whether the data bar has a negative bar color that is different from the positive bar color |
+| negativeBarBorderColorSameAsPositive  |          | true        | Specifies whether the data bar has a negative border color that is different from the positive border color |
+| axisPosition  |       | 'auto'             | Specifies the axis position for the data bar |
+| direction  |          | 'leftToRight'      | Specifies the direction of the data bar |
 | cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
 | style         |          |         | style structure to apply if the comparison returns true |
 
@@ -1748,7 +1796,6 @@ worksheet.addConditionalFormatting({
 | lastMonth         | Apply format if cell value falls in last month |
 | thisMonth         | Apply format if cell value falls in this month |
 | nextMonth         | Apply format if cell value falls in next month |
-
 
 ## Outline Levels
 
@@ -1928,7 +1975,9 @@ to modify individual cell protection.
 
 **Note:** While the protect() function returns a Promise indicating
 that it is async, the current implementation runs on the main
-thread and will use approx 600ms on an average CPU.
+thread and will use approx 600ms on an average CPU. This can be adjusted
+by setting the spinCount, which can be used to make the process either
+faster or more resilient.
 
 ### Sheet Protection Options
 
@@ -1947,6 +1996,7 @@ thread and will use approx 600ms on an average CPU.
 | sort                | false   | Lets the user sort data |
 | autoFilter          | false   | Lets the user filter data in tables |
 | pivotTables         | false   | Lets the user use pivot tables |
+| spinCount           | 100000  | The number of hash iterations performed when protecting or unprotecting |
 
 
 
@@ -2003,6 +2053,15 @@ workbook.xlsx.writeBuffer()
 
 #### Reading CSV
 
+Options supported when reading CSV files.
+
+| Field            |  Required   |    Type     |Description  |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormats      |     N       |  Array      | Specify the date encoding format of dayjs. |
+| map              |     N       |  Function   | Custom Array.prototype.map() callback function for processing data. |
+| sheetName        |     N       |  String     | Specify worksheet name. |
+| parserOptions    |     N       |  Object     | [parseOptions options](https://c2fo.io/fast-csv/docs/parsing/options)  @fast-csv/format module to write csv data. |
+
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
@@ -2050,7 +2109,12 @@ var options = {
         // the rest are numbers
         return parseFloat(value);
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/parsing/options
+  parserOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
 workbook.csv.readFile(filename, options)
   .then(function(worksheet) {
@@ -2059,7 +2123,7 @@ workbook.csv.readFile(filename, options)
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
- The options passed into the read functions above is also passed to fast-csv for parsing of the csv data.
+The formatterOptions in the options passed to the above write function will be passed to the @fast-csv/format module to write csv data.
  Please refer to the fast-csv README.md for details.
 
 Dates are parsed using the npm module [dayjs](https://www.npmjs.com/package/dayjs).
@@ -2072,6 +2136,19 @@ Dates are parsed using the npm module [dayjs](https://www.npmjs.com/package/dayj
 Please refer to the [dayjs CustomParseFormat plugin](https://github.com/iamkun/dayjs/blob/HEAD/docs/en/Plugin.md#customparseformat) for details on how to structure a dateFormat.
 
 #### Writing CSV
+
+Options supported when writing to a CSV file.
+
+| Field            |  Required   |    Type     | Description |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormat       |     N       |  String     | Specify the date encoding format of dayjs. |
+| dateUTC          |     N       |  Boolean    | Specify whether ExcelJS uses `dayjs.utc ()` to convert time zone for parsing dates. |
+| encoding         |     N       |  String     | Specify file encoding format. |
+| includeEmptyRows |     N       |  Boolean    | Specifies whether empty rows can be written. |
+| map              |     N       |  Function   | Custom Array.prototype.map() callback function for processing row values. |
+| sheetName        |     N       |  String     | Specify worksheet name. |
+| sheetId          |     N       |  Number     | Specify worksheet ID. |
+| formatterOptions |     N       |  Object     | [formatterOptions options](https://c2fo.io/fast-csv/docs/formatting/options/) @fast-csv/format module to write csv data. |
 
 ```javascript
 
@@ -2120,7 +2197,12 @@ var options = {
         // the rest are numbers
         return value;
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/formatting/options
+  formatterOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
 workbook.csv.writeFile(filename, options)
   .then(() => {
@@ -2135,7 +2217,7 @@ workbook.csv.writeBuffer()
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write the CSV file.
- The options passed into the write functions above is also passed to fast-csv for writing the csv data.
+ The formatterOptions in the options passed to the above write function will be passed to the @fast-csv/format module to write csv data.
  Please refer to the fast-csv README.md for details.
 
 Dates are formatted using the npm module [moment](https://www.npmjs.com/package/moment).
@@ -2727,3 +2809,5 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 3.6.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1047">Clarify merging cells by row/column numbers #1047</a>. Many thanks to <a href="https://github.com/kendallroth">Kendall Roth</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1048">Fix README mistakes concerning freezing views #1048</a>. Many thanks to <a href="https://github.com/overlookmotel">overlookmotel</a> for this contribution. </li> <li> Merged: <ul> <li><a href="https://github.com/exceljs/exceljs/pull/1073">fix issue #1045 horizontalCentered & verticalCentered in page not working #1073</a></li> <li><a href="https://github.com/exceljs/exceljs/pull/1082">Fix the problem of anchor failure of readme_zh.md file #1082</a></li> <li><a href="https://github.com/exceljs/exceljs/pull/1065">Fix problems caused by case of worksheet names #1065</a></li> </ul> Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> </ul> |
 | 3.7.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1076">Fix Issue #1075: Unable to read/write defaultColWidth attribute in &lt;sheetFormatPr&gt; node #1076</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1078">function duplicateRows added #1078</a> and <a href="https://github.com/exceljs/exceljs/pull/1088">Duplicate rows #1088</a>. Many thanks to <a href="https://github.com/cbeltrangomez84">cbeltrangomez84</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1087">Prevent from unhandled promise rejection durning workbook load #1087</a>. Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1071">fix issue #899 Support for inserting pictures with hyperlinks #1071</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1089">Update TS definition to reference proper internal libraries #1089</a>. Many thanks to <a href="https://github.com/jakawell">Jesse Kawell</a> for this contribution. </li> </ul> |
 | 3.8.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1090">Issue/Corrupt workbook using stream writer with background image #1090</a>. Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1092">Fix index.d.ts #1092</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1093">Wait for writing to tmp fiels before handling zip stream close #1093</a>. Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1095">Support ArrayBuffer as an xlsx.load argument #1095</a>. Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1099">Export shared strings with RichText #1099</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1102">Keep borders of merged cells after rewriting an Excel workbook #1102</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1104">Fix #1103: `editAs` not working #1104</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1105">Fix to issue #1101 #1105</a>. Many thanks to <a href="https://github.com/cbeltrangomez84">Carlos Andres Beltran Gomez</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1107">fix some errors and typos in readme #1107</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1112">Update issue templates #1112</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> </ul> |
+| 3.8.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1112">Update issue templates #1112</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1124">Typo: Replace 'allways' with 'always' #1124</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1125">Replace uglify with terser #1125</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1126">Apply codestyles on each commit and run lint:fix #1126</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1127">[WIP] Replace sax with saxes #1127</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1128">Add PR, Feature Request and Question github templates #1128</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1137">fix issue #749 Fix internal link example errors in readme #1137</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> </ul> |
+| 3.8.2   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1133">Update @types/node version to latest lts #1133</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1134">fix issue #1118 Adding Data Validation and Conditional Formatting to the same sheet causes corrupt workbook #1134</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1139">Add benchmarking #1139</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1148">fix issue #731 image extensions not be case sensitive #1148</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1169">fix issue #1165 and update index.d.ts #1169</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> </ul> |

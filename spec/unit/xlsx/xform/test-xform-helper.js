@@ -130,7 +130,7 @@ const its = {
             },
           ],
         });
-        const saxStream = new SAXStream();
+        const saxStream = new SAXStream(['opentag', 'text', 'closetag']);
         xform
           .parse(saxStream)
           .then(model => {
@@ -156,7 +156,7 @@ const its = {
         const xml = getExpectation(expectation, 'xml');
         const result = getExpectation(expectation, 'parsedModel');
 
-        const saxStream = new SAXStream();
+        const saxStream = new SAXStream(['opentag', 'text', 'closetag']);
         const xform = expectation.create();
 
         xform
