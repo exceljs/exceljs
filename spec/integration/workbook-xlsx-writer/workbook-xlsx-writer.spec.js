@@ -457,7 +457,7 @@ describe('WorkbookWriter', () => {
       const ws2 = wb2.getWorksheet('Hello');
 
       expect(ws2.getCell('B2').value).to.equal(5);
-      expect(ws2.getCell('B2').note.texts[0].text).to.equal('five');
+      expect(ws2.getCell('B2').note).to.equal('five');
       expect(ws2.getCell('D2').value).to.equal(7);
       expect(ws2.getCell('D2').note.texts).to.deep.equal(note.texts);
       expect(ws2.getCell('D2').note.margins).to.deep.equal(note.margins);
@@ -473,17 +473,6 @@ describe('WorkbookWriter', () => {
       const ws = wb.addWorksheet('Hello');
       ws.getCell('B2').value = 5;
       ws.getCell('B2').note = 'five';
-      const noteDefault = {
-        margins: {
-          insetmode: 'auto',
-          inset: [0.13, 0.13, 0.25, 0.25],
-        },
-        protection: {
-          locked: 'True',
-          lockText: 'True',
-        },
-        editAs: 'absolute',
-      };
       const note = {
         texts: [
           {
@@ -515,12 +504,7 @@ describe('WorkbookWriter', () => {
       await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
       const ws2 = wb2.getWorksheet('Hello');
       expect(ws2.getCell('B2').value).to.equal(5);
-      expect(ws2.getCell('B2').note.texts[0].text).to.equal('five');
-      expect(ws2.getCell('B2').note.margins).to.deep.equal(noteDefault.margins);
-      expect(ws2.getCell('B2').note.protection).to.deep.equal(
-        noteDefault.protection
-      );
-      expect(ws2.getCell('B2').note.editAs).to.deep.equal(noteDefault.editAs);
+      expect(ws2.getCell('B2').note).to.equal('five');
 
       expect(ws2.getCell('D2').value).to.equal(7);
       expect(ws2.getCell('D2').note.texts).to.deep.equal(note.texts);
