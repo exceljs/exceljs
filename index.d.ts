@@ -1,4 +1,3 @@
-import { Comment, Protection } from './index.d';
 declare interface Buffer extends ArrayBuffer { }
 
 export const enum RelationshipType {
@@ -377,24 +376,24 @@ export type CellValue =
 	| CellFormulaValue | CellSharedFormulaValue;
 
 
-export interface CommentMargins {
-	insetmode: 'auto' | 'custom',
-	inset: Number[]
-}
+	export interface CommentMargins {
+		insetmode: 'auto' | 'custom';
+		inset: Number[];
+	}
+	
+	export interface CommentProtection {
+		locked: 'True' | 'False';
+		lockText: 'True' | 'False';
+	}
+	
+	export type CommentEditAs = 'twoCells' | 'oneCells' | 'absolute';
 
-export interface CommentProtection {
-	locked: 'True' | 'False'
-	lockText: 'True' | 'False'
-}
-
-export type CommentEditAs =
-	| 'twoCells' | 'oneCells' | 'absolute' 
-export interface Comment {
-	texts: RichText[];
-	margins: CommentMargins;
-	protection: CommentProtection;
-	editAs: CommentEditAs;
-}
+	export interface Comment {
+		texts?: RichText[];
+		margins?: Partial<CommentMargins>;
+		protection?: Partial<CommentProtection>;
+		editAs?: CommentEditAs;
+	}
 
 export interface CellModel {
 	address: Address;
@@ -451,7 +450,7 @@ export interface Cell extends Style, Address {
 	/**
 	 * comment of the cell
 	 */
-	note: Comment;
+	note: string | Comment;
 
 	/**
 	 * convenience getter to access the formula
