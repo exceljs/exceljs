@@ -1352,44 +1352,34 @@ worksheet.addImage(imageId2, {
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
-workbook.xlsx.readFile(filename)
-  .then(function() {
-    // use workbook
-  });
+await workbook.xlsx.readFile(filename);
+// ... use workbook
 
-// pipe from stream
+
+// read from a stream
 var workbook = new Excel.Workbook();
-stream.pipe(workbook.xlsx.createInputStream());
+await workbook.xlsx.read(stream);
+// ... use workbook
+
 
 // load from buffer
 var workbook = new Excel.Workbook();
-workbook.xlsx.load(data)
-  .then(function() {
-    // use workbook
-  });
+await workbook.xlsx.load(data);
+// ... use workbook
 ```
 
 #### <a id="writing-xlsx">写 XLSX</a>
 
-```javascript
+````javascript
 // write to a file
 var workbook = createAndFillWorkbook();
-workbook.xlsx.writeFile(filename)
-  .then(function() {
-    // done
-  });
+await workbook.xlsx.writeFile(filename);
 
 // write to a stream
-workbook.xlsx.write(stream)
-  .then(function() {
-    // done
-  });
+await workbook.xlsx.write(stream);
 
 // write to a new buffer
-workbook.xlsx.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.xlsx.writeBuffer();
 ```
 
 ### CSV <a id="csv">CSV</a>
@@ -1408,31 +1398,24 @@ workbook.xlsx.writeBuffer()
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
-workbook.csv.readFile(filename)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename);
+// ... use workbook or worksheet
+
 
 // read from a stream
 var workbook = new Excel.Workbook();
-workbook.csv.read(stream)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.read(stream);
+// ... use workbook or worksheet
 
-// pipe from stream
-var workbook = new Excel.Workbook();
-stream.pipe(workbook.csv.createInputStream());
 
 // read from a file with European Dates
 var workbook = new Excel.Workbook();
 var options = {
   dateFormats: ['DD/MM/YYYY']
 };
-workbook.csv.readFile(filename, options)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
+
 
 // read from a file with custom value parsing
 var workbook = new Excel.Workbook();
@@ -1459,10 +1442,8 @@ var options = {
     quote: false,
   },
 };
-workbook.csv.readFile(filename, options)
-  .then(function(worksheet) {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
 ```
 
 CSV解析器使用[fast-csv](https://www.npmjs.com/package/fast-csv)来读取CSV文件。
@@ -1496,18 +1477,12 @@ CSV解析器使用[fast-csv](https://www.npmjs.com/package/fast-csv)来读取CSV
 
 // write to a file
 var workbook = createAndFillWorkbook();
-workbook.csv.writeFile(filename)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename);
 
 // write to a stream
 // Be careful that you need to provide sheetName or
 // sheetId for correct import to csv.
-workbook.csv.write(stream, { sheetName: 'Page name' })
-  .then(() => {
-    // done
-  });
+await workbook.csv.write(stream, { sheetName: 'Page name' });
 
 // write to a file with European Date-Times
 var workbook = new Excel.Workbook();
@@ -1515,10 +1490,7 @@ var options = {
   dateFormat: 'DD/MM/YYYY HH:mm:ss',
   dateUTC: true, // use utc when rendering dates
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 
 // write to a file with custom value formatting
@@ -1546,16 +1518,10 @@ var options = {
     quote: false,
   },
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 // write to a new buffer
-workbook.csv.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.csv.writeBuffer();
 ```
 
 CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CSV文件。
@@ -1660,10 +1626,8 @@ worksheet.commit();
 
 ```javascript
 // Finished the workbook.
-workbook.commit()
-  .then(function() {
-    // the stream has been written
-  });
+await workbook.commit();
+// ... the stream has been written
 ```
 
 # <a id="browser">浏览器</a>
