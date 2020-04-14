@@ -199,9 +199,27 @@ require('core-js/modules/es.symbol');
 require('core-js/modules/es.symbol.async-iterator');
 require('regenerator-runtime/runtime');
 
-// ...
-
 const ExcelJS = require('exceljs/dist/es5');
+```
+
+For IE 11, you'll also need a polyfill to support unicode regex patterns. For example,
+
+```js
+const rewritePattern = require('regexpu-core');
+const {generateRegexpuOptions} = require('@babel/helper-create-regexp-features-plugin/lib/util');
+
+const {RegExp} = global;
+try {
+  new RegExp('a', 'u');
+} catch (err) {
+  global.RegExp = function(pattern, flags) {
+    if (flags && flags.includes('u')) {
+      return new RegExp(rewritePattern(pattern, flags, generateRegexpuOptions({flags, pattern})));
+    }
+    return new RegExp(pattern, flags);
+  };
+  global.RegExp.prototype = RegExp;
+}
 ```
 
 ## Browserify
@@ -226,7 +244,7 @@ And one without...
 ## Create a Workbook
 
 ```javascript
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 ```
 
 ## Set Workbook Properties
@@ -267,7 +285,7 @@ workbook.views = [
 ## Add a Worksheet
 
 ```javascript
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 ```
 
 Use the second parameter of the addWorksheet function to specify options for the worksheet.
@@ -276,13 +294,13 @@ For Example:
 
 ```javascript
 // create a sheet with red tab colour
-var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
 // create a sheet where the grid lines are hidden
-var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
+const sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
 
 // create a sheet with the first row and column frozen
-var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
+const sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
 ```
 
 ## Remove a Worksheet
@@ -293,7 +311,7 @@ For Example:
 
 ```javascript
 // Create a worksheet
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 
 // Remove the worksheet using worksheet id
 workbook.removeWorksheet(sheet.id)
@@ -308,10 +326,10 @@ workbook.eachSheet(function(worksheet, sheetId) {
 });
 
 // fetch sheet by name
-var worksheet = workbook.getWorksheet('My Sheet');
+const worksheet = workbook.getWorksheet('My Sheet');
 
 // fetch sheet by id
-var worksheet = workbook.getWorksheet(1);
+const worksheet = workbook.getWorksheet(1);
 ```
 
 ## Worksheet State
@@ -333,10 +351,10 @@ Worksheets support a property bucket to allow control over some features of the 
 
 ```javascript
 // create new sheet with properties
-var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
+const worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
 // create a new sheet writer with properties
-var worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
+const worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
 
 // adjust properties afterwards (not supported by worksheet-writer)
 worksheet.properties.outlineLevelCol = 2;
@@ -372,12 +390,12 @@ All properties that can affect the printing of a sheet are held in a pageSetup o
 
 ```javascript
 // create new sheet with pageSetup settings for A4 - landscape
-var worksheet =  workbook.addWorksheet('sheet', {
+const worksheet =  workbook.addWorksheet('sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
 
 // create a new sheet writer with pageSetup settings for fit-to-page
-var worksheetWriter = workbookWriter.addSheet('sheet', {
+const worksheetWriter = workbookWriter.addSheet('sheet', {
   pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
 });
 
@@ -616,9 +634,9 @@ worksheet.columns = [
 ];
 
 // Access an individual columns by key, letter and 1-based column number
-var idCol = worksheet.getColumn('id');
-var nameCol = worksheet.getColumn('B');
-var dobCol = worksheet.getColumn(3);
+const idCol = worksheet.getColumn('id');
+const nameCol = worksheet.getColumn('B');
+const dobCol = worksheet.getColumn(3);
 
 // set column properties
 
@@ -669,8 +687,8 @@ worksheet.spliceColumns(3,2);
 // Note: columns 4 and above will be shifted right by 1 column.
 // Also: If the worksheet has more rows than values in the column inserts,
 //  the rows will still be shifted as if the values existed
-var newCol3Values = [1,2,3,4,5];
-var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
+const newCol3Values = [1,2,3,4,5];
+const newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
@@ -686,24 +704,24 @@ worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
 worksheet.addRow([3, 'Sam', new Date()]);
 
 // Add a row by sparse Array (assign to columns A, E & I)
-var rowValues = [];
+const rowValues = [];
 rowValues[1] = 4;
 rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
 worksheet.addRow(rowValues);
 
 // Add an array of rows
-var rows = [
+const rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
 worksheet.addRows(rows);
 
 // Get a row object. If it doesn't already exist, a new empty one will be returned
-var row = worksheet.getRow(5);
+const row = worksheet.getRow(5);
 
 // Get the last editable row in a worksheet (or undefined if there are none)
-var row = worksheet.lastRow;
+const row = worksheet.lastRow;
 
 // Set a specific row height
 row.height = 42.5;
@@ -736,7 +754,7 @@ expect(row.getCell(2).value).toEqual(2);
 expect(row.getCell(3).value).toEqual(3);
 
 // assign row values by sparse array  (where array element 0 is undefined)
-var values = []
+const values = []
 values[5] = 7;
 values[10] = 'Hello, World!';
 row.values = values;
@@ -780,8 +798,8 @@ worksheet.spliceRows(4,3);
 
 // remove one row and insert two more.
 // Note: rows 4 and below will be shifted down by 1 row.
-var newRow3Values = [1,2,3,4,5];
-var newRow4Values = ['one', 'two', 'three', 'four', 'five'];
+const newRow3Values = [1,2,3,4,5];
+const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
 
 // Cut one or more cells (cells to the right are shifted left)
@@ -795,14 +813,14 @@ row.splice(4,1,'new value 1', 'new value 2');
 row.commit();
 
 // row metrics
-var rowSize = row.cellCount;
-var numValues = row.actualCellCount;
+const rowSize = row.cellCount;
+const numValues = row.actualCellCount;
 ```
 
 ## Handling Individual Cells
 
 ```javascript
-var cell = worksheet.getCell('C3');
+const cell = worksheet.getCell('C3');
 
 // Modify/Add individual cell
 cell.value = new Date(1968, 5, 1);
@@ -814,7 +832,7 @@ expect(cell.type).toEqual(Excel.ValueType.Date);
 myInput.value = cell.text;
 
 // use html-safe string for rendering...
-var html = '<div>' + cell.html + '</div>';
+const html = '<div>' + cell.html + '</div>';
 
 ```
 
@@ -1290,7 +1308,7 @@ ws.getCell('A3').font = {
 
 // note: the cell will store a reference to the font object assigned.
 // If the font object is changed afterwards, the cell font will change also...
-var font = { name: 'Arial', size: 12 };
+const font = { name: 'Arial', size: 12 };
 ws.getCell('A3').font = font;
 font.size = 20; // Cell A3 now has font size 20!
 
@@ -1619,7 +1637,7 @@ worksheet.addConditionalFormatting({
 | aboveAverage  | Y        | false   | if true, the rank field is a percentage, not an absolute |
 | style         |          |         | style structure to apply if the comparison returns true |
 
-### Colour Scale
+### Color Scale
 
 | Field         | Optional | Default | Description |
 | ------------- | -------- | ------- | ----------- |
@@ -1636,6 +1654,27 @@ worksheet.addConditionalFormatting({
 | type          |          |         | 'iconSet' |
 | priority      | Y        | &lt;auto&gt;  | determines priority ordering of styles |
 | iconSet       | Y        | 3TrafficLights | name of icon set to use |
+| showValue     |          | true    | Specifies whether the cells in the applied range display the icon and cell value, or the icon only |
+| reverse       |          | false   | Specifies whether the icons in the icon set specified in iconSet are show in reserve order. If custom equals "true" this value must be ignored |
+| custom        |          |  false  | Specifies whether a custom set of icons is used |
+| cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
+| style         |          |         | style structure to apply if the comparison returns true |
+
+### Data Bar
+
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'dataBar' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| minLength  |          | 0       | Specifies the length of the shortest data bar in this conditional formatting range |
+| maxLength  |          | 100     | Specifies the length of the longest data bar in this conditional formatting range |
+| showValue  |          | true    | Specifies whether the cells in the conditional formatting range display both the data bar and the numeric value or the data bar |
+| gradient   |          | true    | Specifies whether the data bar has a gradient fill |
+| border     |          | true    | Specifies whether the data bar has a border |
+| negativeBarColorSameAsPositive  |                | true        | Specifies whether the data bar has a negative bar color that is different from the positive bar color |
+| negativeBarBorderColorSameAsPositive  |          | true        | Specifies whether the data bar has a negative border color that is different from the positive border color |
+| axisPosition  |       | 'auto'             | Specifies the axis position for the data bar |
+| direction  |          | 'leftToRight'      | Specifies the direction of the data bar |
 | cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
 | style         |          |         | style structure to apply if the comparison returns true |
 
@@ -1682,7 +1721,6 @@ worksheet.addConditionalFormatting({
 | lastMonth         | Apply format if cell value falls in last month |
 | thisMonth         | Apply format if cell value falls in this month |
 | nextMonth         | Apply format if cell value falls in next month |
-
 
 ## Outline Levels
 
@@ -1748,20 +1786,20 @@ Valid extension values include 'jpeg', 'png', 'gif'.
 
 ```javascript
 // add image to workbook by filename
-var imageId1 = workbook.addImage({
+const imageId1 = workbook.addImage({
   filename: 'path/to/image.jpg',
   extension: 'jpeg',
 });
 
 // add image to workbook by buffer
-var imageId2 = workbook.addImage({
+const imageId2 = workbook.addImage({
   buffer: fs.readFileSync('path/to.image.png'),
   extension: 'png',
 });
 
 // add image to workbook by base64
-var myBase64Image = "data:image/png;base64,iVBORw0KG...";
-var imageId2 = workbook.addImage({
+const myBase64Image = "data:image/png;base64,iVBORw0KG...";
+const imageId2 = workbook.addImage({
   base64: myBase64Image,
   extension: 'png',
 });
@@ -1862,7 +1900,9 @@ to modify individual cell protection.
 
 **Note:** While the protect() function returns a Promise indicating
 that it is async, the current implementation runs on the main
-thread and will use approx 600ms on an average CPU.
+thread and will use approx 600ms on an average CPU. This can be adjusted
+by setting the spinCount, which can be used to make the process either
+faster or more resilient.
 
 ### Sheet Protection Options
 
@@ -1881,6 +1921,7 @@ thread and will use approx 600ms on an average CPU.
 | sort                | false   | Lets the user sort data |
 | autoFilter          | false   | Lets the user filter data in tables |
 | pivotTables         | false   | Lets the user use pivot tables |
+| spinCount           | 100000  | The number of hash iterations performed when protecting or unprotecting |
 
 
 
@@ -1892,48 +1933,35 @@ thread and will use approx 600ms on an average CPU.
 
 ```javascript
 // read from a file
-var workbook = new Excel.Workbook();
-workbook.xlsx.readFile(filename)
-  .then(function() {
-    // use workbook
-  });
+const workbook = new Excel.Workbook();
+await workbook.xlsx.readFile(filename);
+// ... use workbook
 
-// read from stream
-var workbook = new Excel.Workbook();
-workbook.xlsx.read(stream)
-  .then(function() {
-    // use workbook
-  });
+
+// read from a stream
+const workbook = new Excel.Workbook();
+await workbook.xlsx.read(stream);
+// ... use workbook
+
 
 // load from buffer
-var workbook = new Excel.Workbook();
-workbook.xlsx.load(data)
-  .then(function() {
-    // use workbook
-  });
+const workbook = new Excel.Workbook();
+await workbook.xlsx.load(data);
+// ... use workbook
 ```
 
 #### Writing XLSX
 
 ```javascript
 // write to a file
-var workbook = createAndFillWorkbook();
-workbook.xlsx.writeFile(filename)
-  .then(function() {
-    // done
-  });
+const workbook = createAndFillWorkbook();
+await workbook.xlsx.writeFile(filename);
 
 // write to a stream
-workbook.xlsx.write(stream)
-  .then(function() {
-    // done
-  });
+await workbook.xlsx.write(stream);
 
 // write to a new buffer
-workbook.xlsx.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.xlsx.writeBuffer();
 ```
 
 ### CSV
@@ -1951,36 +1979,29 @@ Options supported when reading CSV files.
 
 ```javascript
 // read from a file
-var workbook = new Excel.Workbook();
-workbook.csv.readFile(filename)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const workbook = new Excel.Workbook();
+const worksheet = await workbook.csv.readFile(filename);
+// ... use workbook or worksheet
+
 
 // read from a stream
-var workbook = new Excel.Workbook();
-workbook.csv.read(stream)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const workbook = new Excel.Workbook();
+const worksheet = await workbook.csv.read(stream);
+// ... use workbook or worksheet
 
-// pipe from stream
-var workbook = new Excel.Workbook();
-stream.pipe(workbook.csv.createInputStream());
 
 // read from a file with European Dates
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormats: ['DD/MM/YYYY']
 };
-workbook.csv.readFile(filename, options)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
+
 
 // read from a file with custom value parsing
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -2003,10 +2024,8 @@ var options = {
     quote: false,
   },
 };
-workbook.csv.readFile(filename, options)
-  .then(function(worksheet) {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
@@ -2040,35 +2059,26 @@ Options supported when writing to a CSV file.
 ```javascript
 
 // write to a file
-var workbook = createAndFillWorkbook();
-workbook.csv.writeFile(filename)
-  .then(() => {
-    // done
-  });
+const workbook = createAndFillWorkbook();
+await workbook.csv.writeFile(filename);
 
 // write to a stream
 // Be careful that you need to provide sheetName or
 // sheetId for correct import to csv.
-workbook.csv.write(stream, { sheetName: 'Page name' })
-  .then(() => {
-    // done
-  });
+await workbook.csv.write(stream, { sheetName: 'Page name' });
 
 // write to a file with European Date-Times
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormat: 'DD/MM/YYYY HH:mm:ss',
   dateUTC: true, // use utc when rendering dates
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 
 // write to a file with custom value formatting
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -2091,16 +2101,10 @@ var options = {
     quote: false,
   },
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 // write to a new buffer
-workbook.csv.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.csv.writeBuffer();
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write the CSV file.
@@ -2155,12 +2159,12 @@ If neither stream nor filename is specified in the options, the workbook writer 
 
 ```javascript
 // construct a streaming XLSX workbook writer with styles and shared strings
-var options = {
+const options = {
   filename: './streamed-workbook.xlsx',
   useStyles: true,
   useSharedStrings: true
 };
-var workbook = new Excel.stream.xlsx.WorkbookWriter(options);
+const workbook = new Excel.stream.xlsx.WorkbookWriter(options);
 ```
 
 In general, the interface to the streaming XLSX writer is the same as the Document workbook (and worksheets)
@@ -2207,10 +2211,8 @@ To complete the XLSX document, the workbook must be committed. If any worksheet 
 
 ```javascript
 // Finished the workbook.
-workbook.commit()
-  .then(function() {
-    // the stream has been written
-  });
+await workbook.commit();
+// ... the stream has been written
 ```
 
 ##### Streaming XLSX Reader

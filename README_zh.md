@@ -140,7 +140,7 @@ npm install exceljs
 默认导出是带有 Promise polyfill 转换的 ES5 版本 - 因为这会提供最高的兼容性。
 
 ```javascript
-var Excel = require('exceljs');
+const Excel = require('exceljs');
 import Excel from 'exceljs';
 ```
 
@@ -156,7 +156,7 @@ import Excel from 'exceljs/modern.browser';
 ## <a id="create-a-workbook">创建工作簿</a>
 
 ```javascript
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 ```
 
 ## <a id="set-workbook-properties">设置工作簿属性</a>
@@ -190,7 +190,7 @@ workbook.views = [
 ## <a id="add-a-worksheet">添加工作表</a>
 
 ```javascript
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 ```
 
 用addWorksheet函数的第二个参数设置工作表的选项。
@@ -199,13 +199,13 @@ var sheet = workbook.addWorksheet('My Sheet');
 
 ```javascript
 // 创建一个红色标签颜色的工作表
-var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
 // 创建一个隐藏网格线的工作表
-var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
+const sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
 
 // 创建一个第一行和列冻结的工作表
-var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
+const sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
 ```
 
 ## <a id="remove-a-worksheet">删除工作表</a>
@@ -216,7 +216,7 @@ var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
 
 ```javascript
 // 创建工作表
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 
 // 使用工作表ID删除工作表
 workbook.removeWorksheet(sheet.id)
@@ -231,10 +231,10 @@ workbook.eachSheet(function(worksheet, sheetId) {
 });
 
 // 按名称获取表格
-var worksheet = workbook.getWorksheet('My Sheet');
+const worksheet = workbook.getWorksheet('My Sheet');
 
 // 按ID获取表格
-var worksheet = workbook.getWorksheet(1);
+const worksheet = workbook.getWorksheet(1);
 ```
 
 ## <a id="worksheet-state">工作表状态</a>
@@ -256,10 +256,10 @@ worksheet.state = 'veryHidden';
 
 ```javascript
 // 创建具有属性的新工作表
-var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
+const worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
 // 创建一个具有属性的可写的新工作表
-var worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
+const worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
 
 // 之后调整属性（不受工作表 - 编写者支持）
 worksheet.properties.outlineLevelCol = 2;
@@ -295,12 +295,12 @@ worksheet.properties.defaultRowHeight = 15;
 
 ```javascript
 // 使用A4设置的页面设置设置创建新工作表 - 横向
-var worksheet =  workbook.addWorksheet('sheet', {
+const worksheet =  workbook.addWorksheet('sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
 
 // 使用适合页面的pageSetup设置创建一个新的工作表编写器
-var worksheetWriter = workbookWriter.addSheet('sheet', {
+const worksheetWriter = workbookWriter.addSheet('sheet', {
   pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
 });
 
@@ -533,9 +533,9 @@ worksheet.columns = [
 ];
 
 // 按键，字母和从1开始的列号访问各列
-var idCol = worksheet.getColumn('id');
-var nameCol = worksheet.getColumn('B');
-var dobCol = worksheet.getColumn(3);
+const idCol = worksheet.getColumn('id');
+const nameCol = worksheet.getColumn('B');
+const dobCol = worksheet.getColumn(3);
 
 // 设置列属性
 
@@ -585,8 +585,8 @@ worksheet.spliceColumns(3,2);
 // 删除一列并再插入两列。
 // 注意：第4列及以上将向右移动1列。
 // 另外：如果工作表的行数多于column插入中的值，则行仍将被移位，就像存在的值一样
-var newCol3Values = [1,2,3,4,5];
-var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
+const newCol3Values = [1,2,3,4,5];
+const newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
@@ -602,24 +602,24 @@ worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
 worksheet.addRow([3, 'Sam', new Date()]);
 
 // 通过稀疏数组添加一行（分配给A，E和I列）
-var rowValues = [];
+const rowValues = [];
 rowValues[1] = 4;
 rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
 worksheet.addRow(rowValues);
 
 // 添加行数组
-var rows = [
+const rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
 worksheet.addRows(rows);
 
 // 获取行对象。如果它尚不存在，将返回一个新的空的
-var row = worksheet.getRow(5);
+const row = worksheet.getRow(5);
 
 // 获取工作表中的最后一个可编辑行（如果没有，则为undefined）
-var row = worksheet.lastRow;
+const row = worksheet.lastRow;
 
 // 设置特定的行高
 row.height = 42.5;
@@ -652,7 +652,7 @@ expect(row.getCell(2).value).toEqual(2);
 expect(row.getCell(3).value).toEqual(3);
 
 // 通过稀疏数组分配行值（其中数组元素0未定义）
-var values = []
+const values = []
 values[5] = 7;
 values[10] = 'Hello, World!';
 row.values = values;
@@ -696,8 +696,8 @@ worksheet.spliceRows(4,3);
 
 // 删除一行并再插入两行。
 //注意：第4行和第4行将向下移动1行。
-var newRow3Values = [1,2,3,4,5];
-var newRow4Values = ['one', 'two', 'three', 'four', 'five'];
+const newRow3Values = [1,2,3,4,5];
+const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
 
 // 切一个或多个单元格（右边的单元格向左移动）
@@ -711,14 +711,14 @@ row.splice(4,1,'new value 1', 'new value 2');
 row.commit();
 
 // 行指标
-var rowSize = row.cellCount;
-var numValues = row.actualCellCount;
+const rowSize = row.cellCount;
+const numValues = row.actualCellCount;
 ```
 
 ## <a id="handling-individual-cells">处理单个单元格</a>
 
 ```javascript
-var cell = worksheet.getCell('C3');
+const cell = worksheet.getCell('C3');
 
 // 修改/添加单个单元格
 cell.value = new Date(1968, 5, 1);
@@ -730,7 +730,7 @@ expect(cell.type).toEqual(Excel.ValueType.Date);
 myInput.value = cell.text;
 
 // 使用html-safe字符串进行渲染...
-var html = '<div>' + cell.html + '</div>';
+const html = '<div>' + cell.html + '</div>';
 
 ```
 
@@ -973,7 +973,7 @@ ws.getCell('A3').font = {
 
 // 注意：单元格将存储对指定的字体对象的引用。
 // 如果之后更改了字体对象，则单元格字体也将更改...
-var font = { name: 'Arial', size: 12 };
+const font = { name: 'Arial', size: 12 };
 ws.getCell('A3').font = font;
 font.size = 20; // Cell A3现在的字体大小为20！
 
@@ -1249,20 +1249,20 @@ Workbook.addImage函数支持按文件名或缓冲区添加图像。
 
 ```javascript
 // add image to workbook by filename
-var imageId1 = workbook.addImage({
+const imageId1 = workbook.addImage({
   filename: 'path/to/image.jpg',
   extension: 'jpeg',
 });
 
 // add image to workbook by buffer
-var imageId2 = workbook.addImage({
+const imageId2 = workbook.addImage({
   buffer: fs.readFileSync('path/to.image.png'),
   extension: 'png',
 });
 
 // add image to workbook by base64
-var myBase64Image = "data:image/png;base64,iVBORw0KG...";
-var imageId2 = workbook.addImage({
+const myBase64Image = "data:image/png;base64,iVBORw0KG...";
+const imageId2 = workbook.addImage({
   base64: myBase64Image,
   extension: 'png',
 });
@@ -1351,48 +1351,35 @@ worksheet.addImage(imageId2, {
 
 ```javascript
 // read from a file
-var workbook = new Excel.Workbook();
-workbook.xlsx.readFile(filename)
-  .then(function() {
-    // use workbook
-  });
+const workbook = new Excel.Workbook();
+await workbook.xlsx.readFile(filename);
+// ... use workbook
 
-// read from stream
-var workbook = new Excel.Workbook();
-workbook.xlsx.read(stream)
-  .then(function() {
-    // use workbook
-  });
+
+// read from a stream
+const workbook = new Excel.Workbook();
+await workbook.xlsx.read(stream);
+// ... use workbook
+
 
 // load from buffer
-var workbook = new Excel.Workbook();
-workbook.xlsx.load(data)
-  .then(function() {
-    // use workbook
-  });
+const workbook = new Excel.Workbook();
+await workbook.xlsx.load(data);
+// ... use workbook
 ```
 
 #### <a id="writing-xlsx">写 XLSX</a>
 
-```javascript
+````javascript
 // write to a file
-var workbook = createAndFillWorkbook();
-workbook.xlsx.writeFile(filename)
-  .then(function() {
-    // done
-  });
+const workbook = createAndFillWorkbook();
+await workbook.xlsx.writeFile(filename);
 
 // write to a stream
-workbook.xlsx.write(stream)
-  .then(function() {
-    // done
-  });
+await workbook.xlsx.write(stream);
 
 // write to a new buffer
-workbook.xlsx.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.xlsx.writeBuffer();
 ```
 
 ### CSV <a id="csv">CSV</a>
@@ -1410,36 +1397,29 @@ workbook.xlsx.writeBuffer()
 
 ```javascript
 // read from a file
-var workbook = new Excel.Workbook();
-workbook.csv.readFile(filename)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const workbook = new Excel.Workbook();
+const worksheet = await workbook.csv.readFile(filename);
+// ... use workbook or worksheet
+
 
 // read from a stream
-var workbook = new Excel.Workbook();
-workbook.csv.read(stream)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const workbook = new Excel.Workbook();
+const worksheet = await workbook.csv.read(stream);
+// ... use workbook or worksheet
 
-// pipe from stream
-var workbook = new Excel.Workbook();
-stream.pipe(workbook.csv.createInputStream());
 
 // read from a file with European Dates
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormats: ['DD/MM/YYYY']
 };
-workbook.csv.readFile(filename, options)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
+
 
 // read from a file with custom value parsing
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -1462,10 +1442,8 @@ var options = {
     quote: false,
   },
 };
-workbook.csv.readFile(filename, options)
-  .then(function(worksheet) {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
 ```
 
 CSV解析器使用[fast-csv](https://www.npmjs.com/package/fast-csv)来读取CSV文件。
@@ -1498,35 +1476,26 @@ CSV解析器使用[fast-csv](https://www.npmjs.com/package/fast-csv)来读取CSV
 ```javascript
 
 // write to a file
-var workbook = createAndFillWorkbook();
-workbook.csv.writeFile(filename)
-  .then(() => {
-    // done
-  });
+const workbook = createAndFillWorkbook();
+await workbook.csv.writeFile(filename);
 
 // write to a stream
 // Be careful that you need to provide sheetName or
 // sheetId for correct import to csv.
-workbook.csv.write(stream, { sheetName: 'Page name' })
-  .then(() => {
-    // done
-  });
+await workbook.csv.write(stream, { sheetName: 'Page name' });
 
 // write to a file with European Date-Times
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormat: 'DD/MM/YYYY HH:mm:ss',
   dateUTC: true, // use utc when rendering dates
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 
 // write to a file with custom value formatting
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -1549,16 +1518,10 @@ var options = {
     quote: false,
   },
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 // write to a new buffer
-workbook.csv.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.csv.writeBuffer();
 ```
 
 CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CSV文件。
@@ -1612,12 +1575,12 @@ CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CS
 
 ```javascript
 // construct a streaming XLSX workbook writer with styles and shared strings
-var options = {
+const options = {
   filename: './streamed-workbook.xlsx',
   useStyles: true,
   useSharedStrings: true
 };
-var workbook = new Excel.stream.xlsx.WorkbookWriter(options);
+const workbook = new Excel.stream.xlsx.WorkbookWriter(options);
 ```
 
 通常，流式XLSX编写器的接口与文档工作簿（和工作表）相同
@@ -1663,10 +1626,8 @@ worksheet.commit();
 
 ```javascript
 // Finished the workbook.
-workbook.commit()
-  .then(function() {
-    // the stream has been written
-  });
+await workbook.commit();
+// ... the stream has been written
 ```
 
 ##### Streaming XLSX Reader
