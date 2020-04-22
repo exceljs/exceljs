@@ -28,7 +28,7 @@
   "scripts": {
     "test": "npm run test:full",
     "test:es5": "export EXCEL_BUILD=es5 && npm run test:full",
-    "test:full": "npm run build && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:jasmine",
+    "test:full": "npm run build && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser",
     "test:all": "npm run test:native && npm run test:es5",
     "test:native": "npm run test:full",
     "test:unit": "mocha --require spec/config/setup --require spec/config/setup-unit spec/unit --recursive",
