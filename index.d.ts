@@ -955,7 +955,7 @@ export interface WorksheetModel {
 	// dataValidations: this.dataValidations.model,
 	properties: WorksheetProperties;
 	pageSetup: Partial<PageSetup>;
-	headerFooter: HeaderFooter;
+	headerFooter: Partial<HeaderFooter>;
 	rowBreaks: RowBreak[];
 	views: WorksheetView[];
 	autoFilter: AutoFilter;
@@ -967,12 +967,12 @@ export type CellIsOperators = 'equal' | 'greaterThan' | 'lessThan' | 'between';
 
 export type ContainsTextOperators = 'containsText' | 'containsBlanks' | 'notContainsBlanks' | 'containsErrors' | 'notContainsErrors';
 
-export type TimePeriodTypes = 'lastWeek' | 'thisWeek' | 'nextWeek' | 'yesterday' | 'today' | 'tomorrow' | 'last7Days' | 'lastMonth' 
-			| 'thisMonth' | 'nextMonth';
+export type TimePeriodTypes = 'lastWeek' | 'thisWeek' | 'nextWeek' | 'yesterday' | 'today' | 'tomorrow' | 'last7Days' | 'lastMonth'
+	| 'thisMonth' | 'nextMonth';
 
-export type IconSetTypes = '5Arrows' | '5ArrowsGray' | '5Boxes' | '5Quarters' | '5Rating' | '4Arrows' | '4ArrowsGray' 
-			| '4Rating' | '4RedToBlack' | '4TrafficLights' | 'NoIcons' | '3Arrows' | '3ArrowsGray' | '3Flags' | '3Signs' 
-			| '3Stars' | '3Symbols' | '3Symbols2' | '3TrafficLights1' | '3TrafficLights2' | '3Triangles';
+export type IconSetTypes = '5Arrows' | '5ArrowsGray' | '5Boxes' | '5Quarters' | '5Rating' | '4Arrows' | '4ArrowsGray'
+	| '4Rating' | '4RedToBlack' | '4TrafficLights' | 'NoIcons' | '3Arrows' | '3ArrowsGray' | '3Flags' | '3Signs'
+	| '3Stars' | '3Symbols' | '3Symbols2' | '3TrafficLights1' | '3TrafficLights2' | '3Triangles';
 
 export type CfvoTypes = 'percentile' | 'percent' | 'num' | 'min' | 'max' | 'formula' | 'autoMin' | 'autoMax';
 
@@ -1047,13 +1047,13 @@ export interface DataBarRuleType extends ConditionalFormattingBaseRule {
 	cfvo?: Cvfo[];
 }
 
-export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType 
-				| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
+export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType
+	| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
 
 export interface ConditionalFormattingOptions {
 	ref: string;
 	rules: ConditionalFormattingRule[];
-} 
+}
 
 export interface Worksheet {
 	readonly id: number;
@@ -1070,7 +1070,7 @@ export interface Worksheet {
 	/**
 	 * Worksheet Header and Footer
 	 */
-	headerFooter: HeaderFooter;
+	headerFooter: Partial<HeaderFooter>;
 
 	/**
 	 * Worksheet State
@@ -1266,7 +1266,7 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & {hyperlinks?: ImageHyperlinkValue} | { editAs?: string; } & ImagePosition & {hyperlinks?: ImageHyperlinkValue}): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): void;
 
 	getImages(): Array<{
 		type: 'image',
@@ -1354,6 +1354,7 @@ export interface WorksheetProperties {
 export interface AddWorksheetOptions {
 	properties: Partial<WorksheetProperties>;
 	pageSetup: Partial<PageSetup>;
+	headerFooter: Partial<HeaderFooter>;
 	views: Array<Partial<WorksheetView>>;
 	state: WorksheetState;
 }
@@ -1844,42 +1845,42 @@ export namespace stream {
 			useStyles: boolean;
 		}
 
-        interface ArchiverZipOptions {
-            comment: string;
-            forceLocalTime: boolean;
-            forceZip64: boolean;
-            store: boolean;
-            zlib: Partial<ZlibOptions>;
-        }
+		interface ArchiverZipOptions {
+			comment: string;
+			forceLocalTime: boolean;
+			forceZip64: boolean;
+			store: boolean;
+			zlib: Partial<ZlibOptions>;
+		}
 
-        interface ZlibOptions {
-            /**
-             * @default constants.Z_NO_FLUSH
-             */
-            flush: number;
-            /**
-             * @default constants.Z_FINISH
-             */
-            finishFlush: number;
-            /**
-             * @default 16*1024
-             */
-            chunkSize: number;
-            windowBits: number;
-            level: number; // compression only
-            memLevel: number; // compression only
-            strategy: number; // compression only
-            dictionary: Buffer | NodeJS.TypedArray | DataView | ArrayBuffer; // deflate/inflate only, empty dictionary by default
-        }
+		interface ZlibOptions {
+			/**
+			 * @default constants.Z_NO_FLUSH
+			 */
+			flush: number;
+			/**
+			 * @default constants.Z_FINISH
+			 */
+			finishFlush: number;
+			/**
+			 * @default 16*1024
+			 */
+			chunkSize: number;
+			windowBits: number;
+			level: number; // compression only
+			memLevel: number; // compression only
+			strategy: number; // compression only
+			dictionary: Buffer | NodeJS.TypedArray | DataView | ArrayBuffer; // deflate/inflate only, empty dictionary by default
+		}
 
 		interface WorkbookStreamWriterOptions extends WorkbookWriterOptions {
 
-            /**
-             * Specifies whether to add style information to the workbook.
-             * Styles can add some performance overhead. Default is false
-             */
-            zip: Partial<ArchiverZipOptions>;
-        }
+			/**
+			 * Specifies whether to add style information to the workbook.
+			 * Styles can add some performance overhead. Default is false
+			 */
+			zip: Partial<ArchiverZipOptions>;
+		}
 
 		class WorkbookWriter extends Workbook {
 			constructor(options: Partial<WorkbookStreamWriterOptions>);

@@ -80,5 +80,15 @@
   "media": [],
   "rowBreaks": [],
   "tables": [],
+  "headerFooter": {
+    "oddHeader": "&C&KCCCCCC&\"Aril\"2 exceljs",
+    "oddFooter": "&Lexceljs&C&F&RPage &P",
+    "firstHeader": "Hello Exceljs",
+    "firstFooter": "Hello World",
+    "differentFirst": true,
+    "differentOddEven": true,
+    "evenHeader": "&C&KCCCCCC&\"Aril\"3 exceljs evenHeader",
+    "evenFooter": "&Lexceljs&C&F&RPage &P evenHeader"
+  },
   "conditionalFormattings": []
 }
