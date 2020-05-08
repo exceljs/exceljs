@@ -514,4 +514,20 @@ describe('WorksheetWriter', () => {
       }).to.throw(Error);
     });
   });
+
+  describe('Worksheet Protection', () => {
+    it('has a protect method', () => {
+      const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({
+        filename: './test.xlsx',
+      });
+      
+      const sheet = workbook.addWorksheet('data');
+      const row = sheet.addRow(['readonly cell']);
+      row.getCell(1).protection = {
+        locked: true,
+      };
+      
+      expect(sheet.protect).to.exist();
+    });
+  });
 });
