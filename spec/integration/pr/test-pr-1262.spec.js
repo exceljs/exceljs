@@ -5,13 +5,13 @@ describe('github issues', () => {
     const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({
       filename: './test.xlsx',
     });
-      
+
     const sheet = workbook.addWorksheet('data');
     const row = sheet.addRow(['readonly cell']);
     row.getCell(1).protection = {
       locked: true,
     };
-    
+
     expect(sheet.protect).to.exist();
   });
 });
