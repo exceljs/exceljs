@@ -362,8 +362,8 @@ workbook.worksheets[0]; //the first one;
 
 ```
 
-It's important to know that `workbook.getWorksheet (1)! = Workbook.worksheets [0]` and workbook.getWorksheet (1)! = Workbook.worksheets [1] `,
-becouse `workbook.worksheets [0] .id` may have any value.
+It's important to know that `workbook.getWorksheet(1) != Workbook.worksheets[0]` and `workbook.getWorksheet(1) != Workbook.worksheets[1]`,
+becouse `workbook.worksheets[0].id` may have any value.
 
 ## Worksheet State
 
