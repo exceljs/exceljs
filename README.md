@@ -352,8 +352,20 @@ workbook.eachSheet(function(worksheet, sheetId) {
 const worksheet = workbook.getWorksheet('My Sheet');
 
 // fetch sheet by id
+// INFO: Be careful when using it!
+// It tries to access to `worksheet.id` field. Sometimes (really very often) workbook has worksheets with id not starting from 1.
+// For instance It happens when any worksheet has been deleted.
+// It's much more safety when you assume that ids are random. And stop to use this function.
+// If you need to access all worksheets in a loop please look to the next example.
 const worksheet = workbook.getWorksheet(1);
+
+// access by `worksheets` array:
+workbook.worksheets[0]; //the first one;
+
 ```
+
+It's important to know that `workbook.getWorksheet(1) != Workbook.worksheets[0]` and `workbook.getWorksheet(1) != Workbook.worksheets[1]`,
+becouse `workbook.worksheets[0].id` may have any value.
 
 ## Worksheet State
 

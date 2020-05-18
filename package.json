@@ -93,7 +93,7 @@
   ],
   "dependencies": {
     "archiver": "^4.0.1",
-    "dayjs": "^1.8.25",
+    "dayjs": "^1.8.26",
     "fast-csv": "^4.1.2",
     "jszip": "^3.4.0",
     "readable-stream": "^3.6.0",
