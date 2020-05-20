@@ -3,7 +3,7 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-terser');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
@@ -21,11 +21,21 @@ module.exports = function(grunt) {
           },
         ],
       },
+      bundle: {
+        files: [
+          {
+            cwd: './build',
+            expand: true,
+            src: ['exceljs.bare.js', 'exceljs.js'],
+            dest: './dist/',
+          },
+        ],
+      },
     },
     browserify: {
       bare: {
         src: ['./build/lib/exceljs.bare.js'],
-        dest: './dist/exceljs.bare.js',
+        dest: './build/exceljs.bare.js',
         options: {
           browserifyOptions: {
             standalone: 'ExcelJS',
@@ -34,7 +44,7 @@ module.exports = function(grunt) {
       },
       bundle: {
         src: ['./build/lib/exceljs.browser.js'],
-        dest: './dist/exceljs.js',
+        dest: './build/exceljs.js',
         options: {
           browserifyOptions: {
             standalone: 'ExcelJS',
@@ -46,9 +56,13 @@ module.exports = function(grunt) {
         dest: './build/web/exceljs.spec.js',
       },
     },
-    uglify: {
+    terser: {
       options: {
-        banner: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+        sourceMap: true,
+        output: {
+          preamble: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+        },
+        ascii_only: true
       },
       dist: {
         files: {
@@ -92,6 +106,6 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('build', ['babel', 'browserify', 'uglify', 'copy']);
-  grunt.registerTask('ug', ['uglify']);
+  grunt.registerTask('build', ['babel:dist', 'browserify', 'babel:bundle', 'terser', 'copy']);
+  grunt.registerTask('ug', ['terser']);
 };

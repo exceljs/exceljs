@@ -49,6 +49,7 @@
   ],
   "styles": [
     {"numFmtId": 0, "fontId": 0, "fillId": 0, "borderId": 0, "xfId": 0},
+    {"numFmtId": 0, "fontId": 1, "fillId": 0, "borderId": 0, "alignment": {"horizontal": "center", "vertical": "middle"}, "protection": {"locked": false, "hidden": false} ,"xfId": 0},
     {"numFmtId": 0, "fontId": 1, "fillId": 0, "borderId": 0, "alignment": {"horizontal": "center", "vertical": "middle"}, "xfId": 0},
     {"numFmtId": 0, "fontId": 1, "fillId": 0, "borderId": 1, "xfId": 0},
     {"numFmtId": 8, "fontId": 2, "fillId": 0, "borderId": 0, "xfId": 0},

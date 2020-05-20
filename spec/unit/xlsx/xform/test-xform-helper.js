@@ -1,8 +1,8 @@
-const Sax = require('sax');
 const {cloneDeep, each} = require('../../../utils/under-dash');
+const CompyXform = require('./compy-xform');
 
+const SAXStream = verquire('utils/sax-stream');
 const XmlStream = verquire('utils/xml-stream');
-const CompositeXform = verquire('xlsx/xform/composite-xform');
 const BooleanXform = verquire('xlsx/xform/simple/boolean-xform');
 
 function getExpectation(expectation, name) {
@@ -76,10 +76,12 @@ const its = {
           child: getExpectation(expectation, 'preparedModel'),
           post: true,
         };
-        const result =
-          `<compy><pre/>${getExpectation(expectation, 'xml')}<post/></compy>`;
+        const result = `<compy><pre/>${getExpectation(
+          expectation,
+          'xml'
+        )}<post/></compy>`;
 
-        const xform = new CompositeXform({
+        const xform = new CompyXform({
           tag: 'compy',
           children: [
             {
@@ -114,7 +116,7 @@ const its = {
         const result = {pre: true};
         result[childXform.tag] = getExpectation(expectation, 'parsedModel');
         result.post = true;
-        const xform = new CompositeXform({
+        const xform = new CompyXform({
           tag: 'compy',
           children: [
             {
@@ -128,10 +130,9 @@ const its = {
             },
           ],
         });
-        const parser = Sax.createStream(true);
-
+        const saxStream = new SAXStream(['opentag', 'text', 'closetag']);
         xform
-          .parse(parser)
+          .parse(saxStream)
           .then(model => {
             // console.log('parsed Model', JSON.stringify(model));
             // console.log('expected Model', JSON.stringify(result));
@@ -145,7 +146,7 @@ const its = {
             resolve();
           })
           .catch(reject);
-        parser.write(xml);
+        saxStream.write(xml);
       }));
   },
 
@@ -155,11 +156,11 @@ const its = {
         const xml = getExpectation(expectation, 'xml');
         const result = getExpectation(expectation, 'parsedModel');
 
-        const parser = Sax.createStream(true);
+        const saxStream = new SAXStream(['opentag', 'text', 'closetag']);
         const xform = expectation.create();
 
         xform
-          .parse(parser)
+          .parse(saxStream)
           .then(model => {
             // eliminate the undefined
             const clone = cloneDeep(model, false);
@@ -171,7 +172,7 @@ const its = {
           })
           .catch(reject);
 
-        parser.write(xml);
+        saxStream.write(xml);
       }));
   },
 

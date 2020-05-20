@@ -86,10 +86,10 @@ const expectations = [
       ],
     },
     xml:
-    '<fill><gradientFill degree="0">' +
-    '<stop position="0"><color rgb="FF0000FF"/></stop>' +
-    '<stop position="1"><color rgb="FFFFFFFF"/></stop>' +
-    '</gradientFill></fill>',
+      '<fill><gradientFill degree="0">' +
+      '<stop position="0"><color rgb="FF0000FF"/></stop>' +
+      '<stop position="1"><color rgb="FFFFFFFF"/></stop>' +
+      '</gradientFill></fill>',
     get parsedModel() {
       return this.preparedModel;
     },
@@ -111,11 +111,11 @@ const expectations = [
       ],
     },
     xml:
-    '<fill><gradientFill type="path" left="0.5" right="0.5" top="0.5" bottom="0.5">' +
-    '<stop position="0"><color rgb="FFFF0000"/></stop>' +
-    '<stop position="0.5"><color rgb="FF00FF00"/></stop>' +
-    '<stop position="1"><color rgb="FF0000FF"/></stop>' +
-    '</gradientFill></fill>',
+      '<fill><gradientFill type="path" left="0.5" right="0.5" top="0.5" bottom="0.5">' +
+      '<stop position="0"><color rgb="FFFF0000"/></stop>' +
+      '<stop position="0.5"><color rgb="FF00FF00"/></stop>' +
+      '<stop position="1"><color rgb="FF0000FF"/></stop>' +
+      '</gradientFill></fill>',
     get parsedModel() {
       return this.preparedModel;
     },

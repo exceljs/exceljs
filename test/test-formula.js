@@ -6,9 +6,15 @@ const [, , filename] = process.argv;
 const wb = new Excel.Workbook();
 const ws = wb.addWorksheet('Foo');
 
-ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [[2, 3], [3, 4]]);
+ws.fillFormula('A1:B2', 'ROW()+COLUMN()', [
+  [2, 3],
+  [3, 4],
+]);
 
-ws.fillFormula('A4:B5', 'A1', [[2, 3], [3, 4]]);
+ws.fillFormula('A4:B5', 'A1', [
+  [2, 3],
+  [3, 4],
+]);
 
 for (let i = 1; i <= 4; i++) {
   ws.getCell(`D${i}`).value = {formula: 'ROW()', result: i};

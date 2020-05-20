@@ -45,6 +45,7 @@ npm install exceljs
 # 目录
 
 <ul>
+  <li><a href="#importing">导入</a></li>
   <li>
     <a href="#interface">接口</a>
     <ul>
@@ -65,7 +66,7 @@ npm install exceljs
           <li><a href="#split-views">拆分视图</a></li>
         </ul>
       </li>
-      <li><a href="#auto-filters">Auto Filters</a></li>
+      <li><a href="#auto-filters">自动过滤器</a></li>
       <li><a href="#columns">列</a></li>
       <li><a href="#rows">行</a></li>
       <li><a href="#handling-individual-cells">处理单个单元格</a></li>
@@ -76,7 +77,7 @@ npm install exceljs
         <ul>
           <li><a href="#number-formats">数字格式</a></li>
           <li><a href="#fonts">字体</a></li>
-          <li><a href="#alignment">对准</a></li>
+          <li><a href="#alignment">对齐方式</a></li>
           <li><a href="#borders">边框</a></li>
           <li><a href="#fills">填充</a></li>
           <li><a href="#rich-text">富文本</a></li>
@@ -98,9 +99,9 @@ npm install exceljs
               <li><a href="#writing-csv">写 CSV</a></li>
             </ul>
           </li>
-          <li><a href="#streaming-io">Streaming I/O</a>
+          <li><a href="#streaming-io">流 I/O</a>
             <ul>
-              <li><a href="#reading-csv">Streaming XLSX</a></li>
+              <li><a href="#streaming-xlsx">流 XLSX</a></li>
             </ul>
           </li>
         </ul>
@@ -109,7 +110,7 @@ npm install exceljs
   </li>
   <li><a href="#browser">浏览器</a></li>
   <li>
-    <a href="#value-types">价类型</a>
+    <a href="#value-types">值类型</a>
     <ul>
       <li><a href="#null-value">空值</a></li>
       <li><a href="#merge-cell">合并单元格</a></li>
@@ -124,7 +125,7 @@ npm install exceljs
           <li><a href="#formula-type">公式类型</a></li>
         </ul>
       </li>
-      <li><a href="#rich-text-value">丰富的文本值</a></li>
+      <li><a href="#rich-text-value">富文本值</a></li>
       <li><a href="#boolean-value">布尔值</a></li>
       <li><a href="#error-value">错误值</a></li>
     </ul>
@@ -134,9 +135,7 @@ npm install exceljs
   <li><a href="#release-history">发布历史</a></li>
 </ul>
 
-# 接口{#interface}
-
-## 导入{#importing}
+## <a id="importing">导入</a>
 
 默认导出是带有 Promise polyfill 转换的 ES5 版本 - 因为这会提供最高的兼容性。
 
@@ -152,13 +151,15 @@ const Excel = require('exceljs/modern.nodejs');
 import Excel from 'exceljs/modern.browser';
 ```
 
-## 创建工作簿{#create-a-workbook}
+# <a id="interface">接口</a>
+
+## <a id="create-a-workbook">创建工作簿</a>
 
 ```javascript
 var workbook = new Excel.Workbook();
 ```
 
-## 设置工作簿属性{#set-workbook-properties}
+## <a id="set-workbook-properties">设置工作簿属性</a>
 
 ```javascript
 workbook.creator = 'Me';
@@ -173,7 +174,7 @@ workbook.lastPrinted = new Date(2016, 9, 27);
 workbook.properties.date1904 = true;
 ```
 
-## 工作簿视图{#workbook-views}
+## <a id="workbook-views">工作簿视图</a>
 
 “工作簿”视图控制Excel在查看工作簿时打开多少个单独的窗口。
 
@@ -186,7 +187,7 @@ workbook.views = [
 ]
 ```
 
-## 添加工作表{#add-a-worksheet}
+## <a id="add-a-worksheet">添加工作表</a>
 
 ```javascript
 var sheet = workbook.addWorksheet('My Sheet');
@@ -201,13 +202,13 @@ var sheet = workbook.addWorksheet('My Sheet');
 var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
 // 创建一个隐藏网格线的工作表
-var sheet = workbook.addWorksheet('My Sheet', {properties: {showGridLines: false}});
+var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
 
 // 创建一个第一行和列冻结的工作表
 var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
 ```
 
-## 删除工作表{#remove-a-worksheet}
+## <a id="remove-a-worksheet">删除工作表</a>
 
 使用工作表`id`从工作簿中删除工作表。
 
@@ -221,7 +222,7 @@ var sheet = workbook.addWorksheet('My Sheet');
 workbook.removeWorksheet(sheet.id)
 ```
 
-## 访问工作表{#access-worksheets}
+## <a id="access-worksheets">访问工作表</a>
 ```javascript
 // 迭代所有sheet
 // 注意：workbook.worksheets.forEach仍然可以工作，但这个方式更好
@@ -236,7 +237,7 @@ var worksheet = workbook.getWorksheet('My Sheet');
 var worksheet = workbook.getWorksheet(1);
 ```
 
-## 工作表状态{#worksheet-state}
+## <a id="worksheet-state">工作表状态</a>
 
 ```javascript
 // 使工作表可见
@@ -249,7 +250,7 @@ worksheet.state = 'hidden';
 worksheet.state = 'veryHidden';
 ```
 
-## 工作表属性{#worksheet-properties}
+## <a id="worksheet-properties">工作表属性</a>
 
 工作表支持属性桶，以允许控制工作表的某些功能。
 
@@ -273,6 +274,7 @@ worksheet.properties.defaultRowHeight = 15;
 | outlineLevelCol  | 0          | 工作表列大纲级别 |
 | outlineLevelRow  | 0          | 工作表行大纲级别 |
 | defaultRowHeight | 15         | 默认行高 |
+| defaultColWidth  | (可选) | 默认列宽 |
 | dyDescent        | 55         | TBD |
 
 ### 工作表指标
@@ -287,7 +289,7 @@ worksheet.properties.defaultRowHeight = 15;
 | actualColumnCount | 具有值的列数的计数。 |
 
 
-## 页面设置{#page-setup}
+## <a id="page-setup">页面设置</a>
 
 所有可能影响工作表打印的属性都保存在工作表的pageSetup对象中。
 
@@ -361,7 +363,7 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | 日本双明信片旋转 |  82       |
 | 16K 197x273 mm                |  119      |
 
-## 页眉和页脚{#header-footer}
+## <a id="header-footer">页眉和页脚</a>
 
 这里将介绍如何添加页眉和页脚，添加的内容主要是文本，比如时间，简介，文件信息等，并且可以设置文本的风格。此外，也可以针对首页，奇偶页设置不同的文本。
 
@@ -424,7 +426,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 |&数字|字体大小，比如12px大的文本：&12 |
 |&KHEXCode|字体颜色，比如灰色：&KCCCCCC|
 
-## 工作表视图{#worksheet-views}
+## <a id="worksheet-views">工作表视图</a>
 
 工作表现在支持一个视图列表，用于控制Excel如何显示工作表：
 
@@ -445,7 +447,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 | zoomScaleNormal   | 100       | 正常缩放视图 |
 | style             | undefined | 演示文稿样式 -  pageBreakPreview或pageLayout之一。注意pageLayout与冻结视图不兼容 |
 
-### 冰冻视图{#frozen-views}
+### <a id="frozen-views">冰冻视图</a>
 
 冻结视图支持以下扩展属性：
 
@@ -461,7 +463,7 @@ worksheet.views = [
 ];
 ```
 
-### 拆分视图{#split-views}
+### <a id="split-views">拆分视图</a>
 
 拆分视图支持以下扩展属性：
 
@@ -478,7 +480,7 @@ worksheet.views = [
 ];
 ```
 
-## 自动过滤器{#auto-filters}
+## <a id="auto-filters">自动过滤器</a>
 
 可以将自动过滤器应用于工作表。
 
@@ -518,7 +520,7 @@ worksheet.autoFilter = {
 }
 ```
 
-## 列{#columns}
+## <a id="columns">列</a>
 
 ```javascript
 // 添加列标题并定义列键和宽度
@@ -582,14 +584,14 @@ worksheet.spliceColumns(3,2);
 
 // 删除一列并再插入两列。
 // 注意：第4列及以上将向右移动1列。
-// 另外：如果工作表的行数多于colulmn插入中的值，则行仍将被移位，就像存在的值一样
+// 另外：如果工作表的行数多于column插入中的值，则行仍将被移位，就像存在的值一样
 var newCol3Values = [1,2,3,4,5];
 var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
 
-## 行{#rows}
+## <a id="rows">行</a>
 
 ```javascript
 // 使用列键在最后一行之后按键值添加几行
@@ -713,7 +715,7 @@ var rowSize = row.cellCount;
 var numValues = row.actualCellCount;
 ```
 
-## 处理单个单元格{#handling-individual-cells}
+## <a id="handling-individual-cells">处理单个单元格</a>
 
 ```javascript
 var cell = worksheet.getCell('C3');
@@ -732,7 +734,7 @@ var html = '<div>' + cell.html + '</div>';
 
 ```
 
-## 合并单元格{#merged-cells}
+## <a id="merged-cells">合并单元格</a>
 
 ```javascript
 // 合并一系列单元格
@@ -758,7 +760,7 @@ worksheet.mergeCells('G10', 'H11');
 worksheet.mergeCells(10,11,12,13); // 上，左，下，右
 ```
 
-## 定义的名称{#defined-names}
+## <a id="defined-names">定义的名称</a>
 
 单个单元格（或多组单元格）可以为其分配名称。
  名称可用于公式和数据验证（可能更多）。
@@ -777,7 +779,7 @@ worksheet.getCell('A1').removeName('thing1');
 expect(worksheet.getCell('A1').names).to.have.members(['thing2']);
 ```
 
-## 数据验证{#data-validations}
+## <a id="data-validations">数据验证</a>
 
 单元格可以定义哪些值有效，并向用户提供提示以帮助指导它们。
 
@@ -833,7 +835,7 @@ worksheet.getCell('A1').dataValidation = {
   error: 'The value must not be Five'
 };
 
-// Specify Cell must be a decomal number between 1.5 and 7.
+// Specify Cell must be a decimal number between 1.5 and 7.
 // Add 'tooltip' to help guid the user
 worksheet.getCell('A1').dataValidation = {
   type: 'decimal',
@@ -864,7 +866,7 @@ worksheet.getCell('A1').dataValidation = {
 };
 ```
 
-## 单元格评论{#cell-comments}
+## <a id="cell-comments">单元格评论</a>
 
 将旧样式评论添加到单元格
 
@@ -887,7 +889,7 @@ ws.getCell('B1').note = {
 };
 ```
 
-## 样式{#styles}
+## <a id="styles">样式</a>
 
 单元格，行和列各自支持一组丰富的样式和格式，这些样式和格式会影响单元格的显示方式。
 
@@ -930,7 +932,7 @@ ws.getRow(2).font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'do
  如果希望样式对象是独立的，则需要在分配它们之前克隆它们。
  此外，默认情况下，如果从文件（或流）读取文档（如果电子表格实体共享相似的样式），则它们也将引用相同的样式对象。
 
-### 数字格式{#number-formats}
+### <a id="number-formats">数字格式</a>
 
 ```javascript
 // 显示值为 '1 3/5'
@@ -942,7 +944,7 @@ ws.getCell('B1').value = 0.016;
 ws.getCell('B1').numFmt = '0.00%';
 ```
 
-### 字体{#fonts}
+### <a id="fonts">字体</a>
 
 ```javascript
 
@@ -993,7 +995,7 @@ font.size = 20; // Cell A3现在的字体大小为20！
 | outline       | Font outline | true, false |
 | vertAlign     | Vertical align | 'superscript', 'subscript'
 
-### 对齐方式{#alignment}
+### <a id="alignment">对齐方式</a>
 
 ```javascript
 // set cell alignment to top-left, middle-center, bottom-right
@@ -1026,7 +1028,7 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 | distributed      |             |          |         |              |              |
 
 
-### 边框{#borders}
+### <a id="borders">边框</a>
 
 ```javascript
 // 在A1周围设置单个细边框
@@ -1066,7 +1068,7 @@ ws.getCell('A5').border = {
 * double
 * thick
 
-### 填充{#fills}
+### <a id="fills">填充</a>
 
 ```javascript
 // fill A1 with red darkVertical stripes
@@ -1121,7 +1123,7 @@ let fill = {
 ws.fillCells('A1:C5', fill)
 ```
 
-#### 图案填充{#pattern-fills}
+#### <a id="pattern-fills">图案填充</a>
 
 | Property | Required | 描述 |
 | -------- | -------- | ----------- |
@@ -1152,7 +1154,7 @@ ws.fillCells('A1:C5', fill)
 * lightGrid
 * lightTrellis
 
-#### 渐变填充{#gradient-fills}
+#### <a id="gradient-fills">渐变填充</a>
 
 | Property | Required | 描述 |
 | -------- | -------- | ----------- |
@@ -1169,7 +1171,7 @@ ws.fillCells('A1:C5', fill)
 类似地，停止序列也可以由具有位置[0,1]或[0,0.5,1]作为唯一选项的UI限制。
 注意此填充以确保目标XLSX查看器支持它。
 
-### Rich Text
+### <a id="rich-text">富文本</a>
 
 单个单元格现在支持富文本或单元格格式。
  富文本值可以控制文本值中任意数量子字符串的字体属性。
@@ -1195,7 +1197,7 @@ expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 
 ```
 
-## 大纲级别{#outline-levels}
+## <a id="outline-levels">大纲级别</a>
 
 Excel支持概述;其中可以展开或折叠行或列，具体取决于用户希望查看的详细程度。
 
@@ -1243,7 +1245,7 @@ worksheet.properties.outlineProperties = {
 };
 ```
 
-## 图片{#images}
+## <a id="images">图片</a>
 
 将图像添加到工作表需要两个步骤。
 首先，通过addImage（）函数将图像添加到工作簿，该函数也将返回imageId值。
@@ -1251,7 +1253,7 @@ worksheet.properties.outlineProperties = {
 
 注意：从此版本开始，不支持调整或转换图像。
 
-### 将图像添加到工作簿{#add-image-to-workbook}
+### <a id="add-image-to-workbook">将图像添加到工作簿</a>
 
 Workbook.addImage函数支持按文件名或缓冲区添加图像。
 请注意，在这两种情况下，都必须指定扩展名。
@@ -1278,7 +1280,7 @@ var imageId2 = workbook.addImage({
 });
 ```
 
-### 将图像背景添加到工作表{#add-image-background-to-worksheet}
+### <a id="add-image-background-to-worksheet">将图像背景添加到工作表</a>
 
 使用Workbook.addImage中的图像ID，可以使用addBackgroundImage函数设置工作表的背景
 
@@ -1287,7 +1289,7 @@ var imageId2 = workbook.addImage({
 worksheet.addBackgroundImage(imageId1);
 ```
 
-### 在范围内添加图像{#add-image-over-a-range}
+### <a id="add-image-over-a-range">在范围内添加图像</a>
 
 使用Workbook.addImage中的图像ID，可以在工作表中嵌入图像以覆盖范围。
 从该范围计算的坐标将覆盖从第一个单元格的左上角到第二个单元格的右下角。
@@ -1310,7 +1312,7 @@ worksheet.addImage(imageId2, {
 });
 ```
 
-单元格范围也可以具有epâperty“editAs”，它将控制图像如何锚定到单元格
+单元格范围也可以具有“editAs”属性，它将控制图像如何锚定到单元格
 它可以具有以下值之一：
 
 | Value     | 描述 |
@@ -1327,7 +1329,7 @@ ws.addImage(imageId, {
 });
 ```
 
-### 将图像添加到单元格{#add-image-to-a-cell}
+### <a id="add-image-to-a-cell">将图像添加到单元格</a>
 
 You can add an image to a cell and then define its width and height in pixels at 96dpi.
 
@@ -1338,87 +1340,94 @@ worksheet.addImage(imageId2, {
 });
 ```
 
-## File I/O
+### <a id="add-image-with-hyperlinks">添加带超链接的图片</a>
 
-### XLSX
+You can add an image with hyperlinks to a cell.
 
-#### Reading XLSX
+```javascript
+worksheet.addImage(imageId2, {
+  tl: { col: 0, row: 0 },
+  ext: { width: 500, height: 200 },
+  hyperlinks: {
+    hyperlink: 'http://www.somewhere.com',
+    tooltip: 'http://www.somewhere.com'
+  }
+});
+```
+
+## <a id="file-io">文件 I/O</a>
+
+### <a id="xlsx">XLSX</a>
+
+#### <a id="reading-xlsx">读 XLSX</a>
 
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
-workbook.xlsx.readFile(filename)
-  .then(function() {
-    // use workbook
-  });
+await workbook.xlsx.readFile(filename);
+// ... use workbook
 
-// pipe from stream
-var workbook = new Excel.Workbook();
-stream.pipe(workbook.xlsx.createInputStream());
-
-// load from buffer
-var workbook = new Excel.Workbook();
-workbook.xlsx.load(data)
-  .then(function() {
-    // use workbook
-  });
-```
-
-#### Writing XLSX
-
-```javascript
-// write to a file
-var workbook = createAndFillWorkbook();
-workbook.xlsx.writeFile(filename)
-  .then(function() {
-    // done
-  });
-
-// write to a stream
-workbook.xlsx.write(stream)
-  .then(function() {
-    // done
-  });
-
-// write to a new buffer
-workbook.xlsx.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
-```
-
-### CSV
-
-#### Reading CSV
-
-```javascript
-// read from a file
-var workbook = new Excel.Workbook();
-workbook.csv.readFile(filename)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
 
 // read from a stream
 var workbook = new Excel.Workbook();
-workbook.csv.read(stream)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+await workbook.xlsx.read(stream);
+// ... use workbook
 
-// pipe from stream
+
+// load from buffer
 var workbook = new Excel.Workbook();
-stream.pipe(workbook.csv.createInputStream());
+await workbook.xlsx.load(data);
+// ... use workbook
+```
+
+#### <a id="writing-xlsx">写 XLSX</a>
+
+````javascript
+// write to a file
+var workbook = createAndFillWorkbook();
+await workbook.xlsx.writeFile(filename);
+
+// write to a stream
+await workbook.xlsx.write(stream);
+
+// write to a new buffer
+const buffer = await workbook.xlsx.writeBuffer();
+```
+
+### CSV <a id="csv">CSV</a>
+
+#### <a id="reading-csv">读 CSV</a>
+
+读取CSV文件时支持的选项。
+
+| Field            |  Required   |    Type     |Description  |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormats      |     N       |  Array      | 指定dayjs的日期编码格式 |
+| map              |     N       |  Function   | 自定义 Array.prototype.map() 的callback用于解析数据 |
+| sheetName        |     N       |  String     | 指定工作表名称 |
+| parserOptions    |     N       |  Object     | [parseOptions options](https://c2fo.io/fast-csv/docs/parsing/options) @fast-csv/parse模块以解析csv数据 |
+
+```javascript
+// read from a file
+var workbook = new Excel.Workbook();
+const worksheet = await workbook.csv.readFile(filename);
+// ... use workbook or worksheet
+
+
+// read from a stream
+var workbook = new Excel.Workbook();
+const worksheet = await workbook.csv.read(stream);
+// ... use workbook or worksheet
+
 
 // read from a file with European Dates
 var workbook = new Excel.Workbook();
 var options = {
   dateFormats: ['DD/MM/YYYY']
 };
-workbook.csv.readFile(filename, options)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
+
 
 // read from a file with custom value parsing
 var workbook = new Excel.Workbook();
@@ -1438,43 +1447,54 @@ var options = {
         // the rest are numbers
         return parseFloat(value);
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/parsing/options
+  parserOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
-workbook.csv.readFile(filename, options)
-  .then(function(worksheet) {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
 ```
 
 CSV解析器使用[fast-csv](https://www.npmjs.com/package/fast-csv)来读取CSV文件。
- 传递给上述读取函数的选项也传递给fast-csv以解析csv数据。
+ 传递给上述读取函数的parserOptions选项将传递给@fast-csv/parse模块以解析csv数据。
  有关详细信息，请参阅fast-csv README.md。
 
 使用npm模块[moment](https://www.npmjs.com/package/moment)解析日期。
  如果未提供dateFormats，则使用以下内容：
 
-* moment.ISO_8601
-*'MM-DD-YYYY'
-*'YYYY-MM-DD'
+* 'YYYY-MM-DD\[T\]HH:mm:ss'
+* 'MM-DD-YYYY'
+* 'YYYY-MM-DD'
 
-#### Writing CSV
+请参阅 [dayjs CustomParseFormat plugin](https://github.com/iamkun/dayjs/blob/HEAD/docs/en/Plugin.md#customparseformat)，以获取有关如何构造dateFormat的详细信息。
+
+#### <a id="writing-csv">写 CSV</a>
+
+写入CSV文件时支持的选项。
+| Field            |  Required   |    Type     |Description  |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormat       |     N       |  String     | 指定dayjs的日期编码格式 |
+| dateUTC          |     N       |  Boolean    | 指定ExcelJS是否使用`dayjs.utc（）`转换时区以解析日期 |
+| encoding         |     N       |  String     | 指定文件编码格式 |
+| includeEmptyRows |     N       |  Boolean    | 指定是否可以写入空行 |
+| map              |     N       |  Function   | 自定义Array.prototype.map()的callback，用于处理行值 |
+| sheetName        |     N       |  String     | 指定工作表名称 |
+| sheetId          |     N       |  Number     | 指定工作表ID |
+| formatterOptions |     N       |  Object     | [formatterOptions options](https://c2fo.io/fast-csv/docs/formatting/options/) @fast-csv/format模块以写入csv数据 |
 
 ```javascript
 
 // write to a file
 var workbook = createAndFillWorkbook();
-workbook.csv.writeFile(filename)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename);
 
 // write to a stream
 // Be careful that you need to provide sheetName or
 // sheetId for correct import to csv.
-workbook.csv.write(stream, { sheetName: 'Page name' })
-  .then(() => {
-    // done
-  });
+await workbook.csv.write(stream, { sheetName: 'Page name' });
 
 // write to a file with European Date-Times
 var workbook = new Excel.Workbook();
@@ -1482,10 +1502,7 @@ var options = {
   dateFormat: 'DD/MM/YYYY HH:mm:ss',
   dateUTC: true, // use utc when rendering dates
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 
 // write to a file with custom value formatting
@@ -1506,30 +1523,29 @@ var options = {
         // the rest are numbers
         return value;
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/formatting/options
+  formatterOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 // write to a new buffer
-workbook.csv.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.csv.writeBuffer();
 ```
 
 CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CSV文件。
- 传递给上述写入函数的选项也传递给fast-csv以写入csv数据。
- 有关详细信息，请参阅fast-csv README.md。
+ 传递给上述写入函数的选项中的formatterOptions将传递给@fast-csv/format模块以写入csv数据。
+ 有关详细信息，请参阅@fast-csv README.md。
 
-使用npm模块格式化日期[时刻]（https://www.npmjs.com/package/moment）。
+使用npm模块格式化日期[moment]（https://www.npmjs.com/package/moment）。
  如果未提供dateFormat，则使用moment.ISO_8601。
  编写CSV时，您可以将布尔值dateUTC设置为true，以使ExcelJS自动解析日期
  使用`moment.utc（）`转换时区。
 
-### Streaming I/O
+### <a id="streaming-io">流 I/O</a>
 
 上面记录的文件I / O要求在写入文件之前在内存中构建整个工作簿。
  虽然方便，但由于所需的内存量，它可能会限制文档的大小。
@@ -1548,7 +1564,8 @@ CSV解析器使用[fast-csv]（https://www.npmjs.com/package/fast-csv）编写CS
 请注意，可以在不提交任何行的情况下构建整个工作簿。
  提交工作簿时，将自动提交所有添加的工作表（包括所有未提交的行）。
  但是，在这种情况下，文档版本的收益很少。
-#### Streaming XLSX
+
+#### <a id="streaming-xlsx">流 XLSX</a>
 
 ##### Streaming XLSX Writer
 
@@ -1621,13 +1638,11 @@ worksheet.commit();
 
 ```javascript
 // Finished the workbook.
-workbook.commit()
-  .then(function() {
-    // the stream has been written
-  });
+await workbook.commit();
+// ... the stream has been written
 ```
 
-# 浏览器
+# <a id="browser">浏览器</a>
 
 该库的一部分已经过隔离测试，可在浏览器环境中使用。
 
@@ -1643,11 +1658,11 @@ workbook.commit()
 * exceljs.js
 * exceljs.min.js
 
-# 值类型
+# <a id="value-types">值类型</a>
 
 支持以下值类型。
 
-## 空值
+## <a id="null-value">空值</a>
 
 Enum: Excel.ValueType.Null
 
@@ -1660,14 +1675,14 @@ Enum: Excel.ValueType.Null
 worksheet.getCell('A1').value = null;
 ```
 
-## 合并单元格
+## <a id="merge-cell">合并单元格</a>
 
 Enum: Excel.ValueType.Merge
 
 合并单元格的值与另一个“主”单元格绑定。
   分配给合并单元将导致修改主单元。
 
-## Number Value
+## <a id="number-value">数值</a>
 
 Enum: Excel.ValueType.Number
 
@@ -1680,7 +1695,7 @@ worksheet.getCell('A1').value = 5;
 worksheet.getCell('A2').value = 3.14159;
 ```
 
-## String Value
+## <a id="string-value">字符串值</a>
 
 Enum: Excel.ValueType.String
 
@@ -1692,7 +1707,7 @@ E.g.
 worksheet.getCell('A1').value = 'Hello, World!';
 ```
 
-## Date Value
+## <a id="date-value">日期值</a>
 
 Enum: Excel.ValueType.Date
 
@@ -1704,7 +1719,7 @@ E.g.
 worksheet.getCell('A1').value = new Date(2017, 2, 15);
 ```
 
-## Hyperlink Value
+## <a id="hyperlink-value">超链接值</a>
 
 Enum: Excel.ValueType.Hyperlink
 
@@ -1720,10 +1735,10 @@ worksheet.getCell('A1').value = {
 };
 
 // internal link
-worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\"Sheet2\\"!A1' };
+worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\'Sheet2\'!A1' };
 ```
 
-## Formula Value
+## <a id="formula-value">公式值</a>
 
 Enum: Excel.ValueType.Formula
 
@@ -1746,7 +1761,7 @@ worksheet.getCell('A3').formula === 'A1+A2';
 worksheet.getCell('A3').result === 7;
 ```
 
-### Shared Formula
+### <a id="shared-formula">共享公式</a>
 
 Shared formulae enhance the compression of the xlsx document by increasing the repetition
 of text within the worksheet xml.
@@ -1766,7 +1781,7 @@ The formula convenience getter will translate the formula in A3 to what it shoul
 worksheet.getCell('B3').formula === 'B1+B2';
 ```
 
-### Formula Type
+### <a id="formula-type">公式类型</a>
 
 To distinguish between real and translated formula cells, use the formulaType getter:
 
@@ -1783,7 +1798,7 @@ Formula type has the following values:
 | Enums.FormulaType.Master   |   1     |
 | Enums.FormulaType.Shared   |   2     |
 
-## 富文本值
+## <a id="rich-text-value">富文本值</a>
 
 枚举： Excel.ValueType.RichText
 
@@ -1799,7 +1814,7 @@ worksheet.getCell('A1').value = {
 };
 ```
 
-## 布尔值
+## <a id="boolean-value">布尔值</a>
 
 枚举：Excel.ValueType.Boolean
 
@@ -1810,7 +1825,7 @@ worksheet.getCell('A1').value = true;
 worksheet.getCell('A2').value = false;
 ```
 
-## 错误值
+## <a id="error-value">错误值</a>
 
 枚举：Excel.ValueType.Error
 
@@ -1864,7 +1879,7 @@ cell.styles重命名为cell.style
 * 默认情况下使用功能更全面且仍然与浏览器兼容的promise lib。这个lib支持Bluebird的许多功能，但占用空间要小得多。
 * 注入不同Promise实现的选项。有关详细信息，请参阅<a href="#config">配置</a>部分。
 
-# 配置{#config}
+# <a id="config">配置</a>
 
 ExcelJS现在支持promise库的依赖注入。
 您可以通过在模块中包含以下代码来恢复Bluebird承诺...
@@ -1885,7 +1900,7 @@ ExcelJS.config.setValue('promise', require('bluebird'));
 除了package.json中指定为“main”的文件之外，不保证dist/文件夹的其他任何内容
 
 
-# 已知的问题{#known-issues}
+# <a id="known-issues">已知的问题</a>
 
 ## 使用Puppeteer进行测试
 
@@ -1901,7 +1916,7 @@ sudo apt-get install libfontconfig
 
 如果任何拼接操作影响合并的单元格，则不会正确移动合并组
 
-# Release History
+# <a id="release-history">发布历史</a>
 
 | Version | Changes |
 | ------- | ------- |
@@ -1911,15 +1926,15 @@ sudo apt-get install libfontconfig
 | 0.1.2   | <ul><li>Fixed potential race condition on zip write</li></ul> |
 | 0.1.3   | <ul><li><a href="#alignment">Cell Alignment Style</a></li><li><a href="#rows">Row Height</a></li><li>Some Internal Restructuring</li></ul> |
 | 0.1.5   | <ul><li>Bug Fixes<ul><li>Now handles 10 or more worksheets in one workbook</li><li>theme1.xml file properly added and referenced</li></ul></li><li><a href="#borders">Cell Borders</a></li></ul> |
-| 0.1.6   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
-| 0.1.8   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li><li>Fixed filename case issue</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
+| 0.1.6   | <ul><li>Bug Fixes<ul><li>More compatible theme1.xml included in XLSX file</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
+| 0.1.8   | <ul><li>Bug Fixes<ul><li>More compatible theme1.xml included in XLSX file</li><li>Fixed filename case issue</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
 | 0.1.9   | <ul><li>Bug Fixes<ul><li>Added docProps files to satisfy Mac Excel users</li><li>Fixed filename case issue</li><li>Fixed worksheet id issue</li></ul></li><li><a href="#set-workbook-properties">Core Workbook Properties</a></li></ul> |
 | 0.1.10  | <ul><li>Bug Fixes<ul><li>Handles File Not Found error</li></ul></li><li><a href="#csv">CSV Files</a></li></ul> |
 | 0.1.11  | <ul><li>Bug Fixes<ul><li>Fixed Vertical Middle Alignment Issue</li></ul></li><li><a href="#styles">Row and Column Styles</a></li><li><a href="#rows">Worksheet.eachRow supports options</a></li><li><a href="#rows">Row.eachCell supports options</a></li><li><a href="#columns">New function Column.eachCell</a></li></ul> |
 | 0.2.0   | <ul><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
 | 0.2.2   | <ul><li><a href="https://pbs.twimg.com/profile_images/2933552754/fc8c70829ee964c5542ae16453503d37.jpeg">One Billion Cells</a><ul><li>Achievement Unlocked: A simple test using ExcelJS has created a spreadsheet with 1,000,000,000 cells. Made using random data with 100,000,000 rows of 10 cells per row. I cannot validate the file yet as Excel will not open it and I have yet to implement the streaming reader but I have every confidence that it is good since 1,000,000 rows loads ok.</li></ul></li></ul> |
 | 0.2.3   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/exceljs/exceljs/issues/18">Merge Cell Styles</a><ul><li>Merged cells now persist (and parse) their styles.</li></ul></li></ul></li><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
-| 0.2.4   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/exceljs/exceljs/issues/27">Worksheets with Ampersand Names</a><ul><li>Worksheet names are now xml-encoded and should work with all xml compatable characters</li></ul></li></ul></li><li><a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a><ul><li>Rows and Columns now support the hidden attribute.</li></ul></li><li><a href="#worksheet">Worksheet.addRows</a><ul><li>New function to add an array of rows (either array or object form) to the end of a worksheet.</li></ul></li></ul> |
+| 0.2.4   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/exceljs/exceljs/issues/27">Worksheets with Ampersand Names</a><ul><li>Worksheet names are now xml-encoded and should work with all xml compatible characters</li></ul></li></ul></li><li><a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a><ul><li>Rows and Columns now support the hidden attribute.</li></ul></li><li><a href="#worksheet">Worksheet.addRows</a><ul><li>New function to add an array of rows (either array or object form) to the end of a worksheet.</li></ul></li></ul> |
 | 0.2.6   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/exceljs/exceljs/issues/87">invalid signature: 0x80014</a>: Thanks to <a href="https://github.com/hasanlussa">hasanlussa</a> for the PR</li></ul></li><li><a href="#defined-names">Defined Names</a><ul><li>Cells can now have assigned names which may then be used in formulas.</li></ul></li><li>Converted Bluebird.defer() to new Bluebird(function(resolve, reject){}). Thanks to user <a href="https://github.com/Nishchit14">Nishchit</a> for the Pull Request</li></ul> |
 | 0.2.7   | <ul><li><a href="#data-validations">Data Validations</a><ul><li>Cells can now define validations that controls the valid values the cell can have</li></ul></li></ul> |
 | 0.2.8   | <ul><li><a href="rich-text">Rich Text Value</a><ul><li>Cells now support <b><i>in-cell</i></b> formatting - Thanks to <a href="https://github.com/pvadam">Peter ADAM</a></li></ul></li><li>Fixed typo in README - Thanks to <a href="https://github.com/MRdNk">MRdNk</a></li><li>Fixing emit in worksheet-reader - Thanks to <a href="https://github.com/alangunning">Alan Gunning</a></li><li>Clearer Docs - Thanks to <a href="https://github.com/miensol">miensol</a></li></ul> |
@@ -1939,7 +1954,7 @@ sudo apt-get install libfontconfig
 | 0.2.22  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/136">Throw legible error when failing Value.getType() #136</a>. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li><li>Honourable mention to contributors whose PRs were fixed before I saw them:<ul><li><a href="https://github.com/haoliangyu">haoliangyu</a></li><li><a href="https://github.com/wulfsolter">wulfsolter</a></li></ul></li></ul> |
 | 0.2.23  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/137">Fall back to JSON.stringify() if unknown Cell.Type #137</a> with some modification. If a cell value is assigned to an unrecognisable javascript object, the stored value in xlsx and csv files will  be JSON stringified. Note that if the file is read again, no attempt will be made to parse the stringified JSON text. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li></ul> |
 | 0.2.24  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/166">Protect cell fix #166</a>. This does not mean full support for protected cells merely that the parser is not confused by the extra xml. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
-| 0.2.25  | <ul><li>Added functions to delete cells, rows and columns from a worksheet. Modelled after the Array splice method, the functions allow cells, rows and columns to be deleted (and optionally inserted). See <a href="#columns">Columns</a> and <a href="#rows">Rows</a> for details.<br />Note: <a href="#splice-vs-merge">Not compatable with cell merges</a></li></ul> |
+| 0.2.25  | <ul><li>Added functions to delete cells, rows and columns from a worksheet. Modelled after the Array splice method, the functions allow cells, rows and columns to be deleted (and optionally inserted). See <a href="#columns">Columns</a> and <a href="#rows">Rows</a> for details.<br />Note: <a href="#splice-vs-merge">Not compatible with cell merges</a></li></ul> |
 | 0.2.26  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/184">Update border-xform.js #184</a>Border edges without style will be parsed and rendered as no-border. Thanks to <a href="https://github.com/skumarnk2">skumarnk2</a> for the contribution.</li></ul> |
 | 0.2.27  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/187">Pass views to worksheet-writer #187</a>. Now also passes views to worksheet-writer. Thanks to <a href="https://github.com/Temetz">Temetz</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/189">Do not escape xml characters when using shared strings #189</a>. Fixing bug in shared strings. Thanks to <a href="https://github.com/tkirda">tkirda</a> for the contribution.</li></ul> |
 | 0.2.28  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/190">Fix tiny bug [Update hyperlink-map.js] #190</a>Thanks to <a href="https://github.com/lszlkss">lszlkss</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/196">fix typo on sheet view showGridLines option #196</a> "showGridlines" should have been "showGridLines". Thanks to <a href="https://github.com/gadiaz1">gadiaz1</a> for the contribution.</li></ul> |
@@ -1954,7 +1969,7 @@ sudo apt-get install libfontconfig
 | 0.2.37  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/225">Fix output order of Sheet Properties #225</a>. Thanks to <a href="https://github.com/keeneym">keeneym</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/231">remove empty worksheet[0] from _worksheets #231</a>. Thanks to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/232">do not skip empty string in shared strings so that indexes match #232</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/233">use shared strings for streamed writes #233</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li></ul> |
 | 0.2.38  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/236">Add a comment for issue #216 #236</a>. Thanks to <a href="https://github.com/jsalwen">jsalwen</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/237">Start on support for 1904 based dates #237</a>. Fixed date handling in documents with the 1904 flag set. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
 | 0.2.39  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/245">Stops Bluebird warning about unreturned promise #245</a>. Thanks to <a href="https://github.com/robinbullocks4rb">robinbullocks4rb</a> for the contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/247">Added missing dependency: col-cache.js #247</a>. Thanks to <a href="https://github.com/Manish2005">Manish2005</a> for the contribution. </li> </ul> |
-| 0.2.42  | <ul><li>Browser Compatable!<ul><li>Well mostly. I have added a browser sub-folder that contains a browserified bundle and an index.js that can be used to generate another. See <a href="#browser">Browser</a> section for details.</li></ul></li><li>Fixed corrupted theme.xml. Apologies for letting that through.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/253">[BUGFIX] data validation formulae undefined #253</a>. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
+| 0.2.42  | <ul><li>Browser Compatible!<ul><li>Well mostly. I have added a browser sub-folder that contains a browserified bundle and an index.js that can be used to generate another. See <a href="#browser">Browser</a> section for details.</li></ul></li><li>Fixed corrupted theme.xml. Apologies for letting that through.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/253">[BUGFIX] data validation formulae undefined #253</a>. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
 | 0.2.43  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/255">added a (maybe partial) solution to issue 99. i wasn't able to create an appropriate test #255</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/99">Too few data or empty worksheet generate malformed excel file #99</a>. Thanks to <a href="https://github.com/mminuti">mminuti</a> for the contribution.</li></ul> |
 | 0.2.44  | <ul><li>Reduced Dependencies.<ul><li>Goodbye lodash, goodbye bluebird. Minified bundle is now just over half what it was in the first version.</li></ul></li></ul> |
 | 0.2.45  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/256">Sheets with hyperlinks and data validations are corrupted #256</a>. Thanks to <a href="https://github.com/simon-stoic">simon-stoic</a> for the contribution.</li></ul> |

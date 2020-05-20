@@ -18,11 +18,11 @@ const stopwatch = new HrStopwatch();
 stopwatch.start();
 
 wb.commit()
-.then(() => {
-  const micros = stopwatch.microseconds;
-  console.log('Done.');
-  console.log('Time taken:', micros);
-})
-.catch(error => {
-  console.log(error.message);
-});
+  .then(() => {
+    const micros = stopwatch.microseconds;
+    console.log('Done.');
+    console.log('Time taken:', micros);
+  })
+  .catch(error => {
+    console.log(error.message);
+  });

@@ -406,6 +406,18 @@ describe('Worksheet', () => {
       it('throws an error', () => {
         const wb = new ExcelJS.Workbook();
 
+        const validName = 'thisisaworksheetnameinuppercase';
+        const invalideName = 'THISISAWORKSHEETNAMEINUPPERCASE';
+        const expectedError = `Worksheet name already exists: ${invalideName}`;
+
+        wb.addWorksheet(validName);
+
+        expect(() => wb.addWorksheet(invalideName)).to.throw(expectedError);
+      });
+
+      it('throws an error', () => {
+        const wb = new ExcelJS.Workbook();
+
         const validName = 'ThisIsAWorksheetNameThatIsLonge';
         const invalideName = 'ThisIsAWorksheetNameThatIsLongerThan31';
         const expectedError = `Worksheet name already exists: ${validName}`;

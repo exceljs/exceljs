@@ -5,7 +5,9 @@ const FormulaXform = verquire('xlsx/xform/sheet/cf/formula-xform');
 const expectations = [
   {
     title: 'formula',
-    create() { return new FormulaXform(); },
+    create() {
+      return new FormulaXform();
+    },
     preparedModel: 'ROW()',
     xml: '<formula>ROW()</formula>',
     parsedModel: 'ROW()',

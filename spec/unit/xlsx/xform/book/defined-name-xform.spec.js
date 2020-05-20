@@ -2,7 +2,6 @@ const testXformHelper = require('./../test-xform-helper');
 
 const DefinedNameXform = verquire('xlsx/xform/book/defined-name-xform');
 
-
 const expectations = [
   {
     title: 'Defined Names',

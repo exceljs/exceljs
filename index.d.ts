@@ -1,6 +1,4 @@
 declare interface Buffer extends ArrayBuffer { }
-declare interface Stream { }
-declare interface Writable { }
 
 export const enum RelationshipType {
 	None = 0,
@@ -388,7 +386,7 @@ export interface CellModel {
 	text?: string;
 	hyperlink?: string;
 	value?: CellValue;
-	master: Cell;
+	master: string;
 	formula?: string;
 	sharedFormula?: string;
 	result?: string | number | any;
@@ -407,9 +405,9 @@ export interface Cell extends Style, Address {
 	readonly text: string;
 	readonly fullAddress: {
 		sheetName: string;
-		address: Address;
-		row: Row;
-		col: Column;
+		address: string;
+		row: string;
+		col: string;
 	};
 	model: CellModel;
 	/**
@@ -436,7 +434,7 @@ export interface Cell extends Style, Address {
 	/**
 	 * comment of the cell
 	 */
-	comment: Comment;
+	note: Comment;
 
 	/**
 	 * convenience getter to access the formula
@@ -476,7 +474,7 @@ export interface Cell extends Style, Address {
 	release(): void;
 	addMergeRef(): void;
 	releaseMergeRef(): void;
-	merge(master: Cell): void;
+	merge(master: Cell, ignoreStyle?: boolean): void;
 	unmerge(): void;
 	isMergedTo(master: Cell): boolean;
 	toString(): string;
@@ -614,9 +612,22 @@ export interface Column {
 	 * Column letter key
 	 */
 	readonly letter: string;
-}
+	readonly number: number;
+	readonly worksheet: Worksheet;
+	readonly isCustomWidth: boolean;
+	readonly headers: string[];
+	readonly isDefault: boolean;
+	readonly headerCount: number;
+	border: Partial<Borders>;
+	fill: Fill;
+	numFmt: string
+	font: Partial<Font>;
+	alignment: Partial<Alignment>;
+	protection: Partial<Protection>;
 
-export interface ColumnExtension extends Partial<Style> {
+	toString(): string
+	equivalentTo(other: Column): boolean
+
 	/**
 	 * indicate the collapsed state based on outlineLevel
 	 */
@@ -631,8 +642,9 @@ export interface ColumnExtension extends Partial<Style> {
 	 * Iterate over all current cells in this column including empty cells
 	 */
 	eachCell(opt: { includeEmpty: boolean }, callback: (cell: Cell, rowNumber: number) => void): void;
-}
 
+	defn: any; //todo
+}
 export interface PageSetup {
 	/**
 	 * Whitespace on the borders of the page. Units are inches.
@@ -878,6 +890,11 @@ export interface ImagePosition {
 	ext: { width: number; height: number };
 }
 
+export interface ImageHyperlinkValue {
+	hyperlink: string;
+	tooltip?: string;
+}
+
 export interface Range extends Location {
 	sheetName: string;
 
@@ -946,6 +963,98 @@ export interface WorksheetModel {
 }
 export type WorksheetState = 'visible' | 'hidden' | 'veryHidden';
 
+export type CellIsOperators = 'equal' | 'greaterThan' | 'lessThan' | 'between';
+
+export type ContainsTextOperators = 'containsText' | 'containsBlanks' | 'notContainsBlanks' | 'containsErrors' | 'notContainsErrors';
+
+export type TimePeriodTypes = 'lastWeek' | 'thisWeek' | 'nextWeek' | 'yesterday' | 'today' | 'tomorrow' | 'last7Days' | 'lastMonth' 
+			| 'thisMonth' | 'nextMonth';
+
+export type IconSetTypes = '5Arrows' | '5ArrowsGray' | '5Boxes' | '5Quarters' | '5Rating' | '4Arrows' | '4ArrowsGray' 
+			| '4Rating' | '4RedToBlack' | '4TrafficLights' | 'NoIcons' | '3Arrows' | '3ArrowsGray' | '3Flags' | '3Signs' 
+			| '3Stars' | '3Symbols' | '3Symbols2' | '3TrafficLights1' | '3TrafficLights2' | '3Triangles';
+
+export type CfvoTypes = 'percentile' | 'percent' | 'num' | 'min' | 'max' | 'formula' | 'autoMin' | 'autoMax';
+
+export interface Cvfo {
+	type: CfvoTypes;
+	value?: number;
+}
+export interface ConditionalFormattingBaseRule {
+	priority: number;
+	style?: Partial<Style>;
+}
+export interface ExpressionRuleType extends ConditionalFormattingBaseRule {
+	type: 'expression';
+	formulae?: any[];
+}
+
+export interface CellIsRuleType extends ConditionalFormattingBaseRule {
+	type: 'cellIs';
+	formulae?: any[];
+	operator?: CellIsOperators;
+}
+
+export interface Top10RuleType extends ConditionalFormattingBaseRule {
+	type: 'top10';
+	rank: number;
+	percent: boolean;
+	bottom: boolean;
+}
+
+export interface AboveAverageRuleType extends ConditionalFormattingBaseRule {
+	type: 'aboveAverage';
+	aboveAverage: boolean;
+}
+
+export interface ColorScaleRuleType extends ConditionalFormattingBaseRule {
+	type: 'colorScale';
+	cfvo?: Cvfo[];
+	color?: Partial<Color>;
+}
+
+export interface IconSetRuleType extends ConditionalFormattingBaseRule {
+	type: 'iconSet';
+	showValue?: boolean;
+	reverse?: boolean;
+	custom?: boolean;
+	iconSet?: IconSetTypes;
+	cfvo?: Cvfo[];
+}
+
+export interface ContainsTextRuleType extends ConditionalFormattingBaseRule {
+	type: 'containsText';
+	operator?: ContainsTextOperators;
+	text?: string;
+}
+
+export interface TimePeriodRuleType extends ConditionalFormattingBaseRule {
+	type: 'timePeriod';
+	timePeriod?: TimePeriodTypes;
+}
+
+export interface DataBarRuleType extends ConditionalFormattingBaseRule {
+	type: 'dataBar';
+	gradient?: boolean;
+	minLength?: number;
+	maxLength?: number;
+	showValue?: boolean;
+	border?: boolean;
+	negativeBarColorSameAsPositive?: boolean;
+	negativeBarBorderColorSameAsPositive?: boolean;
+	axisPosition?: 'auto' | 'middle' | 'none';
+	direction?: 'context' | 'leftToRight' | 'rightToLeft';
+	cfvo?: Cvfo[];
+}
+
+export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType 
+				| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
+
+export interface ConditionalFormattingOptions {
+	ref: string;
+	rules: ConditionalFormattingRule[];
+} 
+
 export interface Worksheet {
 	readonly id: number;
 	name: string;
@@ -1011,7 +1120,7 @@ export interface Worksheet {
 	/**
 	 * Access an individual columns by key, letter and 1-based column number
 	 */
-	getColumn(indexOrKey: number | string): Partial<Column> & ColumnExtension;
+	getColumn(indexOrKey: number | string): Partial<Column>;
 
 	/**
 	 * Cut one or more columns (columns to the right are shifted left)
@@ -1066,6 +1175,11 @@ export interface Worksheet {
 	addRows(rows: any[]): void;
 
 	/**
+	 * Duplicate rows and insert new rows
+	 */
+	duplicateRow(rowNum: number, count: number, insert: boolean): void;
+
+	/**
 	 * Get or create row by 1-based index
 	 */
 	getRow(index: number): Row;
@@ -1114,6 +1228,16 @@ export interface Worksheet {
 	mergeCells(v: [string, string, string]): void;
 	mergeCells(v: [number, number, number, number]): void;
 	mergeCells(v: [number, number, number, number, string]): void;
+	mergeCellsWithoutStyle(): void;
+	mergeCellsWithoutStyle(v: Range): void;
+	mergeCellsWithoutStyle(v: string): void;
+	mergeCellsWithoutStyle(v: Location): void;
+	mergeCellsWithoutStyle(top: number, left: number, bottom: number, right: number, sheetName?: string): void;
+	mergeCellsWithoutStyle(tl: string, br: string, sheetName?: string): void;
+	mergeCellsWithoutStyle(v: [string, string]): void;
+	mergeCellsWithoutStyle(v: [string, string, string]): void;
+	mergeCellsWithoutStyle(v: [number, number, number, number]): void;
+	mergeCellsWithoutStyle(v: [number, number, number, number, string]): void;
 
 	/**
 	 * unmerging the cells breaks the style links
@@ -1142,7 +1266,7 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange | { editAs?: string; } & ImagePosition): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & {hyperlinks?: ImageHyperlinkValue} | { editAs?: string; } & ImagePosition & {hyperlinks?: ImageHyperlinkValue}): void;
 
 	getImages(): Array<{
 		type: 'image',
@@ -1168,6 +1292,23 @@ export interface Worksheet {
 	 * fetch table by name or id
 	 */
 	getTable(name: string): Table;
+	/**
+	 * delete table by name or id
+	 */
+	removeTable(name: string): void;
+	/**
+	 *  fetch table
+	 */
+	getTables(): [Table, void][];
+	/**
+	 * add conditionalFormattingOptions
+	 */
+	addConditionalFormatting(cf: ConditionalFormattingOptions): void;
+
+	/**
+	 * delete conditionalFormattingOptions
+	 */
+	removeConditionalFormatting(filter: any): void;
 }
 
 export interface CalculationProperties {
@@ -1197,6 +1338,11 @@ export interface WorksheetProperties {
 	 * Default row height (default: 15)
 	 */
 	defaultRowHeight: number;
+
+	/**
+	 * Default column width (optional)
+	 */
+	defaultColWidth?: number;
 
 	/**
 	 * default: 55
@@ -1249,7 +1395,7 @@ export interface Xlsx {
 	 * read from a stream
 	 * @param stream
 	 */
-	read(stream: Stream): Promise<Workbook>;
+	read(stream: import('stream').Stream): Promise<Workbook>;
 
 	/**
 	 * load from an array buffer
@@ -1260,7 +1406,7 @@ export interface Xlsx {
 	/**
 	 * Create input stream for reading
 	 */
-	createInputStream(): Writable;
+	createInputStream(): import('events').EventEmitter;
 
 	/**
 	 * write to a buffer
@@ -1275,17 +1421,82 @@ export interface Xlsx {
 	/**
 	 * write to a stream
 	 */
-	write(stream: Stream, options?: Partial<XlsxWriteOptions>): Promise<void>;
+	write(stream: import('stream').Stream, options?: Partial<XlsxWriteOptions>): Promise<void>;
+}
+
+// https://c2fo.io/fast-csv/docs/parsing/options
+
+type HeaderArray = (string | undefined | null)[];
+type HeaderTransformFunction = (headers: HeaderArray) => HeaderArray;
+export interface FastCsvParserOptionsArgs {
+	objectMode: boolean;
+	delimiter: string;
+	quote: string | null;
+	escape: string;
+	headers: boolean | HeaderTransformFunction | HeaderArray;
+	renameHeaders: boolean;
+	ignoreEmpty: boolean;
+	comment: string;
+	strictColumnHandling: boolean;
+	discardUnmappedColumns: boolean;
+	trim: boolean;
+	ltrim: boolean;
+	rtrim: boolean;
+	encoding: string;
+	maxRows: number;
+	skipLines: number;
+	skipRows: number;
+}
+
+interface QuoteColumnMap {
+	[s: string]: boolean;
+}
+declare type QuoteColumns = boolean | boolean[] | QuoteColumnMap;
+
+interface RowMap {
+	[key: string]: any;
+}
+declare type RowHashArray = [string, any][];
+declare type RowArray = string[];
+declare type Rows = RowArray | RowMap | RowHashArray;
+declare type RowTransformCallback = (error?: Error | null, row?: Rows) => void;
+interface RowTransformFunction {
+	(row: Rows, callback: RowTransformCallback): void;
+	(row: Rows): Rows;
+}
+
+// https://c2fo.io/fast-csv/docs/formatting/options/
+export interface FastCsvFormatterOptionsArgs {
+	objectMode: boolean;
+	delimiter: string;
+	rowDelimiter: string;
+	quote: string | boolean;
+	escape: string;
+	quoteColumns: QuoteColumns;
+	quoteHeaders: QuoteColumns;
+	headers: null | boolean | string[];
+	includeEndRowDelimiter: boolean;
+	writeBOM: boolean;
+	transform: RowTransformFunction;
+	alwaysWriteHeaders: boolean;
 }
 
 export interface CsvReadOptions {
 	dateFormats: string[];
 	map(value: any, index: number): any;
+	sheetName: string;
+	parserOptions: Partial<FastCsvParserOptionsArgs>;
 }
 
 export interface CsvWriteOptions {
 	dateFormat: string;
 	dateUTC: boolean;
+	sheetName: string;
+	sheetId: number;
+	encoding: string;
+	map(value: any, index: number): any;
+	includeEmptyRows: boolean;
+	formatterOptions: Partial<FastCsvFormatterOptionsArgs>;
 }
 
 export interface Csv {
@@ -1297,17 +1508,17 @@ export interface Csv {
 	/**
 	 * read from a stream
 	 */
-	read(stream: Stream, options?: Partial<CsvReadOptions>): Promise<Worksheet>;
+	read(stream: import('stream').Stream, options?: Partial<CsvReadOptions>): Promise<Worksheet>;
 
 	/**
 	 * Create input stream for reading
 	 */
-	createInputStream(): Writable;
+	createInputStream(options?: Partial<CsvReadOptions>): import('events').EventEmitter;
 
 	/**
 	 * write to a buffer
 	 */
-	writeBuffer(): Promise<Buffer>;
+	writeBuffer(options?: Partial<CsvWriteOptions>): Promise<Buffer>;
 
 	/**
 	 * write to a file
@@ -1317,7 +1528,7 @@ export interface Csv {
 	/**
 	 * write to a stream
 	 */
-	write(stream: Stream, options?: Partial<CsvWriteOptions>): Promise<void>;
+	write(stream: import('stream').Stream, options?: Partial<CsvWriteOptions>): Promise<void>;
 }
 
 export interface Media {
@@ -1614,7 +1825,7 @@ export namespace stream {
 			/**
 			 * Specifies a writable stream to write the XLSX workbook to.
 			 */
-			stream: Stream;
+			stream: import('stream').Stream;
 
 			/**
 			 * 	If stream not specified, this field specifies the path to a file to write the XLSX workbook to.

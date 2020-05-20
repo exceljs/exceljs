@@ -22,21 +22,66 @@ npm install exceljs
 
 <ul>
   <li>
-    <a href="#conditional-formatting">Conditional Formatting</a>
-    A subset of Excel Conditional formatting has been implemented!
-    Specifically the formatting rules that do not require XML to be rendered
-    inside an &lt;extLst&gt; node, or in other words everything except
-    databar and three icon sets (3Triangles, 3Stars, 5Boxes).
-    These will be implemented in due course
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1140">Optimize SAXStream #1140</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1030">remove core-js/ import #1030</a>.
-    Many thanks to <a href="https://github.com/bleuscyther">jeffrey n. carre</a> for this contribution.
-    This change is used to create a new browserified bundle artefact that does not include
-    any polyfills.
-    See <a href="#browserify">Browserify</a> for details.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1143">fix issue #1057 Fix addConditionalFormatting is not a function error when using Streaming XLSX Writer #1143</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1160">fix issue #204 sets default column width #1160</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1164">Include cell address for Shared Formula master must exist.. error #1164</a>.
+    Many thanks to <a href="https://github.com/noisyscanner">Brad Reed</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1166">Typo in DataValidation examples #1166</a>.
+    Many thanks to <a href="https://github.com/mravey">Matthieu Ravey</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1176">fixes #1175 #1176</a>.
+    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1179">fix issue #1178 and update index.d.ts #1179</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1182">Simple test if typescript is able to compile #1182</a>.
+    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1190">More improvements #1190</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1193">Ensure all node_modules are compatible with IE11 #1193</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1199">fix issue #1194 and update index.d.ts #1199</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/1194">[BUG] TypeScript version doesn't have definition for Worksheet.addConditionalFormatting #1194</a>.
+  </li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1204">fix issue #1157 marked Cannot set property #1204</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/1157">[BUG] Cannot set property 'marked' of undefined #1157</a>.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1209">Deprecate createInputStream #1209</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
+  </li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1204">fix issue #1206 #1205 Abnormality of and attributes #1210</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/1205">[BUG] Unlocked cells do not maintain their unlocked status after reading and writing a workbook. #1205</a>
+    and <a href="https://github.com/exceljs/exceljs/issues/1206">[BUG] Unlocked cells lose their vertical and horizontal alignment after a read and write. #1206</a>.
   </li>
 </ul>
+
 
 # Contributions
 
@@ -79,6 +124,7 @@ To be clear, all contributions added to this library will be included in the lib
       <li><a href="#rows">Rows</a></li>
       <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
       <li><a href="#merged-cells">Merged Cells</a></li>
+      <li><a href="#duplicate-a-row">Duplicate Row</a></li>
       <li><a href="#defined-names">Defined Names</a></li>
       <li><a href="#data-validations">Data Validations</a></li>
       <li><a href="#cell-comments">Cell Comments</a></li>
@@ -174,15 +220,33 @@ require('core-js/modules/es.object.assign');
 require('core-js/modules/es.object.keys');
 require('regenerator-runtime/runtime');
 
-// ...
-
 const ExcelJS = require('exceljs/dist/es5');
+```
+
+For IE 11, you'll also need a polyfill to support unicode regex patterns. For example,
+
+```js
+const rewritePattern = require('regexpu-core');
+const {generateRegexpuOptions} = require('@babel/helper-create-regexp-features-plugin/lib/util');
+
+const {RegExp} = global;
+try {
+  new RegExp('a', 'u');
+} catch (err) {
+  global.RegExp = function(pattern, flags) {
+    if (flags && flags.includes('u')) {
+      return new RegExp(rewritePattern(pattern, flags, generateRegexpuOptions({flags, pattern})));
+    }
+    return new RegExp(pattern, flags);
+  };
+  global.RegExp.prototype = RegExp;
+}
 ```
 
 ## Browserify
 
 ExcelJS publishes two browserified bundles inside the dist/ folder:
- 
+
 One with implicit dependencies on core-js polyfills...
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
@@ -254,10 +318,10 @@ For Example:
 var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
 // create a sheet where the grid lines are hidden
-var sheet = workbook.addWorksheet('My Sheet', {properties: {showGridLines: false}});
+var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
 
 // create a sheet with the first row and column frozen
-var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
+var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
 ```
 
 ## Remove a Worksheet
@@ -286,8 +350,20 @@ workbook.eachSheet(function(worksheet, sheetId) {
 var worksheet = workbook.getWorksheet('My Sheet');
 
 // fetch sheet by id
+// INFO: Be careful when using it! 
+// It tries to access to `worksheet.id` field. Sometimes (really very often) workbook has worksheets with id not starting from 1. 
+// For instance It happens when any worksheet has been deleted.
+// It's much more safety when you assume that ids are random. And stop to use this function. 
+// If you need to access all worksheets in a loop please look to the next example.
 var worksheet = workbook.getWorksheet(1);
+
+// access by `worksheets` array:
+workbook.worksheets[0]; //the first one;
+
 ```
+
+It's important to know that `workbook.getWorksheet(1) != Workbook.worksheets[0]` and `workbook.getWorksheet(1) != Workbook.worksheets[1]`,
+becouse `workbook.worksheets[0].id` may have any value.
 
 ## Worksheet State
 
@@ -326,6 +402,7 @@ worksheet.properties.defaultRowHeight = 15;
 | outlineLevelCol  | 0          | The worksheet column outline level |
 | outlineLevelRow  | 0          | The worksheet row outline level |
 | defaultRowHeight | 15         | Default row height |
+| defaultColWidth  | (optional) | Default column width |
 | dyDescent        | 55         | TBD |
 
 ### Worksheet Metrics
@@ -364,6 +441,9 @@ worksheet.pageSetup.margins = {
 
 // Set Print Area for a sheet
 worksheet.pageSetup.printArea = 'A1:G20';
+
+// Set multiple Print Areas by separating print areas with '&&'
+worksheet.pageSetup.printArea = 'A1:G10&&A11:G20';
 
 // Repeat specific rows on every printed page
 worksheet.pageSetup.printTitlesRow = '1:3';
@@ -482,7 +562,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 
 Worksheets now support a list of views, that control how Excel presents the sheet:
 
-* frozen - where a number of rows and columns to the top and left are frozen in place. Only the bottom left section will scroll
+* frozen - where a number of rows and columns to the top and left are frozen in place. Only the bottom right section will scroll
 * split - where the view is split into 4 sections, each semi-independently scrollable.
 
 Each view also supports various properties:
@@ -497,7 +577,7 @@ Each view also supports various properties:
 | showGridLines     | true      | Shows or hides the gridlines (shown for cells where borders have not been defined) |
 | zoomScale         | 100       | Percentage zoom to use for the view |
 | zoomScaleNormal   | 100       | Normal zoom for the view |
-| style             | undefined | Presentation style - one of pageBreakPreview or pageLayout. Note pageLayout is not compatable with frozen views |
+| style             | undefined | Presentation style - one of pageBreakPreview or pageLayout. Note pageLayout is not compatible with frozen views |
 
 ### Frozen Views
 
@@ -632,13 +712,13 @@ worksheet.getColumn(6).values = [1,2,3,4,5];
 worksheet.getColumn(7).values = [,,2,3,,5,,7,,,,11];
 
 // cut one or more columns (columns to the right are shifted left)
-// If column properties have been definde, they will be cut or moved accordingly
+// If column properties have been defined, they will be cut or moved accordingly
 // Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
 worksheet.spliceColumns(3,2);
 
 // remove one column and insert two more.
 // Note: columns 4 and above will be shifted right by 1 column.
-// Also: If the worksheet has more rows than values in the colulmn inserts,
+// Also: If the worksheet has more rows than values in the column inserts,
 //  the rows will still be shifted as if the values existed
 var newCol3Values = [1,2,3,4,5];
 var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
@@ -811,9 +891,35 @@ expect(worksheet.getCell('B5').style).not.toBe(worksheet.getCell('A4').style);
 expect(worksheet.getCell('B5').style.font).not.toBe(myFonts.arial);
 
 // merge by top-left, bottom-right
-worksheet.mergeCells('G10', 'H11');
-worksheet.mergeCells(10,11,12,13); // top,left,bottom,right
+worksheet.mergeCells('K10', 'M12');
+
+// merge by start row, start column, end row, end column (equivalent to K10:M12)
+worksheet.mergeCells(10,11,12,13);
 ```
+## Duplicate a Row
+
+```javascript
+duplicateRow(start, amount = 1, insert = true)
+
+const wb = new ExcelJS.Workbook();
+const ws = wb.addWorksheet('duplicateTest');
+ws.getCell('A1').value = 'One';
+ws.getCell('A2').value = 'Two';
+ws.getCell('A3').value = 'Three';
+ws.getCell('A4').value = 'Four';
+
+// This line will duplicate the row 'One' twice but it will replace rows 'Two' and 'Three'
+// if third param was true so it would insert 2 new rows with the values and styles of row 'One'
+ws.duplicateRow(1,2,false);
+```
+
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| start          | Row number you want to duplicate (first in excel is 1) |  |
+| amount    | The times you want to duplicate the row | 1 |
+| insert            | *true* if you want to insert new rows for the duplicates, or *false* if you want to replace them | *true* |
+
+
 
 ## Defined Names
 
@@ -890,7 +996,7 @@ worksheet.getCell('A1').dataValidation = {
   error: 'The value must not be Five'
 };
 
-// Specify Cell must be a decomal number between 1.5 and 7.
+// Specify Cell must be a decimal number between 1.5 and 7.
 // Add 'tooltip' to help guid the user
 worksheet.getCell('A1').dataValidation = {
   type: 'decimal',
@@ -1116,7 +1222,7 @@ table.commit();
 const table = ws.getTable('MyTable');
 
 // remove second column
-table.removeColumnss(1, 1);
+table.removeColumns(1, 1);
 
 // insert new column (with data) at index 1
 table.addColumn(
@@ -1499,7 +1605,7 @@ in ascending order.
 Note: at present, only a subset of conditional formatting rules are supported.
 Specifically, only the formatting rules that do not require XML rendering
 inside an &lt;extLst&gt; element. This means that datasets and three specific
-icon sets (3Triangles, 3Stars, 5Boxes) are not supported. 
+icon sets (3Triangles, 3Stars, 5Boxes) are not supported.
 
 ```javascript
 // add a checkerboard pattern to A1:E7 based on row + col being even or odd
@@ -1577,7 +1683,7 @@ worksheet.addConditionalFormatting({
 | aboveAverage  | Y        | false   | if true, the rank field is a percentage, not an absolute |
 | style         |          |         | style structure to apply if the comparison returns true |
 
-### Colour Scale
+### Color Scale
 
 | Field         | Optional | Default | Description |
 | ------------- | -------- | ------- | ----------- |
@@ -1594,6 +1700,27 @@ worksheet.addConditionalFormatting({
 | type          |          |         | 'iconSet' |
 | priority      | Y        | &lt;auto&gt;  | determines priority ordering of styles |
 | iconSet       | Y        | 3TrafficLights | name of icon set to use |
+| showValue     |          | true    | Specifies whether the cells in the applied range display the icon and cell value, or the icon only |
+| reverse       |          | false   | Specifies whether the icons in the icon set specified in iconSet are show in reserve order. If custom equals "true" this value must be ignored |
+| custom        |          |  false  | Specifies whether a custom set of icons is used |
+| cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
+| style         |          |         | style structure to apply if the comparison returns true |
+
+### Data Bar
+
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'dataBar' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| minLength  |          | 0       | Specifies the length of the shortest data bar in this conditional formatting range |
+| maxLength  |          | 100     | Specifies the length of the longest data bar in this conditional formatting range |
+| showValue  |          | true    | Specifies whether the cells in the conditional formatting range display both the data bar and the numeric value or the data bar |
+| gradient   |          | true    | Specifies whether the data bar has a gradient fill |
+| border     |          | true    | Specifies whether the data bar has a border |
+| negativeBarColorSameAsPositive  |                | true        | Specifies whether the data bar has a negative bar color that is different from the positive bar color |
+| negativeBarBorderColorSameAsPositive  |          | true        | Specifies whether the data bar has a negative border color that is different from the positive border color |
+| axisPosition  |       | 'auto'             | Specifies the axis position for the data bar |
+| direction  |          | 'leftToRight'      | Specifies the direction of the data bar |
 | cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
 | style         |          |         | style structure to apply if the comparison returns true |
 
@@ -1640,7 +1767,6 @@ worksheet.addConditionalFormatting({
 | lastMonth         | Apply format if cell value falls in last month |
 | thisMonth         | Apply format if cell value falls in this month |
 | nextMonth         | Apply format if cell value falls in next month |
-
 
 ## Outline Levels
 
@@ -1757,13 +1883,13 @@ worksheet.addImage(imageId2, {
 });
 ```
 
-The cell range can also have the eproperty 'editAs' which will control how the image is anchored to the cell(s)
+The cell range can also have the property 'editAs' which will control how the image is anchored to the cell(s)
 It can have one of the following values:
 
 | Value     | Description |
 | --------- | ----------- |
-| undefined | This is the default. It specifies the image will be moved and sized with cells |
-| oneCell   | Image will be moved with cells but not sized |
+| undefined | It specifies the image will be moved and sized with cells |
+| oneCell   | This is the default. Image will be moved with cells but not sized |
 | absolute  | Image will not be moved or sized with cells |
 
 ```javascript
@@ -1782,6 +1908,21 @@ You can add an image to a cell and then define its width and height in pixels at
 worksheet.addImage(imageId2, {
   tl: { col: 0, row: 0 },
   ext: { width: 500, height: 200 }
+});
+```
+
+### Add image with hyperlinks
+
+You can add an image with hyperlinks to a cell, and defines the hyperlinks in image range.
+
+```javascript
+worksheet.addImage(imageId2, {
+  tl: { col: 0, row: 0 },
+  ext: { width: 500, height: 200 },
+  hyperlinks: {
+    hyperlink: 'http://www.somewhere.com',
+    tooltip: 'http://www.somewhere.com'
+  }
 });
 ```
 
@@ -1805,7 +1946,9 @@ to modify individual cell protection.
 
 **Note:** While the protect() function returns a Promise indicating
 that it is async, the current implementation runs on the main
-thread and will use approx 600ms on an average CPU.
+thread and will use approx 600ms on an average CPU. This can be adjusted
+by setting the spinCount, which can be used to make the process either
+faster or more resilient.
 
 ### Sheet Protection Options
 
@@ -1824,6 +1967,7 @@ thread and will use approx 600ms on an average CPU.
 | sort                | false   | Lets the user sort data |
 | autoFilter          | false   | Lets the user filter data in tables |
 | pivotTables         | false   | Lets the user use pivot tables |
+| spinCount           | 100000  | The number of hash iterations performed when protecting or unprotecting |
 
 
 
@@ -1836,21 +1980,20 @@ thread and will use approx 600ms on an average CPU.
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
-workbook.xlsx.readFile(filename)
-  .then(function() {
-    // use workbook
-  });
+await workbook.xlsx.readFile(filename);
+// ... use workbook
 
-// pipe from stream
+
+// read from a stream
 var workbook = new Excel.Workbook();
-stream.pipe(workbook.xlsx.createInputStream());
+await workbook.xlsx.read(stream);
+// ... use workbook
+
 
 // load from buffer
 var workbook = new Excel.Workbook();
-workbook.xlsx.load(data)
-  .then(function() {
-    // use workbook
-  });
+await workbook.xlsx.load(data);
+// ... use workbook
 ```
 
 #### Writing XLSX
@@ -1858,56 +2001,49 @@ workbook.xlsx.load(data)
 ```javascript
 // write to a file
 var workbook = createAndFillWorkbook();
-workbook.xlsx.writeFile(filename)
-  .then(function() {
-    // done
-  });
+await workbook.xlsx.writeFile(filename);
 
 // write to a stream
-workbook.xlsx.write(stream)
-  .then(function() {
-    // done
-  });
+await workbook.xlsx.write(stream);
 
 // write to a new buffer
-workbook.xlsx.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.xlsx.writeBuffer();
 ```
 
 ### CSV
 
 #### Reading CSV
 
+Options supported when reading CSV files.
+
+| Field            |  Required   |    Type     |Description  |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormats      |     N       |  Array      | Specify the date encoding format of dayjs. |
+| map              |     N       |  Function   | Custom Array.prototype.map() callback function for processing data. |
+| sheetName        |     N       |  String     | Specify worksheet name. |
+| parserOptions    |     N       |  Object     | [parseOptions options](https://c2fo.io/fast-csv/docs/parsing/options)  @fast-csv/format module to write csv data. |
+
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
-workbook.csv.readFile(filename)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename);
+// ... use workbook or worksheet
+
 
 // read from a stream
 var workbook = new Excel.Workbook();
-workbook.csv.read(stream)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.read(stream);
+// ... use workbook or worksheet
 
-// pipe from stream
-var workbook = new Excel.Workbook();
-stream.pipe(workbook.csv.createInputStream());
 
 // read from a file with European Dates
 var workbook = new Excel.Workbook();
 var options = {
   dateFormats: ['DD/MM/YYYY']
 };
-workbook.csv.readFile(filename, options)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
+
 
 // read from a file with custom value parsing
 var workbook = new Excel.Workbook();
@@ -1927,16 +2063,19 @@ var options = {
         // the rest are numbers
         return parseFloat(value);
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/parsing/options
+  parserOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
-workbook.csv.readFile(filename, options)
-  .then(function(worksheet) {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
- The options passed into the read functions above is also passed to fast-csv for parsing of the csv data.
+The formatterOptions in the options passed to the above write function will be passed to the @fast-csv/format module to write csv data.
  Please refer to the fast-csv README.md for details.
 
 Dates are parsed using the npm module [dayjs](https://www.npmjs.com/package/dayjs).
@@ -1950,22 +2089,29 @@ Please refer to the [dayjs CustomParseFormat plugin](https://github.com/iamkun/d
 
 #### Writing CSV
 
+Options supported when writing to a CSV file.
+
+| Field            |  Required   |    Type     | Description |
+| ---------------- | ----------- | ----------- | ----------- |
+| dateFormat       |     N       |  String     | Specify the date encoding format of dayjs. |
+| dateUTC          |     N       |  Boolean    | Specify whether ExcelJS uses `dayjs.utc ()` to convert time zone for parsing dates. |
+| encoding         |     N       |  String     | Specify file encoding format. |
+| includeEmptyRows |     N       |  Boolean    | Specifies whether empty rows can be written. |
+| map              |     N       |  Function   | Custom Array.prototype.map() callback function for processing row values. |
+| sheetName        |     N       |  String     | Specify worksheet name. |
+| sheetId          |     N       |  Number     | Specify worksheet ID. |
+| formatterOptions |     N       |  Object     | [formatterOptions options](https://c2fo.io/fast-csv/docs/formatting/options/) @fast-csv/format module to write csv data. |
+
 ```javascript
 
 // write to a file
 var workbook = createAndFillWorkbook();
-workbook.csv.writeFile(filename)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename);
 
 // write to a stream
 // Be careful that you need to provide sheetName or
 // sheetId for correct import to csv.
-workbook.csv.write(stream, { sheetName: 'Page name' })
-  .then(() => {
-    // done
-  });
+await workbook.csv.write(stream, { sheetName: 'Page name' });
 
 // write to a file with European Date-Times
 var workbook = new Excel.Workbook();
@@ -1973,10 +2119,7 @@ var options = {
   dateFormat: 'DD/MM/YYYY HH:mm:ss',
   dateUTC: true, // use utc when rendering dates
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 
 // write to a file with custom value formatting
@@ -1997,22 +2140,21 @@ var options = {
         // the rest are numbers
         return value;
     }
-  }
+  },
+  // https://c2fo.io/fast-csv/docs/formatting/options
+  formatterOptions: {
+    delimiter: '\t',
+    quote: false,
+  },
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 // write to a new buffer
-workbook.csv.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.csv.writeBuffer();
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write the CSV file.
- The options passed into the write functions above is also passed to fast-csv for writing the csv data.
+ The formatterOptions in the options passed to the above write function will be passed to the @fast-csv/format module to write csv data.
  Please refer to the fast-csv README.md for details.
 
 Dates are formatted using the npm module [moment](https://www.npmjs.com/package/moment).
@@ -2054,7 +2196,7 @@ The constructor takes an optional options object with the following fields:
 | filename         | If stream not specified, this field specifies the path to a file to write the XLSX workbook to. |
 | useSharedStrings | Specifies whether to use shared strings in the workbook. Default is false |
 | useStyles        | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
-| zip              | [Zip optons](https://www.archiverjs.com/global.html#ZipOptions) that ExcelJS internally passes to [Archiver](https://github.com/archiverjs/node-archiver). Default is undefined |
+| zip              | [Zip options](https://www.archiverjs.com/global.html#ZipOptions) that ExcelJS internally passes to [Archiver](https://github.com/archiverjs/node-archiver). Default is undefined |
 
 If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object
  that will store the contents of the XLSX workbook in memory.
@@ -2114,10 +2256,8 @@ To complete the XLSX document, the workbook must be committed. If any worksheet 
 
 ```javascript
 // Finished the workbook.
-workbook.commit()
-  .then(function() {
-    // the stream has been written
-  });
+await workbook.commit();
+// ... the stream has been written
 ```
 
 # Browser
@@ -2213,7 +2353,7 @@ worksheet.getCell('A1').value = {
 };
 
 // internal link
-worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\\"Sheet2\\"!A1' };
+worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\'Sheet2\'!A1' };
 ```
 
 ## Formula Value
@@ -2402,7 +2542,7 @@ Every effort is made to make a good consistent interface that doesn't break thro
 
 ### Worksheet.eachRow
 
-The arguments in the callback function to Worksheet.eachRow have been swapped and changed; it was function(rowNumber,rowValues), now it is function(row, rowNumber) which gives it a look and feel more like the underscore (_.each) function and prioritises the row object over the row number.
+The arguments in the callback function to Worksheet.eachRow have been swapped and changed; it was function(rowNumber,rowValues), now it is function(row, rowNumber) which gives it a look and feel more like the underscore (_.each) function and priorities the row object over the row number.
 
 ### Worksheet.getRow
 
@@ -2423,7 +2563,7 @@ Promises returned from functions switched from Bluebird to native node Promise w
 
 To mitigate this the following two changes were added to 0.3.0:
 
-* A more fully featured and still browser compatable promise lib is used by default. This lib supports many of the features of Bluebird but with a much lower footprint.
+* A more fully featured and still browser compatible promise lib is used by default. This lib supports many of the features of Bluebird but with a much lower footprint.
 * An option to inject a different Promise implementation. See <a href="#config">Config</a> section for more details.
 
 # Config
@@ -2477,15 +2617,15 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.1.2   | <ul><li>Fixed potential race condition on zip write</li></ul> |
 | 0.1.3   | <ul><li><a href="#alignment">Cell Alignment Style</a></li><li><a href="#rows">Row Height</a></li><li>Some Internal Restructuring</li></ul> |
 | 0.1.5   | <ul><li>Bug Fixes<ul><li>Now handles 10 or more worksheets in one workbook</li><li>theme1.xml file properly added and referenced</li></ul></li><li><a href="#borders">Cell Borders</a></li></ul> |
-| 0.1.6   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
-| 0.1.8   | <ul><li>Bug Fixes<ul><li>More compatable theme1.xml included in XLSX file</li><li>Fixed filename case issue</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
+| 0.1.6   | <ul><li>Bug Fixes<ul><li>More compatible theme1.xml included in XLSX file</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
+| 0.1.8   | <ul><li>Bug Fixes<ul><li>More compatible theme1.xml included in XLSX file</li><li>Fixed filename case issue</li></ul></li><li><a href="#fills">Cell Fills</a></li></ul> |
 | 0.1.9   | <ul><li>Bug Fixes<ul><li>Added docProps files to satisfy Mac Excel users</li><li>Fixed filename case issue</li><li>Fixed worksheet id issue</li></ul></li><li><a href="#set-workbook-properties">Core Workbook Properties</a></li></ul> |
 | 0.1.10  | <ul><li>Bug Fixes<ul><li>Handles File Not Found error</li></ul></li><li><a href="#csv">CSV Files</a></li></ul> |
 | 0.1.11  | <ul><li>Bug Fixes<ul><li>Fixed Vertical Middle Alignment Issue</li></ul></li><li><a href="#styles">Row and Column Styles</a></li><li><a href="#rows">Worksheet.eachRow supports options</a></li><li><a href="#rows">Row.eachCell supports options</a></li><li><a href="#columns">New function Column.eachCell</a></li></ul> |
 | 0.2.0   | <ul><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
 | 0.2.2   | <ul><li><a href="https://pbs.twimg.com/profile_images/2933552754/fc8c70829ee964c5542ae16453503d37.jpeg">One Billion Cells</a><ul><li>Achievement Unlocked: A simple test using ExcelJS has created a spreadsheet with 1,000,000,000 cells. Made using random data with 100,000,000 rows of 10 cells per row. I cannot validate the file yet as Excel will not open it and I have yet to implement the streaming reader but I have every confidence that it is good since 1,000,000 rows loads ok.</li></ul></li></ul> |
 | 0.2.3   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/exceljs/exceljs/issues/18">Merge Cell Styles</a><ul><li>Merged cells now persist (and parse) their styles.</li></ul></li></ul></li><li><a href="#streaming-xlxs-writer">Streaming XLSX Writer</a><ul><li>At long last ExcelJS can support writing massive XLSX files in a scalable memory efficient manner. Performance has been optimised and even smaller spreadsheets can be faster to write than the document writer. Options have been added to control the use of shared strings and styles as these can both have a considerable effect on performance</li></ul></li><li><a href="#rows">Worksheet.lastRow</a><ul><li>Access the last editable row in a worksheet.</li></ul></li><li><a href="#rows">Row.commit()</a><ul><li>For streaming writers, this method commits the row (and any previous rows) to the stream. Committed rows will no longer be editable (and are typically deleted from the worksheet object). For Document type workbooks, this method has no effect.</li></ul></li></ul> |
-| 0.2.4   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/exceljs/exceljs/issues/27">Worksheets with Ampersand Names</a><ul><li>Worksheet names are now xml-encoded and should work with all xml compatable characters</li></ul></li></ul></li><li><a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a><ul><li>Rows and Columns now support the hidden attribute.</li></ul></li><li><a href="#worksheet">Worksheet.addRows</a><ul><li>New function to add an array of rows (either array or object form) to the end of a worksheet.</li></ul></li></ul> |
+| 0.2.4   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/exceljs/exceljs/issues/27">Worksheets with Ampersand Names</a><ul><li>Worksheet names are now xml-encoded and should work with all xml compatible characters</li></ul></li></ul></li><li><a href="#rows">Row.hidden</a> & <a href="#columns">Column.hidden</a><ul><li>Rows and Columns now support the hidden attribute.</li></ul></li><li><a href="#worksheet">Worksheet.addRows</a><ul><li>New function to add an array of rows (either array or object form) to the end of a worksheet.</li></ul></li></ul> |
 | 0.2.6   | <ul><li>Bug Fixes<ul><li><a href="https://github.com/exceljs/exceljs/issues/87">invalid signature: 0x80014</a>: Thanks to <a href="https://github.com/hasanlussa">hasanlussa</a> for the PR</li></ul></li><li><a href="#defined-names">Defined Names</a><ul><li>Cells can now have assigned names which may then be used in formulas.</li></ul></li><li>Converted Bluebird.defer() to new Bluebird(function(resolve, reject){}). Thanks to user <a href="https://github.com/Nishchit14">Nishchit</a> for the Pull Request</li></ul> |
 | 0.2.7   | <ul><li><a href="#data-validations">Data Validations</a><ul><li>Cells can now define validations that controls the valid values the cell can have</li></ul></li></ul> |
 | 0.2.8   | <ul><li><a href="rich-text">Rich Text Value</a><ul><li>Cells now support <b><i>in-cell</i></b> formatting - Thanks to <a href="https://github.com/pvadam">Peter ADAM</a></li></ul></li><li>Fixed typo in README - Thanks to <a href="https://github.com/MRdNk">MRdNk</a></li><li>Fixing emit in worksheet-reader - Thanks to <a href="https://github.com/alangunning">Alan Gunning</a></li><li>Clearer Docs - Thanks to <a href="https://github.com/miensol">miensol</a></li></ul> |
@@ -2505,7 +2645,7 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.22  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/136">Throw legible error when failing Value.getType() #136</a>. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li><li>Honourable mention to contributors whose PRs were fixed before I saw them:<ul><li><a href="https://github.com/haoliangyu">haoliangyu</a></li><li><a href="https://github.com/wulfsolter">wulfsolter</a></li></ul></li></ul> |
 | 0.2.23  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/137">Fall back to JSON.stringify() if unknown Cell.Type #137</a> with some modification. If a cell value is assigned to an unrecognisable javascript object, the stored value in xlsx and csv files will  be JSON stringified. Note that if the file is read again, no attempt will be made to parse the stringified JSON text. Thanks to <a href="https://github.com/wulfsolter">wulfsolter</a> for the contribution.</li></ul> |
 | 0.2.24  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/166">Protect cell fix #166</a>. This does not mean full support for protected cells merely that the parser is not confused by the extra xml. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
-| 0.2.25  | <ul><li>Added functions to delete cells, rows and columns from a worksheet. Modelled after the Array splice method, the functions allow cells, rows and columns to be deleted (and optionally inserted). See <a href="#columns">Columns</a> and <a href="#rows">Rows</a> for details.<br />Note: <a href="#splice-vs-merge">Not compatable with cell merges</a></li></ul> |
+| 0.2.25  | <ul><li>Added functions to delete cells, rows and columns from a worksheet. Modelled after the Array splice method, the functions allow cells, rows and columns to be deleted (and optionally inserted). See <a href="#columns">Columns</a> and <a href="#rows">Rows</a> for details.<br />Note: <a href="#splice-vs-merge">Not compatible with cell merges</a></li></ul> |
 | 0.2.26  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/184">Update border-xform.js #184</a>Border edges without style will be parsed and rendered as no-border. Thanks to <a href="https://github.com/skumarnk2">skumarnk2</a> for the contribution.</li></ul> |
 | 0.2.27  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/187">Pass views to worksheet-writer #187</a>. Now also passes views to worksheet-writer. Thanks to <a href="https://github.com/Temetz">Temetz</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/189">Do not escape xml characters when using shared strings #189</a>. Fixing bug in shared strings. Thanks to <a href="https://github.com/tkirda">tkirda</a> for the contribution.</li></ul> |
 | 0.2.28  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/190">Fix tiny bug [Update hyperlink-map.js] #190</a>Thanks to <a href="https://github.com/lszlkss">lszlkss</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/196">fix typo on sheet view showGridLines option #196</a> "showGridlines" should have been "showGridLines". Thanks to <a href="https://github.com/gadiaz1">gadiaz1</a> for the contribution.</li></ul> |
@@ -2520,7 +2660,7 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.2.37  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/225">Fix output order of Sheet Properties #225</a>. Thanks to <a href="https://github.com/keeneym">keeneym</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/231">remove empty worksheet[0] from _worksheets #231</a>. Thanks to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/232">do not skip empty string in shared strings so that indexes match #232</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/233">use shared strings for streamed writes #233</a>. Thanks again to <a href="https://github.com/pookong">pookong</a> for the contribution.</li></ul> |
 | 0.2.38  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/236">Add a comment for issue #216 #236</a>. Thanks to <a href="https://github.com/jsalwen">jsalwen</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/237">Start on support for 1904 based dates #237</a>. Fixed date handling in documents with the 1904 flag set. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
 | 0.2.39  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/245">Stops Bluebird warning about unreturned promise #245</a>. Thanks to <a href="https://github.com/robinbullocks4rb">robinbullocks4rb</a> for the contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/247">Added missing dependency: col-cache.js #247</a>. Thanks to <a href="https://github.com/Manish2005">Manish2005</a> for the contribution. </li> </ul> |
-| 0.2.42  | <ul><li>Browser Compatable!<ul><li>Well mostly. I have added a browser sub-folder that contains a browserified bundle and an index.js that can be used to generate another. See <a href="#browser">Browser</a> section for details.</li></ul></li><li>Fixed corrupted theme.xml. Apologies for letting that through.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/253">[BUGFIX] data validation formulae undefined #253</a>. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
+| 0.2.42  | <ul><li>Browser Compatible!<ul><li>Well mostly. I have added a browser sub-folder that contains a browserified bundle and an index.js that can be used to generate another. See <a href="#browser">Browser</a> section for details.</li></ul></li><li>Fixed corrupted theme.xml. Apologies for letting that through.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/253">[BUGFIX] data validation formulae undefined #253</a>. Thanks to <a href="https://github.com/jayflo">jayflo</a> for the contribution.</li></ul> |
 | 0.2.43  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/255">added a (maybe partial) solution to issue 99. i wasn't able to create an appropriate test #255</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/99">Too few data or empty worksheet generate malformed excel file #99</a>. Thanks to <a href="https://github.com/mminuti">mminuti</a> for the contribution.</li></ul> |
 | 0.2.44  | <ul><li>Reduced Dependencies.<ul><li>Goodbye lodash, goodbye bluebird. Minified bundle is now just over half what it was in the first version.</li></ul></li></ul> |
 | 0.2.45  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/256">Sheets with hyperlinks and data validations are corrupted #256</a>. Thanks to <a href="https://github.com/simon-stoic">simon-stoic</a> for the contribution.</li></ul> |
@@ -2599,4 +2739,10 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 3.3.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/892">Fix anchor.js #892</a>. Many thanks to <a href="https://github.com/wwojtkowski">Wojciech Wojtkowski</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/896">add xml:space="preserve" for all whitespaces #896</a>. Many thanks to <a href="https://github.com/sebikeller">Sebastian Keller</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/959">Add `shrinkToFit` to document and typing #959</a>. Many thanks to <a href="https://github.com/mozisan">('3')</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/943">shrinkToFit property not on documentation #943</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/980">#951: Force formula re-calculation on file open from Excel #980</a>. Many thanks to <a href="https://github.com/zymon">zymon</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/951">Force formula re-calculation on file open from Excel #951</a>. </li> <li> Fixed <a href="https://github.com/exceljs/exceljs/issues/989">Lib contains class syntax, not compatible with IE11 #989</a>. </li> </ul> |
 | 3.3.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1000">Add headerFooter to worksheet model when importing from file #1000</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1005">Update eslint plugins and configs #1005</a>, <a href="https://github.com/exceljs/exceljs/pull/1006">Drop grunt-lib-phantomjs #1006</a> and <a href="https://github.com/exceljs/exceljs/pull/1007">Rename .browserslintrc.txt to .browserslistrc #1007</a>. Many thanks to <a href="https://github.com/takenspc">Takeshi Kurosawa</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1012">Fix issue #988 #1012</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/988">Can not read excel file #988</a>. Many thanks to <a href="https://github.com/thambley">Todd Hambley</a> for this contribution. </li> </ul> |
 | 3.4.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1016">Feature/stream writer add background images #1016</a>. Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1019">Fix issue # 991 #1019</a>. This fixes <a href="https://github.com/exceljs/exceljs/issues/991">read csv file issue #991</a>. Many thanks to <a href="https://github.com/LibertyNJ">Nathaniel J. Liberty</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1018">Large excels - optimize performance of writing file by excelJS + optimize generated file (MS excel opens it much faster) #1018</a>. Many thanks to <a href="https://github.com/pzawadzki82">Piotr</a> for this contribution. </li> </ul> |
-
+| 3.5.0   | <ul> <li> <a href="#conditional-formatting">Conditional Formatting</a> A subset of Excel Conditional formatting has been implemented! Specifically the formatting rules that do not require XML to be rendered inside an &lt;extLst&gt; node, or in other words everything except databar and three icon sets (3Triangles, 3Stars, 5Boxes). These will be implemented in due course </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1030">remove core-js/ import #1030</a>. Many thanks to <a href="https://github.com/bleuscyther">jeffrey n. carre</a> for this contribution. This change is used to create a new browserified bundle artefact that does not include any polyfills. See <a href="#browserify">Browserify</a> for details. </li> </ul> |
+| 3.6.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1042">1041 multiple print areas #1042</a>. Many thanks to <a href="https://github.com/AlexanderPruss">Alexander Pruss</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1058">fix typings for cell.note #1058</a>. Many thanks to <a href="https://github.com/xydens">xydens</a> for this contribution. </li> <li> <a href="#conditional-formatting">Conditional Formatting</a> has been completed. The &lt;extLst&gt; conditional formattings including dataBar and the three iconSet types (3Triangles, 3Stars, 5Boxes) are now available. </li> </ul> |
+| 3.6.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1047">Clarify merging cells by row/column numbers #1047</a>. Many thanks to <a href="https://github.com/kendallroth">Kendall Roth</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1048">Fix README mistakes concerning freezing views #1048</a>. Many thanks to <a href="https://github.com/overlookmotel">overlookmotel</a> for this contribution. </li> <li> Merged: <ul> <li><a href="https://github.com/exceljs/exceljs/pull/1073">fix issue #1045 horizontalCentered & verticalCentered in page not working #1073</a></li> <li><a href="https://github.com/exceljs/exceljs/pull/1082">Fix the problem of anchor failure of readme_zh.md file #1082</a></li> <li><a href="https://github.com/exceljs/exceljs/pull/1065">Fix problems caused by case of worksheet names #1065</a></li> </ul> Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> </ul> |
+| 3.7.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1076">Fix Issue #1075: Unable to read/write defaultColWidth attribute in &lt;sheetFormatPr&gt; node #1076</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1078">function duplicateRows added #1078</a> and <a href="https://github.com/exceljs/exceljs/pull/1088">Duplicate rows #1088</a>. Many thanks to <a href="https://github.com/cbeltrangomez84">cbeltrangomez84</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1087">Prevent from unhandled promise rejection durning workbook load #1087</a>. Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1071">fix issue #899 Support for inserting pictures with hyperlinks #1071</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1089">Update TS definition to reference proper internal libraries #1089</a>. Many thanks to <a href="https://github.com/jakawell">Jesse Kawell</a> for this contribution. </li> </ul> |
+| 3.8.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1090">Issue/Corrupt workbook using stream writer with background image #1090</a>. Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1092">Fix index.d.ts #1092</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1093">Wait for writing to tmp fiels before handling zip stream close #1093</a>. Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1095">Support ArrayBuffer as an xlsx.load argument #1095</a>. Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1099">Export shared strings with RichText #1099</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1102">Keep borders of merged cells after rewriting an Excel workbook #1102</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1104">Fix #1103: `editAs` not working #1104</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1105">Fix to issue #1101 #1105</a>. Many thanks to <a href="https://github.com/cbeltrangomez84">Carlos Andres Beltran Gomez</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1107">fix some errors and typos in readme #1107</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1112">Update issue templates #1112</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> </ul> |
+| 3.8.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1112">Update issue templates #1112</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1124">Typo: Replace 'allways' with 'always' #1124</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1125">Replace uglify with terser #1125</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1126">Apply codestyles on each commit and run lint:fix #1126</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1127">[WIP] Replace sax with saxes #1127</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1128">Add PR, Feature Request and Question github templates #1128</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1137">fix issue #749 Fix internal link example errors in readme #1137</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> </ul> |
+| 3.8.2   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1133">Update @types/node version to latest lts #1133</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1134">fix issue #1118 Adding Data Validation and Conditional Formatting to the same sheet causes corrupt workbook #1134</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1139">Add benchmarking #1139</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1148">fix issue #731 image extensions not be case sensitive #1148</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1169">fix issue #1165 and update index.d.ts #1169</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> </ul> |

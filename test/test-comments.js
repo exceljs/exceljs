@@ -95,7 +95,6 @@ wb.xlsx
       // sheet.getCell('D2').comment = 'Plain Text Comment';
     });
 
-
     return wb.xlsx.writeFile(`${__dirname}/data/test.xlsx`);
   })
   .catch(console.error);
