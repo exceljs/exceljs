@@ -62,6 +62,7 @@ module.exports = function(grunt) {
         output: {
           preamble: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n',
         },
+        ascii_only: true
       },
       dist: {
         files: {
