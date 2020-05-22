@@ -1175,6 +1175,18 @@ export interface Worksheet {
 	addRows(rows: any[]): void;
 
 	/**
+	 * Insert a Row by key-value, at the pos (shifiting down all rows from pos), 
+	 * using the column keys, or add a row by contiguous Array (assign to columns A, B & C)
+	 */
+	insertRow(pos: number, value: any[] | any): Row;
+
+	/**
+	 * Insert multiple rows at pos (shifiting down all rows from pos) 
+	 * by providing an array of arrays or key-value pairs
+	 */
+	insertRows(pos: number, values: any[]): void;
+
+	/**
 	 * Duplicate rows and insert new rows
 	 */
 	duplicateRow(rowNum: number, count: number, insert: boolean): void;
