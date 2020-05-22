@@ -11,6 +11,7 @@ module.exports = function(grunt) {
     babel: {
       options: {
         sourceMap: true,
+        compact: true,
       },
       dist: {
         files: [
@@ -70,20 +71,6 @@ module.exports = function(grunt) {
           './dist/exceljs.bare.min.js': ['./dist/exceljs.bare.js'],
         },
       },
-      // es3: {
-      //   files: [
-      //     {
-      //       expand: true,
-      //       cwd: './build/lib/',
-      //       src: ['*.js', '**/*.js'],
-      //       dest: 'dist/es3/',
-      //       ext: '.js',
-      //     },
-      //     {
-      //       './dist/es3/index.js': ['./build/lib/exceljs.nodejs.js'],
-      //     }
-      //   ],
-      // },
     },
 
     copy: {
