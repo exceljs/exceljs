@@ -61,6 +61,7 @@ module.exports = function(grunt) {
         sourceMap: true,
         output: {
           preamble: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+          ascii_only: true,
         },
       },
       dist: {

@@ -57,6 +57,29 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/1190">More improvements #1190</a>.
     Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1193">Ensure all node_modules are compatible with IE11 #1193</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1199">fix issue #1194 and update index.d.ts #1199</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/1194">[BUG] TypeScript version doesn't have definition for Worksheet.addConditionalFormatting #1194</a>.
+  </li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1204">fix issue #1157 marked Cannot set property #1204</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/1157">[BUG] Cannot set property 'marked' of undefined #1157</a>.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1209">Deprecate createInputStream #1209</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
+  </li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1204">fix issue #1206 #1205 Abnormality of and attributes #1210</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/1205">[BUG] Unlocked cells do not maintain their unlocked status after reading and writing a workbook. #1205</a>
+    and <a href="https://github.com/exceljs/exceljs/issues/1206">[BUG] Unlocked cells lose their vertical and horizontal alignment after a read and write. #1206</a>.
+  </li>
 </ul>
 
 
@@ -327,8 +350,20 @@ workbook.eachSheet(function(worksheet, sheetId) {
 var worksheet = workbook.getWorksheet('My Sheet');
 
 // fetch sheet by id
+// INFO: Be careful when using it! 
+// It tries to access to `worksheet.id` field. Sometimes (really very often) workbook has worksheets with id not starting from 1. 
+// For instance It happens when any worksheet has been deleted.
+// It's much more safety when you assume that ids are random. And stop to use this function. 
+// If you need to access all worksheets in a loop please look to the next example.
 var worksheet = workbook.getWorksheet(1);
+
+// access by `worksheets` array:
+workbook.worksheets[0]; //the first one;
+
 ```
+
+It's important to know that `workbook.getWorksheet(1) != Workbook.worksheets[0]` and `workbook.getWorksheet(1) != Workbook.worksheets[1]`,
+becouse `workbook.worksheets[0].id` may have any value.
 
 ## Worksheet State
 
@@ -2009,21 +2044,20 @@ faster or more resilient.
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
-workbook.xlsx.readFile(filename)
-  .then(function() {
-    // use workbook
-  });
+await workbook.xlsx.readFile(filename);
+// ... use workbook
 
-// pipe from stream
+
+// read from a stream
 var workbook = new Excel.Workbook();
-stream.pipe(workbook.xlsx.createInputStream());
+await workbook.xlsx.read(stream);
+// ... use workbook
+
 
 // load from buffer
 var workbook = new Excel.Workbook();
-workbook.xlsx.load(data)
-  .then(function() {
-    // use workbook
-  });
+await workbook.xlsx.load(data);
+// ... use workbook
 ```
 
 #### Writing XLSX
@@ -2031,22 +2065,13 @@ workbook.xlsx.load(data)
 ```javascript
 // write to a file
 var workbook = createAndFillWorkbook();
-workbook.xlsx.writeFile(filename)
-  .then(function() {
-    // done
-  });
+await workbook.xlsx.writeFile(filename);
 
 // write to a stream
-workbook.xlsx.write(stream)
-  .then(function() {
-    // done
-  });
+await workbook.xlsx.write(stream);
 
 // write to a new buffer
-workbook.xlsx.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.xlsx.writeBuffer();
 ```
 
 ### CSV
@@ -2065,31 +2090,24 @@ Options supported when reading CSV files.
 ```javascript
 // read from a file
 var workbook = new Excel.Workbook();
-workbook.csv.readFile(filename)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename);
+// ... use workbook or worksheet
+
 
 // read from a stream
 var workbook = new Excel.Workbook();
-workbook.csv.read(stream)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.read(stream);
+// ... use workbook or worksheet
 
-// pipe from stream
-var workbook = new Excel.Workbook();
-stream.pipe(workbook.csv.createInputStream());
 
 // read from a file with European Dates
 var workbook = new Excel.Workbook();
 var options = {
   dateFormats: ['DD/MM/YYYY']
 };
-workbook.csv.readFile(filename, options)
-  .then(worksheet => {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
+
 
 // read from a file with custom value parsing
 var workbook = new Excel.Workbook();
@@ -2116,10 +2134,8 @@ var options = {
     quote: false,
   },
 };
-workbook.csv.readFile(filename, options)
-  .then(function(worksheet) {
-    // use workbook or worksheet
-  });
+const worksheet = await workbook.csv.readFile(filename, options);
+// ... use workbook or worksheet
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to read the CSV file.
@@ -2154,18 +2170,12 @@ Options supported when writing to a CSV file.
 
 // write to a file
 var workbook = createAndFillWorkbook();
-workbook.csv.writeFile(filename)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename);
 
 // write to a stream
 // Be careful that you need to provide sheetName or
 // sheetId for correct import to csv.
-workbook.csv.write(stream, { sheetName: 'Page name' })
-  .then(() => {
-    // done
-  });
+await workbook.csv.write(stream, { sheetName: 'Page name' });
 
 // write to a file with European Date-Times
 var workbook = new Excel.Workbook();
@@ -2173,10 +2183,7 @@ var options = {
   dateFormat: 'DD/MM/YYYY HH:mm:ss',
   dateUTC: true, // use utc when rendering dates
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 
 // write to a file with custom value formatting
@@ -2204,16 +2211,10 @@ var options = {
     quote: false,
   },
 };
-workbook.csv.writeFile(filename, options)
-  .then(() => {
-    // done
-  });
+await workbook.csv.writeFile(filename, options);
 
 // write to a new buffer
-workbook.csv.writeBuffer()
-  .then(function(buffer) {
-    // done
-  });
+const buffer = await workbook.csv.writeBuffer();
 ```
 
 The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write the CSV file.
@@ -2319,10 +2320,8 @@ To complete the XLSX document, the workbook must be committed. If any worksheet 
 
 ```javascript
 // Finished the workbook.
-workbook.commit()
-  .then(function() {
-    // the stream has been written
-  });
+await workbook.commit();
+// ... the stream has been written
 ```
 
 # Browser
