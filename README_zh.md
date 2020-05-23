@@ -1003,9 +1003,84 @@ ws.getCell('B1').note = {
     {'font': {'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': ' in-cell '},
     {'font': {'bold': true, 'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': 'format'},
   ],
+  margins: {
+    insetmode: 'custom',
+    inset: [0.25, 0.25, 0.35, 0.35]
+  },
+  protection: {
+    locked: True,
+    lockText: False
+  },
+  editAs: 'twoCells'
 };
 ```
 
+### <a>单元格批注属性</a>
+
+下表定义了单元格注释已支持的属性。
+
+| Field     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| texts     | Y        |               | 评论文字 |
+| margins | N        | {}  | 确定自动或自定义设置单元格注释的边距值 |
+| protection   | N        | {} | 可以使用保护属性来指定对象和对象文本的锁定状态 |
+| editAs   | N        | 'absolute' | 可以使用'editAs'属性来指定注释如何锚定到单元格 |
+
+### <a>单元格批注页边距</a>
+
+确定单元格批注的页面距设置模式，自动或者自定义模式。
+
+```javascript
+ws.getCell('B1').note.margins = {
+  insetmode: 'custom',
+  inset: [0.25, 0.25, 0.35, 0.35]
+}
+```
+
+### <a>已支持的页边距属性</a>
+
+| Property     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| insetmode     | N        |    'auto'           | 确定是否自动设置注释边距，并且值是'auto' 或者 'custom' |
+| inset | N        | [0.13, 0.13, 0.25, 0.25]  | 批注页边距的值，单位是厘米, 方向是左-上-右-下 |
+
+注意：只有当 ```insetmode```的值设置为'custom'时，```inset```的设置才生效。
+
+### <a>单元格批注保护</a>
+
+可以使用保护属性来修改单元级别保护。
+
+```javascript
+ws.getCell('B1').note.protection = {
+  locked: 'False',
+  lockText: 'False',
+};
+```
+
+### <a>已支持的保护属性</a>
+
+| Property     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| locked     | N        |    'True'           | 此元素指定在保护工作表时对象已锁定 |
+| lockText | N        | 'True'  | 该元素指定对象的文本已锁定 |
+
+
+### <a>单元格批注对象位置属性</a>
+
+单元格注释还可以具有属性 'editAs'，该属性将控制注释如何锚定到单元格。
+它可以具有以下值之一：
+
+```javascript
+ws.getCell('B1').note.editAs = 'twoCells'
+```
+
+| Value     | Description |
+| --------- | ----------- |
+| twoCells | 它指定注释的大小、位置随单元格而变 |
+| oneCells   | 它指定注释的大小固定，位置随单元格而变 |
+| absolute  | 这是默认值，它指定注释的大小、位置均固定 |
+
+## <a id="styles">样式</a>
 ## 表格
 
 表允许表格内数据的表内操作。

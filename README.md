@@ -1047,8 +1047,85 @@ ws.getCell('B1').note = {
     {'font': {'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': ' in-cell '},
     {'font': {'bold': true, 'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': 'format'},
   ],
+  margins: {
+    insetmode: 'custom',
+    inset: [0.25, 0.25, 0.35, 0.35]
+  },
+  protection: {
+    locked: True,
+    lockText: False
+  },
+  editAs: 'twoCells',
 };
 ```
+
+### <a>Cell Comments Properties</a>
+
+The following table defines the properties supported by cell comments.
+
+| Field     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| texts     | Y        |               | The text of the comment |
+| margins | N        | {}  | Determines the value of margins for automatic or custom cell comments
+| protection   | N        | {} | Specifying the lock status of objects and object text using protection attributes |
+| editAs   | N        | 'absolute' | Use the 'editAs' attribute to specify how the annotation is anchored to the cell  |
+
+### Cell Comments Margins
+
+Determine the page margin setting mode of the cell annotation, automatic or custom mode.
+
+```javascript
+ws.getCell('B1').note.margins = {
+  insetmode: 'custom',
+  inset: [0.25, 0.25, 0.35, 0.35]
+}
+```
+
+### Supported Margins Properties
+
+| Property     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| insetmode     | N        |    'auto'           | Determines whether comment margins are set automatically and the value is 'auto' or 'custom' |
+| inset | N        | [0.13, 0.13, 0.25, 0.25]  | Whitespace on the borders of the comment. Units are centimeter. Direction is left, top, right, bottom |
+
+Note: This  ```inset``` setting takes effect only when the value of ```insetmode``` is 'custom'.
+
+### Cell Comments Protection
+
+Specifying the lock status of objects and object text using protection attributes.
+
+```javascript
+ws.getCell('B1').note.protection = {
+  locked: 'False',
+  lockText: 'False',
+};
+```
+
+### Supported Protection Properties
+
+| Property     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| locked     | N        |    'True'           | This element specifies that the object is locked when the sheet is protected |
+| lockText | N        | 'True'  | This element specifies that the text of the object is locked |
+
+Note: Locked objects are valid only when the worksheet is protected.
+
+
+
+### Cell Comments EditAs
+
+The cell comments can also have the property 'editAs' which will control how the comments is anchored to the cell(s).
+It can have one of the following values:
+
+```javascript
+ws.getCell('B1').note.editAs = 'twoCells';
+```
+
+| Value     | Description |
+| --------- | ----------- |
+| twoCells | It specifies that the size and position of the note varies with cells |
+| oneCells   | It specifies that the size of the note is fixed and the position changes with the cell |
+| absolute  | This is the default. Comments will not be moved or sized with cells |
 
 ## Tables
 
