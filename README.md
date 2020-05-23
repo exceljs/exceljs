@@ -750,26 +750,26 @@ var rows = [
 ];
 worksheet.addRows(rows);
 
-// Insert a couple of Rows by key-value, after the last current row, using the column keys
-worksheet.insertRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
-worksheet.insertRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
+// Insert a couple of Rows by key-value, shifting down rows every time
+worksheet.insertRow(1, {id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
+worksheet.insertRow(1, {id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
 
 // Insert a row by contiguous Array (assign to columns A, B & C)
-worksheet.insertRow([3, 'Sam', new Date()]);
+worksheet.insertRow(1, [3, 'Sam', new Date()]);
 
 // Insert a row by sparse Array (assign to columns A, E & I)
 var rowValues = [];
 rowValues[1] = 4;
 rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
-worksheet.insertRow(rowValues);
+worksheet.insertRow(1, rowValues);
 
-// Add an array of rows
+// Insert an array of rows, in position 1, shifting down current position 1 row by 2 rows
 var rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
-worksheet.insertRows(rows);
+worksheet.insertRows(1, rows);
 
 // Get a row object. If it doesn't already exist, a new empty one will be returned
 var row = worksheet.getRow(5);
