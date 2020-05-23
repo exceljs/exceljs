@@ -375,9 +375,25 @@ export type CellValue =
 	| CellRichTextValue | CellHyperlinkValue
 	| CellFormulaValue | CellSharedFormulaValue;
 
-export interface Comment {
-	texts: RichText[];
-}
+
+	export interface CommentMargins {
+		insetmode: 'auto' | 'custom';
+		inset: Number[];
+	}
+	
+	export interface CommentProtection {
+		locked: 'True' | 'False';
+		lockText: 'True' | 'False';
+	}
+	
+	export type CommentEditAs = 'twoCells' | 'oneCells' | 'absolute';
+
+	export interface Comment {
+		texts?: RichText[];
+		margins?: Partial<CommentMargins>;
+		protection?: Partial<CommentProtection>;
+		editAs?: CommentEditAs;
+	}
 
 export interface CellModel {
 	address: Address;
@@ -434,7 +450,7 @@ export interface Cell extends Style, Address {
 	/**
 	 * comment of the cell
 	 */
-	note: Comment;
+	note: string | Comment;
 
 	/**
 	 * convenience getter to access the formula
