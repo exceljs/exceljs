@@ -22,65 +22,61 @@ npm install exceljs
 
 <ul>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1140">Optimize SAXStream #1140</a>.
-    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1143">fix issue #1057 Fix addConditionalFormatting is not a function error when using Streaming XLSX Writer #1143</a>.
-    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1160">fix issue #204 sets default column width #1160</a>.
-    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1164">Include cell address for Shared Formula master must exist.. error #1164</a>.
-    Many thanks to <a href="https://github.com/noisyscanner">Brad Reed</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1166">Typo in DataValidation examples #1166</a>.
-    Many thanks to <a href="https://github.com/mravey">Matthieu Ravey</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1176">fixes #1175 #1176</a>.
-    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1179">fix issue #1178 and update index.d.ts #1179</a>.
-    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1182">Simple test if typescript is able to compile #1182</a>.
-    Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1190">More improvements #1190</a>.
-    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1193">Ensure all node_modules are compatible with IE11 #1193</a>.
-    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1199">fix issue #1194 and update index.d.ts #1199</a>.
-    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
-    This fixes <a href="https://github.com/exceljs/exceljs/issues/1194">[BUG] TypeScript version doesn't have definition for Worksheet.addConditionalFormatting #1194</a>.
-  </li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1204">fix issue #1157 marked Cannot set property #1204</a>.
-    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
-    This fixes <a href="https://github.com/exceljs/exceljs/issues/1157">[BUG] Cannot set property 'marked' of undefined #1157</a>.
-  </li>
-  <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1209">Deprecate createInputStream #1209</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1233">[Chore] Upgrade dependencies #1233</a>.
     Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
   </li>
   </li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1204">fix issue #1206 #1205 Abnormality of and attributes #1210</a>.
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1220">Fix issue #1198 Absolute path and relative path need to be compatible #1220</a>.
     Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
-    This fixes <a href="https://github.com/exceljs/exceljs/issues/1205">[BUG] Unlocked cells do not maintain their unlocked status after reading and writing a workbook. #1205</a>
-    and <a href="https://github.com/exceljs/exceljs/issues/1206">[BUG] Unlocked cells lose their vertical and horizontal alignment after a read and write. #1206</a>.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/1198">[BUG] Loading OpenPyXL workbooks #1198</a>.
+  </li>
+  </li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1234">Upgrade tmp #1234</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/882">Process doesn't exit < 8.12.0 #882</a>.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1270">New version of dayjs requires explicit `Z` in the date formats #1270</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
+  </li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1280">Fixed #1276 #1280</a>.
+    Many thanks to <a href="https://github.com/Subhajitdas298">Subhajit Das</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/1276">[BUG] Invalid regular expression: /^[ -íŸ¿î€€-ï¿½ð€€-ô¿¿]$/: Range out of order in character class #1276</a>.
+  </li>
+  </li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1278">[bugfix] Fix special cell values causing invalid files produced #1278</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/703">Special cell value results invalid file #703</a>.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1208">Re-translation of simplified Chinese documents (zh-cn) #1208</a>.
+    Many thanks to <a href="https://github.com/wang1212">不如怀念</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1208">data-validations-xform: keep formulae if type not exists #1229</a>.
+    Many thanks to <a href="https://github.com/myfreeer">myfreeer</a> for this contribution.
+  </li>
+  </li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1257">WorkbookWriter support rowBreaks #1257</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+    This fixes <a href="https://github.com/exceljs/exceljs/issues/1248">[BUG] WorkbookWriter doesn't support headerFooter and rowBreaks. #1248</a>.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1289">Fixed ascii only #1289</a>.
+    Many thanks to <a href="https://github.com/Subhajitdas298">Subhajit Das</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1159">Supports setting cell comment properties #1159</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1215">docs: add links to top with jump2header #1215</a>.
+    Many thanks to <a href="https://github.com/strdr4605">Dragoș Străinu</a> for this contribution.
   </li>
 </ul>
+
+
 
 
 # Contributions
@@ -2813,3 +2809,4 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 3.8.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1090">Issue/Corrupt workbook using stream writer with background image #1090</a>. Many thanks to <a href="https://github.com/brunoargolo">brunoargolo</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1092">Fix index.d.ts #1092</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1093">Wait for writing to tmp fiels before handling zip stream close #1093</a>. Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1095">Support ArrayBuffer as an xlsx.load argument #1095</a>. Many thanks to <a href="https://github.com/sohai">Wojtek</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1099">Export shared strings with RichText #1099</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1102">Keep borders of merged cells after rewriting an Excel workbook #1102</a>. Many thanks to <a href="https://github.com/kigh-ota">Kaiichiro Ota</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1104">Fix #1103: `editAs` not working #1104</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1105">Fix to issue #1101 #1105</a>. Many thanks to <a href="https://github.com/cbeltrangomez84">Carlos Andres Beltran Gomez</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1107">fix some errors and typos in readme #1107</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1112">Update issue templates #1112</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> </ul> |
 | 3.8.1   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1112">Update issue templates #1112</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1124">Typo: Replace 'allways' with 'always' #1124</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1125">Replace uglify with terser #1125</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1126">Apply codestyles on each commit and run lint:fix #1126</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1127">[WIP] Replace sax with saxes #1127</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1128">Add PR, Feature Request and Question github templates #1128</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1137">fix issue #749 Fix internal link example errors in readme #1137</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> </ul> |
 | 3.8.2   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1133">Update @types/node version to latest lts #1133</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1134">fix issue #1118 Adding Data Validation and Conditional Formatting to the same sheet causes corrupt workbook #1134</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1139">Add benchmarking #1139</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1148">fix issue #731 image extensions not be case sensitive #1148</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1169">fix issue #1165 and update index.d.ts #1169</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> </ul> |
+| 3.9.0   | <ul> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1140">Optimize SAXStream #1140</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1143">fix issue #1057 Fix addConditionalFormatting is not a function error when using Streaming XLSX Writer #1143</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1160">fix issue #204 sets default column width #1160</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1164">Include cell address for Shared Formula master must exist.. error #1164</a>. Many thanks to <a href="https://github.com/noisyscanner">Brad Reed</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1166">Typo in DataValidation examples #1166</a>. Many thanks to <a href="https://github.com/mravey">Matthieu Ravey</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1176">fixes #1175 #1176</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1179">fix issue #1178 and update index.d.ts #1179</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1182">Simple test if typescript is able to compile #1182</a>. Many thanks to <a href="https://github.com/Siemienik">Siemienik Paweł</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1190">More improvements #1190</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1193">Ensure all node_modules are compatible with IE11 #1193</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1199">fix issue #1194 and update index.d.ts #1199</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/1194">[BUG] TypeScript version doesn't have definition for Worksheet.addConditionalFormatting #1194</a>. </li> Merged <a href="https://github.com/exceljs/exceljs/pull/1204">fix issue #1157 marked Cannot set property #1204</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/1157">[BUG] Cannot set property 'marked' of undefined #1157</a>. </li> <li> Merged <a href="https://github.com/exceljs/exceljs/pull/1209">Deprecate createInputStream #1209</a>. Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution. </li> </li> Merged <a href="https://github.com/exceljs/exceljs/pull/1204">fix issue #1206 #1205 Abnormality of and attributes #1210</a>. Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution. This fixes <a href="https://github.com/exceljs/exceljs/issues/1205">[BUG] Unlocked cells do not maintain their unlocked status after reading and writing a workbook. #1205</a> and <a href="https://github.com/exceljs/exceljs/issues/1206">[BUG] Unlocked cells lose their vertical and horizontal alignment after a read and write. #1206</a>. </li> </ul> |
