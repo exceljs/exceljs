@@ -351,12 +351,59 @@ describe('Cell', () => {
           text: 'This is ',
         },
       ],
+      margins: {
+        insetmode: 'auto',
+        inset: [0.13, 0.13, 0.25, 0.25],
+      },
+      protection: {
+        locked: 'True',
+        lockText: 'True',
+      },
+      editAs: 'twoCells',
     };
 
     a1.note = comment;
     a1.value = 'test set value';
 
     expect(a1.model.comment.type).to.equal('note');
-    expect(a1.model.comment.note).to.equal(comment);
+    expect(a1.model.comment.note).to.deep.equal(comment);
+  });
+
+  it('Cell comments supports setting margins, protection, and position properties', () => {
+    const a1 = sheetMock.getCell('A1');
+
+    const comment = {
+      texts: [
+        {
+          font: {
+            size: 12,
+            color: {theme: 0},
+            name: 'Calibri',
+            family: 2,
+            scheme: 'minor',
+          },
+          text: 'This is ',
+        },
+      ],
+      protection: {
+        locked: 'False',
+        lockText: 'True',
+      },
+    };
+
+    a1.note = comment;
+    a1.value = 'test set value';
+
+    expect(a1.model.comment.type).to.equal('note');
+    expect(a1.model.comment.note.texts).to.deep.equal(comment.texts);
+    expect(a1.model.comment.note.protection).to.deep.equal(comment.protection);
+    expect(a1.model.comment.note.margins.insetmode).to.equal('auto');
+    expect(a1.model.comment.note.margins.inset).to.deep.equal([
+      0.13,
+      0.13,
+      0.25,
+      0.25,
+    ]);
+    expect(a1.model.comment.note.editAs).to.equal('absolute');
   });
 });
