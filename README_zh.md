@@ -295,8 +295,22 @@ var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC00
 // 创建一个隐藏了网格线的工作表
 var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
 
+// 创建一个第一行和列冻结的工作表
+var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
+
+// 使用A4设置的页面设置设置创建新工作表 - 横向
+var worksheet =  workbook.addWorksheet('My Sheet', {
+  pageSetup:{paperSize: 9, orientation:'landscape'}
+});
+
+// 创建一个具有页眉页脚的工作表
+var sheet = workbook.addWorksheet('My Sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+
 // 创建一个冻结了第一行和第一列的工作表
 var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
+
 ```
 
 ## 删除工作表
@@ -349,8 +363,8 @@ worksheet.state = 'veryHidden';
 // 创建具有属性的新工作表
 var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
-// 创建一个具有属性的新工作表读写器
-var worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
+// 创建一个具有属性的可写的新工作表
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {properties:{outlineLevelCol:1}});
 
 // 之后调整属性（工作表读写器不支持该操作）
 worksheet.properties.outlineLevelCol = 2;
@@ -390,8 +404,8 @@ var worksheet =  workbook.addWorksheet('sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
 
-// 使用适用于页面的页面设置配置创建新的表格读写器
-var worksheetWriter = workbookWriter.addSheet('sheet', {
+// 使用适合页面的pageSetup设置创建一个新的工作表编写器
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {
   pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
 });
 
@@ -466,8 +480,18 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 注意：目前不支持图片。
 
 ```javascript
-// 设置页脚（默认居中），结果：“第2页，共16页”
-worksheet.headerFooter.oddFooter = "Page &P of &N";
+// 创建一个带有页眉和页脚的工作表
+var sheet = workbook.addWorksheet('My Sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+
+// 创建一个带有页眉和页脚可写的工作表
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+// 代码中出现的&开头字符对应变量，相关信息可查阅下文的变量表
+// 设置页脚(默认居中),结果：“第 2 页，共 16 页”
+worksheet.headerFooter.oddFooter = "第 &P 页，共 &N 页";
 
 // 将页脚（默认居中）设置为粗体，结果是：“第2页，共16页”
 worksheet.headerFooter.oddFooter = "Page &P of &N";

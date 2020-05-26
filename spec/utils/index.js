@@ -57,6 +57,7 @@ module.exports = {
   conditionalFormatting: tools.fix(
     require('./data/conditional-formatting.json')
   ),
+  headerFooter: tools.fix(require('./data/header-footer.json')),
 
   createTestBook(workbook, docType, sheets) {
     const options = getOptions(docType);

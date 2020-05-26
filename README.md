@@ -319,6 +319,17 @@ var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]})
 
 // create a sheet with the first row and column frozen
 var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
+
+// Create worksheets with headers and footers
+var sheet = workbook.addWorksheet('My Sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+
+// create new sheet with pageSetup settings for A4 - landscape
+var worksheet =  workbook.addWorksheet('My Sheet', {
+  pageSetup:{paperSize: 9, orientation:'landscape'}
+});
+
 ```
 
 ## Remove a Worksheet [⬆](#contents)<!-- Link generated with jump2header -->
@@ -384,7 +395,7 @@ Worksheets support a property bucket to allow control over some features of the 
 var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
 // create a new sheet writer with properties
-var worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {properties:{outlineLevelCol:1}});
 
 // adjust properties afterwards (not supported by worksheet-writer)
 worksheet.properties.outlineLevelCol = 2;
@@ -425,7 +436,7 @@ var worksheet =  workbook.addWorksheet('sheet', {
 });
 
 // create a new sheet writer with pageSetup settings for fit-to-page
-var worksheetWriter = workbookWriter.addSheet('sheet', {
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {
   pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
 });
 
@@ -500,6 +511,15 @@ In addition, you can set different texts for the first page and even page.
 Note: Images are not currently supported.
 
 ```javascript
+
+// Create worksheets with headers and footers
+var sheet = workbook.addWorksheet('sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+// Create worksheets with headers and footers
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
 // Set footer (default centered), result: "Page 2 of 16"
 worksheet.headerFooter.oddFooter = "Page &P of &N";
 
