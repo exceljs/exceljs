@@ -190,6 +190,7 @@ const ExcelJS = require('exceljs/dist/es5');
 ```javascript
 // exceljs 所需的 polyfills
 require('core-js/modules/es.promise');
+require('core-js/modules/es.string.includes');
 require('core-js/modules/es.object.assign');
 require('core-js/modules/es.object.keys');
 require('regenerator-runtime/runtime');
@@ -294,8 +295,22 @@ var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC00
 // 创建一个隐藏了网格线的工作表
 var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
 
+// 创建一个第一行和列冻结的工作表
+var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
+
+// 使用A4设置的页面设置设置创建新工作表 - 横向
+var worksheet =  workbook.addWorksheet('My Sheet', {
+  pageSetup:{paperSize: 9, orientation:'landscape'}
+});
+
+// 创建一个具有页眉页脚的工作表
+var sheet = workbook.addWorksheet('My Sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+
 // 创建一个冻结了第一行和第一列的工作表
 var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
+
 ```
 
 ## 删除工作表
@@ -348,8 +363,8 @@ worksheet.state = 'veryHidden';
 // 创建具有属性的新工作表
 var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
-// 创建一个具有属性的新工作表读写器
-var worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
+// 创建一个具有属性的可写的新工作表
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {properties:{outlineLevelCol:1}});
 
 // 之后调整属性（工作表读写器不支持该操作）
 worksheet.properties.outlineLevelCol = 2;
@@ -389,8 +404,8 @@ var worksheet =  workbook.addWorksheet('sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
 
-// 使用适用于页面的页面设置配置创建新的表格读写器
-var worksheetWriter = workbookWriter.addSheet('sheet', {
+// 使用适合页面的pageSetup设置创建一个新的工作表编写器
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {
   pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
 });
 
@@ -465,8 +480,18 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 注意：目前不支持图片。
 
 ```javascript
-// 设置页脚（默认居中），结果：“第2页，共16页”
-worksheet.headerFooter.oddFooter = "Page &P of &N";
+// 创建一个带有页眉和页脚的工作表
+var sheet = workbook.addWorksheet('My Sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+
+// 创建一个带有页眉和页脚可写的工作表
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+// 代码中出现的&开头字符对应变量，相关信息可查阅下文的变量表
+// 设置页脚(默认居中),结果：“第 2 页，共 16 页”
+worksheet.headerFooter.oddFooter = "第 &P 页，共 &N 页";
 
 // 将页脚（默认居中）设置为粗体，结果是：“第2页，共16页”
 worksheet.headerFooter.oddFooter = "Page &P of &N";
@@ -1003,9 +1028,84 @@ ws.getCell('B1').note = {
     {'font': {'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': ' in-cell '},
     {'font': {'bold': true, 'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': 'format'},
   ],
+  margins: {
+    insetmode: 'custom',
+    inset: [0.25, 0.25, 0.35, 0.35]
+  },
+  protection: {
+    locked: True,
+    lockText: False
+  },
+  editAs: 'twoCells'
 };
 ```
 
+### <a>单元格批注属性</a>
+
+下表定义了单元格注释已支持的属性。
+
+| Field     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| texts     | Y        |               | 评论文字 |
+| margins | N        | {}  | 确定自动或自定义设置单元格注释的边距值 |
+| protection   | N        | {} | 可以使用保护属性来指定对象和对象文本的锁定状态 |
+| editAs   | N        | 'absolute' | 可以使用'editAs'属性来指定注释如何锚定到单元格 |
+
+### <a>单元格批注页边距</a>
+
+确定单元格批注的页面距设置模式，自动或者自定义模式。
+
+```javascript
+ws.getCell('B1').note.margins = {
+  insetmode: 'custom',
+  inset: [0.25, 0.25, 0.35, 0.35]
+}
+```
+
+### <a>已支持的页边距属性</a>
+
+| Property     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| insetmode     | N        |    'auto'           | 确定是否自动设置注释边距，并且值是'auto' 或者 'custom' |
+| inset | N        | [0.13, 0.13, 0.25, 0.25]  | 批注页边距的值，单位是厘米, 方向是左-上-右-下 |
+
+注意：只有当 ```insetmode```的值设置为'custom'时，```inset```的设置才生效。
+
+### <a>单元格批注保护</a>
+
+可以使用保护属性来修改单元级别保护。
+
+```javascript
+ws.getCell('B1').note.protection = {
+  locked: 'False',
+  lockText: 'False',
+};
+```
+
+### <a>已支持的保护属性</a>
+
+| Property     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| locked     | N        |    'True'           | 此元素指定在保护工作表时对象已锁定 |
+| lockText | N        | 'True'  | 该元素指定对象的文本已锁定 |
+
+
+### <a>单元格批注对象位置属性</a>
+
+单元格注释还可以具有属性 'editAs'，该属性将控制注释如何锚定到单元格。
+它可以具有以下值之一：
+
+```javascript
+ws.getCell('B1').note.editAs = 'twoCells'
+```
+
+| Value     | Description |
+| --------- | ----------- |
+| twoCells | 它指定注释的大小、位置随单元格而变 |
+| oneCells   | 它指定注释的大小固定，位置随单元格而变 |
+| absolute  | 这是默认值，它指定注释的大小、位置均固定 |
+
+## <a id="styles">样式</a>
 ## 表格
 
 表允许表格内数据的表内操作。
