@@ -212,6 +212,7 @@ const ExcelJS = require('exceljs/dist/es5');
 ```javascript
 // polyfills required by exceljs
 require('core-js/modules/es.promise');
+require('core-js/modules/es.string.includes');
 require('core-js/modules/es.object.assign');
 require('core-js/modules/es.object.keys');
 require('regenerator-runtime/runtime');
