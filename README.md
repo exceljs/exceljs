@@ -74,6 +74,14 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/1215">docs: add links to top with jump2header #1215</a>.
     Many thanks to <a href="https://github.com/strdr4605">Dragoș Străinu</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1310">Fix cell.text return an empty object when cell is empty #1310</a>.
+    Many thanks to <a href="https://github.com/Alanscut">Alan Wang</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1303">Use rest args instead of slicing arguments #1303</a>.
+    Many thanks to <a href="https://github.com/alubbe">Andreas Lubbe</a> for this contribution.
+  </li>
 </ul>
 
 
