@@ -206,7 +206,7 @@ const ExcelJS = require('exceljs');
 
 ## ES5 Imports[⬆](#contents)<!-- Link generated with jump2header -->
 
-To use the ES5 transpiled code, use the dist/es5 path.
+To use the ES5 transpiled code, for example for node.js versions older than 10, use the dist/es5 path.
 
 ```javascript
 const ExcelJS = require('exceljs/dist/es5');
