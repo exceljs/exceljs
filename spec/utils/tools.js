@@ -22,8 +22,7 @@ const tools = {
     return clone;
   },
 
-  concatenateFormula() {
-    const args = Array.prototype.slice.call(arguments);
+  concatenateFormula(...args) {
     const values = args.map(value => `"${value}"`);
     return {
       formula: `CONCATENATE(${values.join(',')})`,

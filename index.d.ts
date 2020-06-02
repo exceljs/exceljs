@@ -375,9 +375,25 @@ export type CellValue =
 	| CellRichTextValue | CellHyperlinkValue
 	| CellFormulaValue | CellSharedFormulaValue;
 
-export interface Comment {
-	texts: RichText[];
-}
+
+	export interface CommentMargins {
+		insetmode: 'auto' | 'custom';
+		inset: Number[];
+	}
+	
+	export interface CommentProtection {
+		locked: 'True' | 'False';
+		lockText: 'True' | 'False';
+	}
+	
+	export type CommentEditAs = 'twoCells' | 'oneCells' | 'absolute';
+
+	export interface Comment {
+		texts?: RichText[];
+		margins?: Partial<CommentMargins>;
+		protection?: Partial<CommentProtection>;
+		editAs?: CommentEditAs;
+	}
 
 export interface CellModel {
 	address: Address;
@@ -434,7 +450,7 @@ export interface Cell extends Style, Address {
 	/**
 	 * comment of the cell
 	 */
-	note: Comment;
+	note: string | Comment;
 
 	/**
 	 * convenience getter to access the formula
@@ -955,7 +971,7 @@ export interface WorksheetModel {
 	// dataValidations: this.dataValidations.model,
 	properties: WorksheetProperties;
 	pageSetup: Partial<PageSetup>;
-	headerFooter: HeaderFooter;
+	headerFooter: Partial<HeaderFooter>;
 	rowBreaks: RowBreak[];
 	views: WorksheetView[];
 	autoFilter: AutoFilter;
@@ -967,12 +983,12 @@ export type CellIsOperators = 'equal' | 'greaterThan' | 'lessThan' | 'between';
 
 export type ContainsTextOperators = 'containsText' | 'containsBlanks' | 'notContainsBlanks' | 'containsErrors' | 'notContainsErrors';
 
-export type TimePeriodTypes = 'lastWeek' | 'thisWeek' | 'nextWeek' | 'yesterday' | 'today' | 'tomorrow' | 'last7Days' | 'lastMonth' 
-			| 'thisMonth' | 'nextMonth';
+export type TimePeriodTypes = 'lastWeek' | 'thisWeek' | 'nextWeek' | 'yesterday' | 'today' | 'tomorrow' | 'last7Days' | 'lastMonth'
+	| 'thisMonth' | 'nextMonth';
 
-export type IconSetTypes = '5Arrows' | '5ArrowsGray' | '5Boxes' | '5Quarters' | '5Rating' | '4Arrows' | '4ArrowsGray' 
-			| '4Rating' | '4RedToBlack' | '4TrafficLights' | 'NoIcons' | '3Arrows' | '3ArrowsGray' | '3Flags' | '3Signs' 
-			| '3Stars' | '3Symbols' | '3Symbols2' | '3TrafficLights1' | '3TrafficLights2' | '3Triangles';
+export type IconSetTypes = '5Arrows' | '5ArrowsGray' | '5Boxes' | '5Quarters' | '5Rating' | '4Arrows' | '4ArrowsGray'
+	| '4Rating' | '4RedToBlack' | '4TrafficLights' | 'NoIcons' | '3Arrows' | '3ArrowsGray' | '3Flags' | '3Signs'
+	| '3Stars' | '3Symbols' | '3Symbols2' | '3TrafficLights1' | '3TrafficLights2' | '3Triangles';
 
 export type CfvoTypes = 'percentile' | 'percent' | 'num' | 'min' | 'max' | 'formula' | 'autoMin' | 'autoMax';
 
@@ -1047,13 +1063,13 @@ export interface DataBarRuleType extends ConditionalFormattingBaseRule {
 	cfvo?: Cvfo[];
 }
 
-export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType 
-				| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
+export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType
+	| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
 
 export interface ConditionalFormattingOptions {
 	ref: string;
 	rules: ConditionalFormattingRule[];
-} 
+}
 
 export interface Worksheet {
 	readonly id: number;
@@ -1070,7 +1086,7 @@ export interface Worksheet {
 	/**
 	 * Worksheet Header and Footer
 	 */
-	headerFooter: HeaderFooter;
+	headerFooter: Partial<HeaderFooter>;
 
 	/**
 	 * Worksheet State
@@ -1354,6 +1370,7 @@ export interface WorksheetProperties {
 export interface AddWorksheetOptions {
 	properties: Partial<WorksheetProperties>;
 	pageSetup: Partial<PageSetup>;
+	headerFooter: Partial<HeaderFooter>;
 	views: Array<Partial<WorksheetView>>;
 	state: WorksheetState;
 }
