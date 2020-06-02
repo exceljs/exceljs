@@ -223,6 +223,8 @@ require('core-js/modules/es.promise');
 require('core-js/modules/es.string.includes');
 require('core-js/modules/es.object.assign');
 require('core-js/modules/es.object.keys');
+require('core-js/modules/es.symbol');
+require('core-js/modules/es.symbol.async-iterator');
 require('regenerator-runtime/runtime');
 
 const ExcelJS = require('exceljs/dist/es5');
@@ -270,7 +272,7 @@ And one without...
 ## Create a Workbook[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 ```
 
 ## Set Workbook Properties[⬆](#contents)<!-- Link generated with jump2header -->
@@ -311,7 +313,7 @@ workbook.views = [
 ## Add a Worksheet[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 ```
 
 Use the second parameter of the addWorksheet function to specify options for the worksheet.
@@ -320,24 +322,23 @@ For Example:
 
 ```javascript
 // create a sheet with red tab colour
-var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
 // create a sheet where the grid lines are hidden
-var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
+const sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
 
 // create a sheet with the first row and column frozen
-var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
+const sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
 
 // Create worksheets with headers and footers
-var sheet = workbook.addWorksheet('My Sheet', {
+const sheet = workbook.addWorksheet('My Sheet', {
   headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
 });
 
 // create new sheet with pageSetup settings for A4 - landscape
-var worksheet =  workbook.addWorksheet('My Sheet', {
+const worksheet =  workbook.addWorksheet('My Sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
-
 ```
 
 ## Remove a Worksheet[⬆](#contents)<!-- Link generated with jump2header -->
@@ -348,7 +349,7 @@ For Example:
 
 ```javascript
 // Create a worksheet
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 
 // Remove the worksheet using worksheet id
 workbook.removeWorksheet(sheet.id)
@@ -363,7 +364,7 @@ workbook.eachSheet(function(worksheet, sheetId) {
 });
 
 // fetch sheet by name
-var worksheet = workbook.getWorksheet('My Sheet');
+const worksheet = workbook.getWorksheet('My Sheet');
 
 // fetch sheet by id
 // INFO: Be careful when using it!
@@ -371,7 +372,7 @@ var worksheet = workbook.getWorksheet('My Sheet');
 // For instance It happens when any worksheet has been deleted.
 // It's much more safety when you assume that ids are random. And stop to use this function.
 // If you need to access all worksheets in a loop please look to the next example.
-var worksheet = workbook.getWorksheet(1);
+const worksheet = workbook.getWorksheet(1);
 
 // access by `worksheets` array:
 workbook.worksheets[0]; //the first one;
@@ -400,10 +401,10 @@ Worksheets support a property bucket to allow control over some features of the 
 
 ```javascript
 // create new sheet with properties
-var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
+const worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
 // create a new sheet writer with properties
-var worksheetWriter = workbookWriter.addWorksheet('sheet', {properties:{outlineLevelCol:1}});
+const worksheetWriter = workbookWriter.addWorksheet('sheet', {properties:{outlineLevelCol:1}});
 
 // adjust properties afterwards (not supported by worksheet-writer)
 worksheet.properties.outlineLevelCol = 2;
@@ -439,12 +440,12 @@ All properties that can affect the printing of a sheet are held in a pageSetup o
 
 ```javascript
 // create new sheet with pageSetup settings for A4 - landscape
-var worksheet =  workbook.addWorksheet('sheet', {
+const worksheet =  workbook.addWorksheet('sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
 
 // create a new sheet writer with pageSetup settings for fit-to-page
-var worksheetWriter = workbookWriter.addWorksheet('sheet', {
+const worksheetWriter = workbookWriter.addWorksheet('sheet', {
   pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
 });
 
@@ -692,9 +693,9 @@ worksheet.columns = [
 ];
 
 // Access an individual columns by key, letter and 1-based column number
-var idCol = worksheet.getColumn('id');
-var nameCol = worksheet.getColumn('B');
-var dobCol = worksheet.getColumn(3);
+const idCol = worksheet.getColumn('id');
+const nameCol = worksheet.getColumn('B');
+const dobCol = worksheet.getColumn(3);
 
 // set column properties
 
@@ -745,8 +746,8 @@ worksheet.spliceColumns(3,2);
 // Note: columns 4 and above will be shifted right by 1 column.
 // Also: If the worksheet has more rows than values in the column inserts,
 //  the rows will still be shifted as if the values existed
-var newCol3Values = [1,2,3,4,5];
-var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
+const newCol3Values = [1,2,3,4,5];
+const newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
@@ -762,24 +763,24 @@ worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
 worksheet.addRow([3, 'Sam', new Date()]);
 
 // Add a row by sparse Array (assign to columns A, E & I)
-var rowValues = [];
+const rowValues = [];
 rowValues[1] = 4;
 rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
 worksheet.addRow(rowValues);
 
 // Add an array of rows
-var rows = [
+const rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
 worksheet.addRows(rows);
 
 // Get a row object. If it doesn't already exist, a new empty one will be returned
-var row = worksheet.getRow(5);
+const row = worksheet.getRow(5);
 
 // Get the last editable row in a worksheet (or undefined if there are none)
-var row = worksheet.lastRow;
+const row = worksheet.lastRow;
 
 // Set a specific row height
 row.height = 42.5;
@@ -812,7 +813,7 @@ expect(row.getCell(2).value).toEqual(2);
 expect(row.getCell(3).value).toEqual(3);
 
 // assign row values by sparse array  (where array element 0 is undefined)
-var values = []
+const values = []
 values[5] = 7;
 values[10] = 'Hello, World!';
 row.values = values;
@@ -856,8 +857,8 @@ worksheet.spliceRows(4,3);
 
 // remove one row and insert two more.
 // Note: rows 4 and below will be shifted down by 1 row.
-var newRow3Values = [1,2,3,4,5];
-var newRow4Values = ['one', 'two', 'three', 'four', 'five'];
+const newRow3Values = [1,2,3,4,5];
+const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
 
 // Cut one or more cells (cells to the right are shifted left)
@@ -871,14 +872,14 @@ row.splice(4,1,'new value 1', 'new value 2');
 row.commit();
 
 // row metrics
-var rowSize = row.cellCount;
-var numValues = row.actualCellCount;
+const rowSize = row.cellCount;
+const numValues = row.actualCellCount;
 ```
 
 ## Handling Individual Cells[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
-var cell = worksheet.getCell('C3');
+const cell = worksheet.getCell('C3');
 
 // Modify/Add individual cell
 cell.value = new Date(1968, 5, 1);
@@ -890,7 +891,7 @@ expect(cell.type).toEqual(Excel.ValueType.Date);
 myInput.value = cell.text;
 
 // use html-safe string for rendering...
-var html = '<div>' + cell.html + '</div>';
+const html = '<div>' + cell.html + '</div>';
 
 ```
 
@@ -1446,7 +1447,7 @@ ws.getCell('A3').font = {
 
 // note: the cell will store a reference to the font object assigned.
 // If the font object is changed afterwards, the cell font will change also...
-var font = { name: 'Arial', size: 12 };
+const font = { name: 'Arial', size: 12 };
 ws.getCell('A3').font = font;
 font.size = 20; // Cell A3 now has font size 20!
 
@@ -1924,20 +1925,20 @@ Valid extension values include 'jpeg', 'png', 'gif'.
 
 ```javascript
 // add image to workbook by filename
-var imageId1 = workbook.addImage({
+const imageId1 = workbook.addImage({
   filename: 'path/to/image.jpg',
   extension: 'jpeg',
 });
 
 // add image to workbook by buffer
-var imageId2 = workbook.addImage({
+const imageId2 = workbook.addImage({
   buffer: fs.readFileSync('path/to.image.png'),
   extension: 'png',
 });
 
 // add image to workbook by base64
-var myBase64Image = "data:image/png;base64,iVBORw0KG...";
-var imageId2 = workbook.addImage({
+const myBase64Image = "data:image/png;base64,iVBORw0KG...";
+const imageId2 = workbook.addImage({
   base64: myBase64Image,
   extension: 'png',
 });
@@ -2071,19 +2072,19 @@ faster or more resilient.
 
 ```javascript
 // read from a file
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.readFile(filename);
 // ... use workbook
 
 
 // read from a stream
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.read(stream);
 // ... use workbook
 
 
 // load from buffer
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.load(data);
 // ... use workbook
 ```
@@ -2092,7 +2093,7 @@ await workbook.xlsx.load(data);
 
 ```javascript
 // write to a file
-var workbook = createAndFillWorkbook();
+const workbook = createAndFillWorkbook();
 await workbook.xlsx.writeFile(filename);
 
 // write to a stream
@@ -2117,20 +2118,20 @@ Options supported when reading CSV files.
 
 ```javascript
 // read from a file
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 const worksheet = await workbook.csv.readFile(filename);
 // ... use workbook or worksheet
 
 
 // read from a stream
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 const worksheet = await workbook.csv.read(stream);
 // ... use workbook or worksheet
 
 
 // read from a file with European Dates
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormats: ['DD/MM/YYYY']
 };
 const worksheet = await workbook.csv.readFile(filename, options);
@@ -2138,8 +2139,8 @@ const worksheet = await workbook.csv.readFile(filename, options);
 
 
 // read from a file with custom value parsing
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -2197,7 +2198,7 @@ Options supported when writing to a CSV file.
 ```javascript
 
 // write to a file
-var workbook = createAndFillWorkbook();
+const workbook = createAndFillWorkbook();
 await workbook.csv.writeFile(filename);
 
 // write to a stream
@@ -2206,8 +2207,8 @@ await workbook.csv.writeFile(filename);
 await workbook.csv.write(stream, { sheetName: 'Page name' });
 
 // write to a file with European Date-Times
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormat: 'DD/MM/YYYY HH:mm:ss',
   dateUTC: true, // use utc when rendering dates
 };
@@ -2215,8 +2216,8 @@ await workbook.csv.writeFile(filename, options);
 
 
 // write to a file with custom value formatting
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -2278,7 +2279,7 @@ Note that it is possible to build the entire workbook without committing any row
 
 ##### Streaming XLSX Writer
 
-The streaming XLSX writer is available in the ExcelJS.stream.xlsx namespace.
+The streaming XLSX workbook writer is available in the ExcelJS.stream.xlsx namespace.
 
 The constructor takes an optional options object with the following fields:
 
@@ -2286,9 +2287,9 @@ The constructor takes an optional options object with the following fields:
 | ---------------- | ----------- |
 | stream           | Specifies a writable stream to write the XLSX workbook to. |
 | filename         | If stream not specified, this field specifies the path to a file to write the XLSX workbook to. |
-| useSharedStrings | Specifies whether to use shared strings in the workbook. Default is false |
-| useStyles        | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is false |
-| zip              | [Zip options](https://www.archiverjs.com/global.html#ZipOptions) that ExcelJS internally passes to [Archiver](https://github.com/archiverjs/node-archiver). Default is undefined |
+| useSharedStrings | Specifies whether to use shared strings in the workbook. Default is `false`. |
+| useStyles        | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is `false`. |
+| zip              | [Zip options](https://www.archiverjs.com/global.html#ZipOptions) that ExcelJS internally passes to [Archiver](https://github.com/archiverjs/node-archiver). Default is `undefined`. |
 
 If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object
  that will store the contents of the XLSX workbook in memory.
@@ -2297,12 +2298,12 @@ If neither stream nor filename is specified in the options, the workbook writer 
 
 ```javascript
 // construct a streaming XLSX workbook writer with styles and shared strings
-var options = {
+const options = {
   filename: './streamed-workbook.xlsx',
   useStyles: true,
   useSharedStrings: true
 };
-var workbook = new Excel.stream.xlsx.WorkbookWriter(options);
+const workbook = new Excel.stream.xlsx.WorkbookWriter(options);
 ```
 
 In general, the interface to the streaming XLSX writer is the same as the Document workbook (and worksheets)
@@ -2328,6 +2329,7 @@ worksheet.addRow({
 ```
 
 The reason the WorksheetWriter does not commit rows as they are added is to allow cells to be merged across rows:
+
 ```javascript
 worksheet.mergeCells('A1:B2');
 worksheet.getCell('A1').value = 'I am merged';
@@ -2350,6 +2352,90 @@ To complete the XLSX document, the workbook must be committed. If any worksheet 
 // Finished the workbook.
 await workbook.commit();
 // ... the stream has been written
+```
+
+##### Streaming XLSX Reader
+
+The streaming XLSX workbook reader is available in the ExcelJS.stream.xlsx namespace.
+
+The constructor takes a required input argument and an optional options argument:
+
+| Argument              | Description |
+| --------------------- | ----------- |
+| input (required)      | Specifies the name of the file or the readable stream from which to read the XLSX workbook. |
+| options (optional)    | Specifies how to handle the event types occuring during the read parsing. |
+| options.entries       | Specifies whether to emit entries (`'emit'`) or not (`'ignore'`). Default is `'emit'`. |
+| options.sharedStrings | Specifies whether to cache shared strings (`'cache'`), which inserts them into the respective cell values, or whether to emit them (`'emit'`) or ignore them (`'ignore'`), in both of which case the cell value will be a reference to the shared string's index. Default is `'cache'`. |
+| options.hyperlinks    | Specifies whether to cache hyperlinks (`'cache'`), which inserts them into their respective cells, whether to emit them (`'emit'`) or whether to ignore them (`'ignore'`). Default is `'cache'`. |
+| options.styles        | Specifies whether to cache styles (`'cache'`), which inserts them into their respective rows and cells, or whether to ignore them (`'ignore'`). Default is `'cache'`. |
+| options.worksheets    | Specifies whether to emit worksheets (`'emit'`) or not (`'ignore'`). Default is `'emit'`. |
+
+```js
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+for await (const worksheetReader of workbookReader) {
+  for await (const row of worksheetReader) {
+    // ...
+  }
+}
+```
+
+Please note that `worksheetReader` returns an array of rows rather than each row individually for performance reasons: https://github.com/nodejs/node/issues/31979
+
+###### Iterating over all events
+
+Events on workbook are 'worksheet', 'shared-strings' and 'hyperlinks'. Events on worksheet are 'row' and 'hyperlinks'.
+
+```js
+const options = {
+  sharedStrings: 'emit',
+  hyperlinks: 'emit',
+  worksheets: 'emit',
+};
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
+for await (const {eventType, value} of workbook.parse()) {
+  switch (eventType) {
+    case 'shared-strings':
+      // value is the shared string
+    case 'worksheet':
+      // value is the worksheetReader
+    case 'hyperlinks':
+      // value is the hyperlinksReader
+  }
+}
+```
+
+###### Readable stream
+
+While we strongly encourage to use async iteration, we also expose a streaming interface for backwards compatibility.
+
+```js
+const options = {
+  sharedStrings: 'emit',
+  hyperlinks: 'emit',
+  worksheets: 'emit',
+};
+const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
+workbookReader.read();
+
+workbookReader.on('worksheet', worksheet => {
+  worksheet.on('row', row => {
+  });
+});
+
+workbookReader.on('shared-strings', sharedString => {
+  // ...
+});
+
+workbookReader.on('hyperlinks', hyperlinksReader => {
+  // ...
+});
+
+workbookReader.on('end', () => {
+  // ...
+});
+workbookReader.on('error', (err) => {
+  // ...
+});
 ```
 
 # Browser[⬆](#contents)<!-- Link generated with jump2header -->

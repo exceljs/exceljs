@@ -43,6 +43,29 @@ jobs:
         env:
           CI: true
 
+  benchmark:
+    name: Measure performance impact of changes
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Create the npm cache directory
+        run: mkdir npm-cache && npm config set cache ./npm-cache --global
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ./npm-cache
+          key: v1-npm-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            v1-npm-
+      - run: npm install
+      - run: npm run benchmark
+        env:
+          CI: true
+
   typescript:
     name: Ensure typescript compatibility
     runs-on: ubuntu-latest
