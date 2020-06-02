@@ -190,13 +190,13 @@ To be clear, all contributions added to this library will be included in the lib
   <li><a href="#release-history">Release History</a></li>
 </ul>
 
-# Importing [⬆](#contents)<!-- Link generated with jump2header -->
+# Importing[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 const ExcelJS = require('exceljs');
 ```
 
-## ES5 Imports  [⬆](#contents)<!-- Link generated with jump2header -->
+## ES5 Imports[⬆](#contents)<!-- Link generated with jump2header -->
 
 To use the ES5 transpiled code, use the dist/es5 path.
 
@@ -240,7 +240,7 @@ try {
 }
 ```
 
-## Browserify [⬆](#contents)<!-- Link generated with jump2header -->
+## Browserify[⬆](#contents)<!-- Link generated with jump2header -->
 
 ExcelJS publishes two browserified bundles inside the dist/ folder:
 
@@ -257,15 +257,15 @@ And one without...
 ```
 
 
-# Interface [⬆](#contents)<!-- Link generated with jump2header -->
+# Interface[⬆](#contents)<!-- Link generated with jump2header -->
 
-## Create a Workbook  [⬆](#contents)<!-- Link generated with jump2header -->
+## Create a Workbook[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 var workbook = new Excel.Workbook();
 ```
 
-## Set Workbook Properties  [⬆](#contents)<!-- Link generated with jump2header -->
+## Set Workbook Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 workbook.creator = 'Me';
@@ -280,14 +280,14 @@ workbook.lastPrinted = new Date(2016, 9, 27);
 workbook.properties.date1904 = true;
 ```
 
-## Set Calculation Properties [⬆](#contents)<!-- Link generated with jump2header -->
+## Set Calculation Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // Force workbook calculation on load
 workbook.calcProperties.fullCalcOnLoad = true;
 ```
 
-## Workbook Views [⬆](#contents)<!-- Link generated with jump2header -->
+## Workbook Views[⬆](#contents)<!-- Link generated with jump2header -->
 
 The Workbook views controls how many separate windows Excel will open when viewing the workbook.
 
@@ -300,7 +300,7 @@ workbook.views = [
 ]
 ```
 
-## Add a Worksheet  [⬆](#contents)<!-- Link generated with jump2header -->
+## Add a Worksheet[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 var sheet = workbook.addWorksheet('My Sheet');
@@ -332,7 +332,7 @@ var worksheet =  workbook.addWorksheet('My Sheet', {
 
 ```
 
-## Remove a Worksheet [⬆](#contents)<!-- Link generated with jump2header -->
+## Remove a Worksheet[⬆](#contents)<!-- Link generated with jump2header -->
 
 Use the worksheet `id` to remove the sheet from workbook.
 
@@ -346,7 +346,7 @@ var sheet = workbook.addWorksheet('My Sheet');
 workbook.removeWorksheet(sheet.id)
 ```
 
-## Access Worksheets  [⬆](#contents)<!-- Link generated with jump2header -->
+## Access Worksheets[⬆](#contents)<!-- Link generated with jump2header -->
 ```javascript
 // Iterate over all sheets
 // Note: workbook.worksheets.forEach will still work but this is better
@@ -373,7 +373,7 @@ workbook.worksheets[0]; //the first one;
 It's important to know that `workbook.getWorksheet(1) != Workbook.worksheets[0]` and `workbook.getWorksheet(1) != Workbook.worksheets[1]`,
 becouse `workbook.worksheets[0].id` may have any value.
 
-## Worksheet State  [⬆](#contents)<!-- Link generated with jump2header -->
+## Worksheet State[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // make worksheet visible
@@ -386,7 +386,7 @@ worksheet.state = 'hidden';
 worksheet.state = 'veryHidden';
 ```
 
-## Worksheet Properties [⬆](#contents)<!-- Link generated with jump2header -->
+## Worksheet Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 Worksheets support a property bucket to allow control over some features of the worksheet.
 
@@ -413,7 +413,7 @@ worksheet.properties.defaultRowHeight = 15;
 | defaultColWidth  | (optional) | Default column width |
 | dyDescent        | 55         | TBD |
 
-### Worksheet Metrics [⬆](#contents)<!-- Link generated with jump2header -->
+### Worksheet Metrics[⬆](#contents)<!-- Link generated with jump2header -->
 
 Some new metrics have been added to Worksheet...
 
@@ -425,7 +425,7 @@ Some new metrics have been added to Worksheet...
 | actualColumnCount | A count of the number of columns that have values. |
 
 
-## Page Setup [⬆](#contents)<!-- Link generated with jump2header -->
+## Page Setup[⬆](#contents)<!-- Link generated with jump2header -->
 
 All properties that can affect the printing of a sheet are held in a pageSetup object on the sheet.
 
@@ -502,7 +502,7 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | Double Japan Postcard Rotated |  82       |
 | 16K 197x273 mm                |  119      |
 
-## Headers and Footers  [⬆](#contents)<!-- Link generated with jump2header -->
+## Headers and Footers[⬆](#contents)<!-- Link generated with jump2header -->
 
 Here's how to add headers and footers.
 The added content is mainly text, such as time, introduction, file information, etc., and you can set the style of the text.
@@ -575,7 +575,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 | &font size   | font size, for example 12 |
 | &KHEXCode    | font color, for example &KCCCCCC |
 
-## Worksheet Views  [⬆](#contents)<!-- Link generated with jump2header -->
+## Worksheet Views[⬆](#contents)<!-- Link generated with jump2header -->
 
 Worksheets now support a list of views, that control how Excel presents the sheet:
 
@@ -596,7 +596,7 @@ Each view also supports various properties:
 | zoomScaleNormal   | 100       | Normal zoom for the view |
 | style             | undefined | Presentation style - one of pageBreakPreview or pageLayout. Note pageLayout is not compatible with frozen views |
 
-### Frozen Views  [⬆](#contents)<!-- Link generated with jump2header -->
+### Frozen Views[⬆](#contents)<!-- Link generated with jump2header -->
 
 Frozen views support the following extra properties:
 
@@ -612,7 +612,7 @@ worksheet.views = [
 ];
 ```
 
-### Split Views [⬆](#contents)<!-- Link generated with jump2header -->
+### Split Views[⬆](#contents)<!-- Link generated with jump2header -->
 
 Split views support the following extra properties:
 
@@ -629,7 +629,7 @@ worksheet.views = [
 ];
 ```
 
-## Auto filters [⬆](#contents)<!-- Link generated with jump2header -->
+## Auto filters[⬆](#contents)<!-- Link generated with jump2header -->
 
 It is possible to apply an auto filter to your worksheet.
 
@@ -671,7 +671,7 @@ worksheet.autoFilter = {
 }
 ```
 
-## Columns  [⬆](#contents)<!-- Link generated with jump2header -->
+## Columns[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // Add column headers and define column keys and widths
@@ -743,7 +743,7 @@ worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
 
-## Rows [⬆](#contents)<!-- Link generated with jump2header -->
+## Rows[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // Add a couple of Rows by key-value, after the last current row, using the column keys
@@ -867,7 +867,7 @@ var rowSize = row.cellCount;
 var numValues = row.actualCellCount;
 ```
 
-## Handling Individual Cells  [⬆](#contents)<!-- Link generated with jump2header -->
+## Handling Individual Cells[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 var cell = worksheet.getCell('C3');
@@ -886,7 +886,7 @@ var html = '<div>' + cell.html + '</div>';
 
 ```
 
-## Merged Cells [⬆](#contents)<!-- Link generated with jump2header -->
+## Merged Cells[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // merge a range of cells
@@ -913,7 +913,7 @@ worksheet.mergeCells('K10', 'M12');
 // merge by start row, start column, end row, end column (equivalent to K10:M12)
 worksheet.mergeCells(10,11,12,13);
 ```
-## Duplicate a Row  [⬆](#contents)<!-- Link generated with jump2header -->
+## Duplicate a Row[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 duplicateRow(start, amount = 1, insert = true)
@@ -938,7 +938,7 @@ ws.duplicateRow(1,2,false);
 
 
 
-## Defined Names  [⬆](#contents)<!-- Link generated with jump2header -->
+## Defined Names[⬆](#contents)<!-- Link generated with jump2header -->
 
 Individual cells (or multiple groups of cells) can have names assigned to them.
  The names can be used in formulas and data validation (and probably more).
@@ -957,7 +957,7 @@ worksheet.getCell('A1').removeName('thing1');
 expect(worksheet.getCell('A1').names).to.have.members(['thing2']);
 ```
 
-## Data Validations [⬆](#contents)<!-- Link generated with jump2header -->
+## Data Validations[⬆](#contents)<!-- Link generated with jump2header -->
 
 Cells can define what values are valid or not and provide prompting to the user to help guide them.
 
@@ -1044,7 +1044,7 @@ worksheet.getCell('A1').dataValidation = {
 };
 ```
 
-## Cell Comments  [⬆](#contents)<!-- Link generated with jump2header -->
+## Cell Comments[⬆](#contents)<!-- Link generated with jump2header -->
 
 Add old style comment to a cell
 
@@ -1119,9 +1119,9 @@ ws.getCell('B1').note.protection = {
 ```
 
 
-## Tables [⬆](#contents)<!-- Link generated with jump2header -->
+## Tables[⬆](#contents)<!-- Link generated with jump2header -->
 
-### Supported Protection Properties [⬆](#contents)<!-- Link generated with jump2header -->
+### Supported Protection Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Property     | Required | Default Value | Description |
 | --------  | -------- | ------------- | ----------- |
@@ -1132,7 +1132,7 @@ Note: Locked objects are valid only when the worksheet is protected.
 
 
 
-### Cell Comments EditAs  [⬆](#contents)<!-- Link generated with jump2header -->
+### Cell Comments EditAs[⬆](#contents)<!-- Link generated with jump2header -->
 
 The cell comments can also have the property 'editAs' which will control how the comments is anchored to the cell(s).
 It can have one of the following values:
@@ -1147,7 +1147,7 @@ ws.getCell('B1').note.editAs = 'twoCells';
 | oneCells   | It specifies that the size of the note is fixed and the position changes with the cell |
 | absolute  | This is the default. Comments will not be moved or sized with cells |
 
-## Tables [⬆](#contents)<!-- Link generated with jump2header -->
+## Tables[⬆](#contents)<!-- Link generated with jump2header -->
 
 Tables allow for in-sheet manipulation of tabular data.
 
@@ -1181,7 +1181,7 @@ headers and row data to the sheet.
 Any data on the sheet covered by the resulting table (including headers and
 totals) will be overwritten.
 
-### Table Properties  [⬆](#contents)<!-- Link generated with jump2header -->
+### Table Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 The following table defines the properties supported by tables.
 
@@ -1196,7 +1196,7 @@ The following table defines the properties supported by tables.
 | columns        | Column definitions | Y |   |
 | rows           | Rows of data | Y |   |
 
-### Table Style Properties  [⬆](#contents)<!-- Link generated with jump2header -->
+### Table Style Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 The following table defines the properties supported within the table
 style property.
@@ -1209,7 +1209,7 @@ style property.
 | showRowStripes     | Alternate rows shown with background colour | N |  false  |
 | showColumnStripes  | Alternate rows shown with background colour | N |  false  |
 
-### Table Column Properties [⬆](#contents)<!-- Link generated with jump2header -->
+### Table Column Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 The following table defines the properties supported within each table
 column.
@@ -1222,7 +1222,7 @@ column.
 | totalsRowFunction  | Name of the totals function | N | 'none' |
 | totalsRowFormula   | Optional formula for custom functions | N |   |
 
-### Totals Functions  [⬆](#contents)<!-- Link generated with jump2header -->
+### Totals Functions[⬆](#contents)<!-- Link generated with jump2header -->
 
 The following table list the valid values for the totalsRowFunction property
 defined by columns. If any value other than 'custom' is used, it is not
@@ -1242,7 +1242,7 @@ by the table.
 | sum                | The sum of entries for this column |
 | custom             | A custom formula. Requires an associated totalsRowFormula value. |
 
-### Table Style Themes  [⬆](#contents)<!-- Link generated with jump2header -->
+### Table Style Themes[⬆](#contents)<!-- Link generated with jump2header -->
 
 Valid theme names follow the following pattern:
 
@@ -1258,7 +1258,7 @@ For no theme, use the value null.
 
 Note: custom table themes are not supported by exceljs yet.
 
-### Modifying Tables  [⬆](#contents)<!-- Link generated with jump2header -->
+### Modifying Tables[⬆](#contents)<!-- Link generated with jump2header -->
 
 Tables support a set of manipulation functions that allow data to be
 added or removed and some properties to be changed. Since many of these
@@ -1354,7 +1354,7 @@ table.commit();
 ```
 
 
-## Styles [⬆](#contents)<!-- Link generated with jump2header -->
+## Styles[⬆](#contents)<!-- Link generated with jump2header -->
 
 Cells, Rows and Columns each support a rich set of styles and formats that affect how the cells are displayed.
 
@@ -1397,7 +1397,7 @@ Caveat: All the above properties (with the exception of numFmt, which is a strin
  If you want the style objects to be independent, you will need to clone them before assigning them.
  Also, by default, when a document is read from file (or stream) if spreadsheet entities share similar styles, then they will reference the same style object too.
 
-### Number Formats  [⬆](#contents)<!-- Link generated with jump2header -->
+### Number Formats[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // display value as '1 3/5'
@@ -1409,7 +1409,7 @@ ws.getCell('B1').value = 0.016;
 ws.getCell('B1').numFmt = '0.00%';
 ```
 
-### Fonts [⬆](#contents)<!-- Link generated with jump2header -->
+### Fonts[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 
@@ -1461,7 +1461,7 @@ font.size = 20; // Cell A3 now has font size 20!
 | outline       | Font outline | true, false |
 | vertAlign     | Vertical align | 'superscript', 'subscript'
 
-### Alignment [⬆](#contents)<!-- Link generated with jump2header -->
+### Alignment[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // set cell alignment to top-left, middle-center, bottom-right
@@ -1494,7 +1494,7 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 | distributed      |             |          |             |         |              |              |
 
 
-### Borders [⬆](#contents)<!-- Link generated with jump2header -->
+### Borders[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // set single thin border around A1
@@ -1534,7 +1534,7 @@ ws.getCell('A5').border = {
 * double
 * thick
 
-### Fills [⬆](#contents)<!-- Link generated with jump2header -->
+### Fills[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // fill A1 with red darkVertical stripes
@@ -1577,7 +1577,7 @@ ws.getCell('A4').fill = {
 };
 ```
 
-#### Pattern Fills  [⬆](#contents)<!-- Link generated with jump2header -->
+#### Pattern Fills[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Property | Required | Description |
 | -------- | -------- | ----------- |
@@ -1608,7 +1608,7 @@ ws.getCell('A4').fill = {
 * lightGrid
 * lightTrellis
 
-#### Gradient Fills [⬆](#contents)<!-- Link generated with jump2header -->
+#### Gradient Fills[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Property | Required | Description |
 | -------- | -------- | ----------- |
@@ -1625,7 +1625,7 @@ For example, Excel only supports angle gradients of 0, 45, 90 and 135.
 Similarly the sequence of stops may also be limited by the UI with positions [0,1] or [0,0.5,1] as the only options.
 Take care with this fill to be sure it is supported by the target XLSX viewers.
 
-### Rich Text [⬆](#contents)<!-- Link generated with jump2header -->
+### Rich Text[⬆](#contents)<!-- Link generated with jump2header -->
 
 Individual cells now support rich text or in-cell formatting.
  Rich text values can control the font properties of any number of sub-strings within the text value.
@@ -1651,7 +1651,7 @@ expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 
 ```
 
-### Cell Protection [⬆](#contents)<!-- Link generated with jump2header -->
+### Cell Protection[⬆](#contents)<!-- Link generated with jump2header -->
 
 Cell level protection can be modified using the protection property.
 
@@ -1669,7 +1669,7 @@ ws.getCell('A1').protection = {
 | locked   | true    | Specifies whether a cell will be locked if the sheet is protected. |
 | hidden   | false   | Specifies whether a cell's formula will be visible if the sheet is protected. |
 
-## Conditional Formatting [⬆](#contents)<!-- Link generated with jump2header -->
+## Conditional Formatting[⬆](#contents)<!-- Link generated with jump2header -->
 
 Conditional formatting allows a sheet to show specific styles, icons, etc
 depending on cell values or any arbitrary formula.
@@ -1718,7 +1718,7 @@ worksheet.addConditionalFormatting({
 | containsText | Applies formatting based on whether cell a specific text |
 | timePeriod   | Applies formatting based on whether cell datetime value lies within a specified range |
 
-### Expression  [⬆](#contents)<!-- Link generated with jump2header -->
+### Expression[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field    | Optional | Default | Description |
 | -------- | -------- | ------- | ----------- |
@@ -1727,7 +1727,7 @@ worksheet.addConditionalFormatting({
 | formulae |          |         | array of 1 formula string that returns a true/false value. To reference the cell value, use the top-left cell address |
 | style    |          |         | style structure to apply if the formula returns true |
 
-### Cell Is [⬆](#contents)<!-- Link generated with jump2header -->
+### Cell Is[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field    | Optional | Default | Description |
 | -------- | -------- | ------- | ----------- |
@@ -1747,7 +1747,7 @@ worksheet.addConditionalFormatting({
 | between     | Apply format if cell value is between two formula values (inclusive) |
 
 
-### Top 10  [⬆](#contents)<!-- Link generated with jump2header -->
+### Top 10[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field    | Optional | Default | Description |
 | -------- | -------- | ------- | ----------- |
@@ -1758,7 +1758,7 @@ worksheet.addConditionalFormatting({
 | bottom   | Y        | false   | if true, the bottom values are included instead of the top |
 | style    |          |         | style structure to apply if the comparison returns true |
 
-### Above Average [⬆](#contents)<!-- Link generated with jump2header -->
+### Above Average[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field         | Optional | Default | Description |
 | ------------- | -------- | ------- | ----------- |
@@ -1767,7 +1767,7 @@ worksheet.addConditionalFormatting({
 | aboveAverage  | Y        | false   | if true, the rank field is a percentage, not an absolute |
 | style         |          |         | style structure to apply if the comparison returns true |
 
-### Color Scale [⬆](#contents)<!-- Link generated with jump2header -->
+### Color Scale[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field         | Optional | Default | Description |
 | ------------- | -------- | ------- | ----------- |
@@ -1777,7 +1777,7 @@ worksheet.addConditionalFormatting({
 | color         |          |         | corresponding array of colours to use at given way points |
 | style         |          |         | style structure to apply if the comparison returns true |
 
-### Icon Set  [⬆](#contents)<!-- Link generated with jump2header -->
+### Icon Set[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field         | Optional | Default | Description |
 | ------------- | -------- | ------- | ----------- |
@@ -1790,7 +1790,7 @@ worksheet.addConditionalFormatting({
 | cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
 | style         |          |         | style structure to apply if the comparison returns true |
 
-### Data Bar  [⬆](#contents)<!-- Link generated with jump2header -->
+### Data Bar[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field      | Optional | Default | Description |
 | ---------- | -------- | ------- | ----------- |
@@ -1808,7 +1808,7 @@ worksheet.addConditionalFormatting({
 | cfvo          |          |         | array of 2 to 5 Conditional Formatting Value Objects specifying way-points in the value range |
 | style         |          |         | style structure to apply if the comparison returns true |
 
-### Contains Text [⬆](#contents)<!-- Link generated with jump2header -->
+### Contains Text[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field    | Optional | Default | Description |
 | -------- | -------- | ------- | ----------- |
@@ -1828,7 +1828,7 @@ worksheet.addConditionalFormatting({
 | containsErrors    | Apply format if cell value contains errors |
 | notContainsErrors | Apply format if cell value does not contain errors |
 
-### Time Period [⬆](#contents)<!-- Link generated with jump2header -->
+### Time Period[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field      | Optional | Default | Description |
 | ---------- | -------- | ------- | ----------- |
@@ -1852,7 +1852,7 @@ worksheet.addConditionalFormatting({
 | thisMonth         | Apply format if cell value falls in this month |
 | nextMonth         | Apply format if cell value falls in next month |
 
-## Outline Levels [⬆](#contents)<!-- Link generated with jump2header -->
+## Outline Levels[⬆](#contents)<!-- Link generated with jump2header -->
 
 Excel supports outlining; where rows or columns can be expanded or collapsed depending on what level of detail the user wishes to view.
 
@@ -1900,7 +1900,7 @@ worksheet.properties.outlineProperties = {
 };
 ```
 
-## Images [⬆](#contents)<!-- Link generated with jump2header -->
+## Images[⬆](#contents)<!-- Link generated with jump2header -->
 
 Adding images to a worksheet is a two-step process.
 First, the image is added to the workbook via the addImage() function which will also return an imageId value.
@@ -1908,7 +1908,7 @@ Then, using the imageId, the image can be added to the worksheet either as a til
 
 Note: As of this version, adjusting or transforming the image is not supported.
 
-### Add Image to Workbook [⬆](#contents)<!-- Link generated with jump2header -->
+### Add Image to Workbook[⬆](#contents)<!-- Link generated with jump2header -->
 
 The Workbook.addImage function supports adding images by filename or by Buffer.
 Note that in both cases, the extension must be specified.
@@ -1935,7 +1935,7 @@ var imageId2 = workbook.addImage({
 });
 ```
 
-### Add image background to worksheet [⬆](#contents)<!-- Link generated with jump2header -->
+### Add image background to worksheet[⬆](#contents)<!-- Link generated with jump2header -->
 
 Using the image id from Workbook.addImage, the background to a worksheet can be set using the addBackgroundImage function
 
@@ -1944,7 +1944,7 @@ Using the image id from Workbook.addImage, the background to a worksheet can be 
 worksheet.addBackgroundImage(imageId1);
 ```
 
-### Add image over a range  [⬆](#contents)<!-- Link generated with jump2header -->
+### Add image over a range[⬆](#contents)<!-- Link generated with jump2header -->
 
 Using the image id from Workbook.addImage, an image can be embedded within the worksheet to cover a range.
 The coordinates calculated from the range will cover from the top-left of the first cell to the bottom right of the second.
@@ -1984,7 +1984,7 @@ ws.addImage(imageId, {
 });
 ```
 
-### Add image to a cell [⬆](#contents)<!-- Link generated with jump2header -->
+### Add image to a cell[⬆](#contents)<!-- Link generated with jump2header -->
 
 You can add an image to a cell and then define its width and height in pixels at 96dpi.
 
@@ -1995,7 +1995,7 @@ worksheet.addImage(imageId2, {
 });
 ```
 
-### Add image with hyperlinks [⬆](#contents)<!-- Link generated with jump2header -->
+### Add image with hyperlinks[⬆](#contents)<!-- Link generated with jump2header -->
 
 You can add an image with hyperlinks to a cell, and defines the hyperlinks in image range.
 
@@ -2010,7 +2010,7 @@ worksheet.addImage(imageId2, {
 });
 ```
 
-## Sheet Protection [⬆](#contents)<!-- Link generated with jump2header -->
+## Sheet Protection[⬆](#contents)<!-- Link generated with jump2header -->
 
 Worksheets can be protected from modification by adding a password.
 
@@ -2034,7 +2034,7 @@ thread and will use approx 600ms on an average CPU. This can be adjusted
 by setting the spinCount, which can be used to make the process either
 faster or more resilient.
 
-### Sheet Protection Options  [⬆](#contents)<!-- Link generated with jump2header -->
+### Sheet Protection Options[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Field               | Default | Description |
 | ------------------- | ------- | ----------- |
@@ -2055,11 +2055,11 @@ faster or more resilient.
 
 
 
-## File I/O [⬆](#contents)<!-- Link generated with jump2header -->
+## File I/O[⬆](#contents)<!-- Link generated with jump2header -->
 
-### XLSX  [⬆](#contents)<!-- Link generated with jump2header -->
+### XLSX[⬆](#contents)<!-- Link generated with jump2header -->
 
-#### Reading XLSX [⬆](#contents)<!-- Link generated with jump2header -->
+#### Reading XLSX[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // read from a file
@@ -2080,7 +2080,7 @@ await workbook.xlsx.load(data);
 // ... use workbook
 ```
 
-#### Writing XLSX [⬆](#contents)<!-- Link generated with jump2header -->
+#### Writing XLSX[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 // write to a file
@@ -2094,9 +2094,9 @@ await workbook.xlsx.write(stream);
 const buffer = await workbook.xlsx.writeBuffer();
 ```
 
-### CSV [⬆](#contents)<!-- Link generated with jump2header -->
+### CSV[⬆](#contents)<!-- Link generated with jump2header -->
 
-#### Reading CSV  [⬆](#contents)<!-- Link generated with jump2header -->
+#### Reading CSV[⬆](#contents)<!-- Link generated with jump2header -->
 
 Options supported when reading CSV files.
 
@@ -2171,7 +2171,7 @@ Dates are parsed using the npm module [dayjs](https://www.npmjs.com/package/dayj
 
 Please refer to the [dayjs CustomParseFormat plugin](https://github.com/iamkun/dayjs/blob/HEAD/docs/en/Plugin.md#customparseformat) for details on how to structure a dateFormat.
 
-#### Writing CSV  [⬆](#contents)<!-- Link generated with jump2header -->
+#### Writing CSV[⬆](#contents)<!-- Link generated with jump2header -->
 
 Options supported when writing to a CSV file.
 
@@ -2246,7 +2246,7 @@ Dates are formatted using the npm module [moment](https://www.npmjs.com/package/
  When writing a CSV you can supply the boolean dateUTC as true to have ExcelJS parse the date without automatically
  converting the timezone using `moment.utc()`.
 
-### Streaming I/O [⬆](#contents)<!-- Link generated with jump2header -->
+### Streaming I/O[⬆](#contents)<!-- Link generated with jump2header -->
 
 The File I/O documented above requires that an entire workbook is built up in memory before the file can be written.
  While convenient, it can limit the size of the document due to the amount of memory required.
@@ -2266,7 +2266,7 @@ Note that it is possible to build the entire workbook without committing any row
  When the workbook is committed, all added worksheets (including all uncommitted rows) will be automatically committed.
  However in this case, little will have been gained over the Document version.
 
-#### Streaming XLSX [⬆](#contents)<!-- Link generated with jump2header -->
+#### Streaming XLSX[⬆](#contents)<!-- Link generated with jump2header -->
 
 ##### Streaming XLSX Writer
 
@@ -2344,7 +2344,7 @@ await workbook.commit();
 // ... the stream has been written
 ```
 
-# Browser [⬆](#contents)<!-- Link generated with jump2header -->
+# Browser[⬆](#contents)<!-- Link generated with jump2header -->
 
 A portion of this library has been isolated and tested for use within a browser environment.
 
@@ -2353,18 +2353,18 @@ Only the document based workbook may be used (see <a href="#create-a-workbook">C
 
 For example code using ExcelJS in the browser take a look at the <a href="https://github.com/exceljs/exceljs/tree/master/spec/browser">spec/browser</a> folder in the github repo.
 
-## Prebundled [⬆](#contents)<!-- Link generated with jump2header -->
+## Prebundled[⬆](#contents)<!-- Link generated with jump2header -->
 
 The following files are pre-bundled and included inside the dist folder.
 
 * exceljs.js
 * exceljs.min.js
 
-# Value Types [⬆](#contents)<!-- Link generated with jump2header -->
+# Value Types[⬆](#contents)<!-- Link generated with jump2header -->
 
 The following value types are supported.
 
-## Null Value [⬆](#contents)<!-- Link generated with jump2header -->
+## Null Value[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.Null
 
@@ -2377,14 +2377,14 @@ E.g.
 worksheet.getCell('A1').value = null;
 ```
 
-## Merge Cell [⬆](#contents)<!-- Link generated with jump2header -->
+## Merge Cell[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.Merge
 
 A merge cell is one that has its value bound to another 'master' cell.
   Assigning to a merge cell will cause the master's cell to be modified.
 
-## Number Value [⬆](#contents)<!-- Link generated with jump2header -->
+## Number Value[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.Number
 
@@ -2397,7 +2397,7 @@ worksheet.getCell('A1').value = 5;
 worksheet.getCell('A2').value = 3.14159;
 ```
 
-## String Value [⬆](#contents)<!-- Link generated with jump2header -->
+## String Value[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.String
 
@@ -2409,7 +2409,7 @@ E.g.
 worksheet.getCell('A1').value = 'Hello, World!';
 ```
 
-## Date Value [⬆](#contents)<!-- Link generated with jump2header -->
+## Date Value[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.Date
 
@@ -2421,7 +2421,7 @@ E.g.
 worksheet.getCell('A1').value = new Date(2017, 2, 15);
 ```
 
-## Hyperlink Value  [⬆](#contents)<!-- Link generated with jump2header -->
+## Hyperlink Value[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.Hyperlink
 
@@ -2440,7 +2440,7 @@ worksheet.getCell('A1').value = {
 worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\'Sheet2\'!A1' };
 ```
 
-## Formula Value  [⬆](#contents)<!-- Link generated with jump2header -->
+## Formula Value[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.Formula
 
@@ -2463,7 +2463,7 @@ worksheet.getCell('A3').formula === 'A1+A2';
 worksheet.getCell('A3').result === 7;
 ```
 
-### Shared Formula  [⬆](#contents)<!-- Link generated with jump2header -->
+### Shared Formula[⬆](#contents)<!-- Link generated with jump2header -->
 
 Shared formulae enhance the compression of the xlsx document by decreasing the repetition
 of text within the worksheet xml.
@@ -2520,7 +2520,7 @@ fillFormula can also use a callback function to calculate the value at each cell
 worksheet.fillFormula('A2:A100', 'A1+1', (row, col) => row);
 ```
 
-### Formula Type  [⬆](#contents)<!-- Link generated with jump2header -->
+### Formula Type[⬆](#contents)<!-- Link generated with jump2header -->
 
 To distinguish between real and translated formula cells, use the formulaType getter:
 
@@ -2537,7 +2537,7 @@ Formula type has the following values:
 | Enums.FormulaType.Master   |   1     |
 | Enums.FormulaType.Shared   |   2     |
 
-### Array Formula [⬆](#contents)<!-- Link generated with jump2header -->
+### Array Formula[⬆](#contents)<!-- Link generated with jump2header -->
 
 A new way of expressing shared formulae in Excel is the array formula.
 In this form, the master cell is the only cell that contains any information relating to a formula.
@@ -2568,7 +2568,7 @@ worksheet.fillFormula('A2:B3', 'A1', [1,1,1,1], 'array');
 ```
 
 
-## Rich Text Value  [⬆](#contents)<!-- Link generated with jump2header -->
+## Rich Text Value[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.RichText
 
@@ -2584,7 +2584,7 @@ worksheet.getCell('A1').value = {
 };
 ```
 
-## Boolean Value  [⬆](#contents)<!-- Link generated with jump2header -->
+## Boolean Value[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.Boolean
 
@@ -2595,7 +2595,7 @@ worksheet.getCell('A1').value = true;
 worksheet.getCell('A2').value = false;
 ```
 
-## Error Value  [⬆](#contents)<!-- Link generated with jump2header -->
+## Error Value[⬆](#contents)<!-- Link generated with jump2header -->
 
 Enum: Excel.ValueType.Error
 
@@ -2618,29 +2618,29 @@ The current valid Error text values are:
 | Excel.ErrorValue.Value         | #VALUE!     |
 | Excel.ErrorValue.Num           | #NUM!       |
 
-# Interface Changes [⬆](#contents)<!-- Link generated with jump2header -->
+# Interface Changes[⬆](#contents)<!-- Link generated with jump2header -->
 
 Every effort is made to make a good consistent interface that doesn't break through the versions but regrettably, now and then some things have to change for the greater good.
 
-## 0.1.0  [⬆](#contents)<!-- Link generated with jump2header -->
+## 0.1.0[⬆](#contents)<!-- Link generated with jump2header -->
 
-### Worksheet.eachRow [⬆](#contents)<!-- Link generated with jump2header -->
+### Worksheet.eachRow[⬆](#contents)<!-- Link generated with jump2header -->
 
 The arguments in the callback function to Worksheet.eachRow have been swapped and changed; it was function(rowNumber,rowValues), now it is function(row, rowNumber) which gives it a look and feel more like the underscore (_.each) function and priorities the row object over the row number.
 
-### Worksheet.getRow  [⬆](#contents)<!-- Link generated with jump2header -->
+### Worksheet.getRow[⬆](#contents)<!-- Link generated with jump2header -->
 
 This function has changed from returning a sparse array of cell values to returning a Row object. This enables accessing row properties and will facilitate managing row styles and so on.
 
 The sparse array of cell values is still available via Worksheet.getRow(rowNumber).values;
 
-## 0.1.1  [⬆](#contents)<!-- Link generated with jump2header -->
+## 0.1.1[⬆](#contents)<!-- Link generated with jump2header -->
 
-### cell.model  [⬆](#contents)<!-- Link generated with jump2header -->
+### cell.model[⬆](#contents)<!-- Link generated with jump2header -->
 
 cell.styles renamed to cell.style
 
-## 0.2.44 [⬆](#contents)<!-- Link generated with jump2header -->
+## 0.2.44[⬆](#contents)<!-- Link generated with jump2header -->
 
 Promises returned from functions switched from Bluebird to native node Promise which can break calling code
  if they rely on Bluebird's extra features.
@@ -2650,7 +2650,7 @@ To mitigate this the following two changes were added to 0.3.0:
 * A more fully featured and still browser compatible promise lib is used by default. This lib supports many of the features of Bluebird but with a much lower footprint.
 * An option to inject a different Promise implementation. See <a href="#config">Config</a> section for more details.
 
-# Config  [⬆](#contents)<!-- Link generated with jump2header -->
+# Config[⬆](#contents)<!-- Link generated with jump2header -->
 
 ExcelJS now supports dependency injection for the promise library.
  You can restore Bluebird promises by including the following code in your module...
@@ -2662,9 +2662,9 @@ ExcelJS.config.setValue('promise', require('bluebird'));
 Please note: I have tested ExcelJS with bluebird specifically (since up until recently this was the library it used).
  From the tests I have done it will not work with Q.
 
-# Caveats [⬆](#contents)<!-- Link generated with jump2header -->
+# Caveats[⬆](#contents)<!-- Link generated with jump2header -->
 
-## Dist Folder  [⬆](#contents)<!-- Link generated with jump2header -->
+## Dist Folder[⬆](#contents)<!-- Link generated with jump2header -->
 
 Before publishing this module, the source code is transpiled and otherwise processed
 before being placed in a dist/ folder.
@@ -2673,9 +2673,9 @@ No other contents of the dist/ folder are guaranteed in any way other than the f
 specified as "main" in the package.json
 
 
-# Known Issues  [⬆](#contents)<!-- Link generated with jump2header -->
+# Known Issues[⬆](#contents)<!-- Link generated with jump2header -->
 
-## Testing with Puppeteer [⬆](#contents)<!-- Link generated with jump2header -->
+## Testing with Puppeteer[⬆](#contents)<!-- Link generated with jump2header -->
 
 The test suite included in this lib includes a small script executed in a headless browser
 to validate the bundled packages. At the time of this writing, it appears that
@@ -2687,11 +2687,11 @@ For this reason, the browser test can be disabled by the existence of a file nam
 sudo apt-get install libfontconfig
 ```
 
-## Splice vs Merge  [⬆](#contents)<!-- Link generated with jump2header -->
+## Splice vs Merge[⬆](#contents)<!-- Link generated with jump2header -->
 
 If any splice operation affects a merged cell, the merge group will not be moved correctly
 
-# Release History [⬆](#contents)<!-- Link generated with jump2header -->
+# Release History[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Version | Changes |
 | ------- | ------- |
