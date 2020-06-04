@@ -883,7 +883,7 @@ worksheet.mergeCells('K10', 'M12');
 worksheet.mergeCells(10,11,12,13);
 ```
 
-## Insert Rows
+## Insert Rows[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
 insertRow(pos, value, styleOption = 'n')
