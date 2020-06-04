@@ -935,4 +935,44 @@ describe('Worksheet', () => {
         expect(workbook).to.have.property('worksheets');
         expect(workbook.worksheets).to.have.length(1);
       }));
+
+  describe('Hidden', () => {
+    const fileList = [
+      'google-sheets',
+      'libre-calc-as-excel-2007-365',
+      'libre-calc-as-office-open-xml-spreadsheet',
+    ];
+
+    for (const file of fileList) {
+      it(`Should set hidden attribute correctly (${file})`, done => {
+        const wb = new ExcelJS.Workbook();
+        wb.xlsx
+          .readFile(
+            path.resolve(__dirname, 'data', 'hidden-test', `${file}.xlsx`)
+          )
+          .then(() => {
+            const ws = wb.getWorksheet(1);
+
+            //  Check rows
+            expect(ws.getRow(1).hidden, `${file} : Row 1`).to.equal(false);
+            expect(ws.getRow(2).hidden, `${file} : Row 2`).to.equal(true);
+            expect(ws.getRow(3).hidden, `${file} : Row 3`).to.equal(false);
+
+            //  Check columns
+            expect(ws.getColumn(1).hidden, `${file} : Column 1`).to.equal(
+              false
+            );
+            expect(ws.getColumn(2).hidden, `${file} : Column 2`).to.equal(true);
+            expect(ws.getColumn(3).hidden, `${file} : Column 3`).to.equal(
+              false
+            );
+
+            done();
+          })
+          .catch(error => {
+            done(error);
+          });
+      });
+    }
+  });
 });

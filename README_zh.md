@@ -1,6 +1,6 @@
 # ExcelJS
 
-[![Build Status](https://travis-ci.org/exceljs/exceljs.svg?branch=master)](https://travis-ci.org/exceljs/exceljs)
+[![Build status](https://github.com/exceljs/exceljs/workflows/ExcelJS/badge.svg)](https://github.com/exceljs/exceljs/actions?query=workflow%3AExcelJS)
 [![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/context:javascript)
 [![Total Alerts](https://img.shields.io/lgtm/alerts/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/alerts)
 
@@ -240,7 +240,7 @@ ExcelJS 在 *dist/* 文件夹内发布了两个支持浏览器的包：
 ## 创建工作簿
 
 ```javascript
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 ```
 
 ## 设置工作簿属性
@@ -281,7 +281,7 @@ workbook.views = [
 ## 添加工作表
 
 ```javascript
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 ```
 
 使用 `addWorksheet` 函数的第二个参数来指定工作表的选项。
@@ -290,26 +290,26 @@ var sheet = workbook.addWorksheet('My Sheet');
 
 ```javascript
 // 创建带有红色标签颜色的工作表
-var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
 // 创建一个隐藏了网格线的工作表
-var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
+const sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
 
 // 创建一个第一行和列冻结的工作表
-var sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
+const sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
 
 // 使用A4设置的页面设置设置创建新工作表 - 横向
-var worksheet =  workbook.addWorksheet('My Sheet', {
+const worksheet =  workbook.addWorksheet('My Sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
 
 // 创建一个具有页眉页脚的工作表
-var sheet = workbook.addWorksheet('My Sheet', {
+const sheet = workbook.addWorksheet('My Sheet', {
   headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
 });
 
 // 创建一个冻结了第一行和第一列的工作表
-var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
+const sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
 
 ```
 
@@ -321,7 +321,7 @@ var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 
 
 ```javascript
 // 创建工作表
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 
 // 使用工作表 id 删除工作表
 workbook.removeWorksheet(sheet.id)
@@ -336,10 +336,10 @@ workbook.eachSheet(function(worksheet, sheetId) {
 });
 
 // 按 name 提取工作表
-var worksheet = workbook.getWorksheet('My Sheet');
+const worksheet = workbook.getWorksheet('My Sheet');
 
 // 按 id 提取工作表
-var worksheet = workbook.getWorksheet(1);
+const worksheet = workbook.getWorksheet(1);
 ```
 
 ## 工作表状态
@@ -361,10 +361,10 @@ worksheet.state = 'veryHidden';
 
 ```javascript
 // 创建具有属性的新工作表
-var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
+const worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
 // 创建一个具有属性的可写的新工作表
-var worksheetWriter = workbookWriter.addWorksheet('sheet', {properties:{outlineLevelCol:1}});
+const worksheetWriter = workbookWriter.addWorksheet('sheet', {properties:{outlineLevelCol:1}});
 
 // 之后调整属性（工作表读写器不支持该操作）
 worksheet.properties.outlineLevelCol = 2;
@@ -400,12 +400,12 @@ worksheet.properties.defaultRowHeight = 15;
 
 ```javascript
 // 使用 A4 横向的页面设置创建新工作表
-var worksheet =  workbook.addWorksheet('sheet', {
+const worksheet =  workbook.addWorksheet('sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
 
 // 使用适合页面的pageSetup设置创建一个新的工作表编写器
-var worksheetWriter = workbookWriter.addWorksheet('sheet', {
+const worksheetWriter = workbookWriter.addWorksheet('sheet', {
   pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
 });
 
@@ -650,9 +650,9 @@ worksheet.columns = [
 ];
 
 // 通过键，字母和基于1的列号访问单个列
-var idCol = worksheet.getColumn('id');
-var nameCol = worksheet.getColumn('B');
-var dobCol = worksheet.getColumn(3);
+const idCol = worksheet.getColumn('id');
+const nameCol = worksheet.getColumn('B');
+const dobCol = worksheet.getColumn(3);
 
 // 设置列属性
 
@@ -702,8 +702,8 @@ worksheet.spliceColumns(3,2);
 // 删除一列，再插入两列。
 // 注意：第4列及以上的列将右移1列。
 // 另外：如果工作表中的行数多于列插入项中的值，则行将仍然被插入，就好像值存在一样。
-var newCol3Values = [1,2,3,4,5];
-var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
+const newCol3Values = [1,2,3,4,5];
+const newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
@@ -719,24 +719,24 @@ worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
 worksheet.addRow([3, 'Sam', new Date()]);
 
 // 通过稀疏数组添加一行（分配给 A，E 和 I 列）
-var rowValues = [];
+const rowValues = [];
 rowValues[1] = 4;
 rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
 worksheet.addRow(rowValues);
 
 // 添加行数组
-var rows = [
+const rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
 worksheet.addRows(rows);
 
 // 获取一个行对象。如果尚不存在，则将返回一个新的空对象
-var row = worksheet.getRow(5);
+const row = worksheet.getRow(5);
 
 // 获取工作表中的最后一个可编辑行（如果没有，则为 `undefined`）
-var row = worksheet.lastRow;
+const row = worksheet.lastRow;
 
 // 设置特定的行高
 row.height = 42.5;
@@ -769,7 +769,7 @@ expect(row.getCell(2).value).toEqual(2);
 expect(row.getCell(3).value).toEqual(3);
 
 // 通过稀疏数组分配行值（其中数组元素 0 为 `undefined`）
-var values = []
+const values = []
 values[5] = 7;
 values[10] = 'Hello, World!';
 row.values = values;
@@ -813,8 +813,8 @@ worksheet.spliceRows(4,3);
 
 // 删除一行，再插入两行。
 // 注意：第4行及以下行将向下移动 1 行。
-var newRow3Values = [1,2,3,4,5];
-var newRow4Values = ['one', 'two', 'three', 'four', 'five'];
+const newRow3Values = [1,2,3,4,5];
+const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
 
 // 剪切一个或多个单元格（右侧的单元格向左移动）
@@ -828,14 +828,14 @@ row.splice(4,1,'new value 1', 'new value 2');
 row.commit();
 
 // 行尺寸
-var rowSize = row.cellCount;
-var numValues = row.actualCellCount;
+const rowSize = row.cellCount;
+const numValues = row.actualCellCount;
 ```
 
 ## 处理单个单元格
 
 ```javascript
-var cell = worksheet.getCell('C3');
+const cell = worksheet.getCell('C3');
 
 // 修改/添加单个单元格
 cell.value = new Date(1968, 5, 1);
@@ -847,7 +847,7 @@ expect(cell.type).toEqual(Excel.ValueType.Date);
 myInput.value = cell.text;
 
 // 使用 html 安全的字符串进行渲染...
-var html = '<div>' + cell.html + '</div>';
+const html = '<div>' + cell.html + '</div>';
 
 ```
 
@@ -1380,7 +1380,7 @@ ws.getCell('A3').font = {
 
 // 注意：该单元格将存储对分配的字体对象的引用。
 // 如果之后更改了字体对象，则单元字体也将更改。
-var font = { name: 'Arial', size: 12 };
+const font = { name: 'Arial', size: 12 };
 ws.getCell('A3').font = font;
 font.size = 20; // 单元格 A3 现在具有20号字体！
 
@@ -1839,20 +1839,20 @@ worksheet.properties.outlineProperties = {
 
 ```javascript
 // 通过文件名将图像添加到工作簿
-var imageId1 = workbook.addImage({
+const imageId1 = workbook.addImage({
   filename: 'path/to/image.jpg',
   extension: 'jpeg',
 });
 
 // 通过 buffer 将图像添加到工作簿
-var imageId2 = workbook.addImage({
+const imageId2 = workbook.addImage({
   buffer: fs.readFileSync('path/to.image.png'),
   extension: 'png',
 });
 
 // 通过 base64  将图像添加到工作簿
-var myBase64Image = "data:image/png;base64,iVBORw0KG...";
-var imageId2 = workbook.addImage({
+const myBase64Image = "data:image/png;base64,iVBORw0KG...";
+const imageId2 = workbook.addImage({
   base64: myBase64Image,
   extension: 'png',
 });
@@ -1977,19 +1977,19 @@ worksheet.unprotect();
 
 ```javascript
 // 从文件读取
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.readFile(filename);
 // ... 使用 workbook
 
 
 // 从流读取
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.read(stream);
 // ... 使用 workbook
 
 
 // 从 buffer 加载
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.load(data);
 // ... 使用 workbook
 ```
@@ -1998,7 +1998,7 @@ await workbook.xlsx.load(data);
 
 ```javascript
 // 写入文件
-var workbook = createAndFillWorkbook();
+const workbook = createAndFillWorkbook();
 await workbook.xlsx.writeFile(filename);
 
 // 写入流
@@ -2023,20 +2023,20 @@ const buffer = await workbook.xlsx.writeBuffer();
 
 ```javascript
 // 从文件读取
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 const worksheet = await workbook.csv.readFile(filename);
 // ... 使用 workbook 或 worksheet
 
 
 // 从流中读取
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 const worksheet = await workbook.csv.read(stream);
 // ... 使用 workbook 或 worksheet
 
 
 // 从带有欧洲日期的文件中读取
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormats: ['DD/MM/YYYY']
 };
 const worksheet = await workbook.csv.readFile(filename, options);
@@ -2044,8 +2044,8 @@ const worksheet = await workbook.csv.readFile(filename, options);
 
 
 // 从具有自定义值解析的文件中读取
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -2100,7 +2100,7 @@ CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 读取CSV
 ```javascript
 
 // 写入文件
-var workbook = createAndFillWorkbook();
+const workbook = createAndFillWorkbook();
 await workbook.csv.writeFile(filename);
 
 // 写入流
@@ -2108,8 +2108,8 @@ await workbook.csv.writeFile(filename);
 await workbook.csv.write(stream, { sheetName: 'Page name' });
 
 // 使用欧洲日期时间写入文件
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormat: 'DD/MM/YYYY HH:mm:ss',
   dateUTC: true, // 呈现日期时使用 utc
 };
@@ -2117,8 +2117,8 @@ await workbook.csv.writeFile(filename, options);
 
 
 // 使用自定义值格式写入文件
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -2185,12 +2185,12 @@ CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 编写 CS
 
 ```javascript
 // 使用样式和共享字符串构造流式 XLSX 工作簿编写器
-var options = {
+const options = {
   filename: './streamed-workbook.xlsx',
   useStyles: true,
   useSharedStrings: true
 };
-var workbook = new Excel.stream.xlsx.WorkbookWriter(options);
+const workbook = new Excel.stream.xlsx.WorkbookWriter(options);
 ```
 
 通常，流式 XLSX 写入器的接口与上述文档工作簿（和工作表）相同，实际上行，单元格和样式对象是相同的。
@@ -2235,6 +2235,90 @@ worksheet.commit();
 // 完成 workbook.
 await workbook.commit();
 // ... 流已被写入
+```
+
+##### Streaming XLSX Reader
+
+The streaming XLSX workbook reader is available in the ExcelJS.stream.xlsx namespace.
+
+The constructor takes a required input argument and an optional options argument:
+
+| Argument              | Description |
+| --------------------- | ----------- |
+| input (required)      | Specifies the name of the file or the readable stream from which to read the XLSX workbook. |
+| options (optional)    | Specifies how to handle the event types occuring during the read parsing. |
+| options.entries       | Specifies whether to emit entries (`'emit'`) or not (`undefined`). Default is `'emit'`. |
+| options.sharedStrings | Specifies whether to cache shared strings (`'cache'`), emit them (`'emit'`) or skip them (`undefined`). Default is `'cache'`. |
+| options.hyperlinks    | Specifies whether to cache hyperlinks (`'cache'`), emit them (`'emit'`) or skip them (`undefined`). Default is `'cache'`. |
+| options.styles        | Specifies whether to cache styles (`'cache'`) or skip them (`undefined`). Default is `'cache'`. |
+| options.worksheets    | Specifies whether to emit worksheets (`'emit'`) or not (`undefined`). Default is `'emit'`. |
+
+```js
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+for await (const worksheetReader of workbookReader) {
+  for await (const row of worksheetReader) {
+    // ...
+  }
+}
+```
+
+Please note that `worksheetReader` returns an array of rows rather than each row individually for performance reasons: https://github.com/nodejs/node/issues/31979
+
+###### Iterating over all events
+
+Events on workbook are 'worksheet', 'shared-strings' and 'hyperlinks'. Events on worksheet are 'row' and 'hyperlinks'.
+
+```js
+const options = {
+  sharedStrings: 'emit',
+  hyperlinks: 'emit',
+  worksheets: 'emit',
+};
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
+for await (const {eventType, value} of workbook.parse()) {
+  switch (eventType) {
+    case 'shared-strings':
+      // value is the shared string
+    case 'worksheet':
+      // value is the worksheetReader
+    case 'hyperlinks':
+      // value is the hyperlinksReader
+  }
+}
+```
+
+###### Readable stream
+
+While we strongly encourage to use async iteration, we also expose a streaming interface for backwards compatibility.
+
+```js
+const options = {
+  sharedStrings: 'emit',
+  hyperlinks: 'emit',
+  worksheets: 'emit',
+};
+const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
+workbookReader.read();
+
+workbookReader.on('worksheet', worksheet => {
+  worksheet.on('row', row => {
+  });
+});
+
+workbookReader.on('shared-strings', sharedString => {
+  // ...
+});
+
+workbookReader.on('hyperlinks', hyperlinksReader => {
+  // ...
+});
+
+workbookReader.on('end', () => {
+  // ...
+});
+workbookReader.on('error', (err) => {
+  // ...
+});
 ```
 
 # 浏览器

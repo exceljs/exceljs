@@ -1433,11 +1433,6 @@ export interface Xlsx {
 	load(buffer: Buffer): Promise<Workbook>;
 
 	/**
-	 * Create input stream for reading
-	 */
-	createInputStream(): import('events').EventEmitter;
-
-	/**
 	 * write to a buffer
 	 */
 	writeBuffer(options?: Partial<XlsxWriteOptions>): Promise<Buffer>;
@@ -1923,6 +1918,54 @@ export namespace stream {
 			addSharedStrings(): Promise<void>;
 			addWorkbookRels(): Promise<void>;
 			addWorkbook(): Promise<void>;
+		}
+
+
+		interface WorkbookStreamReaderOptions {
+			/**
+			 * @default 'emit'
+			 */
+			worksheets?: 'emit' | 'ignore';
+			/**
+			 * @default 'cache'
+			 */
+			sharedStrings?: 'cache' | 'emit' | 'ignore';
+			/**
+			 * @default 'ignore'
+			 */
+			hyperlinks?: 'cache' | 'emit' | 'ignore';
+			/**
+			 * @default 'ignore'
+			 */
+			styles?: 'cache' | 'ignore';
+			/**
+			 * @default 'ignore'
+			 */
+			entries?: 'emit' | 'ignore';
+		}
+
+		class WorkbookReader extends Workbook {
+			constructor(input: string | import('stream').Stream, options: Partial<WorkbookStreamReaderOptions>);
+			read(): Promise<void>;
+			[Symbol.asyncIterator]: AsyncIterator<WorksheetReader>;
+			parse(): AsyncIterator<any>;
+		}
+
+		interface WorksheetReaderOptions {
+			workbook: Workbook;
+			id: number;
+			entry: import('stream').Stream;
+			options: WorkbookStreamReaderOptions;
+		}
+
+		class WorksheetReader {
+			constructor(options: WorksheetReaderOptions);
+			read(): Promise<void>;
+			[Symbol.asyncIterator]: AsyncIterator<Row>;
+			parse(): AsyncIterator<Array<any>>;
+			dimensions(): number;
+			columns(): number;
+			getColumn(c: number): Column;
 		}
 	}
 }
