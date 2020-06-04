@@ -341,6 +341,33 @@ describe('Worksheet', () => {
       });
     });
 
+    it('add rows with styleOptions', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+
+      ws.addRow([1, 'John Doe', dateValue1]);
+      ws.getRow(1).font = testutils.styles.fonts.comicSansUdB16;
+      ws.addRow([2, 'Jane Doe', dateValue2], 'i');
+      ws.addRow([3, 'Jane Doe', dateValue2], 'n');
+      ws.addRow([4, 'Jane Doe', dateValue2], 'i');
+
+      expect(ws.getCell('A1').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A2').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A3').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A4').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+    });
+
     it('insert rows by object', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
@@ -462,6 +489,72 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(rows[rows.length - rowNumber][colNumber]);
         });
       });
+    });
+
+    it('insert rows with styleOptions', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+
+      const arr = [
+        [5, 'Jane Doe', dateValue2],
+        [5, 'Jane Doe', dateValue2],
+        [5, 'Jane Doe', dateValue2],
+      ];
+
+      ws.addRow([5, 'John Doe', dateValue1]);
+      ws.getRow(1).font = testutils.styles.fonts.comicSansUdB16;
+
+      ws.insertRow(1, [5, 'Jane Doe', dateValue2], 'o');
+      ws.insertRow(1, [4, 'Jane Doe', dateValue2], 'i');
+      ws.insertRow(1, [3, 'Jane Doe', dateValue2], 'n');
+      ws.insertRow(1, [2, 'Jane Doe', dateValue2], 'o');
+
+      ws.addRow([6, 'Jane Doe', dateValue2]);
+      ws.getRow(6).font = testutils.styles.fonts.comicSansUdB16;
+
+      ws.insertRows(6, arr, 'o');
+      ws.insertRows(10, arr, 'i');
+      ws.insertRows(13, arr);
+
+      expect(ws.getCell('A1').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A2').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A3').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A4').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A5').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A6').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A9').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      for (let i = 7; i <= 8; i++) {
+        expect(ws.getCell(`A${i}`).font).not.deep.equal(
+          testutils.styles.fonts.comicSansUdB16
+        );
+      }
+      for (let i = 10; i <= 12; i++) {
+        expect(ws.getCell(`A${i}`).font).to.deep.equal(
+          testutils.styles.fonts.comicSansUdB16
+        );
+      }
+      for (let i = 13; i <= 15; i++) {
+        expect(ws.getCell(`A${i}`).font).not.deep.equal(
+          testutils.styles.fonts.comicSansUdB16
+        );
+      }
     });
 
     it('iterates over rows', () => {

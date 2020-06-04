@@ -124,6 +124,7 @@ To be clear, all contributions added to this library will be included in the lib
       <li><a href="#rows">Rows</a></li>
       <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
       <li><a href="#merged-cells">Merged Cells</a></li>
+      <li><a href="#insert-rows">Insert Rows</a></li>
       <li><a href="#duplicate-a-row">Duplicate Row</a></li>
       <li><a href="#defined-names">Defined Names</a></li>
       <li><a href="#data-validations">Data Validations</a></li>
@@ -743,6 +744,10 @@ rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
 worksheet.addRow(rowValues);
 
+// Add a row with inherited style
+// This new row will have same style as last row
+worksheet.addRow(rowValues, 'i');
+
 // Add an array of rows
 var rows = [
   [5,'Bob',new Date()], // row by array
@@ -750,26 +755,9 @@ var rows = [
 ];
 worksheet.addRows(rows);
 
-// Insert a couple of Rows by key-value, shifting down rows every time
-worksheet.insertRow(1, {id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
-worksheet.insertRow(1, {id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
-
-// Insert a row by contiguous Array (assign to columns A, B & C)
-worksheet.insertRow(1, [3, 'Sam', new Date()]);
-
-// Insert a row by sparse Array (assign to columns A, E & I)
-var rowValues = [];
-rowValues[1] = 4;
-rowValues[5] = 'Kyle';
-rowValues[9] = new Date();
-worksheet.insertRow(1, rowValues);
-
-// Insert an array of rows, in position 1, shifting down current position 1 row by 2 rows
-var rows = [
-  [5,'Bob',new Date()], // row by array
-  {id:6, name: 'Barbara', dob: new Date()}
-];
-worksheet.insertRows(1, rows);
+// Add an array of rows with inherited style
+// These new rows will have same styles as last row
+worksheet.addRows(rows, 'i');
 
 // Get a row object. If it doesn't already exist, a new empty one will be returned
 var row = worksheet.getRow(5);
@@ -917,6 +905,41 @@ worksheet.mergeCells('K10', 'M12');
 // merge by start row, start column, end row, end column (equivalent to K10:M12)
 worksheet.mergeCells(10,11,12,13);
 ```
+
+## Insert Rows
+
+```javascript
+insertRow(pos, value, styleOption = 'n')
+insertRows(pos, values, styleOption = 'n')
+
+// Insert a couple of Rows by key-value, shifting down rows every time
+worksheet.insertRow(1, {id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
+worksheet.insertRow(1, {id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
+
+// Insert a row by contiguous Array (assign to columns A, B & C)
+worksheet.insertRow(1, [3, 'Sam', new Date()]);
+
+// Insert a row by sparse Array (assign to columns A, E & I)
+var rowValues = [];
+rowValues[1] = 4;
+rowValues[5] = 'Kyle';
+rowValues[9] = new Date();
+worksheet.insertRow(1, rowValues);
+
+// Insert an array of rows, in position 1, shifting down current position 1 and later rows by 2 rows
+var rows = [
+  [5,'Bob',new Date()], // row by array
+  {id:6, name: 'Barbara', dob: new Date()}
+];
+worksheet.insertRows(1, rows);
+
+```
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| pos          | Row number where you want to insert, pushing down all rows from there |  |
+| value/s    | The new row/s values |  |
+| styleOption            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
+
 ## Duplicate a Row
 
 ```javascript
