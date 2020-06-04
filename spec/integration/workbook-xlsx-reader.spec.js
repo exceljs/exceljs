@@ -32,13 +32,13 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max row count exceeded');
+              expect(err.message).to.equal('Max row count (10) exceeded');
             }
           );
       });
 
       it('should fail fast on a huge file', function() {
-        this.timeout(20000);
+        this.timeout(5000);
         const workbook = new ExcelJS.Workbook();
         return workbook.xlsx
           .readFile('./spec/integration/data/huge.xlsx', {maxRows: 100})
@@ -47,7 +47,7 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max row count exceeded');
+              expect(err.message).to.equal('Max row count (100) exceeded');
             }
           );
       });
@@ -74,13 +74,13 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max column count exceeded');
+              expect(err.message).to.equal('Max column count (15) exceeded');
             }
           );
       });
 
       it('should fail fast on a huge file', function() {
-        this.timeout(20000);
+        this.timeout(5000);
         const workbook = new ExcelJS.Workbook();
         return workbook.xlsx
           .readFile('./spec/integration/data/huge.xlsx', {maxCols: 10})
@@ -89,7 +89,7 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max column count exceeded');
+              expect(err.message).to.equal('Max column count (10) exceeded');
             }
           );
       });
@@ -118,7 +118,7 @@ describe('WorkbookReader', () => {
               throw new Error('Promise unexpectedly fulfilled');
             },
             err => {
-              expect(err.message).to.equal('Max row count exceeded');
+              expect(err.message).to.equal('Max row count (10) exceeded');
             }
           );
       });

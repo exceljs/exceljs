@@ -64,4 +64,12 @@
     <pageSetup paperSize="9" pageOrder="overThenDown" orientation="landscape" horizontalDpi="300" verticalDpi="300"
                firstPageNumber="5" useFirstPageNumber="1" usePrinterDefaults="1" copies="3"
                fitToHeight="5" fitToWidth="7" scale="90" blackAndWhite="1" draft="1" cellComments="atEnd" errors="dash"/>
+    <headerFooter differentFirst="1" differentOddEven="1">
+        <oddHeader>&amp;C&amp;KCCCCCC&amp;&quot;Aril&quot;2 exceljs</oddHeader>
+        <oddFooter>&amp;Lexceljs&amp;C&amp;F&amp;RPage &amp;P</oddFooter>
+        <evenHeader>&amp;C&amp;KCCCCCC&amp;&quot;Aril&quot;3 exceljs evenHeader</evenHeader>
+        <evenFooter>&amp;Lexceljs&amp;C&amp;F&amp;RPage &amp;P evenHeader</evenFooter>
+        <firstHeader>Hello Exceljs</firstHeader>
+        <firstFooter>Hello World</firstFooter>
+    </headerFooter>           
 </worksheet>
