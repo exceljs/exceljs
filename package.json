@@ -21,8 +21,11 @@
   "files": [
     "dist",
     "lib",
+    "excel.js",
     "LICENSE",
     "README.md",
+    "README_zh.md",
+    "index.ts",
     "index.d.ts"
   ],
   "scripts": {
