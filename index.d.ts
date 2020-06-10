@@ -1,6 +1,6 @@
 declare interface Buffer extends ArrayBuffer { }
 
-export const enum RelationshipType {
+export declare enum RelationshipType {
 	None = 0,
 	OfficeDocument = 1,
 	Worksheet = 2,
@@ -11,7 +11,7 @@ export const enum RelationshipType {
 	Hyperlink = 7
 }
 
-export const enum DocumentType {
+export declare enum DocumentType {
 	Xlsx = 1
 }
 
@@ -272,7 +272,7 @@ export interface Margins {
 	footer: number;
 }
 
-export const enum ReadingOrder {
+export declare enum ReadingOrder {
 	LeftToRight = 1,
 	RightToLeft = 2,
 }
@@ -318,6 +318,16 @@ export interface DataValidation {
 	showInputMessage?: boolean;
 }
 
+export declare enum ErrorValue {
+	NotApplicable = '#N/A',
+	Ref = '#REF!',
+	Name = '#NAME?',
+	DivZero = '#DIV/0!',
+	Null = '#NULL!',
+	Value = '#VALUE!',
+	Num = '#NUM!',
+}
+
 export interface CellErrorValue {
 	error: '#N/A' | '#REF!' | '#NAME?' | '#DIV/0!' | '#NULL!' | '#VALUE!' | '#NUM!';
 }
@@ -349,7 +359,7 @@ export interface CellSharedFormulaValue {
 	date1904: boolean;
 }
 
-export const enum ValueType {
+export declare enum ValueType {
 	Null = 0,
 	Merge = 1,
 	Number = 2,
@@ -363,7 +373,7 @@ export const enum ValueType {
 	Error = 10
 }
 
-export const enum FormulaType {
+export declare enum FormulaType {
 	None = 0,
 	Master = 1,
 	Shared = 2

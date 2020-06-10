@@ -1080,7 +1080,7 @@ ws.getCell('B1').note = {
 };
 ```
 
-### <a>Cell Comments Properties</a>
+### Cell Comments Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 The following table defines the properties supported by cell comments.
 
@@ -1102,7 +1102,7 @@ ws.getCell('B1').note.margins = {
 }
 ```
 
-### Supported Margins Properties
+### Supported Margins Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Property     | Required | Default Value | Description |
 | --------  | -------- | ------------- | ----------- |
@@ -1122,9 +1122,6 @@ ws.getCell('B1').note.protection = {
 };
 ```
 
-
-## Tables[⬆](#contents)<!-- Link generated with jump2header -->
-
 ### Supported Protection Properties[⬆](#contents)<!-- Link generated with jump2header -->
 
 | Property     | Required | Default Value | Description |
@@ -1133,8 +1130,6 @@ ws.getCell('B1').note.protection = {
 | lockText | N        | 'True'  | This element specifies that the text of the object is locked |
 
 Note: Locked objects are valid only when the worksheet is protected.
-
-
 
 ### Cell Comments EditAs[⬆](#contents)<!-- Link generated with jump2header -->
 
@@ -2272,7 +2267,7 @@ Note that it is possible to build the entire workbook without committing any row
 
 #### Streaming XLSX[⬆](#contents)<!-- Link generated with jump2header -->
 
-##### Streaming XLSX Writer
+##### Streaming XLSX Writer(#contents)<!-- Link generated with jump2header -->
 
 The streaming XLSX workbook writer is available in the ExcelJS.stream.xlsx namespace.
 
@@ -2349,7 +2344,7 @@ await workbook.commit();
 // ... the stream has been written
 ```
 
-##### Streaming XLSX Reader
+##### Streaming XLSX Reader(#contents)<!-- Link generated with jump2header -->
 
 The streaming XLSX workbook reader is available in the ExcelJS.stream.xlsx namespace.
 
@@ -2376,7 +2371,7 @@ for await (const worksheetReader of workbookReader) {
 
 Please note that `worksheetReader` returns an array of rows rather than each row individually for performance reasons: https://github.com/nodejs/node/issues/31979
 
-###### Iterating over all events
+###### Iterating over all events(#contents)<!-- Link generated with jump2header -->
 
 Events on workbook are 'worksheet', 'shared-strings' and 'hyperlinks'. Events on worksheet are 'row' and 'hyperlinks'.
 
@@ -2399,7 +2394,7 @@ for await (const {eventType, value} of workbook.parse()) {
 }
 ```
 
-###### Readable stream
+###### Readable stream(#contents)<!-- Link generated with jump2header -->
 
 While we strongly encourage to use async iteration, we also expose a streaming interface for backwards compatibility.
 
