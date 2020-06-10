@@ -72,7 +72,6 @@ npm install exceljs
       <li><a href="#行">行</a></li>
       <li><a href="#处理单个单元格">处理单个单元格</a></li>
       <li><a href="#合并单元格">合并单元格</a></li>
-      <li><a href="#insert-rows">Insert Rows</a></li>
       <li><a href="#重复行">重复行</a></li>
       <li><a href="#定义名称">定义名称</a></li>
       <li><a href="#数据验证">数据验证</a></li>
@@ -702,20 +701,12 @@ rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
 worksheet.addRow(rowValues);
 
-// Add a row with inherited style
-// This new row will have same style as last row
-worksheet.addRow(rowValues, 'i');
-
 // 添加行数组
 const rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
 worksheet.addRows(rows);
-
-// Add an array of rows with inherited style
-// These new rows will have same styles as last row
-worksheet.addRows(rows, 'i');
 
 // 获取一个行对象。如果尚不存在，则将返回一个新的空对象
 const row = worksheet.getRow(5);
@@ -863,41 +854,6 @@ worksheet.mergeCells('K10', 'M12');
 // 按开始行，开始列，结束行，结束列合并（相当于 K10:M12）
 worksheet.mergeCells(10,11,12,13);
 ```
-
-## Insert Rows[⬆](#目录)<!-- Link generated with jump2header -->
-
-```javascript
-insertRow(pos, value, styleOption = 'n')
-insertRows(pos, values, styleOption = 'n')
-
-// Insert a couple of Rows by key-value, shifting down rows every time
-worksheet.insertRow(1, {id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
-worksheet.insertRow(1, {id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
-
-// Insert a row by contiguous Array (assign to columns A, B & C)
-worksheet.insertRow(1, [3, 'Sam', new Date()]);
-
-// Insert a row by sparse Array (assign to columns A, E & I)
-var rowValues = [];
-rowValues[1] = 4;
-rowValues[5] = 'Kyle';
-rowValues[9] = new Date();
-worksheet.insertRow(1, rowValues);
-
-// Insert an array of rows, in position 1, shifting down current position 1 and later rows by 2 rows
-var rows = [
-  [5,'Bob',new Date()], // row by array
-  {id:6, name: 'Barbara', dob: new Date()}
-];
-worksheet.insertRows(1, rows);
-
-```
-| Parameter | Description | Default Value |
-| -------------- | ----------------- | -------- |
-| pos          | Row number where you want to insert, pushing down all rows from there |  |
-| value/s    | The new row/s values |  |
-| styleOption            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
-
 ## 重复行[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
