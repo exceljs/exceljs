@@ -903,12 +903,28 @@ rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
 worksheet.insertRow(1, rowValues);
 
+// Insert a row, with inherited style
+// This new row will have same style as row on top of it
+worksheet.insertRow(1, rowValues, 'i');
+
+// Insert a row, keeping original style
+// This new row will have same style as it was previously
+worksheet.insertRow(1, rowValues, 'o');
+
 // Insert an array of rows, in position 1, shifting down current position 1 and later rows by 2 rows
 var rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
 worksheet.insertRows(1, rows);
+
+// Insert an array of rows, with inherited style
+// These new rows will have same style as row on top of it
+worksheet.insertRows(1, rows, 'i');
+
+// Insert an array of rows, keeping original style
+// These new rows will have same style as it was previously in 'pos' position
+worksheet.insertRows(1, rows, 'o');
 
 ```
 | Parameter | Description | Default Value |
