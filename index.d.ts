@@ -390,12 +390,12 @@ export type CellValue =
 		insetmode: 'auto' | 'custom';
 		inset: Number[];
 	}
-	
+
 	export interface CommentProtection {
 		locked: 'True' | 'False';
 		lockText: 'True' | 'False';
 	}
-	
+
 	export type CommentEditAs = 'twoCells' | 'oneCells' | 'absolute';
 
 	export interface Comment {
@@ -1201,13 +1201,13 @@ export interface Worksheet {
 	addRows(rows: any[], styleOption: string): void;
 
 	/**
-	 * Insert a Row by key-value, at the pos (shifiting down all rows from pos), 
+	 * Insert a Row by key-value, at the pos (shifiting down all rows from pos),
 	 * using the column keys, or add a row by contiguous Array (assign to columns A, B & C)
 	 */
 	insertRow(pos: number, value: any[] | any, styleOption: string): Row;
 
 	/**
-	 * Insert multiple rows at pos (shifiting down all rows from pos) 
+	 * Insert multiple rows at pos (shifiting down all rows from pos)
 	 * by providing an array of arrays or key-value pairs
 	 */
 	insertRows(pos: number, values: any[], styleOption: string): void;
@@ -1957,7 +1957,7 @@ export namespace stream {
 		class WorkbookReader extends Workbook {
 			constructor(input: string | import('stream').Stream, options: Partial<WorkbookStreamReaderOptions>);
 			read(): Promise<void>;
-			[Symbol.asyncIterator]: AsyncIterator<WorksheetReader>;
+			[Symbol.asyncIterator](): AsyncGenerator<WorksheetReader>;
 			parse(): AsyncIterator<any>;
 		}
 
@@ -1971,7 +1971,7 @@ export namespace stream {
 		class WorksheetReader {
 			constructor(options: WorksheetReaderOptions);
 			read(): Promise<void>;
-			[Symbol.asyncIterator]: AsyncIterator<Row>;
+			[Symbol.asyncIterator](): AsyncGenerator<Row>;
 			parse(): AsyncIterator<Array<any>>;
 			dimensions(): number;
 			columns(): number;
