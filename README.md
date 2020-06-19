@@ -2569,15 +2569,15 @@ Shared formulae enhance the compression of the xlsx document by decreasing the r
 of text within the worksheet xml.
 The top-left cell in a range is the designated master and will hold the
 formula that all the other cells in the range will derive from.
-The other 'slave' cells can then refer to this master cell instead of redefining the
+The other 'aligned' cells can then refer to this master cell instead of redefining the
 whole formula again.
-Note that the master formula will be translated to the slave cells in the usual
+Note that the master formula will be translated to the aligned cells in the usual
 Excel fashion so that references to other cells will be shifted down and
-to the right depending on the slave's offset to the master.
+to the right depending on the aligned cell's offset to the master.
 For example: if the master cell A2 has a formula referencing A1 then
 if cell B2 shares A2's formula, then it will reference B1.
 
-A master formula can be assigned to a cell along with the slave cells in its range
+A master formula can be assigned to a cell along with the aligned cells in its range
 
 ```javascript
 worksheet.getCell('A2').value = {
@@ -2645,7 +2645,7 @@ It contains the shareType 'array' along with the range of cells it applies to an
 The rest of the cells are regular cells with regular values.
 
 Note: array formulae are not translated in the way shared formulae are.
-So if master cell A2 refers to A1, then slave cell B2 will also refer to A1.
+So if master cell A2 refers to A1, then aligned cell B2 will also refer to A1.
 
 E.g.
 ```javascript

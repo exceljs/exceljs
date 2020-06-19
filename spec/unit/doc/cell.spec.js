@@ -180,7 +180,7 @@ describe('Cell', () => {
     expect(a2.master).to.equal(a1);
     expect(a1.master).to.equal(a1);
 
-    // assignment of slaves write to the master
+    // assignment of aligned write to the master
     a2.value = 7;
     expect(a1.value).to.equal(7);
 

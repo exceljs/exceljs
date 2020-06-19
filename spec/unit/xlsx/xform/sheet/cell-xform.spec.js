@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const CellXform = verquire('xlsx/xform/sheet/cell-xform');
 const SharedStringsXform = verquire('xlsx/xform/strings/shared-strings-xform');
@@ -433,7 +433,7 @@ const expectations = [
     },
   },
   {
-    title: 'Shared Formula Slave',
+    title: 'Shared Formula Alignment',
     create() {
       return new CellXform();
     },
