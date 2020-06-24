@@ -77,9 +77,11 @@ To be clear, all contributions added to this library will be included in the lib
       <li><a href="#auto-filters">Auto Filters</a></li>
       <li><a href="#columns">Columns</a></li>
       <li><a href="#rows">Rows</a></li>
+      <li><a href="#add-rows">Add Rows</a></li>
       <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
       <li><a href="#merged-cells">Merged Cells</a></li>
       <li><a href="#insert-rows">Insert Rows</a></li>
+      <li><a href="#splice">Splice</a></li>
       <li><a href="#duplicate-a-row">Duplicate Row</a></li>
       <li><a href="#defined-names">Defined Names</a></li>
       <li><a href="#data-validations">Data Validations</a></li>
@@ -707,35 +709,6 @@ worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 ## Rows[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
-// Add a couple of Rows by key-value, after the last current row, using the column keys
-worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
-worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
-
-// Add a row by contiguous Array (assign to columns A, B & C)
-worksheet.addRow([3, 'Sam', new Date()]);
-
-// Add a row by sparse Array (assign to columns A, E & I)
-const rowValues = [];
-rowValues[1] = 4;
-rowValues[5] = 'Kyle';
-rowValues[9] = new Date();
-worksheet.addRow(rowValues);
-
-// Add a row with inherited style
-// This new row will have same style as last row
-worksheet.addRow(rowValues, 'i');
-
-// Add an array of rows
-const rows = [
-  [5,'Bob',new Date()], // row by array
-  {id:6, name: 'Barbara', dob: new Date()}
-];
-worksheet.addRows(rows);
-
-// Add an array of rows with inherited style
-// These new rows will have same styles as last row
-worksheet.addRows(rows, 'i');
-
 // Get a row object. If it doesn't already exist, a new empty one will be returned
 const row = worksheet.getRow(5);
 
@@ -811,23 +784,6 @@ row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
   console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
-// Cut one or more rows (rows below are shifted up)
-// Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
-worksheet.spliceRows(4,3);
-
-// remove one row and insert two more.
-// Note: rows 4 and below will be shifted down by 1 row.
-const newRow3Values = [1,2,3,4,5];
-const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
-worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
-
-// Cut one or more cells (cells to the right are shifted left)
-// Note: this operation will not affect other rows
-row.splice(3,2);
-
-// remove one cell and insert two more (cells to the right of the cut cell will be shifted right)
-row.splice(4,1,'new value 1', 'new value 2');
-
 // Commit a completed row to stream
 row.commit();
 
@@ -835,6 +791,43 @@ row.commit();
 const rowSize = row.cellCount;
 const numValues = row.actualCellCount;
 ```
+
+## Add Rows[⬆](#contents)<!-- Link generated with jump2header -->
+
+```javascript
+// Add a couple of Rows by key-value, after the last current row, using the column keys
+worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
+worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
+
+// Add a row by contiguous Array (assign to columns A, B & C)
+worksheet.addRow([3, 'Sam', new Date()]);
+
+// Add a row by sparse Array (assign to columns A, E & I)
+const rowValues = [];
+rowValues[1] = 4;
+rowValues[5] = 'Kyle';
+rowValues[9] = new Date();
+worksheet.addRow(rowValues);
+
+// Add a row with inherited style
+// This new row will have same style as last row
+worksheet.addRow(rowValues, 'i');
+
+// Add an array of rows
+const rows = [
+  [5,'Bob',new Date()], // row by array
+  {id:6, name: 'Barbara', dob: new Date()}
+];
+worksheet.addRows(rows);
+
+// Add an array of rows with inherited style
+// These new rows will have same styles as last row
+worksheet.addRows(rows, 'i');
+```
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| value/s    | The new row/s values |  |
+| styleOption            | 'i' for inherit from row above, 'n' for none | *'n'* |
 
 ## Handling Individual Cells[⬆](#contents)<!-- Link generated with jump2header -->
 
@@ -932,6 +925,33 @@ worksheet.insertRows(1, rows, 'o');
 | pos          | Row number where you want to insert, pushing down all rows from there |  |
 | value/s    | The new row/s values |  |
 | styleOption            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
+
+## Splice[⬆](#contents)<!-- Link generated with jump2header -->
+
+```javascript
+// Cut one or more rows (rows below are shifted up)
+// Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
+worksheet.spliceRows(4, 3);
+
+// remove one row and insert two more.
+// Note: rows 4 and below will be shifted down by 1 row.
+const newRow3Values = [1, 2, 3, 4, 5];
+const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
+worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
+
+// Cut one or more cells (cells to the right are shifted left)
+// Note: this operation will not affect other rows
+row.splice(3, 2);
+
+// remove one cell and insert two more (cells to the right of the cut cell will be shifted right)
+row.splice(4, 1, 'new value 1', 'new value 2');
+```
+### Splice
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| start    | Starting point to splice from |  |
+| count    | Number of rows/cells to remove |  |
+| ...inserts            | New row/cell values to insert |  |
 
 ## Duplicate a Row[⬆](#contents)<!-- Link generated with jump2header -->
 
