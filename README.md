@@ -76,13 +76,16 @@ To be clear, all contributions added to this library will be included in the lib
       </li>
       <li><a href="#auto-filters">Auto Filters</a></li>
       <li><a href="#columns">Columns</a></li>
-      <li><a href="#rows">Rows</a></li>
-      <li><a href="#add-rows">Add Rows</a></li>
-      <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
-      <li><a href="#merged-cells">Merged Cells</a></li>
-      <li><a href="#insert-rows">Insert Rows</a></li>
-      <li><a href="#splice">Splice</a></li>
-      <li><a href="#duplicate-a-row">Duplicate Row</a></li>
+      <li><a href="#rows">Rows</a>
+        <ul>
+          <li><a href="#add-rows">Add Rows</a></li>
+          <li><a href="#handling-individual-cells">Handling Individual Cells</a></li>
+          <li><a href="#merged-cells">Merged Cells</a></li>
+          <li><a href="#insert-rows">Insert Rows</a></li>
+          <li><a href="#splice">Splice</a></li>
+          <li><a href="#duplicate-a-row">Duplicate Row</a></li>
+        </ul>
+      </li>
       <li><a href="#defined-names">Defined Names</a></li>
       <li><a href="#data-validations">Data Validations</a></li>
       <li><a href="#cell-comments">Cell Comments</a></li>
