@@ -946,7 +946,6 @@ row.splice(3, 2);
 // remove one cell and insert two more (cells to the right of the cut cell will be shifted right)
 row.splice(4, 1, 'new value 1', 'new value 2');
 ```
-### Splice
 | Parameter | Description | Default Value |
 | -------------- | ----------------- | -------- |
 | start    | Starting point to splice from |  |
