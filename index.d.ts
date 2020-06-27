@@ -878,7 +878,8 @@ export interface WorksheetProtection {
 	pivotTables: boolean;
 }
 
-export interface Image {
+export interface 
+{
 	extension: 'jpeg' | 'png' | 'gif';
 	base64?: string;
 	filename?: string;
@@ -907,8 +908,8 @@ export class Anchor implements IAnchor {
 	constructor(model?: IAnchor | object);
 }
 export interface ImageRange {
-	tl: { col: number; row: number } | Anchor;
-	br: { col: number; row: number } | Anchor;
+	tl: Anchor;
+	br: Anchor;
 }
 
 export interface ImagePosition {
