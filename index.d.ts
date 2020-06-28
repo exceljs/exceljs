@@ -877,7 +877,7 @@ export interface WorksheetProtection {
 	autoFilter: boolean;
 	pivotTables: boolean;
 }
-export interface Images {
+export interface Image {
 	extension: 'jpeg' | 'png' | 'gif';
 	base64?: string;
 	filename?: string;
