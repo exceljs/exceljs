@@ -1197,7 +1197,7 @@ export interface Worksheet {
 	/**
 	 * return all rows as sparse array
 	 */
-	getSheetValues(): Row[];
+	getSheetValues(): any[];
 
 	/**
 	 * returns the cell at [r,c] or address given by r. If not found, return undefined
