@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const SharedStringXform = verquire('xlsx/xform/strings/shared-string-xform');
 
@@ -51,6 +51,18 @@ const expectations = [
       ],
     },
     tests: ['render', 'renderIn', 'parse'],
+  },
+  {
+    title: 'richText is empty',
+    create() {
+      return new SharedStringXform();
+    },
+    preparedModel: {
+      richText: [],
+    },
+    xml: '<si><t></t></si>',
+    parsedModel: '',
+    tests: ['parse'],
   },
   {
     title: 'text + phonetic',

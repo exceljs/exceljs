@@ -11,6 +11,7 @@ module.exports = function(grunt) {
     babel: {
       options: {
         sourceMap: true,
+        compact: false,
       },
       dist: {
         files: [
@@ -61,6 +62,7 @@ module.exports = function(grunt) {
         sourceMap: true,
         output: {
           preamble: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+          ascii_only: true,
         },
       },
       dist: {
@@ -69,20 +71,6 @@ module.exports = function(grunt) {
           './dist/exceljs.bare.min.js': ['./dist/exceljs.bare.js'],
         },
       },
-      // es3: {
-      //   files: [
-      //     {
-      //       expand: true,
-      //       cwd: './build/lib/',
-      //       src: ['*.js', '**/*.js'],
-      //       dest: 'dist/es3/',
-      //       ext: '.js',
-      //     },
-      //     {
-      //       './dist/es3/index.js': ['./build/lib/exceljs.nodejs.js'],
-      //     }
-      //   ],
-      // },
     },
 
     copy: {

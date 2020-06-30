@@ -1,6 +1,6 @@
 declare interface Buffer extends ArrayBuffer { }
 
-export const enum RelationshipType {
+export declare enum RelationshipType {
 	None = 0,
 	OfficeDocument = 1,
 	Worksheet = 2,
@@ -11,7 +11,7 @@ export const enum RelationshipType {
 	Hyperlink = 7
 }
 
-export const enum DocumentType {
+export declare enum DocumentType {
 	Xlsx = 1
 }
 
@@ -272,7 +272,7 @@ export interface Margins {
 	footer: number;
 }
 
-export const enum ReadingOrder {
+export declare enum ReadingOrder {
 	LeftToRight = 1,
 	RightToLeft = 2,
 }
@@ -318,6 +318,16 @@ export interface DataValidation {
 	showInputMessage?: boolean;
 }
 
+export declare enum ErrorValue {
+	NotApplicable = '#N/A',
+	Ref = '#REF!',
+	Name = '#NAME?',
+	DivZero = '#DIV/0!',
+	Null = '#NULL!',
+	Value = '#VALUE!',
+	Num = '#NUM!',
+}
+
 export interface CellErrorValue {
 	error: '#N/A' | '#REF!' | '#NAME?' | '#DIV/0!' | '#NULL!' | '#VALUE!' | '#NUM!';
 }
@@ -349,7 +359,7 @@ export interface CellSharedFormulaValue {
 	date1904: boolean;
 }
 
-export const enum ValueType {
+export declare enum ValueType {
 	Null = 0,
 	Merge = 1,
 	Number = 2,
@@ -363,7 +373,7 @@ export const enum ValueType {
 	Error = 10
 }
 
-export const enum FormulaType {
+export declare enum FormulaType {
 	None = 0,
 	Master = 1,
 	Shared = 2
@@ -375,9 +385,25 @@ export type CellValue =
 	| CellRichTextValue | CellHyperlinkValue
 	| CellFormulaValue | CellSharedFormulaValue;
 
-export interface Comment {
-	texts: RichText[];
-}
+
+	export interface CommentMargins {
+		insetmode: 'auto' | 'custom';
+		inset: Number[];
+	}
+
+	export interface CommentProtection {
+		locked: 'True' | 'False';
+		lockText: 'True' | 'False';
+	}
+
+	export type CommentEditAs = 'twoCells' | 'oneCells' | 'absolute';
+
+	export interface Comment {
+		texts?: RichText[];
+		margins?: Partial<CommentMargins>;
+		protection?: Partial<CommentProtection>;
+		editAs?: CommentEditAs;
+	}
 
 export interface CellModel {
 	address: Address;
@@ -434,7 +460,7 @@ export interface Cell extends Style, Address {
 	/**
 	 * comment of the cell
 	 */
-	note: Comment;
+	note: string | Comment;
 
 	/**
 	 * convenience getter to access the formula
@@ -955,7 +981,7 @@ export interface WorksheetModel {
 	// dataValidations: this.dataValidations.model,
 	properties: WorksheetProperties;
 	pageSetup: Partial<PageSetup>;
-	headerFooter: HeaderFooter;
+	headerFooter: Partial<HeaderFooter>;
 	rowBreaks: RowBreak[];
 	views: WorksheetView[];
 	autoFilter: AutoFilter;
@@ -967,12 +993,12 @@ export type CellIsOperators = 'equal' | 'greaterThan' | 'lessThan' | 'between';
 
 export type ContainsTextOperators = 'containsText' | 'containsBlanks' | 'notContainsBlanks' | 'containsErrors' | 'notContainsErrors';
 
-export type TimePeriodTypes = 'lastWeek' | 'thisWeek' | 'nextWeek' | 'yesterday' | 'today' | 'tomorrow' | 'last7Days' | 'lastMonth' 
-			| 'thisMonth' | 'nextMonth';
+export type TimePeriodTypes = 'lastWeek' | 'thisWeek' | 'nextWeek' | 'yesterday' | 'today' | 'tomorrow' | 'last7Days' | 'lastMonth'
+	| 'thisMonth' | 'nextMonth';
 
-export type IconSetTypes = '5Arrows' | '5ArrowsGray' | '5Boxes' | '5Quarters' | '5Rating' | '4Arrows' | '4ArrowsGray' 
-			| '4Rating' | '4RedToBlack' | '4TrafficLights' | 'NoIcons' | '3Arrows' | '3ArrowsGray' | '3Flags' | '3Signs' 
-			| '3Stars' | '3Symbols' | '3Symbols2' | '3TrafficLights1' | '3TrafficLights2' | '3Triangles';
+export type IconSetTypes = '5Arrows' | '5ArrowsGray' | '5Boxes' | '5Quarters' | '5Rating' | '4Arrows' | '4ArrowsGray'
+	| '4Rating' | '4RedToBlack' | '4TrafficLights' | 'NoIcons' | '3Arrows' | '3ArrowsGray' | '3Flags' | '3Signs'
+	| '3Stars' | '3Symbols' | '3Symbols2' | '3TrafficLights1' | '3TrafficLights2' | '3Triangles';
 
 export type CfvoTypes = 'percentile' | 'percent' | 'num' | 'min' | 'max' | 'formula' | 'autoMin' | 'autoMax';
 
@@ -1047,13 +1073,13 @@ export interface DataBarRuleType extends ConditionalFormattingBaseRule {
 	cfvo?: Cvfo[];
 }
 
-export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType 
-				| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
+export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType
+	| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
 
 export interface ConditionalFormattingOptions {
 	ref: string;
 	rules: ConditionalFormattingRule[];
-} 
+}
 
 export interface Worksheet {
 	readonly id: number;
@@ -1070,7 +1096,7 @@ export interface Worksheet {
 	/**
 	 * Worksheet Header and Footer
 	 */
-	headerFooter: HeaderFooter;
+	headerFooter: Partial<HeaderFooter>;
 
 	/**
 	 * Worksheet State
@@ -1167,12 +1193,24 @@ export interface Worksheet {
 	 * Add a couple of Rows by key-value, after the last current row, using the column keys,
 	 * or add a row by contiguous Array (assign to columns A, B & C)
 	 */
-	addRow(data: any[] | any): Row;
+	addRow(data: any[] | any, styleOption: string): Row;
 
 	/**
 	 * Add multiple rows by providing an array of arrays or key-value pairs
 	 */
-	addRows(rows: any[]): void;
+	addRows(rows: any[], styleOption: string): void;
+
+	/**
+	 * Insert a Row by key-value, at the pos (shifiting down all rows from pos),
+	 * using the column keys, or add a row by contiguous Array (assign to columns A, B & C)
+	 */
+	insertRow(pos: number, value: any[] | any, styleOption: string): Row;
+
+	/**
+	 * Insert multiple rows at pos (shifiting down all rows from pos)
+	 * by providing an array of arrays or key-value pairs
+	 */
+	insertRows(pos: number, values: any[], styleOption: string): void;
 
 	/**
 	 * Duplicate rows and insert new rows
@@ -1266,7 +1304,7 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & {hyperlinks?: ImageHyperlinkValue} | { editAs?: string; } & ImagePosition & {hyperlinks?: ImageHyperlinkValue}): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): void;
 
 	getImages(): Array<{
 		type: 'image',
@@ -1354,6 +1392,7 @@ export interface WorksheetProperties {
 export interface AddWorksheetOptions {
 	properties: Partial<WorksheetProperties>;
 	pageSetup: Partial<PageSetup>;
+	headerFooter: Partial<HeaderFooter>;
 	views: Array<Partial<WorksheetView>>;
 	state: WorksheetState;
 }
@@ -1402,11 +1441,6 @@ export interface Xlsx {
 	 * @param buffer
 	 */
 	load(buffer: Buffer): Promise<Workbook>;
-
-	/**
-	 * Create input stream for reading
-	 */
-	createInputStream(): import('events').EventEmitter;
 
 	/**
 	 * write to a buffer
@@ -1844,42 +1878,42 @@ export namespace stream {
 			useStyles: boolean;
 		}
 
-        interface ArchiverZipOptions {
-            comment: string;
-            forceLocalTime: boolean;
-            forceZip64: boolean;
-            store: boolean;
-            zlib: Partial<ZlibOptions>;
-        }
+		interface ArchiverZipOptions {
+			comment: string;
+			forceLocalTime: boolean;
+			forceZip64: boolean;
+			store: boolean;
+			zlib: Partial<ZlibOptions>;
+		}
 
-        interface ZlibOptions {
-            /**
-             * @default constants.Z_NO_FLUSH
-             */
-            flush: number;
-            /**
-             * @default constants.Z_FINISH
-             */
-            finishFlush: number;
-            /**
-             * @default 16*1024
-             */
-            chunkSize: number;
-            windowBits: number;
-            level: number; // compression only
-            memLevel: number; // compression only
-            strategy: number; // compression only
-            dictionary: Buffer | NodeJS.TypedArray | DataView | ArrayBuffer; // deflate/inflate only, empty dictionary by default
-        }
+		interface ZlibOptions {
+			/**
+			 * @default constants.Z_NO_FLUSH
+			 */
+			flush: number;
+			/**
+			 * @default constants.Z_FINISH
+			 */
+			finishFlush: number;
+			/**
+			 * @default 16*1024
+			 */
+			chunkSize: number;
+			windowBits: number;
+			level: number; // compression only
+			memLevel: number; // compression only
+			strategy: number; // compression only
+			dictionary: Buffer | NodeJS.TypedArray | DataView | ArrayBuffer; // deflate/inflate only, empty dictionary by default
+		}
 
 		interface WorkbookStreamWriterOptions extends WorkbookWriterOptions {
 
-            /**
-             * Specifies whether to add style information to the workbook.
-             * Styles can add some performance overhead. Default is false
-             */
-            zip: Partial<ArchiverZipOptions>;
-        }
+			/**
+			 * Specifies whether to add style information to the workbook.
+			 * Styles can add some performance overhead. Default is false
+			 */
+			zip: Partial<ArchiverZipOptions>;
+		}
 
 		class WorkbookWriter extends Workbook {
 			constructor(options: Partial<WorkbookStreamWriterOptions>);
@@ -1894,6 +1928,54 @@ export namespace stream {
 			addSharedStrings(): Promise<void>;
 			addWorkbookRels(): Promise<void>;
 			addWorkbook(): Promise<void>;
+		}
+
+
+		interface WorkbookStreamReaderOptions {
+			/**
+			 * @default 'emit'
+			 */
+			worksheets?: 'emit' | 'ignore';
+			/**
+			 * @default 'cache'
+			 */
+			sharedStrings?: 'cache' | 'emit' | 'ignore';
+			/**
+			 * @default 'ignore'
+			 */
+			hyperlinks?: 'cache' | 'emit' | 'ignore';
+			/**
+			 * @default 'ignore'
+			 */
+			styles?: 'cache' | 'ignore';
+			/**
+			 * @default 'ignore'
+			 */
+			entries?: 'emit' | 'ignore';
+		}
+
+		class WorkbookReader extends Workbook {
+			constructor(input: string | import('stream').Stream, options: Partial<WorkbookStreamReaderOptions>);
+			read(): Promise<void>;
+			[Symbol.asyncIterator](): AsyncGenerator<WorksheetReader>;
+			parse(): AsyncIterator<any>;
+		}
+
+		interface WorksheetReaderOptions {
+			workbook: Workbook;
+			id: number;
+			entry: import('stream').Stream;
+			options: WorkbookStreamReaderOptions;
+		}
+
+		class WorksheetReader {
+			constructor(options: WorksheetReaderOptions);
+			read(): Promise<void>;
+			[Symbol.asyncIterator](): AsyncGenerator<Row>;
+			parse(): AsyncIterator<Array<any>>;
+			dimensions(): number;
+			columns(): number;
+			getColumn(c: number): Column;
 		}
 	}
 }

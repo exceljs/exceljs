@@ -84,7 +84,7 @@ function report() {
 }
 
 if (useStream) {
-  const wb = new WorkbookReader(options);
+  const wb = new WorkbookReader();
   wb.on('end', () => {
     console.log('reached end of stream');
   });

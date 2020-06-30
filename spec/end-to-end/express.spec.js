@@ -27,7 +27,8 @@ describe('Express', () => {
     server.close();
   });
 
-  it('downloads a workbook', async () => {
+  it('downloads a workbook', async function() {
+    this.timeout(5000);
     const res = got.stream('http://127.0.0.1:3003/workbook', {
       decompress: false,
     });
