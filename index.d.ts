@@ -877,7 +877,6 @@ export interface WorksheetProtection {
 	autoFilter: boolean;
 	pivotTables: boolean;
 }
-
 export interface Image {
 	extension: 'jpeg' | 'png' | 'gif';
 	base64?: string;
@@ -907,8 +906,8 @@ export class Anchor implements IAnchor {
 	constructor(model?: IAnchor | object);
 }
 export interface ImageRange {
-	tl: { col: number; row: number } | Anchor;
-	br: { col: number; row: number } | Anchor;
+	tl: Anchor;
+	br: Anchor;
 }
 
 export interface ImagePosition {
@@ -1196,24 +1195,24 @@ export interface Worksheet {
 	 * Add a couple of Rows by key-value, after the last current row, using the column keys,
 	 * or add a row by contiguous Array (assign to columns A, B & C)
 	 */
-	addRow(data: any[] | any, styleOption: string): Row;
+	addRow(data: any[] | any, styleOption?: string): Row;
 
 	/**
 	 * Add multiple rows by providing an array of arrays or key-value pairs
 	 */
-	addRows(rows: any[], styleOption: string): void;
+	addRows(rows: any[], styleOption?: string): void;
 
 	/**
 	 * Insert a Row by key-value, at the pos (shifiting down all rows from pos),
 	 * using the column keys, or add a row by contiguous Array (assign to columns A, B & C)
 	 */
-	insertRow(pos: number, value: any[] | any, styleOption: string): Row;
+	insertRow(pos: number, value: any[] | any, styleOption?: string): Row;
 
 	/**
 	 * Insert multiple rows at pos (shifiting down all rows from pos)
 	 * by providing an array of arrays or key-value pairs
 	 */
-	insertRows(pos: number, values: any[], styleOption: string): void;
+	insertRows(pos: number, values: any[], styleOption?: string): void;
 
 	/**
 	 * Duplicate rows and insert new rows
