@@ -656,6 +656,17 @@ worksheet.autoFilter = {
 }
 ```
 
+Additionally, specific columns can be excluded from showing an auto filter button using `exclude`. The `exclude` property takes an array of columns to exclude (with 0 being the leftmost column), and hides the filter button on said columns. 
+
+```javascript
+// Set an auto filter from A1 to E1, while hiding the filter button on the A and C columns
+worksheet.autoFilter = {
+  from: 'A1',
+  to: 'E1',
+  exclude: [0, 2]
+}
+```
+
 ## Columns[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
