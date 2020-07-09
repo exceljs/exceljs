@@ -69,11 +69,16 @@ npm install exceljs
       </li>
       <li><a href="#自动筛选器">自动筛选器</a></li>
       <li><a href="#列">列</a></li>
-      <li><a href="#行">行</a></li>
-      <li><a href="#处理单个单元格">处理单个单元格</a></li>
-      <li><a href="#合并单元格">合并单元格</a></li>
-      <li><a href="#insert-rows">Insert Rows</a></li>
-      <li><a href="#重复行">重复行</a></li>
+      <li><a href="#行">行</a>
+        <ul>
+          <li><a href="#add-rows">Add Rows</a></li>
+          <li><a href="#处理单个单元格">处理单个单元格</a></li>
+          <li><a href="#合并单元格">合并单元格</a></li>
+          <li><a href="#insert-rows">Insert Rows</a></li>
+          <li><a href="#splice">Splice</a></li>
+          <li><a href="#重复行">重复行</a></li>
+        </ul>
+      </li>
       <li><a href="#定义名称">定义名称</a></li>
       <li><a href="#数据验证">数据验证</a></li>
       <li><a href="#单元格注释">单元格注释</a></li>
@@ -688,35 +693,6 @@ worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 ## 行[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-// 在最后一个当前行之后，使用列键值添加两行
-worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
-worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
-
-// 通过连续数组添加一行（分配给 A，B 和 C 列）
-worksheet.addRow([3, 'Sam', new Date()]);
-
-// 通过稀疏数组添加一行（分配给 A，E 和 I 列）
-const rowValues = [];
-rowValues[1] = 4;
-rowValues[5] = 'Kyle';
-rowValues[9] = new Date();
-worksheet.addRow(rowValues);
-
-// Add a row with inherited style
-// This new row will have same style as last row
-worksheet.addRow(rowValues, 'i');
-
-// 添加行数组
-const rows = [
-  [5,'Bob',new Date()], // row by array
-  {id:6, name: 'Barbara', dob: new Date()}
-];
-worksheet.addRows(rows);
-
-// Add an array of rows with inherited style
-// These new rows will have same styles as last row
-worksheet.addRows(rows, 'i');
-
 // 获取一个行对象。如果尚不存在，则将返回一个新的空对象
 const row = worksheet.getRow(5);
 
@@ -792,23 +768,6 @@ row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
   console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
-// 剪切下一行或多行（下面的行向上移动）
-// 已知问题：如果拼接导致任何合并的单元格移动，结果可能是不可预测的
-worksheet.spliceRows(4,3);
-
-// 删除一行，再插入两行。
-// 注意：第4行及以下行将向下移动 1 行。
-const newRow3Values = [1,2,3,4,5];
-const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
-worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
-
-// 剪切一个或多个单元格（右侧的单元格向左移动）
-// 注意：此操作不会影响其他行
-row.splice(3,2);
-
-// 删除一个单元格，再插入两个单元格（剪切单元格右侧的单元格将向右移动）
-row.splice(4,1,'new value 1', 'new value 2');
-
 // 提交给流一个完成的行
 row.commit();
 
@@ -816,6 +775,43 @@ row.commit();
 const rowSize = row.cellCount;
 const numValues = row.actualCellCount;
 ```
+
+## Add Rows[⬆](#contents)<!-- Link generated with jump2header -->
+
+```javascript
+// Add a couple of Rows by key-value, after the last current row, using the column keys
+worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
+worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
+
+// Add a row by contiguous Array (assign to columns A, B & C)
+worksheet.addRow([3, 'Sam', new Date()]);
+
+// Add a row by sparse Array (assign to columns A, E & I)
+const rowValues = [];
+rowValues[1] = 4;
+rowValues[5] = 'Kyle';
+rowValues[9] = new Date();
+worksheet.addRow(rowValues);
+
+// Add a row with inherited style
+// This new row will have same style as last row
+worksheet.addRow(rowValues, 'i');
+
+// Add an array of rows
+const rows = [
+  [5,'Bob',new Date()], // row by array
+  {id:6, name: 'Barbara', dob: new Date()}
+];
+worksheet.addRows(rows);
+
+// Add an array of rows with inherited style
+// These new rows will have same styles as last row
+worksheet.addRows(rows, 'i');
+```
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| value/s    | The new row/s values |  |
+| styleOption            | 'i' for inherit from row above, 'n' for none | *'n'* |
 
 ## 处理单个单元格[⬆](#目录)<!-- Link generated with jump2header -->
 
@@ -913,6 +909,32 @@ worksheet.insertRows(1, rows, 'o');
 | pos          | Row number where you want to insert, pushing down all rows from there |  |
 | value/s    | The new row/s values |  |
 | styleOption            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
+
+## Splice[⬆](#contents)<!-- Link generated with jump2header -->
+
+```javascript
+// Cut one or more rows (rows below are shifted up)
+// Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
+worksheet.spliceRows(4, 3);
+
+// remove one row and insert two more.
+// Note: rows 4 and below will be shifted down by 1 row.
+const newRow3Values = [1, 2, 3, 4, 5];
+const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
+worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
+
+// Cut one or more cells (cells to the right are shifted left)
+// Note: this operation will not affect other rows
+row.splice(3, 2);
+
+// remove one cell and insert two more (cells to the right of the cut cell will be shifted right)
+row.splice(4, 1, 'new value 1', 'new value 2');
+```
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| start    | Starting point to splice from |  |
+| count    | Number of rows/cells to remove |  |
+| ...inserts            | New row/cell values to insert |  |
 
 ## 重复行[⬆](#目录)<!-- Link generated with jump2header -->
 
