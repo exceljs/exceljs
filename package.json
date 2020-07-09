@@ -1,6 +1,6 @@
 {
   "name": "exceljs",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -142,6 +142,6 @@
     "prettier-eslint-cli": "^5.0.0",
     "regenerator-runtime": "^0.13.5",
     "ts-node": "^8.9.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   }
 }
