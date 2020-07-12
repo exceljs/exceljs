@@ -1,5 +1,6 @@
 const path = require('path');
 
+const {expect} = require('chai');
 const testutils = require('../utils/index');
 
 const ExcelJS = verquire('exceljs');
@@ -271,6 +272,11 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(values[rowNumber][colNumber]);
         });
       });
+
+      const fetchedRows = ws.getRows(1, 2);
+      for (let i = 0; i < 2; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(values[i + 1]);
+      }
     });
 
     it('adds rows by contiguous array', () => {
@@ -293,6 +299,15 @@ describe('Worksheet', () => {
 
       expect(ws.getRow(1).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
       expect(ws.getRow(2).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
+
+      const values = [
+        [, 1, 'John Doe', dateValue1],
+        [, 2, 'Jane Doe', dateValue2],
+      ];
+      const fetchedRows = ws.getRows(1, 2);
+      for (let i = 0; i < 2; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(values[i]);
+      }
     });
 
     it('adds rows by sparse array', () => {
@@ -339,6 +354,11 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(rows[rowNumber][colNumber]);
         });
       });
+
+      const fetchedRows = ws.getRows(1, 2);
+      for (let i = 0; i < 2; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(rows[i + 1]);
+      }
     });
 
     it('add rows with styleOptions', () => {
@@ -368,7 +388,7 @@ describe('Worksheet', () => {
       );
     });
 
-    it('insert rows by object', () => {
+    it('inserts rows by object', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -414,9 +434,14 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(values[rowNumber][colNumber]);
         });
       });
+
+      const fetchedRows = ws.getRows(1, 2);
+      for (let i = 0; i < 2; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(values[i + 1]);
+      }
     });
 
-    it('insert rows by contiguous array', () => {
+    it('inserts rows by contiguous array', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -442,12 +467,23 @@ describe('Worksheet', () => {
       expect(ws.getCell('B3').value).to.equal('Jane Doe');
       expect(ws.getCell('C3').value).to.equal(dateValue2);
 
-      expect(ws.getRow(1).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
-      expect(ws.getRow(2).values).to.deep.equal([, 3, 'Other Doe', dateValue3]);
-      expect(ws.getRow(3).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
+      const values = [
+        [, 1, 'John Doe', dateValue1],
+        [, 3, 'Other Doe', dateValue3],
+        [, 2, 'Jane Doe', dateValue2],
+      ];
+
+      expect(ws.getRow(1).values).to.deep.equal(values[0]);
+      expect(ws.getRow(2).values).to.deep.equal(values[1]);
+      expect(ws.getRow(3).values).to.deep.equal(values[2]);
+
+      const fetchedRows = ws.getRows(1, 3);
+      for (let i = 0; i < 3; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(values[i]);
+      }
     });
 
-    it('insert rows by sparse array', () => {
+    it('inserts rows by sparse array', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -489,9 +525,14 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(rows[rows.length - rowNumber][colNumber]);
         });
       });
+
+      const fetchedRows = ws.getRows(1, 3);
+      for (let i = 0; i < 3; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(rows[rows.length - i - 1]);
+      }
     });
 
-    it('insert rows with styleOptions', () => {
+    it('inserts rows with styleOptions', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
