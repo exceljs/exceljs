@@ -1942,7 +1942,7 @@ Adding images to a worksheet is a two-step process.
 First, the image is added to the workbook via the addImage() function which will also return an imageId value.
 Then, using the imageId, the image can be added to the worksheet either as a tiled background or covering a cell range.
 
-Note: As of this version, adjusting or transforming the image is not supported.
+Note: As of this version, adjusting or transforming the image is not supported and images are not supported in streaming mode.
 
 ### Add Image to Workbook[⬆](#contents)<!-- Link generated with jump2header -->
 
