@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const TableColumnXform = verquire('xlsx/xform/table/table-column-xform');
 
@@ -21,6 +21,26 @@ const expectations = [
     preparedModel: {id: 1, name: 'Foo', totalsRowFunction: 'Baz'},
     xml: '<tableColumn id="1" name="Foo" totalsRowFunction="Baz" />',
     parsedModel: {name: 'Foo', totalsRowFunction: 'Baz'},
+    tests: ['render', 'renderIn', 'parse'],
+  },
+  {
+    title: 'calculatedColumnFormula',
+    create() {
+      return new TableColumnXform();
+    },
+    preparedModel: {
+      id: 1,
+      name: 'Foo',
+      totalsRowFunction: 'Baz',
+      calculatedColumnFormula: 'A2*2',
+    },
+    xml:
+      '<tableColumn id="1" name="Foo" totalsRowFunction="Baz"><calculatedColumnFormula>A2*2</calculatedColumnFormula></tableColumn>',
+    parsedModel: {
+      name: 'Foo',
+      totalsRowFunction: 'Baz',
+      calculatedColumnFormula: 'A2*2',
+    },
     tests: ['render', 'renderIn', 'parse'],
   },
 ];
