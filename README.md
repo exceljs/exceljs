@@ -1250,13 +1250,14 @@ style property.
 The following table defines the properties supported within each table
 column.
 
-| Column Property    | Description       | Required | Default Value |
-| ------------------ | ----------------- | -------- | ------------- |
-| name               | The name of the column, also used in the header | Y |    |
-| filterButton       | Switches the filter control in the header | N |  false  |
-| totalsRowLabel     | Label to describe the totals row (first column) | N | 'Total' |
-| totalsRowFunction  | Name of the totals function | N | 'none' |
-| totalsRowFormula   | Optional formula for custom functions | N |   |
+| Column Property         | Description       | Required | Default Value |
+| ----------------------- | ----------------- | -------- | ------------- |
+| name                    | The name of the column, also used in the header | Y |    |
+| filterButton            | Switches the filter control in the header | N |  false  |
+| totalsRowLabel          | Label to describe the totals row (first column) | N | 'Total' |
+| totalsRowFunction       | Name of the totals function | N | 'none' |
+| totalsRowFormula        | Optional formula for custom functions | N |   |
+| calculatedColumnFormula | Optional formula to apply to the whole column | N |   |
 
 ### Totals Functions[⬆](#contents)<!-- Link generated with jump2header -->
 
@@ -1277,6 +1278,29 @@ by the table.
 | var                | The variance for this column |
 | sum                | The sum of entries for this column |
 | custom             | A custom formula. Requires an associated totalsRowFormula value. |
+
+### Calculated column formulas[⬆](#contents)<!-- Link generated with jump2header -->
+
+When using a calculated column formula you need to set the cells value to null when adding it, this was it will be converted into a shared formula.
+If you set it to a value other than null, it will use that value instead.
+
+```javascript
+ws.addTable({
+  name: 'MyTable',
+  ref: 'A1',
+  // ...
+  columns: [
+    {name: 'Id'},
+    {name: 'ByTwo', calculatedColumnFormula: 'A2*2'},
+  ],
+  rows: [
+    [1, null],
+    [2, null],
+    [3, 'Will override'],
+    [4, null]
+  ],
+});
+```
 
 ### Table Style Themes[⬆](#contents)<!-- Link generated with jump2header -->
 

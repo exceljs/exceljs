@@ -1777,6 +1777,10 @@ export interface TableColumnProperties {
 	  * Optional formula for custom functions
 	  */
 	totalsRowFormula?: string;
+	/**
+	 * Optional formula to apply to the entire column
+	 */
+	calculatedColumnFormula?: string
 }
 
 

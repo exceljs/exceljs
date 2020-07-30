@@ -61,7 +61,7 @@ function checkTable(ref, ws, testValues) {
       const value = (vRow && vRow[j]) || null;
       const nCol = j + a.col;
       const cellValue = nCol >= 1 && row.getCell(nCol).value;
-      if (!cellValue) continue;
+      if (cellValue === false) continue;
 
       if (value instanceof Date) {
         expect(cellValue).to.equalDate(value);
@@ -211,6 +211,78 @@ describe('Worksheet', () => {
       ]);
 
       checkTable('A1', ws, newValues);
+    });
+
+    it('sets shared calculated column formula', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+      ws.addTable({
+        name: 'TestTable',
+        ref: 'A1',
+        headerRow: true,
+        totalsRow: false,
+        style: {
+          theme: 'TableStyleDark3',
+          showRowStripes: true,
+        },
+        columns: [
+          {name: 'Id'},
+          {name: 'ByTwo', calculatedColumnFormula: 'A2*2'},
+          {name: 'Word'},
+          {name: 'ByThree', calculatedColumnFormula: 'A2*3'},
+        ],
+        rows: [
+          [1, null, 'Bird', null],
+          [2, null, 'Is', null],
+          [3, 'overridden', 'the', null],
+          [4, null, 'Word', null],
+        ],
+      });
+      checkTable('A1', ws, [
+        ['Id', 'ByTwo', 'Word', 'ByThree'],
+        [
+          1,
+          {
+            formula: 'A2*2',
+            shareType: 'shared',
+            ref: 'B2:B5',
+          },
+          'Bird',
+          {
+            formula: 'A2*3',
+            shareType: 'shared',
+            ref: 'D2:D5',
+          },
+        ],
+        [
+          2,
+          {
+            sharedFormula: 'B2',
+          },
+          'Is',
+          {
+            sharedFormula: 'D2',
+          },
+        ],
+        [
+          3,
+          'overridden',
+          'the',
+          {
+            sharedFormula: 'D2',
+          },
+        ],
+        [
+          4,
+          {
+            sharedFormula: 'B2',
+          },
+          'Word',
+          {
+            sharedFormula: 'D2',
+          },
+        ],
+      ]);
     });
   });
 });
