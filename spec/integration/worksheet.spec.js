@@ -1,6 +1,6 @@
 const path = require('path');
 
-const testutils = require('./../utils/index');
+const testutils = require('../utils/index');
 
 const ExcelJS = verquire('exceljs');
 const Range = verquire('doc/range');
@@ -339,6 +339,222 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(rows[rowNumber][colNumber]);
         });
       });
+    });
+
+    it('add rows with styleOptions', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+
+      ws.addRow([1, 'John Doe', dateValue1]);
+      ws.getRow(1).font = testutils.styles.fonts.comicSansUdB16;
+      ws.addRow([2, 'Jane Doe', dateValue2], 'i');
+      ws.addRow([3, 'Jane Doe', dateValue2], 'n');
+      ws.addRow([4, 'Jane Doe', dateValue2], 'i');
+
+      expect(ws.getCell('A1').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A2').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A3').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A4').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+    });
+
+    it('insert rows by object', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      // add columns to define column keys
+      ws.columns = [
+        {header: 'Id', key: 'id', width: 10},
+        {header: 'Name', key: 'name', width: 32},
+        {header: 'D.O.B.', key: 'dob', width: 10},
+      ];
+
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+      const dateValue3 = new Date(1965, 1, 10);
+
+      ws.addRow({id: 1, name: 'John Doe', dob: dateValue1});
+      ws.addRow({id: 2, name: 'Jane Doe', dob: dateValue2});
+
+      // insert in 3 shifting down earlier
+      ws.insertRow(3, {id: 3, name: 'Other Doe', dob: dateValue3});
+
+      expect(ws.getCell('A2').value).to.equal(1);
+      expect(ws.getCell('B2').value).to.equal('John Doe');
+      expect(ws.getCell('C2').value).to.equal(dateValue1);
+
+      expect(ws.getCell('A3').value).to.equal(3);
+      expect(ws.getCell('B3').value).to.equal('Other Doe');
+      expect(ws.getCell('C3').value).to.equal(dateValue3);
+
+      expect(ws.getCell('A4').value).to.equal(2);
+      expect(ws.getCell('B4').value).to.equal('Jane Doe');
+      expect(ws.getCell('C4').value).to.equal(dateValue2);
+
+      const values = [
+        ,
+        [, 'Id', 'Name', 'D.O.B.'],
+        [, 1, 'John Doe', dateValue1],
+        [, 3, 'Other Doe', dateValue3],
+        [, 2, 'Jane Doe', dateValue2],
+      ];
+      ws.eachRow((row, rowNumber) => {
+        expect(row.values).to.deep.equal(values[rowNumber]);
+        row.eachCell((cell, colNumber) => {
+          expect(cell.value).to.equal(values[rowNumber][colNumber]);
+        });
+      });
+    });
+
+    it('insert rows by contiguous array', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+      const dateValue3 = new Date(1965, 1, 10);
+
+      ws.addRow([1, 'John Doe', dateValue1]);
+      ws.addRow([2, 'Jane Doe', dateValue2]);
+
+      // insert in 2 shifting down earlier
+      ws.insertRow(2, [3, 'Other Doe', dateValue3]);
+
+      expect(ws.getCell('A1').value).to.equal(1);
+      expect(ws.getCell('B1').value).to.equal('John Doe');
+      expect(ws.getCell('C1').value).to.equal(dateValue1);
+
+      expect(ws.getCell('A2').value).to.equal(3);
+      expect(ws.getCell('B2').value).to.equal('Other Doe');
+      expect(ws.getCell('C2').value).to.equal(dateValue3);
+
+      expect(ws.getCell('A3').value).to.equal(2);
+      expect(ws.getCell('B3').value).to.equal('Jane Doe');
+      expect(ws.getCell('C3').value).to.equal(dateValue2);
+
+      expect(ws.getRow(1).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
+      expect(ws.getRow(2).values).to.deep.equal([, 3, 'Other Doe', dateValue3]);
+      expect(ws.getRow(3).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
+    });
+
+    it('insert rows by sparse array', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+      const dateValue3 = new Date(1965, 1, 10);
+      const rows = [
+        ,
+        [, 1, 'John Doe', , dateValue1],
+        [, 2, 'Jane Doe', , dateValue2],
+      ];
+      const row3 = [];
+      row3[1] = 3;
+      row3[3] = 'Other Doe';
+      row3[5] = dateValue3;
+      rows.push(row3);
+      rows.forEach(row => {
+        if (row) {
+          // insert on row 1 every time and thus finally reversed order
+          ws.insertRow(1, row);
+        }
+      });
+
+      expect(ws.getCell('A1').value).to.equal(3);
+      expect(ws.getCell('C1').value).to.equal('Other Doe');
+      expect(ws.getCell('E1').value).to.equal(dateValue3);
+
+      expect(ws.getCell('A2').value).to.equal(2);
+      expect(ws.getCell('B2').value).to.equal('Jane Doe');
+      expect(ws.getCell('D2').value).to.equal(dateValue2);
+
+      expect(ws.getCell('A3').value).to.equal(1);
+      expect(ws.getCell('B3').value).to.equal('John Doe');
+      expect(ws.getCell('D3').value).to.equal(dateValue1);
+
+      ws.eachRow((row, rowNumber) => {
+        expect(row.values).to.deep.equal(rows[rows.length - rowNumber]);
+        row.eachCell((cell, colNumber) => {
+          expect(cell.value).to.equal(rows[rows.length - rowNumber][colNumber]);
+        });
+      });
+    });
+
+    it('insert rows with styleOptions', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+
+      const arr = [
+        [5, 'Jane Doe', dateValue2],
+        [5, 'Jane Doe', dateValue2],
+        [5, 'Jane Doe', dateValue2],
+      ];
+
+      ws.addRow([5, 'John Doe', dateValue1]);
+      ws.getRow(1).font = testutils.styles.fonts.comicSansUdB16;
+
+      ws.insertRow(1, [5, 'Jane Doe', dateValue2], 'o');
+      ws.insertRow(1, [4, 'Jane Doe', dateValue2], 'i');
+      ws.insertRow(1, [3, 'Jane Doe', dateValue2], 'n');
+      ws.insertRow(1, [2, 'Jane Doe', dateValue2], 'o');
+
+      ws.addRow([6, 'Jane Doe', dateValue2]);
+      ws.getRow(6).font = testutils.styles.fonts.comicSansUdB16;
+
+      ws.insertRows(6, arr, 'o');
+      ws.insertRows(10, arr, 'i');
+      ws.insertRows(13, arr);
+
+      expect(ws.getCell('A1').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A2').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A3').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A4').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A5').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A6').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A9').font).to.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      for (let i = 7; i <= 8; i++) {
+        expect(ws.getCell(`A${i}`).font).not.deep.equal(
+          testutils.styles.fonts.comicSansUdB16
+        );
+      }
+      for (let i = 10; i <= 12; i++) {
+        expect(ws.getCell(`A${i}`).font).to.deep.equal(
+          testutils.styles.fonts.comicSansUdB16
+        );
+      }
+      for (let i = 13; i <= 15; i++) {
+        expect(ws.getCell(`A${i}`).font).not.deep.equal(
+          testutils.styles.fonts.comicSansUdB16
+        );
+      }
     });
 
     it('iterates over rows', () => {
@@ -812,4 +1028,44 @@ describe('Worksheet', () => {
         expect(workbook).to.have.property('worksheets');
         expect(workbook.worksheets).to.have.length(1);
       }));
+
+  describe('Hidden', () => {
+    const fileList = [
+      'google-sheets',
+      'libre-calc-as-excel-2007-365',
+      'libre-calc-as-office-open-xml-spreadsheet',
+    ];
+
+    for (const file of fileList) {
+      it(`Should set hidden attribute correctly (${file})`, done => {
+        const wb = new ExcelJS.Workbook();
+        wb.xlsx
+          .readFile(
+            path.resolve(__dirname, 'data', 'hidden-test', `${file}.xlsx`)
+          )
+          .then(() => {
+            const ws = wb.getWorksheet(1);
+
+            //  Check rows
+            expect(ws.getRow(1).hidden, `${file} : Row 1`).to.equal(false);
+            expect(ws.getRow(2).hidden, `${file} : Row 2`).to.equal(true);
+            expect(ws.getRow(3).hidden, `${file} : Row 3`).to.equal(false);
+
+            //  Check columns
+            expect(ws.getColumn(1).hidden, `${file} : Column 1`).to.equal(
+              false
+            );
+            expect(ws.getColumn(2).hidden, `${file} : Column 2`).to.equal(true);
+            expect(ws.getColumn(3).hidden, `${file} : Column 3`).to.equal(
+              false
+            );
+
+            done();
+          })
+          .catch(error => {
+            done(error);
+          });
+      });
+    }
+  });
 });

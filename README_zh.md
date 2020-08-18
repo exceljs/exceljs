@@ -1,6 +1,6 @@
 # ExcelJS
 
-[![Build Status](https://travis-ci.org/exceljs/exceljs.svg?branch=master)](https://travis-ci.org/exceljs/exceljs)
+[![Build status](https://github.com/exceljs/exceljs/workflows/ExcelJS/badge.svg)](https://github.com/exceljs/exceljs/actions?query=workflow%3AExcelJS)
 [![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/context:javascript)
 [![Total Alerts](https://img.shields.io/lgtm/alerts/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/alerts)
 
@@ -18,44 +18,18 @@ npm install exceljs
 
 <ul>
   <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/1140">优化 SAXStream #1140</a>.
-    非常感谢 <a href="https://github.com/alubbe">Andreas Lubbe</a> 对此的贡献。
+    重大版本更改-主要的ExcelJS接口已从基于流的API迁移到异步迭代器，从而使代码更简洁。 虽然技术上是一个突破性的变化，但大多数API都没有变化，详细信息请参见<a href="https://github.com/exceljs/exceljs/blob/master/UPGRADE-4.0.md">UPGRADE-4.0.md</a>。
   </li>
   <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/1143">修复问题 #1057 使用  Streaming XLSX Writer 时 `addConditionalFormatting` 不是方法的错误 #1143</a>.
-    非常感谢 <a href="https://github.com/Alanscut">Alan Wang</a> 对此的贡献。
-  </li>
-  <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/1160">修复问题 #204 设置默认列宽 #1160</a>.
-    非常感谢 <a href="https://github.com/Alanscut">Alan Wang</a> 对此的贡献。
-  </li>
-  <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/1164">共享公式主单元格的包含单元格地址必须存在。 #1164</a>.
-    非常感谢 <a href="https://github.com/noisyscanner">Brad Reed</a> 对此的贡献。
-  </li>
-  <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/1166">数据验证示例中的错字 #1166</a>.
-    非常感谢 <a href="https://github.com/mravey">Matthieu Ravey</a> 对此的贡献。
-  </li>
-  <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/1176">修复 #1175 #1176</a>.
-    非常感谢 <a href="https://github.com/Siemienik">Siemienik Paweł</a> 对此的贡献。
-  </li>
-  <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/1179">修复问题 #1178 和更新 index.d.ts #1179</a>.
-    非常感谢 <a href="https://github.com/Alanscut">Alan Wang</a> 对此的贡献。
-  </li>
-  <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/1182">简单测试 typescript 是否能够编译 #1182</a>.
-    非常感谢 <a href="https://github.com/Siemienik">Siemienik Paweł</a> 对此的贡献。
-  </li>
-  <li>
-    合并 <a href="https://github.com/exceljs/exceljs/pull/1190">更多改进 #1190</a>.
-    非常感谢 <a href="https://github.com/alubbe">Andreas Lubbe</a> 对此的贡献。
+    此升级来自以下合并：
+     <ul>
+      <li><a href="https://github.com/exceljs/exceljs/pull/1135">[MAJOR VERSION] Async iterators #1135</a></li>
+      <li><a href="https://github.com/exceljs/exceljs/pull/1142">[MAJOR VERSION] Move node v8 support to ES5 imports #1142</a></li>
+    </ul>
+    团队做了很多工作-特别是 <a href="https://github.com/alubbe">Andreas Lubbe</a> and
+    <a href="https://github.com/Siemienik">Siemienik Paweł</a>.
   </li>
 </ul>
-
-
 
 # 贡献
 
@@ -95,10 +69,16 @@ npm install exceljs
       </li>
       <li><a href="#自动筛选器">自动筛选器</a></li>
       <li><a href="#列">列</a></li>
-      <li><a href="#行">行</a></li>
-      <li><a href="#处理单个单元格">处理单个单元格</a></li>
-      <li><a href="#合并单元格">合并单元格</a></li>
-      <li><a href="#重复行">重复行</a></li>
+      <li><a href="#行">行</a>
+        <ul>
+          <li><a href="#add-rows">Add Rows</a></li>
+          <li><a href="#处理单个单元格">处理单个单元格</a></li>
+          <li><a href="#合并单元格">合并单元格</a></li>
+          <li><a href="#insert-rows">Insert Rows</a></li>
+          <li><a href="#splice">Splice</a></li>
+          <li><a href="#重复行">重复行</a></li>
+        </ul>
+      </li>
       <li><a href="#定义名称">定义名称</a></li>
       <li><a href="#数据验证">数据验证</a></li>
       <li><a href="#单元格注释">单元格注释</a></li>
@@ -170,13 +150,13 @@ npm install exceljs
 
 
 
-# 导入
+# 导入[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 const ExcelJS = require('exceljs');
 ```
 
-## ES5 导入
+## ES5 导入[⬆](#目录)<!-- Link generated with jump2header -->
 
 要使用 ES5 编译代码，请使用 *dist/es5* 路径。
 
@@ -190,8 +170,11 @@ const ExcelJS = require('exceljs/dist/es5');
 ```javascript
 // exceljs 所需的 polyfills
 require('core-js/modules/es.promise');
+require('core-js/modules/es.string.includes');
 require('core-js/modules/es.object.assign');
 require('core-js/modules/es.object.keys');
+require('core-js/modules/es.symbol');
+require('core-js/modules/es.symbol.async-iterator');
 require('regenerator-runtime/runtime');
 
 const ExcelJS = require('exceljs/dist/es5');
@@ -217,7 +200,7 @@ try {
 }
 ```
 
-## 浏览器端
+## 浏览器端[⬆](#目录)<!-- Link generated with jump2header -->
 
 ExcelJS 在 *dist/* 文件夹内发布了两个支持浏览器的包：
 
@@ -234,15 +217,15 @@ ExcelJS 在 *dist/* 文件夹内发布了两个支持浏览器的包：
 ```
 
 
-# 接口
+# 接口[⬆](#目录)<!-- Link generated with jump2header -->
 
-## 创建工作簿
+## 创建工作簿[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 ```
 
-## 设置工作簿属性
+## 设置工作簿属性[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 workbook.creator = 'Me';
@@ -257,14 +240,14 @@ workbook.lastPrinted = new Date(2016, 9, 27);
 workbook.properties.date1904 = true;
 ```
 
-## 设置计算属性
+## 设置计算属性[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 // 在加载时强制工作簿计算属性
 workbook.calcProperties.fullCalcOnLoad = true;
 ```
 
-## 工作簿视图
+## 工作簿视图[⬆](#目录)<!-- Link generated with jump2header -->
 
 工作簿视图控制在查看工作簿时 Excel 将打开多少个单独的窗口。
 
@@ -277,10 +260,10 @@ workbook.views = [
 ]
 ```
 
-## 添加工作表
+## 添加工作表[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 ```
 
 使用 `addWorksheet` 函数的第二个参数来指定工作表的选项。
@@ -289,16 +272,30 @@ var sheet = workbook.addWorksheet('My Sheet');
 
 ```javascript
 // 创建带有红色标签颜色的工作表
-var sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
 
 // 创建一个隐藏了网格线的工作表
-var sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
+const sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
+
+// 创建一个第一行和列冻结的工作表
+const sheet = workbook.addWorksheet('My Sheet', {views:[{xSplit: 1, ySplit:1}]});
+
+// 使用A4设置的页面设置设置创建新工作表 - 横向
+const worksheet =  workbook.addWorksheet('My Sheet', {
+  pageSetup:{paperSize: 9, orientation:'landscape'}
+});
+
+// 创建一个具有页眉页脚的工作表
+const sheet = workbook.addWorksheet('My Sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
 
 // 创建一个冻结了第一行和第一列的工作表
-var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
+const sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
+
 ```
 
-## 删除工作表
+## 删除工作表[⬆](#目录)<!-- Link generated with jump2header -->
 
 使用工作表的  `id` 从工作簿中删除工作表。
 
@@ -306,13 +303,13 @@ var sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 
 
 ```javascript
 // 创建工作表
-var sheet = workbook.addWorksheet('My Sheet');
+const sheet = workbook.addWorksheet('My Sheet');
 
 // 使用工作表 id 删除工作表
 workbook.removeWorksheet(sheet.id)
 ```
 
-## 访问工作表
+## 访问工作表[⬆](#目录)<!-- Link generated with jump2header -->
 ```javascript
 // 遍历所有工作表
 // 注意： workbook.worksheets.forEach 仍然是可以正常运行的， 但是以下的方式更好
@@ -321,13 +318,13 @@ workbook.eachSheet(function(worksheet, sheetId) {
 });
 
 // 按 name 提取工作表
-var worksheet = workbook.getWorksheet('My Sheet');
+const worksheet = workbook.getWorksheet('My Sheet');
 
 // 按 id 提取工作表
-var worksheet = workbook.getWorksheet(1);
+const worksheet = workbook.getWorksheet(1);
 ```
 
-## 工作表状态
+## 工作表状态[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 // 使工作表可见
@@ -340,16 +337,16 @@ worksheet.state = 'hidden';
 worksheet.state = 'veryHidden';
 ```
 
-## 工作表属性
+## 工作表属性[⬆](#目录)<!-- Link generated with jump2header -->
 
 工作表支持属性存储，以允许控制工作表的某些功能。
 
 ```javascript
 // 创建具有属性的新工作表
-var worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
+const worksheet = workbook.addWorksheet('sheet', {properties:{tabColor:{argb:'FF00FF00'}}});
 
-// 创建一个具有属性的新工作表读写器
-var worksheetWriter = workbookWriter.addSheet('sheet', {properties:{outlineLevelCol:1}});
+// 创建一个具有属性的可写的新工作表
+const worksheetWriter = workbookWriter.addWorksheet('sheet', {properties:{outlineLevelCol:1}});
 
 // 之后调整属性（工作表读写器不支持该操作）
 worksheet.properties.outlineLevelCol = 2;
@@ -367,7 +364,7 @@ worksheet.properties.defaultRowHeight = 15;
 | defaultColWidth  | (optional) | 默认列宽 |
 | dyDescent        | 55         | TBD |
 
-### 工作表尺寸
+### 工作表尺寸[⬆](#目录)<!-- Link generated with jump2header -->
 
 一些新的尺寸属性已添加到工作表中...
 
@@ -379,18 +376,18 @@ worksheet.properties.defaultRowHeight = 15;
 | actualColumnCount | 具有值的列数的计数。                                         |
 
 
-## 页面设置
+## 页面设置[⬆](#目录)<!-- Link generated with jump2header -->
 
 所有可能影响工作表打印的属性都保存在工作表上的 `pageSetup` 对象中。
 
 ```javascript
 // 使用 A4 横向的页面设置创建新工作表
-var worksheet =  workbook.addWorksheet('sheet', {
+const worksheet =  workbook.addWorksheet('sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
 
-// 使用适用于页面的页面设置配置创建新的表格读写器
-var worksheetWriter = workbookWriter.addSheet('sheet', {
+// 使用适合页面的pageSetup设置创建一个新的工作表编写器
+const worksheetWriter = workbookWriter.addWorksheet('sheet', {
   pageSetup:{fitToPage: true, fitToHeight: 5, fitToWidth: 7}
 });
 
@@ -456,7 +453,7 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | Double Japan Postcard Rotated | 82          |
 | 16K 197x273 mm                | 119         |
 
-## 页眉和页脚
+## 页眉和页脚[⬆](#目录)<!-- Link generated with jump2header -->
 
 这是添加页眉和页脚的方法。
 添加的内容主要是文本，例如时间，简介，文件信息等，您可以设置文本的样式。
@@ -465,8 +462,18 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 注意：目前不支持图片。
 
 ```javascript
-// 设置页脚（默认居中），结果：“第2页，共16页”
-worksheet.headerFooter.oddFooter = "Page &P of &N";
+// 创建一个带有页眉和页脚的工作表
+var sheet = workbook.addWorksheet('My Sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+
+// 创建一个带有页眉和页脚可写的工作表
+var worksheetWriter = workbookWriter.addWorksheet('sheet', {
+  headerFooter:{firstHeader: "Hello Exceljs", firstFooter: "Hello World"}
+});
+// 代码中出现的&开头字符对应变量，相关信息可查阅下文的变量表
+// 设置页脚(默认居中),结果：“第 2 页，共 16 页”
+worksheet.headerFooter.oddFooter = "第 &P 页，共 &N 页";
 
 // 将页脚（默认居中）设置为粗体，结果是：“第2页，共16页”
 worksheet.headerFooter.oddFooter = "Page &P of &N";
@@ -520,7 +527,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 | &font size   | 字体大小，例如12 |
 | &KHEXCode    | 字体颜色，例如 &KCCCCCC |
 
-## 工作表视图
+## 工作表视图[⬆](#目录)<!-- Link generated with jump2header -->
 
 现在，工作表支持视图列表，这些视图控制Excel如何显示工作表：
 
@@ -541,7 +548,7 @@ worksheet.headerFooter.firstFooter = "Hello World"
 | zoomScaleNormal   | 100       | 正常缩放视图 |
 | style             | `undefined` | 演示样式- `pageBreakPreview` 或 `pageLayout` 之一。 注意：页面布局与 `frozen` 视图不兼容 |
 
-### 冻结视图
+### 冻结视图[⬆](#目录)<!-- Link generated with jump2header -->
 
 冻结视图支持以下额外属性：
 
@@ -557,7 +564,7 @@ worksheet.views = [
 ];
 ```
 
-### 拆分视图
+### 拆分视图[⬆](#目录)<!-- Link generated with jump2header -->
 
 拆分视图支持以下额外属性：
 
@@ -574,7 +581,7 @@ worksheet.views = [
 ];
 ```
 
-## 自动筛选器
+## 自动筛选器[⬆](#目录)<!-- Link generated with jump2header -->
 
 可以对工作表应用自动筛选器。
 
@@ -613,7 +620,7 @@ worksheet.autoFilter = {
 }
 ```
 
-## 列
+## 列[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 // 添加列标题并定义列键和宽度
@@ -625,9 +632,9 @@ worksheet.columns = [
 ];
 
 // 通过键，字母和基于1的列号访问单个列
-var idCol = worksheet.getColumn('id');
-var nameCol = worksheet.getColumn('B');
-var dobCol = worksheet.getColumn(3);
+const idCol = worksheet.getColumn('id');
+const nameCol = worksheet.getColumn('B');
+const dobCol = worksheet.getColumn(3);
 
 // 设置列属性
 
@@ -677,41 +684,20 @@ worksheet.spliceColumns(3,2);
 // 删除一列，再插入两列。
 // 注意：第4列及以上的列将右移1列。
 // 另外：如果工作表中的行数多于列插入项中的值，则行将仍然被插入，就好像值存在一样。
-var newCol3Values = [1,2,3,4,5];
-var newCol4Values = ['one', 'two', 'three', 'four', 'five'];
+const newCol3Values = [1,2,3,4,5];
+const newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 
 ```
 
-## 行
+## 行[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-// 在最后一个当前行之后，使用列键值添加两行
-worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
-worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
-
-// 通过连续数组添加一行（分配给 A，B 和 C 列）
-worksheet.addRow([3, 'Sam', new Date()]);
-
-// 通过稀疏数组添加一行（分配给 A，E 和 I 列）
-var rowValues = [];
-rowValues[1] = 4;
-rowValues[5] = 'Kyle';
-rowValues[9] = new Date();
-worksheet.addRow(rowValues);
-
-// 添加行数组
-var rows = [
-  [5,'Bob',new Date()], // row by array
-  {id:6, name: 'Barbara', dob: new Date()}
-];
-worksheet.addRows(rows);
-
 // 获取一个行对象。如果尚不存在，则将返回一个新的空对象
-var row = worksheet.getRow(5);
+const row = worksheet.getRow(5);
 
 // 获取工作表中的最后一个可编辑行（如果没有，则为 `undefined`）
-var row = worksheet.lastRow;
+const row = worksheet.lastRow;
 
 // 设置特定的行高
 row.height = 42.5;
@@ -744,7 +730,7 @@ expect(row.getCell(2).value).toEqual(2);
 expect(row.getCell(3).value).toEqual(3);
 
 // 通过稀疏数组分配行值（其中数组元素 0 为 `undefined`）
-var values = []
+const values = []
 values[5] = 7;
 values[10] = 'Hello, World!';
 row.values = values;
@@ -782,35 +768,55 @@ row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
   console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
-// 剪切下一行或多行（下面的行向上移动）
-// 已知问题：如果拼接导致任何合并的单元格移动，结果可能是不可预测的
-worksheet.spliceRows(4,3);
-
-// 删除一行，再插入两行。
-// 注意：第4行及以下行将向下移动 1 行。
-var newRow3Values = [1,2,3,4,5];
-var newRow4Values = ['one', 'two', 'three', 'four', 'five'];
-worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
-
-// 剪切一个或多个单元格（右侧的单元格向左移动）
-// 注意：此操作不会影响其他行
-row.splice(3,2);
-
-// 删除一个单元格，再插入两个单元格（剪切单元格右侧的单元格将向右移动）
-row.splice(4,1,'new value 1', 'new value 2');
-
 // 提交给流一个完成的行
 row.commit();
 
 // 行尺寸
-var rowSize = row.cellCount;
-var numValues = row.actualCellCount;
+const rowSize = row.cellCount;
+const numValues = row.actualCellCount;
 ```
 
-## 处理单个单元格
+## Add Rows[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
-var cell = worksheet.getCell('C3');
+// Add a couple of Rows by key-value, after the last current row, using the column keys
+worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
+worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
+
+// Add a row by contiguous Array (assign to columns A, B & C)
+worksheet.addRow([3, 'Sam', new Date()]);
+
+// Add a row by sparse Array (assign to columns A, E & I)
+const rowValues = [];
+rowValues[1] = 4;
+rowValues[5] = 'Kyle';
+rowValues[9] = new Date();
+worksheet.addRow(rowValues);
+
+// Add a row with inherited style
+// This new row will have same style as last row
+worksheet.addRow(rowValues, 'i');
+
+// Add an array of rows
+const rows = [
+  [5,'Bob',new Date()], // row by array
+  {id:6, name: 'Barbara', dob: new Date()}
+];
+worksheet.addRows(rows);
+
+// Add an array of rows with inherited style
+// These new rows will have same styles as last row
+worksheet.addRows(rows, 'i');
+```
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| value/s    | The new row/s values |  |
+| styleOption            | 'i' for inherit from row above, 'n' for none | *'n'* |
+
+## 处理单个单元格[⬆](#目录)<!-- Link generated with jump2header -->
+
+```javascript
+const cell = worksheet.getCell('C3');
 
 // 修改/添加单个单元格
 cell.value = new Date(1968, 5, 1);
@@ -822,11 +828,11 @@ expect(cell.type).toEqual(Excel.ValueType.Date);
 myInput.value = cell.text;
 
 // 使用 html 安全的字符串进行渲染...
-var html = '<div>' + cell.html + '</div>';
+const html = '<div>' + cell.html + '</div>';
 
 ```
 
-## 合并单元格
+## 合并单元格[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 // 合并一系列单元格
@@ -853,7 +859,84 @@ worksheet.mergeCells('K10', 'M12');
 // 按开始行，开始列，结束行，结束列合并（相当于 K10:M12）
 worksheet.mergeCells(10,11,12,13);
 ```
-## 重复行
+
+## Insert Rows[⬆](#目录)<!-- Link generated with jump2header -->
+
+```javascript
+insertRow(pos, value, styleOption = 'n')
+insertRows(pos, values, styleOption = 'n')
+
+// Insert a couple of Rows by key-value, shifting down rows every time
+worksheet.insertRow(1, {id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
+worksheet.insertRow(1, {id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
+
+// Insert a row by contiguous Array (assign to columns A, B & C)
+worksheet.insertRow(1, [3, 'Sam', new Date()]);
+
+// Insert a row by sparse Array (assign to columns A, E & I)
+var rowValues = [];
+rowValues[1] = 4;
+rowValues[5] = 'Kyle';
+rowValues[9] = new Date();
+worksheet.insertRow(1, rowValues);
+
+// Insert a row, with inherited style
+// This new row will have same style as row on top of it
+worksheet.insertRow(1, rowValues, 'i');
+
+// Insert a row, keeping original style
+// This new row will have same style as it was previously
+worksheet.insertRow(1, rowValues, 'o');
+
+// Insert an array of rows, in position 1, shifting down current position 1 and later rows by 2 rows
+var rows = [
+  [5,'Bob',new Date()], // row by array
+  {id:6, name: 'Barbara', dob: new Date()}
+];
+worksheet.insertRows(1, rows);
+
+// Insert an array of rows, with inherited style
+// These new rows will have same style as row on top of it
+worksheet.insertRows(1, rows, 'i');
+
+// Insert an array of rows, keeping original style
+// These new rows will have same style as it was previously in 'pos' position
+worksheet.insertRows(1, rows, 'o');
+
+```
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| pos          | Row number where you want to insert, pushing down all rows from there |  |
+| value/s    | The new row/s values |  |
+| styleOption            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
+
+## Splice[⬆](#contents)<!-- Link generated with jump2header -->
+
+```javascript
+// Cut one or more rows (rows below are shifted up)
+// Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
+worksheet.spliceRows(4, 3);
+
+// remove one row and insert two more.
+// Note: rows 4 and below will be shifted down by 1 row.
+const newRow3Values = [1, 2, 3, 4, 5];
+const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
+worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
+
+// Cut one or more cells (cells to the right are shifted left)
+// Note: this operation will not affect other rows
+row.splice(3, 2);
+
+// remove one cell and insert two more (cells to the right of the cut cell will be shifted right)
+row.splice(4, 1, 'new value 1', 'new value 2');
+```
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| start    | Starting point to splice from |  |
+| count    | Number of rows/cells to remove |  |
+| ...inserts            | New row/cell values to insert |  |
+
+## 重复行[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 duplicateRow(start, amount = 1, insert = true)
@@ -878,7 +961,7 @@ ws.duplicateRow(1,2,false);
 
 
 
-## 定义名称
+## 定义名称[⬆](#目录)<!-- Link generated with jump2header -->
 
 单个单元格（或多个单元格组）可以为它们分配名称。名称可用于公式和数据验证（可能还有更多）。
 
@@ -896,7 +979,7 @@ worksheet.getCell('A1').removeName('thing1');
 expect(worksheet.getCell('A1').names).to.have.members(['thing2']);
 ```
 
-## 数据验证
+## 数据验证[⬆](#目录)<!-- Link generated with jump2header -->
 
 单元格可以定义哪些值有效或无效，并提示用户以帮助指导它们。
 
@@ -983,7 +1066,7 @@ worksheet.getCell('A1').dataValidation = {
 };
 ```
 
-## 单元格注释
+## 单元格注释[⬆](#目录)<!-- Link generated with jump2header -->
 
 将旧样式的注释添加到单元格
 
@@ -1003,10 +1086,84 @@ ws.getCell('B1').note = {
     {'font': {'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': ' in-cell '},
     {'font': {'bold': true, 'size': 12, 'color': {'theme': 1}, 'name': 'Calibri', 'family': 2, 'scheme': 'minor'}, 'text': 'format'},
   ],
+  margins: {
+    insetmode: 'custom',
+    inset: [0.25, 0.25, 0.35, 0.35]
+  },
+  protection: {
+    locked: True,
+    lockText: False
+  },
+  editAs: 'twoCells'
 };
 ```
 
-## 表格
+### 单元格批注属性[⬆](#目录)<!-- Link generated with jump2header -->
+
+下表定义了单元格注释已支持的属性。
+
+| Field     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| texts     | Y        |               | 评论文字 |
+| margins | N        | {}  | 确定自动或自定义设置单元格注释的边距值 |
+| protection   | N        | {} | 可以使用保护属性来指定对象和对象文本的锁定状态 |
+| editAs   | N        | 'absolute' | 可以使用'editAs'属性来指定注释如何锚定到单元格 |
+
+### 单元格批注页边距[⬆](#目录)<!-- Link generated with jump2header -->
+
+确定单元格批注的页面距设置模式，自动或者自定义模式。
+
+```javascript
+ws.getCell('B1').note.margins = {
+  insetmode: 'custom',
+  inset: [0.25, 0.25, 0.35, 0.35]
+}
+```
+
+### 已支持的页边距属性[⬆](#目录)<!-- Link generated with jump2header -->
+
+| Property     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| insetmode     | N        |    'auto'           | 确定是否自动设置注释边距，并且值是'auto' 或者 'custom' |
+| inset | N        | [0.13, 0.13, 0.25, 0.25]  | 批注页边距的值，单位是厘米, 方向是左-上-右-下 |
+
+注意：只有当 ```insetmode```的值设置为'custom'时，```inset```的设置才生效。
+
+### 单元格批注保护[⬆](#目录)<!-- Link generated with jump2header -->
+
+可以使用保护属性来修改单元级别保护。
+
+```javascript
+ws.getCell('B1').note.protection = {
+  locked: 'False',
+  lockText: 'False',
+};
+```
+
+### 已支持的保护属性[⬆](#目录)<!-- Link generated with jump2header -->
+
+| Property     | Required | Default Value | Description |
+| --------  | -------- | ------------- | ----------- |
+| locked     | N        |    'True'           | 此元素指定在保护工作表时对象已锁定 |
+| lockText | N        | 'True'  | 该元素指定对象的文本已锁定 |
+
+
+### 单元格批注对象位置属性[⬆](#目录)<!-- Link generated with jump2header -->
+
+单元格注释还可以具有属性 'editAs'，该属性将控制注释如何锚定到单元格。
+它可以具有以下值之一：
+
+```javascript
+ws.getCell('B1').note.editAs = 'twoCells'
+```
+
+| Value     | Description |
+| --------- | ----------- |
+| twoCells | 它指定注释的大小、位置随单元格而变 |
+| oneCells   | 它指定注释的大小固定，位置随单元格而变 |
+| absolute  | 这是默认值，它指定注释的大小、位置均固定 |
+
+## 表格[⬆](#目录)<!-- Link generated with jump2header -->
 
 表允许表格内数据的表内操作。
 
@@ -1038,7 +1195,8 @@ ws.addTable({
 注意：将表格添加到工作表将通过放置表格的标题和行数据来修改工作表。
 结果就是表格覆盖的工作表上的所有数据（包括标题和所有的）都将被覆盖。
 
-### 表格属性
+### 表格属性[⬆](#目录)<!-- Link generated with jump2header -->
+
 
 下表定义了表格支持的属性。
 
@@ -1053,7 +1211,7 @@ ws.addTable({
 | columns        | 列定义 | Y |   |
 | rows           | 数据行 | Y |   |
 
-### 表格样式属性
+### 表格样式属性[⬆](#目录)<!-- Link generated with jump2header -->
 
 下表定义了表格中支持的属性样式属性。
 
@@ -1065,7 +1223,7 @@ ws.addTable({
 | showRowStripes     | 用交替的背景色显示行 | N |  `false`  |
 | showColumnStripes  | 用交替的背景色显示列 | N |  `false`  |
 
-### 表格列属性
+### 表格列属性[⬆](#目录)<!-- Link generated with jump2header -->
 
 下表定义了每个表格列中支持的属性。
 
@@ -1077,7 +1235,7 @@ ws.addTable({
 | totalsRowFunction  | 统计函数名称 | N | `'none'` |
 | totalsRowFormula   | 自定义函数的可选公式 | N |   |
 
-### 统计函数
+### 统计函数[⬆](#目录)<!-- Link generated with jump2header -->
 
 下表列出了由列定义的 `totalsRowFunction` 属性的有效值。如果使用 `'custom'` 以外的任何值，则无需包括关联的公式，因为该公式将被表格插入。
 
@@ -1094,7 +1252,7 @@ ws.addTable({
 | sum                | 此列的条目总数 |
 | custom             | 自定义公式。 需要关联的 `totalsRowFormula` 值。 |
 
-### 表格样式主题
+### 表格样式主题[⬆](#目录)<!-- Link generated with jump2header -->
 
 有效的主题名称遵循以下模式：
 
@@ -1110,7 +1268,7 @@ Shades（阴影），Number（数字）可以是以下之一：
 
 注意：exceljs 尚不支持自定义表格主题。
 
-### 修改表格
+### 修改表格[⬆](#目录)<!-- Link generated with jump2header -->
 
 表格支持一组操作函数，这些操作函数允许添加或删除数据以及更改某些属性。由于这些操作中的许多操作可能会对工作表产生副作用，因此更改必须在完成后立即提交。
 
@@ -1202,7 +1360,7 @@ table.commit();
 ```
 
 
-## 样式
+## 样式[⬆](#目录)<!-- Link generated with jump2header -->
 
 单元格，行和列均支持一组丰富的样式和格式，这些样式和格式会影响单元格的显示方式。
 
@@ -1239,7 +1397,7 @@ ws.getRow(2).font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'do
 
 注意：以上所有属性（`numFmt`（字符串）除外）都是 JS 对象结构。如果将同一样式对象分配给多个电子表格实体，则每个实体将共享同一样式对象。如果样式对象后来在电子表格序列化之前被修改，则所有引用该样式对象的实体也将被修改。此行为旨在通过减少创建的JS对象的数量来优先考虑性能。如果希望样式对象是独立的，则需要先对其进行克隆，然后再分配它们。同样，默认情况下，如果电子表格实体共享相似的样式，则从文件（或流）中读取文档时，它们也将引用相同的样式对象。
 
-### 数字格式
+### 数字格式[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 // 将值显示为“ 1 3/5”
@@ -1280,7 +1438,7 @@ ws.getCell('A3').font = {
 
 // 注意：该单元格将存储对分配的字体对象的引用。
 // 如果之后更改了字体对象，则单元字体也将更改。
-var font = { name: 'Arial', size: 12 };
+const font = { name: 'Arial', size: 12 };
 ws.getCell('A3').font = font;
 font.size = 20; // 单元格 A3 现在具有20号字体！
 
@@ -1302,7 +1460,7 @@ font.size = 20; // 单元格 A3 现在具有20号字体！
 | outline       | 字体轮廓 | true, false |
 | vertAlign     | 垂直对齐 | 'superscript', 'subscript'
 
-### 对齐
+### 对齐[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 // 将单元格对齐方式设置为左上，中间居中，右下
@@ -1335,7 +1493,7 @@ ws.getCell('H1').alignment = { textRotation: 'vertical' };
 | distributed      |             |          |             |         |              |              |
 
 
-### 边框
+### 边框[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 // 在A1周围设置单个细边框
@@ -1375,7 +1533,7 @@ ws.getCell('A5').border = {
 * double
 * thick
 
-### 填充
+### 填充[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 // 用红色深色垂直条纹填充A1
@@ -1418,7 +1576,7 @@ ws.getCell('A4').fill = {
 };
 ```
 
-#### 填充模式
+#### 填充模式[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性 | 是否需要 | 描述 |
 | -------- | -------- | ----------- |
@@ -1449,7 +1607,7 @@ ws.getCell('A4').fill = {
 * lightGrid
 * lightTrellis
 
-#### 渐变填充
+#### 渐变填充[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性 | 是否需要 | 描述 |
 | -------- | -------- | ----------- |
@@ -1463,7 +1621,7 @@ ws.getCell('A4').fill = {
 
 使用上面的接口，可能会创建使用XLSX编辑器程序无法实现的渐变填充效果。例如，Excel 仅支持0、45、90 和 135 的角度梯度。类似地，stops 的顺序也可能受到 UI 的限制，其中位置 [0,1] 或[0,0.5,1] 是唯一的选择。请谨慎处理此填充，以确保目标 XLSX 查看器支持该填充。
 
-### 富文本
+### 富文本[⬆](#目录)<!-- Link generated with jump2header -->
 
 现在，单个单元格支持RTF文本或单元格格式化。富文本值可以控制文本值内任意数量的子字符串的字体属性。有关支持哪些字体属性的详细信息，请参见<a href="font">字体</a>。
 
@@ -1487,7 +1645,7 @@ expect(ws.getCell('A1').type).to.equal(Excel.ValueType.RichText);
 
 ```
 
-### 单元格保护
+### 单元格保护[⬆](#目录)<!-- Link generated with jump2header -->
 
 可以使用保护属性来修改单元级别保护。
 
@@ -1505,7 +1663,7 @@ ws.getCell('A1').protection = {
 | locked   | `true`    | 指定在工作表受保护的情况下是否将单元格锁定。 |
 | hidden   | `false`   | 指定如果工作表受保护，则单元格的公式是否可见。 |
 
-## 条件格式化
+## 条件格式化[⬆](#目录)<!-- Link generated with jump2header -->
 
 条件格式化允许工作表根据单元格值或任意公式显示特定的样式，图标等。
 
@@ -1544,7 +1702,7 @@ worksheet.addConditionalFormatting({
 | containsText | 根据单元格是否为特定文本来应用格式 |
 | timePeriod   | 根据单元格日期时间值是否在指定范围内应用格式 |
 
-### 表达式
+### 表达式[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性    | 可选 | 默认值 | 描述 |
 | -------- | -------- | ------- | ----------- |
@@ -1553,7 +1711,7 @@ worksheet.addConditionalFormatting({
 | formulae |          |         | 1个包含真/假值的公式字符串数组。要引用单元格值，请使用左上角的单元格地址 |
 | style    |          |         | 公式返回 `true` 时要应用的样式结构 |
 
-### Cell Is
+### Cell Is[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性    | 可选 | 默认值 | 描述 |
 | -------- | -------- | ------- | ----------- |
@@ -1573,7 +1731,7 @@ worksheet.addConditionalFormatting({
 | between     | 如果单元格值在两个公式值之间（包括两个值），则应用格式 |
 
 
-### Top 10
+### Top 10[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性    | 可选 | 默认值 | 描述 |
 | -------- | -------- | ------- | ----------- |
@@ -1584,7 +1742,7 @@ worksheet.addConditionalFormatting({
 | bottom   | Y        | `false`   | 如果为 true，则包含最低值而不是最高值 |
 | style    |          |         | 如果比较返回 true，则应用样式结构 |
 
-### 高于平均值
+### 高于平均值[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性         | 可选 | 默认值 | 描述 |
 | ------------- | -------- | ------- | ----------- |
@@ -1593,7 +1751,7 @@ worksheet.addConditionalFormatting({
 | aboveAverage  | Y        | `false`   | 如果为 true，则等级字段为百分比，而不是绝对值 |
 | style         |          |         | 如果比较返回 true，则应用样式结构 |
 
-### 色阶
+### 色阶[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性         | 可选 | 默认值 | 描述 |
 | ------------- | -------- | ------- | ----------- |
@@ -1603,7 +1761,7 @@ worksheet.addConditionalFormatting({
 | color         |          |         | 在给定的航路点使用的相应颜色数组 |
 | style         |          |         | 如果比较返回 true，则应用样式结构 |
 
-### 图标集
+### 图标集[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性         | 可选 | 默认值 | 描述 |
 | ------------- | -------- | ------- | ----------- |
@@ -1616,7 +1774,7 @@ worksheet.addConditionalFormatting({
 | cfvo          |          |         | 2到5个条件格式化值对象的数组，指定值范围内的航路点 |
 | style         |          |         | 如果比较返回 true，则应用样式结构 |
 
-### 数据条
+### 数据条[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 字段      | 可选 | 默认值 | 描述 |
 | ---------- | -------- | ------- | ----------- |
@@ -1634,7 +1792,7 @@ worksheet.addConditionalFormatting({
 | cfvo          |          |         | 2 到 5 个条件格式化值对象的数组，指定值范围内的航路点 |
 | style         |          |         | 如果比较返回 true，则应用样式结构 |
 
-### 包含文字
+### 包含文字[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性    | 可选 | 默认值 | 描述 |
 | -------- | -------- | ------- | ----------- |
@@ -1654,7 +1812,7 @@ worksheet.addConditionalFormatting({
 | containsErrors    | 如果单元格值包含错误，则应用格式 |
 | notContainsErrors | 如果单元格值不包含错误，则应用格式 |
 
-### 时间段
+### 时间段[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性      | 可选 | 默认值 | 描述 |
 | ---------- | -------- | ------- | ----------- |
@@ -1679,7 +1837,7 @@ worksheet.addConditionalFormatting({
 | nextMonth         | 如果单元格值在下个月下降，则应用格式 |
 
 
-## 大纲级别
+## 大纲级别[⬆](#目录)<!-- Link generated with jump2header -->
 
 Excel 支持大纲；行或列可以根据用户希望查看的详细程度展开或折叠。
 
@@ -1727,38 +1885,38 @@ worksheet.properties.outlineProperties = {
 };
 ```
 
-## 图片
+## 图片[⬆](#目录)<!-- Link generated with jump2header -->
 
 将图像添加到工作表是一个分为两个步骤的过程。首先，通过 `addImage()` 函数将图像添加到工作簿中，该函数还将返回 `imageId` 值。然后，使用 `imageId`，可以将图像作为平铺背景或覆盖单元格区域添加到工作表中。
 
 注意：从此版本开始，不支持调整或变换图像。
 
-### 将图片添加到工作簿
+### 将图片添加到工作簿[⬆](#目录)<!-- Link generated with jump2header -->
 
 `Workbook.addImage` 函数支持按文件名或按 `Buffer` 添加图像。请注意，在两种情况下，都必须指定扩展名。有效的扩展名包括 “jpeg”，“png”，“gif”。
 
 ```javascript
 // 通过文件名将图像添加到工作簿
-var imageId1 = workbook.addImage({
+const imageId1 = workbook.addImage({
   filename: 'path/to/image.jpg',
   extension: 'jpeg',
 });
 
 // 通过 buffer 将图像添加到工作簿
-var imageId2 = workbook.addImage({
+const imageId2 = workbook.addImage({
   buffer: fs.readFileSync('path/to.image.png'),
   extension: 'png',
 });
 
 // 通过 base64  将图像添加到工作簿
-var myBase64Image = "data:image/png;base64,iVBORw0KG...";
-var imageId2 = workbook.addImage({
+const myBase64Image = "data:image/png;base64,iVBORw0KG...";
+const imageId2 = workbook.addImage({
   base64: myBase64Image,
   extension: 'png',
 });
 ```
 
-### 将图片添加到工作表背景
+### 将图片添加到工作表背景[⬆](#目录)<!-- Link generated with jump2header -->
 
 使用 `Workbook.addImage` 中的图像 `ID`，可以使用 `addBackgroundImage` 函数设置工作表的背景
 
@@ -1767,7 +1925,7 @@ var imageId2 = workbook.addImage({
 worksheet.addBackgroundImage(imageId1);
 ```
 
-### 在一定范围内添加图片
+### 在一定范围内添加图片[⬆](#目录)<!-- Link generated with jump2header -->
 
 使用 `Workbook.addImage` 中的图像 `ID`，可以将图像嵌入工作表中以覆盖一定范围。从该范围计算出的坐标将覆盖从第一个单元格的左上角到第二个单元格的右下角。
 
@@ -1804,7 +1962,7 @@ ws.addImage(imageId, {
 });
 ```
 
-### 将图片添加到单元格
+### 将图片添加到单元格[⬆](#目录)<!-- Link generated with jump2header -->
 
 您可以将图像添加到单元格，然后以 96dpi 定义其宽度和高度（以像素为单位）。
 
@@ -1815,7 +1973,7 @@ worksheet.addImage(imageId2, {
 });
 ```
 
-### 添加带有超链接的图片
+### 添加带有超链接的图片[⬆](#目录)<!-- Link generated with jump2header -->
 
 您可以将带有超链接的图像添加到单元格，并在图像范围内定义超链接。
 
@@ -1830,7 +1988,7 @@ worksheet.addImage(imageId2, {
 });
 ```
 
-## 工作表保护
+## 工作表保护[⬆](#目录)<!-- Link generated with jump2header -->
 
 可以通过添加密码来保护工作表免受修改。
 
@@ -1849,7 +2007,7 @@ worksheet.unprotect();
 
 **注意：** 当 `protect()` 函数返回一个 Promise 代表它是异步的，当前的实现在主线程上运行，并且在 CPU 上将使用平均大约 600 毫秒。可以通过设置 `spinCount` 进行调整，该值可用于使过程更快或更有弹性。
 
-### 工作表保护选项
+### 工作表保护选项[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 属性               | 默认值 | 描述 |
 | ------------------- | ------- | ----------- |
@@ -1869,27 +2027,27 @@ worksheet.unprotect();
 | spinCount           | 100000  | 保护或取消保护时执行的哈希迭代次数 |
 
 
-## 文件 I/O
+## 文件 I/O[⬆](#目录)<!-- Link generated with jump2header -->
 
-### XLSX
+### XLSX[⬆](#目录)<!-- Link generated with jump2header -->
 
-#### 读 XLSX
+#### 读 XLSX[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
 // 从文件读取
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.readFile(filename);
 // ... 使用 workbook
 
 
 // 从流读取
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.read(stream);
 // ... 使用 workbook
 
 
 // 从 buffer 加载
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.load(data);
 // ... 使用 workbook
 ```
@@ -1898,7 +2056,7 @@ await workbook.xlsx.load(data);
 
 ```javascript
 // 写入文件
-var workbook = createAndFillWorkbook();
+const workbook = createAndFillWorkbook();
 await workbook.xlsx.writeFile(filename);
 
 // 写入流
@@ -1908,9 +2066,9 @@ await workbook.xlsx.write(stream);
 const buffer = await workbook.xlsx.writeBuffer();
 ```
 
-### CSV
+### CSV[⬆](#目录)<!-- Link generated with jump2header -->
 
-#### 读 CSV
+#### 读 CSV[⬆](#目录)<!-- Link generated with jump2header -->
 
 读取 CSV 文件时支持的选项。
 
@@ -1923,20 +2081,20 @@ const buffer = await workbook.xlsx.writeBuffer();
 
 ```javascript
 // 从文件读取
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 const worksheet = await workbook.csv.readFile(filename);
 // ... 使用 workbook 或 worksheet
 
 
 // 从流中读取
-var workbook = new Excel.Workbook();
+const workbook = new Excel.Workbook();
 const worksheet = await workbook.csv.read(stream);
 // ... 使用 workbook 或 worksheet
 
 
 // 从带有欧洲日期的文件中读取
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormats: ['DD/MM/YYYY']
 };
 const worksheet = await workbook.csv.readFile(filename, options);
@@ -1944,8 +2102,8 @@ const worksheet = await workbook.csv.readFile(filename, options);
 
 
 // 从具有自定义值解析的文件中读取
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -1982,7 +2140,7 @@ CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 读取CSV
 
 请参阅 [dayjs CustomParseFormat 插件](https://github.com/iamkun/dayjs/blob/HEAD/docs/en/Plugin.md#customparseformat)，以获取有关如何构造 `dateFormat` 的详细信息。
 
-#### 写 CSV
+#### 写 CSV[⬆](#目录)<!-- Link generated with jump2header -->
 
 写入 CSV 文件时支持的选项。
 
@@ -2000,7 +2158,7 @@ CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 读取CSV
 ```javascript
 
 // 写入文件
-var workbook = createAndFillWorkbook();
+const workbook = createAndFillWorkbook();
 await workbook.csv.writeFile(filename);
 
 // 写入流
@@ -2008,8 +2166,8 @@ await workbook.csv.writeFile(filename);
 await workbook.csv.write(stream, { sheetName: 'Page name' });
 
 // 使用欧洲日期时间写入文件
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   dateFormat: 'DD/MM/YYYY HH:mm:ss',
   dateUTC: true, // 呈现日期时使用 utc
 };
@@ -2017,8 +2175,8 @@ await workbook.csv.writeFile(filename, options);
 
 
 // 使用自定义值格式写入文件
-var workbook = new Excel.Workbook();
-var options = {
+const workbook = new Excel.Workbook();
+const options = {
   map(value, index) {
     switch(index) {
       case 0:
@@ -2051,7 +2209,7 @@ CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 编写 CS
 
 日期使用 npm 模块 [moment](https://www.npmjs.com/package/moment) 格式化。如果未提供 `dateFormat`，则使用 `moment.ISO_8601`。编写 CSV 时，您可以提供布尔值 `dateUTC` 为 `true`，以使 ExcelJS 解析日期，而无需使用 `moment.utc()` 自动转换时区。
 
-### 流式 I/O
+### 流式 I/O[⬆](#目录)<!-- Link generated with jump2header -->
 
 上面记录的文件 I/O 需要在内存中建立整个工作簿，然后才能写入文件。虽然方便，但是由于所需的内存量，它可能会限制文档的大小。
 
@@ -2065,9 +2223,9 @@ CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 编写 CS
 
 请注意，可以在不提交任何行的情况下构建整个工作簿。提交工作簿后，所有添加的工作表（包括所有未提交的行）将自动提交。但是，在这种情况下，与文档版本相比收效甚微。
 
-#### 流式 XLSX
+#### 流式 XLSX[⬆](#目录)<!-- Link generated with jump2header -->
 
-##### 流式 XLSX 写入器
+##### 流式 XLSX 写入器[⬆](#目录)<!-- Link generated with jump2header -->
 
 流式 XLSX 写入器在 `ExcelJS.stream.xlsx` 命名空间中可用。
 
@@ -2085,12 +2243,12 @@ CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 编写 CS
 
 ```javascript
 // 使用样式和共享字符串构造流式 XLSX 工作簿编写器
-var options = {
+const options = {
   filename: './streamed-workbook.xlsx',
   useStyles: true,
   useSharedStrings: true
 };
-var workbook = new Excel.stream.xlsx.WorkbookWriter(options);
+const workbook = new Excel.stream.xlsx.WorkbookWriter(options);
 ```
 
 通常，流式 XLSX 写入器的接口与上述文档工作簿（和工作表）相同，实际上行，单元格和样式对象是相同的。
@@ -2137,7 +2295,91 @@ await workbook.commit();
 // ... 流已被写入
 ```
 
-# 浏览器
+##### 流式 XLSX 阅读器[⬆](#目录)<!-- Link generated with jump2header -->
+
+流式 XLSX 工作簿阅读器可以在ExcelJS.stream.xlsx命名空间中找到。
+
+构造函数包含必需的输入参数和可选的options参数:
+
+| Argument              | Description |
+| --------------------- | ----------- |
+| input (必需的)        | 指定从中读取XLSX工作簿的文件或可读流的名称|
+| options (可选的)      | 指定如何处理读取解析期间发生的事件类型 |
+| options.entries       | 指定是否去触发事件(`'emit'`)或者不发出事件(`'ignore'`)，默认值是`'emit'` |
+| options.sharedStrings | 指定是否去缓存(`'cache'`)共享字符串，将其插入到相应的单元格值中，或者是否去触发(`'emit'`)或忽略(`'ignore'`)它们，在这两种情况下，单元格值都将是对共享字符串索引的引用。默认值是`'cache'` |
+| options.hyperlinks    | 指定是否去缓存超链接(`'cache'`)，将其插入到相应的单元格值中，是否去触发(`'emit'`)或忽略(`'ignore'`)它们。默认值是`'cache'` |
+| options.styles        | 指定是否去缓存样式(`'cache'`)，将其插入到相应的行或单元格值中，或是否忽略(`'忽略'`)它们。默认值是`'cache'`  |
+| options.worksheets    |指定是否去触发(`'emit'`)或忽略(`'ignore'`)工作表。默认值是`'emit'` |
+
+```js
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+for await (const worksheetReader of workbookReader) {
+  for await (const row of worksheetReader) {
+    // ...
+  }
+}
+```
+
+请注意，由于性能原因，`worksheetReader`返回一个行数组，而不是单独返回每一行: https://github.com/nodejs/node/issues/31979
+
+###### 迭代遍历所有事件[⬆](#目录)<!-- Link generated with jump2header -->
+
+工作簿上的事件是 'worksheet'、'shared-strings' 和 'hyperlinks'。 工作表上的事件是 'row' 和 'hyperlinks'.
+
+```js
+const options = {
+  sharedStrings: 'emit',
+  hyperlinks: 'emit',
+  worksheets: 'emit',
+};
+const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
+for await (const {eventType, value} of workbook.parse()) {
+  switch (eventType) {
+    case 'shared-strings':
+      // 值是共享字符串
+    case 'worksheet':
+      // 值是worksheetReader
+    case 'hyperlinks':
+      // 值是hyperlinksReader
+  }
+}
+```
+
+###### 可读流[⬆](#目录)<!-- Link generated with jump2header -->
+
+我们强烈建议使用异步迭代，但我们也公开了流接口以实现向后兼容性。
+
+```js
+const options = {
+  sharedStrings: 'emit',
+  hyperlinks: 'emit',
+  worksheets: 'emit',
+};
+const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx', options);
+workbookReader.read();
+
+workbookReader.on('worksheet', worksheet => {
+  worksheet.on('row', row => {
+  });
+});
+
+workbookReader.on('shared-strings', sharedString => {
+  // ...
+});
+
+workbookReader.on('hyperlinks', hyperlinksReader => {
+  // ...
+});
+
+workbookReader.on('end', () => {
+  // ...
+});
+workbookReader.on('error', (err) => {
+  // ...
+});
+```
+
+# 浏览器[⬆](#目录)<!-- Link generated with jump2header -->
 
 该库的一部分已被隔离，并经过测试可在浏览器环境中使用。
 
@@ -2145,18 +2387,18 @@ await workbook.commit();
 
 例如，在浏览器中使用 ExcelJS 的代码可查看 github 中的<a href="https://github.com/exceljs/exceljs/tree/master/spec/browser"> spec / browser </a>文件夹。
 
-## 预捆绑
+## 预捆绑[⬆](#目录)<!-- Link generated with jump2header -->
 
 以下文件已预先捆绑在一起，并包含在 *dist* 文件夹中。
 
 * exceljs.js
 * exceljs.min.js
 
-# 值类型
+# 值类型[⬆](#目录)<!-- Link generated with jump2header -->
 
 支持以下值类型。
 
-## Null 值
+## Null 值[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.Null`
 
@@ -2166,13 +2408,13 @@ Enum: `Excel.ValueType.Null`
 worksheet.getCell('A1').value = null;
 ```
 
-## 合并单元格
+## 合并单元格[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.Merge`
 
 合并单元格是其值绑定到另一个“主”单元格的单元格。分配给合并单元将导致修改单元格。
 
-## 数字值
+## 数字值[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.Number`
 
@@ -2185,7 +2427,7 @@ worksheet.getCell('A1').value = 5;
 worksheet.getCell('A2').value = 3.14159;
 ```
 
-## 字符串值
+## 字符串值[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.String`
 
@@ -2197,7 +2439,7 @@ Enum: `Excel.ValueType.String`
 worksheet.getCell('A1').value = 'Hello, World!';
 ```
 
-## 日期值
+## 日期值[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.Date`
 
@@ -2209,7 +2451,7 @@ Enum: `Excel.ValueType.Date`
 worksheet.getCell('A1').value = new Date(2017, 2, 15);
 ```
 
-## 超链接值
+## 超链接值[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.Hyperlink`
 
@@ -2228,7 +2470,7 @@ worksheet.getCell('A1').value = {
 worksheet.getCell('A1').value = { text: 'Sheet2', hyperlink: '#\'Sheet2\'!A1' };
 ```
 
-## 公式值
+## 公式值[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.Formula`
 
@@ -2249,7 +2491,7 @@ worksheet.getCell('A3').formula === 'A1+A2';
 worksheet.getCell('A3').result === 7;
 ```
 
-### 共享公式
+### 共享公式[⬆](#目录)<!-- Link generated with jump2header -->
 
 共享的公式通过减少工作表 xml 中文本的重复来增强 xlsx 文档的压缩。范围中左上角的单元格是指定的母版，它将保留该范围内的所有其他单元格都将引用的公式。然后，其他“从属”单元格可以引用此主单元格，而不必再次重新定义整个公式。请注意，主公式将以常用的 Excel 方式转换为从属单元格，以便对其他单元格的引用将根据从属单元相对于主单元的偏移量向右下移。例如：如果主单元格A2具有引用A1的公式，则如果单元格B2共享A2的公式，则它将引用B1。
 
@@ -2295,7 +2537,7 @@ worksheet.fillFormula('A2:A10', 'A1+1', [2,3,4,5,6,7,8,9,10]);
 worksheet.fillFormula('A2:A100', 'A1+1', (row, col) => row);
 ```
 
-### 公式类型
+### 公式类型[⬆](#目录)<!-- Link generated with jump2header -->
 
 要区分真正的和转换后的公式单元格，请使用 FormulaType getter：
 
@@ -2312,7 +2554,7 @@ worksheet.getCell('B3').formulaType === Enums.FormulaType.Shared;
 | Enums.FormulaType.Master   |   1     |
 | Enums.FormulaType.Shared   |   2     |
 
-### 数组公式
+### 数组公式[⬆](#目录)<!-- Link generated with jump2header -->
 
 在 Excel 中表示共享公式的一种新方法是数组公式。以这种形式，主单元格是唯一包含与公式有关的任何信息的单元格。它包含 shareType 'array' 以及适用于其的单元格范围以及将要复制的公式。其余单元格是具有常规值的常规单元格。
 
@@ -2339,7 +2581,7 @@ worksheet.fillFormula('A2:B3', 'A1', [1,1,1,1], 'array');
 ```
 
 
-## 富文本值
+## 富文本值[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.RichText`
 
@@ -2355,7 +2597,7 @@ worksheet.getCell('A1').value = {
 };
 ```
 
-## 布尔值
+## 布尔值[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.Boolean`
 
@@ -2366,7 +2608,7 @@ worksheet.getCell('A1').value = true;
 worksheet.getCell('A2').value = false;
 ```
 
-## 错误值
+## 错误值[⬆](#目录)<!-- Link generated with jump2header -->
 
 Enum: `Excel.ValueType.Error`
 
@@ -2389,29 +2631,29 @@ worksheet.getCell('A2').value = { error: '#VALUE!' };
 | Excel.ErrorValue.Value         | #VALUE!     |
 | Excel.ErrorValue.Num           | #NUM!       |
 
-# 接口变化
+# 接口变化[⬆](#目录)<!-- Link generated with jump2header -->
 
 我们会尽一切努力创建一个良好的，一致的接口，该接口不会在版本之间不兼容，但令人遗憾的是，为了实现更大的利益，有时需要进行一些更改。
 
-## 0.1.0
+## 0.1.0[⬆](#目录)<!-- Link generated with jump2header -->
 
-### Worksheet.eachRow
+### Worksheet.eachRow[⬆](#目录)<!-- Link generated with jump2header -->
 
 在 `Worksheet.eachRow` 的回调函数中的参数已被交换和更改；它是 `function(rowNumber，rowValues)`，现在是 `function(row，rowNumber)`，使它的外观更像 *underscore(`_.each`)方法，并且行对象优先于行号。*
 
-### Worksheet.getRow
+### Worksheet.getRow[⬆](#目录)<!-- Link generated with jump2header -->
 
 此函数已从返回稀疏的单元格数组更改为返回 `Row` 对象。这样可以访问行属性，并有助于管理行样式等。
 
 仍可通过 `Worksheet.getRow(rowNumber).values;` 获得稀疏的单元格值的数组。
 
-## 0.1.1
+## 0.1.1[⬆](#目录)<!-- Link generated with jump2header -->
 
-### cell.model
+### cell.model[⬆](#目录)<!-- Link generated with jump2header -->
 
 `cell.styles` 重命名为 `cell.style`
 
-## 0.2.44
+## 0.2.44[⬆](#目录)<!-- Link generated with jump2header -->
 
 从 Bluebird 切换到 Node 原生 Promise 的函数返回的 Promise 如果依赖 Bluebird 的额外功能，则可能会破坏调用代码。
 
@@ -2422,7 +2664,7 @@ worksheet.getCell('A2').value = { error: '#VALUE!' };
 
 
 
-# 配置
+# 配置[⬆](#目录)<!-- Link generated with jump2header -->
 
 ExcelJS现在支持对 Promise 库的依赖项注入。您可以通过在模块中包含以下代码来还原 Bluebird Promise。
 
@@ -2432,16 +2674,16 @@ ExcelJS.config.setValue('promise', require('bluebird'));
 
 请注意：我已经使用 bluebird 专门测试了 ExcelJS（直到最近，这是它使用的库）。根据我所做的测试，它不适用于 Q。
 
-# 注意事项
+# 注意事项[⬆](#目录)<!-- Link generated with jump2header -->
 
-## Dist 文件夹
+## Dist 文件夹[⬆](#目录)<!-- Link generated with jump2header -->
 
 在发布此模块之前，先对源代码进行编译和其他处理，然后再将它们放置在 *dist/* 文件夹中。该自述文件标识两个文件-浏览器捆绑和压缩版本。除了在 package.json 中指定为  `"main"` 的文件外，不能保证 *dist/* 文件夹的其他内容。
 
 
-# 已知的问题
+# 已知的问题[⬆](#目录)<!-- Link generated with jump2header -->
 
-## 使用 Puppeteer 进行测试
+## 使用 Puppeteer 进行测试[⬆](#目录)<!-- Link generated with jump2header -->
 
 该 lib 中包含的测试套件包括一个在无头浏览器中执行的小脚本，以验证捆绑的软件包。 在撰写本文时，其表现出该测试在 Windows Linux 子系统中不能很好地进行。
 
@@ -2451,11 +2693,11 @@ ExcelJS.config.setValue('promise', require('bluebird'));
 sudo apt-get install libfontconfig
 ```
 
-## splice 与合并
+## 拼接与合并[⬆](#目录)<!-- Link generated with jump2header -->
 
 如果任何 `splice` 操作影响合并的单元格，则合并组将无法正确移动
 
-# 发布历史
+# 发布历史[⬆](#目录)<!-- Link generated with jump2header -->
 
 | 版本 | 变化 |
 | ------- | ------- |

@@ -7,12 +7,14 @@ const self = {
   styles: tools.fix(require('./data/styles.json')),
   properties: tools.fix(require('./data/sheet-properties.json')),
   pageSetup: tools.fix(require('./data/page-setup.json')),
+  headerFooter: tools.fix(require('./data/header-footer.json')),
 
   addSheet(wb, options) {
     // call it sheet1 so this sheet can be used for csv testing
     const ws = wb.addWorksheet('sheet1', {
       properties: self.properties,
       pageSetup: self.pageSetup,
+      headerFooter: self.headerFooter,
     });
 
     ws.getCell('J10').value = 1;
@@ -136,6 +138,7 @@ const self = {
       expect(ws.properties.tabColor).to.deep.equal({argb: 'FF00FF00'});
       expect(ws.properties).to.deep.equal(self.properties);
       expect(ws.pageSetup).to.deep.equal(self.pageSetup);
+      expect(ws.headerFooter).to.deep.equal(self.headerFooter);
     }
 
     expect(ws.getCell('A1').value).to.equal(7);
