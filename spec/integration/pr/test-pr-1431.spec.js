@@ -23,19 +23,26 @@ describe('github issues', () => {
 
     await workbook.commit();
 
-    const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./test.xlsx', {
-      entries: 'emit',
-      hyperlinks: 'cache',
-      sharedStrings: 'cache',
-      styles: 'cache',
-      worksheets: 'emit',
-    });
+    return new Promise((resolve, reject) => {
+      const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./test.xlsx', {
+        entries: 'emit',
+        hyperlinks: 'cache',
+        sharedStrings: 'cache',
+        styles: 'cache',
+        worksheets: 'emit',
+      });
 
-    for await (const worksheetReader of workbookReader) {
-      for await (const row of worksheetReader) {
-        expect(row.values[1]).to.eql(rowData[0]);
-        expect(row.values[2]).to.equal(rowData[1]);
-      }
-    }
+      workbookReader.on('worksheet', worksheet =>
+        worksheet.on('row', row => {
+          expect(row.values[1]).to.eql(rowData[0]);
+          expect(row.values[2]).to.equal(rowData[1]);
+
+          resolve();
+        })
+      );
+      workbookReader.on('error', reject);
+
+      workbookReader.read();
+    });
   });
 });
