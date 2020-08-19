@@ -33,9 +33,7 @@ describe('github issues', () => {
 
     for await (const worksheetReader of workbookReader) {
       for await (const row of worksheetReader) {
-        // actual: 'This Should '
         expect(row.values[1]).to.eql(rowData[0]);
-        // actual: 'be one shared string value'
         expect(row.values[2]).to.equal(rowData[1]);
       }
     }
