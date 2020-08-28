@@ -1035,7 +1035,7 @@ export interface AboveAverageRuleType extends ConditionalFormattingBaseRule {
 export interface ColorScaleRuleType extends ConditionalFormattingBaseRule {
 	type: 'colorScale';
 	cfvo?: Cvfo[];
-	color?: Partial<Color>;
+	color?: Partial<Color>[];
 }
 
 export interface IconSetRuleType extends ConditionalFormattingBaseRule {
