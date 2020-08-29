@@ -835,7 +835,7 @@ const newRowsStyled = worksheet.addRows(rows, 'i');
 | Parameter | Description | Default Value |
 | -------------- | ----------------- | -------- |
 | value/s    | The new row/s values |  |
-| style            | 'i' for inherit from row above, 'n' for none | *'n'* |
+| style            | 'i' for inherit from row above, 'i+' to include empty cells, 'n' for none | *'n'* |
 
 ## Handling Individual Cells[⬆](#contents)<!-- Link generated with jump2header -->
 
@@ -937,7 +937,7 @@ const insertedRowsOriginal = worksheet.insertRows(1, rows, 'o');
 | -------------- | ----------------- | -------- |
 | pos          | Row number where you want to insert, pushing down all rows from there |  |
 | value/s    | The new row/s values |  |
-| style            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
+| style            | 'i' for inherit from row above, , 'i+' to include empty cells, 'o' for original style, 'o+' to include empty cells, 'n' for none | *'n'* |
 
 ## Splice[⬆](#contents)<!-- Link generated with jump2header -->
 
