@@ -714,6 +714,9 @@ worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 // Get a row object. If it doesn't already exist, a new empty one will be returned
 const row = worksheet.getRow(5);
 
+// Get multiple row objects. If it doesn't already exist, new empty ones will be returned
+const rows = worksheet.getRows(5, 2); // start, length (>0, else undefined is returned)
+
 // Get the last editable row in a worksheet (or undefined if there are none)
 const row = worksheet.lastRow;
 
@@ -813,18 +816,21 @@ worksheet.addRow(rowValues);
 
 // Add a row with inherited style
 // This new row will have same style as last row
-worksheet.addRow(rowValues, 'i');
+// And return as row object
+const newRow = worksheet.addRow(rowValues, 'i');
 
 // Add an array of rows
 const rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
-worksheet.addRows(rows);
+// add new rows and return them as array of row objects
+const newRows = worksheet.addRows(rows);
 
 // Add an array of rows with inherited style
 // These new rows will have same styles as last row
-worksheet.addRows(rows, 'i');
+// and return them as array of row objects
+const newRowsStyled = worksheet.addRows(rows, 'i');
 ```
 | Parameter | Description | Default Value |
 | -------------- | ----------------- | -------- |
@@ -896,30 +902,35 @@ var rowValues = [];
 rowValues[1] = 4;
 rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
-worksheet.insertRow(1, rowValues);
+// insert new row and return as row object
+const insertedRow = worksheet.insertRow(1, rowValues);
 
 // Insert a row, with inherited style
 // This new row will have same style as row on top of it
-worksheet.insertRow(1, rowValues, 'i');
+// And return as row object
+const insertedRowInherited = worksheet.insertRow(1, rowValues, 'i');
 
 // Insert a row, keeping original style
 // This new row will have same style as it was previously
-worksheet.insertRow(1, rowValues, 'o');
+// And return as row object
+const insertedRowOriginal = worksheet.insertRow(1, rowValues, 'o');
 
 // Insert an array of rows, in position 1, shifting down current position 1 and later rows by 2 rows
 var rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
-worksheet.insertRows(1, rows);
+// insert new rows and return them as array of row objects
+const insertedRows = worksheet.insertRows(1, rows);
 
 // Insert an array of rows, with inherited style
 // These new rows will have same style as row on top of it
-worksheet.insertRows(1, rows, 'i');
+// And return them as array of row objects
+const insertedRowsInherited = worksheet.insertRows(1, rows, 'i');
 
 // Insert an array of rows, keeping original style
 // These new rows will have same style as it was previously in 'pos' position
-worksheet.insertRows(1, rows, 'o');
+const insertedRowsOriginal = worksheet.insertRows(1, rows, 'o');
 
 ```
 | Parameter | Description | Default Value |
