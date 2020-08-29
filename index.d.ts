@@ -1205,24 +1205,24 @@ export interface Worksheet {
 	 * Add a couple of Rows by key-value, after the last current row, using the column keys,
 	 * or add a row by contiguous Array (assign to columns A, B & C)
 	 */
-	addRow(data: any[] | any, styleOption?: string): Row;
+	addRow(data: any[] | any, style?: string): Row;
 
 	/**
 	 * Add multiple rows by providing an array of arrays or key-value pairs
 	 */
-	addRows(rows: any[], styleOption?: string): Row[];
+	addRows(rows: any[], style?: string): Row[];
 
 	/**
 	 * Insert a Row by key-value, at the pos (shifiting down all rows from pos),
 	 * using the column keys, or add a row by contiguous Array (assign to columns A, B & C)
 	 */
-	insertRow(pos: number, value: any[] | any, styleOption?: string): Row;
+	insertRow(pos: number, value: any[] | any, style?: string): Row;
 
 	/**
 	 * Insert multiple rows at pos (shifiting down all rows from pos)
 	 * by providing an array of arrays or key-value pairs
 	 */
-	insertRows(pos: number, values: any[], styleOption?: string): Row[];
+	insertRows(pos: number, values: any[], style?: string): Row[];
 
 	/**
 	 * Duplicate rows and insert new rows

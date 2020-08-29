@@ -829,7 +829,7 @@ worksheet.addRows(rows, 'i');
 | Parameter | Description | Default Value |
 | -------------- | ----------------- | -------- |
 | value/s    | The new row/s values |  |
-| styleOption            | 'i' for inherit from row above, 'n' for none | *'n'* |
+| style            | 'i' for inherit from row above, 'n' for none | *'n'* |
 
 ## Handling Individual Cells[⬆](#contents)<!-- Link generated with jump2header -->
 
@@ -881,8 +881,8 @@ worksheet.mergeCells(10,11,12,13);
 ## Insert Rows[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
-insertRow(pos, value, styleOption = 'n')
-insertRows(pos, values, styleOption = 'n')
+insertRow(pos, value, style = 'n')
+insertRows(pos, values, style = 'n')
 
 // Insert a couple of Rows by key-value, shifting down rows every time
 worksheet.insertRow(1, {id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
@@ -926,7 +926,7 @@ worksheet.insertRows(1, rows, 'o');
 | -------------- | ----------------- | -------- |
 | pos          | Row number where you want to insert, pushing down all rows from there |  |
 | value/s    | The new row/s values |  |
-| styleOption            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
+| style            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
 
 ## Splice[⬆](#contents)<!-- Link generated with jump2header -->
 
