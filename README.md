@@ -25,6 +25,10 @@ npm install exceljs
     Merged <a href="https://github.com/exceljs/exceljs/pull/1443">AddRow/s and InsertRow/s now returning the newly added rows #1443</a>
     Many thanks to <a href="https://github.com/Subhajitdas298">Subhajit Das</a> for this contribution.
   </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1443">AddRow/s and InsertRow/s now returning the newly added rows #1443</a>
+    Many thanks to <a href="https://github.com/7coil">Leondro Lio</a> for this contribution.
+  </li>
 </ul>
 
 
