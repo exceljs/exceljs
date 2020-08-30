@@ -26,8 +26,12 @@ npm install exceljs
     Many thanks to <a href="https://github.com/Subhajitdas298">Subhajit Das</a> for this contribution.
   </li>
   <li>
-    Merged <a href="https://github.com/exceljs/exceljs/pull/1443">AddRow/s and InsertRow/s now returning the newly added rows #1443</a>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1442">Change typing for colorScale colour to array of colours #1442</a>
     Many thanks to <a href="https://github.com/7coil">Leondro Lio</a> for this contribution.
+  </li>
+  <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/1432">Fix issue #1431 Streaming WorkbookReader _parseSharedStrings doesn't handle rich text within shared string nodes #1432</a>
+    Many thanks to <a href="https://github.com/rheidari">Reza Heidari</a> for this contribution.
   </li>
 </ul>
 
