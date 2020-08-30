@@ -1178,7 +1178,20 @@ export interface Worksheet {
 	 */
 	readonly lastRow: Row | undefined;
 
+	/**
+	 * Tries to find and return row for row no, else undefined
+	 * 
+	 * @param row The 1-index row number
+	 */
 	findRow(row: number): Row | undefined;
+
+	/**
+	 * Tries to find and return rows for row no start and length, else undefined
+	 * 
+	 * @param start The 1-index starting row number
+	 * @param length The length of the expected array
+	 */
+	findRows(start: number, length: number): Row[] | undefined;
 
 	/**
 	 * Cut one or more rows (rows below are shifted up)
@@ -1192,24 +1205,24 @@ export interface Worksheet {
 	 * Add a couple of Rows by key-value, after the last current row, using the column keys,
 	 * or add a row by contiguous Array (assign to columns A, B & C)
 	 */
-	addRow(data: any[] | any, styleOption?: string): Row;
+	addRow(data: any[] | any, style?: string): Row;
 
 	/**
 	 * Add multiple rows by providing an array of arrays or key-value pairs
 	 */
-	addRows(rows: any[], styleOption?: string): void;
+	addRows(rows: any[], style?: string): Row[];
 
 	/**
 	 * Insert a Row by key-value, at the pos (shifiting down all rows from pos),
 	 * using the column keys, or add a row by contiguous Array (assign to columns A, B & C)
 	 */
-	insertRow(pos: number, value: any[] | any, styleOption?: string): Row;
+	insertRow(pos: number, value: any[] | any, style?: string): Row;
 
 	/**
 	 * Insert multiple rows at pos (shifiting down all rows from pos)
 	 * by providing an array of arrays or key-value pairs
 	 */
-	insertRows(pos: number, values: any[], styleOption?: string): void;
+	insertRows(pos: number, values: any[], style?: string): Row[];
 
 	/**
 	 * Duplicate rows and insert new rows
@@ -1220,6 +1233,11 @@ export interface Worksheet {
 	 * Get or create row by 1-based index
 	 */
 	getRow(index: number): Row;
+
+	/**
+	 * Get or create rows by 1-based index
+	 */
+	getRows(start: number, length: number): Row[];
 
 	/**
 	 * Iterate over all rows that have values in a worksheet
