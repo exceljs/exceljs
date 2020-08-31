@@ -228,7 +228,7 @@ And one without...
 ## Create a Workbook[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
-const workbook = new Excel.Workbook();
+const workbook = new ExcelJS.Workbook();
 ```
 
 ## Set Workbook Properties[⬆](#contents)<!-- Link generated with jump2header -->

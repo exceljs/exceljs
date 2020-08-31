@@ -222,7 +222,7 @@ ExcelJS 在 *dist/* 文件夹内发布了两个支持浏览器的包：
 ## 创建工作簿[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-const workbook = new Excel.Workbook();
+const workbook = new ExcelJS.Workbook();
 ```
 
 ## 设置工作簿属性[⬆](#目录)<!-- Link generated with jump2header -->
