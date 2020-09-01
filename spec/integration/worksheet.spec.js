@@ -361,7 +361,7 @@ describe('Worksheet', () => {
       }
     });
 
-    it('add rows with styleOptions', () => {
+    it('adds rows with style option', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -532,7 +532,7 @@ describe('Worksheet', () => {
       }
     });
 
-    it('inserts rows with styleOptions', () => {
+    it('inserts rows with style option', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
