@@ -3,7 +3,7 @@ const express = require('express');
 const got = require('got');
 const testutils = require('../utils/index');
 
-const Excel = verquire('exceljs');
+const Excel = require('exceljs');
 
 describe('Express', () => {
   let server;
