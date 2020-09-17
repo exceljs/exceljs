@@ -53,6 +53,10 @@ module.exports = function(grunt) {
         dest: './dist/exceljs.js',
       },
       spec: {
+        options: {
+          transform: null,
+          browserifyOptions: null,
+        },
         src: ['./build/spec/browser/exceljs.spec.js'],
         dest: './build/web/exceljs.spec.js',
       },
