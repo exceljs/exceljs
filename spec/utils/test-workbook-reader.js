@@ -31,10 +31,10 @@ module.exports = {
     return new Promise((resolve, reject) => {
       let rowCount = 0;
 
-      wb.on('worksheet', (ws) => {
+      wb.on('worksheet', ws => {
         // Sheet name stored in workbook. Not guaranteed here
         // expect(ws.name).to.equal('blort');
-        ws.on('row', (row) => {
+        ws.on('row', row => {
           rowCount++;
           try {
             switch (row.number) {

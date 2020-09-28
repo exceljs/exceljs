@@ -30,7 +30,7 @@ ws.getCell('F4').value = {sharedFormula: 'F1', result: 4};
 
 // function fill
 ws.getCell('H1').value = 1;
-ws.fillFormula('H2:H20', 'H1+1', (row) => row);
+ws.fillFormula('H2:H20', 'H1+1', row => row);
 
 // array formula
 
@@ -51,6 +51,6 @@ wb.xlsx
     console.log('Done.');
     console.log('Time taken:', micros);
   })
-  .catch((error) => {
+  .catch(error => {
     console.log(error.message);
   });

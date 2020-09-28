@@ -8,7 +8,7 @@ const self = {
   addSheet(wb) {
     const ws = wb.addWorksheet('conditional-formatting');
     const {types} = self.conditionalFormattings;
-    types.forEach((type) => {
+    types.forEach(type => {
       const conditionalFormatting = self.getConditionalFormatting(type);
       if (conditionalFormatting) {
         ws.addConditionalFormatting(conditionalFormatting);
@@ -20,7 +20,7 @@ const self = {
     const ws = wb.getWorksheet('conditional-formatting');
     expect(ws).to.not.be.undefined();
     expect(ws.conditionalFormattings).to.not.be.undefined();
-    (ws.conditionalFormattings && ws.conditionalFormattings).forEach((item) => {
+    (ws.conditionalFormattings && ws.conditionalFormattings).forEach(item => {
       const type = item.rules && item.rules[0].type;
       const conditionalFormatting = self.getConditionalFormatting(type);
       expect(item).to.have.property('ref');

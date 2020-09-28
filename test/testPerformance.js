@@ -156,7 +156,7 @@ function runTests(options) {
       // run each test with a 10 second pause between (to let GC do its stuff)
       promise = promise.then(() =>
         runTest(options)
-          .then((result) => {
+          .then(result => {
             results.push(result);
           })
           .delay(sleepTime)
@@ -180,13 +180,13 @@ function runTests(options) {
 
 let mainPromise = Promise.resolve();
 // var mainPromise = execute(125, 'stream', 'plain', 'own');
-_.each(counts, (count) => {
+_.each(counts, count => {
   mainPromise = mainPromise.then(() => {
     resultSheet.addRow().getCell('count').value = count;
   });
-  _.each(workbooks, (workbook) => {
-    _.each(styles, (style) => {
-      _.each(strings, (str) => {
+  _.each(workbooks, workbook => {
+    _.each(styles, style => {
+      _.each(strings, str => {
         mainPromise = mainPromise.then(
           runTests({
             count,
@@ -208,7 +208,7 @@ mainPromise = mainPromise
   .then(() => {
     console.log('All Done');
   })
-  .catch((error) => {
+  .catch(error => {
     console.log(error.message);
   });
 

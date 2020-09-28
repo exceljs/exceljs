@@ -23,6 +23,6 @@ wb.xlsx
     console.log('Done.');
     console.log('Time taken:', micros);
   })
-  .catch((error) => {
+  .catch(error => {
     console.log(error.message);
   });

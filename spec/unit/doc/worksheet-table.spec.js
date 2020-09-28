@@ -157,7 +157,7 @@ describe('Worksheet', () => {
       table.removeColumns(1);
       table.commit();
 
-      const newValues = values.map((rVals) => spliceArray(rVals, 1, 1));
+      const newValues = values.map(rVals => spliceArray(rVals, 1, 1));
       checkTable('A1', ws, newValues);
     });
 

@@ -77,8 +77,8 @@ describe('DefinedNames', () => {
     dn.add('horizontal!C1', 'horizontal');
     dn.add('horizontal!D1', 'horizontal');
 
-    ['A', 'B', 'C', 'D'].forEach((col) => {
-      [1, 2, 3, 4].forEach((row) => {
+    ['A', 'B', 'C', 'D'].forEach(col => {
+      [1, 2, 3, 4].forEach(row => {
         dn.add(`square!${col}${row}`, 'square');
       });
     });

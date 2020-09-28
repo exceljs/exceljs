@@ -47,10 +47,10 @@ describe('Workbook', () => {
           const wb2 = new ExcelJS.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then((wb2) => {
+        .then(wb2 => {
           const ws2 = wb2.getWorksheet('blort');
           ['A1', 'B1', 'C1', 'A2', 'B2', 'C2', 'A3', 'B3', 'C3'].forEach(
-            (address) => {
+            address => {
               expect(ws2.getCell(address).value).to.equal(address);
             }
           );
@@ -125,7 +125,7 @@ describe('Workbook', () => {
           const wb2 = new ExcelJS.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then((wb2) => {
+        .then(wb2 => {
           const ws2 = wb2.getWorksheet('blort');
 
           expect(ws2.getCell('B4').fill).to.deep.equal(

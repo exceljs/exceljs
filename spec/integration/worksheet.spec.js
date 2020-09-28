@@ -326,7 +326,7 @@ describe('Worksheet', () => {
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      rows.forEach((row) => {
+      rows.forEach(row => {
         if (row) {
           ws.addRow(row);
         }
@@ -500,7 +500,7 @@ describe('Worksheet', () => {
       row3[3] = 'Other Doe';
       row3[5] = dateValue3;
       rows.push(row3);
-      rows.forEach((row) => {
+      rows.forEach(row => {
         if (row) {
           // insert on row 1 every time and thus finally reversed order
           ws.insertRow(1, row);
@@ -1056,7 +1056,7 @@ describe('Worksheet', () => {
     it('Should not break when importing a .numbers file', () =>
       new ExcelJS.Workbook().xlsx
         .readFile(path.resolve(__dirname, 'data', 'numbers.numbers'))
-        .then((workbook) => {
+        .then(workbook => {
           expect(workbook).to.have.property('worksheets');
           expect(workbook.worksheets).to.have.length(0);
         }));
@@ -1065,7 +1065,7 @@ describe('Worksheet', () => {
   it('Should not break when importing an Excel file that contains a chartsheet', () =>
     new ExcelJS.Workbook().xlsx
       .readFile(path.resolve(__dirname, 'data', 'chart-sheet.xlsx'))
-      .then((workbook) => {
+      .then(workbook => {
         expect(workbook).to.have.property('worksheets');
         expect(workbook.worksheets).to.have.length(1);
       }));
@@ -1078,7 +1078,7 @@ describe('Worksheet', () => {
     ];
 
     for (const file of fileList) {
-      it(`Should set hidden attribute correctly (${file})`, (done) => {
+      it(`Should set hidden attribute correctly (${file})`, done => {
         const wb = new ExcelJS.Workbook();
         wb.xlsx
           .readFile(
@@ -1103,7 +1103,7 @@ describe('Worksheet', () => {
 
             done();
           })
-          .catch((error) => {
+          .catch(error => {
             done(error);
           });
       });

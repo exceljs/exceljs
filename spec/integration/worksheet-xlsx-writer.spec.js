@@ -297,7 +297,7 @@ describe('WorksheetWriter', () => {
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      rows.forEach((row) => {
+      rows.forEach(row => {
         if (row) {
           ws.addRow(row);
         }

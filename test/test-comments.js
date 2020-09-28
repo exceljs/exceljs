@@ -4,7 +4,7 @@ const wb = new Excel.Workbook();
 wb.xlsx
   .readFile(require.resolve('./data/comments.xlsx'))
   .then(() => {
-    wb.worksheets.forEach((sheet) => {
+    wb.worksheets.forEach(sheet => {
       console.info(sheet.getCell('A1').model);
       sheet.getCell('B2').value = 'Zeb';
       sheet.getCell('B2').comment = {

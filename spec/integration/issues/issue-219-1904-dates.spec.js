@@ -27,7 +27,7 @@ describe('github issues', () => {
           const wb2 = new ExcelJS.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then((wb2) => {
+        .then(wb2 => {
           expect(wb2.properties.date1904).to.equal(true);
 
           const ws2 = wb2.getWorksheet('Sheet1');

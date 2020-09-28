@@ -67,7 +67,7 @@ module.exports = {
       {x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0},
     ];
 
-    sheets.forEach((sheet) => {
+    sheets.forEach(sheet => {
       const testSheet = _.get(testSheets, sheet);
       testSheet.addSheet(workbook, options);
     });
@@ -95,7 +95,7 @@ module.exports = {
       ]);
     }
 
-    sheets.forEach((sheet) => {
+    sheets.forEach(sheet => {
       const testSheet = _.get(testSheets, sheet);
       testSheet.checkSheet(workbook, options);
     });

@@ -5,7 +5,7 @@ describe('github issues', () => {
     const wb = new ExcelJS.Workbook();
     return wb.csv
       .readFile('./spec/integration/data/test-issue-991.csv')
-      .then((worksheet) => {
+      .then(worksheet => {
         expect(worksheet.getCell('A1').value.toString()).to.equal(
           new Date('2019-11-04T00:00:00').toString()
         );

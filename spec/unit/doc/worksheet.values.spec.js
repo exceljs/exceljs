@@ -309,7 +309,7 @@ describe('Worksheet', () => {
       row3[3] = 'Sam';
       row3[5] = dateValue1;
       rows.push(row3);
-      rows.forEach((row) => {
+      rows.forEach(row => {
         if (row) {
           ws.addRow(row);
         }
@@ -572,7 +572,7 @@ describe('Worksheet', () => {
             {id: '123', name: 'Jack', dob: new Date(), age: 0},
             {id: '124', name: 'Jill', dob: new Date(), age: 0},
           ];
-          values.forEach((value) => {
+          values.forEach(value => {
             ws.addRow(value);
           });
 

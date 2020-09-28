@@ -358,7 +358,7 @@ const self = {
             formula: 'A9',
             result: 1,
           });
-          ['B11', 'C11', 'D11', 'E11'].forEach((address) => {
+          ['B11', 'C11', 'D11', 'E11'].forEach(address => {
             expect(ws.getCell(address).value).to.equal(1);
           });
         }

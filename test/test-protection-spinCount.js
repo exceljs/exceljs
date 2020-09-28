@@ -51,6 +51,6 @@ async function save() {
   }
 }
 
-save().catch((error) => {
+save().catch(error => {
   console.log(error.message);
 });

@@ -45,7 +45,7 @@ e.on('finished', () => {
 
 let row = null;
 let cell = null;
-parser.on('opentag', (node) => {
+parser.on('opentag', node => {
   // console.log('opentag ' + node.name);
   switch (node.name) {
     case 'row': {
@@ -64,13 +64,13 @@ parser.on('opentag', (node) => {
     default:
   }
 });
-parser.on('text', (text) => {
+parser.on('text', text => {
   // console.log('text ' + text);
   if (cell) {
     cell.value += text;
   }
 });
-parser.on('closetag', (name) => {
+parser.on('closetag', name => {
   // console.log('closetag ' + name);
   switch (name) {
     case 'row':
