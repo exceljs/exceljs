@@ -380,7 +380,7 @@ export declare enum FormulaType {
 }
 
 export type CellValue =
-	| null | number | string | boolean | Date
+	| null | number | string | boolean | Date | undefined
 	| CellErrorValue
 	| CellRichTextValue | CellHyperlinkValue
 	| CellFormulaValue | CellSharedFormulaValue;
@@ -1075,6 +1075,9 @@ export interface DataBarRuleType extends ConditionalFormattingBaseRule {
 export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType
 	| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
 
+
+export type RowValues = CellValue[] | { [key: string]: CellValue } | undefined | null; 
+
 export interface ConditionalFormattingOptions {
 	ref: string;
 	rules: ConditionalFormattingRule[];
@@ -1252,7 +1255,7 @@ export interface Worksheet {
 	/**
 	 * return all rows as sparse array
 	 */
-	getSheetValues(): Row[];
+	getSheetValues(): RowValues[];
 
 	/**
 	 * returns the cell at [r,c] or address given by r. If not found, return undefined
