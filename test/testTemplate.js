@@ -3,7 +3,7 @@ const Excel = require('../excel');
 const workbook = new Excel.Workbook();
 workbook.xlsx
   .readFile('./out/template.xlsx')
-  .then(stream => {
+  .then((stream) => {
     const options = {
       useSharedStrings: true,
       useStyles: true,
@@ -15,7 +15,7 @@ workbook.xlsx
         console.log('Done.');
       });
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error.message);
     console.error(error.stack);
   });

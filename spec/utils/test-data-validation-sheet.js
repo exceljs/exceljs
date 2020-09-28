@@ -85,7 +85,7 @@ const self = {
     };
 
     // two rows of the same validation to test dataValidation optimisation
-    ['A22', 'A23'].forEach(address => {
+    ['A22', 'A23'].forEach((address) => {
       ws.getCell(address).value = tools.concatenateFormula('Five Numbers');
     });
     [
@@ -99,7 +99,7 @@ const self = {
       'D23',
       'E23',
       'F23',
-    ].forEach(address => {
+    ].forEach((address) => {
       ws.getCell(address).dataValidation = JSON.parse(
         JSON.stringify(self.dataValidations.shared)
       );
@@ -159,7 +159,7 @@ const self = {
       'D23',
       'E23',
       'F23',
-    ].forEach(address => {
+    ].forEach((address) => {
       expect(ws.getCell(address).dataValidation).to.deep.equal(
         self.dataValidations.shared
       );

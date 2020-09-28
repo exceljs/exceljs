@@ -53,7 +53,7 @@ describe('pr related issues', () => {
           const wb2 = new Excel.Workbook();
           return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
         })
-        .then(wb2 => {
+        .then((wb2) => {
           const ws2 = wb2.getWorksheet('sheet1');
           expect(ws2).to.not.be.undefined();
           expect(ws2.getCell('A1').value).to.deep.equal(TEST_VALUE);

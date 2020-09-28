@@ -134,7 +134,7 @@ function allDone() {
       console.log(`Sums: ${colCount}`);
       console.log(`Time: ${stopwatch}`);
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error.message);
     });
 }

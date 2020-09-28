@@ -13,10 +13,10 @@ const runs = 3;
 
         let worksheetCount = 0;
         let rowCount = 0;
-        workbookReader.on('worksheet', worksheet => {
+        workbookReader.on('worksheet', (worksheet) => {
           worksheetCount += 1;
           console.log(`Reading worksheet ${worksheetCount}`);
-          worksheet.on('row', row => {
+          worksheet.on('row', (row) => {
             rowCount += 1;
             if (rowCount % 50000 === 0) console.log(`Reading row ${rowCount}`);
           });

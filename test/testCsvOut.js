@@ -59,6 +59,6 @@ wb.csv
   .then(() => {
     console.log('Done.');
   })
-  .catch(error => {
+  .catch((error) => {
     console.log(error.message);
   });

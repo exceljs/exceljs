@@ -7,7 +7,7 @@ const filename = process.argv[2];
 const st = new SharedStrings(null);
 
 const lst = ['Hello', 'Hello', 'World', 'Hello\nWorld!', 'Hello, "World!"'];
-_.each(lst, item => {
+_.each(lst, (item) => {
   st.add(item);
 });
 

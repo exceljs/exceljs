@@ -38,7 +38,7 @@ const main = {
         deferred.reject(err);
       } else {
         const promises = [];
-        _.each(files, file => {
+        _.each(files, (file) => {
           promises.push(remove(`${path}/${file}`));
         });
 
@@ -46,7 +46,7 @@ const main = {
           .then(() => {
             deferred.resolve();
           })
-          .catch(error => {
+          .catch((error) => {
             deferred.reject(error);
           });
       }

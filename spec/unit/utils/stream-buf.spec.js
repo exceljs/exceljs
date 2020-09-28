@@ -27,7 +27,7 @@ describe('StreamBuf', () => {
     expect(chunk.toString('UTF8')).to.equal('Hello, World!');
   });
 
-  it('signals end', done => {
+  it('signals end', (done) => {
     const stream = new StreamBuf();
     stream.on('finish', () => {
       done();

@@ -8,6 +8,6 @@ a[1] = 'one';
 a[5] = 'five';
 a[0] = 'zero';
 
-_.each(a, i => {
+_.each(a, (i) => {
   console.log(i);
 });

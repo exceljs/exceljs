@@ -6,7 +6,7 @@ describe('github issues', () => {
     return wb.xlsx
       .readFile('./spec/integration/data/test-issue-257.xlsx')
       .then(() => {
-        expect(wb.worksheets.map(ws => ws.name)).to.deep.equal([
+        expect(wb.worksheets.map((ws) => ws.name)).to.deep.equal([
           'First',
           'Second',
         ]);

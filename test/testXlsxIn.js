@@ -21,6 +21,6 @@ wb.xlsx
       console.log(id, sheet.name);
     });
   })
-  .catch(error => {
+  .catch((error) => {
     console.error('something went wrong', error.stack);
   });

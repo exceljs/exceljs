@@ -87,6 +87,6 @@ const results = {};
 Promise.resolve(results)
   .then(testWrite)
   .then(testGrow)
-  .then(r => {
+  .then((r) => {
     console.log(JSON.stringify(r, null, '  '));
   });

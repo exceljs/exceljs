@@ -23,7 +23,7 @@ const tools = {
   },
 
   concatenateFormula(...args) {
-    const values = args.map(value => `"${value}"`);
+    const values = args.map((value) => `"${value}"`);
     return {
       formula: `CONCATENATE(${values.join(',')})`,
     };

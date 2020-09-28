@@ -19,6 +19,6 @@ wb.xlsx
     const {image} = ws.background;
     console.log('Media', image.name, image.type, image.buffer.length);
   })
-  .catch(error => {
+  .catch((error) => {
     console.log(error.message);
   });

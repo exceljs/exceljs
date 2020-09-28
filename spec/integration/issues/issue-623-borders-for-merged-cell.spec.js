@@ -20,7 +20,7 @@ describe('github issues', () => {
         const wb2 = new ExcelJS.Workbook();
         return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
       })
-      .then(wb2 => {
+      .then((wb2) => {
         // written file should have same borders
         const worksheet = wb2.getWorksheet(1);
         checkBorder(worksheet.getCell('B2'), ['left', 'top']);
@@ -32,7 +32,7 @@ describe('github issues', () => {
 });
 
 function checkBorder(cell, borders) {
-  borders.forEach(b => {
+  borders.forEach((b) => {
     expect(cell.style.border).to.have.property(b);
   });
 }

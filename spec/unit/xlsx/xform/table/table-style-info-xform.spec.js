@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const TableStyleInfoXform = verquire('xlsx/xform/table/table-style-info-xform');
 

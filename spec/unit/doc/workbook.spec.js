@@ -1,4 +1,4 @@
-const simpleWorkbookModel = require('./../data/simpleWorkbook.json');
+const simpleWorkbookModel = require('../data/simpleWorkbook.json');
 const testUtils = require('../../utils/index');
 
 const Excel = verquire('exceljs');

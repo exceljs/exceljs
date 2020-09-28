@@ -22,7 +22,7 @@ wb.xlsx
   .then(() => {
     console.log('Loaded', inputFile);
 
-    wb.eachSheet(sheet => {
+    wb.eachSheet((sheet) => {
       console.log(sheet.name);
     });
 
@@ -39,7 +39,7 @@ wb.xlsx
   .then(() => {
     assert(passed, 'Something went wrong', 'All tests passed!');
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error.message);
     console.error(error.stack);
   });

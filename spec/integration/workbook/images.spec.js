@@ -37,7 +37,7 @@ describe('Workbook', () => {
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })
-        .then(imageData => {
+        .then((imageData) => {
           const backgroundId2 = ws2.getBackgroundImageId();
           const image = wb2.getImage(backgroundId2);
 
@@ -81,7 +81,7 @@ describe('Workbook', () => {
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })
-        .then(imageData => {
+        .then((imageData) => {
           const images = ws2.getImages();
           expect(images.length).to.equal(1);
 
@@ -125,7 +125,7 @@ describe('Workbook', () => {
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })
-        .then(imageData => {
+        .then((imageData) => {
           const images = ws2.getImages();
           expect(images.length).to.equal(1);
 
@@ -166,7 +166,7 @@ describe('Workbook', () => {
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })
-        .then(imageData => {
+        .then((imageData) => {
           const images = ws2.getImages();
           expect(images.length).to.equal(1);
 
@@ -213,7 +213,7 @@ describe('Workbook', () => {
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })
-        .then(imageData => {
+        .then((imageData) => {
           const images = ws2.getImages();
           expect(images.length).to.equal(1);
 
@@ -271,7 +271,7 @@ describe('Workbook', () => {
 
           return fsReadFileAsync(IMAGE_FILENAME);
         })
-        .then(imageData => {
+        .then((imageData) => {
           const images = ws2.getImages();
           expect(images.length).to.equal(2);
 

@@ -289,6 +289,6 @@ wb.commit()
   .then(() => {
     console.log('Done.');
   })
-  .catch(error => {
+  .catch((error) => {
     console.log(error.message);
   });

@@ -23,7 +23,7 @@ function getExpectation(expectation, name) {
 const its = {
   prepare(expectation) {
     it('Prepare Model', () =>
-      new Promise(resolve => {
+      new Promise((resolve) => {
         const model = getExpectation(expectation, 'initialModel');
         const result = getExpectation(expectation, 'preparedModel');
 
@@ -36,7 +36,7 @@ const its = {
 
   render(expectation) {
     it('Render to XML', () =>
-      new Promise(resolve => {
+      new Promise((resolve) => {
         const model = getExpectation(expectation, 'preparedModel');
         const result = getExpectation(expectation, 'xml');
 
@@ -54,7 +54,7 @@ const its = {
   'prepare-render': function(expectation) {
     // when implementation details get in the way of testing the prepared result
     it('Prepare and Render to XML', () =>
-      new Promise(resolve => {
+      new Promise((resolve) => {
         const model = getExpectation(expectation, 'initialModel');
         const result = getExpectation(expectation, 'xml');
 
@@ -71,7 +71,7 @@ const its = {
 
   renderIn(expectation) {
     it('Render in Composite to XML ', () =>
-      new Promise(resolve => {
+      new Promise((resolve) => {
         const model = {
           pre: true,
           child: getExpectation(expectation, 'preparedModel'),
@@ -136,7 +136,7 @@ const its = {
         stream.end();
         xform
           .parse(parseSax(stream))
-          .then(model => {
+          .then((model) => {
             // console.log('parsed Model', JSON.stringify(model));
             // console.log('expected Model', JSON.stringify(result));
 
@@ -165,7 +165,7 @@ const its = {
         stream.end();
         xform
           .parse(parseSax(stream))
-          .then(model => {
+          .then((model) => {
             // eliminate the undefined
             const clone = cloneDeep(model, false);
 
@@ -180,7 +180,7 @@ const its = {
 
   reconcile(expectation) {
     it('Reconcile Model', () =>
-      new Promise(resolve => {
+      new Promise((resolve) => {
         const model = getExpectation(expectation, 'parsedModel');
         const result = getExpectation(expectation, 'reconciledModel');
 
@@ -197,10 +197,10 @@ const its = {
 };
 
 function testXform(expectations) {
-  each(expectations, expectation => {
+  each(expectations, (expectation) => {
     const tests = getExpectation(expectation, 'tests');
     describe(expectation.title, () => {
-      each(tests, test => {
+      each(tests, (test) => {
         its[test](expectation);
       });
     });
