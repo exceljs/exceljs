@@ -555,12 +555,12 @@ export interface Row extends Style {
 	readonly collapsed: boolean;
 
 	/**
-	 * Number of non-empty cells
+	 * Number of cells including empty ones
 	 */
 	readonly cellCount: number;
 
 	/**
-	 * Number of cells including empty ones
+	 * Number of non-empty cells
 	 */
 	readonly actualCellCount: number;
 
