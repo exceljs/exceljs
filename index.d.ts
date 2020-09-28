@@ -1216,13 +1216,13 @@ export interface Worksheet {
 	addRows(rows: any[], style?: string): Row[];
 
 	/**
-	 * Insert a Row by key-value, at the pos (shifiting down all rows from pos),
+	 * Insert a Row by key-value, at the position (shifiting down all rows from position),
 	 * using the column keys, or add a row by contiguous Array (assign to columns A, B & C)
 	 */
 	insertRow(pos: number, value: any[] | any, style?: string): Row;
 
 	/**
-	 * Insert multiple rows at pos (shifiting down all rows from pos)
+	 * Insert multiple rows at position (shifiting down all rows from position)
 	 * by providing an array of arrays or key-value pairs
 	 */
 	insertRows(pos: number, values: any[], style?: string): Row[];
