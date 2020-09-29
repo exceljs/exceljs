@@ -2,6 +2,6 @@
   "bracketSpacing": false,
   "printWidth": 100,
   "trailingComma": "all",
-  "bracketSpacing": true,
+  "bracketSpacing": false,
   "arrowParens": "avoid"
 }
