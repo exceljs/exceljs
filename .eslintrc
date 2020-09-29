@@ -13,12 +13,13 @@
     "node": true
   },
   "rules": {
+    "arrow-parens": ["error", "as-needed"],
     "class-methods-use-this": ["off"],
     "comma-dangle": ["error", {"arrays": "always-multiline", "objects": "always-multiline", "imports": "always-multiline", "exports": "always-multiline", "functions": "never"}],
     "default-case": ["off"],
     "func-names": ["off", "never"],
     "global-require": ["off"],
-    "max-len": ["error", {"code": 160, "ignoreComments": true, "ignoreStrings": true}],
+    "max-len": ["error", {"code": 100, "ignoreComments": true, "ignoreStrings": true}],
     "no-console": ["error", { "allow": ["warn"] }],
     "no-continue": ["off"],
     "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
