@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const CellPositionXform = verquire('xlsx/xform/drawing/cell-position-xform');
 

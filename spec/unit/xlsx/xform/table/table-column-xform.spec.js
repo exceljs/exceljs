@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const TableColumnXform = verquire('xlsx/xform/table/table-column-xform');
 
