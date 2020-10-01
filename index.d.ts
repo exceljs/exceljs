@@ -1626,7 +1626,7 @@ export interface CellMatrix {
 
 export interface DefinedNamesRanges {
 	name: string;
-	range: string[];
+	ranges: string[];
 }
 
 export type DefinedNamesModel = DefinedNamesRanges[];
