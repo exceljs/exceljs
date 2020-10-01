@@ -1,6 +1,5 @@
 const ExcelJS = verquire('exceljs');
 
-// this file to contain integration tests created from github issues
 const TEST_XLSX_FILE_NAME = './spec/integration/data/test-issue-1364.xlsx';
 
 describe('github issues', () => {
