@@ -1,6 +1,5 @@
 const ExcelJS = verquire('exceljs');
 
-// this file to contain integration tests created from github issues
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 
 describe('github issues', () => {
@@ -19,9 +18,6 @@ describe('github issues', () => {
       type: 'list',
     };
 
-    return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME).then(() => {
-      // arriving here is success
-      expect(true).to.equal(true);
-    });
+    return wb.xlsx.writeFile(TEST_XLSX_FILE_NAME);
   });
 });
