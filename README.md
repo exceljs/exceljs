@@ -455,6 +455,7 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | Letter                        | undefined |
 | Legal                         |  5        |
 | Executive                     |  7        |
+| A3                            |  8        |
 | A4                            |  9        |
 | A5                            |  11       |
 | B5 (JIS)                      |  13       |
