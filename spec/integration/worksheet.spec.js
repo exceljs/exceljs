@@ -659,6 +659,22 @@ describe('Worksheet', () => {
       });
     });
 
+    context('when the worksheet name contains illegal characters', () => {
+      it('when the worksheet name contain < > * ? " | : / \\ [ ]', () => {
+        const workbook = new ExcelJS.Workbook();
+
+        const invalideNames = ['*', '?', ':', '/', '\\', '[', ']'];
+        const expectedError =
+          'Worksheet name cannot contain the characters * ? : / \\ [ ] : ';
+
+        invalideNames.forEach(invalideName => {
+          expect(() => workbook.addWorksheet(invalideName)).to.throw(
+            expectedError + invalideName
+          );
+        });
+      });
+    });
+
     context('when worksheet name already exists', () => {
       it('throws an error', () => {
         const wb = new ExcelJS.Workbook();
