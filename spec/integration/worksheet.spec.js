@@ -659,6 +659,32 @@ describe('Worksheet', () => {
       });
     });
 
+    context('when the worksheet name contains illegal characters', () => {
+      it('throws an error', () => {
+        const workbook = new ExcelJS.Workbook();
+
+        const invalidCharacters = ['*', '?', ':', '/', '\\', '[', ']'];
+
+        for (const invalidCharacter of invalidCharacters) {
+          expect(() => workbook.addWorksheet(invalidCharacter)).to.throw(
+            `Worksheet name ${invalidCharacter} cannot include any of the following characters: * ? : \\ / [ ]`
+          );
+        }
+      });
+
+      it('throws an error', () => {
+        const workbook = new ExcelJS.Workbook();
+
+        const invalidNames = ['\'sheetName', 'sheetName\''];
+
+        for (const invalidName of invalidNames) {
+          expect(() => workbook.addWorksheet(invalidName)).to.throw(
+            `The first or last character of worksheet name cannot be a single quotation mark: ${invalidName}`
+          );
+        }
+      });
+    });
+
     context('when worksheet name already exists', () => {
       it('throws an error', () => {
         const wb = new ExcelJS.Workbook();
