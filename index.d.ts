@@ -602,17 +602,17 @@ export interface Column {
 	/**
 	 * Can be a string to set one row high header or an array to set multi-row high header
 	 */
-	header: string | string[];
+	header?: string | string[];
 
 	/**
 	 * The name of the properties associated with this column in each row
 	 */
-	key: string;
+	key?: string;
 
 	/**
 	 * The width of the column
 	 */
-	width: number;
+	width?: number;
 
 	/**
 	 * Set an outline level for columns
@@ -644,12 +644,16 @@ export interface Column {
 	readonly headers: string[];
 	readonly isDefault: boolean;
 	readonly headerCount: number;
-	border: Partial<Borders>;
-	fill: Fill;
-	numFmt: string
-	font: Partial<Font>;
-	alignment: Partial<Alignment>;
-	protection: Partial<Protection>;
+
+	/**
+	 * Below properties read from style
+	 */
+	border?: Partial<Borders>;
+	fill?: Fill;
+	numFmt?: string;
+	font?: Partial<Font>;
+	alignment?: Partial<Alignment>;
+	protection?: Partial<Protection>;
 
 	toString(): string
 	equivalentTo(other: Column): boolean
@@ -1134,18 +1138,18 @@ export interface Worksheet {
 	 */
 	readonly actualColumnCount: number;
 
-	getColumnKey(key: string): Partial<Column>;
+	getColumnKey(key: string): Column;
 
-	setColumnKey(key: string, value: Partial<Column>): void;
+	setColumnKey(key: string, value: Column): void;
 
 	deleteColumnKey(key: string): void;
 
-	eachColumnKey(callback: (col: Partial<Column>, index: number) => void): void;
+	eachColumnKey(callback: (col: Column, index: number) => void): void;
 
 	/**
 	 * Access an individual columns by key, letter and 1-based column number
 	 */
-	getColumn(indexOrKey: number | string): Partial<Column>;
+	getColumn(indexOrKey: number | string): Column;
 
 	/**
 	 * Cut one or more columns (columns to the right are shifted left)
@@ -1166,7 +1170,7 @@ export interface Worksheet {
 	 * Note: these column structures are a workbook-building convenience only,
 	 * apart from the column width, they will not be fully persisted.
 	 */
-	columns: Array<Partial<Column>>;
+	columns: Array<Column>;
 
 	/**
 	 * The total row size of the document. Equal to the row number of the last row that has values.
