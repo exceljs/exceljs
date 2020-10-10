@@ -2226,7 +2226,7 @@ Options supported when writing to a CSV file.
 | ---------------- | ----------- | ----------- | ----------- |
 | dateFormat       |     N       |  String     | Specify the date encoding format of dayjs. |
 | dateUTC          |     N       |  Boolean    | Specify whether ExcelJS uses `dayjs.utc ()` to convert time zone for parsing dates. |
-| encoding         |     N       |  String     | Specify file encoding format. |
+| encoding         |     N       |  String     | Specify file encoding format. (Only applies to `.writeFile`.) |
 | includeEmptyRows |     N       |  Boolean    | Specifies whether empty rows can be written. |
 | map              |     N       |  Function   | Custom Array.prototype.map() callback function for processing row values. |
 | sheetName        |     N       |  String     | Specify worksheet name. |

@@ -664,19 +664,11 @@ describe('Worksheet', () => {
         const workbook = new ExcelJS.Workbook();
 
         const invalidCharacters = ['*', '?', ':', '/', '\\', '[', ']'];
-        const expectedErrors = invalidCharacters.map(
-          invalidCharacter =>
-            `Worksheet name ${invalidCharacter} cannot include any of the following characters: * ? : \\ / [ ]`
-        );
 
-        for (
-          let lastIndex = invalidCharacters.length - 1;
-          lastIndex >= 0;
-          --lastIndex
-        ) {
-          expect(() =>
-            workbook.addWorksheet(invalidCharacters[lastIndex])
-          ).to.throw(expectedErrors[lastIndex]);
+        for (const invalidCharacter of invalidCharacters) {
+          expect(() => workbook.addWorksheet(invalidCharacter)).to.throw(
+            `Worksheet name ${invalidCharacter} cannot include any of the following characters: * ? : \\ / [ ]`
+          );
         }
       });
 
@@ -684,18 +676,10 @@ describe('Worksheet', () => {
         const workbook = new ExcelJS.Workbook();
 
         const invalidNames = ['\'sheetName', 'sheetName\''];
-        const expectedErrors = invalidNames.map(
-          invalidName =>
-            `The first or last character of worksheet name cannot be a single quotation mark: ${invalidName}`
-        );
 
-        for (
-          let lastIndex = invalidNames.length - 1;
-          lastIndex >= 0;
-          --lastIndex
-        ) {
-          expect(() => workbook.addWorksheet(invalidNames[lastIndex])).to.throw(
-            expectedErrors[lastIndex]
+        for (const invalidName of invalidNames) {
+          expect(() => workbook.addWorksheet(invalidName)).to.throw(
+            `The first or last character of worksheet name cannot be a single quotation mark: ${invalidName}`
           );
         }
       });
