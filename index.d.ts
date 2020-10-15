@@ -1981,7 +1981,7 @@ export namespace stream {
 		class WorkbookReader extends Workbook {
 			constructor(input: string | import('stream').Stream, options: Partial<WorkbookStreamReaderOptions>);
 			read(): Promise<void>;
-			[Symbol.asyncIterator](): AsyncGenerator<WorksheetReader>;
+			//[Symbol.asyncIterator](): AsyncGenerator<WorksheetReader>;
 			parse(): AsyncIterator<any>;
 		}
 
@@ -1995,7 +1995,7 @@ export namespace stream {
 		class WorksheetReader {
 			constructor(options: WorksheetReaderOptions);
 			read(): Promise<void>;
-			[Symbol.asyncIterator](): AsyncGenerator<Row>;
+			//[Symbol.asyncIterator](): AsyncGenerator<Row>;
 			parse(): AsyncIterator<Array<any>>;
 			dimensions(): number;
 			columns(): number;
