@@ -1173,7 +1173,7 @@ export interface Worksheet {
 	 * Note: these column structures are a workbook-building convenience only,
 	 * apart from the column width, they will not be fully persisted.
 	 */
-	columns: Array<Column>;
+	columns: Array<Partial<Column>>;
 
 	/**
 	 * The total row size of the document. Equal to the row number of the last row that has values.
