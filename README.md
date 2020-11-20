@@ -2498,7 +2498,7 @@ The constructor takes a required input argument and an optional options argument
 | options.worksheets    | Specifies whether to emit worksheets (`'emit'`) or not (`'ignore'`). Default is `'emit'`. |
 
 ```js
-const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
 for await (const worksheetReader of workbookReader) {
   for await (const row of worksheetReader) {
     // ...
