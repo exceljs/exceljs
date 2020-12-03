@@ -167,7 +167,7 @@ export type FillPatterns =
 export interface FillPattern {
 	type: 'pattern';
 	pattern: FillPatterns;
-	fgColor: Partial<Color>;
+	fgColor?: Partial<Color>;
 	bgColor?: Partial<Color>;
 }
 
