@@ -639,9 +639,13 @@ describe('Workbook', () => {
               const ws2 = wb2.getWorksheet('duplicateTest');
 
               expect(ws2.getCell('A2').value).to.equal('OneInfo');
-              expect(ws2.getCell('A2').style).to.equal(ws2.getCell('A1').style);
+              expect(ws2.getCell('A2').style).to.deep.equal(
+                ws2.getCell('A1').style
+              );
               expect(ws2.getCell('A3').value).to.equal('OneInfo');
-              expect(ws2.getCell('A3').style).to.equal(ws2.getCell('A1').style);
+              expect(ws2.getCell('A3').style).to.deep.equal(
+                ws2.getCell('A1').style
+              );
               expect(ws2.getCell('A4').value).to.be.null();
             });
         });
