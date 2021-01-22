@@ -59,4 +59,9 @@ describe('StreamBuf', () => {
       );
     }
   });
+  it('returns stream when piping', async () => {
+    const stream1 = new StreamBuf();
+    const stream2 = new StreamBuf();
+    expect(stream1.pipe(stream2)).to.equal(stream2);
+  });
 });
