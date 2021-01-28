@@ -54,7 +54,7 @@ ws.addTable({
       style: {font: {bold: true, name: 'Comic Sans MS'}},
     },
   ],
-  rows: words.map((word, i) => [new Date(+today + 86400 * i), i, word]),
+  rows: words.map((word, i) => [new Date(+today + (86400 * i)), i, word]),
 });
 
 const stopwatch = new HrStopwatch();
