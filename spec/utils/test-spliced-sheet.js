@@ -52,6 +52,110 @@ module.exports = {
         expect(ws.getCell('C5').type).to.equal(Enums.ValueType.String);
       },
     },
+    remove2Last: {
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-row-remove-2last');
+
+        ws.addRow(['1,1', '1,2', '1,3']);
+        ws.addRow(['2,1', '2,2', '2,3']);
+        ws.getCell('A4').value = 4.1;
+        ws.getCell('C4').value = 4.3;
+        ws.addRow(['5,1', '5,2', '5,3']);
+
+        ws.spliceRows(4, 2); // remove rows 4,5
+      },
+
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-row-remove-2last');
+        expect(ws).to.not.be.undefined();
+
+        expect(ws.getCell('A1').value).to.equal('1,1');
+        expect(ws.getCell('A1').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('B1').value).to.equal('1,2');
+        expect(ws.getCell('B1').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('C1').value).to.equal('1,3');
+        expect(ws.getCell('C1').type).to.equal(Enums.ValueType.String);
+
+        expect(ws.getCell('A2').value).to.equal('2,1');
+        expect(ws.getCell('A2').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('B2').value).to.equal('2,2');
+        expect(ws.getCell('B2').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('C2').value).to.equal('2,3');
+        expect(ws.getCell('C2').type).to.equal(Enums.ValueType.String);
+
+        expect(ws.getCell('A3').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('B3').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('C3').type).to.equal(Enums.ValueType.Null);
+
+        expect(ws.getCell('A4').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('B4').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('C4').type).to.equal(Enums.ValueType.Null);
+
+        expect(ws.getCell('A5').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('B5').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('C5').type).to.equal(Enums.ValueType.Null);
+
+        ws.addRow(['5,1b', '5,2b', '5,3b']);
+        expect(ws.getCell('A4').value).to.equal('5,1b');
+        expect(ws.getCell('A4').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('B4').value).to.equal('5,2b');
+        expect(ws.getCell('B4').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('C4').value).to.equal('5,3b');
+        expect(ws.getCell('C4').type).to.equal(Enums.ValueType.String);
+      },
+    },
+    removeFew: {
+      addSheet(wb) {
+        const ws = wb.addWorksheet('splice-row-remove-few');
+
+        ws.addRow(['1,1', '1,2', '1,3']);
+        ws.addRow(['2,1', '2,2', '2,3']);
+        ws.getCell('A4').value = 4.1;
+        ws.getCell('C4').value = 4.3;
+        ws.addRow(['5,1', '5,2', '5,3']);
+
+        ws.spliceRows(2, 3); // remove rows 2,3,4. row 5 becomes 2
+      },
+
+      checkSheet(wb) {
+        const ws = wb.getWorksheet('splice-row-remove-few');
+        expect(ws).to.not.be.undefined();
+
+        expect(ws.getCell('A1').value).to.equal('1,1');
+        expect(ws.getCell('A1').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('B1').value).to.equal('1,2');
+        expect(ws.getCell('B1').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('C1').value).to.equal('1,3');
+        expect(ws.getCell('C1').type).to.equal(Enums.ValueType.String);
+
+        expect(ws.getCell('A2').value).to.equal('5,1');
+        expect(ws.getCell('A2').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('B2').value).to.equal('5,2');
+        expect(ws.getCell('B2').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('C2').value).to.equal('5,3');
+        expect(ws.getCell('C2').type).to.equal(Enums.ValueType.String);
+
+        expect(ws.getCell('A3').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('B3').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('C3').type).to.equal(Enums.ValueType.Null);
+
+        expect(ws.getCell('A4').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('B4').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('C4').type).to.equal(Enums.ValueType.Null);
+
+        expect(ws.getCell('A5').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('B5').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('C5').type).to.equal(Enums.ValueType.Null);
+
+        ws.addRow(['5,1b', '5,2b', '5,3b']);
+        expect(ws.getCell('A3').value).to.equal('5,1b');
+        expect(ws.getCell('A3').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('B3').value).to.equal('5,2b');
+        expect(ws.getCell('B3').type).to.equal(Enums.ValueType.String);
+        expect(ws.getCell('C3').value).to.equal('5,3b');
+        expect(ws.getCell('C3').type).to.equal(Enums.ValueType.String);
+      },
+    },
     insertFewer: {
       addSheet(wb) {
         const ws = wb.addWorksheet('splice-row-insert-fewer');
