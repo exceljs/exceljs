@@ -87,13 +87,9 @@ module.exports = {
         expect(ws.getCell('B3').type).to.equal(Enums.ValueType.Null);
         expect(ws.getCell('C3').type).to.equal(Enums.ValueType.Null);
 
-        expect(ws.getCell('A4').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('B4').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('C4').type).to.equal(Enums.ValueType.Null);
-
-        expect(ws.getCell('A5').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('B5').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('C5').type).to.equal(Enums.ValueType.Null);
+        // expect(ws.getCell('A4').type).to.equal(Enums.ValueType.Null);
+        // expect(ws.getCell('B4').type).to.equal(Enums.ValueType.Null);
+        // expect(ws.getCell('C4').type).to.equal(Enums.ValueType.Null);
 
         ws.addRow(['5,1b', '5,2b', '5,3b']);
         expect(ws.getCell('A4').value).to.equal('5,1b');
@@ -102,6 +98,10 @@ module.exports = {
         expect(ws.getCell('B4').type).to.equal(Enums.ValueType.String);
         expect(ws.getCell('C4').value).to.equal('5,3b');
         expect(ws.getCell('C4').type).to.equal(Enums.ValueType.String);
+
+        expect(ws.getCell('A5').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('B5').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('C5').type).to.equal(Enums.ValueType.Null);
       },
     },
     removeFew: {
@@ -135,17 +135,9 @@ module.exports = {
         expect(ws.getCell('C2').value).to.equal('5,3');
         expect(ws.getCell('C2').type).to.equal(Enums.ValueType.String);
 
-        expect(ws.getCell('A3').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('B3').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('C3').type).to.equal(Enums.ValueType.Null);
-
-        expect(ws.getCell('A4').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('B4').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('C4').type).to.equal(Enums.ValueType.Null);
-
-        expect(ws.getCell('A5').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('B5').type).to.equal(Enums.ValueType.Null);
-        expect(ws.getCell('C5').type).to.equal(Enums.ValueType.Null);
+        // expect(ws.getCell('A3').type).to.equal(Enums.ValueType.Null);
+        // expect(ws.getCell('B3').type).to.equal(Enums.ValueType.Null);
+        // expect(ws.getCell('C3').type).to.equal(Enums.ValueType.Null);
 
         ws.addRow(['5,1b', '5,2b', '5,3b']);
         expect(ws.getCell('A3').value).to.equal('5,1b');
@@ -154,6 +146,14 @@ module.exports = {
         expect(ws.getCell('B3').type).to.equal(Enums.ValueType.String);
         expect(ws.getCell('C3').value).to.equal('5,3b');
         expect(ws.getCell('C3').type).to.equal(Enums.ValueType.String);
+
+        expect(ws.getCell('A4').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('B4').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('C4').type).to.equal(Enums.ValueType.Null);
+
+        expect(ws.getCell('A5').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('B5').type).to.equal(Enums.ValueType.Null);
+        expect(ws.getCell('C5').type).to.equal(Enums.ValueType.Null);
       },
     },
     insertFewer: {
