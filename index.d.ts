@@ -432,8 +432,8 @@ export interface Cell extends Style, Address {
 	readonly fullAddress: {
 		sheetName: string;
 		address: string;
-		row: string;
-		col: string;
+		row: number;
+		col: number;
 	};
 	model: CellModel;
 	/**
