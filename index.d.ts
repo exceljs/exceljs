@@ -1244,7 +1244,7 @@ export interface Worksheet {
 	/**
 	 * Get or create rows by 1-based index
 	 */
-	getRows(start: number, length: number): Row[];
+	getRows(start: number, length: number): Row[] | undefined;
 
 	/**
 	 * Iterate over all rows that have values in a worksheet
