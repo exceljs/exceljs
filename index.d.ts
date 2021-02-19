@@ -1980,10 +1980,14 @@ export namespace stream {
 
 		class WorkbookReader extends Workbook {
 			constructor(input: string | import('stream').Stream, options: Partial<WorkbookStreamReaderOptions>);
+			input: import('stream').Stream;
+			options: WorkbookStreamReaderOptions;
+			stream: import('stream').Stream;
+			styles: any; // StylesXform
 			read(): Promise<void>;
 			[Symbol.asyncIterator](): AsyncGenerator<WorksheetReader>;
 			parse(): AsyncIterator<any>;
-			on(event: 'worksheet', listner: (worksheet: Worksheet) => void): this;
+			on(event: 'worksheet', listner: (worksheet: WorksheetReader) => void): this;
 			on(event: 'error', listner: (err: Error) => void): this;
 			on(event: 'shared-strings', listner: (sharedStrings: any) => void): this;
 			on(event: 'hyperlinks', listener: (hyperlinks: any) => void): this;
@@ -2000,12 +2004,21 @@ export namespace stream {
 
 		class WorksheetReader {
 			constructor(options: WorksheetReaderOptions);
+			name: string;
+			state: string;
+			id: number;
+			options: WorkbookStreamReaderOptions;
+			workbook: WorkbookReader;
 			read(): Promise<void>;
 			[Symbol.asyncIterator](): AsyncGenerator<Row>;
 			parse(): AsyncIterator<Array<any>>;
 			dimensions(): number;
 			columns(): number;
 			getColumn(c: number): Column;
+			on(event: 'row', listner: (row: Row) => void): this;
+			on(event: 'hyperlink', listner: (hyperlink: any) => void): this;
+			on(event: 'finished', listner: () => void): this;
+			on(event: 'error', listner: (err: Error) => void): this;
 		}
 	}
 }
