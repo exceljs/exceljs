@@ -1983,6 +1983,12 @@ export namespace stream {
 			read(): Promise<void>;
 			[Symbol.asyncIterator](): AsyncGenerator<WorksheetReader>;
 			parse(): AsyncIterator<any>;
+			on(event: 'worksheet', listner: (worksheet: Worksheet) => void): this;
+			on(event: 'error', listner: (err: Error) => void): this;
+			on(event: 'shared-strings', listner: (sharedStrings: any) => void): this;
+			on(event: 'hyperlinks', listener: (hyperlinks: any) => void): this;
+			on(event: 'end', listner: () => void): this;
+			on(event: 'finished', listner: () => void): this;
 		}
 
 		interface WorksheetReaderOptions {
