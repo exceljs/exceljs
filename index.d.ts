@@ -1137,6 +1137,11 @@ export interface Worksheet {
 	readonly columnCount: number;
 
 	/**
+	 * Get the last column in a worksheet
+	 */
+	readonly lastColumn: Column;
+
+	/**
 	 * A count of the number of columns that have values.
 	 */
 	readonly actualColumnCount: number;
