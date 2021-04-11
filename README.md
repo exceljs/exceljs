@@ -1604,8 +1604,15 @@ ws.getCell('A2').fill = {
   bgColor:{argb:'FF0000FF'}
 };
 
-// fill A3 with blue-white-blue gradient from left to right
+// fill A3 with solid coral
 ws.getCell('A3').fill = {
+  type: 'pattern',
+  pattern:'solid',
+  fgColor:{argb:'F08080'},
+};
+
+// fill A4 with blue-white-blue gradient from left to right
+ws.getCell('A4').fill = {
   type: 'gradient',
   gradient: 'angle',
   degree: 0,
@@ -1617,8 +1624,8 @@ ws.getCell('A3').fill = {
 };
 
 
-// fill A4 with red-green gradient from center
-ws.getCell('A4').fill = {
+// fill A5 with red-green gradient from center
+ws.getCell('A5').fill = {
   type: 'gradient',
   gradient: 'path',
   center:{left:0.5,top:0.5},
@@ -1637,6 +1644,10 @@ ws.getCell('A4').fill = {
 | pattern  | Y        | Specifies type of pattern (see <a href="#valid-pattern-types">Valid Pattern Types</a> below) |
 | fgColor  | N        | Specifies the pattern foreground color. Default is black. |
 | bgColor  | N        | Specifies the pattern background color. Default is white. |
+
+Note: If you want to fill a cell using the `solid` pattern, then you don't need to specify `bgColor`.
+See example above for cell `A3` with a `solid` pattern and a coral `fgColor`.
+
 
 **Valid Pattern Types**
 
