@@ -639,6 +639,13 @@ describe('Worksheet', () => {
       expect(count).to.equal(7);
     });
 
+    it('returns undefined when row range is less than 1', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      expect(ws.getRows(1, 0)).to.equal(undefined);
+    });
+
     context('when worksheet name is less than or equal 31', () => {
       it('save the original name', () => {
         const wb = new ExcelJS.Workbook();
