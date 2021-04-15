@@ -1,5 +1,3 @@
-const {expect} = require('chai');
-
 const parseSax = verquire('utils/parse-sax');
 
 const utf8Encoder = {
@@ -85,9 +83,9 @@ describe('parse-sax', () => {
     await utf8FragTest('αβγδεζηθικ');
   });
   it('convert 3 byte UTF-8 chars properly', async () => {
-    await utf8FragTest('あいうえおかきくけこ');
+    await utf8FragTest('あいうえお');
   });
   it('convert 4 byte UTF-8 chars properly', async () => {
-    await utf8FragTest('😀😁😂😃😄😅😆😇😈😉');
+    await utf8FragTest('😀😁😂😃😄');
   });
 });
