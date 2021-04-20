@@ -2598,10 +2598,13 @@ An Excel formula for calculating values on the fly.
 
 Note that ExcelJS cannot process the formula to generate a result, it must be supplied.
 
+Note that function semantic names must be in English and the separator must be a comma
+
 E.g.
 
 ```javascript
 worksheet.getCell('A3').value = { formula: 'A1+A2', result: 7 };
+worksheet.getCell('A3').value = { formula: 'SUM(A1,A2)', result: 7 };
 ```
 
 Cells also support convenience getters to access the formula and result:
