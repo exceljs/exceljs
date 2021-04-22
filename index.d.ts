@@ -318,6 +318,11 @@ export interface DataValidation {
 	showInputMessage?: boolean;
 }
 
+export interface DataValidations {
+	add(range: string, validation: DataValidation): void;
+	readonly model: Record<string, DataValidation>;
+}
+
 export declare enum ErrorValue {
 	NotApplicable = '#N/A',
 	Ref = '#REF!',
@@ -386,24 +391,24 @@ export type CellValue =
 	| CellFormulaValue | CellSharedFormulaValue;
 
 
-	export interface CommentMargins {
-		insetmode: 'auto' | 'custom';
-		inset: Number[];
-	}
+export interface CommentMargins {
+	insetmode: 'auto' | 'custom';
+	inset: Number[];
+}
 
-	export interface CommentProtection {
-		locked: 'True' | 'False';
-		lockText: 'True' | 'False';
-	}
+export interface CommentProtection {
+	locked: 'True' | 'False';
+	lockText: 'True' | 'False';
+}
 
-	export type CommentEditAs = 'twoCells' | 'oneCells' | 'absolute';
+export type CommentEditAs = 'twoCells' | 'oneCells' | 'absolute';
 
-	export interface Comment {
-		texts?: RichText[];
-		margins?: Partial<CommentMargins>;
-		protection?: Partial<CommentProtection>;
-		editAs?: CommentEditAs;
-	}
+export interface Comment {
+	texts?: RichText[];
+	margins?: Partial<CommentMargins>;
+	protection?: Partial<CommentProtection>;
+	editAs?: CommentEditAs;
+}
 
 export interface CellModel {
 	address: Address;
@@ -1080,7 +1085,7 @@ export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | To
 	| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
 
 
-export type RowValues = CellValue[] | { [key: string]: CellValue } | undefined | null; 
+export type RowValues = CellValue[] | { [key: string]: CellValue } | undefined | null;
 
 export interface ConditionalFormattingOptions {
 	ref: string;
@@ -1196,6 +1201,8 @@ export interface Worksheet {
 	 * @param row The 1-index row number
 	 */
 	findRow(row: number): Row | undefined;
+
+	dataValidations: DataValidations;
 
 	/**
 	 * Tries to find and return rows for row no start and length, else undefined
@@ -1687,19 +1694,19 @@ export interface WorkbookModel {
 }
 
 export class Workbook {
-    category: string;
-    company: string;
+	category: string;
+	company: string;
 	creator: string;
-    description: string;
-    keywords: string;
+	description: string;
+	keywords: string;
 	lastModifiedBy: string;
 	created: Date;
-    manager: string;
+	manager: string;
 	modified: Date;
 	lastPrinted: Date;
 	properties: WorkbookProperties;
 	subject: string;
-    title: string;
+	title: string;
 
 	/**
 	 * Workbook calculation Properties
@@ -1769,50 +1776,50 @@ export interface TableStyleProperties {
 	 */
 	theme?: 'TableStyleDark1' | 'TableStyleDark10' | 'TableStyleDark11' | 'TableStyleDark2' | 'TableStyleDark3' | 'TableStyleDark4' | 'TableStyleDark5' | 'TableStyleDark6' | 'TableStyleDark7' | 'TableStyleDark8' | 'TableStyleDark9' | 'TableStyleLight1' | 'TableStyleLight10' | 'TableStyleLight11' | 'TableStyleLight12' | 'TableStyleLight13' | 'TableStyleLight14' | 'TableStyleLight15' | 'TableStyleLight16' | 'TableStyleLight17' | 'TableStyleLight18' | 'TableStyleLight19' | 'TableStyleLight2' | 'TableStyleLight20' | 'TableStyleLight21' | 'TableStyleLight3' | 'TableStyleLight4' | 'TableStyleLight5' | 'TableStyleLight6' | 'TableStyleLight7' | 'TableStyleLight8' | 'TableStyleLight9' | 'TableStyleMedium1' | 'TableStyleMedium10' | 'TableStyleMedium11' | 'TableStyleMedium12' | 'TableStyleMedium13' | 'TableStyleMedium14' | 'TableStyleMedium15' | 'TableStyleMedium16' | 'TableStyleMedium17' | 'TableStyleMedium18' | 'TableStyleMedium19' | 'TableStyleMedium2' | 'TableStyleMedium20' | 'TableStyleMedium21' | 'TableStyleMedium22' | 'TableStyleMedium23' | 'TableStyleMedium24' | 'TableStyleMedium25' | 'TableStyleMedium26' | 'TableStyleMedium27' | 'TableStyleMedium28' | 'TableStyleMedium3' | 'TableStyleMedium4' | 'TableStyleMedium5' | 'TableStyleMedium6' | 'TableStyleMedium7' | 'TableStyleMedium8' | 'TableStyleMedium9';
 	/**
-	  * Highlight the first column (bold)
-	  * @default false
-	  */
+		* Highlight the first column (bold)
+		* @default false
+		*/
 	showFirstColumn?: boolean;
 	/**
-	  * Highlight the last column (bold)
-	  * @default false
-	  */
+		* Highlight the last column (bold)
+		* @default false
+		*/
 	showLastColumn?: boolean;
 	/**
-	  * Alternate rows shown with background colour
-	  * @default false
-	  */
+		* Alternate rows shown with background colour
+		* @default false
+		*/
 	showRowStripes?: boolean;
 	/**
-	  * Alternate rows shown with background colour
-	  * @default false
-	  */
+		* Alternate rows shown with background colour
+		* @default false
+		*/
 	showColumnStripes?: boolean;
 }
 
 export interface TableColumnProperties {
 	/**
-	  * The name of the column, also used in the header
-	  */
+		* The name of the column, also used in the header
+		*/
 	name: string;
 	/**
-	  * Switches the filter control in the header
-	  * @default false
-	  */
+		* Switches the filter control in the header
+		* @default false
+		*/
 	filterButton?: boolean;
 	/**
-	  * Label to describe the totals row (first column)
-	  * @default 'Total'
-	  */
+		* Label to describe the totals row (first column)
+		* @default 'Total'
+		*/
 	totalsRowLabel?: string;
 	/**
-	  * Name of the totals function
-	  * @default 'none'
-	  */
+		* Name of the totals function
+		* @default 'none'
+		*/
 	totalsRowFunction?: 'none' | 'average' | 'countNums' | 'count' | 'max' | 'min' | 'stdDev' | 'var' | 'sum' | 'custom';
 	/**
-	  * Optional formula for custom functions
-	  */
+		* Optional formula for custom functions
+		*/
 	totalsRowFormula?: string;
 }
 
