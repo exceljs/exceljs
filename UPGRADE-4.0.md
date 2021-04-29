@@ -1,6 +1,6 @@
 # UPGRADE FROM 3.x to 4.0
 
-## `wb.createInputStream()` depraction
+## `wb.createInputStream()` deprecation
 
 | ExcelJS V3.9.*                                                      | ExcelJS v4                         |
 |---------------------------------------------------------------------|------------------------------------|
@@ -21,8 +21,8 @@ const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
 for await (const worksheetReader of workbookReader) {
   for await (const row of worksheetReader) {
     // ...
-    
-    // continue, break, return 
+
+    // continue, break, return
   }
 }
 ```

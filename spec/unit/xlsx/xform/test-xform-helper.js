@@ -1,7 +1,8 @@
+const {PassThrough} = require('readable-stream');
 const {cloneDeep, each} = require('../../../utils/under-dash');
 const CompyXform = require('./compy-xform');
 
-const SAXStream = verquire('utils/sax-stream');
+const parseSax = verquire('utils/parse-sax');
 const XmlStream = verquire('utils/xml-stream');
 const BooleanXform = verquire('xlsx/xform/simple/boolean-xform');
 
@@ -130,9 +131,11 @@ const its = {
             },
           ],
         });
-        const saxStream = new SAXStream(['opentag', 'text', 'closetag']);
+        const stream = new PassThrough();
+        stream.write(xml);
+        stream.end();
         xform
-          .parse(saxStream)
+          .parse(parseSax(stream))
           .then(model => {
             // console.log('parsed Model', JSON.stringify(model));
             // console.log('expected Model', JSON.stringify(result));
@@ -146,7 +149,6 @@ const its = {
             resolve();
           })
           .catch(reject);
-        saxStream.write(xml);
       }));
   },
 
@@ -156,11 +158,13 @@ const its = {
         const xml = getExpectation(expectation, 'xml');
         const result = getExpectation(expectation, 'parsedModel');
 
-        const saxStream = new SAXStream(['opentag', 'text', 'closetag']);
         const xform = expectation.create();
 
+        const stream = new PassThrough();
+        stream.write(xml);
+        stream.end();
         xform
-          .parse(saxStream)
+          .parse(parseSax(stream))
           .then(model => {
             // eliminate the undefined
             const clone = cloneDeep(model, false);
@@ -171,8 +175,6 @@ const its = {
             resolve();
           })
           .catch(reject);
-
-        saxStream.write(xml);
       }));
   },
 

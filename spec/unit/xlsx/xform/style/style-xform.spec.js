@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const StyleXform = verquire('xlsx/xform/style/style-xform');
 
@@ -122,6 +122,7 @@ const expectations = [
       numFmtId: 0,
       xfId: 0,
       alignment: {horizontal: 'center', vertical: 'middle'},
+      protection: {locked: false, hidden: false},
     },
     tests: ['parse', 'parseIn'],
   },

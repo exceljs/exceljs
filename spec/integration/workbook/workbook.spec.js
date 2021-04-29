@@ -919,7 +919,7 @@ describe('Workbook', () => {
       expect.fail('should fail for given argument');
     } catch (e) {
       expect(e.message).to.equal(
-        'Chunk must be one of type String, Buffer or StringBuf.'
+        'Can\'t read the data of \'the loaded zip file\'. Is it in a supported JavaScript type (String, Blob, ArrayBuffer, etc) ?'
       );
     }
   });

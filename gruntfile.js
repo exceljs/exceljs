@@ -6,11 +6,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-terser');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-exorcise');
 
   grunt.initConfig({
     babel: {
       options: {
         sourceMap: true,
+        compact: false,
       },
       dist: {
         files: [
@@ -21,68 +23,89 @@ module.exports = function(grunt) {
           },
         ],
       },
-      bundle: {
-        files: [
-          {
-            cwd: './build',
-            expand: true,
-            src: ['exceljs.bare.js', 'exceljs.js'],
-            dest: './dist/',
-          },
-        ],
-      },
     },
     browserify: {
-      bare: {
-        src: ['./build/lib/exceljs.bare.js'],
-        dest: './build/exceljs.bare.js',
-        options: {
-          browserifyOptions: {
-            standalone: 'ExcelJS',
-          },
+      options: {
+        transform: [
+          ['babelify', {
+            // enable babel transpile for node_modules
+            global: true,
+            presets: ['@babel/preset-env'],
+            // core-js should not be transpiled
+            // See https://github.com/zloirock/core-js/issues/514
+            ignore: [/node_modules[\\/]core-js/],
+          }],
+        ],
+        browserifyOptions: {
+          // enable source map for browserify
+          debug: true,
+          standalone: 'ExcelJS',
         },
+      },
+      bare: {
+        // keep the original source for source maps
+        src: ['./lib/exceljs.bare.js'],
+        dest: './dist/exceljs.bare.js',
       },
       bundle: {
-        src: ['./build/lib/exceljs.browser.js'],
-        dest: './build/exceljs.js',
-        options: {
-          browserifyOptions: {
-            standalone: 'ExcelJS',
-          },
-        },
+        // keep the original source for source maps
+        src: ['./lib/exceljs.browser.js'],
+        dest: './dist/exceljs.js',
       },
       spec: {
+        options: {
+          transform: null,
+          browserifyOptions: null,
+        },
         src: ['./build/spec/browser/exceljs.spec.js'],
         dest: './build/web/exceljs.spec.js',
       },
     },
+
     terser: {
       options: {
-        sourceMap: true,
         output: {
           preamble: '/*! ExcelJS <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+          ascii_only: true,
         },
       },
       dist: {
+        options: {
+          // Keep the original source maps from browserify
+          // See also https://www.npmjs.com/package/terser#source-map-options
+          sourceMap: {
+            content: 'inline',
+            url: 'exceljs.min.js.map',
+          },
+        },
         files: {
           './dist/exceljs.min.js': ['./dist/exceljs.js'],
+        },
+      },
+      bare: {
+        options: {
+          // Keep the original source maps from browserify
+          // See also https://www.npmjs.com/package/terser#source-map-options
+          sourceMap: {
+            content: 'inline',
+            url: 'exceljs.bare.min.js.map',
+          },
+        },
+        files: {
           './dist/exceljs.bare.min.js': ['./dist/exceljs.bare.js'],
         },
       },
-      // es3: {
-      //   files: [
-      //     {
-      //       expand: true,
-      //       cwd: './build/lib/',
-      //       src: ['*.js', '**/*.js'],
-      //       dest: 'dist/es3/',
-      //       ext: '.js',
-      //     },
-      //     {
-      //       './dist/es3/index.js': ['./build/lib/exceljs.nodejs.js'],
-      //     }
-      //   ],
-      // },
+    },
+
+    // Move source maps to a separate file
+    exorcise: {
+      bundle: {
+        options: {},
+        files: {
+          './dist/exceljs.js.map': ['./dist/exceljs.js'],
+          './dist/exceljs.bare.js.map': ['./dist/exceljs.bare.js'],
+        },
+      },
     },
 
     copy: {
@@ -105,6 +128,6 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('build', ['babel:dist', 'browserify', 'babel:bundle', 'terser', 'copy']);
+  grunt.registerTask('build', ['babel:dist', 'browserify', 'terser', 'exorcise', 'copy']);
   grunt.registerTask('ug', ['terser']);
 };

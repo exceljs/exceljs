@@ -1,4 +1,3 @@
-const MemoryStream = require('memorystream');
 const _ = require('./under-dash');
 
 const tools = {
@@ -23,46 +22,11 @@ const tools = {
     return clone;
   },
 
-  concatenateFormula() {
-    const args = Array.prototype.slice.call(arguments);
+  concatenateFormula(...args) {
     const values = args.map(value => `"${value}"`);
     return {
       formula: `CONCATENATE(${values.join(',')})`,
     };
-  },
-  cloneByModel(thing1, Type) {
-    const {model} = thing1;
-    const thing2 = new Type();
-    thing2.model = model;
-    return Promise.resolve(thing2);
-  },
-  cloneByStream(thing1, Type, end) {
-    return new Promise((resolve, reject) => {
-      end = end || 'end';
-
-      const thing2 = new Type();
-      const stream = thing2.createInputStream();
-      stream.on(end, () => {
-        resolve(thing2);
-      });
-      stream.on('error', error => {
-        reject(error);
-      });
-
-      const memStream = new MemoryStream();
-      memStream.on('error', error => {
-        reject(error);
-      });
-      memStream.pipe(stream);
-      thing1.write(memStream).then(() => {
-        memStream.end();
-      });
-    });
-  },
-  toISODateString(dt) {
-    const iso = dt.toISOString();
-    const parts = iso.split('T');
-    return parts[0];
   },
 };
 

@@ -31,6 +31,9 @@ describe('Gold Book', () => {
         hyperlink: 'https://www.npmjs.com/package/exceljs',
         text: 'exceljs',
       });
+
+      expect(ws.lastColumn).to.equal(ws.getColumn(2));
+      expect(ws.lastRow).to.equal(ws.getRow(6));
     });
 
     it('Styles', () => {});
