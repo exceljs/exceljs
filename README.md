@@ -2279,7 +2279,7 @@ const options = {
         return value;
       case 1:
         // column 2 is a date
-        return moment(value).format('YYYY-MM-DD');
+        return dayjs(value).format('YYYY-MM-DD');
       case 2:
         // column 3 is a formula, write just the result
         return value.result;
@@ -2304,10 +2304,10 @@ The CSV parser uses [fast-csv](https://www.npmjs.com/package/fast-csv) to write 
  The formatterOptions in the options passed to the above write function will be passed to the @fast-csv/format module to write csv data.
  Please refer to the fast-csv README.md for details.
 
-Dates are formatted using the npm module [moment](https://www.npmjs.com/package/moment).
- If no dateFormat is supplied, moment.ISO_8601 is used.
+Dates are formatted using the npm module [dayjs](https://www.npmjs.com/package/dayjs).
+ If no dateFormat is supplied, dayjs.ISO_8601 is used.
  When writing a CSV you can supply the boolean dateUTC as true to have ExcelJS parse the date without automatically
- converting the timezone using `moment.utc()`.
+ converting the timezone using `dayjs.utc()`.
 
 ### Streaming I/O[⬆](#contents)<!-- Link generated with jump2header -->
 
