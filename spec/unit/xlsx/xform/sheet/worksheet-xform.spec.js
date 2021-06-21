@@ -188,4 +188,27 @@ describe('WorksheetXform', () => {
     expect(iDataValidations).not.to.equal(-1);
     expect(iConditionalFormatting).to.be.lessThan(iDataValidations);
   });
+  it('dataValidations should be split between internal and external', () => {
+    const xform = new WorksheetXform();
+    const model = require('./data/sheet.4.1.json');
+    const xmlStream = new XmlStream();
+    const options = {
+      styles: new StylesXform(true),
+      hyperlinks: [],
+    };
+    xform.prepare(model, options);
+    xform.render(xmlStream, model);
+
+    const {xml} = xmlStream;
+    const iInternalDataValidations = xml.indexOf('dataValidations');
+    const iExt = xml.indexOf('ext');
+    const iExternalDataValidations = xml.indexOf('x14:dataValidations');
+    const countCounters = (xml.match(/count="1"/g) || []).length;
+    expect(iInternalDataValidations).not.to.equal(-1);
+    expect(iExt).not.to.equal(-1);
+    expect(iExternalDataValidations).not.to.equal(-1);
+    expect(iInternalDataValidations).to.be.lessThan(iExt);
+    expect(iExt).to.be.lessThan(iExternalDataValidations);
+    expect(countCounters).to.be.equal(2);
+  });
 });
