@@ -1802,12 +1802,16 @@ worksheet.addConditionalFormatting({
 
 **Cell Is Operators**
 
-| Operator    | Description |
-| ----------- | ----------- |
-| equal       | Apply format if cell value equals formula value |
-| greaterThan | Apply format if cell value is greater than formula value |
-| lessThan    | Apply format if cell value is less than formula value |
-| between     | Apply format if cell value is between two formula values (inclusive) |
+| Operator           | Description |
+| ------------------ | ----------- |
+| equal              | Apply format if cell value equals formula value |
+| notEqual           | Apply format if cell value not equals formula value |
+| greaterThan        | Apply format if cell value is greater than formula value |
+| greaterThanOrEqual | Apply format if cell value is greater than or equal to formula value |
+| lessThan           | Apply format if cell value is less than formula value |
+| lessThanOrEqual    | Apply format if cell value is less than or equal to formula value |
+| between            | Apply format if cell value is between two formula values (inclusive) |
+| notBetween         | Apply format if cell value is not between two formula values (inclusive) |
 
 
 ### Top 10[⬆](#contents)<!-- Link generated with jump2header -->
