@@ -13,11 +13,19 @@ const imageId = wb.addImage({
   filename: path.join(__dirname, 'data/image2.png'),
   extension: 'png',
 });
-ws.addImage(imageId, {
-  tl: {col: 0.1125, row: 0.4},
-  br: {col: 2.101046875, row: 3.4},
-  editAs: 'oneCell',
-});
+ws.addImage(
+  imageId,
+  {
+    tl: {col: 0.1125, row: 0.4},
+    br: {col: 2.101046875, row: 3.4},
+    editAs: 'oneCell',
+  },
+  {
+    title: 'Image title',
+    decorative: 1,
+    description: 'this is image alternative text',
+  }
+);
 
 const stopwatch = new HrStopwatch();
 stopwatch.start();
