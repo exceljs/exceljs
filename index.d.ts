@@ -349,14 +349,14 @@ export interface CellHyperlinkValue {
 export interface CellFormulaValue {
 	formula: string;
 	result?: number | string | Date | { error: CellErrorValue };
-	date1904: boolean;
+	date1904?: boolean;
 }
 
 export interface CellSharedFormulaValue {
 	sharedFormula: string;
 	readonly formula?: string;
 	result?: number | string | Date | { error: CellErrorValue };
-	date1904: boolean;
+	date1904?: boolean;
 }
 
 export declare enum ValueType {
