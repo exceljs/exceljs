@@ -598,6 +598,30 @@ describe('Worksheet', () => {
       }
     });
 
+    it('should style of the inserted row with inherited style be mutable', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+
+      ws.addRow([1, 'John Doe', dateValue1]);
+      ws.getRow(1).font = testutils.styles.fonts.comicSansUdB16;
+
+      ws.insertRow(2, [3, 'Jane Doe', dateValue2], 'i');
+      ws.insertRow(2, [2, 'Jane Doe', dateValue2], 'o');
+
+      ws.getCell('A2').font = testutils.styles.fonts.arialBlackUI14;
+      ws.getCell('A3').font = testutils.styles.fonts.arialBlackUI14;
+
+      expect(ws.getCell('A2').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A3').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+    });
+
     it('iterates over rows', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
