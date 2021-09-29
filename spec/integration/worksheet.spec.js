@@ -611,9 +611,17 @@ describe('Worksheet', () => {
       ws.insertRow(2, [3, 'Jane Doe', dateValue2], 'i');
       ws.insertRow(2, [2, 'Jane Doe', dateValue2], 'o');
 
+      ws.getRow(2).font = testutils.styles.fonts.broadwayRedOutline20;
+      ws.getRow(3).font = testutils.styles.fonts.broadwayRedOutline20;
       ws.getCell('A2').font = testutils.styles.fonts.arialBlackUI14;
       ws.getCell('A3').font = testutils.styles.fonts.arialBlackUI14;
 
+      expect(ws.getRow(2).font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getRow(3).font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
       expect(ws.getCell('A2').font).not.deep.equal(
         testutils.styles.fonts.comicSansUdB16
       );
