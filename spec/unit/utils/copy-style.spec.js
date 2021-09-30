@@ -33,7 +33,7 @@ describe('copyStyle', () => {
   });
 
   it('should return the argument if a falsy value passed', () => {
-    expect(copyStyle(null)).to.deep.equal(null);
-    expect(copyStyle(undefined)).to.deep.equal(undefined);
+    expect(copyStyle(null)).to.equal(null);
+    expect(copyStyle(undefined)).to.equal(undefined);
   });
 });
