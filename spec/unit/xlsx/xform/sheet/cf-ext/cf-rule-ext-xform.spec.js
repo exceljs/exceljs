@@ -84,6 +84,30 @@ const expectations = [
     },
     tests: ['render', 'parse'],
   },
+  {
+    title: 'Expression',
+    create() {
+      return new CfRuleExtXform();
+    },
+    preparedModel: {
+      type: 'expression',
+      x14Id: 'x14-id',
+      priority: 1,
+      formulae: ['ROW()'],
+    },
+    xml: `
+      <x14:cfRule type="expression" priority="1" id="x14-id">
+        <xm:f>ROW()</xm:f>
+      </x14:cfRule>
+    `,
+    parsedModel: {
+      type: 'expression',
+      x14Id: 'x14-id',
+      priority: 1,
+      formulae: ['ROW()'],
+    },
+    tests: ['render', 'parse'],
+  },
 ];
 
 describe('CfRuleExtXform', () => {
