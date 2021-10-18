@@ -17,8 +17,7 @@ const expectations = [
       outlineLevelRow: 5,
       outlineLevelCol: 2,
     },
-    xml:
-      '<sheetFormatPr defaultRowHeight="14.4" defaultColWidth="2.17" customHeight="1" outlineLevelRow="5" outlineLevelCol="2" x14ac:dyDescent="0.55"/>',
+    xml: '<sheetFormatPr defaultRowHeight="14.4" defaultColWidth="2.17" customHeight="1" outlineLevelRow="5" outlineLevelCol="2" x14ac:dyDescent="0.55"/>',
     parsedModel: {
       defaultRowHeight: 14.4,
       defaultColWidth: 2.17,
@@ -34,8 +33,7 @@ const expectations = [
       return new SheetFormatPropertiesXform();
     },
     preparedModel: {defaultRowHeight: 14.4, dyDescent: 0.55},
-    xml:
-      '<sheetFormatPr defaultRowHeight="14.4" customHeight="1" x14ac:dyDescent="0.55"/>',
+    xml: '<sheetFormatPr defaultRowHeight="14.4" customHeight="1" x14ac:dyDescent="0.55"/>',
     parsedModel: {
       defaultRowHeight: 14.4,
       dyDescent: 0.55,

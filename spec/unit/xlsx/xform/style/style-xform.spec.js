@@ -40,8 +40,7 @@ const expectations = [
       xfId: 0,
       alignment: {horizontal: 'center', vertical: 'middle'},
     },
-    xml:
-      '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>',
+    xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>',
     get parsedModel() {
       return this.preparedModel;
     },
@@ -53,8 +52,7 @@ const expectations = [
       return new StyleXform({xfId: true});
     },
     preparedModel: {numFmtId: 0, fontId: 5, fillId: 0, borderId: 0, xfId: 0},
-    xml:
-      '<xf numFmtId="0" fontId="5" fillId="0" borderId="0" xfId="0" applyFont="1"/>',
+    xml: '<xf numFmtId="0" fontId="5" fillId="0" borderId="0" xfId="0" applyFont="1"/>',
     get parsedModel() {
       return this.preparedModel;
     },
@@ -66,8 +64,7 @@ const expectations = [
       return new StyleXform({xfId: true});
     },
     preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 7, xfId: 0},
-    xml:
-      '<xf numFmtId="0" fontId="0" fillId="0" borderId="7" xfId="0" applyBorder="1"/>',
+    xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="7" xfId="0" applyBorder="1"/>',
     get parsedModel() {
       return this.preparedModel;
     },
@@ -79,8 +76,7 @@ const expectations = [
       return new StyleXform({xfId: true});
     },
     preparedModel: {numFmtId: 1, fontId: 0, fillId: 0, borderId: 0, xfId: 0},
-    xml:
-      '<xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>',
+    xml: '<xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>',
     get parsedModel() {
       return this.preparedModel;
     },
@@ -92,8 +88,7 @@ const expectations = [
       return new StyleXform({xfId: true});
     },
     preparedModel: {numFmtId: 0, fontId: 0, fillId: 2, borderId: 0, xfId: 0},
-    xml:
-      '<xf numFmtId="0" fontId="0" fillId="2" borderId="0" xfId="0" applyFill="1"/>',
+    xml: '<xf numFmtId="0" fontId="0" fillId="2" borderId="0" xfId="0" applyFill="1"/>',
     get parsedModel() {
       return this.preparedModel;
     },
@@ -113,8 +108,7 @@ const expectations = [
       alignment: {horizontal: 'center', vertical: 'middle'},
       protection: {locked: false},
     },
-    xml:
-      '<xf borderId="1" fillId="10" fontId="3" numFmtId="0" xfId="0" applyProtection="1" applyAlignment="1" applyFill="1" applyBorder="1" applyFont="1"><protection locked="0"/><alignment horizontal="center" vertical="center"/></xf>',
+    xml: '<xf borderId="1" fillId="10" fontId="3" numFmtId="0" xfId="0" applyProtection="1" applyAlignment="1" applyFill="1" applyBorder="1" applyFont="1"><protection locked="0"/><alignment horizontal="center" vertical="center"/></xf>',
     parsedModel: {
       borderId: 1,
       fillId: 10,

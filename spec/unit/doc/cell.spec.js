@@ -399,10 +399,7 @@ describe('Cell', () => {
     expect(a1.model.comment.note.protection).to.deep.equal(comment.protection);
     expect(a1.model.comment.note.margins.insetmode).to.equal('auto');
     expect(a1.model.comment.note.margins.inset).to.deep.equal([
-      0.13,
-      0.13,
-      0.25,
-      0.25,
+      0.13, 0.13, 0.25, 0.25,
     ]);
     expect(a1.model.comment.note.editAs).to.equal('absolute');
   });

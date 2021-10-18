@@ -24,8 +24,7 @@ const expectations = [
       outlineLevel: 1,
       collapsed: true,
     },
-    xml:
-      '<col min="2" max="2" width="10.15625" bestFit="1" customWidth="1" outlineLevel="1" collapsed="1"/>',
+    xml: '<col min="2" max="2" width="10.15625" bestFit="1" customWidth="1" outlineLevel="1" collapsed="1"/>',
     parsedModel: {
       min: 2,
       max: 2,
