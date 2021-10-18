@@ -1,4 +1,4 @@
-const _ = require('../lib/utils/under-dash.js');
+const _ = require('../lib/utils/under-dash');
 const HrStopwatch = require('./utils/hr-stopwatch');
 
 const Excel = require('../excel');
