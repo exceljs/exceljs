@@ -2,6 +2,11 @@ const fs = require('fs');
 const {promisify} = require('util');
 
 const testUtils = require('../../utils/index');
+const {
+  addTable,
+  checkTable,
+  defaultTableValues,
+} = require('../../unit/doc/worksheet-table.spec');
 
 const ExcelJS = verquire('exceljs');
 
@@ -263,6 +268,28 @@ describe('WorkbookWriter', () => {
             ],
           });
           expect(ws2.getCell('B1').value).to.equal('plain text');
+        });
+    });
+
+    it('table', () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+        useStyles: true,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws = wb.addWorksheet('Hello');
+      addTable('A1', ws);
+
+      ws.commit();
+      return wb
+        .commit()
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          const ws2 = wb2.getWorksheet('Hello');
+          checkTable('A1', ws2, defaultTableValues);
         });
     });
 
