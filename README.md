@@ -743,7 +743,30 @@ worksheet.spliceColumns(3,2);
 const newCol3Values = [1,2,3,4,5];
 const newCol4Values = ['one', 'two', 'three', 'four', 'five'];
 worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
+```
 
+## Nested columns
+Also you can build nested columns 
+
+```javascript
+worksheet.makeColumns([
+  {
+    id: 1, 
+    title: 'Some', 
+  },
+  {id: 2, title: 'Qwe'},
+  {id: 3, title: 'Foo'},
+  {
+    id: 4,
+    title: 'Zoo',
+    child: [
+      { id: 41, title: 'Zoo 1' },
+      { id: 42, title: 'Zoo 2' },
+      { id: 44, title: 'Zoo 3' },
+      { id: 45, title: 'Zoo 4' },
+    ]
+  }
+]);
 ```
 
 ## Rows[⬆](#contents)<!-- Link generated with jump2header -->
