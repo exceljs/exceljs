@@ -2000,17 +2000,21 @@ export namespace stream {
 		interface WorksheetReaderOptions {
 			workbook: Workbook;
 			id: number;
-			entry: import('stream').Stream;
+			iterator: AsyncIterator<any>;
 			options: WorkbookStreamReaderOptions;
 		}
 
 		class WorksheetReader {
+			readonly id: number;
+			name: string;
+			state: WorksheetState;
+			workbook: WorkbookReader;
 			constructor(options: WorksheetReaderOptions);
-			read(): Promise<void>;
+			readonly dimensions: Range;
+			readonly columns: Column[];
 			[Symbol.asyncIterator](): AsyncGenerator<Row>;
+			read(): Promise<void>;
 			parse(): AsyncIterator<Array<any>>;
-			dimensions(): number;
-			columns(): number;
 			getColumn(c: number): Column;
 		}
 	}
