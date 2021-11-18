@@ -61,6 +61,35 @@
             }
         ]
     },
+    "abbreviation": {
+        "ref": "A:A",
+        "rules": [
+            {
+                "type": "cellIs",
+                "operator": "between",
+                "formulae": [1000, 1000000],
+                "style": { "numFmt": "#,##0.000,\\K;-#,##0.000,\\K" }
+            },
+            {
+                "type": "cellIs",
+                "operator": "between",
+                "formulae": [-1000, -1000000],
+                "style": { "numFmt": "#,##0.000,\\K;-#,##0.000,\\K" }
+            },
+            {
+                "type": "cellIs",
+                "operator": "greaterThan",
+                "formulae": [1000000],
+                "style": { "numFmt": "#,##0.000,,\\M;-#,##0.000,,\\M" }
+            },
+            {
+                "type": "cellIs",
+                "operator": "lessThan",
+                "formulae": [-1000000],
+                "style": { "numFmt": "#,##0.000,,\\M;-#,##0.000,,\\M" }
+            }
+        ]
+    },
     "types": [
         "expression",
         "cellIs",
