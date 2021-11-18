@@ -167,7 +167,7 @@ export type FillPatterns =
 export interface FillPattern {
 	type: 'pattern';
 	pattern: FillPatterns;
-	fgColor: Partial<Color>;
+	fgColor?: Partial<Color>;
 	bgColor?: Partial<Color>;
 }
 
@@ -432,8 +432,8 @@ export interface Cell extends Style, Address {
 	readonly fullAddress: {
 		sheetName: string;
 		address: string;
-		row: string;
-		col: string;
+		row: number;
+		col: number;
 	};
 	model: CellModel;
 	/**
@@ -1137,6 +1137,11 @@ export interface Worksheet {
 	readonly columnCount: number;
 
 	/**
+	 * Get the last column in a worksheet
+	 */
+	readonly lastColumn: Column;
+
+	/**
 	 * A count of the number of columns that have values.
 	 */
 	readonly actualColumnCount: number;
@@ -1244,7 +1249,7 @@ export interface Worksheet {
 	/**
 	 * Get or create rows by 1-based index
 	 */
-	getRows(start: number, length: number): Row[];
+	getRows(start: number, length: number): Row[] | undefined;
 
 	/**
 	 * Iterate over all rows that have values in a worksheet
@@ -1682,12 +1687,19 @@ export interface WorkbookModel {
 }
 
 export class Workbook {
+    category: string;
+    company: string;
 	creator: string;
+    description: string;
+    keywords: string;
 	lastModifiedBy: string;
 	created: Date;
+    manager: string;
 	modified: Date;
 	lastPrinted: Date;
 	properties: WorkbookProperties;
+	subject: string;
+    title: string;
 
 	/**
 	 * Workbook calculation Properties
@@ -1857,7 +1869,7 @@ export interface Table extends Required<TableProperties> {
 	/**
 	 * Add a row of data, either insert at rowNumber or append
 	 */
-	addRow: (values: any[], rowNumber: number) => void
+	addRow: (values: any[], rowNumber?: number) => void
 	/**
 	 * Get column
 	 */
