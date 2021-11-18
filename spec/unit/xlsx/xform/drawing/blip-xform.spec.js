@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const BlipXform = verquire('xlsx/xform/drawing/blip-xform');
 

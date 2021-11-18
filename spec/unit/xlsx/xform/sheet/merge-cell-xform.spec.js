@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const MergeCellXform = verquire('xlsx/xform/sheet/merge-cell-xform');
 

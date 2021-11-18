@@ -212,5 +212,37 @@ describe('Worksheet', () => {
         testUtils.styles.numFmts.numFmt1
       );
     });
+
+    it('preserves merges after row inserts', function() {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('testMergeAfterInsert');
+
+      ws.addRow([1, 2]);
+      ws.addRow([3, 4]);
+      ws.mergeCells('A1:B2');
+      ws.insertRow(1, ['Inserted Row Text']);
+
+      const r2 = ws.getRow(2);
+      const r3 = ws.getRow(3);
+
+      const cellVals = [];
+      for (const r of [r2, r3]) {
+        for (const cell of r._cells) {
+          cellVals.push(cell._value);
+        }
+      }
+
+      let nNumberVals = 0;
+      let nMergeVals = 0;
+      for (const cellVal of cellVals) {
+        const {name} = cellVal.constructor;
+        if (name === 'NumberValue') nNumberVals += 1;
+        if (name === 'MergeValue' && cellVal.model.master === 'A2') {
+          nMergeVals += 1;
+        }
+      }
+      expect(nNumberVals).to.deep.equal(1);
+      expect(nMergeVals).to.deep.equal(3);
+    });
   });
 });

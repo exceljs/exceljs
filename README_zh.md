@@ -222,7 +222,7 @@ ExcelJS 在 *dist/* 文件夹内发布了两个支持浏览器的包：
 ## 创建工作簿[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-const workbook = new Excel.Workbook();
+const workbook = new ExcelJS.Workbook();
 ```
 
 ## 设置工作簿属性[⬆](#目录)<!-- Link generated with jump2header -->
@@ -442,6 +442,7 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | Letter                        | `undefined` |
 | Legal                         | 5           |
 | Executive                     | 7           |
+| A3                            | 8           |
 | A4                            | 9           |
 | A5                            | 11          |
 | B5 (JIS)                      | 13          |
@@ -2195,7 +2196,7 @@ const options = {
         return value;
       case 1:
         // 第2列是日期
-        return moment(value).format('YYYY-MM-DD');
+        return dayjs(value).format('YYYY-MM-DD');
       case 2:
         // 第3列是一个公式，只写结果
         return value.result;
@@ -2218,7 +2219,7 @@ const buffer = await workbook.csv.writeBuffer();
 
 CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 编写 CSV 文件。传递给上述写入函数的选项中的 `formatterOptions` 将传递给 @fast-csv/format 模块以写入 csv 数据。有关详细信息，请参阅 fast-csv README.md。
 
-日期使用 npm 模块 [moment](https://www.npmjs.com/package/moment) 格式化。如果未提供 `dateFormat`，则使用 `moment.ISO_8601`。编写 CSV 时，您可以提供布尔值 `dateUTC` 为 `true`，以使 ExcelJS 解析日期，而无需使用 `moment.utc()` 自动转换时区。
+日期使用 npm 模块 [dayjs](https://www.npmjs.com/package/dayjs) 格式化。如果未提供 `dateFormat`，则使用 `dayjs.ISO_8601`。编写 CSV 时，您可以提供布尔值 `dateUTC` 为 `true`，以使 ExcelJS 解析日期，而无需使用 `dayjs.utc()` 自动转换时区。
 
 ### 流式 I/O[⬆](#目录)<!-- Link generated with jump2header -->
 
