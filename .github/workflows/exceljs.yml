@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/actions/setup-node/issues/27
-        node-version: [8.17.0, 10.x, 12.x, 14.x, 16.x]
+        node-version: [8.17.0, 10.x, 12.x, 14.x, 16.x, 17.x]
         os: [ubuntu-latest, macOS-latest, windows-latest]
     runs-on: ${{ matrix.os }}
 
@@ -27,13 +27,13 @@ jobs:
         if: runner.os == 'Windows'
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - name: Create the npm cache directory
         run: mkdir npm-cache && npm config set cache ./npm-cache --global
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ./npm-cache
           key: v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-${{ hashFiles('**/package.json') }}
@@ -51,13 +51,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: 12.x
       - name: Create the npm cache directory
         run: mkdir npm-cache && npm config set cache ./npm-cache --global
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ./npm-cache
           key: v1-npm-${{ hashFiles('**/package.json') }}
@@ -75,13 +75,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: 12.x
       - name: Create the npm cache directory
         run: mkdir npm-cache && npm config set cache ./npm-cache --global
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ./npm-cache
           key: v1-npm-${{ hashFiles('**/package.json') }}
