@@ -31,6 +31,25 @@ const expectations = [
     tests: ['prepare', 'render', 'renderIn', 'parse'],
     options: {index: 1},
   },
+  {
+    title: 'with custom filter',
+    create() {
+      return new FilterColumnXform();
+    },
+    initialModel: {filterButton: false, customFilters: [{val: '*brandywine*'}]},
+    preparedModel: {
+      colId: '0',
+      filterButton: false,
+      customFilters: [{val: '*brandywine*'}],
+    },
+    xml:
+      '<filterColumn colId="0" hiddenButton="1"><customFilters><customFilter val="*brandywine*"/></customFilters></filterColumn>',
+    get parsedModel() {
+      return this.initialModel;
+    },
+    tests: ['prepare', 'render', 'renderIn', 'parse'],
+    options: {index: 0},
+  },
 ];
 
 describe('FilterColumnXform', () => {
