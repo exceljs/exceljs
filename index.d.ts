@@ -1137,6 +1137,11 @@ export interface Worksheet {
 	readonly columnCount: number;
 
 	/**
+	 * Get the last column in a worksheet
+	 */
+	readonly lastColumn: Column;
+
+	/**
 	 * A count of the number of columns that have values.
 	 */
 	readonly actualColumnCount: number;
@@ -1682,12 +1687,19 @@ export interface WorkbookModel {
 }
 
 export class Workbook {
+    category: string;
+    company: string;
 	creator: string;
+    description: string;
+    keywords: string;
 	lastModifiedBy: string;
 	created: Date;
+    manager: string;
 	modified: Date;
 	lastPrinted: Date;
 	properties: WorkbookProperties;
+	subject: string;
+    title: string;
 
 	/**
 	 * Workbook calculation Properties
