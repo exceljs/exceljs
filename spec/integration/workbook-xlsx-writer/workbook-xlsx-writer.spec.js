@@ -588,5 +588,30 @@ describe('WorkbookWriter', () => {
           testUtils.checkTestBook(wb2, 'xlsx', ['conditionalFormatting']);
         });
     });
+
+    it('with conditional formatting that contains numFmt (#1814)', async () => {
+      const sheet = 'conditionalFormatting';
+      const options = {filename: TEST_XLSX_FILE_NAME, useStyles: true};
+
+      // generate file with conditional formatting that contains styles with numFmt
+      const wb1 = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws1 = wb1.addWorksheet(sheet);
+      const cf1 = testUtils.conditionalFormatting.abbreviation;
+      ws1.addConditionalFormatting(cf1);
+      await wb1.commit();
+
+      // read generated file and extract saved conditional formatting rule
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      const ws2 = wb2.getWorksheet(sheet);
+      const [cf2] = ws2.conditionalFormattings;
+
+      // verify that rules from generated file contain styles with valid numFmt
+      cf2.rules.forEach(rule => {
+        expect(rule.style.numFmt).to.exist();
+        expect(rule.style.numFmt.id).to.be.a('number');
+        expect(rule.style.numFmt.formatCode).to.be.a('string');
+      });
+    });
   });
 });
