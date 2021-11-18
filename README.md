@@ -2598,7 +2598,7 @@ An Excel formula for calculating values on the fly.
 
 Note that ExcelJS cannot process the formula to generate a result, it must be supplied.
 
-Note that function semantic names must be in English and the separator must be a comma
+Note that function semantic names must be in English and the separator must be a comma.
 
 E.g.
 
