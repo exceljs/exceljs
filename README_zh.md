@@ -222,7 +222,7 @@ ExcelJS 在 *dist/* 文件夹内发布了两个支持浏览器的包：
 ## 创建工作簿[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-const workbook = new Excel.Workbook();
+const workbook = new ExcelJS.Workbook();
 ```
 
 ## 设置工作簿属性[⬆](#目录)<!-- Link generated with jump2header -->
@@ -442,6 +442,7 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | Letter                        | `undefined` |
 | Legal                         | 5           |
 | Executive                     | 7           |
+| A3                            | 8           |
 | A4                            | 9           |
 | A5                            | 11          |
 | B5 (JIS)                      | 13          |
@@ -696,6 +697,9 @@ worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 // 获取一个行对象。如果尚不存在，则将返回一个新的空对象
 const row = worksheet.getRow(5);
 
+// Get multiple row objects. If it doesn't already exist, new empty ones will be returned
+const rows = worksheet.getRows(5, 2); // start, length (>0, else undefined is returned)
+
 // 获取工作表中的最后一个可编辑行（如果没有，则为 `undefined`）
 const row = worksheet.lastRow;
 
@@ -795,23 +799,26 @@ worksheet.addRow(rowValues);
 
 // Add a row with inherited style
 // This new row will have same style as last row
-worksheet.addRow(rowValues, 'i');
+// And return as row object
+const newRow = worksheet.addRow(rowValues, 'i');
 
 // Add an array of rows
 const rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
-worksheet.addRows(rows);
+// add new rows and return them as array of row objects
+const newRows = worksheet.addRows(rows);
 
 // Add an array of rows with inherited style
 // These new rows will have same styles as last row
-worksheet.addRows(rows, 'i');
+// and return them as array of row objects
+const newRowsStyled = worksheet.addRows(rows, 'i');
 ```
 | Parameter | Description | Default Value |
 | -------------- | ----------------- | -------- |
 | value/s    | The new row/s values |  |
-| styleOption            | 'i' for inherit from row above, 'n' for none | *'n'* |
+| style            | 'i' for inherit from row above, 'i+' to include empty cells, 'n' for none | *'n'* |
 
 ## 处理单个单元格[⬆](#目录)<!-- Link generated with jump2header -->
 
@@ -863,8 +870,8 @@ worksheet.mergeCells(10,11,12,13);
 ## Insert Rows[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-insertRow(pos, value, styleOption = 'n')
-insertRows(pos, values, styleOption = 'n')
+insertRow(pos, value, style = 'n')
+insertRows(pos, values, style = 'n')
 
 // Insert a couple of Rows by key-value, shifting down rows every time
 worksheet.insertRow(1, {id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
@@ -878,37 +885,42 @@ var rowValues = [];
 rowValues[1] = 4;
 rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
-worksheet.insertRow(1, rowValues);
+// insert new row and return as row object
+const insertedRow = worksheet.insertRow(1, rowValues);
 
 // Insert a row, with inherited style
 // This new row will have same style as row on top of it
-worksheet.insertRow(1, rowValues, 'i');
+// And return as row object
+const insertedRowInherited = worksheet.insertRow(1, rowValues, 'i');
 
 // Insert a row, keeping original style
 // This new row will have same style as it was previously
-worksheet.insertRow(1, rowValues, 'o');
+// And return as row object
+const insertedRowOriginal = worksheet.insertRow(1, rowValues, 'o');
 
 // Insert an array of rows, in position 1, shifting down current position 1 and later rows by 2 rows
 var rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
-worksheet.insertRows(1, rows);
+// insert new rows and return them as array of row objects
+const insertedRows = worksheet.insertRows(1, rows);
 
 // Insert an array of rows, with inherited style
 // These new rows will have same style as row on top of it
-worksheet.insertRows(1, rows, 'i');
+// And return them as array of row objects
+const insertedRowsInherited = worksheet.insertRows(1, rows, 'i');
 
 // Insert an array of rows, keeping original style
 // These new rows will have same style as it was previously in 'pos' position
-worksheet.insertRows(1, rows, 'o');
+const insertedRowsOriginal = worksheet.insertRows(1, rows, 'o');
 
 ```
 | Parameter | Description | Default Value |
 | -------------- | ----------------- | -------- |
 | pos          | Row number where you want to insert, pushing down all rows from there |  |
 | value/s    | The new row/s values |  |
-| styleOption            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
+| style            | 'i' for inherit from row above, , 'i+' to include empty cells, 'o' for original style, 'o+' to include empty cells, 'n' for none | *'n'* |
 
 ## Splice[⬆](#contents)<!-- Link generated with jump2header -->
 
@@ -2184,7 +2196,7 @@ const options = {
         return value;
       case 1:
         // 第2列是日期
-        return moment(value).format('YYYY-MM-DD');
+        return dayjs(value).format('YYYY-MM-DD');
       case 2:
         // 第3列是一个公式，只写结果
         return value.result;
@@ -2207,7 +2219,7 @@ const buffer = await workbook.csv.writeBuffer();
 
 CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 编写 CSV 文件。传递给上述写入函数的选项中的 `formatterOptions` 将传递给 @fast-csv/format 模块以写入 csv 数据。有关详细信息，请参阅 fast-csv README.md。
 
-日期使用 npm 模块 [moment](https://www.npmjs.com/package/moment) 格式化。如果未提供 `dateFormat`，则使用 `moment.ISO_8601`。编写 CSV 时，您可以提供布尔值 `dateUTC` 为 `true`，以使 ExcelJS 解析日期，而无需使用 `moment.utc()` 自动转换时区。
+日期使用 npm 模块 [dayjs](https://www.npmjs.com/package/dayjs) 格式化。如果未提供 `dateFormat`，则使用 `dayjs.ISO_8601`。编写 CSV 时，您可以提供布尔值 `dateUTC` 为 `true`，以使 ExcelJS 解析日期，而无需使用 `dayjs.utc()` 自动转换时区。
 
 ### 流式 I/O[⬆](#目录)<!-- Link generated with jump2header -->
 

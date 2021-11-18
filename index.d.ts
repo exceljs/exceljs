@@ -167,7 +167,7 @@ export type FillPatterns =
 export interface FillPattern {
 	type: 'pattern';
 	pattern: FillPatterns;
-	fgColor: Partial<Color>;
+	fgColor?: Partial<Color>;
 	bgColor?: Partial<Color>;
 }
 
@@ -380,7 +380,7 @@ export declare enum FormulaType {
 }
 
 export type CellValue =
-	| null | number | string | boolean | Date
+	| null | number | string | boolean | Date | undefined
 	| CellErrorValue
 	| CellRichTextValue | CellHyperlinkValue
 	| CellFormulaValue | CellSharedFormulaValue;
@@ -432,8 +432,8 @@ export interface Cell extends Style, Address {
 	readonly fullAddress: {
 		sheetName: string;
 		address: string;
-		row: string;
-		col: string;
+		row: number;
+		col: number;
 	};
 	model: CellModel;
 	/**
@@ -555,12 +555,12 @@ export interface Row extends Style {
 	readonly collapsed: boolean;
 
 	/**
-	 * Number of non-empty cells
+	 * Number of cells including empty ones
 	 */
 	readonly cellCount: number;
 
 	/**
-	 * Number of cells including empty ones
+	 * Number of non-empty cells
 	 */
 	readonly actualCellCount: number;
 
@@ -602,17 +602,17 @@ export interface Column {
 	/**
 	 * Can be a string to set one row high header or an array to set multi-row high header
 	 */
-	header: string | string[];
+	header?: string | string[];
 
 	/**
 	 * The name of the properties associated with this column in each row
 	 */
-	key: string;
+	key?: string;
 
 	/**
 	 * The width of the column
 	 */
-	width: number;
+	width?: number;
 
 	/**
 	 * Set an outline level for columns
@@ -644,12 +644,16 @@ export interface Column {
 	readonly headers: string[];
 	readonly isDefault: boolean;
 	readonly headerCount: number;
-	border: Partial<Borders>;
-	fill: Fill;
-	numFmt: string
-	font: Partial<Font>;
-	alignment: Partial<Alignment>;
-	protection: Partial<Protection>;
+
+	/**
+	 * Below properties read from style
+	 */
+	border?: Partial<Borders>;
+	fill?: Fill;
+	numFmt?: string;
+	font?: Partial<Font>;
+	alignment?: Partial<Alignment>;
+	protection?: Partial<Protection>;
 
 	toString(): string
 	equivalentTo(other: Column): boolean
@@ -1035,7 +1039,7 @@ export interface AboveAverageRuleType extends ConditionalFormattingBaseRule {
 export interface ColorScaleRuleType extends ConditionalFormattingBaseRule {
 	type: 'colorScale';
 	cfvo?: Cvfo[];
-	color?: Partial<Color>;
+	color?: Partial<Color>[];
 }
 
 export interface IconSetRuleType extends ConditionalFormattingBaseRule {
@@ -1074,6 +1078,9 @@ export interface DataBarRuleType extends ConditionalFormattingBaseRule {
 
 export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType
 	| ContainsTextRuleType | TimePeriodRuleType | DataBarRuleType;
+
+
+export type RowValues = CellValue[] | { [key: string]: CellValue } | undefined | null; 
 
 export interface ConditionalFormattingOptions {
 	ref: string;
@@ -1130,22 +1137,27 @@ export interface Worksheet {
 	readonly columnCount: number;
 
 	/**
+	 * Get the last column in a worksheet
+	 */
+	readonly lastColumn: Column;
+
+	/**
 	 * A count of the number of columns that have values.
 	 */
 	readonly actualColumnCount: number;
 
-	getColumnKey(key: string): Partial<Column>;
+	getColumnKey(key: string): Column;
 
-	setColumnKey(key: string, value: Partial<Column>): void;
+	setColumnKey(key: string, value: Column): void;
 
 	deleteColumnKey(key: string): void;
 
-	eachColumnKey(callback: (col: Partial<Column>, index: number) => void): void;
+	eachColumnKey(callback: (col: Column, index: number) => void): void;
 
 	/**
 	 * Access an individual columns by key, letter and 1-based column number
 	 */
-	getColumn(indexOrKey: number | string): Partial<Column>;
+	getColumn(indexOrKey: number | string): Column;
 
 	/**
 	 * Cut one or more columns (columns to the right are shifted left)
@@ -1178,7 +1190,20 @@ export interface Worksheet {
 	 */
 	readonly lastRow: Row | undefined;
 
+	/**
+	 * Tries to find and return row for row no, else undefined
+	 * 
+	 * @param row The 1-index row number
+	 */
 	findRow(row: number): Row | undefined;
+
+	/**
+	 * Tries to find and return rows for row no start and length, else undefined
+	 * 
+	 * @param start The 1-index starting row number
+	 * @param length The length of the expected array
+	 */
+	findRows(start: number, length: number): Row[] | undefined;
 
 	/**
 	 * Cut one or more rows (rows below are shifted up)
@@ -1192,24 +1217,24 @@ export interface Worksheet {
 	 * Add a couple of Rows by key-value, after the last current row, using the column keys,
 	 * or add a row by contiguous Array (assign to columns A, B & C)
 	 */
-	addRow(data: any[] | any, styleOption?: string): Row;
+	addRow(data: any[] | any, style?: string): Row;
 
 	/**
 	 * Add multiple rows by providing an array of arrays or key-value pairs
 	 */
-	addRows(rows: any[], styleOption?: string): void;
+	addRows(rows: any[], style?: string): Row[];
 
 	/**
-	 * Insert a Row by key-value, at the pos (shifiting down all rows from pos),
+	 * Insert a Row by key-value, at the position (shifiting down all rows from position),
 	 * using the column keys, or add a row by contiguous Array (assign to columns A, B & C)
 	 */
-	insertRow(pos: number, value: any[] | any, styleOption?: string): Row;
+	insertRow(pos: number, value: any[] | any, style?: string): Row;
 
 	/**
-	 * Insert multiple rows at pos (shifiting down all rows from pos)
+	 * Insert multiple rows at position (shifiting down all rows from position)
 	 * by providing an array of arrays or key-value pairs
 	 */
-	insertRows(pos: number, values: any[], styleOption?: string): void;
+	insertRows(pos: number, values: any[], style?: string): Row[];
 
 	/**
 	 * Duplicate rows and insert new rows
@@ -1220,6 +1245,11 @@ export interface Worksheet {
 	 * Get or create row by 1-based index
 	 */
 	getRow(index: number): Row;
+
+	/**
+	 * Get or create rows by 1-based index
+	 */
+	getRows(start: number, length: number): Row[] | undefined;
 
 	/**
 	 * Iterate over all rows that have values in a worksheet
@@ -1234,7 +1264,7 @@ export interface Worksheet {
 	/**
 	 * return all rows as sparse array
 	 */
-	getSheetValues(): Row[];
+	getSheetValues(): RowValues[];
 
 	/**
 	 * returns the cell at [r,c] or address given by r. If not found, return undefined
@@ -1605,7 +1635,7 @@ export interface CellMatrix {
 
 export interface DefinedNamesRanges {
 	name: string;
-	range: string[];
+	ranges: string[];
 }
 
 export type DefinedNamesModel = DefinedNamesRanges[];
@@ -1657,12 +1687,19 @@ export interface WorkbookModel {
 }
 
 export class Workbook {
+    category: string;
+    company: string;
 	creator: string;
+    description: string;
+    keywords: string;
 	lastModifiedBy: string;
 	created: Date;
+    manager: string;
 	modified: Date;
 	lastPrinted: Date;
 	properties: WorkbookProperties;
+	subject: string;
+    title: string;
 
 	/**
 	 * Workbook calculation Properties
@@ -1832,7 +1869,7 @@ export interface Table extends Required<TableProperties> {
 	/**
 	 * Add a row of data, either insert at rowNumber or append
 	 */
-	addRow: (values: any[], rowNumber: number) => void
+	addRow: (values: any[], rowNumber?: number) => void
 	/**
 	 * Get column
 	 */
