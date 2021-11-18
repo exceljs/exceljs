@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const UnderlineXform = verquire('xlsx/xform/style/underline-xform');
 

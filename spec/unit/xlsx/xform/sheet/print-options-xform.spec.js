@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const PrintOptionsXform = verquire('xlsx/xform/sheet/print-options-xform');
 

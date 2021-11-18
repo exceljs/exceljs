@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const RowXform = verquire('xlsx/xform/sheet/row-xform');
 const SharedStringsXform = verquire('xlsx/xform/strings/shared-strings-xform');

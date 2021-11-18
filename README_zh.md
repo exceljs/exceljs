@@ -69,11 +69,16 @@ npm install exceljs
       </li>
       <li><a href="#自动筛选器">自动筛选器</a></li>
       <li><a href="#列">列</a></li>
-      <li><a href="#行">行</a></li>
-      <li><a href="#处理单个单元格">处理单个单元格</a></li>
-      <li><a href="#合并单元格">合并单元格</a></li>
-      <li><a href="#insert-rows">Insert Rows</a></li>
-      <li><a href="#重复行">重复行</a></li>
+      <li><a href="#行">行</a>
+        <ul>
+          <li><a href="#add-rows">Add Rows</a></li>
+          <li><a href="#处理单个单元格">处理单个单元格</a></li>
+          <li><a href="#合并单元格">合并单元格</a></li>
+          <li><a href="#insert-rows">Insert Rows</a></li>
+          <li><a href="#splice">Splice</a></li>
+          <li><a href="#重复行">重复行</a></li>
+        </ul>
+      </li>
       <li><a href="#定义名称">定义名称</a></li>
       <li><a href="#数据验证">数据验证</a></li>
       <li><a href="#单元格注释">单元格注释</a></li>
@@ -217,7 +222,7 @@ ExcelJS 在 *dist/* 文件夹内发布了两个支持浏览器的包：
 ## 创建工作簿[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-const workbook = new Excel.Workbook();
+const workbook = new ExcelJS.Workbook();
 ```
 
 ## 设置工作簿属性[⬆](#目录)<!-- Link generated with jump2header -->
@@ -437,6 +442,7 @@ worksheet.pageSetup.printTitlesColumn = 'A:C';
 | Letter                        | `undefined` |
 | Legal                         | 5           |
 | Executive                     | 7           |
+| A3                            | 8           |
 | A4                            | 9           |
 | A5                            | 11          |
 | B5 (JIS)                      | 13          |
@@ -688,37 +694,11 @@ worksheet.spliceColumns(3, 1, newCol3Values, newCol4Values);
 ## 行[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-// 在最后一个当前行之后，使用列键值添加两行
-worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
-worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
-
-// 通过连续数组添加一行（分配给 A，B 和 C 列）
-worksheet.addRow([3, 'Sam', new Date()]);
-
-// 通过稀疏数组添加一行（分配给 A，E 和 I 列）
-const rowValues = [];
-rowValues[1] = 4;
-rowValues[5] = 'Kyle';
-rowValues[9] = new Date();
-worksheet.addRow(rowValues);
-
-// Add a row with inherited style
-// This new row will have same style as last row
-worksheet.addRow(rowValues, 'i');
-
-// 添加行数组
-const rows = [
-  [5,'Bob',new Date()], // row by array
-  {id:6, name: 'Barbara', dob: new Date()}
-];
-worksheet.addRows(rows);
-
-// Add an array of rows with inherited style
-// These new rows will have same styles as last row
-worksheet.addRows(rows, 'i');
-
 // 获取一个行对象。如果尚不存在，则将返回一个新的空对象
 const row = worksheet.getRow(5);
+
+// Get multiple row objects. If it doesn't already exist, new empty ones will be returned
+const rows = worksheet.getRows(5, 2); // start, length (>0, else undefined is returned)
 
 // 获取工作表中的最后一个可编辑行（如果没有，则为 `undefined`）
 const row = worksheet.lastRow;
@@ -792,23 +772,6 @@ row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
   console.log('Cell ' + colNumber + ' = ' + cell.value);
 });
 
-// 剪切下一行或多行（下面的行向上移动）
-// 已知问题：如果拼接导致任何合并的单元格移动，结果可能是不可预测的
-worksheet.spliceRows(4,3);
-
-// 删除一行，再插入两行。
-// 注意：第4行及以下行将向下移动 1 行。
-const newRow3Values = [1,2,3,4,5];
-const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
-worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
-
-// 剪切一个或多个单元格（右侧的单元格向左移动）
-// 注意：此操作不会影响其他行
-row.splice(3,2);
-
-// 删除一个单元格，再插入两个单元格（剪切单元格右侧的单元格将向右移动）
-row.splice(4,1,'new value 1', 'new value 2');
-
 // 提交给流一个完成的行
 row.commit();
 
@@ -816,6 +779,46 @@ row.commit();
 const rowSize = row.cellCount;
 const numValues = row.actualCellCount;
 ```
+
+## Add Rows[⬆](#contents)<!-- Link generated with jump2header -->
+
+```javascript
+// Add a couple of Rows by key-value, after the last current row, using the column keys
+worksheet.addRow({id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
+worksheet.addRow({id: 2, name: 'Jane Doe', dob: new Date(1965,1,7)});
+
+// Add a row by contiguous Array (assign to columns A, B & C)
+worksheet.addRow([3, 'Sam', new Date()]);
+
+// Add a row by sparse Array (assign to columns A, E & I)
+const rowValues = [];
+rowValues[1] = 4;
+rowValues[5] = 'Kyle';
+rowValues[9] = new Date();
+worksheet.addRow(rowValues);
+
+// Add a row with inherited style
+// This new row will have same style as last row
+// And return as row object
+const newRow = worksheet.addRow(rowValues, 'i');
+
+// Add an array of rows
+const rows = [
+  [5,'Bob',new Date()], // row by array
+  {id:6, name: 'Barbara', dob: new Date()}
+];
+// add new rows and return them as array of row objects
+const newRows = worksheet.addRows(rows);
+
+// Add an array of rows with inherited style
+// These new rows will have same styles as last row
+// and return them as array of row objects
+const newRowsStyled = worksheet.addRows(rows, 'i');
+```
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| value/s    | The new row/s values |  |
+| style            | 'i' for inherit from row above, 'i+' to include empty cells, 'n' for none | *'n'* |
 
 ## 处理单个单元格[⬆](#目录)<!-- Link generated with jump2header -->
 
@@ -867,8 +870,8 @@ worksheet.mergeCells(10,11,12,13);
 ## Insert Rows[⬆](#目录)<!-- Link generated with jump2header -->
 
 ```javascript
-insertRow(pos, value, styleOption = 'n')
-insertRows(pos, values, styleOption = 'n')
+insertRow(pos, value, style = 'n')
+insertRows(pos, values, style = 'n')
 
 // Insert a couple of Rows by key-value, shifting down rows every time
 worksheet.insertRow(1, {id: 1, name: 'John Doe', dob: new Date(1970,1,1)});
@@ -882,37 +885,68 @@ var rowValues = [];
 rowValues[1] = 4;
 rowValues[5] = 'Kyle';
 rowValues[9] = new Date();
-worksheet.insertRow(1, rowValues);
+// insert new row and return as row object
+const insertedRow = worksheet.insertRow(1, rowValues);
 
 // Insert a row, with inherited style
 // This new row will have same style as row on top of it
-worksheet.insertRow(1, rowValues, 'i');
+// And return as row object
+const insertedRowInherited = worksheet.insertRow(1, rowValues, 'i');
 
 // Insert a row, keeping original style
 // This new row will have same style as it was previously
-worksheet.insertRow(1, rowValues, 'o');
+// And return as row object
+const insertedRowOriginal = worksheet.insertRow(1, rowValues, 'o');
 
 // Insert an array of rows, in position 1, shifting down current position 1 and later rows by 2 rows
 var rows = [
   [5,'Bob',new Date()], // row by array
   {id:6, name: 'Barbara', dob: new Date()}
 ];
-worksheet.insertRows(1, rows);
+// insert new rows and return them as array of row objects
+const insertedRows = worksheet.insertRows(1, rows);
 
 // Insert an array of rows, with inherited style
 // These new rows will have same style as row on top of it
-worksheet.insertRows(1, rows, 'i');
+// And return them as array of row objects
+const insertedRowsInherited = worksheet.insertRows(1, rows, 'i');
 
 // Insert an array of rows, keeping original style
 // These new rows will have same style as it was previously in 'pos' position
-worksheet.insertRows(1, rows, 'o');
+const insertedRowsOriginal = worksheet.insertRows(1, rows, 'o');
 
 ```
 | Parameter | Description | Default Value |
 | -------------- | ----------------- | -------- |
 | pos          | Row number where you want to insert, pushing down all rows from there |  |
 | value/s    | The new row/s values |  |
-| styleOption            | 'i' for inherit from row above, 'o' for original style, 'n' for none | *'n'* |
+| style            | 'i' for inherit from row above, , 'i+' to include empty cells, 'o' for original style, 'o+' to include empty cells, 'n' for none | *'n'* |
+
+## Splice[⬆](#contents)<!-- Link generated with jump2header -->
+
+```javascript
+// Cut one or more rows (rows below are shifted up)
+// Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
+worksheet.spliceRows(4, 3);
+
+// remove one row and insert two more.
+// Note: rows 4 and below will be shifted down by 1 row.
+const newRow3Values = [1, 2, 3, 4, 5];
+const newRow4Values = ['one', 'two', 'three', 'four', 'five'];
+worksheet.spliceRows(3, 1, newRow3Values, newRow4Values);
+
+// Cut one or more cells (cells to the right are shifted left)
+// Note: this operation will not affect other rows
+row.splice(3, 2);
+
+// remove one cell and insert two more (cells to the right of the cut cell will be shifted right)
+row.splice(4, 1, 'new value 1', 'new value 2');
+```
+| Parameter | Description | Default Value |
+| -------------- | ----------------- | -------- |
+| start    | Starting point to splice from |  |
+| count    | Number of rows/cells to remove |  |
+| ...inserts            | New row/cell values to insert |  |
 
 ## 重复行[⬆](#目录)<!-- Link generated with jump2header -->
 
@@ -2162,7 +2196,7 @@ const options = {
         return value;
       case 1:
         // 第2列是日期
-        return moment(value).format('YYYY-MM-DD');
+        return dayjs(value).format('YYYY-MM-DD');
       case 2:
         // 第3列是一个公式，只写结果
         return value.result;
@@ -2185,7 +2219,7 @@ const buffer = await workbook.csv.writeBuffer();
 
 CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 编写 CSV 文件。传递给上述写入函数的选项中的 `formatterOptions` 将传递给 @fast-csv/format 模块以写入 csv 数据。有关详细信息，请参阅 fast-csv README.md。
 
-日期使用 npm 模块 [moment](https://www.npmjs.com/package/moment) 格式化。如果未提供 `dateFormat`，则使用 `moment.ISO_8601`。编写 CSV 时，您可以提供布尔值 `dateUTC` 为 `true`，以使 ExcelJS 解析日期，而无需使用 `moment.utc()` 自动转换时区。
+日期使用 npm 模块 [dayjs](https://www.npmjs.com/package/dayjs) 格式化。如果未提供 `dateFormat`，则使用 `dayjs.ISO_8601`。编写 CSV 时，您可以提供布尔值 `dateUTC` 为 `true`，以使 ExcelJS 解析日期，而无需使用 `dayjs.utc()` 自动转换时区。
 
 ### 流式 I/O[⬆](#目录)<!-- Link generated with jump2header -->
 

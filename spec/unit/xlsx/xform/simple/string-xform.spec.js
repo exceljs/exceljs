@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const StringXform = verquire('xlsx/xform/simple/string-xform');
 

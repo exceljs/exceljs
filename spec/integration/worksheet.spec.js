@@ -1,5 +1,6 @@
 const path = require('path');
 
+const {expect} = require('chai');
 const testutils = require('../utils/index');
 
 const ExcelJS = verquire('exceljs');
@@ -271,6 +272,11 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(values[rowNumber][colNumber]);
         });
       });
+
+      const fetchedRows = ws.getRows(1, 2);
+      for (let i = 0; i < 2; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(values[i + 1]);
+      }
     });
 
     it('adds rows by contiguous array', () => {
@@ -293,6 +299,15 @@ describe('Worksheet', () => {
 
       expect(ws.getRow(1).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
       expect(ws.getRow(2).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
+
+      const values = [
+        [, 1, 'John Doe', dateValue1],
+        [, 2, 'Jane Doe', dateValue2],
+      ];
+      const fetchedRows = ws.getRows(1, 2);
+      for (let i = 0; i < 2; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(values[i]);
+      }
     });
 
     it('adds rows by sparse array', () => {
@@ -339,9 +354,14 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(rows[rowNumber][colNumber]);
         });
       });
+
+      const fetchedRows = ws.getRows(1, 2);
+      for (let i = 0; i < 2; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(rows[i + 1]);
+      }
     });
 
-    it('add rows with styleOptions', () => {
+    it('adds rows with style option', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -368,7 +388,7 @@ describe('Worksheet', () => {
       );
     });
 
-    it('insert rows by object', () => {
+    it('inserts rows by object', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -414,9 +434,14 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(values[rowNumber][colNumber]);
         });
       });
+
+      const fetchedRows = ws.getRows(1, 2);
+      for (let i = 0; i < 2; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(values[i + 1]);
+      }
     });
 
-    it('insert rows by contiguous array', () => {
+    it('inserts rows by contiguous array', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -442,12 +467,23 @@ describe('Worksheet', () => {
       expect(ws.getCell('B3').value).to.equal('Jane Doe');
       expect(ws.getCell('C3').value).to.equal(dateValue2);
 
-      expect(ws.getRow(1).values).to.deep.equal([, 1, 'John Doe', dateValue1]);
-      expect(ws.getRow(2).values).to.deep.equal([, 3, 'Other Doe', dateValue3]);
-      expect(ws.getRow(3).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
+      const values = [
+        [, 1, 'John Doe', dateValue1],
+        [, 3, 'Other Doe', dateValue3],
+        [, 2, 'Jane Doe', dateValue2],
+      ];
+
+      expect(ws.getRow(1).values).to.deep.equal(values[0]);
+      expect(ws.getRow(2).values).to.deep.equal(values[1]);
+      expect(ws.getRow(3).values).to.deep.equal(values[2]);
+
+      const fetchedRows = ws.getRows(1, 3);
+      for (let i = 0; i < 3; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(values[i]);
+      }
     });
 
-    it('insert rows by sparse array', () => {
+    it('inserts rows by sparse array', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -489,9 +525,14 @@ describe('Worksheet', () => {
           expect(cell.value).to.equal(rows[rows.length - rowNumber][colNumber]);
         });
       });
+
+      const fetchedRows = ws.getRows(1, 3);
+      for (let i = 0; i < 3; i++) {
+        expect(fetchedRows[i].values).to.deep.equal(rows[rows.length - i - 1]);
+      }
     });
 
-    it('insert rows with styleOptions', () => {
+    it('inserts rows with style option', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
 
@@ -557,6 +598,38 @@ describe('Worksheet', () => {
       }
     });
 
+    it('should style of the inserted row with inherited style be mutable', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      const dateValue1 = new Date(1970, 1, 1);
+      const dateValue2 = new Date(1965, 1, 7);
+
+      ws.addRow([1, 'John Doe', dateValue1]);
+      ws.getRow(1).font = testutils.styles.fonts.comicSansUdB16;
+
+      ws.insertRow(2, [3, 'Jane Doe', dateValue2], 'i');
+      ws.insertRow(2, [2, 'Jane Doe', dateValue2], 'o');
+
+      ws.getRow(2).font = testutils.styles.fonts.broadwayRedOutline20;
+      ws.getRow(3).font = testutils.styles.fonts.broadwayRedOutline20;
+      ws.getCell('A2').font = testutils.styles.fonts.arialBlackUI14;
+      ws.getCell('A3').font = testutils.styles.fonts.arialBlackUI14;
+
+      expect(ws.getRow(2).font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getRow(3).font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A2').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+      expect(ws.getCell('A3').font).not.deep.equal(
+        testutils.styles.fonts.comicSansUdB16
+      );
+    });
+
     it('iterates over rows', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('blort');
@@ -598,6 +671,13 @@ describe('Worksheet', () => {
       expect(count).to.equal(7);
     });
 
+    it('returns undefined when row range is less than 1', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      expect(ws.getRows(1, 0)).to.equal(undefined);
+    });
+
     context('when worksheet name is less than or equal 31', () => {
       it('save the original name', () => {
         const wb = new ExcelJS.Workbook();
@@ -615,6 +695,32 @@ describe('Worksheet', () => {
         const ws = wb.addWorksheet('ThisIsAWorksheetNameThatIsLongerThan31');
 
         expect(ws.name).to.equal('ThisIsAWorksheetNameThatIsLonge');
+      });
+    });
+
+    context('when the worksheet name contains illegal characters', () => {
+      it('throws an error', () => {
+        const workbook = new ExcelJS.Workbook();
+
+        const invalidCharacters = ['*', '?', ':', '/', '\\', '[', ']'];
+
+        for (const invalidCharacter of invalidCharacters) {
+          expect(() => workbook.addWorksheet(invalidCharacter)).to.throw(
+            `Worksheet name ${invalidCharacter} cannot include any of the following characters: * ? : \\ / [ ]`
+          );
+        }
+      });
+
+      it('throws an error', () => {
+        const workbook = new ExcelJS.Workbook();
+
+        const invalidNames = ['\'sheetName', 'sheetName\''];
+
+        for (const invalidName of invalidNames) {
+          expect(() => workbook.addWorksheet(invalidName)).to.throw(
+            `The first or last character of worksheet name cannot be a single quotation mark: ${invalidName}`
+          );
+        }
       });
     });
 

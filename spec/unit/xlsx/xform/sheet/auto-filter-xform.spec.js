@@ -1,4 +1,4 @@
-const testXformHelper = require('./../test-xform-helper');
+const testXformHelper = require('../test-xform-helper');
 
 const AutoFilterXform = verquire('xlsx/xform/sheet/auto-filter-xform');
 
