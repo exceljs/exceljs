@@ -196,7 +196,7 @@ try {
     }
     return new RegExp(pattern, flags);
   };
-  global.RegExp.prototype = RegExp;
+  global.RegExp.prototype = RegExp.prototype;
 }
 ```
 
