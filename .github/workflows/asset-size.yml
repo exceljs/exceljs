@@ -4,6 +4,7 @@ on: [pull_request]
 
 jobs:
   compare:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
 
     steps:
