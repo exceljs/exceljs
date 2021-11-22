@@ -759,7 +759,7 @@ worksheet.makeColumns([
   {
     id: 4,
     title: 'Zoo',
-    child: [
+    children: [
       { id: 41, title: 'Zoo 1' },
       { id: 42, title: 'Zoo 2' },
       { id: 44, title: 'Zoo 3' },
