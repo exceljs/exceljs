@@ -159,8 +159,7 @@ const expectations = [
         ],
       },
     },
-    xml:
-      '<c r="A1" t="inlineStr"><is><r><rPr><color rgb="FF0000"/></rPr><t>red</t></r><r><rPr><color rgb="00FF00"/></rPr><t>green</t></r></is></c>',
+    xml: '<c r="A1" t="inlineStr"><is><r><rPr><color rgb="FF0000"/></rPr><t>red</t></r><r><rPr><color rgb="00FF00"/></rPr><t>green</t></r></is></c>',
     parsedModel: {
       address: 'A1',
       type: Enums.ValueType.String,

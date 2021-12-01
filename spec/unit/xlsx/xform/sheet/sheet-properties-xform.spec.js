@@ -54,8 +54,7 @@ const expectations = [
       tabColor: {argb: 'FFFF0000'},
       pageSetup: {fitToPage: true},
     },
-    xml:
-      '<sheetPr><tabColor rgb="FFFF0000"/><pageSetUpPr fitToPage="1"/></sheetPr>',
+    xml: '<sheetPr><tabColor rgb="FFFF0000"/><pageSetUpPr fitToPage="1"/></sheetPr>',
     parsedModel: {
       tabColor: {argb: 'FFFF0000'},
       pageSetup: {fitToPage: true},
@@ -71,8 +70,7 @@ const expectations = [
       tabColor: {argb: 'FFFF0000'},
       outlineProperties: {summaryBelow: false},
     },
-    xml:
-      '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/></sheetPr>',
+    xml: '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/></sheetPr>',
     parsedModel: {
       tabColor: {argb: 'FFFF0000'},
       outlineProperties: {summaryBelow: false},
@@ -88,8 +86,7 @@ const expectations = [
       pageSetup: {fitToPage: true},
       outlineProperties: {summaryBelow: false},
     },
-    xml:
-      '<sheetPr><pageSetUpPr fitToPage="1"/><outlinePr summaryBelow="0"/></sheetPr>',
+    xml: '<sheetPr><pageSetUpPr fitToPage="1"/><outlinePr summaryBelow="0"/></sheetPr>',
     parsedModel: {
       pageSetup: {fitToPage: true},
       outlineProperties: {summaryBelow: false},
@@ -106,8 +103,7 @@ const expectations = [
       outlineProperties: {summaryBelow: false},
       pageSetup: {fitToPage: true},
     },
-    xml:
-      '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>',
+    xml: '<sheetPr><tabColor rgb="FFFF0000"/><outlinePr summaryBelow="0"/><pageSetUpPr fitToPage="1"/></sheetPr>',
     parsedModel: {
       tabColor: {argb: 'FFFF0000'},
       outlineProperties: {summaryBelow: false},

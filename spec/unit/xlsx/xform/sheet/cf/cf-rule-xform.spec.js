@@ -122,8 +122,7 @@ const expectations = [
       priority: 1,
       aboveAverage: false,
     },
-    xml:
-      '<cfRule type="aboveAverage" dxfId="1" priority="1" aboveAverage="0" />',
+    xml: '<cfRule type="aboveAverage" dxfId="1" priority="1" aboveAverage="0" />',
     parsedModel: {
       type: 'aboveAverage',
       dxfId: 1,

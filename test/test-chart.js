@@ -1,4 +1,4 @@
-const Excel = require('../lib/exceljs.nodejs.js');
+const Excel = require('../lib/exceljs.nodejs');
 const HrStopwatch = require('./utils/hr-stopwatch');
 
 const [, , filename] = process.argv;
@@ -12,7 +12,7 @@ const today = now - (now % 86400000);
 const getRows = () => {
   const rows = [];
   for (let i = 0; i < 20; i++) {
-    rows.push([new Date(today + (86400000 * i)), Math.random() * 10]);
+    rows.push([new Date(today + 86400000 * i), Math.random() * 10]);
   }
   return rows;
 };

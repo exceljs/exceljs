@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-const ExcelJS = require('./lib/exceljs.nodejs.js');
+const ExcelJS = require('./lib/exceljs.nodejs');
 
 const runs = 3;
 
@@ -8,9 +8,7 @@ const runs = 3;
     await runProfiling('huge xlsx file streams', () => {
       return new Promise((resolve, reject) => {
         // Data taken from http://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
-        const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader(
-          './spec/integration/data/huge.xlsx'
-        );
+        const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./spec/integration/data/huge.xlsx');
         workbookReader.read();
 
         let worksheetCount = 0;
@@ -34,9 +32,7 @@ const runs = 3;
 
     await runProfiling('huge xlsx file async iteration', async () => {
       // Data taken from http://eforexcel.com/wp/downloads-18-sample-csv-files-data-sets-for-testing-sales/
-      const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader(
-        'spec/integration/data/huge.xlsx'
-      );
+      const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('spec/integration/data/huge.xlsx');
       let worksheetCount = 0;
       let rowCount = 0;
       for await (const worksheetReader of workbookReader) {
@@ -59,9 +55,7 @@ const runs = 3;
 async function runProfiling(name, run) {
   console.log('');
   console.log('####################################################');
-  console.log(
-    `WARMUP: Current memory usage: ${currentMemoryUsage({runGarbageCollector: true})} MB`
-  );
+  console.log(`WARMUP: Current memory usage: ${currentMemoryUsage({runGarbageCollector: true})} MB`);
   console.log(`WARMUP: ${name} profiling started`);
   const warmupStartTime = Date.now();
   await run();
@@ -71,9 +65,7 @@ async function runProfiling(name, run) {
       runGarbageCollector: false,
     })} MB`
   );
-  console.log(
-    `WARMUP: Current memory usage (after GC): ${currentMemoryUsage({runGarbageCollector: true})} MB`
-  );
+  console.log(`WARMUP: Current memory usage (after GC): ${currentMemoryUsage({runGarbageCollector: true})} MB`);
 
   for (let i = 1; i <= runs; i += 1) {
     console.log('');

@@ -42,8 +42,7 @@ const expectations = [
       filterButton: false,
       customFilters: [{val: '*brandywine*'}],
     },
-    xml:
-      '<filterColumn colId="0" hiddenButton="1"><customFilters><customFilter val="*brandywine*"/></customFilters></filterColumn>',
+    xml: '<filterColumn colId="0" hiddenButton="1"><customFilters><customFilter val="*brandywine*"/></customFilters></filterColumn>',
     get parsedModel() {
       return this.initialModel;
     },

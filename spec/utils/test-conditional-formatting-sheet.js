@@ -1,7 +1,9 @@
 const tools = require('./tools');
 
 const self = {
-  conditionalFormattings: tools.fix(require('./data/conditional-formatting')),
+  conditionalFormattings: tools.fix(
+    require('./data/conditional-formatting.json')
+  ),
   getConditionalFormatting(type) {
     return self.conditionalFormattings[type] || null;
   },

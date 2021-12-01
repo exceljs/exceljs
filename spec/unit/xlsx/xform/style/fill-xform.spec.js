@@ -46,8 +46,7 @@ const expectations = [
       pattern: 'darkVertical',
       fgColor: {argb: 'FFFF0000'},
     },
-    xml:
-      '<fill><patternFill patternType="darkVertical"><fgColor rgb="FFFF0000"/></patternFill></fill>',
+    xml: '<fill><patternFill patternType="darkVertical"><fgColor rgb="FFFF0000"/></patternFill></fill>',
     get parsedModel() {
       return this.preparedModel;
     },
@@ -64,8 +63,7 @@ const expectations = [
       fgColor: {argb: 'FFFF0000'},
       bgColor: {argb: 'FF00FF00'},
     },
-    xml:
-      '<fill><patternFill patternType="darkTrellis"><fgColor rgb="FFFF0000"/><bgColor rgb="FF00FF00"/></patternFill></fill>',
+    xml: '<fill><patternFill patternType="darkTrellis"><fgColor rgb="FFFF0000"/><bgColor rgb="FF00FF00"/></patternFill></fill>',
     get parsedModel() {
       return this.preparedModel;
     },
