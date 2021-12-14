@@ -133,7 +133,7 @@ describe('WorkbookReader', () => {
     });
 
     describe('Big file support', () => {
-      it('should read large file correctly', function(done) {
+      it.only('should read large file correctly', function(done) {
         this.timeout(20000);
         const workbook = new ExcelJS.Workbook();
         workbook.xlsx
@@ -145,14 +145,6 @@ describe('WorkbookReader', () => {
                   done();
                 }
             );
-      });
-
-      it('should parse fine if the limit is not exceeded', () => {
-        const workbook = new ExcelJS.Workbook();
-        return workbook.xlsx.read(
-            fs.createReadStream('./spec/integration/data/fibonacci.xlsx'),
-            {maxRows: 20}
-        );
       });
     });
   });
