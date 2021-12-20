@@ -2,10 +2,10 @@ const ExcelJS = verquire('exceljs');
 
 describe('github issues', () => {
   describe('pull request 1938 - Load table rows and ref', () => {
-    it('Reading test-issue-1936.xlsx', () => {
+    it('Reading test-issue-1938.xlsx', () => {
       const wb = new ExcelJS.Workbook();
       return wb.xlsx
-        .readFile('./spec/integration/data/test-pr-1936.xlsx')
+        .readFile('./spec/integration/data/test-pr-1938.xlsx')
         .then(() => {
           const ws = wb.getWorksheet('Sheet1');
           const table = ws.getTable('Table1');
