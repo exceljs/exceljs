@@ -403,7 +403,7 @@ export type CellValue =
 		margins?: Partial<CommentMargins>;
 		protection?: Partial<CommentProtection>;
 		editAs?: CommentEditAs;
-		autoShape: boolean;
+		autoShape?: boolean;
 	}
 
 export interface CellModel {
