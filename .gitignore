@@ -65,4 +65,4 @@ _SpecRunner.html
 .DS_Store
 
 # Ignore xlsx files generated during testing
-*.xlsx
+# *.xlsx

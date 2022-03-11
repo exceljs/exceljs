@@ -410,4 +410,12 @@ describe('WorkbookReader', () => {
       );
     });
   });
+  describe('with rich text to describe a hyperlink', () => {
+    it('should parse with no errors', () => {
+      const workbook = new ExcelJS.Workbook();
+      return workbook.xlsx.read(
+        fs.createReadStream('./spec/integration/data/xlsx-parse-test.xlsx')
+      );
+    });
+  });
 });
