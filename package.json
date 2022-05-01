@@ -1,16 +1,13 @@
 {
-  "name": "exceljs",
+  "name": "@samsonsun/exceljs",
   "version": "4.3.0",
-  "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
+  "description": "media function improved.",
   "private": false,
   "license": "MIT",
-  "author": {
-    "name": "Guyon Roche",
-    "email": "guyon@live.com"
-  },
+  "author": "Samson Sun <gsamsonsun@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "git+https://github.com/GitSamson/exceljs.git"
   },
   "engines": {
     "node": ">=8.3.0"
@@ -145,5 +142,13 @@
     "sax": "^1.2.4",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
+  },
+  "bugs": {
+    "url": "https://github.com/GitSamson/exceljs/issues"
+  },
+  "homepage": "https://github.com/GitSamson/exceljs#readme",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   }
 }
