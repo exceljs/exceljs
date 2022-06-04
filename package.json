@@ -13,7 +13,7 @@
     "url": "https://github.com/exceljs/exceljs.git"
   },
   "engines": {
-    "node": ">=8.3.0"
+    "node": ">=10.17.0"
   },
   "main": "./excel.js",
   "browser": "./dist/exceljs.min.js",
