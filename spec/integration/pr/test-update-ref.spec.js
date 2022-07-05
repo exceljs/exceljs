@@ -386,5 +386,39 @@ describe('github issues', () => {
           expect(Math.floor(ws.getImages()[2].range.br.col)).to.equal(4); // Image 3
         });
     });
+
+    it('Reading test-update-ref.xlsx - cells', () => {
+      const wb = new ExcelJS.Workbook();
+      return wb.xlsx
+        .readFile('./spec/integration/data/test-update-ref.xlsx')
+        .then(async () => {
+          // Table tests
+          const ws = wb.getWorksheet('Sheet1');
+          // Table 1
+          expect(ws.getTable('Table1').table.tableRef).to.equal('B12:D17');
+
+          // Change tl cell value (header)
+          ws.getRow(12).getCell('B').value = 'Test';
+          expect(ws.getTable('Table1').table.rows[0][0]).to.equal(
+            'Sukhoi Su-27 Flanker'
+          );
+
+          // Change top left first cell value (row)
+          ws.getRow(13).getCell('B').value = 'Fiesta';
+          expect(ws.getTable('Table1').table.rows[0][0]).to.equal('Fiesta');
+
+          // Change cell value in middle of the first table
+          ws.getRow(15).getCell('C').value = 'Random info';
+          expect(ws.getTable('Table1').table.rows[2][1]).to.equal(
+            'Random info'
+          );
+
+          // Change br cell value
+          ws.getRow(17).getCell('D').value = 'Another test';
+          expect(ws.getTable('Table1').table.rows[4][2]).to.equal(
+            'Another test'
+          );
+        });
+    });
   });
 });
