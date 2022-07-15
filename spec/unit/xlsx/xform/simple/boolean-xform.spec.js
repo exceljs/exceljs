@@ -20,18 +20,33 @@ const expectations = [
     create() {
       return new BooleanXform({tag: 'boolean', attr: 'val'});
     },
+    get parsedModel() {
+      return this.preparedModel;
+    },
     preparedModel: false,
     xml: '<boolean val="0"/>',
-    tests: ['render', 'renderIn', 'parse'],
+    tests: ['parse'],
   },
   {
     title: 'one',
     create() {
       return new BooleanXform({tag: 'boolean', attr: 'val'});
     },
+    get parsedModel() {
+      return this.preparedModel;
+    },
     preparedModel: true,
     xml: '<boolean val="1"/>',
-    tests: ['render', 'renderIn', 'parse'],
+    tests: ['parse'],
+  },
+  {
+    title: 'false',
+    create() {
+      return new BooleanXform({tag: 'boolean', attr: 'val'});
+    },
+    preparedModel: false,
+    xml: '',
+    tests: ['render', 'renderIn'],
   },
   {
     title: 'undefined',
