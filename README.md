@@ -1875,6 +1875,22 @@ worksheet.addConditionalFormatting({
 
 ### Icon Set[⬆](#contents)<!-- Link generated with jump2header -->
 
+```javascript
+// add an iconSet conditional formatting in A1
+sheet.getRow(1).getCell(1).value = 1;
+    sheet.addConditionalFormatting({
+        ref: sheet.getRow(1).getCell(1).address,
+        rules: [
+            {
+                type: 'iconSet',
+                iconSet: '3Symbols',
+                priority: 1,
+                cfvo: [{type: 'num', value: 0}, {type: 'num', value: 1}, {type: 'num', value: 2}]
+            }
+        ]
+    });
+```
+
 | Field         | Optional | Default | Description |
 | ------------- | -------- | ------- | ----------- |
 | type          |          |         | 'iconSet' |
