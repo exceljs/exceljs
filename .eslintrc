@@ -22,7 +22,7 @@
     "max-len": ["error", {"code": 120, "ignoreComments": true, "ignoreStrings": true}],
     "no-console": ["error", { "allow": ["warn"] }],
     "no-continue": ["off"],
-    "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
+    "no-mixed-operators": ["off"],
     "no-multi-assign": ["off"],
     "no-param-reassign": ["off"],
     "no-path-concat": ["off"],

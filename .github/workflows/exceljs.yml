@@ -22,15 +22,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Create the npm cache directory
-        run: mkdir npm-cache && npm config set cache ./npm-cache --global
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ./npm-cache
-          key: v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-
       - run: npm install
       # - run: npm test
       #   env:
