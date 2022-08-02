@@ -1,5 +1,5 @@
 {
-  "name": "exceljs",
+  "name": "20-exceljs",
   "version": "4.3.0",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "https://github.com/20Scoops-CNX/exceljs.git"
   },
   "engines": {
     "node": ">=8.3.0"
@@ -55,8 +55,7 @@
     "benchmark:debug": "node --expose-gc --inspect-brk --trace-deopt benchmark",
     "build": "grunt build",
     "install-build": "npm install && grunt build",
-    "preversion": "npm run clean && npm run build && npm run test:version",
-    "postversion": "git push --no-verify && git push --tags --no-verify"
+    "preversion": "npm run clean && npm run build"
   },
   "husky": {
     "hooks": {
@@ -70,31 +69,6 @@
       "git add"
     ]
   },
-  "keywords": [
-    "xlsx",
-    "json",
-    "csv",
-    "excel",
-    "font",
-    "border",
-    "fill",
-    "number",
-    "format",
-    "number format",
-    "alignment",
-    "office",
-    "spreadsheet",
-    "workbook",
-    "defined names",
-    "data validations",
-    "rich text",
-    "in-cell format",
-    "outlineLevel",
-    "views",
-    "frozen",
-    "split",
-    "pageSetup"
-  ],
   "dependencies": {
     "archiver": "^5.0.0",
     "dayjs": "^1.8.34",

@@ -1,0 +1,28 @@
+name: Release prod tag
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release-tag:
+    name: Release prod tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.4.1
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - name: Install
+        run: npm install
+      - name: Release new version and push tag
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.DEPLOYER_TOKEN }}
+          release_branches: master

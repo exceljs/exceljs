@@ -12,18 +12,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # https://github.com/actions/setup-node/issues/27
-        node-version: [8.17.0, 10.x, 12.x, 14.x, 16.x]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        node-version: [16.x]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Set git config
-        shell: bash
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.symlinks true
-        if: runner.os == 'Windows'
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -39,32 +32,9 @@ jobs:
           restore-keys: |
             v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-
       - run: npm install
-      - run: npm test
-        env:
-          CI: true
-
-  benchmark:
-    name: Measure performance impact of changes
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - name: Create the npm cache directory
-        run: mkdir npm-cache && npm config set cache ./npm-cache --global
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ./npm-cache
-          key: v1-npm-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            v1-npm-
-      - run: npm install
-      - run: npm run benchmark
-        env:
-          CI: true
+      # - run: npm test
+      #   env:
+      #     CI: true
 
   typescript:
     name: Ensure typescript compatibility
