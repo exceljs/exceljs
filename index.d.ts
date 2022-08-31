@@ -1494,7 +1494,7 @@ type HeaderTransformFunction = (headers: HeaderArray) => HeaderArray;
 export interface FastCsvParserOptionsArgs {
 	objectMode: boolean;
 	delimiter: string;
-	quote: string | null;
+	quote: string | null | boolean;
 	escape: string;
 	headers: boolean | HeaderTransformFunction | HeaderArray;
 	renameHeaders: boolean;
