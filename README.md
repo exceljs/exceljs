@@ -2157,6 +2157,12 @@ faster or more resilient.
 
 #### Reading XLSX[⬆](#contents)<!-- Link generated with jump2header -->
 
+Options supported when reading CSV files.
+
+| Field            |  Required   |    Type     |Description  |
+| ---------------- | ----------- | ----------- | ----------- |
+| ignoreNodes      |     N       |  Array      | A list of node names to ignore while loading the XLSX document. Improves performance in some situations. |
+
 ```javascript
 // read from a file
 const workbook = new Excel.Workbook();
@@ -2173,6 +2179,16 @@ await workbook.xlsx.read(stream);
 // load from buffer
 const workbook = new Excel.Workbook();
 await workbook.xlsx.load(data);
+// ... use workbook
+
+
+// using additional options
+const workbook = new Excel.Workbook();
+await workbook.xlsx.load(data, {
+  ignoreNodes: [
+    'dataValidations' // ignores the workbook's Data Validations
+  ],
+});
 // ... use workbook
 ```
 
