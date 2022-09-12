@@ -1446,6 +1446,13 @@ export interface JSZipGeneratorOptions {
 	};
 }
 
+export interface XlsxReadOptions {
+	/**
+	 * The list of XML node names to ignore while parsing an XLSX file
+	 */
+	ignoreNodes: string[];
+}
+
 export interface XlsxWriteOptions extends stream.xlsx.WorkbookWriterOptions {
 	/**
 	 * The option passed to JsZip#generateAsync(options)
@@ -1457,19 +1464,19 @@ export interface Xlsx {
 	/**
 	 * read from a file
 	 */
-	readFile(path: string): Promise<Workbook>;
+	readFile(path: string, options?: Partial<XlsxReadOptions>): Promise<Workbook>;
 
 	/**
 	 * read from a stream
 	 * @param stream
 	 */
-	read(stream: import('stream').Stream): Promise<Workbook>;
+	read(stream: import('stream').Stream, options?: Partial<XlsxReadOptions>): Promise<Workbook>;
 
 	/**
 	 * load from an array buffer
 	 * @param buffer
 	 */
-	load(buffer: Buffer): Promise<Workbook>;
+	load(buffer: Buffer, options?: Partial<XlsxReadOptions>): Promise<Workbook>;
 
 	/**
 	 * write to a buffer
