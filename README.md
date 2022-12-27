@@ -156,7 +156,7 @@ To be clear, all contributions added to this library will be included in the lib
           </li>
           <li><a href="#streaming-io">Streaming I/O</a>
             <ul>
-              <li><a href="#reading-csv">Streaming XLSX</a></li>
+              <li><a href="#streaming-xlsx">Streaming XLSX</a></li>
             </ul>
           </li>
         </ul>
