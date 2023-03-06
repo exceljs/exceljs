@@ -1,6 +1,7 @@
 # ExcelJS
 
 This is a fork of the "exceljs" package, which fixes the problem with writing a file using streams and not using RAM.
+It solves the problem of writing large exel files
 <a href="https://github.com/exceljs/exceljs">Original repo</a>
 
 # Installation
