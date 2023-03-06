@@ -66,3 +66,5 @@ _SpecRunner.html
 
 # Ignore xlsx files generated during testing
 *.xlsx
+
+.npmignore
