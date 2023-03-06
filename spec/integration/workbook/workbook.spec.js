@@ -10,8 +10,8 @@ const TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
 
 describe('Workbook', () => {
   describe('Serialise', () => {
-    it('xlsx file', () => {
-      const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'xlsx');
+    it('xlsx file', async () => {
+      const wb = await testUtils.createTestBook(new ExcelJS.Workbook(), 'xlsx');
 
       return wb.xlsx
         .writeFile(TEST_XLSX_FILE_NAME)
@@ -24,8 +24,11 @@ describe('Workbook', () => {
         });
     });
     describe('Xlsx Zip Compression', () => {
-      it('xlsx file with best compression', () => {
-        const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'xlsx');
+      it('xlsx file with best compression', async () => {
+        const wb = await testUtils.createTestBook(
+          new ExcelJS.Workbook(),
+          'xlsx'
+        );
 
         return wb.xlsx
           .writeFile(TEST_XLSX_FILE_NAME, {
@@ -45,8 +48,11 @@ describe('Workbook', () => {
           });
       });
 
-      it('xlsx file with default compression', () => {
-        const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'xlsx');
+      it('xlsx file with default compression', async () => {
+        const wb = await testUtils.createTestBook(
+          new ExcelJS.Workbook(),
+          'xlsx'
+        );
 
         return wb.xlsx
           .writeFile(TEST_XLSX_FILE_NAME, {
@@ -63,8 +69,11 @@ describe('Workbook', () => {
           });
       });
 
-      it('xlsx file with fast compression', () => {
-        const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'xlsx');
+      it('xlsx file with fast compression', async () => {
+        const wb = await testUtils.createTestBook(
+          new ExcelJS.Workbook(),
+          'xlsx'
+        );
 
         return wb.xlsx
           .writeFile(TEST_XLSX_FILE_NAME, {
@@ -84,8 +93,11 @@ describe('Workbook', () => {
           });
       });
 
-      it('xlsx file with no compression', () => {
-        const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'xlsx');
+      it('xlsx file with no compression', async () => {
+        const wb = await testUtils.createTestBook(
+          new ExcelJS.Workbook(),
+          'xlsx'
+        );
 
         return wb.xlsx
           .writeFile(TEST_XLSX_FILE_NAME, {
@@ -392,10 +404,12 @@ describe('Workbook', () => {
         });
     });
 
-    it('dataValidations', () => {
-      const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'xlsx', [
-        'dataValidations',
-      ]);
+    it('dataValidations', async () => {
+      const wb = await testUtils.createTestBook(
+        new ExcelJS.Workbook(),
+        'xlsx',
+        ['dataValidations']
+      );
 
       return wb.xlsx
         .writeFile(TEST_XLSX_FILE_NAME)
@@ -448,10 +462,10 @@ describe('Workbook', () => {
         });
     });
 
-    it('csv file', function() {
+    it('csv file', async function() {
       this.timeout(5000);
 
-      const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'csv');
+      const wb = await testUtils.createTestBook(new ExcelJS.Workbook(), 'csv');
 
       return wb.csv
         .writeFile(TEST_CSV_FILE_NAME)
@@ -464,7 +478,7 @@ describe('Workbook', () => {
         });
     });
 
-    it('CSV file and its configuration', function() {
+    it('CSV file and its configuration', async function() {
       this.timeout(5000);
       const writeOptions = {
         dateFormat: 'DD/MM/YYYY HH:mm:ss',
@@ -485,7 +499,7 @@ describe('Workbook', () => {
           quote: false,
         },
       };
-      const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'csv');
+      const wb = await testUtils.createTestBook(new ExcelJS.Workbook(), 'csv');
 
       return wb.csv
         .writeFile(TEST_CSV_FILE_NAME, writeOptions)
@@ -847,7 +861,7 @@ describe('Workbook', () => {
     });
   });
 
-  it('spliced meat and ham', () => {
+  it('spliced meat and ham', async () => {
     const wb = new ExcelJS.Workbook();
     const sheets = [
       'splice.rows.removeOnly',
@@ -866,7 +880,7 @@ describe('Workbook', () => {
       checkViews: false,
     };
 
-    testUtils.createTestBook(wb, 'xlsx', sheets, options);
+    await testUtils.createTestBook(wb, 'xlsx', sheets, options);
 
     return wb.xlsx
       .writeFile(TEST_XLSX_FILE_NAME)

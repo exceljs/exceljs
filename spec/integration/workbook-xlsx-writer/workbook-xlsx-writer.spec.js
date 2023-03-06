@@ -20,12 +20,12 @@ describe('WorkbookWriter', () => {
   });
 
   describe('Serialise', () => {
-    it('xlsx file', () => {
+    it('xlsx file', async () => {
       const options = {
         filename: TEST_XLSX_FILE_NAME,
         useStyles: true,
       };
-      const wb = testUtils.createTestBook(
+      const wb = await testUtils.createTestBook(
         new ExcelJS.stream.xlsx.WorkbookWriter(options),
         'xlsx'
       );
@@ -41,7 +41,7 @@ describe('WorkbookWriter', () => {
         });
     });
 
-    it('shared formula', () => {
+    it('shared formula', async () => {
       const options = {
         filename: TEST_XLSX_FILE_NAME,
         useStyles: false,
@@ -57,7 +57,6 @@ describe('WorkbookWriter', () => {
       ws.getCell('A2').value = {sharedFormula: 'A1', result: 3};
       ws.getCell('B2').value = {sharedFormula: 'A1', result: 4};
 
-      ws.commit();
       return wb
         .commit()
         .then(() => {
@@ -102,7 +101,6 @@ describe('WorkbookWriter', () => {
       ws.getCell('B3').value = 3;
 
       ws.autoFilter = 'A1:B1';
-      ws.commit();
 
       return wb
         .commit()
@@ -116,12 +114,12 @@ describe('WorkbookWriter', () => {
         });
     });
 
-    it('Without styles', () => {
+    it('Without styles', async () => {
       const options = {
         filename: TEST_XLSX_FILE_NAME,
         useStyles: false,
       };
-      const wb = testUtils.createTestBook(
+      const wb = await testUtils.createTestBook(
         new ExcelJS.stream.xlsx.WorkbookWriter(options),
         'xlsx'
       );
@@ -241,7 +239,6 @@ describe('WorkbookWriter', () => {
 
       ws.getCell('B1').value = 'plain text';
 
-      ws.commit();
       return wb
         .commit()
         .then(() => {
@@ -294,7 +291,7 @@ describe('WorkbookWriter', () => {
         });
     });
 
-    it('addRow', () => {
+    it('addRow', async () => {
       const options = {
         stream: fs.createWriteStream(TEST_XLSX_FILE_NAME, {flags: 'w'}),
         useStyles: true,
@@ -303,9 +300,9 @@ describe('WorkbookWriter', () => {
       const workbook = new ExcelJS.stream.xlsx.WorkbookWriter(options);
       const worksheet = workbook.addWorksheet('test');
       const newRow = worksheet.addRow(['hello']);
-      newRow.commit();
-      worksheet.commit();
-      return workbook.commit();
+      await newRow.commit();
+      // eslint-disable-next-line no-return-await
+      return await workbook.commit();
     });
 
     it('defined names', () => {
@@ -372,9 +369,9 @@ describe('WorkbookWriter', () => {
         });
     });
 
-    it('serializes and deserializes dataValidations', () => {
+    it('serializes and deserializes dataValidations', async () => {
       const options = {filename: TEST_XLSX_FILE_NAME};
-      const wb = testUtils.createTestBook(
+      const wb = await testUtils.createTestBook(
         new ExcelJS.stream.xlsx.WorkbookWriter(options),
         'xlsx',
         ['dataValidations']
@@ -391,7 +388,7 @@ describe('WorkbookWriter', () => {
         });
     });
 
-    it('with zip compression option', () => {
+    it('with zip compression option', async () => {
       const options = {
         filename: TEST_XLSX_FILE_NAME,
         useStyles: true,
@@ -399,7 +396,7 @@ describe('WorkbookWriter', () => {
           zlib: {level: 9}, // Sets the compression level.
         },
       };
-      const wb = testUtils.createTestBook(
+      const wb = await testUtils.createTestBook(
         new ExcelJS.stream.xlsx.WorkbookWriter(options),
         'xlsx',
         ['dataValidations']
@@ -572,7 +569,7 @@ describe('WorkbookWriter', () => {
         useStyles: true,
         useSharedStrings: true,
       };
-      const wb = testUtils.createTestBook(
+      const wb = await testUtils.createTestBook(
         new ExcelJS.stream.xlsx.WorkbookWriter(options),
         'xlsx',
         ['conditionalFormatting']
