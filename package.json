@@ -1,7 +1,7 @@
 {
   "name": "@zlooun/exceljs",
-  "version": "1.0.1",
-  "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
+  "version": "1.0.2",
+  "description": "Fixes the problem with writing a file using streams and not using RAM based on 'exeljs'",
   "private": false,
   "license": "MIT",
   "author": {
