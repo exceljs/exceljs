@@ -1,6 +1,6 @@
 {
   "name": "@zlooun/exceljs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Fixes the problem with writing a file using streams and not using RAM based on 'exeljs'",
   "private": false,
   "license": "MIT",
