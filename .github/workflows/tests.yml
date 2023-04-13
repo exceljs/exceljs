@@ -1,4 +1,4 @@
-name: ExcelJS
+name: Tests
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         # https://github.com/actions/setup-node/issues/27
-        node-version: [8.17.0, 10.x, 12.x, 14.x, 16.x, 17.x]
+        node-version: [8.17.0, 10.x, 12.x, 14.x, 16.x, 17.x, 18.x, 19.x]
         os: [ubuntu-latest, macOS-latest, windows-latest]
     runs-on: ${{ matrix.os }}
 
