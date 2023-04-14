@@ -1,8 +1,6 @@
 # ExcelJS
 
 [![Build status](https://github.com/exceljs/exceljs/workflows/ExcelJS/badge.svg)](https://github.com/exceljs/exceljs/actions?query=workflow%3AExcelJS)
-[![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/context:javascript)
-[![Total Alerts](https://img.shields.io/lgtm/alerts/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/alerts)
 
 Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
@@ -239,7 +237,7 @@ try {
     }
     return new RegExp(pattern, flags);
   };
-  global.RegExp.prototype = RegExp;
+  global.RegExp.prototype = RegExp.prototype;
 }
 ```
 
@@ -2631,10 +2629,13 @@ An Excel formula for calculating values on the fly.
 
 Note that ExcelJS cannot process the formula to generate a result, it must be supplied.
 
+Note that function semantic names must be in English and the separator must be a comma.
+
 E.g.
 
 ```javascript
 worksheet.getCell('A3').value = { formula: 'A1+A2', result: 7 };
+worksheet.getCell('A3').value = { formula: 'SUM(A1,A2)', result: 7 };
 ```
 
 Cells also support convenience getters to access the formula and result:

@@ -1,4 +1,4 @@
-name: ExcelJS
+name: Tests
 
 on:
   push:
@@ -8,12 +8,12 @@ on:
 
 jobs:
   test:
+    timeout-minutes: 10
     name: Node v${{ matrix.node-version }} on ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        # https://github.com/actions/setup-node/issues/27
-        node-version: [8.17.0, 10.x, 12.x, 14.x, 16.x, 17.x]
+        node-version: [10.x, 12.x, 14.x, 16.x, 17.x, 18.x, 19.x]
         os: [ubuntu-latest, macOS-latest, windows-latest]
     runs-on: ${{ matrix.os }}
 
@@ -44,6 +44,7 @@ jobs:
           CI: true
 
   benchmark:
+    timeout-minutes: 15
     name: Measure performance impact of changes
     runs-on: ubuntu-latest
 
@@ -67,6 +68,7 @@ jobs:
           CI: true
 
   typescript:
+    timeout-minutes: 15
     name: Ensure typescript compatibility
     runs-on: ubuntu-latest
 
