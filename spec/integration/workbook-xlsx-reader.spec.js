@@ -133,7 +133,7 @@ describe('WorkbookReader', () => {
     });
 
     describe('Big file support', () => {
-      it.only('should read large file correctly', function(done) {
+      it('should read large file correctly', function(done) {
         this.timeout(20000);
         const workbook = new ExcelJS.Workbook();
         workbook.xlsx
