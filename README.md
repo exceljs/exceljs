@@ -1,8 +1,6 @@
 # ExcelJS
 
 [![Build status](https://github.com/exceljs/exceljs/workflows/ExcelJS/badge.svg)](https://github.com/exceljs/exceljs/actions?query=workflow%3AExcelJS)
-[![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/context:javascript)
-[![Total Alerts](https://img.shields.io/lgtm/alerts/g/exceljs/exceljs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/exceljs/exceljs/alerts)
 
 Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
@@ -156,7 +154,7 @@ To be clear, all contributions added to this library will be included in the lib
           </li>
           <li><a href="#streaming-io">Streaming I/O</a>
             <ul>
-              <li><a href="#reading-csv">Streaming XLSX</a></li>
+              <li><a href="#streaming-xlsx">Streaming XLSX</a></li>
             </ul>
           </li>
         </ul>
