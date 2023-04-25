@@ -1750,7 +1750,7 @@ export class Workbook {
 	/**
 	 * fetch sheet by name or id
 	 */
-	getWorksheet(indexOrName: number | string): Worksheet;
+	getWorksheet(indexOrName?: number | string): Worksheet | undefined;
 
 	/**
 	 * Iterate over all sheets.
