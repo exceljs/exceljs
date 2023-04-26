@@ -677,7 +677,6 @@ describe('Worksheet', () => {
 
       expect(ws.getRows(1, 0)).to.equal(undefined);
     });
-
     context('when worksheet name is less than or equal 31', () => {
       it('save the original name', () => {
         const wb = new ExcelJS.Workbook();
@@ -702,11 +701,11 @@ describe('Worksheet', () => {
       it('throws an error', () => {
         const workbook = new ExcelJS.Workbook();
 
-        const invalidCharacters = ['*', '?', ':', '/', '\\', '[', ']', '＊', '？', '：', '￥', '／', '＼', '［', '］'];
+        const invalidCharacters = ['*', '?', ':', '/', '\\', '[', ']'];
 
         for (const invalidCharacter of invalidCharacters) {
           expect(() => workbook.addWorksheet(invalidCharacter)).to.throw(
-            `Worksheet name ${invalidCharacter} cannot include any of the following characters: * ? : \\ / [ ] ＊ ？ ： ￥ ／ ＼ ［ ］`
+            `Worksheet name ${invalidCharacter} cannot include any of the following characters: * ? : \\ / [ ]`
           );
         }
       });
