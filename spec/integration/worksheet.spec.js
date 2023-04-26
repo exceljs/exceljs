@@ -677,76 +677,173 @@ describe('Worksheet', () => {
 
       expect(ws.getRows(1, 0)).to.equal(undefined);
     });
-    context('when worksheet name is less than or equal 31', () => {
-      it('save the original name', () => {
-        const wb = new ExcelJS.Workbook();
-        let ws = wb.addWorksheet('ThisIsAWorksheetName');
-        expect(ws.name).to.equal('ThisIsAWorksheetName');
+    context('names validation through wb.addWorksheet', () => {
+      context('when worksheet name is less than or equal 31', () => {
+        it('save the original name', () => {
+          const wb = new ExcelJS.Workbook();
+          let ws = wb.addWorksheet('ThisIsAWorksheetName');
+          expect(ws.name).to.equal('ThisIsAWorksheetName');
 
-        ws = wb.addWorksheet('ThisIsAWorksheetNameWith31Chars');
-        expect(ws.name).to.equal('ThisIsAWorksheetNameWith31Chars');
+          ws = wb.addWorksheet('ThisIsAWorksheetNameWith31Chars');
+          expect(ws.name).to.equal('ThisIsAWorksheetNameWith31Chars');
+        });
+      });
+
+      context('when worksheet name is longer than 31', () => {
+        it('keep first 31 characters', () => {
+          const wb = new ExcelJS.Workbook();
+          const ws = wb.addWorksheet('ThisIsAWorksheetNameThatIsLongerThan31');
+
+          expect(ws.name).to.equal('ThisIsAWorksheetNameThatIsLonge');
+        });
+      });
+
+      context('when the worksheet name contains illegal characters', () => {
+        it('throws an error', () => {
+          const workbook = new ExcelJS.Workbook();
+
+          const invalidCharacters = ['*', '?', ':', '/', '\\', '[', ']'];
+
+          for (const invalidCharacter of invalidCharacters) {
+            expect(() => workbook.addWorksheet(invalidCharacter)).to.throw(
+              `Worksheet name ${invalidCharacter} cannot include any of the following characters: * ? : \\ / [ ]`
+            );
+          }
+        });
+
+        it('throws an error', () => {
+          const workbook = new ExcelJS.Workbook();
+
+          const invalidNames = ['\'sheetName', 'sheetName\''];
+
+          for (const invalidName of invalidNames) {
+            expect(() => workbook.addWorksheet(invalidName)).to.throw(
+              `The first or last character of worksheet name cannot be a single quotation mark: ${invalidName}`
+            );
+          }
+        });
+      });
+
+      context('when worksheet name already exists', () => {
+        it('throws an error', () => {
+          const wb = new ExcelJS.Workbook();
+
+          const validName = 'thisisaworksheetnameinuppercase';
+          const invalideName = 'THISISAWORKSHEETNAMEINUPPERCASE';
+          const expectedError = `Worksheet name already exists: ${invalideName}`;
+
+          wb.addWorksheet(validName);
+
+          expect(() => wb.addWorksheet(invalideName)).to.throw(expectedError);
+        });
+
+        it('throws an error', () => {
+          const wb = new ExcelJS.Workbook();
+
+          const validName = 'ThisIsAWorksheetNameThatIsLonge';
+          const invalideName = 'ThisIsAWorksheetNameThatIsLongerThan31';
+          const expectedError = `Worksheet name already exists: ${validName}`;
+
+          wb.addWorksheet(validName);
+
+          expect(() => wb.addWorksheet(validName)).to.throw(expectedError);
+          expect(() => wb.addWorksheet(invalideName)).to.throw(expectedError);
+        });
       });
     });
+    context('names validation through ws.name setter', () => {
+      context('when worksheet name is less than or equal 31', () => {
+        it('save the original name', () => {
+          const wb = new ExcelJS.Workbook();
+          let ws = wb.addWorksheet();
+          ws.name = 'ThisIsAWorksheetName';
+          expect(ws.name).to.equal('ThisIsAWorksheetName');
 
-    context('when worksheet name is longer than 31', () => {
-      it('keep first 31 characters', () => {
-        const wb = new ExcelJS.Workbook();
-        const ws = wb.addWorksheet('ThisIsAWorksheetNameThatIsLongerThan31');
-
-        expect(ws.name).to.equal('ThisIsAWorksheetNameThatIsLonge');
-      });
-    });
-
-    context('when the worksheet name contains illegal characters', () => {
-      it('throws an error', () => {
-        const workbook = new ExcelJS.Workbook();
-
-        const invalidCharacters = ['*', '?', ':', '/', '\\', '[', ']'];
-
-        for (const invalidCharacter of invalidCharacters) {
-          expect(() => workbook.addWorksheet(invalidCharacter)).to.throw(
-            `Worksheet name ${invalidCharacter} cannot include any of the following characters: * ? : \\ / [ ]`
-          );
-        }
+          ws = wb.addWorksheet();
+          ws.name = 'ThisIsAWorksheetNameWith31Chars';
+          expect(ws.name).to.equal('ThisIsAWorksheetNameWith31Chars');
+        });
       });
 
-      it('throws an error', () => {
-        const workbook = new ExcelJS.Workbook();
+      context('when worksheet name is longer than 31', () => {
+        it('keep first 31 characters', () => {
+          const wb = new ExcelJS.Workbook();
+          const ws = wb.addWorksheet();
+          ws.name = 'ThisIsAWorksheetNameThatIsLongerThan31';
 
-        const invalidNames = ['\'sheetName', 'sheetName\''];
-
-        for (const invalidName of invalidNames) {
-          expect(() => workbook.addWorksheet(invalidName)).to.throw(
-            `The first or last character of worksheet name cannot be a single quotation mark: ${invalidName}`
-          );
-        }
-      });
-    });
-
-    context('when worksheet name already exists', () => {
-      it('throws an error', () => {
-        const wb = new ExcelJS.Workbook();
-
-        const validName = 'thisisaworksheetnameinuppercase';
-        const invalideName = 'THISISAWORKSHEETNAMEINUPPERCASE';
-        const expectedError = `Worksheet name already exists: ${invalideName}`;
-
-        wb.addWorksheet(validName);
-
-        expect(() => wb.addWorksheet(invalideName)).to.throw(expectedError);
+          expect(ws.name).to.equal('ThisIsAWorksheetNameThatIsLonge');
+        });
       });
 
-      it('throws an error', () => {
-        const wb = new ExcelJS.Workbook();
+      context('when the worksheet name contains illegal characters', () => {
+        it('throws an error', () => {
+          const workbook = new ExcelJS.Workbook();
 
-        const validName = 'ThisIsAWorksheetNameThatIsLonge';
-        const invalideName = 'ThisIsAWorksheetNameThatIsLongerThan31';
-        const expectedError = `Worksheet name already exists: ${validName}`;
+          const invalidCharacters = ['*', '?', ':', '/', '\\', '[', ']'];
 
-        wb.addWorksheet(validName);
+          for (const invalidCharacter of invalidCharacters) {
+            expect(() => {
+              const ws = workbook.addWorksheet();
+              ws.name = invalidCharacter;
+            }).to.throw(
+              `Worksheet name ${invalidCharacter} cannot include any of the following characters: * ? : \\ / [ ]`
+            );
+          }
+        });
 
-        expect(() => wb.addWorksheet(validName)).to.throw(expectedError);
-        expect(() => wb.addWorksheet(invalideName)).to.throw(expectedError);
+        it('throws an error', () => {
+          const workbook = new ExcelJS.Workbook();
+
+          const invalidNames = ['\'sheetName', 'sheetName\''];
+
+          for (const invalidName of invalidNames) {
+            expect(() => {
+              const ws = workbook.addWorksheet();
+              ws.name = invalidName;
+            }).to.throw(
+              `The first or last character of worksheet name cannot be a single quotation mark: ${invalidName}`
+            );
+          }
+        });
+      });
+
+      context('when worksheet name already exists', () => {
+        it('throws an error', () => {
+          const wb = new ExcelJS.Workbook();
+
+          const validName = 'thisisaworksheetnameinuppercase';
+          const invalideName = 'THISISAWORKSHEETNAMEINUPPERCASE';
+          const expectedError = `Worksheet name already exists: ${invalideName}`;
+
+          const ws = wb.addWorksheet();
+          ws.name = validName;
+
+          expect(() => {
+            const newWs = wb.addWorksheet();
+            newWs.name = invalideName;
+          }).to.throw(expectedError);
+        });
+
+        it('throws an error', () => {
+          const wb = new ExcelJS.Workbook();
+
+          const validName = 'ThisIsAWorksheetNameThatIsLonge';
+          const invalideName = 'ThisIsAWorksheetNameThatIsLongerThan31';
+          const expectedError = `Worksheet name already exists: ${validName}`;
+
+          const ws = wb.addWorksheet();
+          ws.name = validName;
+
+          expect(() => {
+            const newWs = wb.addWorksheet();
+            newWs.name = validName;
+          }).to.throw(expectedError);
+
+          expect(() => {
+            const newWs = wb.addWorksheet();
+            newWs.name = invalideName;
+          }).to.throw(expectedError);
+        });
       });
     });
   });
