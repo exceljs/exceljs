@@ -361,6 +361,36 @@ describe('Worksheet', () => {
             options
           );
         });
+        it('Remove 2 last', () => {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.remove2Last'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.remove2Last'],
+            options
+          );
+        });
+        it('Remove few', () => {
+          const wb = new Excel.Workbook();
+          testUtils.createTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.removeFew'],
+            options
+          );
+          testUtils.checkTestBook(
+            wb,
+            'xlsx',
+            ['splice.rows.removeFew'],
+            options
+          );
+        });
         it('Remove and insert fewer', () => {
           const wb = new Excel.Workbook();
           testUtils.createTestBook(

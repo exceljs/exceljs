@@ -851,6 +851,8 @@ describe('Workbook', () => {
     const wb = new ExcelJS.Workbook();
     const sheets = [
       'splice.rows.removeOnly',
+      'splice.rows.remove2Last',
+      'splice.rows.removeFew',
       'splice.rows.insertFewer',
       'splice.rows.insertSame',
       'splice.rows.insertMore',
