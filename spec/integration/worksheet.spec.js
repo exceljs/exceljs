@@ -701,6 +701,23 @@ describe('Worksheet', () => {
         });
       });
 
+      context('name is be not empty string', () => {
+        it('when empty should thrown an error', () => {
+          const wb = new ExcelJS.Workbook();
+
+          expect(() => {
+            wb.addWorksheet('');
+          }).to.throw('The name can\'t be empty.');
+        });
+        it('when isn\'t string should thrown an error', () => {
+          const wb = new ExcelJS.Workbook();
+
+          expect(() => {
+            wb.addWorksheet(0);
+          }).to.throw('The name has to be string.');
+        });
+      });
+
       context('when worksheet name is longer than 31', () => {
         it('keep first 31 characters', () => {
           const wb = new ExcelJS.Workbook();
@@ -774,6 +791,25 @@ describe('Worksheet', () => {
           ws = wb.addWorksheet();
           ws.name = 'ThisIsAWorksheetNameWith31Chars';
           expect(ws.name).to.equal('ThisIsAWorksheetNameWith31Chars');
+        });
+      });
+
+      context('name is be not empty string', () => {
+        it('when empty should thrown an error', () => {
+          const wb = new ExcelJS.Workbook();
+
+          expect(() => {
+            const ws = wb.addWorksheet();
+            ws.name = '';
+          }).to.throw('The name can\'t be empty.');
+        });
+        it('when isn\'t string should thrown an error', () => {
+          const wb = new ExcelJS.Workbook();
+
+          expect(() => {
+            const ws = wb.addWorksheet();
+            ws.name = 0;
+          }).to.throw('The name has to be string.');
         });
       });
 
