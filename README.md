@@ -1,5 +1,9 @@
 # ExcelJS
 
+
+# Improved image properties and addImage function, support rotation, extent, offset.
+ 
+
 [![Build status](https://github.com/exceljs/exceljs/workflows/ExcelJS/badge.svg)](https://github.com/exceljs/exceljs/actions?query=workflow%3AExcelJS)
 
 Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
