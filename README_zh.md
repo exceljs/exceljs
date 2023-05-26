@@ -1760,7 +1760,7 @@ worksheet.addConditionalFormatting({
 | ------------- | -------- | ------- | ----------- |
 | type          |          |         | `'aboveAverage'` |
 | priority      | Y        | &lt;auto&gt;  | 确定样式的优先顺序 |
-| aboveAverage  | Y        | `false`   | 如果为 true，则等级字段为百分比，而不是绝对值 |
+| aboveAverage  | Y        | `true`   | 如果为 false，则为低于平均值 |
 | style         |          |         | 如果比较返回 true，则应用样式结构 |
 
 ### 色阶[⬆](#目录)<!-- Link generated with jump2header -->

@@ -1858,7 +1858,7 @@ worksheet.addConditionalFormatting({
 | ------------- | -------- | ------- | ----------- |
 | type          |          |         | 'aboveAverage' |
 | priority      | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| aboveAverage  | Y        | false   | if true, the rank field is a percentage, not an absolute |
+| aboveAverage  | Y        | true   | If false, below average |
 | style         |          |         | style structure to apply if the comparison returns true |
 
 ### Color Scale[⬆](#contents)<!-- Link generated with jump2header -->
