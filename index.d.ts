@@ -349,14 +349,14 @@ export interface CellHyperlinkValue {
 
 export interface CellFormulaValue {
 	formula: string;
-	result?: number | string | Date | CellErrorValue;
+	result?: number | string | boolean | Date | CellErrorValue;
 	date1904?: boolean;
 }
 
 export interface CellSharedFormulaValue {
 	sharedFormula: string;
 	readonly formula?: string;
-	result?: number | string | Date | CellErrorValue;
+	result?: number | string | boolean | Date | CellErrorValue;
 	date1904?: boolean;
 }
 
