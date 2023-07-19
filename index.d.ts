@@ -230,7 +230,7 @@ export interface Font {
 }
 
 export type BorderStyle =
-	| 'thin' | 'dotted' | 'hair' | 'medium' | 'double' | 'thick' | 'dashDot'
+	| 'thin' | 'dotted' | 'hair' | 'medium' | 'double' | 'thick' | 'dashed' | 'dashDot'
 	| 'dashDotDot' | 'slantDashDot' | 'mediumDashed' | 'mediumDashDotDot' | 'mediumDashDot';
 
 export interface Color {
