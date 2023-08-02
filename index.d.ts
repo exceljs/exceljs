@@ -1487,7 +1487,7 @@ export interface Xlsx {
 	write(stream: import('stream').Stream, options?: Partial<XlsxWriteOptions>): Promise<void>;
 }
 
-// https://c2fo.io/fast-csv/docs/parsing/options
+// https://c2fo.github.io/fast-csv/docs/parsing/options
 
 type HeaderArray = (string | undefined | null)[];
 type HeaderTransformFunction = (headers: HeaderArray) => HeaderArray;
@@ -1528,7 +1528,7 @@ interface RowTransformFunction {
 	(row: Rows): Rows;
 }
 
-// https://c2fo.io/fast-csv/docs/formatting/options/
+// https://c2fo.github.io/fast-csv/docs/formatting/options/
 export interface FastCsvFormatterOptionsArgs {
 	objectMode: boolean;
 	delimiter: string;
