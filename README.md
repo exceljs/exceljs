@@ -1,3 +1,25 @@
+# Siemienik's Announcement
+
+> Hello to all the contributors and supporters of this project,
+> 
+> I'm writing this with a heavy heart to let you know that the my development of this project has come to a halt. Since 2019, this has been primarily a volunteer effort on my part. While the journey has been incredibly rewarding, the lack of resources and other commitments has affected the pace and progress.
+> 
+> However, I still firmly believe in the potential of this project. The possibilities for further development could include:
+> 
+> 1. **Parallel Development:** Working alongside another project that uses `exceljs` and simultaneously contributing to the evolution of `exceljs`.
+> 2. **Community Sponsorship:** Exploring platforms like Open Collective or similar avenues where community members can sponsor and support the ongoing development and maintenance.
+> 
+> Please share your thoughs. I'm open to ideas and feedback from all of you. If you have any suggestions or if you're interested in supporting this project further, please do get in touch. I'd be happy to collaborate and find ways to move forward.
+> 
+> For communication regarding this announcement or potential collaboration, please reach out to me at: [exceljs+announcement@siemienik.com](mailto:exceljs+announcement@siemienik.com)
+> 
+> Thank you for your understanding and continued support. Let's keep the dream alive!
+> 
+> Warm regards,
+> 
+> Paweł Siemienik
+
+
 # ExcelJS
 
 [![Build status](https://github.com/exceljs/exceljs/workflows/ExcelJS/badge.svg)](https://github.com/exceljs/exceljs/actions?query=workflow%3AExcelJS)
