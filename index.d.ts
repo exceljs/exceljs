@@ -344,6 +344,7 @@ export interface CellRichTextValue {
 export interface CellHyperlinkValue {
 	text: string;
 	hyperlink: string;
+	tooltip?: string;
 }
 
 export interface CellFormulaValue {
@@ -1402,6 +1403,13 @@ export interface WorksheetProperties {
 	 */
 	outlineLevelRow: number;
 
+	/**
+ 	 * The outline properties which controls how it will summarize rows and columns
+   	 */
+	outlineProperties: {
+		summaryBelow: boolean,
+		summaryRight: boolean,
+	};
 	/**
 	 * Default row height (default: 15)
 	 */
