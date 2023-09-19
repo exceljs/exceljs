@@ -880,7 +880,7 @@ export interface WorksheetProtection {
 	sort: boolean;
 	autoFilter: boolean;
 	pivotTables: boolean;
-  spinCount: number;
+	spinCount: number;
 }
 export interface Image {
 	extension: 'jpeg' | 'png' | 'gif';
