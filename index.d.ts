@@ -230,7 +230,7 @@ export interface Font {
 }
 
 export type BorderStyle =
-	| 'thin' | 'dotted' | 'hair' | 'medium' | 'double' | 'thick' | 'dashDot'
+	| 'thin' | 'dotted' | 'hair' | 'medium' | 'double' | 'thick' | 'dashed' | 'dashDot'
 	| 'dashDotDot' | 'slantDashDot' | 'mediumDashed' | 'mediumDashDotDot' | 'mediumDashDot';
 
 export interface Color {
@@ -289,6 +289,7 @@ export interface Alignment {
 
 export interface Protection {
 	locked: boolean;
+	hidden: boolean;
 }
 
 export interface Style {
@@ -349,15 +350,15 @@ export interface CellHyperlinkValue {
 
 export interface CellFormulaValue {
 	formula: string;
-	result?: number | string | Date | { error: CellErrorValue };
-	date1904: boolean;
+	result?: number | string | boolean | Date | CellErrorValue;
+	date1904?: boolean;
 }
 
 export interface CellSharedFormulaValue {
 	sharedFormula: string;
 	readonly formula?: string;
-	result?: number | string | Date | { error: CellErrorValue };
-	date1904: boolean;
+	result?: number | string | boolean | Date | CellErrorValue;
+	date1904?: boolean;
 }
 
 export declare enum ValueType {
@@ -1140,7 +1141,7 @@ export interface Worksheet {
 	/**
 	 * Get the last column in a worksheet
 	 */
-	readonly lastColumn: Column;
+	readonly lastColumn: Column | undefined;
 
 	/**
 	 * A count of the number of columns that have values.
