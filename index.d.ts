@@ -344,6 +344,7 @@ export interface CellRichTextValue {
 export interface CellHyperlinkValue {
 	text: string;
 	hyperlink: string;
+	tooltip?: string;
 }
 
 export interface CellFormulaValue {
