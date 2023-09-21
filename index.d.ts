@@ -992,6 +992,7 @@ export interface WorksheetModel {
 	views: WorksheetView[];
 	autoFilter: AutoFilter;
 	media: Media[];
+	merges: Range['range'][];
 }
 export type WorksheetState = 'visible' | 'hidden' | 'veryHidden';
 
