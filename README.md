@@ -1,6 +1,6 @@
 # ExcelJS
 
-[![Build status](https://github.com/exceljs/exceljs/workflows/ExcelJS/badge.svg)](https://github.com/exceljs/exceljs/actions?query=workflow%3AExcelJS)
+[![Build Status](https://github.com/exceljs/exceljs/actions/workflows/tests.yml/badge.svg?branch=master&event=push)](https://github.com/exceljs/exceljs/actions/workflows/tests.yml)
 
 Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
@@ -83,6 +83,10 @@ Note: Please try to avoid modifying the package version in a PR.
 Versions are updated on release and any change will most likely result in merge collisions.
 
 To be clear, all contributions added to this library will be included in the library's MIT licence.
+
+### Let's chat together:
+
+[![SiemaTeam](https://discordapp.com/api/guilds/976854442009825321/widget.png?style=banner2)](https://discord.gg/siema)
 
 # Contents
 
@@ -2215,7 +2219,7 @@ Options supported when reading CSV files.
 | dateFormats      |     N       |  Array      | Specify the date encoding format of dayjs. |
 | map              |     N       |  Function   | Custom Array.prototype.map() callback function for processing data. |
 | sheetName        |     N       |  String     | Specify worksheet name. |
-| parserOptions    |     N       |  Object     | [parseOptions options](https://c2fo.io/fast-csv/docs/parsing/options)  @fast-csv/format module to write csv data. |
+| parserOptions    |     N       |  Object     | [parseOptions options](https://c2fo.github.io/fast-csv/docs/parsing/options)  @fast-csv/format module to write csv data. |
 
 ```javascript
 // read from a file
@@ -2258,7 +2262,7 @@ const options = {
         return parseFloat(value);
     }
   },
-  // https://c2fo.io/fast-csv/docs/parsing/options
+  // https://c2fo.github.io/fast-csv/docs/parsing/options
   parserOptions: {
     delimiter: '\t',
     quote: false,
@@ -2294,7 +2298,7 @@ Options supported when writing to a CSV file.
 | map              |     N       |  Function   | Custom Array.prototype.map() callback function for processing row values. |
 | sheetName        |     N       |  String     | Specify worksheet name. |
 | sheetId          |     N       |  Number     | Specify worksheet ID. |
-| formatterOptions |     N       |  Object     | [formatterOptions options](https://c2fo.io/fast-csv/docs/formatting/options/) @fast-csv/format module to write csv data. |
+| formatterOptions |     N       |  Object     | [formatterOptions options](https://c2fo.github.io/fast-csv/docs/formatting/options/) @fast-csv/format module to write csv data. |
 
 ```javascript
 
@@ -2335,7 +2339,7 @@ const options = {
         return value;
     }
   },
-  // https://c2fo.io/fast-csv/docs/formatting/options
+  // https://c2fo.github.io/fast-csv/docs/formatting/options
   formatterOptions: {
     delimiter: '\t',
     quote: false,
