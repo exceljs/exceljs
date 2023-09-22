@@ -1,4 +1,4 @@
-name: ExcelJS
+name: Tests
 
 on:
   push:
@@ -8,12 +8,12 @@ on:
 
 jobs:
   test:
+    timeout-minutes: 10
     name: Node v${{ matrix.node-version }} on ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        # https://github.com/actions/setup-node/issues/27
-        node-version: [8.17.0, 10.x, 12.x, 14.x, 16.x, 17.x]
+        node-version: [10.x, 12.x, 14.x, 16.x, 17.x, 18.x, 19.x, 20.x]
         os: [ubuntu-latest, macOS-latest, windows-latest]
     runs-on: ${{ matrix.os }}
 
@@ -24,15 +24,15 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.symlinks true
         if: runner.os == 'Windows'
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 #latest v2. TODO upgrade
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 #latest  v2. TODO upgrade
         with:
           node-version: ${{ matrix.node-version }}
       - name: Create the npm cache directory
         run: mkdir npm-cache && npm config set cache ./npm-cache --global
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@8492260343ad570701412c2f464a5877dc76bace #latest v2 TODO upgrade
         with:
           path: ./npm-cache
           key: v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-${{ hashFiles('**/package.json') }}
@@ -44,18 +44,19 @@ jobs:
           CI: true
 
   benchmark:
+    timeout-minutes: 15
     name: Measure performance impact of changes
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 #latest v2. TODO upgrade
+      - uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 #latest  v2. TODO upgrade
         with:
-          node-version: 12.x
+          node-version: 18
       - name: Create the npm cache directory
         run: mkdir npm-cache && npm config set cache ./npm-cache --global
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@8492260343ad570701412c2f464a5877dc76bace #latest v2 TODO upgrade
         with:
           path: ./npm-cache
           key: v1-npm-${{ hashFiles('**/package.json') }}
@@ -67,18 +68,19 @@ jobs:
           CI: true
 
   typescript:
+    timeout-minutes: 15
     name: Ensure typescript compatibility
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 #latest v2. TODO upgrade
+      - uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8 #latest  v2. TODO upgrade
         with:
-          node-version: 12.x
+          node-version: 18
       - name: Create the npm cache directory
         run: mkdir npm-cache && npm config set cache ./npm-cache --global
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@8492260343ad570701412c2f464a5877dc76bace #latest v2 TODO upgrade
         with:
           path: ./npm-cache
           key: v1-npm-${{ hashFiles('**/package.json') }}
