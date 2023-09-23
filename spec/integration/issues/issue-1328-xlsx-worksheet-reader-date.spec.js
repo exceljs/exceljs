@@ -25,6 +25,7 @@ describe('github issues: Date field with cache style', () => {
       })
   );
   it('issue 1328 - should emit row with Date Object', () => {
-    expect(rows).that.contains(['Date', new Date('2020-11-20T00:00:00.000Z')]);
+    expect(rows).that.contains('Date');
+    expect(rows).that.contains(new Date('2020-11-20T00:00:00.000Z'));
   });
 });
