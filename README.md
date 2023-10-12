@@ -37,14 +37,12 @@ npm install exceljs
 * Merged [Fix issue #1753 Reject promise when workbook reader is writing to temporary file stream and error occurs #1756](https://github.com/exceljs/exceljs/pull/1756). <br/> Many thanks to [@pauliusg](https://github.com/pauliusg) for this contribution!
 * Merged [README.md to have correct link for Streaming XLSX #2186](https://github.com/exceljs/exceljs/pull/2186). <br/> Many thanks to [@wulfsolter](https://github.com/wulfsolter) for this contribution!
 * Merged [Added a polyfill of promise.finally to support lower versions of Firefox. #1982](https://github.com/exceljs/exceljs/pull/1982). <br/> Many thanks to [@DemoJj](https://github.com/DemoJj) for this contribution!
-* Merged [Added a polyfill of promise.finally to support lower versions of Firefox. #1982](https://github.com/exceljs/exceljs/pull/1982). <br/> Many thanks to [@DemoJj](https://github.com/DemoJj) for this contribution!
 * Merged [Fix read this.worksheet before assign it #1934](https://github.com/exceljs/exceljs/pull/1934). <br/> Many thanks to [@ZyqGitHub1](https://github.com/ZyqGitHub1) for this contribution!
 * Merged [chore: upgrade jszip to ^3.10.1 #2211](https://github.com/exceljs/exceljs/pull/2211). <br/> Many thanks to [@jarrod-cocoon](https://github.com/jarrod-cocoon) for this contribution!
 * Merged [fixed spelling error in README.md file #2208](https://github.com/exceljs/exceljs/pull/2208). <br/> Many thanks to [@HugoP27](https://github.com/HugoP27) for this contribution!
 * Merged [fix: Fix xlsx.writeFile() not catching error when error occurs #2244](https://github.com/exceljs/exceljs/pull/2244). <br/> Many thanks to [@zurmokeeper](https://github.com/zurmokeeper) for this contribution!
 * Merged [Improve worksheets' naming validation logic. #2257](https://github.com/exceljs/exceljs/pull/2257). <br/> Many thanks to [@Siemienik](https://github.com/Siemienik) for this contribution!
 * Merged [fix issue 2125 - spliceRows remove last row #2140](https://github.com/exceljs/exceljs/pull/2140). <br/> Many thanks to [@babu-ch](https://github.com/babu-ch) for this contribution!
-* Merged [fix: fix the loss of column attributes due to incorrect column order #2222](https://github.com/exceljs/exceljs/pull/2222). <br/> Many thanks to [@cpaiyueyue](https://github.com/cpaiyueyue) for this contribution!
 * Merged [fix: fix the loss of column attributes due to incorrect column order #2222](https://github.com/exceljs/exceljs/pull/2222). <br/> Many thanks to [@cpaiyueyue](https://github.com/cpaiyueyue) for this contribution!
 * Merged [Fix: Sheet Properties Types #2327](https://github.com/exceljs/exceljs/pull/2327). <br/> Many thanks to [@albeniraouf](https://github.com/albeniraouf) for this contribution!
 * Merged [Use node 18 LTS for tsc, and benchmark. Add node 20. to test matrix. … #2354](https://github.com/exceljs/exceljs/pull/2354). <br/> Many thanks to [@Siemienik](https://github.com/Siemienik) for this contribution!
