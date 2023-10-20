@@ -74,6 +74,11 @@
       "Target": "https://www.npmjs.com/package/exceljs",
       "TargetMode": "External",
       "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
+    },
+    {
+      "Id": "rId2",
+      "Target": "../drawings/vmlDrawing1.vml",
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing"
     }
   ],
   "comments": [],
@@ -90,5 +95,33 @@
     "evenHeader": "&C&KCCCCCC&\"Aril\"3 exceljs evenHeader",
     "evenFooter": "&Lexceljs&C&F&RPage &P evenHeader"
   },
+  "hfImages": [
+    {
+      "id": "HF",
+      "type": "hfimage",
+      "style": {
+        "width": "55pt",
+        "height": "55pt"
+      },
+      "imagedata": {
+        "index": 0,
+        "rId": "rId1",
+        "title": "image1"
+      }
+    }
+  ],
+  "legacyDrawingHF": {
+    "name": "vmlDrawing1",
+    "rId": "rId2",
+    "rels": [
+      {
+        "Id": "rId1",
+        "Target": "../media/image1.jpg",
+        "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+      }
+    ]
+  },
   "conditionalFormattings": []
 }
+
+
