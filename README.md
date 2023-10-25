@@ -2140,7 +2140,7 @@ faster or more resilient.
 
 #### Reading XLSX[⬆](#contents)<!-- Link generated with jump2header -->
 
-Options supported when reading CSV files.
+Options supported when reading XLSX files.
 
 | Field            |  Required   |    Type     |Description  |
 | ---------------- | ----------- | ----------- | ----------- |
