@@ -20,6 +20,10 @@ npm install exceljs
 
 <ul>
   <li>
+    Merged <a href="https://github.com/exceljs/exceljs/pull/2551">Add pivot table with limitations #2551</a>.
+    Many thanks to Protobi and <a href="https://github.com/mikez">Michael</a> for this contribution.
+  </li>
+  <li>
     Merged <a href="https://github.com/exceljs/exceljs/pull/1656">Add TS declarations of Workbook properties #1656</a>.
     Many thanks to <a href="https://github.com/kaoths">Tanawit Kritwongwiman</a> for this contribution.
   </li>
@@ -163,6 +167,7 @@ To be clear, all contributions added to this library will be included in the lib
           </li>
         </ul>
       </li>
+      <li><a href="#pivot-tables">Pivot Tables</a></li>
     </ul>
   </li>
   <li><a href="#browser">Browser</a></li>
@@ -2540,6 +2545,48 @@ workbookReader.on('end', () => {
 });
 workbookReader.on('error', (err) => {
   // ...
+});
+```
+
+## Pivot Tables[⬆](#contents)<!-- Link generated with jump2header -->
+
+Add a pivot table to a Workbook without existing pivot tables.
+
+```javascript
+worksheet.addPivotTable(configuration);
+```
+
+**Note:** Pivot table support is in its early stages with certain limitations, including:
+
+- No support for reading xlsx documents with existing pivot tables (writing is supported).
+- Pivot table configurations can have any number of rows and columns, but must consist of exactly one value with the "sum"-metric.
+- Only one pivot table can be added for the entire document.
+
+### Add pivot table to worksheet[⬆](#contents)<!-- Link generated with jump2header -->
+
+```javascript
+const workbook = new Excel.Workbook();
+
+const worksheet1 = workbook.addWorksheet('Sheet1');
+worksheet1.addRows([
+  ['A', 'B', 'C', 'D', 'E'],
+  ['a1', 'b1', 'c1', 4, 5],
+  ['a1', 'b2', 'c1', 4, 5],
+  ['a2', 'b1', 'c2', 14, 24],
+  ['a2', 'b2', 'c2', 24, 35],
+  ['a3', 'b1', 'c3', 34, 45],
+  ['a3', 'b2', 'c3', 44, 45],
+]);
+
+const worksheet2 = workbook.addWorksheet('Sheet2');
+worksheet2.addPivotTable({
+  // Source data: entire sheet range
+  sourceSheet: worksheet1,
+  // Pivot table fields: via header row in `worksheet1`
+  rows: ['A', 'B'], // Any number of fields
+  columns: ['C'], // Any number of fields
+  values: ['E'], // Exactly 1 field
+  metric: 'sum', // Metric: 'sum' only at this time
 });
 ```
 
