@@ -1243,7 +1243,12 @@ export interface Worksheet {
 	/**
 	 * Duplicate rows and insert new rows
 	 */
-	duplicateRow(rowNum: number, count: number, insert: boolean): void;
+	duplicateRows({
+		initialRow: number,
+		length = 1,
+		firstRowToPaste = 1,
+		copiesAmount = 1,
+	}): void;
 
 	/**
 	 * Get or create row by 1-based index
