@@ -131,6 +131,22 @@ describe('WorkbookReader', () => {
         );
       });
     });
+
+    describe('Big file support', () => {
+      it('should read large file correctly', function(done) {
+        this.timeout(20000);
+        const workbook = new ExcelJS.Workbook();
+        workbook.xlsx
+            .read(fs.createReadStream('./spec/integration/data/extra-large.xlsx') )
+            .then(
+                result => {
+                  expect(result._worksheets[1]._rows.length).to.equal(512781);
+                  expect(result._worksheets[1]._rows[500000]._cells[4]._value.value).to.equal(11);
+                  done();
+                }
+            );
+      });
+    });
   });
 
   describe('edit styles in existing file', () => {
