@@ -30,7 +30,7 @@ describe('Worksheet', () => {
       });
     });
 
-    it('Translates formulae to slave cells', () => {
+    it('Translates formulae to aligned cells', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet();
 

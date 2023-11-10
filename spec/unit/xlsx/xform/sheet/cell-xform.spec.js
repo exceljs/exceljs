@@ -433,7 +433,7 @@ const expectations = [
     },
   },
   {
-    title: 'Shared Formula Slave',
+    title: 'Shared Formula Alignment',
     create() {
       return new CellXform();
     },
