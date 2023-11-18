@@ -523,7 +523,7 @@ export interface RowModel {
 export interface Row extends Style {
 	readonly worksheet: Worksheet;
 	readonly hasValues: boolean;
-	readonly dimensions: number;
+	readonly dimensions: { min: number; max: number } | null;
 	model: Partial<RowModel> | null;
 	/**
 	 * Set a specific row height
