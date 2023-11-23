@@ -26,5 +26,32 @@ module.exports = {
         },
       },
     },
+    {
+      range: {
+        tl: {
+          nativeCol: 6,
+          nativeColOff: 101600,
+          nativeRow: 12,
+          nativeRowOff: 63500,
+        },
+        br: {
+          nativeCol: 7,
+          nativeColOff: 190500,
+          nativeRow: 16,
+          nativeRowOff: 165100,
+        },
+        editAs: 'oneCell',
+      },
+      picture: null,
+      shape: {
+        type: 'ellipse',
+        fill: {
+          type: 'solid',
+          color: {
+            rgb: 'C651E9',
+          },
+        },
+      },
+    },
   ],
 };

@@ -46,7 +46,7 @@ describe('Workbook', () => {
       let ws2;
 
       ws.addShape(
-        {type: 'rect'},
+        {type: 'rect', fill: {type: 'solid', color: {rgb: 'AABBCC'}}},
         {
           tl: {col: 0.1125, row: 0.4},
           br: {col: 2.101046875, row: 3.4},
@@ -69,7 +69,10 @@ describe('Workbook', () => {
           const shape = shapes[0];
           expect(shape.range.editAs).to.equal('oneCell');
           expect(shape.props.type).to.equal('rect');
-          expect(shape.props.fill).to.undefined();
+          expect(shape.props.fill).to.deep.equal({
+            type: 'solid',
+            color: {rgb: 'AABBCC'},
+          });
         });
     });
   });

@@ -936,7 +936,7 @@ export type ShapeType = 'line' | 'rect' | 'roundRect' | 'ellipse' | 'triangle' |
 
 export type ShapeFill = {
 	type: 'solid',
-	color: { theme?: string }
+	color: { theme?: string, rgb?: string }
 }
 
 export interface Range extends Location {
