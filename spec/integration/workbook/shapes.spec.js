@@ -14,7 +14,11 @@ describe('Workbook', () => {
       let ws2;
 
       ws.addShape(
-        {type: 'line', fill: {type: 'solid', color: {theme: 'accent6'}}},
+        {
+          type: 'line',
+          fill: {type: 'solid', color: {theme: 'accent6'}},
+          outline: {weight: 30000, color: {theme: 'accent1'}},
+        },
         'B2:D6'
       );
 
@@ -35,6 +39,10 @@ describe('Workbook', () => {
           expect(shape.props.fill).to.deep.equal({
             type: 'solid',
             color: {theme: 'accent6'},
+          });
+          expect(shape.props.outline).to.deep.equal({
+            weight: 30000,
+            color: {theme: 'accent1'},
           });
         });
     });

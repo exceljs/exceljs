@@ -929,7 +929,8 @@ export interface ImageHyperlinkValue {
 
 export interface ShapeProps {
 	type: ShapeType;
-	fill: ShapeFill;
+	fill?: ShapeFill;
+	outline?: ShapeOutline;
 }
 
 export type ShapeType = 'line' | 'rect' | 'roundRect' | 'ellipse' | 'triangle' | 'rightArrow' | 'downArrow' | 'leftBrace' | 'rightBrace';
@@ -937,6 +938,11 @@ export type ShapeType = 'line' | 'rect' | 'roundRect' | 'ellipse' | 'triangle' |
 export type ShapeFill = {
 	type: 'solid',
 	color: { theme?: string, rgb?: string }
+}
+
+export type ShapeOutline = {
+	weight?: number,
+	color?: { theme?: string, rgb?: string }
 }
 
 export interface Range extends Location {
