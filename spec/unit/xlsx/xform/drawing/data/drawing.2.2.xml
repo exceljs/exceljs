@@ -33,6 +33,9 @@
         <a:prstGeom prst="rect">
           <a:avLst/>
         </a:prstGeom>
+        <a:solidFill>
+          <a:schemeClr val="accent6"/>
+        </a:solidFill>
       </xdr:spPr>
       <xdr:style>
         <a:lnRef idx="2">

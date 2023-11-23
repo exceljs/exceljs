@@ -19,6 +19,12 @@ module.exports = {
       picture: null,
       shape: {
         type: 'rect',
+        fill: {
+          type: 'solid',
+          color: {
+            theme: 'accent6',
+          },
+        },
       },
     },
   ],

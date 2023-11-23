@@ -20,6 +20,12 @@ module.exports = {
       shape: {
         index: 1,
         type: 'rect',
+        fill: {
+          type: 'solid',
+          color: {
+            theme: 'accent6',
+          },
+        },
       },
     },
   ],

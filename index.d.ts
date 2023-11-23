@@ -927,7 +927,17 @@ export interface ImageHyperlinkValue {
 	tooltip?: string;
 }
 
+export interface ShapeProps {
+	type: ShapeType;
+	fill: ShapeFill;
+}
+
 export type ShapeType = 'line' | 'rect' | 'roundRect' | 'ellipse' | 'triangle' | 'rightArrow' | 'downArrow' | 'leftBrace' | 'rightBrace';
+
+export type ShapeFill = {
+	type: 'solid',
+	color: { theme?: string }
+}
 
 export interface Range extends Location {
 	sheetName: string;
@@ -1347,10 +1357,10 @@ export interface Worksheet {
 		range: DrawingRange,
 	}>;
 
-	addShape(props: {type: ShapeType}, range: string | { editAs?: string; } & DrawingRange | { editAs?: string; } & DrawingPosition ): void;
+	addShape(props: ShapeProps, range: string | { editAs?: string; } & DrawingRange | { editAs?: string; } & DrawingPosition ): void;
 
 	getShapes(): Array<{
-		props: {type: ShapeType},
+		props: ShapeProps,
 		range: DrawingRange,
 	}>
 

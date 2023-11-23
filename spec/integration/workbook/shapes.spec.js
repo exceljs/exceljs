@@ -13,7 +13,10 @@ describe('Workbook', () => {
       let wb2;
       let ws2;
 
-      ws.addShape({type: 'line'}, 'B2:D6');
+      ws.addShape(
+        {type: 'line', fill: {type: 'solid', color: {theme: 'accent6'}}},
+        'B2:D6'
+      );
 
       return wb.xlsx
         .writeFile(TEST_XLSX_FILE_NAME)
@@ -29,6 +32,10 @@ describe('Workbook', () => {
 
           const shape = shapes[0];
           expect(shape.props.type).to.equal('line');
+          expect(shape.props.fill).to.deep.equal({
+            type: 'solid',
+            color: {theme: 'accent6'},
+          });
         });
     });
 
@@ -62,6 +69,7 @@ describe('Workbook', () => {
           const shape = shapes[0];
           expect(shape.range.editAs).to.equal('oneCell');
           expect(shape.props.type).to.equal('rect');
+          expect(shape.props.fill).to.undefined();
         });
     });
   });
