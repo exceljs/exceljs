@@ -27,6 +27,19 @@ const expectations = [
     tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
     options,
   },
+  {
+    title: 'Drawing 2 (Shapes)',
+    create() {
+      return new DrawingXform();
+    },
+    initialModel: require('./data/drawing.2.0.js'),
+    preparedModel: require('./data/drawing.2.1.js'),
+    xml: fs.readFileSync(`${__dirname}/data/drawing.2.2.xml`).toString(),
+    parsedModel: require('./data/drawing.2.3.js'),
+    reconciledModel: require('./data/drawing.2.3.js'),
+    tests: ['prepare', 'render', 'renderIn', 'parse', 'reconcile'],
+    options,
+  },
 ];
 
 describe('DrawingXform', () => {

@@ -912,12 +912,12 @@ export class Anchor implements IAnchor {
 
 	constructor(model?: IAnchor | object);
 }
-export interface ImageRange {
+export interface DrawingRange {
 	tl: Anchor;
 	br: Anchor;
 }
 
-export interface ImagePosition {
+export interface DrawingPosition {
 	tl: { col: number; row: number };
 	ext: { width: number; height: number };
 }
@@ -926,6 +926,8 @@ export interface ImageHyperlinkValue {
 	hyperlink: string;
 	tooltip?: string;
 }
+
+export type ShapeType = 'line' | 'rect' | 'roundRect' | 'ellipse' | 'triangle' | 'rightArrow' | 'downArrow' | 'leftBrace' | 'rightBrace';
 
 export interface Range extends Location {
 	sheetName: string;
@@ -1337,13 +1339,20 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & DrawingRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & DrawingPosition & { hyperlinks?: ImageHyperlinkValue }): void;
 
 	getImages(): Array<{
 		type: 'image',
-		imageId: string;
-		range: ImageRange;
+		imageId: string,
+		range: DrawingRange,
 	}>;
+
+	addShape(props: {type: ShapeType}, range: string | { editAs?: string; } & DrawingRange | { editAs?: string; } & DrawingPosition ): void;
+
+	getShapes(): Array<{
+		props: {type: ShapeType},
+		range: DrawingRange,
+	}>
 
 	commit(): void;
 
