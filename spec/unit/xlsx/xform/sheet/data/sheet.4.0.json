@@ -45,6 +45,7 @@
     "B7": { "type": "whole", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "operator": "between", "formulae": ["1", "10"]}
   },
   "media": [],
+  "shapes": [],
   "tables": [],
   "conditionalFormattings": [{
     "ref": "A1:E7",
