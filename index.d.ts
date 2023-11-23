@@ -940,9 +940,20 @@ export type ShapeFill = {
 	color: { theme?: string, rgb?: string }
 }
 
+export interface ShapeArrowEnd {
+	type?: 'triangle' | 'arrow' | 'stealth' | 'diamond' | 'oval';
+	length?: 'lg' | 'med' | 'sm';
+	width?: 'lg' | 'med' | 'sm';
+}
+
 export type ShapeOutline = {
 	weight?: number,
-	color?: { theme?: string, rgb?: string }
+	color?: { theme?: string, rgb?: string },
+	dash?: 'solid' | 'sysDot' | 'sysDash' | 'dash' | 'dashDot' | 'lgDash' | 'lgDashDot' | 'lgDashDotDot',
+	arrow?: {
+		head?: ShapeArrowEnd,
+		tail?: ShapeArrowEnd
+	}
 }
 
 export interface Range extends Location {

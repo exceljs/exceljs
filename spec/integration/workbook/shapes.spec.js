@@ -17,7 +17,13 @@ describe('Workbook', () => {
         {
           type: 'line',
           fill: {type: 'solid', color: {theme: 'accent6'}},
-          outline: {weight: 30000, color: {theme: 'accent1'}},
+          outline: {
+            weight: 30000,
+            color: {theme: 'accent1'},
+            arrow: {
+              head: {type: 'triangle', width: 'lg', length: 'med'},
+            },
+          },
         },
         'B2:D6'
       );
@@ -43,6 +49,9 @@ describe('Workbook', () => {
           expect(shape.props.outline).to.deep.equal({
             weight: 30000,
             color: {theme: 'accent1'},
+            arrow: {
+              head: {type: 'triangle', width: 'lg', length: 'med'},
+            },
           });
         });
     });
@@ -54,7 +63,10 @@ describe('Workbook', () => {
       let ws2;
 
       ws.addShape(
-        {type: 'rect', fill: {type: 'solid', color: {rgb: 'AABBCC'}}},
+        {
+          type: 'rect',
+          fill: {type: 'solid', color: {rgb: 'AABBCC'}},
+        },
         {
           tl: {col: 0.1125, row: 0.4},
           br: {col: 2.101046875, row: 3.4},
