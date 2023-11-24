@@ -974,6 +974,7 @@ export type ShapeRun = {
 
 export type ShapeRunFont = {
 	size: number,
+	color: { theme?: string, rgb?: string },
 	bold: boolean,
 	italic: boolean,
 	underline: 'sng' | 'dbl' | 'none',

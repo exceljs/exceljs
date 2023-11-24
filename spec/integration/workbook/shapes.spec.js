@@ -145,7 +145,10 @@ describe('Parsing text body', () => {
               text: 'foo',
               font: {size: 15, bold: true, italic: true, underline: 'sng'},
             },
-            {text: 'bar'},
+            {
+              text: 'bar',
+              font: {color: {theme: 'accent1'}},
+            },
           ],
           alignment: 'ctr',
         },
