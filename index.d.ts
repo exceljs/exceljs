@@ -922,7 +922,7 @@ export interface DrawingPosition {
 	ext: { width: number; height: number };
 }
 
-export interface ImageHyperlinkValue {
+export interface DrawingHyperlinkValue {
 	hyperlink: string;
 	tooltip?: string;
 }
@@ -1390,7 +1390,7 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & DrawingRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & DrawingPosition & { hyperlinks?: ImageHyperlinkValue }): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & DrawingRange & { hyperlinks?: DrawingHyperlinkValue } | { editAs?: string; } & DrawingPosition & { hyperlinks?: DrawingHyperlinkValue }): void;
 
 	getImages(): Array<{
 		type: 'image',
@@ -1398,7 +1398,7 @@ export interface Worksheet {
 		range: DrawingRange,
 	}>;
 
-	addShape(props: ShapeProps, range: string | { editAs?: string; } & DrawingRange | { editAs?: string; } & DrawingPosition ): void;
+	addShape(props: ShapeProps, range: string | { editAs?: string; } & DrawingRange | { editAs?: string; } & DrawingPosition, hyperlinks?: DrawingHyperlinkValue ): void;
 
 	getShapes(): Array<{
 		props: ShapeProps,
