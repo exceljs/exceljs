@@ -139,7 +139,16 @@ describe('Parsing text body', () => {
   it('object', () => {
     const obj = {
       paragraphs: [
-        {runs: [{text: 'foo'}, {text: 'bar'}], alignment: 'ctr'},
+        {
+          runs: [
+            {
+              text: 'foo',
+              font: {size: 15, bold: true, italic: true, underline: 'sng'},
+            },
+            {text: 'bar'},
+          ],
+          alignment: 'ctr',
+        },
         {runs: [{text: 'baz'}, {text: 'qux'}]},
       ],
       vertAlign: 'b',

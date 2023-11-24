@@ -969,6 +969,14 @@ export type ShapeParagraph = {
 
 export type ShapeRun = {
 	text: string,
+	font?: Partial<ShapeRunFont>,
+}
+
+export type ShapeRunFont = {
+	size: number,
+	bold: boolean,
+	italic: boolean,
+	underline: 'sng' | 'dbl' | 'none',
 }
 
 export interface Range extends Location {
