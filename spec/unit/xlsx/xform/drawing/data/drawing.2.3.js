@@ -25,6 +25,9 @@ module.exports = {
             theme: 'accent6',
           },
         },
+        outline: {
+          theme: 'accent1',
+        },
       },
     },
     {
@@ -51,6 +54,9 @@ module.exports = {
           color: {
             rgb: 'C651E9',
           },
+        },
+        outline: {
+          theme: 'accent1',
         },
       },
     },

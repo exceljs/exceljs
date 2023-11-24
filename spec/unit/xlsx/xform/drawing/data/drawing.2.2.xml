@@ -39,9 +39,7 @@
       </xdr:spPr>
       <xdr:style>
         <a:lnRef idx="2">
-          <a:schemeClr val="accent1">
-            <a:shade val="15000"/>
-          </a:schemeClr>
+          <a:schemeClr val="accent1"/>
         </a:lnRef>
         <a:fillRef idx="1">
           <a:schemeClr val="accent1"/>
@@ -94,9 +92,7 @@
       </xdr:spPr>
       <xdr:style>
         <a:lnRef idx="2">
-          <a:schemeClr val="accent1">
-            <a:shade val="15000"/>
-          </a:schemeClr>
+          <a:schemeClr val="accent1"/>
         </a:lnRef>
         <a:fillRef idx="1">
           <a:schemeClr val="accent1"/>
