@@ -928,13 +928,15 @@ export interface DrawingHyperlinkValue {
 }
 
 export interface ShapeProps {
-	type: ShapeType;
+	/**
+	 * Defined as DocumentFormat.OpenXml.Drawing.ShapeTypeValues in Open API Spec.
+	 * See https://learn.microsoft.com/ja-jp/dotnet/api/documentformat.openxml.drawing.shapetypevalues
+	 */
+	type: string;
 	fill?: ShapeFill;
 	outline?: ShapeOutline;
 	textBody?: ShapeTextBody;
 }
-
-export type ShapeType = 'line' | 'rect' | 'roundRect' | 'ellipse' | 'triangle' | 'rightArrow' | 'downArrow' | 'leftBrace' | 'rightBrace';
 
 export type ShapeFill = {
 	type: 'solid',
