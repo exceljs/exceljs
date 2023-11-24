@@ -959,10 +959,12 @@ export type ShapeOutline = {
 
 export type ShapeTextBody = {
 	paragraphs: ShapeParagraph[],
+	vertAlign?: 't' | 'ctr' | 'b',
 }
 
 export type ShapeParagraph = {
 	runs: ShapeRun[],
+	alignment?: 'l' | 'ctr' | 'r',
 }
 
 export type ShapeRun = {

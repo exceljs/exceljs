@@ -139,9 +139,10 @@ describe('Parsing text body', () => {
   it('object', () => {
     const obj = {
       paragraphs: [
-        {runs: [{text: 'foo'}, {text: 'bar'}]},
+        {runs: [{text: 'foo'}, {text: 'bar'}], alignment: 'ctr'},
         {runs: [{text: 'baz'}, {text: 'qux'}]},
       ],
+      vertAlign: 'b',
     };
     const shape = addAndGetShapeWithTextBody(obj);
     expect(shape.props.textBody).to.deep.equal(obj);
