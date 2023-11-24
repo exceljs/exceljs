@@ -931,6 +931,7 @@ export interface ShapeProps {
 	type: ShapeType;
 	fill?: ShapeFill;
 	outline?: ShapeOutline;
+	textBody?: ShapeTextBody;
 }
 
 export type ShapeType = 'line' | 'rect' | 'roundRect' | 'ellipse' | 'triangle' | 'rightArrow' | 'downArrow' | 'leftBrace' | 'rightBrace';
@@ -954,6 +955,18 @@ export type ShapeOutline = {
 		head?: ShapeArrowEnd,
 		tail?: ShapeArrowEnd
 	}
+}
+
+export type ShapeTextBody = {
+	paragraphs: ShapeParagraph[],
+}
+
+export type ShapeParagraph = {
+	runs: ShapeRun[],
+}
+
+export type ShapeRun = {
+	text: string,
 }
 
 export interface Range extends Location {

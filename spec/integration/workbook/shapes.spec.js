@@ -97,3 +97,53 @@ describe('Workbook', () => {
     });
   });
 });
+
+describe('Parsing text body', () => {
+  function addAndGetShapeWithTextBody(textBody) {
+    const wb = new ExcelJS.Workbook();
+    const ws = wb.addWorksheet();
+    ws.addShape(
+      {
+        textBody,
+        type: 'rect',
+      },
+      'B2:D6'
+    );
+    return ws.getShapes()[0];
+  }
+
+  it('single string', () => {
+    const shape = addAndGetShapeWithTextBody('foo');
+    expect(shape.props.textBody).to.deep.equal({
+      paragraphs: [{runs: [{text: 'foo'}]}],
+    });
+  });
+  it('array of strings', () => {
+    const shape = addAndGetShapeWithTextBody(['foo', 'bar']);
+    expect(shape.props.textBody).to.deep.equal({
+      paragraphs: [{runs: [{text: 'foo'}]}, {runs: [{text: 'bar'}]}],
+    });
+  });
+  it('array of array of strings', () => {
+    const shape = addAndGetShapeWithTextBody([
+      ['foo', 'bar'],
+      ['baz', 'qux'],
+    ]);
+    expect(shape.props.textBody).to.deep.equal({
+      paragraphs: [
+        {runs: [{text: 'foo'}, {text: 'bar'}]},
+        {runs: [{text: 'baz'}, {text: 'qux'}]},
+      ],
+    });
+  });
+  it('object', () => {
+    const obj = {
+      paragraphs: [
+        {runs: [{text: 'foo'}, {text: 'bar'}]},
+        {runs: [{text: 'baz'}, {text: 'qux'}]},
+      ],
+    };
+    const shape = addAndGetShapeWithTextBody(obj);
+    expect(shape.props.textBody).to.deep.equal(obj);
+  });
+});
