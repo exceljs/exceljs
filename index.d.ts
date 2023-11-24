@@ -933,6 +933,9 @@ export interface ShapeProps {
 	 * See https://learn.microsoft.com/ja-jp/dotnet/api/documentformat.openxml.drawing.shapetypevalues
 	 */
 	type: string;
+	rotation?: number;
+	horizontalFlip?: boolean;
+	verticalFlip?: boolean;
 	fill?: ShapeFill;
 	outline?: ShapeOutline;
 	textBody?: ShapeTextBody;

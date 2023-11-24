@@ -65,6 +65,8 @@ describe('Workbook', () => {
       ws.addShape(
         {
           type: 'rect',
+          rotation: 180,
+          horizontalFlip: true,
           fill: {type: 'solid', color: {rgb: 'AABBCC'}},
         },
         {
@@ -89,6 +91,8 @@ describe('Workbook', () => {
           const shape = shapes[0];
           expect(shape.range.editAs).to.equal('oneCell');
           expect(shape.props.type).to.equal('rect');
+          expect(shape.props.rotation).to.equal(180);
+          expect(shape.props.horizontalFlip).to.equal(true);
           expect(shape.props.fill).to.deep.equal({
             type: 'solid',
             color: {rgb: 'AABBCC'},
