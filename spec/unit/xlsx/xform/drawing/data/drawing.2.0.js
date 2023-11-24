@@ -17,11 +17,27 @@ module.exports = {
         editAs: 'oneCell',
       },
       shape: {
-        type: 'rect',
-        fill: {
-          type: 'solid',
-          color: {
-            theme: 'accent6',
+        props: {
+          type: 'rect',
+          fill: {
+            type: 'solid',
+            color: {
+              theme: 'accent6',
+            },
+          },
+          textBody: {
+            vertAlign: 'b',
+            paragraphs: [
+              {
+                alignment: 'l',
+                runs: [
+                  {
+                    font: {size: 11},
+                    text: 'Shape1',
+                  },
+                ],
+              },
+            ],
           },
         },
       },
@@ -44,11 +60,13 @@ module.exports = {
       },
       picture: null,
       shape: {
-        type: 'ellipse',
-        fill: {
-          type: 'solid',
-          color: {
-            rgb: 'C651E9',
+        props: {
+          type: 'ellipse',
+          fill: {
+            type: 'solid',
+            color: {
+              rgb: 'C651E9',
+            },
           },
         },
       },

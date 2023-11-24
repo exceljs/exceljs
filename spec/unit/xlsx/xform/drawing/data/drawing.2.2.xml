@@ -51,6 +51,17 @@
           <a:schemeClr val="lt1"/>
         </a:fontRef>
       </xdr:style>
+      <xdr:txBody>
+        <a:bodyPr vertOverflow="clip" horzOverflow="clip" rtlCol="0" anchor="b"/>
+        <a:lstStyle/>
+        <a:p>
+          <a:pPr algn="l"/>
+          <a:r>
+            <a:rPr sz="1100"/>
+            <a:t>Shape1</a:t>
+          </a:r>
+        </a:p>
+      </xdr:txBody>
     </xdr:sp>
     <xdr:clientData/>
   </xdr:twoCellAnchor>
