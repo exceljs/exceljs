@@ -61,6 +61,10 @@
     "zoomScale": 100,
     "zoomScaleNormal": 100
   }],
+  "rowBreaks": [
+    {"id": 2, "max": 2, "min": 0, "man": 1},
+    {"id": 5, "max": 2, "min": 0, "man": 1}
+  ],
   "tables": null,
   "conditionalFormattings": []
 }
