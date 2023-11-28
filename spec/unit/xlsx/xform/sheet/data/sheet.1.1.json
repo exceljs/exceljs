@@ -78,7 +78,8 @@
     {
       "Id": "rId2",
       "Target": "../drawings/vmlDrawing1.vml",
-      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing"
+      "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing",
+      "isHFRel": true
     }
   ],
   "comments": [],
