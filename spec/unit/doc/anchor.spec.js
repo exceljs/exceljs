@@ -4,13 +4,13 @@ const Anchor = verquire('doc/anchor');
 
 describe('Anchor', () => {
   describe('colWidth', () => {
-    it('should colWidth equals 640000 when worksheet is undefined', () => {
+    it('should colWidth equals 685520(9.02*76000) when worksheet is undefined', () => {
       const anchor = new Anchor();
-      expect(anchor.colWidth).to.equal(640000);
+      expect(anchor.colWidth).to.equal(685520);
     });
-    it('should colWidth equals 640000 when column has not set custom width', () => {
+    it('should colWidth equals 685520(9.02*76000) when column has not set custom width', () => {
       const anchor = new Anchor(createSheetMock());
-      expect(anchor.colWidth).to.equal(640000);
+      expect(anchor.colWidth).to.equal(685520);
     });
     it('should colWidth equals column width', () => {
       const worksheet = createSheetMock();
@@ -19,25 +19,25 @@ describe('Anchor', () => {
         width: 10,
       });
       expect(anchor.colWidth).to.equal(
-        worksheet.getColumn(anchor.nativeCol + 1).width * 10000
+        worksheet.getColumn(anchor.nativeCol + 1).width * 76000
       );
     });
   });
   describe('rowHeight', () => {
-    it('should rowHeight equals 180000 when worksheet is undefined', () => {
+    it('should rowHeight equals 190500(15*12700) when worksheet is undefined', () => {
       const anchor = new Anchor();
-      expect(anchor.rowHeight).to.equal(180000);
+      expect(anchor.rowHeight).to.equal(190500);
     });
-    it('should rowHeight equals 180000 when row has not set height', () => {
+    it('should rowHeight equals 190500(15*12700) when row has not set height', () => {
       const anchor = new Anchor(createSheetMock());
-      expect(anchor.rowHeight).to.equal(180000);
+      expect(anchor.rowHeight).to.equal(190500);
     });
     it('should rowHeight equals row height', () => {
       const worksheet = createSheetMock();
       worksheet.getRow(1).height = 10;
 
       const anchor = new Anchor(worksheet);
-      expect(anchor.rowHeight).to.equal(worksheet.getRow(1).height * 10000);
+      expect(anchor.rowHeight).to.equal(worksheet.getRow(1).height * 12700);
     });
   });
   describe('resize worksheet`s cells', () => {
