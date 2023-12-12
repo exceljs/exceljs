@@ -19,7 +19,6 @@ describe('github issues', () => {
 
     // Start of Heading
     ws.getCell('A1').value = hyperlink;
-    ws.commit();
 
     return wb
       .commit()

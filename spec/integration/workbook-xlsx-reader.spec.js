@@ -10,9 +10,9 @@ const TEST_FILE_NAME = './spec/out/wb.test.xlsx';
 // because of: shared strings, sheet names, etc are not read in guaranteed order
 describe('WorkbookReader', () => {
   describe('Serialise', () => {
-    it('xlsx file', function() {
+    it('xlsx file', async function() {
       this.timeout(10000);
-      const wb = testutils.createTestBook(new ExcelJS.Workbook(), 'xlsx');
+      const wb = await testutils.createTestBook(new ExcelJS.Workbook(), 'xlsx');
 
       return wb.xlsx
         .writeFile(TEST_FILE_NAME)

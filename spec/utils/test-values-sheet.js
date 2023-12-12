@@ -9,7 +9,7 @@ const self = {
   pageSetup: tools.fix(require('./data/page-setup.json')),
   headerFooter: tools.fix(require('./data/header-footer.json')),
 
-  addSheet(wb, options) {
+  async addSheet(wb, options) {
     // call it sheet1 so this sheet can be used for csv testing
     const ws = wb.addWorksheet('sheet1', {
       properties: self.properties,
@@ -34,7 +34,7 @@ const self = {
     ws.getCell('K1').value = self.testValues.Errors.NotApplicable;
     ws.getCell('L1').value = self.testValues.Errors.Value;
 
-    ws.getRow(1).commit();
+    await ws.getRow(1).commit();
 
     // merge cell square with numerical value
     ws.getCell('A2').value = 5;
@@ -42,7 +42,7 @@ const self = {
 
     // merge cell square with null value
     ws.mergeCells('C2:D3');
-    ws.getRow(3).commit();
+    await ws.getRow(3).commit();
 
     ws.getCell('A4').value = 1.5;
     ws.getCell('A4').numFmt = self.testValues.numFmt1;
@@ -52,7 +52,7 @@ const self = {
     ws.getCell('C4').border = self.styles.borders.doubleRed;
     ws.getCell('E4').value = 1.5;
     ws.getCell('E4').border = self.styles.borders.thickRainbow;
-    ws.getRow(4).commit();
+    await ws.getRow(4).commit();
 
     // test fonts and formats
     ws.getCell('A5').value = self.testValues.str;
@@ -73,7 +73,7 @@ const self = {
     ws.getCell('F5').value = self.testValues.date;
     ws.getCell('F5').numFmt = self.testValues.numFmtDate;
     ws.getCell('F5').font = self.styles.fonts.comicSansUdB16;
-    ws.getRow(5).commit();
+    await ws.getRow(5).commit();
 
     ws.getRow(6).height = 42;
     self.styles.alignments.forEach((alignment, index) => {
@@ -83,7 +83,7 @@ const self = {
       cell.value = alignment.text;
       cell.alignment = alignment.alignment;
     });
-    ws.getRow(6).commit();
+    await ws.getRow(6).commit();
 
     if (options.checkBadAlignments) {
       self.styles.badAlignments.forEach((alignment, index) => {
@@ -94,7 +94,7 @@ const self = {
         cell.alignment = alignment.alignment;
       });
     }
-    ws.getRow(7).commit();
+    await ws.getRow(7).commit();
 
     const row8 = ws.getRow(8);
     row8.height = 40;
@@ -106,7 +106,7 @@ const self = {
     row8.getCell(3).fill = self.styles.fills.redGreenDarkTrellis;
     row8.getCell(4).value = 'RGB Path Gradient';
     row8.getCell(4).fill = self.styles.fills.rgbPathGrad;
-    row8.commit();
+    await row8.commit();
 
     // Old Shared Formula
     ws.getCell('A9').value = 1;

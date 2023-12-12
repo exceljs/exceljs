@@ -595,7 +595,7 @@ export interface Row extends Style {
 	/**
 	 * Commit a completed row to stream
 	 */
-	commit(): void;
+	commit(): Promise<void>;
 	destroy(): void;
 	addPageBreak(lft?: number, rght?: number): void;
 }
@@ -1345,7 +1345,7 @@ export interface Worksheet {
 		range: ImageRange;
 	}>;
 
-	commit(): void;
+	commit(): Promise<void>;
 
 	model: WorksheetModel;
 
