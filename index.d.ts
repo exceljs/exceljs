@@ -1793,7 +1793,7 @@ export interface Csv {
 }
 
 export interface Media {
-  type: string; // image,background
+  type: "image" | "background"; // image, background
   name: string;
   extension: string;
   buffer: Buffer;
