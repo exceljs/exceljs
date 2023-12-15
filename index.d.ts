@@ -977,6 +977,15 @@ export class Anchor implements IAnchor {
 
   constructor(model?: IAnchor | object);
 }
+
+// TODO: 아래 스키마로 전환하는 거 검토해보기
+// | string
+// | ({ editAs?: string } & ImageRange & {
+//       hyperlinks?: ImageHyperlinkValue;
+//     })
+// | ({ editAs?: string } & ImagePosition & {
+//       hyperlinks?: ImageHyperlinkValue;
+//     })
 export interface ImageRange {
   tl: Anchor;
   br: Anchor;
@@ -1054,6 +1063,23 @@ export interface RowBreak {
   man: number;
 }
 
+/**
+ * @see {@link Media}
+ */
+export interface WorksheetMedia {
+  type: "image" | "background"; // image, background
+  hyperlinks?: string;
+  imageId: number;
+  range:
+    | string
+    | ({ editAs?: string } & ImageRange & {
+          hyperlinks?: ImageHyperlinkValue;
+        })
+    | ({ editAs?: string } & ImagePosition & {
+          hyperlinks?: ImageHyperlinkValue;
+        });
+}
+
 export interface WorksheetModel {
   id: number;
   name: string;
@@ -1064,7 +1090,7 @@ export interface WorksheetModel {
   rowBreaks: RowBreak[];
   views: WorksheetView[];
   autoFilter: AutoFilter;
-  media: Media[];
+  media: WorksheetMedia[];
   merges: Range["range"][];
 }
 export type WorksheetState = "visible" | "hidden" | "veryHidden";
@@ -1867,6 +1893,17 @@ export interface DefinedNames {
   model: DefinedNamesModel;
 }
 
+/**
+ * @see {@link Media}
+ */
+export interface WorkbookMedia extends Media {
+  type: "image" | "background"; // image, background
+  name: string;
+  extension: string;
+  buffer: Uint8Array;
+  index: number;
+}
+
 export interface WorkbookModel {
   creator: string;
   lastModifiedBy: string;
@@ -1889,7 +1926,7 @@ export interface WorkbookModel {
   revision: Date;
   contentStatus: string;
   themes: string[];
-  media: Media[];
+  media: WorkbookModel[];
 }
 
 export class Workbook {
