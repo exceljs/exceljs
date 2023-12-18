@@ -5,12 +5,12 @@
   "private": false,
   "license": "MIT",
   "author": {
-    "name": "Ivan Shabanov",
-    "email": "zlooooun@yandex.ru"
+    "name": "shuntagami",
+    "email": "shuntagami23@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zlooun/exceljs.git"
+    "url": "https://github.com/shuntagami/exceljs.git"
   },
   "engines": {
     "node": ">=8.3.0"
