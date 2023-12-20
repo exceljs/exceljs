@@ -313,6 +313,11 @@ const sheet = workbook.addWorksheet('My Sheet', {
 // 创建一个冻结了第一行和第一列的工作表
 const sheet = workbook.addWorksheet('My Sheet', {views:[{state: 'frozen', xSplit: 1, ySplit:1}]});
 
+// 创建一个禁用截断名字的工作表
+const worksheet = workbook.addWorksheet('Sheet name length is over than 31', {
+  allowNameTruncated: false,
+})
+
 ```
 
 ## 删除工作表[⬆](#目录)<!-- Link generated with jump2header -->

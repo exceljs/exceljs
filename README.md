@@ -316,6 +316,11 @@ const sheet = workbook.addWorksheet('My Sheet', {
 const worksheet =  workbook.addWorksheet('My Sheet', {
   pageSetup:{paperSize: 9, orientation:'landscape'}
 });
+
+// create a new sheet with name truncate disabled
+const worksheet = workbook.addWorksheet('Sheet name length is over than 31', {
+  allowNameTruncated: false,
+})
 ```
 
 ## Remove a Worksheet[⬆](#contents)<!-- Link generated with jump2header -->
