@@ -1,4 +1,4 @@
-const Excel = require('../lib/exceljs.nodejs.js');
+const Excel = require('../lib/exceljs.nodejs');
 const HrStopwatch = require('./utils/hr-stopwatch');
 
 const [, , filename] = process.argv;
@@ -47,6 +47,7 @@ ws.addTable({
       totalsRowFunction: 'max',
       filterButton: true,
       totalsRowResult: 8,
+      style: {numFmt: '0.00%'},
     },
     {
       name: 'Word',
@@ -54,7 +55,10 @@ ws.addTable({
       style: {font: {bold: true, name: 'Comic Sans MS'}},
     },
   ],
-  rows: words.map((word, i) => [new Date(+today + (86400 * i)), i, word]),
+  rows: words.map((word, i) => {
+    const additionalDays = 86400 * i;
+    return [new Date(today + additionalDays), i, word];
+  }),
 });
 
 const stopwatch = new HrStopwatch();
