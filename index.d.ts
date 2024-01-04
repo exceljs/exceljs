@@ -1836,7 +1836,7 @@ export interface TableColumnProperties {
 	/**
 	 * Styles applied to the column
 	 */
-	style: Partial<Style>;
+	style?: Partial<Style>;
 }
 
 
