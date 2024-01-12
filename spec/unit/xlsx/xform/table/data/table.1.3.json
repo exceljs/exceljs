@@ -1,6 +1,7 @@
 {
   "name": "TestTable",
   "displayName": "TestTable",
+  "ref": "A1:C16",
   "tableRef": "A1:C16",
   "autoFilterRef": "A1:C15",
   "totalsRow": true,
