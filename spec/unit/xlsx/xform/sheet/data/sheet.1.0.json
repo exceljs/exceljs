@@ -71,6 +71,19 @@
     "evenHeader": "&C&KCCCCCC&\"Aril\"3 exceljs evenHeader",
     "evenFooter": "&Lexceljs&C&F&RPage &P evenHeader"
   },
+  "hfImages": [
+    {
+      "id": "HF",
+      "type": "hfimage",
+      "style": {
+        "width": "55pt",
+        "height": "55pt"
+      },
+      "imagedata": {
+        "index":0
+      }
+    }
+  ],
   "media": [],
   "rowBreaks": [],
   "tables": [],
