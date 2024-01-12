@@ -996,7 +996,7 @@ export interface WorksheetModel {
 }
 export type WorksheetState = 'visible' | 'hidden' | 'veryHidden';
 
-export type CellIsOperators = 'equal' | 'greaterThan' | 'lessThan' | 'between';
+export type CellIsOperators = 'equal' | 'notEqual' | 'greaterThan' | 'greaterThanOrEqual' | 'lessThan' | 'lessThanOrEqual' | 'between' | 'notBetween';
 
 export type ContainsTextOperators = 'containsText' | 'containsBlanks' | 'notContainsBlanks' | 'containsErrors' | 'notContainsErrors';
 
