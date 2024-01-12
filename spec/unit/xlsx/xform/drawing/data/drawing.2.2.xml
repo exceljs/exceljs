@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
+  xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+  <xdr:twoCellAnchor editAs="oneCell">
+    <xdr:from>
+      <xdr:col>1</xdr:col>
+      <xdr:colOff>647700</xdr:colOff>
+      <xdr:row>4</xdr:row>
+      <xdr:rowOff>165100</xdr:rowOff>
+    </xdr:from>
+    <xdr:to>
+      <xdr:col>4</xdr:col>
+      <xdr:colOff>508000</xdr:colOff>
+      <xdr:row>10</xdr:row>
+      <xdr:rowOff>165100</xdr:rowOff>
+    </xdr:to>
+    <xdr:sp macro="" textlink="">
+      <xdr:nvSpPr>
+        <xdr:cNvPr id="1" name="Shape 1">
+          <a:extLst>
+            <a:ext uri="{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}">
+              <a16:creationId xmlns:a16="http://schemas.microsoft.com/office/drawing/2014/main" id="{00000000-0008-0000-0000-000002000000}"/>
+            </a:ext>
+          </a:extLst>
+        </xdr:cNvPr>
+        <xdr:cNvSpPr/>
+      </xdr:nvSpPr>
+      <xdr:spPr>
+        <a:xfrm>
+          <a:off x="0" y="0"/>
+          <a:ext cx="0" cy="0"/>
+        </a:xfrm>
+        <a:prstGeom prst="rect">
+          <a:avLst/>
+        </a:prstGeom>
+        <a:solidFill>
+          <a:schemeClr val="accent6"/>
+        </a:solidFill>
+      </xdr:spPr>
+      <xdr:style>
+        <a:lnRef idx="2">
+          <a:schemeClr val="accent1"/>
+        </a:lnRef>
+        <a:fillRef idx="1">
+          <a:schemeClr val="accent1"/>
+        </a:fillRef>
+        <a:effectRef idx="0">
+          <a:schemeClr val="accent1"/>
+        </a:effectRef>
+        <a:fontRef idx="minor">
+          <a:schemeClr val="lt1"/>
+        </a:fontRef>
+      </xdr:style>
+      <xdr:txBody>
+        <a:bodyPr vertOverflow="clip" horzOverflow="clip" rtlCol="0" anchor="b"/>
+        <a:lstStyle/>
+        <a:p>
+          <a:pPr algn="l"/>
+          <a:r>
+            <a:rPr sz="1100"/>
+            <a:t>Shape1</a:t>
+          </a:r>
+        </a:p>
+      </xdr:txBody>
+    </xdr:sp>
+    <xdr:clientData/>
+  </xdr:twoCellAnchor>
+  <xdr:twoCellAnchor editAs="oneCell">
+    <xdr:from>
+      <xdr:col>6</xdr:col>
+      <xdr:colOff>101600</xdr:colOff>
+      <xdr:row>12</xdr:row>
+      <xdr:rowOff>63500</xdr:rowOff>
+    </xdr:from>
+    <xdr:to>
+      <xdr:col>7</xdr:col>
+      <xdr:colOff>190500</xdr:colOff>
+      <xdr:row>16</xdr:row>
+      <xdr:rowOff>165100</xdr:rowOff>
+    </xdr:to>
+    <xdr:sp macro="" textlink="">
+      <xdr:nvSpPr>
+        <xdr:cNvPr id="2" name="Shape 2">
+          <a:extLst>
+            <a:ext uri="{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}">
+              <a16:creationId xmlns:a16="http://schemas.microsoft.com/office/drawing/2014/main" id="{00000000-0008-0000-0000-000002000000}"/>
+            </a:ext>
+          </a:extLst>
+        </xdr:cNvPr>
+        <xdr:cNvSpPr/>
+      </xdr:nvSpPr>
+      <xdr:spPr>
+        <a:xfrm>
+          <a:off x="0" y="0"/>
+          <a:ext cx="0" cy="0"/>
+        </a:xfrm>
+        <a:prstGeom prst="ellipse">
+          <a:avLst/>
+        </a:prstGeom>
+        <a:solidFill>
+          <a:srgbClr val="C651E9"/>
+        </a:solidFill>
+      </xdr:spPr>
+      <xdr:style>
+        <a:lnRef idx="2">
+          <a:schemeClr val="accent1"/>
+        </a:lnRef>
+        <a:fillRef idx="1">
+          <a:schemeClr val="accent1"/>
+        </a:fillRef>
+        <a:effectRef idx="0">
+          <a:schemeClr val="accent1"/>
+        </a:effectRef>
+        <a:fontRef idx="minor">
+          <a:schemeClr val="lt1"/>
+        </a:fontRef>
+      </xdr:style>
+    </xdr:sp>
+    <xdr:clientData/>
+  </xdr:twoCellAnchor>
+</xdr:wsDr>

@@ -912,19 +912,77 @@ export class Anchor implements IAnchor {
 
 	constructor(model?: IAnchor | object);
 }
-export interface ImageRange {
+export interface DrawingRange {
 	tl: Anchor;
 	br: Anchor;
 }
 
-export interface ImagePosition {
+export interface DrawingPosition {
 	tl: { col: number; row: number };
 	ext: { width: number; height: number };
 }
 
-export interface ImageHyperlinkValue {
+export interface DrawingHyperlinkValue {
 	hyperlink: string;
 	tooltip?: string;
+}
+
+export interface ShapeProps {
+	/**
+	 * Defined as DocumentFormat.OpenXml.Drawing.ShapeTypeValues in Open API Spec.
+	 * See https://learn.microsoft.com/ja-jp/dotnet/api/documentformat.openxml.drawing.shapetypevalues
+	 */
+	type: string;
+	rotation?: number;
+	horizontalFlip?: boolean;
+	verticalFlip?: boolean;
+	fill?: ShapeFill;
+	outline?: ShapeOutline;
+	textBody?: ShapeTextBody;
+}
+
+export type ShapeFill = {
+	type: 'solid',
+	color: { theme?: string, rgb?: string }
+}
+
+export interface ShapeArrowEnd {
+	type?: 'triangle' | 'arrow' | 'stealth' | 'diamond' | 'oval';
+	length?: 'lg' | 'med' | 'sm';
+	width?: 'lg' | 'med' | 'sm';
+}
+
+export type ShapeOutline = {
+	weight?: number,
+	color?: { theme?: string, rgb?: string },
+	dash?: 'solid' | 'sysDot' | 'sysDash' | 'dash' | 'dashDot' | 'lgDash' | 'lgDashDot' | 'lgDashDotDot',
+	arrow?: {
+		head?: ShapeArrowEnd,
+		tail?: ShapeArrowEnd
+	}
+}
+
+export type ShapeTextBody = {
+	paragraphs: ShapeParagraph[],
+	vertAlign?: 't' | 'ctr' | 'b',
+}
+
+export type ShapeParagraph = {
+	runs: ShapeRun[],
+	alignment?: 'l' | 'ctr' | 'r',
+}
+
+export type ShapeRun = {
+	text: string,
+	font?: Partial<ShapeRunFont>,
+}
+
+export type ShapeRunFont = {
+	size: number,
+	color: { theme?: string, rgb?: string },
+	bold: boolean,
+	italic: boolean,
+	underline: 'sng' | 'dbl' | 'none',
 }
 
 export interface Range extends Location {
@@ -1337,13 +1395,20 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & DrawingRange & { hyperlinks?: DrawingHyperlinkValue } | { editAs?: string; } & DrawingPosition & { hyperlinks?: DrawingHyperlinkValue }): void;
 
 	getImages(): Array<{
 		type: 'image',
-		imageId: string;
-		range: ImageRange;
+		imageId: string,
+		range: DrawingRange,
 	}>;
+
+	addShape(props: ShapeProps, range: string | { editAs?: string; } & DrawingRange | { editAs?: string; } & DrawingPosition, hyperlinks?: DrawingHyperlinkValue ): void;
+
+	getShapes(): Array<{
+		props: ShapeProps,
+		range: DrawingRange,
+	}>
 
 	commit(): void;
 

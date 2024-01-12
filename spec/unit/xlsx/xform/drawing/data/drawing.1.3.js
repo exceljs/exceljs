@@ -13,6 +13,7 @@ module.exports = {
           rId: 'rId3',
         },
       },
+      shape: null,
     },
     {
       range: {
@@ -28,6 +29,7 @@ module.exports = {
       picture: {
         rId: 'rId2',
       },
+      shape: null,
     },
   ],
 };
