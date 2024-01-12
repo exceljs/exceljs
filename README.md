@@ -298,8 +298,8 @@ Use the second parameter of the addWorksheet function to specify options for the
 For Example:
 
 ```javascript
-// create a sheet with red tab colour
-const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}});
+// create a sheet with a red tab colour using the hexadecimal alpha-red-green-blue format
+const sheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFCC0000'}}});
 
 // create a sheet where the grid lines are hidden
 const sheet = workbook.addWorksheet('My Sheet', {views: [{showGridLines: false}]});
