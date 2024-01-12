@@ -1,3 +1,4 @@
+const path = require('path');
 const testutils = require('../utils/index');
 
 const ExcelJS = verquire('exceljs');
@@ -533,6 +534,34 @@ describe('WorksheetWriter', () => {
       row = ws.getRow(2);
       row.addPageBreak();
       expect(ws.rowBreaks.length).to.equal(2);
+    });
+  });
+
+  describe('Images/Drawings', () => {
+    it.skip('add images', async () => {
+      // const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
+      const filename = path.join(__dirname, 'test.xlsx');
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter({filename, useStyles: true, useSharedStrings: true});
+      const ws1 = wb.addWorksheet('foo');
+      const ws2 = wb.addWorksheet('bar');
+
+      const imageId1 = wb.addImage({
+        filename: path.join(__dirname, 'data/image.png'),
+        extension: 'png',
+      });
+      const imageId2 = wb.addImage({
+        filename: path.join(__dirname, 'data/bubbles.jpg'),
+        extension: 'jpg',
+      });
+      ws1.addImage(imageId1, {
+        tl: {col: 0.25, row: 0.7},
+        ext: {width: 160, height: 60},
+      });
+      ws2.addImage(imageId2, 'C1:F10');
+
+      ws1.commit();
+      ws2.commit();
+      await wb.commit();
     });
   });
 });
