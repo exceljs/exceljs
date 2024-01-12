@@ -15,11 +15,14 @@ describe('Anchor', () => {
     it('should colWidth equals column width', () => {
       const worksheet = createSheetMock();
       const anchor = new Anchor(worksheet);
+      const width = worksheet.properties && worksheet.properties.defaultColWidth
+                    ? worksheet.properties.defaultColWidth
+                    : 9.14285714285714;
       worksheet.addColumn(anchor.nativeCol + 1, {
         width: 10,
       });
       expect(anchor.colWidth).to.equal(
-        worksheet.getColumn(anchor.nativeCol + 1).width * 10000
+        Math.floor(worksheet.getColumn(anchor.nativeCol + 1).width / width * 640000)
       );
     });
   });
@@ -37,7 +40,10 @@ describe('Anchor', () => {
       worksheet.getRow(1).height = 10;
 
       const anchor = new Anchor(worksheet);
-      expect(anchor.rowHeight).to.equal(worksheet.getRow(1).height * 10000);
+      const height = worksheet.properties && worksheet.properties.defaultRowHeight
+                     ? worksheet.properties.defaultRowHeight
+                     : 15;
+      expect(anchor.rowHeight).to.equal(Math.floor(worksheet.getRow(1).height / height * 180000));
     });
   });
   describe('resize worksheet`s cells', () => {

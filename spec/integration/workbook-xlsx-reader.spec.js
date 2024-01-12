@@ -328,10 +328,13 @@ describe('WorkbookReader', () => {
 
         ws.getImages().forEach(image => {
           const col = ws.getColumn(image.range.tl.nativeCol + 1);
+          const width = ws.properties && ws.properties.defaultColWidth
+                        ? ws.properties.defaultColWidth
+                        : 9.14285714285714;
 
           if (col.isCustomWidth) {
             expect(image.range.tl.colWidth).to.equal(
-              Math.floor(col.width * 10000)
+              Math.floor(col.width / width * 640000)
             );
           } else {
             expect(image.range.tl.colWidth).to.equal(640000);
@@ -343,10 +346,12 @@ describe('WorkbookReader', () => {
 
         ws.getImages().forEach(image => {
           const row = ws.getRow(image.range.tl.nativeRow + 1);
-
+          const height = ws.properties && ws.properties.defaultRowHeight
+                        ? ws.properties.defaultRowHeight
+                        : 15;
           if (row.height) {
             expect(image.range.tl.rowHeight).to.equal(
-              Math.floor(row.height * 10000)
+              Math.floor(row.height / height * 180000)
             );
           } else {
             expect(image.range.tl.rowHeight).to.equal(180000);
@@ -375,10 +380,13 @@ describe('WorkbookReader', () => {
 
         ws.getImages().forEach(image => {
           const col = ws.getColumn(image.range.br.nativeCol + 1);
+          const width = ws.properties && ws.properties.defaultColWidth
+                        ? ws.properties.defaultColWidth
+                        : 9.14285714285714;
 
           if (col.isCustomWidth) {
             expect(image.range.br.colWidth).to.equal(
-              Math.floor(col.width * 10000)
+              Math.floor(col.width / width * 640000)
             );
           } else {
             expect(image.range.br.colWidth).to.equal(640000);
@@ -390,10 +398,13 @@ describe('WorkbookReader', () => {
 
         ws.getImages().forEach(image => {
           const row = ws.getRow(image.range.br.nativeRow + 1);
+          const height = ws.properties && ws.properties.defaultRowHeight
+                         ? ws.properties.defaultRowHeight
+                         : 15;
 
           if (row.height) {
             expect(image.range.br.rowHeight).to.equal(
-              Math.floor(row.height * 10000)
+              Math.floor(row.height / height * 180000)
             );
           } else {
             expect(image.range.br.rowHeight).to.equal(180000);
