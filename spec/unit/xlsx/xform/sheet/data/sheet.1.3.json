@@ -85,6 +85,7 @@
     "evenHeader": "&C&KCCCCCC&\"Aril\"3 exceljs evenHeader",
     "evenFooter": "&Lexceljs&C&F&RPage &P evenHeader"
   },
+  "rowBreaks": null,
   "tables": null,
   "conditionalFormattings": []
 }

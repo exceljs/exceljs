@@ -135,7 +135,9 @@ const expectations = [
     initialModel: require('./data/sheet.7.0.json'),
     preparedModel: require('./data/sheet.7.1.json'),
     xml: fs.readFileSync(`${__dirname}/data/sheet.7.2.xml`).toString(),
-    tests: ['prepare', 'render'],
+    parsedModel: require('./data/sheet.7.3.json'),
+    reconciledModel: require('./data/sheet.7.4.json'),
+    tests: ['prepare', 'render', 'parse', 'reconcile'],
     options: {
       sharedStrings: new SharedStringsXform(),
       hyperlinks: [],
