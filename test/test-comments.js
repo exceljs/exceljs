@@ -1,4 +1,4 @@
-const Excel = require('../lib/exceljs.nodejs.js');
+const Excel = require('../lib/exceljs.nodejs');
 
 const wb = new Excel.Workbook();
 wb.xlsx
@@ -89,6 +89,11 @@ wb.xlsx
             text: 'format',
           },
         ],
+      };
+
+      sheet.getCell('C3').comment = {
+        texts: ['This\nIs\nA\nComment\nThat\nNeed\nA\nLargeBox'],
+        autoShape: true,
       };
 
       // sheet.getCell('D2').value = 'Zoo';
