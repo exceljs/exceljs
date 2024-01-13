@@ -1078,6 +1078,7 @@ export interface DataBarRuleType extends ConditionalFormattingBaseRule {
 	axisPosition?: 'auto' | 'middle' | 'none';
 	direction?: 'context' | 'leftToRight' | 'rightToLeft';
 	cfvo?: Cvfo[];
+  color?: Partial<Color>;
 }
 
 export type ConditionalFormattingRule = ExpressionRuleType | CellIsRuleType | Top10RuleType | AboveAverageRuleType | ColorScaleRuleType | IconSetRuleType
