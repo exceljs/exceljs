@@ -74,5 +74,21 @@ describe('Worksheet', () => {
       expect(ws.getColumn(2).outlineLevel).to.equal(2);
       expect(ws.getColumn(3).outlineLevel).to.equal(3);
     });
+
+    it('create a worksheet and disabled name truncated', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('Sheet name length greater than 31', {
+        allowNameTruncated: false,
+      });
+
+      expect(ws.name).to.equal('Sheet name length greater than 31');
+    });
+
+    it('create a worksheet and name should be truncated', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('Sheet name length greater than 31');
+
+      expect(ws.name).to.equal('Sheet name length greater than ');
+    });
   });
 });
