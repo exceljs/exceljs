@@ -1,16 +1,16 @@
 {
-  "name": "exceljs",
-  "version": "4.4.0",
+  "name": "@lineleap/exceljs",
+  "version": "4.4.1",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
   "author": {
-    "name": "Guyon Roche",
-    "email": "guyon@live.com"
+    "name": "LineLeap",
+    "email": "tech@lineleap.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "https://github.com/lineleap/exceljs.git"
   },
   "engines": {
     "node": ">=8.3.0"
