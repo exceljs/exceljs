@@ -1,0 +1,45 @@
+{
+  "dimensions": "A1:C3",
+  "properties": {"defaultRowHeight": 14.4, "dyDescent": 0.55, "outlineLevelRow": 2},
+  "views": [{"state": "normal", "workbookViewId": 0}],
+  "pageSetup": {
+    "margins": {"left": 0.7, "right": 0.7, "top": 0.75, "bottom": 0.75, "header": 0.3, "footer":  0.3 }
+  },
+  "rows": [
+    {
+      "number": 1, "min": 1, "max": 3,
+      "cells": [
+        {"address": "A1", "type": 3, "value": "Tom"},
+        {"address": "B1", "type": 3, "value": "John"},
+        {"address": "C1", "type": 3, "value": "Tom"}
+      ]
+    },
+    {
+      "number": 2, "min": 1, "max": 3, "outlineLevel": 1,
+      "cells": [
+        {"address": "A2", "type": 3, "value": "Dick"},
+        {"address": "B1", "type": 3, "value": "Snow"},
+        {"address": "C2", "type": 3, "value": "Dick"}
+      ]
+    },
+    {
+      "number": 3, "min": 1, "max": 3, "outlineLevel": 2, "collapsed": true,
+      "cells": [
+        {"address": "A3", "type": 3, "value": "Harry"},
+        {"address": "B3", "type": 3, "value": "Bastard"},
+        {"address": "C3", "type": 3, "value": "Harry"}
+      ]
+    }
+  ],
+  "dataValidations": {
+    "A1": { "type": "list", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "formulae": ["$C$1:$C$3"]},
+    "A2": { "type": "list", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "formulae": ["$C$1:$C$3"]},
+    "A3": { "type": "list", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "formulae": ["$C$1:$C$3"]},
+    "B1": { "type": "list", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "formulae": ["ExternalSheet!$A$1:$A$3"]},
+    "B2": { "type": "list", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "formulae": ["ExternalSheet!$A$1:$A$3"]},
+    "B3": { "type": "list", "allowBlank": true, "showInputMessage": true, "showErrorMessage": true, "formulae": ["ExternalSheet!$A$1:$A$3"]}
+  },
+  "media": [],
+  "tables": [],
+  "conditionalFormattings": []
+}
