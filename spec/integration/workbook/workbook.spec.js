@@ -1103,4 +1103,39 @@ describe('Workbook', () => {
         });
     });
   });
+
+  describe('Protect', () => {
+    it('works without passing any arguments', async () => {
+      const wb = new ExcelJS.Workbook();
+      const ws1 = wb.addWorksheet('Protected');
+      expect(ws1.name).to.equal('Protected');
+      ws1.getCell('A1').value = 'Protected';
+
+      const ws2 = wb.addWorksheet();
+      expect(ws2.name).to.match(/sheet\d+/);
+      ws2.getCell('A1').value = ws2.name;
+
+      wb.addWorksheet('Unprotected');
+
+      ws1.getCell('A1').protection = {
+        locked: true,
+      };
+
+      await ws1.protect();
+
+      return wb.xlsx
+        .writeFile(TEST_XLSX_FILE_NAME)
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          expect(wb2.getWorksheet('Protected')).to.be.ok();
+          expect(wb2.getWorksheet('Unprotected')).to.be.ok();
+          expect(wb2.getWorksheet('Protected').sheetProtection.sheet).to.equal(
+            true
+          );
+        });
+    });
+  });
 });
