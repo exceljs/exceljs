@@ -1196,14 +1196,14 @@ export interface Worksheet {
 
 	/**
 	 * Tries to find and return row for row no, else undefined
-	 * 
+	 *
 	 * @param row The 1-index row number
 	 */
 	findRow(row: number): Row | undefined;
 
 	/**
 	 * Tries to find and return rows for row no start and length, else undefined
-	 * 
+	 *
 	 * @param start The 1-index starting row number
 	 * @param length The length of the expected array
 	 */
@@ -2014,7 +2014,7 @@ export namespace stream {
 		}
 
 		class WorkbookReader extends Workbook {
-			constructor(input: string | import('stream').Stream, options: Partial<WorkbookStreamReaderOptions>);
+			constructor(input: string | import('stream').Stream | Blob, options: Partial<WorkbookStreamReaderOptions>);
 			read(): Promise<void>;
 			[Symbol.asyncIterator](): AsyncGenerator<WorksheetReader>;
 			parse(): AsyncIterator<any>;

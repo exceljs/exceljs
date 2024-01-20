@@ -38,6 +38,41 @@ describe('ExcelJS', () => {
       })
       .catch(unexpectedError(done));
   });
+  it('should read xlsx via blob', async done => {
+
+    const wb = new ExcelJS.Workbook();
+    const ws = wb.addWorksheet('blort');
+
+    ws.getCell('A1').value = 'Hello, World!';
+    ws.getCell('A2').value = 7;
+
+    wb.xlsx
+            .writeBuffer()
+            .then(async buffer => {
+              // eslint-disable-next-line no-undef
+              const blob = new Blob([buffer], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.comments+xml',
+              });
+              const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader(blob);
+              let rows = 0;
+              for await (const worksheetReader of workbookReader) {
+                expect(worksheetReader.name).toEqual('blort');
+                for await (const row of worksheetReader) {
+                  rows++;
+                  if (rows === 1) {
+                    expect(row.getCell('A').value).toEqual('Hello, World!');
+                  } else if (rows === 2) {
+                    expect(row.getCell('A').value).toEqual(7);
+                  }
+                }
+              }
+              done();
+            })
+            .catch(error => {
+              throw error;
+            })
+            .catch(unexpectedError(done));
+  });
   it('should read and write xlsx via base64 buffer', done => {
     const options = {
       base64: true,
