@@ -1,7 +1,13 @@
 const fs = require('fs');
 const {promisify} = require('util');
+const {expect} = require('chai');
 
 const testUtils = require('../../utils/index');
+const {
+  addTable,
+  checkTable,
+  defaultTableValues,
+} = require('../../unit/doc/worksheet-table.spec');
 
 const ExcelJS = verquire('exceljs');
 
@@ -263,6 +269,84 @@ describe('WorkbookWriter', () => {
             ],
           });
           expect(ws2.getCell('B1').value).to.equal('plain text');
+        });
+    });
+
+    it('table', () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+        useStyles: true,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws = wb.addWorksheet('Hello');
+      addTable('A1', ws);
+
+      ws.commit();
+      return wb
+        .commit()
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          const ws2 = wb2.getWorksheet('Hello');
+          checkTable('A1', ws2, defaultTableValues);
+        });
+    });
+
+    it('table commiting', () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+        useStyles: true,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws = wb.addWorksheet('Hello');
+      const table = addTable('A1', ws);
+
+      expect(() => {
+        table.headerRow = false;
+      }).to.throw();
+
+      expect(() => {
+        table.setRef('A2');
+      }).to.throw();
+
+      expect(() => {
+        table.addColumn({name: 'Some extra column'});
+      }).to.throw();
+
+      expect(() => {
+        table.removeColumn(2);
+      }).to.throw();
+
+      expect(() => {
+        table.removeRows(-1);
+      }).to.throw();
+
+      expect(() => {
+        table.addRow(defaultTableValues[1], 0);
+      }).to.throw();
+
+      table.addRow(defaultTableValues[1]);
+      table.addRow(defaultTableValues[2], 4);
+      table.addRow(defaultTableValues[3], 4);
+      table.addRow(defaultTableValues[4], 4);
+
+      table.commit();
+      ws.commit();
+      return wb
+        .commit()
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          const ws2 = wb2.getWorksheet('Hello');
+          const rows = [...defaultTableValues]
+            .splice(0, 5)
+            .concat([...defaultTableValues].splice(1, 4).reverse())
+            .concat([defaultTableValues[5]]);
+          checkTable('A1', ws2, rows);
         });
     });
 

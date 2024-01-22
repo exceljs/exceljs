@@ -214,3 +214,9 @@ describe('Worksheet', () => {
     });
   });
 });
+
+module.exports = {
+  defaultTableValues: values,
+  addTable,
+  checkTable,
+};
