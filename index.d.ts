@@ -539,7 +539,7 @@ export interface Row extends Style {
 	 * Get a row as a sparse array
 	 */
 	// readonly values: CellValue[];
-	values: CellValue[] | { [key: string]: CellValue };
+	values: CellValue[];
 
 	/**
 	 * Set an outline level for rows
