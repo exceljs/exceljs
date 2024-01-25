@@ -20,6 +20,31 @@ describe('WorkbookReader', () => {
     });
   });
 
+  describe('stream', () => {
+    it('should have correct sheet names when using streams', async () => {
+      const wb = new ExcelJS.stream.xlsx.WorkbookReader();
+
+      return new Promise((resolve, reject) => {
+        const sheetNames = [];
+        wb.on('worksheet', ws => {
+          sheetNames.push(ws.name);
+        });
+        wb.on('end', () => {
+          try {
+            expect(sheetNames).includes('test');
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        });
+
+        wb.read('./spec/integration/data/test-issue-2663.xlsx', {
+          worksheets: 'emit',
+        });
+      });
+    });
+  });
+
   describe('#readFile', () => {
     describe('Row limit', () => {
       it('should bail out if the file contains more rows than the limit', () => {
