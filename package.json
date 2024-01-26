@@ -56,7 +56,8 @@
     "build": "grunt build",
     "install-build": "npm install && grunt build",
     "preversion": "npm run clean && npm run build && npm run test:version",
-    "postversion": "git push --no-verify && git push --tags --no-verify"
+    "postversion": "git push --no-verify && git push --tags --no-verify",
+    "postinstall": "patch-package"
   },
   "husky": {
     "hooks": {
@@ -139,6 +140,7 @@
     "husky": "^4.3.0",
     "lint-staged": "^10.2.13",
     "mocha": "^7.2.0",
+    "patch-package": "^8.0.0",
     "prettier-eslint": "^11.0.0",
     "prettier-eslint-cli": "^5.0.0",
     "regenerator-runtime": "^0.13.7",
