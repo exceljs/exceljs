@@ -2451,10 +2451,10 @@ The constructor takes a required input argument and an optional options argument
 | --------------------- | ----------- |
 | input (required)      | Specifies the name of the file or the readable stream from which to read the XLSX workbook. |
 | options (optional)    | Specifies how to handle the event types occuring during the read parsing. |
-| options.entries       | Specifies whether to emit entries (`'emit'`) or not (`'ignore'`). Default is `'emit'`. |
+| options.entries       | Specifies whether to emit entries (`'emit'`) or not (`'ignore'`). Default is `'ignore'`. |
 | options.sharedStrings | Specifies whether to cache shared strings (`'cache'`), which inserts them into the respective cell values, or whether to emit them (`'emit'`) or ignore them (`'ignore'`), in both of which case the cell value will be a reference to the shared string's index. Default is `'cache'`. |
-| options.hyperlinks    | Specifies whether to cache hyperlinks (`'cache'`), which inserts them into their respective cells, whether to emit them (`'emit'`) or whether to ignore them (`'ignore'`). Default is `'cache'`. |
-| options.styles        | Specifies whether to cache styles (`'cache'`), which inserts them into their respective rows and cells, or whether to ignore them (`'ignore'`). Default is `'cache'`. |
+| options.hyperlinks    | Specifies whether to cache hyperlinks (`'cache'`), which inserts them into their respective cells, whether to emit them (`'emit'`) or whether to ignore them (`'ignore'`). Default is `'ignore'`. |
+| options.styles        | Specifies whether to cache styles (`'cache'`), which inserts them into their respective rows and cells, or whether to ignore them (`'ignore'`). Default is `'ignore'`. |
 | options.worksheets    | Specifies whether to emit worksheets (`'emit'`) or not (`'ignore'`). Default is `'emit'`. |
 
 ```js
