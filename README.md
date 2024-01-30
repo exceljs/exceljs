@@ -658,6 +658,17 @@ worksheet.autoFilter = {
 }
 ```
 
+Additionally, specific columns can be excluded from showing an auto filter button using `exclude`. The `exclude` property takes an array of columns to exclude (with 0 being the leftmost column), and hides the filter button on said columns. 
+
+```javascript
+// Set an auto filter from A1 to E1, while hiding the filter button on the A and C columns
+worksheet.autoFilter = {
+  from: 'A1',
+  to: 'E1',
+  exclude: [0, 2]
+}
+```
+
 ## Columns[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
@@ -2940,7 +2951,7 @@ If any splice operation affects a merged cell, the merge group will not be moved
 | 0.4.2   | <ul><li><p>Addressed the following issues:<ul><li><a href="https://github.com/exceljs/exceljs/issues/290">White text and borders being changed to black #290</a></li><li><a href="https://github.com/exceljs/exceljs/issues/261">Losing formatting/pivot table from loaded file #261</a></li><li><a href="https://github.com/exceljs/exceljs/issues/272">Solid fill become black #272</a></li></ul>These issues are potentially caused by a bug that caused colours with zero themes, tints or indexes to be rendered and parsed incorrectly.</p><p>Regarding themes: the theme files stored inside the xlsx container hold important information regarding colours, styles etc and if the theme information from a loaded xlsx file is lost, the results can be unpredictable and undesirable. To address this, when an ExcelJS Workbook parses an XLSX file, it will preserve any theme files it finds and include them when writing to a new XLSX. If this behaviour is not desired, the Workbook class exposes a clearThemes() function which will drop the theme content. Note that this behaviour is only implemented in the document based Workbook class, not the streamed Reader and Writer.</p></li></ul> |
 | 0.4.3   | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/294">Support error references in cell ranges #294</a>. Thanks to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
 | 0.4.4   | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/297">Issue with copied cells #297</a>. This merge adds support for shared formulas. Thanks to <a href="https://github.com/muscapades">muscapades</a> for the contribution.</li></ul> |
-| 0.4.6   | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/304">Correct spelling #304</a>. Thanks to <a href="https://github.com/toanalien">toanalien</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/304">Added support for auto filters #306</a>. This adds <a href="#auto-filters">Auto Filters</a> to the Worksheet. Thanks to <a href="https://github.com/C4rmond4i">C4rmond4i</a> for the contribution.</li><li>Restored NodeJS 4.0.0 compatability by removing the destructuring code. My apologies for any inconvenience.</li></ul> |
+| 0.4.6   | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/304">Correct spelling #304</a>. Thanks to <a href="https://github.com/toanalien">toanalien</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/306">Added support for auto filters #306</a>. This adds <a href="#auto-filters">Auto Filters</a> to the Worksheet. Thanks to <a href="https://github.com/C4rmond4i">C4rmond4i</a> for the contribution.</li><li>Restored NodeJS 4.0.0 compatability by removing the destructuring code. My apologies for any inconvenience.</li></ul> |
 | 0.4.9   | <ul><li>Switching to transpiled code for distribution. This will ensure compatability with 4.0.0 and above from here on. And it will also allow use of much more expressive JS code in the lib folder!</li><li><a href="#images">Basic Image Support!</a>Images can now be added to worksheets either as a tiled background or stretched over a range. Note: other features like rotation, etc. are not supported yet and will reqeuire further work.</li></ul> |
 | 0.4.10  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/319">Add missing Office Rels #319</a>. Thanks goes to <a href="https://github.com/mauriciovillalobos">mauriciovillalobos</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/320">Add printTitlesRow Support #320</a> Thanks goes to <a href="https://github.com/psellers89">psellers89</a> for the contribution.</li></ul> |
 | 0.4.11  | <ul><li>Merged <a href="https://github.com/exceljs/exceljs/pull/327">Avoid error on anchor with no media #327</a>. Thanks goes to <a href="https://github.com/holm">holm</a> for the contribution.</li><li>Merged <a href="https://github.com/exceljs/exceljs/pull/332">Assortment of fixes for streaming read #332</a>. Thanks goes to <a href="https://github.com/holm">holm</a> for the contribution.</li></ul> |
