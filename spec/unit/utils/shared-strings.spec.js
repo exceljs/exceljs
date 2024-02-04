@@ -25,4 +25,14 @@ describe('SharedStrings', () => {
     expect(ss.getString(iXml)).to.equal('<tag>value</tag>');
     expect(ss.getString(iAmpersand)).to.equal('&');
   });
+
+  it('Distinguishes richText', () => {
+    // that's the job of the xml utils
+    const ss = new SharedStrings();
+
+    ss.add({richText: [{text: 'value 1'}]});
+    ss.add({richText: [{text: 'value 2'}]});
+
+    expect(ss.count).to.equal(2);
+  });
 });
