@@ -766,10 +766,11 @@ describe('Workbook', () => {
         B2.style.fill = testUtils.styles.fills.blueWhiteHGrad;
         B2.style.alignment = testUtils.styles.namedAlignments.middleCentre;
         B2.style.numFmt = testUtils.styles.numFmts.numFmt1;
-
+        
         // expecting styles to be copied (see worksheet spec)
         ws.mergeCells('B2:C3');
-
+        // expecting styles to be applied to the argument range
+        ws.fillCells('E3:F4', testUtils.styles.fills.blueWhiteHGrad);
         return wb.xlsx
           .writeFile(TEST_XLSX_FILE_NAME)
           .then(() => {
@@ -778,7 +779,6 @@ describe('Workbook', () => {
           })
           .then(wb2 => {
             const ws2 = wb2.getWorksheet('blort');
-
             expect(ws2.getCell('B2').font).to.deep.equal(
               testUtils.styles.fonts.broadwayRedOutline20
             );
@@ -786,6 +786,18 @@ describe('Workbook', () => {
               testUtils.styles.borders.doubleRed
             );
             expect(ws2.getCell('B2').fill).to.deep.equal(
+              testUtils.styles.fills.blueWhiteHGrad
+            );
+            expect(ws2.getCell('E3').fill).to.deep.equal(
+              testUtils.styles.fills.blueWhiteHGrad
+            );
+            expect(ws2.getCell('E4').fill).to.deep.equal(
+              testUtils.styles.fills.blueWhiteHGrad
+            );
+            expect(ws2.getCell('F3').fill).to.deep.equal(
+              testUtils.styles.fills.blueWhiteHGrad
+            );
+            expect(ws2.getCell('F4').fill).to.deep.equal(
               testUtils.styles.fills.blueWhiteHGrad
             );
             expect(ws2.getCell('B2').alignment).to.deep.equal(

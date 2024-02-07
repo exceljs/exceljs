@@ -1651,6 +1651,19 @@ ws.getCell('A5').fill = {
     {position:1, color:{argb:'FF00FF00'}}
   ]
 };
+
+// fill Range with red-green gradient from center
+let fill = {
+  type: 'gradient',
+  gradient: 'path',
+  center:{left:0.5,top:0.5},
+  stops: [
+    {position:0, color:{argb:'FFFF0000'}},
+    {position:1, color:{argb:'FF00FF00'}}
+  ]
+}
+ws.fillCells('A1:C5', fill) // each cell will reference to clone of `fill`  
+ws.fillCells('A1:C5', fill, false) //each cell will reference to `fill` (changing in one of them will propagate changes to all other cells)
 ```
 
 #### Pattern Fills[⬆](#contents)<!-- Link generated with jump2header -->
