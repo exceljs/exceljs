@@ -3,6 +3,7 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-string-replace');
   grunt.loadNpmTasks('grunt-terser');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -53,7 +54,7 @@ module.exports = function(grunt) {
       bundle: {
         // keep the original source for source maps
         src: ['./lib/exceljs.browser.js'],
-        dest: './dist/exceljs.js',
+        dest: './build/web/exceljs.browserify.js',
       },
       spec: {
         options: {
@@ -62,6 +63,21 @@ module.exports = function(grunt) {
         },
         src: ['./build/spec/browser/exceljs.spec.js'],
         dest: './build/web/exceljs.spec.js',
+      },
+    },
+
+    'string-replace': {
+      dist: {
+        options: {
+          replacements: [
+            {
+              pattern: /("use strict")|('use strict')/g,
+              replacement: '\'\'',
+            },
+          ],
+        },
+        src: ['./build/web/exceljs.browserify.js'],
+        dest: './dist/exceljs.js',
       },
     },
 
@@ -135,6 +151,6 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('build', ['babel:dist', 'browserify', 'terser', 'exorcise', 'copy']);
+  grunt.registerTask('build', ['babel:dist', 'browserify', 'string-replace', 'terser', 'exorcise', 'copy']);
   grunt.registerTask('ug', ['terser']);
 };
