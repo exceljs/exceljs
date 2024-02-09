@@ -2090,6 +2090,28 @@ worksheet.addImage(imageId2, {
 });
 ```
 
+### Add image with accessibility support[⬆](#contents)<!-- Link generated with jump2header -->
+
+You can add an image with title, description or mark it as decorative
+
+```javascript
+worksheet.addImage(imageId2, {
+  tl: { col: 0, row: 0 },
+  ext: { width: 500, height: 200 },
+  hyperlinks: {
+    hyperlink: 'http://www.somewhere.com',
+    tooltip: 'http://www.somewhere.com'
+  }
+},
+{
+  title: 'image title',
+  description: 'image alt text',
+  decorative: 1, // value is 0 or 1
+}
+);
+```
+
+
 ## Sheet Protection[⬆](#contents)<!-- Link generated with jump2header -->
 
 Worksheets can be protected from modification by adding a password.
