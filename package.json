@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "https://github.com/SahilTamboli7194/exceljs.git"
   },
   "engines": {
     "node": ">=8.3.0"
