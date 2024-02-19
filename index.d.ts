@@ -305,8 +305,10 @@ export type DataValidationOperator =
 	| 'between' | 'notBetween' | 'equal' | 'notEqual' | 'greaterThan' | 'lessThan'
 	| 'greaterThanOrEqual' | 'lessThanOrEqual';
 
+export type DataValidationType = 'list' | 'whole' | 'decimal' | 'date' | 'textLength' | 'custom';
+
 export interface DataValidation {
-	type: 'list' | 'whole' | 'decimal' | 'date' | 'textLength' | 'custom';
+	type: DataValidationType;
 	formulae: any[];
 	allowBlank?: boolean;
 	operator?: DataValidationOperator;
