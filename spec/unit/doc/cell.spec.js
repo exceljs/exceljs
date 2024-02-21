@@ -369,6 +369,28 @@ describe('Cell', () => {
     expect(a1.model.comment.note).to.deep.equal(comment);
   });
 
+  it('can remove comment', () => {
+    const a1 = sheetMock.getCell('A1');
+
+    expect(a1.note).to.be.undefined();
+
+    a1.note = 'Some note';
+    expect(a1.model.comment.note.texts[0].text).to.be.eq('Some note');
+
+    a1.removeNote();
+    expect(a1.model.comment).to.be.undefined();
+  });
+
+  it('fails to remove comment by assigning empty object', () => {
+    const a1 = sheetMock.getCell('A1');
+    a1.note = 'Some note';
+
+    expect(a1.model.comment.note.texts[0].text).to.be.eq('Some note');
+
+    a1.note = {};
+    expect(a1.model.comment).to.exist();
+  });
+
   it('Cell comments supports setting margins, protection, and position properties', () => {
     const a1 = sheetMock.getCell('A1');
 
@@ -399,10 +421,7 @@ describe('Cell', () => {
     expect(a1.model.comment.note.protection).to.deep.equal(comment.protection);
     expect(a1.model.comment.note.margins.insetmode).to.equal('auto');
     expect(a1.model.comment.note.margins.inset).to.deep.equal([
-      0.13,
-      0.13,
-      0.25,
-      0.25,
+      0.13, 0.13, 0.25, 0.25,
     ]);
     expect(a1.model.comment.note.editAs).to.equal('absolute');
   });

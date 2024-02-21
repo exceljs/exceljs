@@ -1148,6 +1148,9 @@ ws.getCell('B1').note = {
   },
   editAs: 'twoCells',
 };
+
+// delete note
+ws.getCell('B1').removeNote()
 ```
 
 ### Cell Comments Properties[⬆](#contents)<!-- Link generated with jump2header -->
