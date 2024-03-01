@@ -1427,6 +1427,13 @@ export interface WorksheetProperties {
 	 */
 	dyDescent: number;
 	showGridLines: boolean;
+	/**
+	 * The worksheet outline properties (default: summaryBelow: true, summaryRight: true)
+	 */
+	outlineProperties: {
+		summaryBelow: boolean,
+		summaryRight: boolean
+	}
 }
 
 export interface AddWorksheetOptions {
