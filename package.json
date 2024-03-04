@@ -29,72 +29,11 @@
     "index.d.ts"
   ],
   "scripts": {
-    "test": "npm run test:full",
-    "test:es5": "export EXCEL_BUILD=es5 && npm run test:full",
-    "test:full": "npm run build && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:jasmine",
-    "test:version": "npm run build && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser && npm run test:dist",
-    "test:all": "npm run test:native && npm run test:es5",
-    "test:native": "npm run test:full",
-    "test:unit": "mocha --require spec/config/setup --require spec/config/setup-unit spec/unit --recursive",
-    "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
-    "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
-    "test:browser": "if [ ! -f .disable-test-browser ]; then npm run build && npm run test:jasmine; fi",
-    "test:jasmine": "grunt jasmine",
-    "test:unit:es5": "export EXCEL_BUILD=es5 && npm run test:unit",
-    "test:integration:es5": "export EXCEL_BUILD=es5 && npm run test:integration",
-    "test:end-to-end:es5": "export EXCEL_BUILD=es5 && npm run test:end-to-end",
-    "test:dist": "mocha --require spec/config/setup spec/dist --recursive",
-    "test:manual": "node spec/manual/app.js",
-    "test:typescript": "mocha -r ts-node/register spec/typescript/**/*.spec.ts",
     "clean-build": "npm run clean && npm run build",
-    "lint": "eslint --format node_modules/eslint-friendly-formatter .",
-    "lint:fix": "prettier-eslint --write $(pwd)'/**/*.js'",
-    "lint:staged": "lint-staged",
-    "clean": "rm -rf build/ && rm -rf dist",
-    "benchmark": "node --expose-gc benchmark",
-    "benchmark:debug": "node --expose-gc --inspect-brk --trace-deopt benchmark",
+    "clean": "pwsh -command config/clean.ps1",
     "build": "grunt build",
-    "install-build": "npm install && grunt build",
-    "preversion": "npm run clean && npm run build && npm run test:version",
-    "postversion": "git push --no-verify && git push --tags --no-verify"
+    "install-build": "npm install && grunt build"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier-eslint --write",
-      "eslint --format node_modules/eslint-friendly-formatter",
-      "git add"
-    ]
-  },
-  "keywords": [
-    "xlsx",
-    "json",
-    "csv",
-    "excel",
-    "font",
-    "border",
-    "fill",
-    "number",
-    "format",
-    "number format",
-    "alignment",
-    "office",
-    "spreadsheet",
-    "workbook",
-    "defined names",
-    "data validations",
-    "rich text",
-    "in-cell format",
-    "outlineLevel",
-    "views",
-    "frozen",
-    "split",
-    "pageSetup"
-  ],
   "dependencies": {
     "archiver": "^5.0.0",
     "dayjs": "^1.8.34",
@@ -120,12 +59,6 @@
     "chai-xml": "^0.3.2",
     "core-js": "^3.6.5",
     "dirty-chai": "^2.0.1",
-    "eslint": "^6.5.1",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.12.0",
-    "eslint-friendly-formatter": "^4.0.1",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-node": "^11.1.0",
     "express": "^4.16.4",
     "got": "^9.0.0",
     "grunt": "^1.3.0",
