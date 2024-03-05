@@ -1622,8 +1622,8 @@ export interface Media {
 export interface Address {
 	sheetName?: string;
 	address: string;
-	col: string;
-	row: string;
+	col: number;
+	row: number;
 	$col$row: string;
 }
 
