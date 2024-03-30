@@ -2180,7 +2180,7 @@ await workbook.xlsx.load(data, {
 
 ```javascript
 // write to a file
-const workbook = createAndFillWorkbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.writeFile(filename);
 
 // write to a stream
@@ -2285,7 +2285,7 @@ Options supported when writing to a CSV file.
 ```javascript
 
 // write to a file
-const workbook = createAndFillWorkbook();
+const workbook = new Excel.Workbook();
 await workbook.csv.writeFile(filename);
 
 // write to a stream

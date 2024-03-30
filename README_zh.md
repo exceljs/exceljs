@@ -2088,7 +2088,7 @@ await workbook.xlsx.load(data);
 
 ```javascript
 // 写入文件
-const workbook = createAndFillWorkbook();
+const workbook = new Excel.Workbook();
 await workbook.xlsx.writeFile(filename);
 
 // 写入流
@@ -2190,7 +2190,7 @@ CSV 解析器使用 [fast-csv](https://www.npmjs.com/package/fast-csv) 读取CSV
 ```javascript
 
 // 写入文件
-const workbook = createAndFillWorkbook();
+const workbook = new Excel.Workbook();
 await workbook.csv.writeFile(filename);
 
 // 写入流
