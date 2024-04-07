@@ -996,7 +996,7 @@ export interface WorksheetModel {
 }
 export type WorksheetState = 'visible' | 'hidden' | 'veryHidden';
 
-export type CellIsOperators = 'equal' | 'greaterThan' | 'lessThan' | 'between';
+export type CellIsOperators = 'equal' | 'notEqual' | 'greaterThan' | 'greaterThanOrEqual' | 'lessThan' | 'lessThanOrEqual' | 'between' | 'notBetween';
 
 export type ContainsTextOperators = 'containsText' | 'containsBlanks' | 'notContainsBlanks' | 'containsErrors' | 'notContainsErrors';
 
@@ -1014,18 +1014,20 @@ export interface Cvfo {
 	value?: number;
 }
 export interface ConditionalFormattingBaseRule {
-	priority: number;
+	priority?: number;
 	style?: Partial<Style>;
 }
 export interface ExpressionRuleType extends ConditionalFormattingBaseRule {
 	type: 'expression';
 	formulae?: any[];
+	stopIfTrue?: boolean;
 }
 
 export interface CellIsRuleType extends ConditionalFormattingBaseRule {
 	type: 'cellIs';
 	formulae?: any[];
 	operator?: CellIsOperators;
+	stopIfTrue?: boolean;
 }
 
 export interface Top10RuleType extends ConditionalFormattingBaseRule {
@@ -1033,11 +1035,13 @@ export interface Top10RuleType extends ConditionalFormattingBaseRule {
 	rank: number;
 	percent: boolean;
 	bottom: boolean;
+	stopIfTrue?: boolean;
 }
 
 export interface AboveAverageRuleType extends ConditionalFormattingBaseRule {
 	type: 'aboveAverage';
 	aboveAverage: boolean;
+	stopIfTrue?: boolean;
 }
 
 export interface ColorScaleRuleType extends ConditionalFormattingBaseRule {
@@ -1059,11 +1063,13 @@ export interface ContainsTextRuleType extends ConditionalFormattingBaseRule {
 	type: 'containsText';
 	operator?: ContainsTextOperators;
 	text?: string;
+	stopIfTrue?: boolean;
 }
 
 export interface TimePeriodRuleType extends ConditionalFormattingBaseRule {
 	type: 'timePeriod';
 	timePeriod?: TimePeriodTypes;
+	stopIfTrue?: boolean;
 }
 
 export interface DataBarRuleType extends ConditionalFormattingBaseRule {

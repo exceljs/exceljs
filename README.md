@@ -1800,43 +1800,50 @@ worksheet.addConditionalFormatting({
 
 ### Expression[⬆](#contents)<!-- Link generated with jump2header -->
 
-| Field    | Optional | Default | Description |
-| -------- | -------- | ------- | ----------- |
-| type     |          |         | 'expression' |
-| priority | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| formulae |          |         | array of 1 formula string that returns a true/false value. To reference the cell value, use the top-left cell address |
-| style    |          |         | style structure to apply if the formula returns true |
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'expression' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| formulae   |          |         | array of 1 formula string that returns a true/false value. To reference the cell value, use the top-left cell address |
+| style      |          |         | style structure to apply if the formula returns true |
+| stopIfTrue | Y        |         | stop further rule evaluations if the conditions for this rule are met |
 
 ### Cell Is[⬆](#contents)<!-- Link generated with jump2header -->
 
-| Field    | Optional | Default | Description |
-| -------- | -------- | ------- | ----------- |
-| type     |          |         | 'cellIs' |
-| priority | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| operator |          |         | how to compare cell value with formula result |
-| formulae |          |         | array of 1 formula string that returns the value to compare against each cell |
-| style    |          |         | style structure to apply if the comparison returns true |
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'cellIs' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| operator   |          |         | how to compare cell value with formula result |
+| formulae   |          |         | array of 1 formula string that returns the value to compare against each cell |
+| style      |          |         | style structure to apply if the comparison returns true |
+| stopIfTrue | Y        |         | stop further rule evaluations if the conditions for this rule are met |
 
 **Cell Is Operators**
 
-| Operator    | Description |
-| ----------- | ----------- |
-| equal       | Apply format if cell value equals formula value |
-| greaterThan | Apply format if cell value is greater than formula value |
-| lessThan    | Apply format if cell value is less than formula value |
-| between     | Apply format if cell value is between two formula values (inclusive) |
+| Operator           | Description |
+| ------------------ | ----------- |
+| equal              | Apply format if cell value equals formula value |
+| notEqual           | Apply format if cell value does not equal formula value |
+| greaterThan        | Apply format if cell value is greater than formula value |
+| greaterThanOrEqual | Apply format if cell value is greater than or equal to formula value |
+| lessThan           | Apply format if cell value is less than formula value |
+| lessThanOrEqual    | Apply format if cell value is less than or equal to formula value |
+| between            | Apply format if cell value is between two formula values (inclusive) |
+| notBetween         | Apply format if cell value is not between two formula values (inclusive) |
 
 
 ### Top 10[⬆](#contents)<!-- Link generated with jump2header -->
 
-| Field    | Optional | Default | Description |
-| -------- | -------- | ------- | ----------- |
-| type     |          |         | 'top10' |
-| priority | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| rank     | Y        | 10      | specifies how many top (or bottom) values are included in the formatting |
-| percent  | Y        | false   | if true, the rank field is a percentage, not an absolute |
-| bottom   | Y        | false   | if true, the bottom values are included instead of the top |
-| style    |          |         | style structure to apply if the comparison returns true |
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'top10' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| rank       | Y        | 10      | specifies how many top (or bottom) values are included in the formatting |
+| percent    | Y        | false   | if true, the rank field is a percentage, not an absolute |
+| bottom     | Y        | false   | if true, the bottom values are included instead of the top |
+| style      |          |         | style structure to apply if the comparison returns true |
+| stopIfTrue | Y        |         | stop further rule evaluations if the conditions for this rule are met |
 
 ### Above Average[⬆](#contents)<!-- Link generated with jump2header -->
 
@@ -1846,6 +1853,7 @@ worksheet.addConditionalFormatting({
 | priority      | Y        | &lt;auto&gt;  | determines priority ordering of styles |
 | aboveAverage  | Y        | false   | if true, the rank field is a percentage, not an absolute |
 | style         |          |         | style structure to apply if the comparison returns true |
+| stopIfTrue    | Y        |         | stop further rule evaluations if the conditions for this rule are met |
 
 ### Color Scale[⬆](#contents)<!-- Link generated with jump2header -->
 
@@ -1890,13 +1898,14 @@ worksheet.addConditionalFormatting({
 
 ### Contains Text[⬆](#contents)<!-- Link generated with jump2header -->
 
-| Field    | Optional | Default | Description |
-| -------- | -------- | ------- | ----------- |
-| type     |          |         | 'containsText' |
-| priority | Y        | &lt;auto&gt;  | determines priority ordering of styles |
-| operator |          |         | type of text comparison |
-| text     |          |         | text to search for |
-| style    |          |         | style structure to apply if the comparison returns true |
+| Field      | Optional | Default | Description |
+| ---------- | -------- | ------- | ----------- |
+| type       |          |         | 'containsText' |
+| priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
+| operator   |          |         | type of text comparison |
+| text       |          |         | text to search for |
+| style      |          |         | style structure to apply if the comparison returns true |
+| stopIfTrue | Y        |         | stop further rule evaluations if the conditions for this rule are met |
 
 **Contains Text Operators**
 
@@ -1916,6 +1925,7 @@ worksheet.addConditionalFormatting({
 | priority   | Y        | &lt;auto&gt;  | determines priority ordering of styles |
 | timePeriod |          |         | what time period to compare cell value to |
 | style      |          |         | style structure to apply if the comparison returns true |
+| stopIfTrue | Y        |         | stop further rule evaluations if the conditions for this rule are met |
 
 **Time Periods**
 
