@@ -399,11 +399,114 @@ describe('Cell', () => {
     expect(a1.model.comment.note.protection).to.deep.equal(comment.protection);
     expect(a1.model.comment.note.margins.insetmode).to.equal('auto');
     expect(a1.model.comment.note.margins.inset).to.deep.equal([
-      0.13,
-      0.13,
-      0.25,
-      0.25,
+      0.13, 0.13, 0.25, 0.25,
     ]);
     expect(a1.model.comment.note.editAs).to.equal('absolute');
+  });
+
+  describe('when setting a new value for a style attribute', () => {
+    const newStyleAttributes = {
+      numFmt: 'new format',
+      font: fonts.comicSansUdB16,
+      alignment: {},
+      border: {
+        left: {
+          color: {
+            argb: 'ff000000',
+          },
+        },
+        right: {
+          color: {
+            argb: 'ff000000',
+          },
+        },
+      },
+      fill: {
+        type: 'gradient',
+        gradient: 'path',
+        center: {
+          left: 1,
+          top: 2,
+        },
+        stops: [
+          {
+            color: {
+              argb: 'ffff0000',
+            },
+          },
+          {
+            color: {
+              argb: 'ff0000ff',
+            },
+          },
+          {
+            color: {
+              argb: 'ff00ff00',
+            },
+          },
+        ],
+      },
+      protection: {
+        locked: false,
+        hidden: true,
+      },
+    };
+
+    const originalStyle = {
+      numFmt: 'old format',
+      alignment: {
+        horizontal: 'center',
+        shrinkToFit: false,
+      },
+      border: {
+        bottom: {
+          color: {
+            argb: 'ff000000',
+          },
+        },
+        top: {
+          color: {
+            argb: 'ff000000',
+          },
+        },
+      },
+      fill: {
+        type: 'pattern',
+        pattern: 'solid',
+        bgColor: {
+          argb: 'ff333333',
+        },
+      },
+      font: fonts.arialBlackUI14,
+      protection: {
+        hidden: false,
+      },
+    };
+
+    beforeEach(() => {
+      // Simulates two cells with the same style id
+      sheetMock.getCell('S1').style = sheetMock.getCell('S2').style =
+        originalStyle;
+    });
+
+    Object.entries(newStyleAttributes).forEach(([attribute, value]) => {
+      it(`clones style when setting a new ${attribute}`, () => {
+        const cell = sheetMock.getCell('S2');
+
+        cell[attribute] = value;
+
+        // The cell's `style` has been changed to a new object (i.e., newStyle !== oldStyle), ...
+        expect(cell.style).to.not.equal(originalStyle);
+
+        // ...but it still contains the same values for the unchanged style attributes
+        expect(cell.style).to.deep.equal({
+          ...originalStyle,
+          [attribute]: value,
+        });
+
+        // Other cells with the same style id should not have changed
+        expect(sheetMock.getCell('S1').style).to.equal(originalStyle);
+      });
+    });
   });
 });
