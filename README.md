@@ -2042,24 +2042,24 @@ Fractions of cells can be specified by using floating point numbers, e.g. the mi
 ```javascript
 // insert an image over part of B2:D6
 worksheet.addImage(imageId2, {
-  tl: { col: 1.5, row: 1.5 },
-  br: { col: 3.5, row: 5.5 }
+  tl: new Anchor(worksheet, { col: 1.5, row: 1.5 }),
+  br: new Anchor(worksheet, { col: 3.5, row: 5.5 }),
 });
 ```
 
 The cell range can also have the property 'editAs' which will control how the image is anchored to the cell(s)
 It can have one of the following values:
 
-| Value     | Description |
-| --------- | ----------- |
-| undefined | It specifies the image will be moved and sized with cells |
-| oneCell   | This is the default. Image will be moved with cells but not sized |
-| absolute  | Image will not be moved or sized with cells |
+| Value    | Description |
+| -------- | ----------- |
+| twoCell  | It specifies the image will be moved and sized with cells |
+| oneCell  | This is the default. Image will be moved with cells but not sized |
+| absolute | Image will not be moved or sized with cells |
 
 ```javascript
 ws.addImage(imageId, {
-  tl: { col: 0.1125, row: 0.4 },
-  br: { col: 2.101046875, row: 3.4 },
+  tl: new Anchor(worksheet, { col: 0.1125, row: 0.4 }),
+  br: new Anchor(worksheet, { col: 2.101046875, row: 3.4 }),
   editAs: 'oneCell'
 });
 ```

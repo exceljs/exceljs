@@ -1186,14 +1186,14 @@ ws.getCell('B1').note.protection = {
 它可以具有以下值之一：
 
 ```javascript
-ws.getCell('B1').note.editAs = 'twoCells'
+ws.getCell('B1').note.editAs = 'twoCell'
 ```
 
 | Value     | Description |
 | --------- | ----------- |
-| twoCells | 它指定注释的大小、位置随单元格而变 |
-| oneCells   | 它指定注释的大小固定，位置随单元格而变 |
-| absolute  | 这是默认值，它指定注释的大小、位置均固定 |
+| twoCell | 它指定注释的大小、位置随单元格而变 |
+| oneCell | 这是默认值，它指定注释的大小固定，位置随单元格而变 |
+| absolute | 它指定注释的大小、位置均固定 |
 
 ## 表格[⬆](#目录)<!-- Link generated with jump2header -->
 
@@ -1973,8 +1973,8 @@ worksheet.addImage(imageId2, 'B2:D6');
 ```javascript
 // 在 B2:D6 的一部分上插入图像
 worksheet.addImage(imageId2, {
-  tl: { col: 1.5, row: 1.5 },
-  br: { col: 3.5, row: 5.5 }
+  tl: new Anchor(worksheet, { col: 1.5, row: 1.5 }),
+  br: new Anchor(worksheet, { col: 3.5, row: 5.5 }),
 });
 ```
 
@@ -1988,8 +1988,8 @@ worksheet.addImage(imageId2, {
 
 ```javascript
 ws.addImage(imageId, {
-  tl: { col: 0.1125, row: 0.4 },
-  br: { col: 2.101046875, row: 3.4 },
+  tl: new Anchor(worksheet, { col: 0.1125, row: 0.4 }),
+  br: new Anchor(worksheet, { col: 2.101046875, row: 3.4 }),
   editAs: 'oneCell'
 });
 ```
