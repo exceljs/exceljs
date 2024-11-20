@@ -9,8 +9,8 @@ describe('Express', () => {
   let server;
   before(() => {
     const app = express();
-    app.get('/workbook', (req, res) => {
-      const wb = testutils.createTestBook(new Excel.Workbook(), 'xlsx');
+    app.get('/workbook', async (req, res) => {
+      const wb = await testutils.createTestBook(new Excel.Workbook(), 'xlsx');
       res.setHeader(
         'Content-Type',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

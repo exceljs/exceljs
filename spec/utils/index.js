@@ -59,7 +59,7 @@ module.exports = {
   ),
   headerFooter: tools.fix(require('./data/header-footer.json')),
 
-  createTestBook(workbook, docType, sheets) {
+  async createTestBook(workbook, docType, sheets) {
     const options = getOptions(docType);
     sheets = sheets || ['values'];
 
@@ -67,10 +67,11 @@ module.exports = {
       {x: 1, y: 2, width: 10000, height: 20000, firstSheet: 0, activeTab: 0},
     ];
 
-    sheets.forEach(sheet => {
+    for (const sheet of sheets) {
       const testSheet = _.get(testSheets, sheet);
-      testSheet.addSheet(workbook, options);
-    });
+      // eslint-disable-next-line no-await-in-loop
+      await testSheet.addSheet(workbook, options);
+    }
 
     return workbook;
   },
