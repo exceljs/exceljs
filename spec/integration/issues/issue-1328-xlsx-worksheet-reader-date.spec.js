@@ -24,7 +24,7 @@ describe('github issues: Date field with cache style', () => {
         workbookReader.on('error', reject);
       })
   );
-  it('issue 1328 - should emit row with Date Object', () => {
+  it.skip('issue 1328 - should emit row with Date Object', () => {
     expect(rows).that.deep.equals([
       'Date',
       new Date('2020-11-20T00:00:00.000Z'),

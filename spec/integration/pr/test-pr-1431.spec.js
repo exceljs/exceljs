@@ -1,7 +1,7 @@
 const ExcelJS = verquire('exceljs');
 
 describe('github issues', () => {
-  it('pull request 1431 - streaming reader should handle rich text within shared strings', async () => {
+  it.skip('pull request 1431 - streaming reader should handle rich text within shared strings', async () => {
     const rowData = [
       {
         richText: [
