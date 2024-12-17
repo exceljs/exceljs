@@ -17,7 +17,7 @@
   },
   "main": "./excel.js",
   "browser": "./dist/exceljs.min.js",
-  "types": "./index.d.ts",
+  "types": "./exceljs.d.ts",
   "files": [
     "dist",
     "lib",
@@ -26,12 +26,12 @@
     "README.md",
     "README_zh.md",
     "index.ts",
-    "index.d.ts"
+    "exceljs.d.ts"
   ],
   "scripts": {
     "test": "npm run test:full",
     "test:es5": "export EXCEL_BUILD=es5 && npm run test:full",
-    "test:full": "npm run build && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:jasmine",
+    "test:full": "npm run build && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:jasmine && npm run test:typescript",
     "test:version": "npm run build && npm run test:unit && npm run test:integration && npm run test:end-to-end && npm run test:browser && npm run test:dist",
     "test:all": "npm run test:native && npm run test:es5",
     "test:native": "npm run test:full",

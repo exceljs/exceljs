@@ -88,6 +88,6 @@ jobs:
             v1-npm-
       - run: npm install
       - run: npm install typescript
-      - run: tsc index.d.ts
+      - run: tsc exceljs.d.ts
         env:
           CI: true

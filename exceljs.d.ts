@@ -1481,7 +1481,7 @@ export interface Xlsx {
 	 * read from a stream
 	 * @param stream
 	 */
-	read(stream: import('stream').Stream, options?: Partial<XlsxReadOptions>): Promise<Workbook>;
+	read(stream: import('stream').Stream | ReadableStream<Uint8Array>, options?: Partial<XlsxReadOptions>): Promise<Workbook>;
 
 	/**
 	 * load from an array buffer
@@ -1502,7 +1502,7 @@ export interface Xlsx {
 	/**
 	 * write to a stream
 	 */
-	write(stream: import('stream').Stream, options?: Partial<XlsxWriteOptions>): Promise<void>;
+	write(stream: import('stream').Stream | WritableStream<Uint8Array>, options?: Partial<XlsxWriteOptions>): Promise<void>;
 }
 
 // https://c2fo.github.io/fast-csv/docs/parsing/options
