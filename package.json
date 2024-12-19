@@ -53,6 +53,7 @@
     "clean": "rm -rf build/ && rm -rf dist",
     "benchmark": "node --expose-gc benchmark",
     "benchmark:debug": "node --expose-gc --inspect-brk --trace-deopt benchmark",
+    "benchmark:styles": "node --expose-gc benchmark-styles",
     "build": "grunt build",
     "install-build": "npm install && grunt build",
     "preversion": "npm run clean && npm run build && npm run test:version",

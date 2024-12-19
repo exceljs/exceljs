@@ -867,6 +867,12 @@ const cell = worksheet.getCell('C3');
 // Modify/Add individual cell
 cell.value = new Date(1968, 5, 1);
 
+// Override cell style with style provided.
+cell.style = {fill: {...}};
+
+// Updates cell style with a "merge" of the styles from the style provided, the row style and the Column style.
+cell.addStyle({fill: {...}});
+
 // query a cell's type
 expect(cell.type).toEqual(Excel.ValueType.Date);
 
@@ -2376,6 +2382,7 @@ The constructor takes an optional options object with the following fields:
 | filename         | If stream not specified, this field specifies the path to a file to write the XLSX workbook to. |
 | useSharedStrings | Specifies whether to use shared strings in the workbook. Default is `false`. |
 | useStyles        | Specifies whether to add style information to the workbook. Styles can add some performance overhead. Default is `false`. |
+| stylesCacheMode  | Specifies the styles cacheing mode for performance tunning. Default is WEAK_MAP for backwards compatibility. </br></br>WEAK_MAP: has poor performance if the style objects are not re-used. When you mix Col, row and cell styles a different style object is created per cell and performance deteriorates to being worse then with No Cache. </br>JSON_MAP: uses JSON.stringify as the key for a style map. The perfromance can be similar to WeakMap or up to 2.5x faster. </br>FAST_MAP: uses a custom function to encode a style to use it as a key on cache. Should be preferred over JSON_MAP. The encoded style is much smaller and faster to generate then a JSON. The encoding function is designed so two distinct styles can never be encoded to the same key, but if this happens use JSON_MAP instead.</br>NO_CACHE: In some cases NO_CACHE can be faster than WEAK_MAP. In rare cases it maybe faster than JSON_MAP.
 | zip              | [Zip options](https://www.archiverjs.com/global.html#ZipOptions) that ExcelJS internally passes to [Archiver](https://github.com/archiverjs/node-archiver). Default is `undefined`. |
 
 If neither stream nor filename is specified in the options, the workbook writer will create a StreamBuf object

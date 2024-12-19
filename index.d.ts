@@ -1935,6 +1935,18 @@ export namespace stream {
 			 * Styles can add some performance overhead. Default is false
 			 */
 			useStyles: boolean;
+
+			/**
+			 * Specifies the cacheing mode for styles for performance fine tunning. Default is WEAK_MAP for backwards compatibility.
+			 * WEAK_MAP: has poor performance if the style objects are not re-used. When you mix Col, row and cell styles a different style object 
+			 * is created per cell and performance deteriorates to being worse then with No Cache.
+			 * JSON_MAP: uses JSON.stringify as the key for a style map. The perfromance can be similar to WeakMap or up to 2.5x faster. 
+			 * FAST_MAP: uses a custom function to encode a style to use it as a key on cache. Should be preferred over JSON_MAP
+			 * The encoded style is much smaller and faster to generate then a JSON. 
+			 * The encoding function is designed so two distinct styles can never be encoded to the same key, but if this happens use JSON_MAP instead.
+			 * NO_CACHE: In some cases NO_CACHE can be faster than WEAK_MAP. In rare cases it maybe faster than JSON_MAP.
+			 */
+			stylesCacheMode: 'WEAK_MAP' | 'JSON_MAP' | 'FAST_MAP' | 'NO_CACHE';
 		}
 
 		interface ArchiverZipOptions {
