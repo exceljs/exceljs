@@ -1345,6 +1345,12 @@ export interface Worksheet {
 		range: ImageRange;
 	}>;
 
+	/**
+	 * footer heaedr
+	 */
+	addHFImage(imageId: number, options: { id: string, width: string, height: string }): void
+
+
 	commit(): void;
 
 	model: WorksheetModel;

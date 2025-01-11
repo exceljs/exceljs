@@ -66,6 +66,12 @@ const expectations = [
       styles: fakeStyles,
       formulae: {},
       siFormulae: 0,
+      vmlDrawings: [],
+      vmlDrawingsCount: 0,
+      media: [
+        {name: 'image1', extension: 'jpg'},
+        {name: 'image0', extension: 'jpg'},
+      ],
     },
   },
   {

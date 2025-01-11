@@ -71,5 +71,6 @@
         <evenFooter>&amp;Lexceljs&amp;C&amp;F&amp;RPage &amp;P evenHeader</evenFooter>
         <firstHeader>Hello Exceljs</firstHeader>
         <firstFooter>Hello World</firstFooter>
-    </headerFooter>           
+    </headerFooter>
+    <legacyDrawingHF r:id="rId2" />
 </worksheet>
