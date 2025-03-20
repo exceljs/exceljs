@@ -5,6 +5,8 @@ const ExcelJS = verquire('exceljs');
 
 const IMAGE_FILENAME = `${__dirname}/../data/image.png`;
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
+const IMAGE_XLSX_FILE_NAME = `${__dirname}/../data/images.xlsx`;
+
 const fsReadFileAsync = promisify(fs.readFile);
 
 // =============================================================================
@@ -288,6 +290,133 @@ describe('Workbook', () => {
           expect(Buffer.compare(imageData, image1.buffer)).to.equal(0);
           expect(Buffer.compare(imageData, image2.buffer)).to.equal(0);
         });
+    });
+  });
+
+  describe('Image Manipulation', () => {
+    describe('Functionality Tests', () => {
+      it('should return sheetImageId when adding an image', () => {
+        const wb = new ExcelJS.Workbook();
+        const ws = wb.addWorksheet('blort');
+
+        const imageId = wb.addImage({
+          filename: IMAGE_FILENAME,
+          extension: 'jpeg',
+        });
+
+        const sheetImageId = ws.addImage(imageId, 'C3:E6');
+        expect(sheetImageId).to.be.a('string');
+        expect(
+          ws.getImages().some(img => img.sheetImageId === sheetImageId)
+        ).to.be.true();
+      });
+
+      it('should return sheetImageId for existing images in a file', () => {
+        const wb = new ExcelJS.Workbook();
+
+        return wb.xlsx.readFile(IMAGE_XLSX_FILE_NAME).then(() => {
+          const ws = wb.getWorksheet(1); // 假设图片在第一个工作表中
+          const images = ws.getImages();
+          expect(images.length).to.be.greaterThan(0);
+
+          images.forEach(image => {
+            expect(image.sheetImageId).to.be.a('string');
+          });
+        });
+      });
+    });
+
+    describe('Unit Tests', () => {
+      it('should add and remove an embedded image', () => {
+        const wb = new ExcelJS.Workbook();
+        const ws = wb.addWorksheet('blort');
+
+        const imageId = wb.addImage({
+          filename: IMAGE_FILENAME,
+          extension: 'jpeg',
+        });
+
+        const sheetImageId = ws.addImage(imageId, 'C3:E6');
+        expect(ws.getImages().length).to.equal(1);
+
+        ws.removeImage(sheetImageId);
+        expect(ws.getImages().length).to.equal(0);
+      });
+
+      it('should add and remove a background image', () => {
+        const wb = new ExcelJS.Workbook();
+        const ws = wb.addWorksheet('blort');
+
+        const imageId = wb.addImage({
+          filename: IMAGE_FILENAME,
+          extension: 'jpeg',
+        });
+
+        const sheetImageId = ws.addBackgroundImage(imageId);
+        expect(ws.getBackgroundImageId()).to.equal(imageId);
+
+        ws.removeImage(sheetImageId);
+        expect(ws.getBackgroundImageId()).to.be.undefined();
+      });
+    });
+
+    describe('Integration Tests', () => {
+      it('should add and remove an embedded image without affecting the original', () => {
+        const wb = new ExcelJS.Workbook();
+        const ws = wb.addWorksheet('blort');
+
+        // Step 1: Add an initial image
+        const wbImageId = wb.addImage({
+          filename: IMAGE_FILENAME,
+          extension: 'jpeg',
+        });
+        const firstSheetImageId = ws.addImage(wbImageId, 'C3:E6');
+        expect(ws.getImages().length).to.equal(1);
+
+        // Step 2: Retrieve the existing image and add a new one
+        const secondSheetImageId = ws.addImage(wbImageId, 'F3:H6');
+        expect(ws.getImages().length).to.equal(2);
+
+        // Step 3: Remove the original sheet image
+        ws.removeImage(firstSheetImageId);
+        expect(ws.getImages().length).to.equal(1);
+
+        // Step 4: Verify the original image is unaffected
+        const remainingImage = ws.getImages()[0];
+        expect(remainingImage.sheetImageId).to.equal(secondSheetImageId);
+        expect(remainingImage.range.tl.col).to.equal(5);
+        expect(remainingImage.range.tl.row).to.equal(2);
+      });
+
+      it('should add and remove a background image without affecting other images', () => {
+        const wb = new ExcelJS.Workbook();
+        const ws = wb.addWorksheet('blort');
+
+        // Add an embedded image
+        const wbImageId = wb.addImage({
+          filename: IMAGE_FILENAME,
+          extension: 'jpeg',
+        });
+        const normalSheetImageId = ws.addImage(wbImageId, 'C3:E6');
+        expect(ws.getImages().length).to.equal(1);
+
+        // Add a background image
+        const backgroundImageId = wb.addImage({
+          filename: IMAGE_FILENAME,
+          extension: 'jpeg',
+        });
+        const backgroundSheetImageId = ws.addBackgroundImage(backgroundImageId);
+        expect(ws.getBackgroundImageId()).to.equal(backgroundImageId);
+
+        // Remove the background image
+        ws.removeImage(backgroundSheetImageId);
+        expect(ws.getBackgroundImageId()).to.be.undefined();
+
+        // Verify the normal image is unaffected
+        expect(ws.getImages().length).to.equal(1);
+        const remainingImage = ws.getImages()[0];
+        expect(remainingImage.sheetImageId).to.equal(normalSheetImageId);
+      });
     });
   });
 });

@@ -1328,20 +1328,29 @@ export interface Worksheet {
 
 	/**
 	 * Using the image id from `Workbook.addImage`, set the background to the worksheet
+	 * Returns the sheetImageId of the background image
 	 */
-	addBackgroundImage(imageId: number): void;
+	addBackgroundImage(imageId: number): string;
 
 	getBackgroundImageId(): string;
 
 	/**
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
+	 * Returns the sheetImageId of the embedded image
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): void;
+	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): string;
+
+	/**
+	 * Using the sheetImageId from `Worksheet.addImage` or `Worksheet.addBackgroundImage`,
+	 * Remove an embedded image or background image from the worksheet
+	 */
+	removeImage(sheetImageId: string): void;
 
 	getImages(): Array<{
 		type: 'image',
 		imageId: string;
+		sheetImageId: string;
 		range: ImageRange;
 	}>;
 

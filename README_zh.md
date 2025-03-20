@@ -2019,6 +2019,24 @@ worksheet.addImage(imageId2, {
   }
 });
 ```
+### 从工作表中移除图片[⬆](#目录)<!-- Link generated with jump2header -->
+
+您可以通过指定图像的 `sheetImageId` 从工作表中移除图像。
+
+```javascript
+// 移除工作表图像
+const sheetImageId = worksheet.addImage(imageId2, "B2:D6");
+worksheet.removeImage(sheetImageId);
+
+// 移除工作表背景图像
+const backgroundSheetImageId = worksheet.addBackgroundImage(imageId1);
+worksheet.removeImage(backgroundSheetImageId);
+
+// 从 getImages() 获取 sheetImageId 并移除工作表图像
+const allSheetImage = worksheet.getImages();
+const firstSheetImageId = allSheetImage[0].sheetImageId;
+worksheet.removeImage(firstSheetImageId);
+```
 
 ## 工作表保护[⬆](#目录)<!-- Link generated with jump2header -->
 
