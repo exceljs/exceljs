@@ -2344,7 +2344,7 @@ await workbook.commit();
 | options.worksheets    |指定是否去触发(`'emit'`)或忽略(`'ignore'`)工作表。默认值是`'emit'` |
 
 ```js
-const workbook = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
+const workbookReader = new ExcelJS.stream.xlsx.WorkbookReader('./file.xlsx');
 for await (const worksheetReader of workbookReader) {
   for await (const row of worksheetReader) {
     // ...
