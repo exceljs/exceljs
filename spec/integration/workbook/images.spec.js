@@ -289,5 +289,52 @@ describe('Workbook', () => {
           expect(Buffer.compare(imageData, image2.buffer)).to.equal(0);
         });
     });
+
+    it('positions images correctly with custom column widths', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('custom');
+
+      let wb2;
+      let ws2;
+
+      // Set custom column widths
+      ws.columns = [
+        {width: 5},
+        {width: 30}, // Big width
+        {width: 10},
+      ];
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'jpeg',
+      });
+
+      // Add image using tl+ext (which depends on column width)
+      ws.addImage(imageId, {
+        tl: {col: 1.5, row: 1},
+        ext: {width: 150, height: 100},
+        editAs: 'oneCell',
+      });
+
+      return wb.xlsx
+        .writeFile(TEST_XLSX_FILE_NAME)
+        .then(() => {
+          wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(() => {
+          ws2 = wb2.getWorksheet('custom');
+          expect(ws2).to.not.be.undefined();
+
+          const images = ws2.getImages();
+          expect(images.length).to.equal(1);
+
+          const imageDesc = images[0];
+          expect(imageDesc.range.tl.col).to.be.closeTo(1.5, 0.01);
+          expect(imageDesc.range.tl.row).to.be.closeTo(1, 0.01);
+          expect(imageDesc.range.ext.width).to.equal(150);
+          expect(imageDesc.range.ext.height).to.equal(100);
+        });
+    });
   });
 });
