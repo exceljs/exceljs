@@ -1,0 +1,39 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: Publishing version (tag name)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ExcelJS repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.version }}
+
+      - name: Build
+        uses: ./.github/actions/exceljs/steps/build
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish to NPM
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access=public
+
+      - name: Setup NPM tags
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm dist-tag add exceljs@${{ inputs.version }} 24_1
+          npm dist-tag add exceljs@${{ inputs.version }} 24_2
+          npm dist-tag add exceljs@${{ inputs.version }} 25_1
