@@ -38,7 +38,7 @@ jobs:
           key: v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-${{ hashFiles('**/package.json') }}
           restore-keys: |
             v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-
-      - run: npm install
+      - run: npm ci
       - run: npm test
         env:
           CI: true
@@ -62,7 +62,7 @@ jobs:
           key: v1-npm-${{ hashFiles('**/package.json') }}
           restore-keys: |
             v1-npm-
-      - run: npm install
+      - run: npm ci
       - run: npm run benchmark
         env:
           CI: true
@@ -86,8 +86,8 @@ jobs:
           key: v1-npm-${{ hashFiles('**/package.json') }}
           restore-keys: |
             v1-npm-
-      - run: npm install
-      - run: npm install typescript
+      - run: npm ci
+      - run: npm ci typescript
       - run: tsc index.d.ts
         env:
           CI: true
