@@ -1,5 +1,5 @@
 {
-  "name": "exceljs",
+  "name": "@deranged/exceljs",
   "version": "4.4.0",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
