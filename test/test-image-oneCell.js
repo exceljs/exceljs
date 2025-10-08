@@ -19,6 +19,17 @@ ws.addImage(imageId, {
   editAs: 'oneCell',
 });
 
+// Add another image with twoCell editAs
+const imageId2 = wb.addImage({
+  filename: path.join(__dirname, 'data/image2.png'),
+  extension: 'png',
+});
+ws.addImage(imageId2, {
+  tl: {col: 3.1125, row: 0.4},
+  br: {col: 5.101046875, row: 3.4},
+  editAs: 'twoCell',
+});
+
 const stopwatch = new HrStopwatch();
 stopwatch.start();
 wb.xlsx

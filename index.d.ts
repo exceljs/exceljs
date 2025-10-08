@@ -400,6 +400,8 @@ export type CellValue =
 
 	export type CommentEditAs = 'twoCells' | 'oneCells' | 'absolute';
 
+	export type ImageEditAs = 'twoCell' | 'oneCell' | 'absolute';
+
 	export interface Comment {
 		texts?: RichText[];
 		margins?: Partial<CommentMargins>;
@@ -1337,7 +1339,7 @@ export interface Worksheet {
 	 * Using the image id from `Workbook.addImage`,
 	 * embed an image within the worksheet to cover a range
 	 */
-	addImage(imageId: number, range: string | { editAs?: string; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: string; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): void;
+	addImage(imageId: number, range: string | { editAs?: ImageEditAs; } & ImageRange & { hyperlinks?: ImageHyperlinkValue } | { editAs?: ImageEditAs; } & ImagePosition & { hyperlinks?: ImageHyperlinkValue }): void;
 
 	getImages(): Array<{
 		type: 'image',
