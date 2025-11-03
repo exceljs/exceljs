@@ -1764,6 +1764,14 @@ export class Workbook {
 	getWorksheet(indexOrName?: number | string): Worksheet | undefined;
 
 	/**
+	 * Get the first worksheet in the workbook.
+	 * This method finds the first worksheet that exists (not deleted), regardless of its id.
+	 *
+	 * @returns The first worksheet, or undefined if no worksheets exist.
+	 */
+	getFirstWorksheet(): Worksheet | undefined;
+
+	/**
 	 * Iterate over all sheets.
 	 *
 	 * Note: `workbook.worksheets.forEach` will still work but this is better.
