@@ -35,6 +35,22 @@ function main(filepath) {
     metric: 'sum', // only 'sum' possible for now
   });
 
+  // Test custom column widths preservation
+  const worksheet3 = workbook.addWorksheet('Sheet3 - Custom Widths');
+
+  // Set custom column widths before creating pivot table
+  worksheet3.getColumn(1).width = 30; // Wide for labels
+  worksheet3.getColumn(2).width = 15; // Narrower for data
+
+  worksheet3.addPivotTable({
+    sourceSheet: worksheet1,
+    rows: ['A', 'B'],
+    columns: ['C'],
+    values: ['H'],
+    metric: 'sum',
+    applyWidthHeightFormats: '0', // Preserve worksheet column widths
+  });
+
   save(workbook, filepath);
 }
 
