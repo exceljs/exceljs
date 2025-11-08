@@ -23,18 +23,17 @@ describe('typescript', () => {
     const ws = wb.addWorksheet('blort');
     ws.getCell('A1').value = 7;
 
+    const { PassThrough } = require('stream');
+    const stream = new PassThrough();
     const wb2 = new ExcelJS.Workbook();
-    const stream = wb2.xlsx.createInputStream();
-    await wb.xlsx.write(stream);
-    stream.end();
-
-    await new Promise((resolve, reject) => {
-      stream.on('done', () => {
-        const ws2 = wb2.getWorksheet('blort');
-        expect(ws2.getCell('A1').value).to.equal(7);
-        resolve();
-      });
-      stream.on('error', reject);
-    })
+    
+    // Write to stream and read from it
+    const writePromise = wb.xlsx.write(stream);
+    const readPromise = wb2.xlsx.read(stream);
+    
+    await Promise.all([writePromise, readPromise]);
+    
+    const ws2 = wb2.getWorksheet('blort');
+    expect(ws2.getCell('A1').value).to.equal(7);
   });
 });
