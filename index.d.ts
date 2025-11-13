@@ -1167,7 +1167,7 @@ export interface Worksheet {
 	 * Cut one or more columns (columns to the right are shifted left)
 	 * and optionally insert more
 	 *
-	 * If column properties have been definde, they will be cut or moved accordingly
+	 * If column properties have been defined, they will be cut or moved accordingly
 	 *
 	 * Known Issue: If a splice causes any merged cells to move, the results may be unpredictable
 	 *
