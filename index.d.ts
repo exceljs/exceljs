@@ -1,5 +1,3 @@
-declare interface Buffer extends ArrayBuffer { }
-
 export declare enum RelationshipType {
 	None = 0,
 	OfficeDocument = 1,
