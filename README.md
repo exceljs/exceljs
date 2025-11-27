@@ -355,6 +355,10 @@ const worksheet = workbook.getWorksheet(1);
 // This method finds and returns the first worksheet that exists, regardless of its id
 const firstWorksheet = workbook.getFirstWorksheet();
 
+// get the first visible worksheet (skips hidden and veryHidden sheets)
+// This method finds and returns the first worksheet with state === 'visible'
+const firstVisibleWorksheet = workbook.getFirstVisibleWorksheet();
+
 // access by `worksheets` array:
 workbook.worksheets[0]; //the first one;
 

@@ -277,6 +277,92 @@ describe('Workbook', () => {
     });
   });
 
+  describe('#getFirstVisibleWorksheet', () => {
+    it('should return the first visible worksheet', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      wb.addWorksheet('Sheet2');
+      wb.addWorksheet('Sheet3');
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.equal(ws1);
+      expect(firstVisibleWs.name).to.equal('Sheet1');
+    });
+
+    it('should return the first visible worksheet when first sheet is hidden', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+      wb.addWorksheet('Sheet3');
+
+      ws1.state = 'hidden';
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.equal(ws2);
+      expect(firstVisibleWs.name).to.equal('Sheet2');
+    });
+
+    it('should return the first visible worksheet after deletion of visible sheet', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+      wb.addWorksheet('Sheet3');
+
+      wb.removeWorksheet(ws1.id);
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.equal(ws2);
+      expect(firstVisibleWs.name).to.equal('Sheet2');
+    });
+
+    it('should return undefined if no worksheets exist', () => {
+      const wb = new Excel.Workbook();
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.be.undefined();
+    });
+
+    it('should return undefined if all worksheets are hidden', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+
+      ws1.state = 'hidden';
+      ws2.state = 'hidden';
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.be.undefined();
+    });
+
+    it('should return undefined if all worksheets are veryHidden', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+
+      ws1.state = 'veryHidden';
+      ws2.state = 'veryHidden';
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.be.undefined();
+    });
+
+    it('should return the first visible worksheet when some are hidden and some veryHidden', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+      const ws3 = wb.addWorksheet('Sheet3');
+      wb.addWorksheet('Sheet4');
+
+      ws1.state = 'hidden';
+      ws2.state = 'visible';
+      ws3.state = 'veryHidden';
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.equal(ws2);
+      expect(firstVisibleWs.name).to.equal('Sheet2');
+    });
+  });
+
   describe('duplicateRows', () => {
     it('inserts duplicates', () => {
       const wb = new Excel.Workbook();

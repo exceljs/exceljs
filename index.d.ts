@@ -1769,7 +1769,16 @@ export class Workbook {
 	 */
 	getFirstWorksheet(): Worksheet | undefined;
 
-	/**
+    /**
+     * Get the first visible worksheet (skips hidden and veryHidden sheets)
+     * This method finds and returns the first worksheet with state === 'visible'
+     *
+     * @returns The first worksheet, or undefined if no worksheets exist.
+     */
+    getFirstVisibleWorksheet(): Worksheet | undefined;
+
+
+    /**
 	 * Iterate over all sheets.
 	 *
 	 * Note: `workbook.worksheets.forEach` will still work but this is better.
