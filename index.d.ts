@@ -1,5 +1,3 @@
-declare interface Buffer extends ArrayBuffer { }
-
 export declare enum RelationshipType {
 	None = 0,
 	OfficeDocument = 1,
@@ -1764,6 +1762,23 @@ export class Workbook {
 	getWorksheet(indexOrName?: number | string): Worksheet | undefined;
 
 	/**
+	 * Get the first worksheet in the workbook.
+	 * This method finds the first worksheet that exists (not deleted), regardless of its id.
+	 *
+	 * @returns The first worksheet, or undefined if no worksheets exist.
+	 */
+	getFirstWorksheet(): Worksheet | undefined;
+
+    /**
+     * Get the first visible worksheet (skips hidden and veryHidden sheets)
+     * This method finds and returns the first worksheet with state === 'visible'
+     *
+     * @returns The first worksheet, or undefined if no worksheets exist.
+     */
+    getFirstVisibleWorksheet(): Worksheet | undefined;
+
+
+    /**
 	 * Iterate over all sheets.
 	 *
 	 * Note: `workbook.worksheets.forEach` will still work but this is better.

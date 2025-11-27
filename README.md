@@ -351,6 +351,14 @@ const worksheet = workbook.getWorksheet('My Sheet');
 // If you need to access all worksheets in a loop please look to the next example.
 const worksheet = workbook.getWorksheet(1);
 
+// get the first worksheet (alternative to getWorksheet(1) when sheets may be deleted)
+// This method finds and returns the first worksheet that exists, regardless of its id
+const firstWorksheet = workbook.getFirstWorksheet();
+
+// get the first visible worksheet (skips hidden and veryHidden sheets)
+// This method finds and returns the first worksheet with state === 'visible'
+const firstVisibleWorksheet = workbook.getFirstVisibleWorksheet();
+
 // access by `worksheets` array:
 workbook.worksheets[0]; //the first one;
 

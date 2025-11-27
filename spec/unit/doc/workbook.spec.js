@@ -217,6 +217,152 @@ describe('Workbook', () => {
     expect(wb.getWorksheet(1) === sheet).to.equal(true);
   });
 
+  describe('#getFirstWorksheet', () => {
+    it('should return the first worksheet', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      wb.addWorksheet('Sheet2');
+      wb.addWorksheet('Sheet3');
+
+      const firstWs = wb.getFirstWorksheet();
+      expect(firstWs).to.equal(ws1);
+      expect(firstWs.name).to.equal('Sheet1');
+    });
+
+    it('should return the first existing worksheet after deletion', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+      wb.addWorksheet('Sheet3');
+
+      wb.removeWorksheet(ws1.id);
+
+      const firstWs = wb.getFirstWorksheet();
+      expect(firstWs).to.equal(ws2);
+      expect(firstWs.name).to.equal('Sheet2');
+    });
+
+    it('should return the first existing worksheet after multiple deletions', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+      const ws3 = wb.addWorksheet('Sheet3');
+      wb.addWorksheet('Sheet4');
+
+      wb.removeWorksheet(ws1.id);
+      wb.removeWorksheet(ws2.id);
+
+      const firstWs = wb.getFirstWorksheet();
+      expect(firstWs).to.equal(ws3);
+      expect(firstWs.name).to.equal('Sheet3');
+    });
+
+    it('should return undefined if no worksheets exist', () => {
+      const wb = new Excel.Workbook();
+
+      const firstWs = wb.getFirstWorksheet();
+      expect(firstWs).to.be.undefined();
+    });
+
+    it('should return undefined if all worksheets are deleted', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+
+      wb.removeWorksheet(ws1.id);
+      wb.removeWorksheet(ws2.id);
+
+      const firstWs = wb.getFirstWorksheet();
+      expect(firstWs).to.be.undefined();
+    });
+  });
+
+  describe('#getFirstVisibleWorksheet', () => {
+    it('should return the first visible worksheet', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      wb.addWorksheet('Sheet2');
+      wb.addWorksheet('Sheet3');
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.equal(ws1);
+      expect(firstVisibleWs.name).to.equal('Sheet1');
+    });
+
+    it('should return the first visible worksheet when first sheet is hidden', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+      wb.addWorksheet('Sheet3');
+
+      ws1.state = 'hidden';
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.equal(ws2);
+      expect(firstVisibleWs.name).to.equal('Sheet2');
+    });
+
+    it('should return the first visible worksheet after deletion of visible sheet', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+      wb.addWorksheet('Sheet3');
+
+      wb.removeWorksheet(ws1.id);
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.equal(ws2);
+      expect(firstVisibleWs.name).to.equal('Sheet2');
+    });
+
+    it('should return undefined if no worksheets exist', () => {
+      const wb = new Excel.Workbook();
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.be.undefined();
+    });
+
+    it('should return undefined if all worksheets are hidden', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+
+      ws1.state = 'hidden';
+      ws2.state = 'hidden';
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.be.undefined();
+    });
+
+    it('should return undefined if all worksheets are veryHidden', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+
+      ws1.state = 'veryHidden';
+      ws2.state = 'veryHidden';
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.be.undefined();
+    });
+
+    it('should return the first visible worksheet when some are hidden and some veryHidden', () => {
+      const wb = new Excel.Workbook();
+      const ws1 = wb.addWorksheet('Sheet1');
+      const ws2 = wb.addWorksheet('Sheet2');
+      const ws3 = wb.addWorksheet('Sheet3');
+      wb.addWorksheet('Sheet4');
+
+      ws1.state = 'hidden';
+      ws2.state = 'visible';
+      ws3.state = 'veryHidden';
+
+      const firstVisibleWs = wb.getFirstVisibleWorksheet();
+      expect(firstVisibleWs).to.equal(ws2);
+      expect(firstVisibleWs.name).to.equal('Sheet2');
+    });
+  });
+
   describe('duplicateRows', () => {
     it('inserts duplicates', () => {
       const wb = new Excel.Workbook();
