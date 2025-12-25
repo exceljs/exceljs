@@ -2629,9 +2629,10 @@ An Excel formula for calculating values on the fly.
   Note that while the cell type will be Formula, the cell may have an effectiveType value that will
   be derived from the result value.
 
-Note that ExcelJS cannot process the formula to generate a result, it must be supplied.
-
-Note that function semantic names must be in English and the separator must be a comma.
+Notes:
+* ExcelJS cannot process the formula to generate a result, it must be supplied.
+* Function semantic names must be in English and the separator must be a comma.
+* Do not enter a leading `=` before the formula.
 
 E.g.
 
