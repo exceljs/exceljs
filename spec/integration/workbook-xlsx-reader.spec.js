@@ -410,4 +410,20 @@ describe('WorkbookReader', () => {
       );
     });
   });
+
+  describe('HAN CELL compatibility', () => {
+    it('should read files created by HAN CELL (Korean spreadsheet software)', async () => {
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.readFile('./spec/integration/data/hancell-file.xlsx');
+
+      const worksheet = workbook.getWorksheet(1);
+      expect(worksheet).to.be.ok;
+      expect(worksheet.name).to.equal('no build');
+      expect(worksheet.rowCount).to.equal(2);
+
+      // Verify data can be read
+      expect(worksheet.getCell('A1').value).to.be.ok;
+      expect(worksheet.getCell('G2').value).to.equal(90);
+    });
+  });
 });
