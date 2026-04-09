@@ -19,4 +19,4 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           files: '["dist/*.js"]'
           with-same: "false"
-          build-assets: "npm run install-build"
+          build-assets: "npm run prepare-and-build"
