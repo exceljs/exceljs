@@ -1,16 +1,26 @@
 {
-  "name": "exceljs",
+  "name": "@zklogic/exceljs",
   "version": "4.4.0",
-  "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
+  "description": "Excel Workbook Manager - Read and Write xlsx and csv Files. Maintained fork of exceljs with EOL dependencies resolved.",
   "private": false,
   "license": "MIT",
   "author": {
-    "name": "Guyon Roche",
-    "email": "guyon@live.com"
+    "name": "Arfan Khalil Mughal",
+    "email": "arfankhalil@hotmail.com",
+    "url": "https://github.com/ArfanKhalilMughal"
+  },
+  "forkedFrom": {
+    "package": "exceljs",
+    "repository": "https://github.com/exceljs/exceljs",
+    "author": "Guyon Roche"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "https://github.com/ArfanKhalilMughal/exceljs.git"
+  },
+  "bugs": {
+    "email": "arfankhalil@hotmail.com",
+    "url": "https://github.com/ArfanKhalilMughal/exceljs/issues"
   },
   "engines": {
     "node": ">=18.0.0"

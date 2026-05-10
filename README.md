@@ -1,4 +1,54 @@
-# ExcelJS
+# ExcelJS — Security-Patched Fork
+
+> **This is a maintained fork of [exceljs/exceljs](https://github.com/exceljs/exceljs)
+> ([npm: exceljs](https://www.npmjs.com/package/exceljs)) with EOL and deprecated
+> dependencies resolved. All original functionality is preserved.**
+
+| | Original | This Fork |
+|---|---|---|
+| **GitHub** | [exceljs/exceljs](https://github.com/exceljs/exceljs) | [ArfanKhalilMughal/exceljs](https://github.com/ArfanKhalilMughal/exceljs) |
+| **Branch** | `master` | `fix/dependency-security` |
+| **Node.js** | `>=8.3.0` | `>=18.0.0` |
+
+## Changes in This Fork
+
+- **`saxes@^6.0.0` → [`@zklogic/saxes@^7.0.1`](https://www.npmjs.com/package/@zklogic/saxes)**
+  Maintained fork of `saxes`; replaces the EOL `xmlchars` transitive dep with
+  [`@zklogic/xmlchars`](https://www.npmjs.com/package/@zklogic/xmlchars).
+
+- **`unzipper@^0.10.11` → `unzipper@^0.11.6`**
+  Eliminates `node-int64@0.4.0` (sole version, published 2014, EOL) from the
+  dependency tree. `0.11.x` also drops legacy deps `binary`, `fstream`,
+  `buffer-indexof-polyfill`, `setimmediate`, and `listenercount`.
+
+- **`uuid@^8.3.0` → `uuid@^11.0.3`**
+  `uuid@8` and all versions through `v10` carry an official npm deprecation flag.
+  `v11` retains CJS support (`main: ./dist/cjs/index.js`); the single call site
+  `const {v4: uuidv4} = require('uuid')` is unchanged.
+
+- **`engines.node` bumped to `>=18.0.0`**
+  Required by `@zklogic/saxes@7`.
+
+- **`overrides.please-upgrade-node` pinned to `3.1.0`**
+  Fixes `husky@4` postinstall crash on Node 20 caused by a breaking change in
+  `please-upgrade-node@3.2.0`.
+
+- **`grunt-contrib-watch` removed from devDependencies**
+  Was declared but never loaded in `gruntfile.js`.
+
+## Installation (this fork)
+
+```shell
+npm install @zklogic/exceljs
+```
+
+Or point directly in `package.json`:
+
+```json
+"exceljs": "npm:@zklogic/exceljs@^4.4.0"
+```
+
+---
 
 [![Build Status](https://github.com/exceljs/exceljs/actions/workflows/tests.yml/badge.svg?branch=master&event=push)](https://github.com/exceljs/exceljs/actions/workflows/tests.yml)
 
@@ -10,7 +60,7 @@ Reverse engineered from Excel spreadsheet files as a project.
 
 * [中文文档](README_zh.md)
 
-# Installation
+# Installation (original package)
 
 ```shell
 npm install exceljs
