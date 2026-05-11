@@ -1,93 +1,84 @@
-name: Tests
+name: CI/CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, "renovate/*" ]
+    tags: [ "v*" ]
   pull_request:
-    branches: [ '**' ]
+    branches: [ master ]
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   test:
+    if: "!startsWith(github.ref, 'refs/tags/')"
     timeout-minutes: 10
-    name: Node v${{ matrix.node-version }} on ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        node-version: [10.x, 12.x, 14.x, 16.x, 17.x, 18.x, 19.x, 20.x]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-
+        node-version: [18.x, 20.x, 22.x]
     steps:
-      - name: Set git config
-        shell: bash
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.symlinks true
-        if: runner.os == 'Windows'
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #latest v4. TODO upgrade
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d #latest  v3. TODO upgrade
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Create the npm cache directory
-        run: mkdir npm-cache && npm config set cache ./npm-cache --global
-      - name: Cache node modules
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 #latest v3 TODO upgrade
-        with:
-          path: ./npm-cache
-          key: v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-
-      - run: npm install
+          cache: npm
+      - run: npm ci
       - run: npm test
         env:
           CI: true
 
   benchmark:
+    if: "!startsWith(github.ref, 'refs/tags/')"
     timeout-minutes: 15
     name: Measure performance impact of changes
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #latest v4. TODO upgrade
-      - uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d #latest  v3. TODO upgrade
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - name: Create the npm cache directory
-        run: mkdir npm-cache && npm config set cache ./npm-cache --global
-      - name: Cache node modules
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 #latest v3 TODO upgrade
-        with:
-          path: ./npm-cache
-          key: v1-npm-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            v1-npm-
-      - run: npm install
+          node-version: 20.x
+          cache: npm
+      - run: npm ci
       - run: npm run benchmark
         env:
           CI: true
 
   typescript:
+    if: "!startsWith(github.ref, 'refs/tags/')"
     timeout-minutes: 15
     name: Ensure typescript compatibility
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #latest v4. TODO upgrade
-      - uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d #latest  v3. TODO upgrade
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - name: Create the npm cache directory
-        run: mkdir npm-cache && npm config set cache ./npm-cache --global
-      - name: Cache node modules
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 #latest v3 TODO upgrade
-        with:
-          path: ./npm-cache
-          key: v1-npm-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            v1-npm-
-      - run: npm install
-      - run: npm install typescript
+          node-version: 20.x
+          cache: npm
+      - run: npm ci
       - run: tsc index.d.ts
         env:
           CI: true
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
