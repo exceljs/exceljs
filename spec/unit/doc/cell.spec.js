@@ -122,6 +122,14 @@ describe('Cell', () => {
     expect(a1.value).to.deep.equal({formula: 'A3'});
     expect(a1.type).to.equal(Enums.ValueType.Formula);
 
+    // falsy cached results are still valid formula results
+    for (const result of [0, false, '']) {
+      formulaValue = {formula: 'A4', result};
+      expect((a1.value = formulaValue)).to.deep.equal(formulaValue);
+      expect(a1.value).to.deep.equal(formulaValue);
+      expect(a1.type).to.equal(Enums.ValueType.Formula);
+    }
+
     const hyperlinkValue = {
       hyperlink: 'http://www.link.com',
       text: 'www.link.com',
