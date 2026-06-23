@@ -51,6 +51,22 @@ const expectations = [
     tests: ['render', 'renderIn', 'parse'],
   },
   {
+    title: 'Wrap Text explicit false',
+    create: () => new AlignmentXform(),
+    preparedModel: {wrapText: true},
+    xml: '<alignment wrapText="0"/>',
+    parsedModel: null,
+    tests: ['parse'],
+  },
+  {
+    title: 'Shrink To Fit explicit false',
+    create: () => new AlignmentXform(),
+    preparedModel: {wrapText: true},
+    xml: '<alignment shrinkToFit="0"/>',
+    parsedModel: null,
+    tests: ['parse'],
+  },
+  {
     title: 'Indent 1',
     create: () => new AlignmentXform(),
     preparedModel: {indent: 1},
