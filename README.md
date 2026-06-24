@@ -6,14 +6,10 @@ Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
 Reverse engineered from Excel spreadsheet files as a project.
 
-# Translations
-
-* [中文文档](README_zh.md)
-
 # Installation
 
 ```shell
-npm install exceljs
+npm install @mito3p/exceljs
 ```
 
 # New Features!
