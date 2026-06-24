@@ -1,6 +1,6 @@
 {
-  "name": "exceljs",
-  "version": "4.4.0",
+  "name": "@mito3p/exceljs",
+  "version": "4.5.0",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "https://github.com/ldefelici-mitobit/exceljs/tree/feature/quote-prefix"
   },
   "engines": {
-    "node": ">=8.3.0"
+    "node": ">=12.0.0"
   },
   "main": "./excel.js",
   "browser": "./dist/exceljs.min.js",
@@ -36,6 +36,7 @@
     "test:all": "npm run test:native && npm run test:es5",
     "test:native": "npm run test:full",
     "test:unit": "mocha --require spec/config/setup --require spec/config/setup-unit spec/unit --recursive",
+    "test:escape": "mocha --require spec/config/setup spec/escape --recursive",
     "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
     "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
     "test:browser": "if [ ! -f .disable-test-browser ]; then npm run build && npm run test:jasmine; fi",
@@ -104,7 +105,7 @@
     "saxes": "^5.0.1",
     "tmp": "^0.2.0",
     "unzipper": "^0.10.11",
-    "uuid": "^8.3.0"
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

@@ -299,6 +299,7 @@ export interface Style {
 	protection: Partial<Protection>;
 	border: Partial<Borders>;
 	fill: Fill;
+	quotePrefix: boolean;
 }
 
 export type DataValidationOperator =
@@ -656,6 +657,7 @@ export interface Column {
 	font?: Partial<Font>;
 	alignment?: Partial<Alignment>;
 	protection?: Partial<Protection>;
+	quotePrefix?: boolean;
 
 	toString(): string
 	equivalentTo(other: Column): boolean

@@ -6,14 +6,10 @@ Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
 Reverse engineered from Excel spreadsheet files as a project.
 
-# Translations
-
-* [中文文档](README_zh.md)
-
 # Installation
 
 ```shell
-npm install exceljs
+npm install @mito3p/exceljs
 ```
 
 # New Features!
@@ -117,6 +113,7 @@ To be clear, all contributions added to this library will be included in the lib
           <li><a href="#alignment">Alignment</a></li>
           <li><a href="#borders">Borders</a></li>
           <li><a href="#fills">Fills</a></li>
+          <li><a href="#quote-prefix">Quote Prefix</a></li>
           <li><a href="#rich-text">Rich Text</a></li>
         </ul>
       </li>
@@ -1705,11 +1702,20 @@ For example, Excel only supports angle gradients of 0, 45, 90 and 135.
 Similarly the sequence of stops may also be limited by the UI with positions [0,1] or [0,0.5,1] as the only options.
 Take care with this fill to be sure it is supported by the target XLSX viewers.
 
+### Quote Prefix[⬆](#contents)<!-- Link generated with jump2header -->
+
+Individual cells now support the quote prefix style to escape cell content (es. formula that starts with '=' will treat as simple string)
+
+```javascript
+// fill A1 with red darkVertical stripes
+ws.getCell('A1').quotePrefix = true;
+```
+
 ### Rich Text[⬆](#contents)<!-- Link generated with jump2header -->
 
 Individual cells now support rich text or in-cell formatting.
- Rich text values can control the font properties of any number of sub-strings within the text value.
- See <a href="font">Fonts</a> for a complete list of details on what font properties are supported.
+Rich text values can control the font properties of any number of sub-strings within the text value.
+See <a href="font">Fonts</a> for a complete list of details on what font properties are supported.
 
 ```javascript
 
