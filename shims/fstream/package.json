@@ -1,0 +1,6 @@
+{
+  "name": "fstream",
+  "version": "0.0.0",
+  "description": "Noop shim placeholder. exceljs uses unzipper's Parse stream (not Extract); fstream is only a dependency of unzipper's Extract code path, which exceljs never invokes. Replaced with an empty module to drop deprecated transitive dependencies (fstream, rimraf@2).",
+  "main": "index.js"
+}

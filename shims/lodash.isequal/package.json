@@ -1,0 +1,6 @@
+{
+  "name": "lodash.isequal",
+  "version": "0.0.0",
+  "description": "Shim replacing deprecated lodash.isequal with Node's built-in util.isDeepStrictEqual (as the deprecation notice recommends). @fast-csv/format uses it only for a simple deep-equality check.",
+  "main": "index.js"
+}

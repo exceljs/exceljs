@@ -1,0 +1,6 @@
+{
+  "name": "elliptic",
+  "version": "0.0.0",
+  "description": "Noop shim placeholder. exceljs bundles crypto-browserify (via browserify) for hashing only; ECDSA/ECDH signing code paths are never used, so elliptic is replaced with an empty module to drop an unpatchable transitive vulnerability.",
+  "main": "index.js"
+}
