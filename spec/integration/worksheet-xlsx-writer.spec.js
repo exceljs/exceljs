@@ -406,8 +406,7 @@ describe('WorksheetWriter', () => {
 
       ws.getColumn('A').numFmt = testutils.styles.numFmts.numFmt2;
       ws.getColumn('A').font = testutils.styles.fonts.comicSansUdB16;
-      ws.getColumn('A').alignment =
-        testutils.styles.namedAlignments.middleCentre;
+      ws.getColumn('A').alignment = testutils.styles.namedAlignments.middleCentre;
       ws.getColumn('A').border = testutils.styles.borders.thin;
       ws.getColumn('A').fill = testutils.styles.fills.redGreenDarkTrellis;
 

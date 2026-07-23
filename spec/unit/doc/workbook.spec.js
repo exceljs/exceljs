@@ -232,8 +232,7 @@ describe('Workbook', () => {
       ws.getCell('A2').value = '2.1';
       ws.getCell('A2').alignment = testUtils.styles.namedAlignments.topLeft;
       ws.getCell('B2').value = '2.2';
-      ws.getCell('B2').alignment =
-        testUtils.styles.namedAlignments.middleCentre;
+      ws.getCell('B2').alignment = testUtils.styles.namedAlignments.middleCentre;
       ws.getCell('C2').value = '2.3';
       ws.getCell('C2').alignment = testUtils.styles.namedAlignments.bottomRight;
       ws.getRow(2).numFmt = testUtils.styles.numFmts.numFmt2;
@@ -285,8 +284,7 @@ describe('Workbook', () => {
       ws.getCell('A2').value = '2.1';
       ws.getCell('A2').alignment = testUtils.styles.namedAlignments.topLeft;
       ws.getCell('B2').value = '2.2';
-      ws.getCell('B2').alignment =
-        testUtils.styles.namedAlignments.middleCentre;
+      ws.getCell('B2').alignment = testUtils.styles.namedAlignments.middleCentre;
       ws.getCell('C2').value = '2.3';
       ws.getCell('C2').alignment = testUtils.styles.namedAlignments.bottomRight;
       ws.getRow(2).numFmt = testUtils.styles.numFmts.numFmt2;

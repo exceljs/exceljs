@@ -187,9 +187,7 @@ describe('Worksheet', () => {
         'd',
         {formula: 'ROW()', result: 6},
       ];
-      const newValues = values.map((rVals, i) =>
-        spliceArray(rVals, 2, 0, colValues[i])
-      );
+      const newValues = values.map((rVals, i) => spliceArray(rVals, 2, 0, colValues[i]));
       checkTable('A1', ws, newValues);
     });
 

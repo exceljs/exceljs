@@ -35,14 +35,12 @@ describe('github issues', () => {
         }
       );
 
-      workbookReader.on('worksheet', worksheet =>
-        worksheet.on('row', row => {
-          expect(row.values[1]).to.eql(rowData[0]);
-          expect(row.values[2]).to.equal(rowData[1]);
+      workbookReader.on('worksheet', worksheet => worksheet.on('row', row => {
+        expect(row.values[1]).to.eql(rowData[0]);
+        expect(row.values[2]).to.equal(rowData[1]);
 
-          resolve();
-        })
-      );
+        resolve();
+      }));
       workbookReader.on('error', reject);
 
       workbookReader.read();

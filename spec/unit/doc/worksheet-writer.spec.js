@@ -5,6 +5,7 @@ describe('Workbook Writer', () => {
   it('generates valid xml even when there is no data', () =>
     // issue: https://github.com/guyonroche/exceljs/issues/99
     // PR: https://github.com/guyonroche/exceljs/pull/255
+    // eslint-disable-next-line implicit-arrow-linebreak
     new Promise((resolve, reject) => {
       const mockWorkbook = {
         _openStream() {

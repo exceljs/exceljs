@@ -8,10 +8,16 @@ const expectations = [
     create() {
       return new PageBreaksXform();
     },
-    initialModel: {id: 2, max: 3, min: 1, man: 1},
-    preparedModel: {id: 2, max: 3, min: 1, man: 1},
+    initialModel: {
+      id: 2, max: 3, min: 1, man: 1,
+    },
+    preparedModel: {
+      id: 2, max: 3, min: 1, man: 1,
+    },
     xml: '<brk id="2" max="3" min="1" man="1"/>',
-    parsedModel: {id: 2, max: 3, min: 1, man: 1},
+    parsedModel: {
+      id: 2, max: 3, min: 1, man: 1,
+    },
     tests: ['prepare', 'render', 'renderIn'],
   },
 ];

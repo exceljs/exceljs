@@ -36,18 +36,17 @@ describe('StreamBuf', () => {
     stream.end();
   });
 
-  it('handles buffers', () =>
-    new Promise((resolve, reject) => {
-      const s = fs.createReadStream(path.join(__dirname, 'data/image1.png'));
-      const sb = new StreamBuf();
-      sb.on('finish', () => {
-        const buf = sb.toBuffer();
-        expect(buf.length).to.equal(1672);
-        resolve();
-      });
-      sb.on('error', reject);
-      s.pipe(sb);
-    }));
+  it('handles buffers', () => new Promise((resolve, reject) => {
+    const s = fs.createReadStream(path.join(__dirname, 'data/image1.png'));
+    const sb = new StreamBuf();
+    sb.on('finish', () => {
+      const buf = sb.toBuffer();
+      expect(buf.length).to.equal(1672);
+      resolve();
+    });
+    sb.on('error', reject);
+    s.pipe(sb);
+  }));
   it('handle unsupported type of chunk', async () => {
     const stream = new StreamBuf();
     try {

@@ -6,7 +6,9 @@ const expectations = [
   {
     title: 'Best Fit',
     create: () => new ColXform(),
-    preparedModel: {min: 2, max: 2, width: 10.15625, bestFit: true},
+    preparedModel: {
+      min: 2, max: 2, width: 10.15625, bestFit: true,
+    },
     get parsedModel() {
       return this.preparedModel;
     },

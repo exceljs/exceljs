@@ -4,8 +4,7 @@ const ExcelJS = verquire('exceljs');
 describe('github issues', () => {
   describe('Shared Formulas', () => {
     describe('issue xyz - cells copied as a block treat formulas as values', () => {
-      const explain =
-        'this fails, although the cells look the same in excel. Both cells are created by copying A3:B3 to A4:F19. The first row in the new block work as espected, the rest only has values (when seen through exceljs)';
+      const explain = 'this fails, although the cells look the same in excel. Both cells are created by copying A3:B3 to A4:F19. The first row in the new block work as espected, the rest only has values (when seen through exceljs)';
       it('copied cells should have the right formulas', () => {
         const wb = new ExcelJS.Workbook();
         return wb.xlsx

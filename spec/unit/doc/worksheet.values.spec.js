@@ -569,8 +569,12 @@ describe('Worksheet', () => {
           ];
 
           const values = [
-            {id: '123', name: 'Jack', dob: new Date(), age: 0},
-            {id: '124', name: 'Jill', dob: new Date(), age: 0},
+            {
+              id: '123', name: 'Jack', dob: new Date(), age: 0,
+            },
+            {
+              id: '124', name: 'Jill', dob: new Date(), age: 0,
+            },
           ];
           values.forEach(value => {
             ws.addRow(value);
@@ -880,8 +884,7 @@ describe('Worksheet', () => {
       expect(ws.getSheetValues()).to.deep.equal([
         ,
         [, 11, , 'C1'],
-        [, 21, 'B2'], // eslint-disable-line comma-style
-        ,
+        [, 21, 'B2'],, // eslint-disable-line comma-style
         [, 'end'],
       ]);
     });

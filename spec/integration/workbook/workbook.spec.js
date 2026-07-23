@@ -151,8 +151,7 @@ describe('Workbook', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('printHeader');
 
-      ws.getCell('A1').value =
-        'This is a header row repeated on every printed page';
+      ws.getCell('A1').value = 'This is a header row repeated on every printed page';
       ws.getCell('B2').value = 'This is a header row too';
 
       for (let i = 0; i < 100; i++) {
@@ -177,10 +176,8 @@ describe('Workbook', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('printColumn');
 
-      ws.getCell('A1').value =
-        'This is a column repeated on every printed page';
-      ws.getCell('A2').value =
-        'This is a column repeated on every printed page';
+      ws.getCell('A1').value = 'This is a column repeated on every printed page';
+      ws.getCell('A2').value = 'This is a column repeated on every printed page';
       ws.getCell('B1').value = 'This is a repeated column too';
       ws.getCell('B2').value = 'This is a repeated column too';
 
@@ -207,10 +204,8 @@ describe('Workbook', () => {
       const wb = new ExcelJS.Workbook();
       const ws = wb.addWorksheet('printHeaderAndColumn');
 
-      ws.getCell('A1').value =
-        'This is a column / row repeated on every printed page';
-      ws.getCell('A2').value =
-        'This is a column / row repeated on every printed page';
+      ws.getCell('A1').value = 'This is a column / row repeated on every printed page';
+      ws.getCell('A2').value = 'This is a column / row repeated on every printed page';
       ws.getCell('B1').value = 'This is a repeated column / row too';
       ws.getCell('B2').value = 'This is a repeated column / row too';
 
@@ -619,8 +614,7 @@ describe('Workbook', () => {
 
     describe('Duplicate Rows', () => {
       it('Duplicate rows with styles properly', () => {
-        const fileDuplicateRowTestFile =
-          './spec/integration/data/duplicateRowTest.xlsx';
+        const fileDuplicateRowTestFile = './spec/integration/data/duplicateRowTest.xlsx';
         const wb = new ExcelJS.Workbook();
         return wb.xlsx.readFile(fileDuplicateRowTestFile).then(() => {
           const ws = wb.getWorksheet('duplicateTest');

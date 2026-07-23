@@ -90,8 +90,7 @@ describe('Worksheet', () => {
 
       ws.getColumn('A').numFmt = testUtils.styles.numFmts.numFmt2;
       ws.getColumn('A').font = testUtils.styles.fonts.comicSansUdB16;
-      ws.getColumn('A').alignment =
-        testUtils.styles.namedAlignments.middleCentre;
+      ws.getColumn('A').alignment = testUtils.styles.namedAlignments.middleCentre;
       ws.getColumn('A').border = testUtils.styles.borders.thin;
       ws.getColumn('A').fill = testUtils.styles.fills.redGreenDarkTrellis;
 

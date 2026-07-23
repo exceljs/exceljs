@@ -817,8 +817,7 @@ describe('Worksheet', () => {
     expect(ws.getSheetValues()).to.deep.equal([
       ,
       [, 11, , 'C1'],
-      [, 21, 'B2'], // eslint-disable-line comma-style
-      ,
+      [, 21, 'B2'],, // eslint-disable-line comma-style
       [, 'end'],
     ]);
   });
@@ -1170,22 +1169,20 @@ describe('Worksheet', () => {
   });
 
   describe('When passed a non-Excel file', () => {
-    it('Should not break when importing a .numbers file', () =>
-      new ExcelJS.Workbook().xlsx
-        .readFile(path.resolve(__dirname, 'data', 'numbers.numbers'))
-        .then(workbook => {
-          expect(workbook).to.have.property('worksheets');
-          expect(workbook.worksheets).to.have.length(0);
-        }));
-  });
-
-  it('Should not break when importing an Excel file that contains a chartsheet', () =>
-    new ExcelJS.Workbook().xlsx
-      .readFile(path.resolve(__dirname, 'data', 'chart-sheet.xlsx'))
+    it('Should not break when importing a .numbers file', () => new ExcelJS.Workbook().xlsx
+      .readFile(path.resolve(__dirname, 'data', 'numbers.numbers'))
       .then(workbook => {
         expect(workbook).to.have.property('worksheets');
-        expect(workbook.worksheets).to.have.length(1);
+        expect(workbook.worksheets).to.have.length(0);
       }));
+  });
+
+  it('Should not break when importing an Excel file that contains a chartsheet', () => new ExcelJS.Workbook().xlsx
+    .readFile(path.resolve(__dirname, 'data', 'chart-sheet.xlsx'))
+    .then(workbook => {
+      expect(workbook).to.have.property('worksheets');
+      expect(workbook.worksheets).to.have.length(1);
+    }));
 
   describe('Hidden', () => {
     const fileList = [

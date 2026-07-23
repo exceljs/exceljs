@@ -32,7 +32,7 @@ module.exports = [
       ecmaVersion: 2022,
       sourceType: 'script',
     },
-    extends: ['airbnb-base', 'prettier', 'plugin:n/recommended'],
+    extends: ['airbnb-base', 'plugin:n/recommended'],
     env: {
       es6: true,
       mocha: true,

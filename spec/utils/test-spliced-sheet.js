@@ -719,8 +719,7 @@ module.exports = {
           ,
           4.1,
           'four',
-          'quatre',
-          ,
+          'quatre',,
           4.5,
         ]);
         expect(ws.getRow(5).values).to.deep.equal([
@@ -787,8 +786,7 @@ module.exports = {
           4.1,
           'four',
           'quatre',
-          'quatro',
-          ,
+          'quatro',,
           4.5,
         ]);
         expect(ws.getRow(5).values).to.deep.equal([
@@ -1165,18 +1163,14 @@ module.exports = {
 
         expect(wsSingles.getRow(1).values).to.deep.equal([
           ,
-          '1,1',
-          ,
-          'foo',
-          ,
+          '1,1',,
+          'foo',,
           '1,4',
         ]);
         expect(wsSingles.getRow(4).values).to.deep.equal([
           ,
-          '4,1',
-          ,
-          'qux',
-          ,
+          '4,1',,
+          'qux',,
           '4,4',
         ]);
 
@@ -1266,15 +1260,13 @@ module.exports = {
         expect(wsSingles.getRow(1).values).to.deep.equal([
           ,
           '1,1',
-          'foo',
-          ,
+          'foo',,
           '1,4',
         ]);
         expect(wsSingles.getRow(4).values).to.deep.equal([
           ,
           '4,1',
-          'qux',
-          ,
+          'qux',,
           '4,4',
         ]);
 

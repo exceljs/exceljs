@@ -8,7 +8,9 @@ const expectations = [
     create() {
       return new StyleXform();
     },
-    preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 0},
+    preparedModel: {
+      numFmtId: 0, fontId: 0, fillId: 0, borderId: 0,
+    },
     xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>',
     get parsedModel() {
       return this.preparedModel;
@@ -20,7 +22,9 @@ const expectations = [
     create() {
       return new StyleXform({xfId: true});
     },
-    preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 0, xfId: 0},
+    preparedModel: {
+      numFmtId: 0, fontId: 0, fillId: 0, borderId: 0, xfId: 0,
+    },
     xml: '<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>',
     get parsedModel() {
       return this.preparedModel;
@@ -52,7 +56,9 @@ const expectations = [
     create() {
       return new StyleXform({xfId: true});
     },
-    preparedModel: {numFmtId: 0, fontId: 5, fillId: 0, borderId: 0, xfId: 0},
+    preparedModel: {
+      numFmtId: 0, fontId: 5, fillId: 0, borderId: 0, xfId: 0,
+    },
     xml:
       '<xf numFmtId="0" fontId="5" fillId="0" borderId="0" xfId="0" applyFont="1"/>',
     get parsedModel() {
@@ -65,7 +71,9 @@ const expectations = [
     create() {
       return new StyleXform({xfId: true});
     },
-    preparedModel: {numFmtId: 0, fontId: 0, fillId: 0, borderId: 7, xfId: 0},
+    preparedModel: {
+      numFmtId: 0, fontId: 0, fillId: 0, borderId: 7, xfId: 0,
+    },
     xml:
       '<xf numFmtId="0" fontId="0" fillId="0" borderId="7" xfId="0" applyBorder="1"/>',
     get parsedModel() {
@@ -78,7 +86,9 @@ const expectations = [
     create() {
       return new StyleXform({xfId: true});
     },
-    preparedModel: {numFmtId: 1, fontId: 0, fillId: 0, borderId: 0, xfId: 0},
+    preparedModel: {
+      numFmtId: 1, fontId: 0, fillId: 0, borderId: 0, xfId: 0,
+    },
     xml:
       '<xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>',
     get parsedModel() {
@@ -91,7 +101,9 @@ const expectations = [
     create() {
       return new StyleXform({xfId: true});
     },
-    preparedModel: {numFmtId: 0, fontId: 0, fillId: 2, borderId: 0, xfId: 0},
+    preparedModel: {
+      numFmtId: 0, fontId: 0, fillId: 2, borderId: 0, xfId: 0,
+    },
     xml:
       '<xf numFmtId="0" fontId="0" fillId="2" borderId="0" xfId="0" applyFill="1"/>',
     get parsedModel() {

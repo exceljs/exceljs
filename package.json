@@ -46,7 +46,7 @@
     "type-check": "tsc index.d.ts",
     "clean-build": "pnpm run clean && pnpm run build",
     "lint": "eslint --format node_modules/eslint-friendly-formatter/index.js .",
-    "lint:fix": "prettier-eslint --write $(pwd)'/**/*.js'",
+    "lint:fix": "eslint --format node_modules/eslint-friendly-formatter/index.js --fix .",
     "lint:staged": "lint-staged",
     "clean": "rm -rf build/ && rm -rf dist",
     "benchmark": "node --expose-gc benchmark",
@@ -59,7 +59,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier-eslint --write",
+      "eslint --fix",
       "eslint --format node_modules/eslint-friendly-formatter/index.js"
     ]
   },
@@ -131,9 +131,6 @@
     "husky": "^9.1.7",
     "lint-staged": "^10.2.13",
     "mocha": "^11.7.1",
-    "prettier": "^3.8.3",
-    "prettier-eslint": "^17.1.1",
-    "prettier-eslint-cli": "^9.2.1",
     "regenerator-runtime": "^0.14.0",
     "sax": "^1.2.4",
     "ts-node": "^8.10.2",

@@ -39,7 +39,7 @@ function addDateTable(ws, ref) {
   const now = Date.now();
   const today = now - (now % DAY);
   let dt = new Date(today);
-  const sow = today - ( (dt.getDay() - 1) * DAY );
+  const sow = today - ((dt.getDay() - 1) * DAY);
   const som = sow - (28 * DAY);
   dt = new Date(som);
 

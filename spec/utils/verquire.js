@@ -18,7 +18,7 @@ const basePath = (function() {
   }
   libs.exceljs = require('../../lib/dx-exceljs-fork.nodejs');
   return '../../lib/';
-})();
+}());
 
 module.exports = function verquire(path) {
   if (!libs[path]) {

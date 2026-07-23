@@ -38,11 +38,9 @@ resultSheet.columns = [
 function randomName(length) {
   length = length || 5;
   const text = [];
-  const possible =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (let i = 0; i < length; i++)
-    text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
+  for (let i = 0; i < length; i++) text.push(possible.charAt(Math.floor(Math.random() * possible.length)));
 
   return text.join('');
 }
@@ -96,10 +94,9 @@ function execute(options) {
     useStyles: options.style === 'styled',
     useSharedStrings: options.str === 'shared',
   };
-  const wb =
-    options.workbook === 'doc'
-      ? new Workbook(wbOptions)
-      : new WorkbookWriter(wbOptions);
+  const wb = options.workbook === 'doc'
+    ? new Workbook(wbOptions)
+    : new WorkbookWriter(wbOptions);
   const ws = wb.addWorksheet('data');
   ws.columns = [
     {header: 'Col 1', key: 'key', width: 25},
@@ -154,21 +151,19 @@ function runTests(options) {
     let promise = Promise.resolve();
     for (let pass = 0; pass < passes; pass++) {
       // run each test with a 10 second pause between (to let GC do its stuff)
-      promise = promise.then(() =>
-        runTest(options)
-          .then(result => {
-            results.push(result);
-          })
-          .delay(sleepTime)
-          .then(() => {
-            try {
-              fs.unlinkSync(testFilename);
-            } catch (ex) {
-              console.error(`Error deleting file:${ex.message}`);
-            }
-          })
-          .delay(1000)
-      );
+      promise = promise.then(() => runTest(options)
+        .then(result => {
+          results.push(result);
+        })
+        .delay(sleepTime)
+        .then(() => {
+          try {
+            fs.unlinkSync(testFilename);
+          } catch (ex) {
+            console.error(`Error deleting file:${ex.message}`);
+          }
+        })
+        .delay(1000));
     }
     return promise.then(() => {
       const testResult = reduceResults(results);

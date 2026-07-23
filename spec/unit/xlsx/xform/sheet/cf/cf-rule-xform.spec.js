@@ -58,9 +58,13 @@ const expectations = [
     create() {
       return new CfRuleXform();
     },
-    preparedModel: {type: 'top10', dxfId: 1, priority: 1, rank: 10},
+    preparedModel: {
+      type: 'top10', dxfId: 1, priority: 1, rank: 10,
+    },
     xml: '<cfRule type="top10" dxfId="1" priority="1" rank="10" />',
-    parsedModel: {type: 'top10', dxfId: 1, priority: 1, rank: 10},
+    parsedModel: {
+      type: 'top10', dxfId: 1, priority: 1, rank: 10,
+    },
     tests: ['render', 'parse'],
   },
   {
@@ -98,7 +102,9 @@ const expectations = [
       bottom: true,
     },
     xml: '<cfRule type="top10" dxfId="1" priority="1" rank="10" bottom="1" />',
-    parsedModel: {type: 'top10', dxfId: 1, priority: 1, rank: 10, bottom: true},
+    parsedModel: {
+      type: 'top10', dxfId: 1, priority: 1, rank: 10, bottom: true,
+    },
     tests: ['render', 'parse'],
   },
   {

@@ -38,8 +38,7 @@ describe('Row', () => {
     const values = [
       ,
       5,
-      'Hello, World!',
-      ,
+      'Hello, World!',,
       {hyperlink: 'http://www.hyperlink.com', text: 'www.hyperlink.com'},
     ];
     expect(row1.values).to.deep.equal(values);
@@ -274,7 +273,9 @@ describe('Row', () => {
 
     expect(row1.model).to.deep.equal({
       cells: [
-        {address: 'A1', type: Enums.ValueType.Number, value: 5, style: {}},
+        {
+          address: 'A1', type: Enums.ValueType.Number, value: 5, style: {},
+        },
         {
           address: 'B1',
           type: Enums.ValueType.String,
@@ -308,7 +309,9 @@ describe('Row', () => {
     row3.outlineLevel = 1;
     expect(row3.model).to.deep.equal({
       cells: [
-        {address: 'A3', type: Enums.ValueType.Number, value: 5, style: {}},
+        {
+          address: 'A3', type: Enums.ValueType.Number, value: 5, style: {},
+        },
       ],
       number: 3,
       min: 1,
@@ -345,8 +348,7 @@ describe('Row', () => {
     expect(row1.values).to.deep.equal([
       ,
       5,
-      'Hello, World!',
-      ,
+      'Hello, World!',,
       {hyperlink: 'http://www.hyperlink.com', text: 'www.hyperlink.com'},
     ]);
     expect(row1.getCell(1).type).to.equal(Enums.ValueType.Number);
