@@ -1,4 +1,4 @@
-const Excel = require('../excel');
+const Excel = require('../dx-excel-fork');
 
 const [, , inputFile, outputFile] = process.argv;
 

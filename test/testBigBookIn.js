@@ -4,7 +4,7 @@ const utils = require('./utils/utils');
 const HrStopwatch = require('./utils/hr-stopwatch');
 const ColumnSum = require('./utils/column-sum');
 
-const Excel = require('../excel');
+const Excel = require('../dx-excel-fork');
 
 const {Workbook} = Excel;
 const {WorkbookReader} = Excel.stream.xlsx;

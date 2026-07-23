@@ -1,4 +1,4 @@
-const Excel = require('../excel');
+const Excel = require('../dx-excel-fork');
 
 const workbook = new Excel.Workbook();
 workbook.xlsx

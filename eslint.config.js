@@ -122,6 +122,16 @@ module.exports = [
   },
 
   {
+    files: ['spec/browser/**/*.js'],
+    languageOptions: {
+      globals: {
+        window: 'readonly',
+        ExcelJS: 'readonly',
+      },
+    },
+  },
+
+  {
     files: ['test/**/*.js'],
     rules: {
       'no-new': ['off'],
@@ -133,7 +143,7 @@ module.exports = [
   },
 
   {
-    files: ['eslint.config.js'],
+    files: ['eslint.config.js', 'playwright.config.js'],
     rules: {
       'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
     },

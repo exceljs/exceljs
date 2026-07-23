@@ -1,7 +1,7 @@
 'use strict';
 
 const HrStopwatch = require('./utils/hr-stopwatch');
-const Excel = require('../excel');
+const Excel = require('../dx-excel-fork');
 
 const filename = process.argv[2];
 const wb = new Excel.Workbook();

@@ -1,5 +1,5 @@
 const _ = require('../lib/utils/under-dash.js');
-const Excel = require('../excel');
+const Excel = require('../dx-excel-fork');
 
 // const { Workbook } = Excel;
 const {WorkbookWriter} = Excel.stream.xlsx;

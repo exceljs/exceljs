@@ -2,7 +2,7 @@ const _ = require('../lib/utils/under-dash.js');
 
 const HrStopwatch = require('./utils/hr-stopwatch');
 
-const ExcelJS = require('../excel');
+const ExcelJS = require('../dx-excel-fork');
 
 const {Workbook} = ExcelJS;
 

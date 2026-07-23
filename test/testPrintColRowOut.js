@@ -1,6 +1,6 @@
 const HrStopwatch = require('./utils/hr-stopwatch');
 
-const Excel = require('../excel');
+const Excel = require('../dx-excel-fork');
 
 const {Workbook} = Excel;
 

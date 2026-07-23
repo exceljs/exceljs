@@ -1,4 +1,4 @@
-const Excel = require('../excel');
+const Excel = require('../dx-excel-fork');
 const utils = require('../spec/utils/index');
 
 const filename = process.argv[2];

@@ -213,7 +213,7 @@ describe('Worksheet', () => {
       );
     });
 
-    it('preserves merges after row inserts', function() {
+    it('preserves merges after row inserts', () => {
       const wb = new Excel.Workbook();
       const ws = wb.addWorksheet('testMergeAfterInsert');
 

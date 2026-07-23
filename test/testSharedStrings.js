@@ -1,4 +1,4 @@
-const ExcelJS = require('../excel');
+const ExcelJS = require('../dx-excel-fork');
 
 const {Workbook} = ExcelJS;
 

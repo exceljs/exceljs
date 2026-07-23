@@ -10,6 +10,7 @@ describe('Express', () => {
   before(async () => {
     // got is ESM-only since v12; load it via dynamic import so this
     // CommonJS test stays portable across Node/got versions.
+    // eslint-disable-next-line import/no-unresolved
     ({default: got} = await import('got'));
 
     const app = express();
