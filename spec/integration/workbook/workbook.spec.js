@@ -1,9 +1,42 @@
+const fs = require('fs');
+const path = require('path');
 const testUtils = require('../../utils/index');
 
 const ExcelJS = verquire('exceljs');
 
 const TEST_XLSX_FILE_NAME = './spec/out/wb.test.xlsx';
 const TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
+
+let workbookTempFileCounter = 0;
+
+function makeUniqueOutXlsxFileName(prefix) {
+  workbookTempFileCounter += 1;
+  return path.join(
+    __dirname,
+    '../../out',
+    `${prefix}.${process.pid}.${Date.now()}.${workbookTempFileCounter}.xlsx`
+  );
+}
+
+async function cleanupFileWithRetry(fileName, retries = 5, attempt = 0) {
+  try {
+    await fs.promises.unlink(fileName);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return;
+    }
+    if (
+      (error.code === 'EBUSY' || error.code === 'EPERM') &&
+      attempt < retries
+    ) {
+      // Windows can briefly keep a file handle open after read/write completes.
+      await new Promise(resolve => setTimeout(resolve, 50 * (attempt + 1)));
+      await cleanupFileWithRetry(fileName, retries, attempt + 1);
+      return;
+    }
+    throw error;
+  }
+}
 
 // =============================================================================
 // Tests
@@ -1076,7 +1109,8 @@ describe('Workbook', () => {
         });
     });
 
-    it('multiple book views', () => {
+    it('multiple book views', async () => {
+      const testFileName = makeUniqueOutXlsxFileName('wb.book-views');
       const wb = new ExcelJS.Workbook();
       wb.views = [testUtils.views.book.visible, testUtils.views.book.hidden];
 
@@ -1086,21 +1120,22 @@ describe('Workbook', () => {
       const ws2 = wb.addWorksheet('two');
       ws2.views = [testUtils.views.sheet.split];
 
-      return wb.xlsx
-        .writeFile(TEST_XLSX_FILE_NAME)
-        .then(() => {
-          const wb2 = new ExcelJS.Workbook();
-          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
-        })
-        .then(wb2 => {
-          expect(wb2.views).to.deep.equal(wb.views);
+      try {
+        await wb.xlsx.writeFile(testFileName);
 
-          const ws1b = wb2.getWorksheet('one');
-          expect(ws1b.views).to.deep.equal(ws1.views);
+        const wb2 = new ExcelJS.Workbook();
+        await wb2.xlsx.readFile(testFileName);
 
-          const ws2b = wb2.getWorksheet('two');
-          expect(ws2b.views).to.deep.equal(ws2.views);
-        });
+        expect(wb2.views).to.deep.equal(wb.views);
+
+        const ws1b = wb2.getWorksheet('one');
+        expect(ws1b.views).to.deep.equal(ws1.views);
+
+        const ws2b = wb2.getWorksheet('two');
+        expect(ws2b.views).to.deep.equal(ws2.views);
+      } finally {
+        await cleanupFileWithRetry(testFileName);
+      }
     });
   });
 });

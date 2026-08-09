@@ -11,7 +11,7 @@
 # 安装
 
 ```shell
-npm install exceljs
+npm install @zklogic/exceljs
 ```
 
 # 新的功能!

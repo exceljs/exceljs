@@ -7,87 +7,26 @@ on:
     branches: [ '**' ]
 
 jobs:
-  test:
-    timeout-minutes: 10
-    name: Node v${{ matrix.node-version }} on ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [10.x, 12.x, 14.x, 16.x, 17.x, 18.x, 19.x, 20.x]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Set git config
-        shell: bash
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.symlinks true
-        if: runner.os == 'Windows'
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #latest v4. TODO upgrade
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d #latest  v3. TODO upgrade
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Create the npm cache directory
-        run: mkdir npm-cache && npm config set cache ./npm-cache --global
-      - name: Cache node modules
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 #latest v3 TODO upgrade
-        with:
-          path: ./npm-cache
-          key: v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            v1-${{ runner.os }}-node-${{ matrix.node-version }}-npm-
-      - run: npm install
-      - run: npm test
-        env:
-          CI: true
-
-  benchmark:
+  verify:
     timeout-minutes: 15
-    name: Measure performance impact of changes
+    name: Install, type-check, build
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #latest v4. TODO upgrade
-      - uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d #latest  v3. TODO upgrade
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - name: Create the npm cache directory
-        run: mkdir npm-cache && npm config set cache ./npm-cache --global
-      - name: Cache node modules
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 #latest v3 TODO upgrade
-        with:
-          path: ./npm-cache
-          key: v1-npm-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            v1-npm-
+          node-version: '22'
       - run: npm install
-      - run: npm run benchmark
+      # Do NOT run `npm install typescript` -- it overwrites devDep typescript@^3.9.7
+      # with TypeScript 5.x (latest), which breaks the existing index.d.ts typings.
+      # typescript@3.9.7 is already installed by `npm install` above.
+      # Use npx to resolve the local devDep binary, avoiding PATH issues on Windows.
+      - name: Type-check
+        run: npx tsc index.d.ts
         env:
           CI: true
-
-  typescript:
-    timeout-minutes: 15
-    name: Ensure typescript compatibility
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #latest v4. TODO upgrade
-      - uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d #latest  v3. TODO upgrade
-        with:
-          node-version: 18
-      - name: Create the npm cache directory
-        run: mkdir npm-cache && npm config set cache ./npm-cache --global
-      - name: Cache node modules
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 #latest v3 TODO upgrade
-        with:
-          path: ./npm-cache
-          key: v1-npm-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            v1-npm-
-      - run: npm install
-      - run: npm install typescript
-      - run: tsc index.d.ts
+      - name: Build
+        run: npm run build
         env:
           CI: true

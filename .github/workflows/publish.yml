@@ -1,0 +1,69 @@
+name: Publish
+
+# Publishes @zklogic/exceljs to npm when a v* tag is pushed.
+#
+# Auth: OIDC trusted publishing (no NPM_TOKEN). This requires the Trusted
+# Publisher entry on npmjs.com for @zklogic/exceljs to name THIS file
+# (publish.yml) as the workflow filename -- if it still says tests.yml the
+# publish will fail with a misleading 404.
+#
+# Provenance is attested automatically under trusted publishing; no
+# --provenance flag is needed.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch: {}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      # npm >=11.5.1 is required for trusted publishing.
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@11
+
+      # No `npm ci`: .npmrc sets package-lock=false and package-lock.json is
+      # gitignored, so there is no lockfile to install from.
+      - run: npm install
+
+      - name: Verify tag matches package.json version
+        # Only enforced on tag pushes. Manual (workflow_dispatch) runs can
+        # target any branch or tag from the GitHub Actions ref picker and
+        # just publish whatever version is currently in package.json.
+        if: github.ref_type == 'tag'
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "ERROR: tag $GITHUB_REF_NAME implies $TAG_VERSION but package.json is $PKG_VERSION"
+            exit 1
+          fi
+
+      - name: Show publish target
+        run: echo "Publishing $(node -p "require('./package.json').name")@$(node -p "require('./package.json').version") from ${{ github.ref_name }}"
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: true
+
+      - name: Verify dist directory
+        run: |
+          if [ ! -d 'dist' ] || [ -z "$(ls -A dist)" ]; then
+            echo "ERROR: dist/ directory is empty or missing. Build must complete successfully."
+            exit 1
+          fi
+
+      - run: npm publish --access public

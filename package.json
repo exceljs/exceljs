@@ -1,19 +1,32 @@
 {
-  "name": "exceljs",
-  "version": "4.4.0",
+  "name": "@zklogic/exceljs",
+  "version": "5.0.7",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
   "author": {
-    "name": "Guyon Roche",
-    "email": "guyon@live.com"
+    "name": "Arfan Khalil Mughal",
+    "email": "arfankhalil@hotmail.com",
+    "url": "https://github.com/ArfanKhalilMughal"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "https://github.com/ArfanKhalilMughal/exceljs.git"
+  },
+  "forkedFrom": {
+    "repository": "https://github.com/exceljs/exceljs",
+    "author": "Guyon Roche",
+    "url": "https://github.com/guyonroche"
+  },
+  "bugs": {
+    "email": "arfankhalil@hotmail.com",
+    "url": "https://github.com/ArfanKhalilMughal/exceljs/issues"
   },
   "engines": {
-    "node": ">=8.3.0"
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "main": "./excel.js",
   "browser": "./dist/exceljs.min.js",
@@ -38,7 +51,7 @@
     "test:unit": "mocha --require spec/config/setup --require spec/config/setup-unit spec/unit --recursive",
     "test:integration": "mocha --require spec/config/setup spec/integration --recursive",
     "test:end-to-end": "mocha --require spec/config/setup spec/end-to-end --recursive",
-    "test:browser": "if [ ! -f .disable-test-browser ]; then npm run build && npm run test:jasmine; fi",
+    "test:browser": "node -e \"const fs=require('fs'); const cp=require('child_process'); if(fs.existsSync('.disable-test-browser')){console.log('Skipping browser tests (.disable-test-browser present)'); process.exit(0);} cp.execSync('npm run build && npm run test:jasmine',{stdio:'inherit'});\"",
     "test:jasmine": "grunt jasmine",
     "test:unit:es5": "export EXCEL_BUILD=es5 && npm run test:unit",
     "test:integration:es5": "export EXCEL_BUILD=es5 && npm run test:integration",
@@ -50,13 +63,14 @@
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
     "lint:fix": "prettier-eslint --write $(pwd)'/**/*.js'",
     "lint:staged": "lint-staged",
-    "clean": "rm -rf build/ && rm -rf dist",
+    "clean": "node -e \"const fs=require('fs'); ['build','dist'].forEach(d=>{if(fs.existsSync(d))fs.rmSync(d,{recursive:true})})\"",
     "benchmark": "node --expose-gc benchmark",
     "benchmark:debug": "node --expose-gc --inspect-brk --trace-deopt benchmark",
     "build": "grunt build",
     "install-build": "npm install && grunt build",
     "preversion": "npm run clean && npm run build && npm run test:version",
-    "postversion": "git push --no-verify && git push --tags --no-verify"
+    "postversion": "git push --no-verify && git push --tags --no-verify",
+    "prepublishonly": "node -e \"const fs = require('fs'); if (!fs.existsSync('dist') || fs.readdirSync('dist').length === 0) { console.error('ERROR: dist/ directory is empty or missing. Run npm run build first.'); process.exit(1); } else { console.log('✓ dist/ directory exists and contains files.'); }\""
   },
   "husky": {
     "hooks": {
@@ -96,15 +110,18 @@
     "pageSetup"
   ],
   "dependencies": {
+    "@zklogic/saxes": "^7.0.3",
+    "@zklogic/unzipper": "^0.13.2",
     "archiver": "^5.0.0",
     "dayjs": "^1.8.34",
     "fast-csv": "^4.3.1",
     "jszip": "^3.10.1",
     "readable-stream": "^3.6.0",
-    "saxes": "^5.0.1",
     "tmp": "^0.2.0",
-    "unzipper": "^0.10.11",
     "uuid": "^8.3.0"
+  },
+  "overrides": {
+    "lazystream": "npm:@zklogic/lazystream@^1.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -120,11 +137,12 @@
     "chai-xml": "^0.3.2",
     "core-js": "^3.6.5",
     "dirty-chai": "^2.0.1",
+    "es-abstract": "^1.24.2",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-friendly-formatter": "^4.0.1",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-node": "^11.1.0",
     "express": "^4.16.4",
     "got": "^9.0.0",
@@ -144,6 +162,7 @@
     "regenerator-runtime": "^0.13.7",
     "sax": "^1.2.4",
     "ts-node": "^8.10.2",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "underscore.string": "^3.3.6"
   }
 }

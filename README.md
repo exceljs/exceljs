@@ -1,10 +1,13 @@
 # ExcelJS
 
-[![Build Status](https://github.com/exceljs/exceljs/actions/workflows/tests.yml/badge.svg?branch=master&event=push)](https://github.com/exceljs/exceljs/actions/workflows/tests.yml)
+[![Build Status](https://github.com/ArfanKhalilMughal/exceljs/actions/workflows/tests.yml/badge.svg?branch=master&event=push)](https://github.com/ArfanKhalilMughal/exceljs/actions/workflows/tests.yml)
 
 Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
 
 Reverse engineered from Excel spreadsheet files as a project.
+
+> Fork of [exceljs/exceljs](https://github.com/exceljs/exceljs) by Guyon Roche. Original package published to npm as `exceljs`.
+> This fork is maintained by Arfan Khalil Mughal at [ArfanKhalilMughal/exceljs](https://github.com/ArfanKhalilMughal/exceljs) and published to npm as `@zklogic/exceljs`.
 
 # Translations
 
@@ -13,7 +16,7 @@ Reverse engineered from Excel spreadsheet files as a project.
 # Installation
 
 ```shell
-npm install exceljs
+npm install @zklogic/exceljs
 ```
 
 # New Features!
@@ -178,7 +181,7 @@ To be clear, all contributions added to this library will be included in the lib
 # Importing[⬆](#contents)<!-- Link generated with jump2header -->
 
 ```javascript
-const ExcelJS = require('exceljs');
+const ExcelJS = require('@zklogic/exceljs');
 ```
 
 ## ES5 Imports[⬆](#contents)<!-- Link generated with jump2header -->
