@@ -1218,7 +1218,7 @@ export interface Worksheet {
 	spliceRows(start: number, count: number, ...insert: any[][]): void;
 
 	/**
-	 * Add a couple of Rows by key-value, after the last current row, using the column keys,
+	 * Add a row by key-value, after the last current row, using the column keys,
 	 * or add a row by contiguous Array (assign to columns A, B & C)
 	 */
 	addRow(data: any[] | any, style?: string): Row;
