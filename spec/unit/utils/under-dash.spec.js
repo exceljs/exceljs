@@ -2,6 +2,19 @@ const _ = verquire('utils/under-dash');
 const util = require('util');
 
 describe('under-dash', () => {
+  describe('deepMerge', () => {
+    it('ignores prototype pollution keys', () => {
+      const maliciousValue = JSON.parse(
+        '{"__proto__":{"polluted":true},"constructor":{"polluted":true},"prototype":{"polluted":true}}'
+      );
+
+      const mergedValue = _.deepMerge({}, maliciousValue);
+
+      expect(Object.prototype.polluted).to.equal(undefined);
+      expect(mergedValue).to.deep.equal({});
+    });
+  });
+
   describe('isEqual', () => {
     const values = [
       0,
