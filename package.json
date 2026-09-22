@@ -1,17 +1,25 @@
 {
-  "name": "exceljs",
-  "version": "4.4.0",
-  "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
+  "name": "exceljs-hardened",
+  "version": "5.0.0",
+  "description": "Unofficial security-hardened fork of exceljs, patching known unpatched vulnerabilities in the upstream (unmaintained) project. Not affiliated with the original exceljs maintainers.",
   "private": false,
   "license": "MIT",
-  "author": {
-    "name": "Guyon Roche",
-    "email": "guyon@live.com"
-  },
+  "author": "mateo@callec.net",
+  "contributors": [
+    {
+      "name": "Guyon Roche",
+      "email": "guyon@live.com",
+      "note": "original exceljs author — not involved in this fork's security patches"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "https://github.com/mateocallec/exceljs-hardened.git"
   },
+  "bugs": {
+    "url": "https://github.com/mateocallec/exceljs-hardened/issues"
+  },
+  "homepage": "https://github.com/mateocallec/exceljs-hardened#readme",
   "engines": {
     "node": ">=8.3.0"
   },
@@ -93,7 +101,10 @@
     "views",
     "frozen",
     "split",
-    "pageSetup"
+    "pageSetup",
+    "security",
+    "hardened",
+    "patched"
   ],
   "dependencies": {
     "archiver": "^5.0.0",
@@ -104,7 +115,7 @@
     "saxes": "^5.0.1",
     "tmp": "^0.2.0",
     "unzipper": "^0.10.11",
-    "uuid": "^8.3.0"
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
