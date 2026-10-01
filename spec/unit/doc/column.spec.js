@@ -3,6 +3,22 @@ const {createSheetMock} = require('../../utils/index');
 const Column = verquire('doc/column');
 
 describe('Column', () => {
+  it('compares custom widths against the worksheet default', () => {
+    const sheet = createSheetMock();
+    const column = sheet.addColumn(1);
+    expect(column.isCustomWidth).to.equal(false);
+    column.width = 9;
+    expect(column.isCustomWidth).to.equal(false);
+    sheet.properties.defaultColWidth = 20;
+    expect(column.isCustomWidth).to.equal(true);
+    column.width = 20;
+    expect(column.isCustomWidth).to.equal(false);
+    sheet.properties.defaultColWidth = 0;
+    expect(column.isCustomWidth).to.equal(true);
+    column.width = 0;
+    expect(column.isCustomWidth).to.equal(false);
+  });
+
   it('creates by defn', () => {
     const sheet = createSheetMock();
 

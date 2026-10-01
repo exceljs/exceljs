@@ -7,6 +7,22 @@ const ExcelJS = verquire('exceljs');
 const Range = verquire('doc/range');
 
 describe('Worksheet', () => {
+  it('preserves an explicit width of 9 when the sheet default differs', async () => {
+    const wb = new ExcelJS.Workbook();
+    const ws = wb.addWorksheet('Widths');
+    ws.getColumn(1).width = 9;
+    ws.getColumn(2).width = 10;
+    ws.properties.defaultColWidth = 20;
+
+    const loaded = new ExcelJS.Workbook();
+    await loaded.xlsx.load(await wb.xlsx.writeBuffer());
+
+    const sheet = loaded.getWorksheet('Widths');
+    expect(sheet.properties.defaultColWidth).to.equal(20);
+    expect(sheet.getColumn(1).width).to.equal(9);
+    expect(sheet.getColumn(2).width).to.equal(10);
+  });
+
   describe('Values', () => {
     it('stores values properly', () => {
       const wb = new ExcelJS.Workbook();
