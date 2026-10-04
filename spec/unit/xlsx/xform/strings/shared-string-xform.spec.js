@@ -98,6 +98,42 @@ const expectations = [
     tests: ['parse'],
   },
   {
+    title: 'plain text followed by a rich-text run',
+    create() {
+      return new SharedStringXform();
+    },
+    xml: '<si><t>xy</t><r><rPr><u val="single"/><color theme="10"/></rPr><t>link text</t></r></si>',
+    parsedModel: {
+      richText: [
+        {text: 'xy'},
+        {font: {underline: 'single', color: {theme: 10}}, text: 'link text'},
+      ],
+    },
+    tests: ['parse'],
+  },
+  {
+    title: 'empty plain text followed by a rich-text run',
+    create() {
+      return new SharedStringXform();
+    },
+    xml: '<si><t></t><r><t>link text</t></r></si>',
+    parsedModel: {
+      richText: [{text: 'link text'}],
+    },
+    tests: ['parse'],
+  },
+  {
+    title: 'plain text followed by several rich-text runs',
+    create() {
+      return new SharedStringXform();
+    },
+    xml: '<si><t>xy</t><r><t>a</t></r><r><t>b</t></r></si>',
+    parsedModel: {
+      richText: [{text: 'xy'}, {text: 'a'}, {text: 'b'}],
+    },
+    tests: ['parse'],
+  },
+  {
     title: 'text with newline',
     create() {
       return new SharedStringXform();

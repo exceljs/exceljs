@@ -185,6 +185,58 @@ const expectations = [
     options: {hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles},
   },
   {
+    title: 'Inline String with plain text followed by a rich-text run',
+    create() {
+      return new CellXform();
+    },
+    xml: '<c r="A1" t="inlineStr"><is><t>xy</t><r><rPr><u val="single"/><color theme="10"/></rPr><t>link text</t></r></is></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.String,
+      value: {
+        richText: [
+          {text: 'xy'},
+          {font: {underline: 'single', color: {theme: 10}}, text: 'link text'},
+        ],
+      },
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.RichText,
+      value: {
+        richText: [
+          {text: 'xy'},
+          {font: {underline: 'single', color: {theme: 10}}, text: 'link text'},
+        ],
+      },
+    },
+    tests: ['parse', 'reconcile'],
+    options: {hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles},
+  },
+  {
+    title: 'Inline String with an empty plain text followed by a rich-text run',
+    create() {
+      return new CellXform();
+    },
+    xml: '<c r="A1" t="inlineStr"><is><t></t><r><t>link text</t></r></is></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.String,
+      value: {
+        richText: [{text: 'link text'}],
+      },
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.RichText,
+      value: {
+        richText: [{text: 'link text'}],
+      },
+    },
+    tests: ['parse', 'reconcile'],
+    options: {hyperlinkMap: fakeHyperlinkMap, styles: fakeStyles},
+  },
+  {
     title: 'Shared String',
     create() {
       return new CellXform();
