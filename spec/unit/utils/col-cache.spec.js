@@ -239,4 +239,23 @@ describe('colCache', () => {
       right: 2,
     });
   });
+
+  it('rejects unexpected characters in addresses', () => {
+    expect(() => {
+      colCache.decodeAddress('83333-3333');
+    }).to.throw(/Invalid address/);
+  });
+
+  it('rejects row numbers beyond the Excel limit', () => {
+    expect(() => {
+      colCache.decodeAddress('A1048577');
+    }).to.throw(/Out of bounds\. Invalid row number/);
+  });
+
+  it('rejects crafted dataValidation sqref ranges that would explode', () => {
+    expect(() => {
+      colCache.decode('A2:83333-3333');
+    }).to.throw(/Invalid address/);
+  });
+
 });
