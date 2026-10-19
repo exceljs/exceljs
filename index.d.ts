@@ -2029,6 +2029,7 @@ export namespace stream {
 
 		class WorksheetReader {
 			constructor(options: WorksheetReaderOptions);
+			name: string;
 			read(): Promise<void>;
 			[Symbol.asyncIterator](): AsyncGenerator<Row>;
 			parse(): AsyncIterator<Array<any>>;
