@@ -1,5 +1,172 @@
 # ExcelJS
 
+> **openly/exceljs fork.** This is the Lets Flo fork of
+> [exceljs/exceljs](https://github.com/exceljs/exceljs), based on upstream
+> commit `34866c3` (published to npm as `4.4.1-prerelease.0`): upstream
+> `master` (`5bed18b`) plus the unzipper bump from the upstream
+> `move-to-next-unzipper` branch. See
+> [Changes in this fork](#changes-in-this-fork) below.
+
+## Changes in this fork
+
+This fork needs **Node 18 or later** (it uses the built-in `fetch`).
+
+### `4.4.1-flo.2`: placeholder for bad images, and images from a URL
+
+Both changes apply to `workbook.xlsx.write()`, `writeFile()` and
+`writeBuffer()`. The code is in `lib/xlsx/media-source.js`.
+
+#### Placeholder for missing or invalid images (on by default)
+
+Before writing each image, the fork checks that it is really an image, using
+the first bytes of the file (PNG, JPEG, GIF, BMP or TIFF). If an image is
+missing, unreadable, fails to download, or is not an image (for example an
+HTML error page saved as `.png`), it is replaced by a placeholder and the write
+carries on. Callers no longer need their own "image not available" logic.
+
+- The default placeholder is `lib/xlsx/media/placeholder.png`, a grey
+  "Image not available" image.
+- Any known image format is accepted whatever the `extension` says, because
+  callers often label PNGs as `jpg` and Excel displays them anyway.
+- Media with other extensions (`emf`, `wmf`, ...) is not checked.
+- Upstream behaviour was to fail the whole write on a missing file. To keep
+  that, pass `placeholder: false`.
+
+#### Images from a URL
+
+`addImage` accepts a `url`. The image is downloaded while the file is written,
+so it never touches the disk:
+
+```js
+const imageId = workbook.addImage({url: 'https://cdn.example.com/a.png', extension: 'png'});
+worksheet.addImage(imageId, {tl: {col: 1, row: 1}, ext: {width: 50, height: 50}});
+```
+
+- Up to `concurrency` downloads run ahead of the writer, and at most
+  `concurrency` downloaded images wait to be written at a time, so memory stays
+  bounded (`concurrency` × image size).
+- Redirects are followed. A non-2xx response, timeout, network error, an image
+  over `maxBytes`, or a body that is not an image gives the placeholder.
+- No retries, and nothing is cached: the same URL added twice is downloaded
+  twice.
+- Images are embedded as downloaded: they are not rotated using their EXIF
+  orientation or resized. Callers that need either should keep downloading and
+  processing the file themselves, then add it with `filename`.
+
+#### Options
+
+Pass them as `media` in the write options:
+
+```js
+await workbook.xlsx.writeFile(path, {
+  media: {
+    placeholder: '/path/to/other.png', // filename or Buffer; false = fail the write instead
+    onError: (error, medium) => logger.warn('Image replaced', medium.url || medium.filename, error.message),
+    concurrency: 8, // url downloads in flight / waiting to be written
+    timeout: 30000, // ms per url download, headers and body
+    maxBytes: 20 * 1024 * 1024, // larger downloads get the placeholder
+    headers: {}, // extra request headers for url downloads
+  },
+});
+```
+
+`onError` is called once for each image that was replaced. `error.code` is
+`ENOENT` (missing file), `EINVALIDIMAGE` (not an image) or `ETIMEDOUT`
+(download timed out). An HTTP failure sets `error.statusCode`.
+
+**Results** (3,000 URL images × 200 KB, 30 ms server delay, `concurrency: 8`):
+peak RSS 181 MB, 22.3 s.
+
+**Tests:** `spec/integration/pr/test-pr-2244.spec.js` now expects a missing
+image to fail only with `placeholder: false`, and checks the placeholder
+default.
+
+**Not covered:** the streaming `WorkbookWriter` (`Excel.stream.xlsx`) is
+unchanged and does not support `url` or the placeholder.
+
+### `4.4.1-flo.1`: stream media into the zip instead of buffering it
+
+**Problem.** `workbook.xlsx.write()`, `writeFile()` and `writeBuffer()` held the
+entire file in memory before writing anything:
+
+1. `addMedia` read **every** image file at once
+   (`Promise.all(media.map(fs.readFile))`), so all images were in memory
+   together.
+2. The zip was built with JSZip, whose `generateAsync({type: 'nodebuffer'})`
+   produces the whole `.xlsx` as one more Buffer.
+
+Peak memory was therefore roughly twice the total size of the images. A
+12,000-image catalogue export used up the server's memory and the kernel's
+out-of-memory killer took down MongoDB on the same host. These are Node Buffers,
+outside the V8 heap, so `--max-old-space-size` does not limit them.
+
+**Change** (`lib/xlsx/xlsx.js` only):
+
+- `write()` now builds the zip with [archiver](https://www.npmjs.com/package/archiver)
+  (already an exceljs dependency, used by the streaming `WorkbookWriter`)
+  piped straight to the output stream, instead of JSZip.
+- `addMedia()` queues images on the archiver. Images added with
+  `workbook.addImage({filename})` are opened lazily and streamed from disk one
+  at a time (`archiver.file()`), never read fully into memory. `buffer` and
+  `base64` images are appended as Buffers, as before.
+- `_finalize()` resolves when the archiver has finished writing (`end`), and
+  rejects on archiver `error`/`warning`. (In `flo.1` a missing image file
+  failed the write with `ENOENT`; since `flo.2` it gets the placeholder unless
+  `placeholder: false` is set, see above.)
+- The existing JSZip-style `options.zip` (`compression: 'STORE' | 'DEFLATE'`,
+  `compressionOptions.level`) is mapped to archiver options, so existing calls
+  such as `writeFile(path, {zip: {compression: 'STORE'}})` keep working.
+  Archiver options (`store`, `zlib`) can also be passed directly.
+
+**Unchanged:** the public API, the workbook model, all XML output (drawings,
+anchors, rels, content types) and the reader. JSZip is still used for
+**reading** xlsx files. The streaming `WorkbookWriter` was already
+archiver-based and is untouched.
+
+**Difference in output:** the zip no longer contains empty folder entries
+(`xl/`, `docProps/`, ...). Excel does not need them; files saved by Excel and by
+the exceljs streaming writer do not have them either.
+
+**Results** (3,000 images × 200 KB = 587 MB, `writeFile`, Node 22):
+
+| | Peak RSS | Write time |
+|---|---|---|
+| upstream `4.4.1-prerelease.0` | 1,919 MB | 32.3 s |
+| this fork | 204 MB | 21.6 s |
+
+Unit tests (883), integration and end-to-end tests (195) pass. The one failing
+integration test, `issue-1328 should emit row with Date Object`, also fails on
+unmodified upstream at this commit.
+
+**Notes.**
+
+- Only the Node build (`lib/`) is changed. The browser bundle (`dist/`) is not
+  committed here and is not rebuilt. Installing from this repo gives the Node
+  entry point (`excel.js` → `lib/`).
+- Embedded images are still stored at their original size. Resizing images to
+  their display size before `addImage` keeps the output file small as well.
+
+### Using this fork
+
+Reference a commit tarball, the same way as `openly/pptxgenjs`:
+
+```json
+"exceljs": "https://codeload.github.com/openly/exceljs/tar.gz/<commit-sha>"
+```
+
+### Updating from upstream
+
+```bash
+git remote add upstream https://github.com/exceljs/exceljs.git
+git fetch upstream
+git rebase upstream/master   # re-apply the commits on top of the new base
+```
+
+Re-run `npm run test:unit` and `npm run test:integration` and check
+`lib/xlsx/xlsx.js` (`write`, `addMedia`, `_finalize`) still matches what is
+described above.
+
+
 [![Build Status](https://github.com/exceljs/exceljs/actions/workflows/tests.yml/badge.svg?branch=master&event=push)](https://github.com/exceljs/exceljs/actions/workflows/tests.yml)
 
 Read, manipulate and write spreadsheet data and styles to XLSX and JSON.
