@@ -9,6 +9,81 @@
 
 ## Changes in this fork
 
+This fork needs **Node 18 or later** (it uses the built-in `fetch`).
+
+### `4.4.1-flo.2`: placeholder for bad images, and images from a URL
+
+Both changes apply to `workbook.xlsx.write()`, `writeFile()` and
+`writeBuffer()`. The code is in `lib/xlsx/media-source.js`.
+
+#### Placeholder for missing or invalid images (on by default)
+
+Before writing each image, the fork checks that it is really an image, using
+the first bytes of the file (PNG, JPEG, GIF, BMP or TIFF). If an image is
+missing, unreadable, fails to download, or is not an image (for example an
+HTML error page saved as `.png`), it is replaced by a placeholder and the write
+carries on. Callers no longer need their own "image not available" logic.
+
+- The default placeholder is `lib/xlsx/media/placeholder.png`, a grey
+  "Image not available" image.
+- Any known image format is accepted whatever the `extension` says, because
+  callers often label PNGs as `jpg` and Excel displays them anyway.
+- Media with other extensions (`emf`, `wmf`, ...) is not checked.
+- Upstream behaviour was to fail the whole write on a missing file. To keep
+  that, pass `placeholder: false`.
+
+#### Images from a URL
+
+`addImage` accepts a `url`. The image is downloaded while the file is written,
+so it never touches the disk:
+
+```js
+const imageId = workbook.addImage({url: 'https://cdn.example.com/a.png', extension: 'png'});
+worksheet.addImage(imageId, {tl: {col: 1, row: 1}, ext: {width: 50, height: 50}});
+```
+
+- Up to `concurrency` downloads run ahead of the writer, and at most
+  `concurrency` downloaded images wait to be written at a time, so memory stays
+  bounded (`concurrency` × image size).
+- Redirects are followed. A non-2xx response, timeout, network error, an image
+  over `maxBytes`, or a body that is not an image gives the placeholder.
+- No retries, and nothing is cached: the same URL added twice is downloaded
+  twice.
+- Images are embedded as downloaded: they are not rotated using their EXIF
+  orientation or resized. Callers that need either should keep downloading and
+  processing the file themselves, then add it with `filename`.
+
+#### Options
+
+Pass them as `media` in the write options:
+
+```js
+await workbook.xlsx.writeFile(path, {
+  media: {
+    placeholder: '/path/to/other.png', // filename or Buffer; false = fail the write instead
+    onError: (error, medium) => logger.warn('Image replaced', medium.url || medium.filename, error.message),
+    concurrency: 8, // url downloads in flight / waiting to be written
+    timeout: 30000, // ms per url download, headers and body
+    maxBytes: 20 * 1024 * 1024, // larger downloads get the placeholder
+    headers: {}, // extra request headers for url downloads
+  },
+});
+```
+
+`onError` is called once for each image that was replaced. `error.code` is
+`ENOENT` (missing file), `EINVALIDIMAGE` (not an image) or `ETIMEDOUT`
+(download timed out). An HTTP failure sets `error.statusCode`.
+
+**Results** (3,000 URL images × 200 KB, 30 ms server delay, `concurrency: 8`):
+peak RSS 181 MB, 22.3 s.
+
+**Tests:** `spec/integration/pr/test-pr-2244.spec.js` now expects a missing
+image to fail only with `placeholder: false`, and checks the placeholder
+default.
+
+**Not covered:** the streaming `WorkbookWriter` (`Excel.stream.xlsx`) is
+unchanged and does not support `url` or the placeholder.
+
 ### `4.4.1-flo.1`: stream media into the zip instead of buffering it
 
 **Problem.** `workbook.xlsx.write()`, `writeFile()` and `writeBuffer()` held the
@@ -35,8 +110,9 @@ outside the V8 heap, so `--max-old-space-size` does not limit them.
   at a time (`archiver.file()`), never read fully into memory. `buffer` and
   `base64` images are appended as Buffers, as before.
 - `_finalize()` resolves when the archiver has finished writing (`end`), and
-  rejects on archiver `error`/`warning`, so a missing image file still fails
-  the write (`ENOENT`).
+  rejects on archiver `error`/`warning`. (In `flo.1` a missing image file
+  failed the write with `ENOENT`; since `flo.2` it gets the placeholder unless
+  `placeholder: false` is set, see above.)
 - The existing JSZip-style `options.zip` (`compression: 'STORE' | 'DEFLATE'`,
   `compressionOptions.level`) is mapped to archiver options, so existing calls
   such as `writeFile(path, {zip: {compression: 'STORE'}})` keep working.
