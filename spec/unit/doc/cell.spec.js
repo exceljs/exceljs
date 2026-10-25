@@ -369,6 +369,18 @@ describe('Cell', () => {
     expect(a1.model.comment.note).to.deep.equal(comment);
   });
 
+  it('does not allow note serialization to pollute object prototypes', () => {
+    const a1 = sheetMock.getCell('A1');
+    const note = JSON.parse(
+      '{"texts":[{"text":"safe"}],"__proto__":{"exceljsPolluted":true},"constructor":{"prototype":{"exceljsPolluted":true}}}'
+    );
+
+    a1.note = note;
+
+    expect(a1.model.comment.note.texts[0].text).to.equal('safe');
+    expect(Object.prototype.exceljsPolluted).to.equal(undefined);
+  });
+
   it('Cell comments supports setting margins, protection, and position properties', () => {
     const a1 = sheetMock.getCell('A1');
 
@@ -399,10 +411,7 @@ describe('Cell', () => {
     expect(a1.model.comment.note.protection).to.deep.equal(comment.protection);
     expect(a1.model.comment.note.margins.insetmode).to.equal('auto');
     expect(a1.model.comment.note.margins.inset).to.deep.equal([
-      0.13,
-      0.13,
-      0.25,
-      0.25,
+      0.13, 0.13, 0.25, 0.25,
     ]);
     expect(a1.model.comment.note.editAs).to.equal('absolute');
   });
