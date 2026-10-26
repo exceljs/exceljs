@@ -147,6 +147,36 @@ describe('colCache', () => {
         $col$row: '$$2',
       });
     });
+
+    it('rejects unsupported characters instead of mangling the address', () => {
+      // "83333-3333" used to be read as row 833333333, which made expanding
+      // the range "A2:83333-3333" walk 833 million rows
+      expect(() => {
+        colCache.decodeAddress('83333-3333');
+      }).to.throw(Error, 'Invalid Address: 83333-3333');
+      expect(() => {
+        colCache.decodeAddress('A1B2');
+      }).to.throw(Error, 'Invalid Address: A1B2');
+      expect(() => {
+        colCache.decodeAddress('1A');
+      }).to.throw(Error, 'Invalid Address: 1A');
+      expect(() => {
+        colCache.decodeAddress('a1');
+      }).to.throw(Error, 'Invalid Address: a1');
+      expect(() => {
+        colCache.decodeEx('A2:83333-3333');
+      }).to.throw(Error, 'Invalid Address: 83333-3333');
+    });
+
+    it('rejects rows beyond the Excel limit', () => {
+      expect(colCache.decodeAddress('A1048576').row).to.equal(1048576);
+      expect(() => {
+        colCache.decodeAddress('A1048577');
+      }).to.throw(Error, 'Out of bounds. Excel supports rows from 1 to 1048576');
+      expect(() => {
+        colCache.decodeEx('A2:A833333333');
+      }).to.throw(Error, 'Out of bounds. Excel supports rows from 1 to 1048576');
+    });
   });
 
   it('convert [sheetName!][$]col[$]row[[$]col[$]row] into address or range structures', () => {

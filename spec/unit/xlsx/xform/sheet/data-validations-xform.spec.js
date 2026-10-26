@@ -153,4 +153,18 @@ const expectations = [
 
 describe('DataValidationsXform', () => {
   testXformHelper(expectations);
+
+  it('rejects a sqref with an invalid range instead of expanding it', () => {
+    // https://github.com/exceljs/exceljs/issues/3093 - "A2:83333-3333" used
+    // to be read as the range A2:833333333 and expanded cell by cell
+    const xform = new DataValidationsXform();
+    xform.parseOpen({name: 'dataValidations'});
+    xform.parseOpen({
+      name: 'dataValidation',
+      attributes: {type: 'list', sqref: 'A2:83333-3333'},
+    });
+    expect(() => {
+      xform.parseClose('dataValidation');
+    }).to.throw(Error, 'Invalid Address: 83333-3333');
+  });
 });
