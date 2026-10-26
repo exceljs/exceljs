@@ -188,4 +188,64 @@ describe('WorksheetXform', () => {
     expect(iDataValidations).not.to.equal(-1);
     expect(iConditionalFormatting).to.be.lessThan(iDataValidations);
   });
+
+  it('ignores a comments relationship when its metadata is missing', () => {
+    const xform = new WorksheetXform();
+    const model = {
+      relationships: [
+        {
+          Id: 'rId1',
+          Type: 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments',
+          Target: '../comments1.xml',
+        },
+      ],
+      rows: [],
+      hyperlinks: [],
+      tables: [],
+      conditionalFormattings: [],
+    };
+    const options = {
+      comments: {},
+      vmlDrawings: {},
+      drawings: {},
+      tables: {},
+      styles: fakeStyles,
+    };
+
+    expect(() => xform.reconcile(model, options)).not.to.throw();
+    expect(options.commentsMap).to.deep.equal({});
+  });
+
+  it('keeps comments when their VML metadata is missing', () => {
+    const xform = new WorksheetXform();
+    const comments = [{ref: 'A1', note: {texts: [{text: 'Hello'}]}}];
+    const model = {
+      relationships: [
+        {
+          Id: 'rId1',
+          Type: 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments',
+          Target: '../comments1.xml',
+        },
+        {
+          Id: 'rId2',
+          Type: 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing',
+          Target: '../drawings/vmlDrawing1.vml',
+        },
+      ],
+      rows: [],
+      hyperlinks: [],
+      tables: [],
+      conditionalFormattings: [],
+    };
+    const options = {
+      comments: {'../comments1.xml': {comments}},
+      vmlDrawings: {},
+      drawings: {},
+      tables: {},
+      styles: fakeStyles,
+    };
+
+    expect(() => xform.reconcile(model, options)).not.to.throw();
+    expect(options.commentsMap.A1).to.equal(comments[0]);
+  });
 });
