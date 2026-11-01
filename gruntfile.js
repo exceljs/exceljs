@@ -6,7 +6,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-terser');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-exorcise');
 
   grunt.initConfig({
     babel: {
@@ -100,17 +99,6 @@ module.exports = function(grunt) {
       },
     },
 
-    // Move source maps to a separate file
-    exorcise: {
-      bundle: {
-        options: {},
-        files: {
-          './dist/exceljs.js.map': ['./dist/exceljs.js'],
-          './dist/exceljs.bare.js.map': ['./dist/exceljs.bare.js'],
-        },
-      },
-    },
-
     copy: {
       dist: {
         files: [
@@ -135,6 +123,6 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('build', ['babel:dist', 'browserify', 'terser', 'exorcise', 'copy']);
+  grunt.registerTask('build', ['babel:dist', 'browserify', 'terser', 'copy']);
   grunt.registerTask('ug', ['terser']);
 };

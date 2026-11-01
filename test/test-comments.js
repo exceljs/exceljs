@@ -1,4 +1,4 @@
-const Excel = require('../lib/exceljs.nodejs.js');
+const Excel = require('../lib/exceljs.nodejs');
 
 const wb = new Excel.Workbook();
 wb.xlsx

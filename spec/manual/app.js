@@ -5,7 +5,7 @@
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
-const ExcelJS = require('../../lib/exceljs.nodejs.js');
+const ExcelJS = require('../../lib/exceljs.nodejs');
 const StreamBuf = require('../../lib/utils/stream-buf');
 
 console.log('Copying bundle.js to public folder');

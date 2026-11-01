@@ -1,4 +1,4 @@
-const StreamBuf = require('../lib/utils/stream-buf.js');
+const StreamBuf = require('../lib/utils/stream-buf');
 
 const sb = new StreamBuf({bufSize: 64});
 sb.write('Hello, World!');

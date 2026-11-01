@@ -1,4 +1,4 @@
-const Excel = require('../lib/exceljs.nodejs.js');
+const Excel = require('../lib/exceljs.nodejs');
 const HrStopwatch = require('./utils/hr-stopwatch');
 
 const [, , filename] = process.argv;

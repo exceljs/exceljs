@@ -2,6 +2,18 @@ const _ = verquire('utils/under-dash');
 const util = require('util');
 
 describe('under-dash', () => {
+  describe('deepMerge', () => {
+    it('does not pollute object prototypes', () => {
+      const source = JSON.parse(
+        '{"__proto__":{"exceljsPolluted":true},"constructor":{"prototype":{"exceljsPolluted":true}}}'
+      );
+      const target = _.deepMerge({}, source);
+
+      expect(target.exceljsPolluted).to.equal(undefined);
+      expect(Object.prototype.exceljsPolluted).to.equal(undefined);
+    });
+  });
+
   describe('isEqual', () => {
     const values = [
       0,

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const JSZip = require('jszip');
 
-// eslint-disable-next-line node/no-unsupported-features/node-builtins
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
 const fsp = fs.promises;
 
 const filename = process.argv[2];

@@ -1462,6 +1462,12 @@ export interface XlsxReadOptions {
 	 * The list of XML node names to ignore while parsing an XLSX file
 	 */
 	ignoreNodes: string[];
+	/** Maximum uncompressed size of a single ZIP entry in bytes. */
+	maxEntrySize: number;
+	/** Maximum total uncompressed size of all ZIP entries in bytes. */
+	maxTotalSize: number;
+	/** Maximum allowed uncompressed-to-compressed size ratio. */
+	maxCompressionRatio: number;
 }
 
 export interface XlsxWriteOptions extends stream.xlsx.WorkbookWriterOptions {
@@ -1578,6 +1584,8 @@ export interface CsvWriteOptions {
 	map(value: any, index: number): any;
 	includeEmptyRows: boolean;
 	formatterOptions: Partial<FastCsvFormatterOptionsArgs>;
+	/** Escape values that spreadsheet applications could interpret as formulas. Defaults to true. */
+	escapeFormulas: boolean;
 }
 
 export interface Csv {

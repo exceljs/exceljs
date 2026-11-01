@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-const ExcelJS = require('./lib/exceljs.nodejs.js');
+const ExcelJS = require('./lib/exceljs.nodejs');
 
 const runs = 3;
 
