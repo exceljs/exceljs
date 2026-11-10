@@ -392,6 +392,90 @@ const expectations = [
     options: {formulae: {}, siFormulae: 0},
   },
   {
+    title: 'String Formula in Date-Formatted Cell',
+    create() {
+      return new CellXform();
+    },
+    xml: '<c r="A1" s="1" t="str"><f>A2</f><v>Foo</v></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.Formula,
+      formula: 'A2',
+      result: 'Foo',
+      styleId: 1,
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.Formula,
+      formula: 'A2',
+      result: 'Foo',
+      style: {numFmt: 'mm-dd-yy'},
+    },
+    tests: ['parse', 'reconcile'],
+    options: {
+      hyperlinkMap: fakeHyperlinkMap,
+      styles: fakeStyles,
+      formulae: {},
+      siFormulae: 0,
+    },
+  },
+  {
+    title: 'Boolean Formula in Date-Formatted Cell',
+    create() {
+      return new CellXform();
+    },
+    xml: '<c r="A1" s="1" t="b"><f>A2</f><v>1</v></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.Formula,
+      formula: 'A2',
+      result: true,
+      styleId: 1,
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.Formula,
+      formula: 'A2',
+      result: true,
+      style: {numFmt: 'mm-dd-yy'},
+    },
+    tests: ['parse', 'reconcile'],
+    options: {
+      hyperlinkMap: fakeHyperlinkMap,
+      styles: fakeStyles,
+      formulae: {},
+      siFormulae: 0,
+    },
+  },
+  {
+    title: 'Number Formula in Date-Formatted Cell',
+    create() {
+      return new CellXform();
+    },
+    xml: '<c r="A1" s="1"><f>A2</f><v>42530</v></c>',
+    parsedModel: {
+      address: 'A1',
+      type: Enums.ValueType.Formula,
+      formula: 'A2',
+      result: 42530,
+      styleId: 1,
+    },
+    reconciledModel: {
+      address: 'A1',
+      type: Enums.ValueType.Formula,
+      formula: 'A2',
+      result: new Date('2016-06-09T00:00:00.000Z'),
+      style: {numFmt: 'mm-dd-yy'},
+    },
+    tests: ['parse', 'reconcile'],
+    options: {
+      hyperlinkMap: fakeHyperlinkMap,
+      styles: fakeStyles,
+      formulae: {},
+      siFormulae: 0,
+    },
+  },
+  {
     title: 'Master Shared Formula',
     create() {
       return new CellXform();
