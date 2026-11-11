@@ -23,6 +23,26 @@ describe('utils', () => {
 
       expect(utils.xmlEncode('new\x0aline')).to.equal('new\x0aline');
     });
+
+    it('removes U+FFFE and U+FFFF, which XML does not allow', () => {
+      expect(utils.xmlEncode('abc\ufffe\uffffabc')).to.equal('abcabc');
+      expect(utils.xmlEncode('\ufffe')).to.equal('');
+      expect(utils.xmlEncode('<\uffff>')).to.equal('&lt;&gt;');
+      expect(utils.xmlEncode('\ufffe<&\ud83d\ude00\uffff')).to.equal(
+        '&lt;&amp;\ud83d\ude00'
+      );
+    });
+
+    it('keeps U+FFFD and characters outside the Basic Multilingual Plane', () => {
+      expect(utils.xmlEncode('abc\ufffdabc')).to.equal('abc\ufffdabc');
+      expect(utils.xmlEncode('<\ufffd>')).to.equal('&lt;\ufffd&gt;');
+      expect(utils.xmlEncode('abc\ud83d\ude00abc')).to.equal(
+        'abc\ud83d\ude00abc'
+      );
+      expect(utils.xmlEncode('<\ud83d\ude00>')).to.equal(
+        '&lt;\ud83d\ude00&gt;'
+      );
+    });
   });
   describe('isDateFmt', () => {
     ['yyyy-mm-dd'].forEach(fmt => {

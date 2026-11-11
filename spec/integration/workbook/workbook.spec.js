@@ -392,6 +392,25 @@ describe('Workbook', () => {
         });
     });
 
+    it('strings with U+FFFE and U+FFFF, which XML does not allow', () => {
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('Hello');
+      ws.getCell('A1').value = 'Foo\ufffeBar';
+      ws.getCell('A2').value = 'Foo\uffffBar';
+      return wb.xlsx
+        .writeFile(TEST_XLSX_FILE_NAME)
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          const ws2 = wb2.getWorksheet('Hello');
+
+          expect(ws2.getCell('A1').value).to.equal('FooBar');
+          expect(ws2.getCell('A2').value).to.equal('FooBar');
+        });
+    });
+
     it('dataValidations', () => {
       const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'xlsx', [
         'dataValidations',

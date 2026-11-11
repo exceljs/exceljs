@@ -372,6 +372,28 @@ describe('WorkbookWriter', () => {
         });
     });
 
+    it('removes U+FFFE and U+FFFF, which XML does not allow', () => {
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter({
+        filename: TEST_XLSX_FILE_NAME,
+      });
+      const ws = wb.addWorksheet('blort');
+
+      ws.getCell('A1').value = 'Foo\ufffeBar';
+      ws.getCell('A2').value = 'Foo\uffffBar';
+
+      return wb
+        .commit()
+        .then(() => {
+          const wb2 = new ExcelJS.Workbook();
+          return wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+        })
+        .then(wb2 => {
+          const ws2 = wb2.getWorksheet('blort');
+          expect(ws2.getCell('A1').value).to.equal('FooBar');
+          expect(ws2.getCell('A2').value).to.equal('FooBar');
+        });
+    });
+
     it('serializes and deserializes dataValidations', () => {
       const options = {filename: TEST_XLSX_FILE_NAME};
       const wb = testUtils.createTestBook(
