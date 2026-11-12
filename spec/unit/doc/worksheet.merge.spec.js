@@ -244,5 +244,23 @@ describe('Worksheet', () => {
       expect(nNumberVals).to.deep.equal(1);
       expect(nMergeVals).to.deep.equal(3);
     });
+
+    it('rejects a merge that would allocate too many cells', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      expect(() => {
+        ws.mergeCells('A1:XFD1048576');
+      }).to.throw(Error, /too large/);
+    });
+
+    it('rejects a merge whose row is outside the Excel grid', () => {
+      const wb = new Excel.Workbook();
+      const ws = wb.addWorksheet('blort');
+
+      expect(() => {
+        ws.mergeCells('B2:C4294967296');
+      }).to.throw(Error, /1048576/);
+    });
   });
 });
