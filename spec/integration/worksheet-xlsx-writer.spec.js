@@ -281,6 +281,33 @@ describe('WorksheetWriter', () => {
       expect(ws.getRow(2).values).to.deep.equal([, 2, 'Jane Doe', dateValue2]);
     });
 
+    it('adds a batch of rows that can be committed together', async () => {
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
+      const ws = wb.addWorksheet('blort');
+      ws.columns = [{key: 'id'}, {key: 'name'}];
+      ws.addRow([1, 'First']).commit();
+
+      const [second, third] = ws.addRows([[2, 'Second'], {id: 3, name: 'Third'}]);
+      expect(second.number).to.equal(2);
+      expect(third.number).to.equal(3);
+      second.getCell('name').value = 'Updated';
+      third.commit();
+      ws.addRow([4, 'Fourth']).commit();
+      await wb.commit();
+
+      const reopened = new ExcelJS.Workbook();
+      await reopened.xlsx.load(wb.stream.read());
+      const sheet = reopened.getWorksheet('blort');
+      const rows = [];
+      sheet.eachRow(row => rows.push(row.values.slice(1)));
+      expect(rows).to.deep.equal([
+        [1, 'First'],
+        [2, 'Updated'],
+        [3, 'Third'],
+        [4, 'Fourth'],
+      ]);
+    });
+
     it('adds rows by sparse array', () => {
       const wb = new ExcelJS.stream.xlsx.WorkbookWriter();
       const ws = wb.addWorksheet('blort');
