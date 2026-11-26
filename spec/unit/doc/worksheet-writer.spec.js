@@ -29,4 +29,39 @@ describe('Workbook Writer', () => {
 
       writer.commit();
     }));
+
+  it('writes worksheet elements in schema order', () => {
+    const mockWorkbook = {
+      _openStream() {
+        return this.stream;
+      },
+      stream: new StreamBuf(),
+    };
+    const writer = new WorksheetWriter({
+      id: 1,
+      workbook: mockWorkbook,
+    });
+    const calls = [];
+    [
+      '_writeSheetProtection',
+      '_writeAutoFilter',
+      '_writeMergeCells',
+      '_writeConditionalFormatting',
+      '_writeDataValidations',
+      '_writeHyperlinks',
+    ].forEach(name => {
+      writer[name] = () => calls.push(name);
+    });
+
+    writer.commit();
+
+    expect(calls).to.deep.equal([
+      '_writeSheetProtection',
+      '_writeAutoFilter',
+      '_writeMergeCells',
+      '_writeConditionalFormatting',
+      '_writeDataValidations',
+      '_writeHyperlinks',
+    ]);
+  });
 });
