@@ -10,6 +10,27 @@ const TEST_CSV_FILE_NAME = './spec/out/wb.test.csv';
 
 describe('Workbook', () => {
   describe('Serialise', () => {
+    it('preserves whitespace in table column names and their header cells', async () => {
+      const workbook = new ExcelJS.Workbook();
+      const sheet = workbook.addWorksheet('Inventory');
+      const names = ['Price\n(USD)', 'Shipped\r\nunits', 'Rack\tID'];
+      sheet.addTable({
+        name: 'Stock',
+        ref: 'A1',
+        columns: names.map(name => ({name})),
+        rows: [[12, 20, 'A2']],
+      });
+
+      const copy = new ExcelJS.Workbook();
+      await copy.xlsx.load(await workbook.xlsx.writeBuffer());
+      const loaded = copy.getWorksheet('Inventory');
+      const table = loaded.getTable('Stock');
+      names.forEach((name, index) => {
+        expect(table.getColumn(index).name).to.equal(name);
+        expect(loaded.getRow(1).getCell(index + 1).value).to.equal(name);
+      });
+    });
+
     it('xlsx file', () => {
       const wb = testUtils.createTestBook(new ExcelJS.Workbook(), 'xlsx');
 
